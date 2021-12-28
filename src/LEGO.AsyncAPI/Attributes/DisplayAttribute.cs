@@ -3,7 +3,7 @@
 namespace LEGO.AsyncAPI.Attributes
 {
     /// <summary>
-    /// Represents the Open Api Data type metadata attribute.
+    /// Display attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     internal class DisplayAttribute : Attribute
