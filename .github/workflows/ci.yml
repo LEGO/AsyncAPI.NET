@@ -10,7 +10,7 @@ on:
     paths: 
       - 'src/**'
       - '!**/*.md'
-
+  workflow_dispatch:
 jobs:
   build:
 
