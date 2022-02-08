@@ -1,0 +1,29 @@
+{
+  "headers": {
+    "readOnly": false,
+    "writeOnly": false,
+    "allOf": [],
+    "oneOf": [],
+    "anyOf": [],
+    "required": [],
+    "properties": {},
+    "enum": [],
+    "nullable": false,
+    "deprecated": false
+  },
+  "payload": 13.13,
+  "correlationId": {
+    "unresolvedReference": false
+  },
+  "schemaFormat": "application/vnd.aai.asyncapi;version=2.3.0",
+  "contentType": "application/json",
+  "name": "UserSignup",
+  "title": "User signup",
+  "summary": "Action to sign a user up.",
+  "description": "A longer description",
+  "tags": [],
+  "externalDocs": {},
+  "bindings": {},
+  "examples": [],
+  "traits": []
+}

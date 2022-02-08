@@ -3,15 +3,15 @@
 namespace LEGO.AsyncAPI.Any
 {
     /// <summary>
-    /// Async API array.
+    /// Async API null.
     /// </summary>
-    public class Array : List<IAny>, IAny
+    public class Long : Primitive<long?>
     {
         /// <summary>
         /// The type of <see cref="IOpenApiAny"/>.
         /// </summary>
-        public AnyType AnyType { get; } = AnyType.Array;
-        
-        public List<IAny> Value { get; set; }
+        public override PrimitiveType PrimitiveType { get; } = PrimitiveType.Long;
+
+        public override long? Value { get; set; }
     }
 }

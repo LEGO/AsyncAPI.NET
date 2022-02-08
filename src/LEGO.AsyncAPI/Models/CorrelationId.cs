@@ -1,5 +1,7 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using Newtonsoft.Json;
+
 namespace LEGO.AsyncAPI.Models
 {
     /// <summary>
@@ -18,12 +20,14 @@ namespace LEGO.AsyncAPI.Models
         public string Location { get; set; }
 
         /// <inheritdoc/>
+        [JsonProperty("unresolvedReference")]
         public bool UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
         public Reference Reference { get; set; }
 
         /// <inheritdoc/>
+        [JsonIgnore]
         public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
     }
 }

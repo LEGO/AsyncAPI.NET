@@ -1,0 +1,9 @@
+{
+  "asyncapi": "2.3.0",
+  "id": "urn:com:smartylighting:streetlights:server",
+  "info": {
+    "title": "foo",
+    "version": "bar"
+  },
+  "channels": {}
+}

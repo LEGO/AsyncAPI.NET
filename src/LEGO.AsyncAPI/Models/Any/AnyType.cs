@@ -26,5 +26,10 @@ namespace LEGO.AsyncAPI.Any
         /// Object.
         /// </summary>
         Object,
+        
+        /// <summary>
+        /// Undefined
+        /// </summary>
+        Undefined
     }
 }
