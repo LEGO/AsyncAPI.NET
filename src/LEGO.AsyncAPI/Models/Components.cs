@@ -1,5 +1,9 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Any;
+using LEGO.AsyncAPI.Models.Interfaces;
+using Newtonsoft.Json.Linq;
+
 namespace LEGO.AsyncAPI.Models
 {
     /// <summary>
@@ -66,6 +70,6 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IMessageBinding> MessageBindings { get; set; } = new Dictionary<string, IMessageBinding>();
 
         /// <inheritdoc/>
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, JToken> Extensions { get; set; }
     }
 }

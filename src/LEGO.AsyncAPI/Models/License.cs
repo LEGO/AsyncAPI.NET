@@ -1,6 +1,9 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Any;
+using LEGO.AsyncAPI.Models.Interfaces;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace LEGO.AsyncAPI.Models
 {
@@ -21,8 +24,7 @@ namespace LEGO.AsyncAPI.Models
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
-        [System.Text.Json.Serialization.JsonIgnore]
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, JToken> Extensions { get; set; }
 
         public override bool Equals(object? obj)
         {

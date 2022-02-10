@@ -1,5 +1,8 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Models.Interfaces;
+using Newtonsoft.Json.Linq;
+
 namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Any;
@@ -72,7 +75,7 @@ namespace LEGO.AsyncAPI.Models
         /// A list of tags for API documentation control. Tags can be used for logical grouping of messages.
         /// </summary>
         [JsonProperty("tags")]
-        public IList<Tag> Tags { get; set; } = new List<Tag>();
+        public IList<Tag> Tags { get; set; }
 
         /// <summary>
         /// Additional external documentation for this message.
@@ -84,13 +87,13 @@ namespace LEGO.AsyncAPI.Models
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
         /// </summary>
         [JsonProperty("bindings")]
-        public IDictionary<string, IMessageBinding> Bindings { get; set; } = new Dictionary<string, IMessageBinding>();
+        public IDictionary<string, IMessageBinding> Bindings { get; set; }
 
         /// <summary>
         /// List of examples.
         /// </summary>
         [JsonProperty("examples")]
-        public IList<MessageExample> Examples { get; set; } = new List<MessageExample>();
+        public IList<MessageExample> Examples { get; set; }
 
         /// <summary>
         /// A list of traits to apply to the message object. Traits MUST be merged into the message object using the JSON Merge Patch algorithm in the same order they are defined here. The resulting object MUST be a valid Message Object.
@@ -99,8 +102,7 @@ namespace LEGO.AsyncAPI.Models
         public List<MessageTrait> Traits { get; set; }
 
         /// <inheritdoc/>
-        [JsonIgnore]
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, JToken> Extensions { get; set; }
 
         /// <inheritdoc/>
         [JsonIgnore]

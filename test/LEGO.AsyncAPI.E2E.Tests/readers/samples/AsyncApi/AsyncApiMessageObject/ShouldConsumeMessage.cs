@@ -1,35 +1,26 @@
-using System;
 using System.Collections.Generic;
 using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
 using Xunit;
 
-namespace LEGO.AsyncAPI.E2E.Tests
+namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
 {
-    public class JsonPropertyMessage
+    public class ShouldConsumeMessage: ShouldConsumeProduceBase<Message>
     {
-        private IReader<Message> _asyncApiReader;
-
-        public JsonPropertyMessage()
+        public ShouldConsumeMessage(): base(typeof(ShouldConsumeMessage))
         {
-            _asyncApiReader = new AsyncApiReaderNewtonJson<Message>();
         }
 
-        private const string SampleFolderPath = "readers/samples/AsyncApi/AsyncApiMessageObject/";
-        
         [Fact]
         public async void JsonPropertyMinimalJsonSpec()
         {
-            var output = _asyncApiReader.Consume(Helper.ReadFileToStream(typeof(JsonPropertyInfo), SampleFolderPath, "Minimal.json"));
-        
-            Assert.NotNull(output);
+            Assert.NotNull(_asyncApiAsyncApiReader.Consume(GetStream("Minimal.json")));
         }
 
         [Fact]
         public async void JsonPropertyCompleteSpec()
         {
-            var output = _asyncApiReader.Consume(Helper.ReadFileToStream(typeof(JsonPropertyInfo), SampleFolderPath, "Complete.json"));
+            var output = _asyncApiAsyncApiReader.Consume(GetStream("Complete.json"));
         
             Assert.IsType<Schema>(output.Headers);
             Assert.IsAssignableFrom<IAny>(output.Payload);

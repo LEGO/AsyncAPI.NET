@@ -1,10 +1,10 @@
-using LEGO.AsyncAPI.Any;
-using LEGO.AsyncAPI.Models;
-using Newtonsoft.Json;
-
 namespace LEGO.AsyncAPI
 {
-    public class AsyncApiReaderNewtonJson<T>: IReader<T>
+    using LEGO.AsyncAPI.Any;
+    using LEGO.AsyncAPI.Models;
+    using Newtonsoft.Json;
+
+    public class AsyncApiAsyncApiReaderNewtonJson<T>: IAsyncApiReader<T>
     {
         public T Consume(Stream stream)
         {
