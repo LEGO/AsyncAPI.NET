@@ -1,0 +1,31 @@
+name: Publish a NuGet package
+on:
+  push:
+    branches: [ master ]
+    paths: 
+      - 'src/LEGO.AsyncAPI/**'
+      - '!**/*.md'
+  pull_request:
+    types: [closed]
+    branches: [ master ]
+    paths: 
+      - 'src/LEGO.AsyncAPI/**'
+      - '!**/*.md'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: Publish a NuGet package
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Setup .NET Core @ Latest
+        uses: actions/setup-dotnet@v1
+        with:
+          source-url: https://nuget.pkg.github.com/LEGO/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}   
+      - name: Build LEGO.AsyncAPI project and pack NuGet package
+        run: dotnet pack src/LEGO.AsyncAPI/LEGO.AsyncAPI.csproj -c Release -o out
+#     next step to be uncommented when LEGO.AsyncAPI is complete
+#      - name: Push generated package to GitHub Packages registry
+#        run: dotnet nuget push src/LEGO.AsyncAPI/out/*.nupkg --skip-duplicate --no-symbols true
