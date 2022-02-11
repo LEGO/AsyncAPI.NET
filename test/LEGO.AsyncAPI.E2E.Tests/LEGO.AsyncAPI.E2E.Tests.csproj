@@ -37,6 +37,8 @@
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiMessageObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiServerObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiServerObject\Minimal.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiServerVariableObject\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiServerVariableObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\schema-v2.3.0.json" />
