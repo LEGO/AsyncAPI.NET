@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Tests;
-using Newtonsoft.Json.Linq;
 using Xunit;
-using Object = LEGO.AsyncAPI.Any.Object;
-using String = LEGO.AsyncAPI.Any.String;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
 {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
@@ -12,18 +13,18 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
         }
 
         [Fact]
-        public async void JsonPropertyMinimalJsonSpec()
+        public async void ShouldConsumeMinimalSpec()
         {
             Assert.NotNull(_asyncApiAsyncApiReader.Consume(GetStream("Minimal.json")));
         }
 
         [Fact]
-        public async void JsonPropertyCompleteSpec()
+        public async void ShouldConsumeCompleteSpec()
         {
             var output = _asyncApiAsyncApiReader.Consume(GetStream("Complete.json"));
         
             Assert.IsType<Schema>(output.Headers);
-            Assert.IsAssignableFrom<IAny>(output.Payload);
+            Assert.IsAssignableFrom<JToken>(output.Payload);
             Assert.IsType<CorrelationId>(output.CorrelationId);
             Assert.Equal("application/vnd.aai.asyncapi;version=2.3.0", output.SchemaFormat);
             Assert.Equal("application/json", output.ContentType);

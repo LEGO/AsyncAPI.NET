@@ -12,6 +12,12 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class Info : IExtensible
     {
+        public Info(string title, string version)
+        {
+            Title = title;
+            Version = version;
+        }
+
         /// <summary>
         /// REQUIRED. The title of the application.
         /// </summary>

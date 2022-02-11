@@ -1,9 +1,13 @@
 {
+  "$id": "1",
   "asyncapi": "2.3.0",
   "id": "urn:com:smartylighting:streetlights:server",
   "info": {
+    "$id": "2",
     "title": "foo",
     "version": "bar"
   },
-  "channels": {}
+  "channels": {
+    "$id": "3"
+  }
 }

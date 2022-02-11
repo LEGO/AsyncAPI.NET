@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Tests;
+using Newtonsoft.Json.Linq;
 using Xunit;
 using Double = LEGO.AsyncAPI.Any.Double;
 
@@ -30,7 +31,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
                 Description = "A longer description",
                 ContentType = "application/json",
                 Headers = new Schema(),
-                Payload = new Double(){ Value = 13.13 },
+                Payload = MockData.Payload(),
                 SchemaFormat = "application/vnd.aai.asyncapi;version=2.3.0",
                 CorrelationId = new CorrelationId(),
                 Traits = new List<MessageTrait>(),

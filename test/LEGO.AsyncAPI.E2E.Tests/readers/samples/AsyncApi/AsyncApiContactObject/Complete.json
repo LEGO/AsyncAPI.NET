@@ -1,4 +1,5 @@
 {
+  "$id": "1",
   "name": "foo",
   "uri": "https://lego.com",
   "email": "asyncApiContactObject@lego.com",

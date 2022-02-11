@@ -1,18 +1,35 @@
 {
+  "$id": "1",
   "headers": {
+    "$id": "2",
     "readOnly": false,
     "writeOnly": false,
     "allOf": [],
     "oneOf": [],
     "anyOf": [],
     "required": [],
-    "properties": {},
+    "properties": {
+      "$id": "3"
+    },
     "enum": [],
     "nullable": false,
     "deprecated": false
   },
-  "payload": 13.13,
+  "payload": {
+    "foo": "bar",
+    "baz": 13,
+    "bazz": 13.13,
+    "grault": {
+      "garply": "waldo"
+    },
+    "qux": [
+      "foo"
+    ],
+    "quux": true,
+    "quuz": null
+  },
   "correlationId": {
+    "$id": "4",
     "unresolvedReference": false
   },
   "schemaFormat": "application/vnd.aai.asyncapi;version=2.3.0",
@@ -22,8 +39,12 @@
   "summary": "Action to sign a user up.",
   "description": "A longer description",
   "tags": [],
-  "externalDocs": {},
-  "bindings": {},
+  "externalDocs": {
+    "$id": "5"
+  },
+  "bindings": {
+    "$id": "6"
+  },
   "examples": [],
   "traits": []
 }

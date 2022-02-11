@@ -10,6 +10,8 @@ namespace LEGO.AsyncAPI
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 Formatting = Formatting.Indented,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             };
             return JsonConvert.SerializeObject(asyncApiDocument, jsonSerializerSettings);
         }
