@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi;
@@ -19,13 +20,29 @@ public class ShouldConsumeProduceBase<T>
 
     protected Stream? GetStream(string filename)
     {
-        var combine = Path.Combine(_SampleFolderPath, filename).Replace("/", ".");
-        return GetType().Assembly.GetManifestResourceStream(combine);
+        return GenerateStreamFromString(GetString(filename));
+    }
+    
+    protected Stream? GetStreamWithMockedExtensions(string filename)
+    {
+        return GenerateStreamFromString(GetStringWithMockedExtensions(filename));
     }
 
     protected string GetString(string filename)
     {
-        var combine = Path.Combine(_SampleFolderPath, filename).Replace("/", ".");
+        return ReadFile(_SampleFolderPath, filename);
+    }
+
+    protected string GetStringWithMockedExtensions(string filename)
+    {
+        var body = GetString(filename);
+        var extensionsBody = ReadFile("LEGO/AsyncAPI/E2E/Tests/readers/samples/AsyncApi", "MockExtensions.json");
+        return new StringBuilder(body.Substring(0, body.Length - 2)).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString();
+    }
+
+    private string ReadFile(string sampleFolderPath, string filename)
+    {
+        var combine = Path.Combine(sampleFolderPath, filename).Replace("/", ".");
         Stream? stream = GetType().Assembly.GetManifestResourceStream(combine);
         if (stream == null)
         {
@@ -34,10 +51,20 @@ public class ShouldConsumeProduceBase<T>
 
         return new StreamReader(stream).ReadToEnd();
     }
-    
+
     private static string GetPath(Type child)
     {
         var split = Regex.Split(child.FullName, "(.*?)\\.Should.*?");
         return split[1];
+    }
+    
+    static Stream GenerateStreamFromString(string s)
+    {
+        var stream = new MemoryStream();
+        var writer = new StreamWriter(stream);
+        writer.Write(s);
+        writer.Flush();
+        stream.Position = 0;
+        return stream;
     }
 }

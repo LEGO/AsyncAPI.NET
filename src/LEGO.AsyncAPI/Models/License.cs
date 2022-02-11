@@ -12,6 +12,11 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class License : IExtensible
     {
+        public License(string name)
+        {
+            Name = name;
+        }
+
         /// <summary>
         /// REQUIRED. The license name used for the API.
         /// </summary>
@@ -21,9 +26,11 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A URL to the license used for the API. MUST be in the format of a URL.
         /// </summary>
+        [JsonProperty("url")]
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
+        [JsonExtensionData]
         public IDictionary<string, JToken> Extensions { get; set; }
 
         public override bool Equals(object? obj)

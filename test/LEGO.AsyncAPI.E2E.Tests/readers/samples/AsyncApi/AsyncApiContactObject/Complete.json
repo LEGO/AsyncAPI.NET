@@ -2,19 +2,5 @@
   "$id": "1",
   "name": "foo",
   "uri": "https://lego.com",
-  "email": "asyncApiContactObject@lego.com",
-  "x-ext-null": null,
-  "x-ext-integer": 13,
-  "x-ext-number": 13.13,
-  "x-ext-string": "bar",
-  "x-ext-boolean": true,
-  "x-ext-array": [
-    "foo",
-    {
-      "foo": "bar"
-    }
-  ],
-  "x-ext-object": {
-    "foo": "bar"
-  }
+  "email": "asyncApiContactObject@lego.com"
 }

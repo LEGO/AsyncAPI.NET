@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Produce(new Contact
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Produce(new Contact
             {
                 Name = "foo",
                 Url = new Uri("https://lego.com"),

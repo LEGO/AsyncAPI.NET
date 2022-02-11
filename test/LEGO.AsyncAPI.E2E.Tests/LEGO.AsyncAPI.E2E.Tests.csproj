@@ -31,11 +31,15 @@
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiContactObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiInfoObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiInfoObject\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiLicenseObject\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiLicenseObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiMessageObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiMessageObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\schema-v2.3.0.json" />
+      <None Remove="readers\samples\AsyncApi\MockExtensions.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\MockExtensions.json" />
     </ItemGroup>
 
 </Project>

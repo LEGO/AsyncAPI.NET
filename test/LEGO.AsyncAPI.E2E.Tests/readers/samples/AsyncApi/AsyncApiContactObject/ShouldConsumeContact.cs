@@ -23,7 +23,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Consume(GetStream("Complete.json"));
+            var output = _asyncApiAsyncApiReader.Consume(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.Name);
             Assert.Equal(new Uri("https://lego.com"), output.Url);
