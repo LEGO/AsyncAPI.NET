@@ -1,0 +1,16 @@
+{
+  "$id": "1",
+  "url": "https://lego.com",
+  "protocol": "http",
+  "protocolVersion": "0.0.1",
+  "description": "foo",
+  "variables": {
+    "$id": "2"
+  },
+  "security": {
+    "$id": "3"
+  },
+  "bindings": {
+    "$id": "4"
+  }
+}
