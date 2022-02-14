@@ -26,7 +26,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiChannelObject\Basic.yaml" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiChannelObject\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiChannelObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiContactObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiContactObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiInfoObject\Minimal.json" />

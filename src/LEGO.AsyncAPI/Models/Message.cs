@@ -106,7 +106,7 @@ namespace LEGO.AsyncAPI.Models
 
         /// <inheritdoc/>
         [JsonIgnore]
-        public bool UnresolvedReference { get; set; }
+        public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
         [JsonIgnore]

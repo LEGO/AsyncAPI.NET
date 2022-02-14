@@ -24,7 +24,7 @@ namespace LEGO.AsyncAPI.Models
 
         /// <inheritdoc/>
         [JsonProperty("unresolvedReference")]
-        public bool UnresolvedReference { get; set; }
+        public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
         public Reference Reference { get; set; }

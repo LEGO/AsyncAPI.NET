@@ -43,7 +43,7 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, JToken> Extensions { get; set; }
 
         /// <inheritdoc/>
-        public bool UnresolvedReference { get; set; }
+        public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
         public Reference Reference { get; set; }

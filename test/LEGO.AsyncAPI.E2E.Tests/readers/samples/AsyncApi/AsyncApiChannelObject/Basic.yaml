@@ -1,4 +1,0 @@
-user/signedup:
-  subscribe:
-    message:
-      $ref: "#/components/messages/userSignedUp"

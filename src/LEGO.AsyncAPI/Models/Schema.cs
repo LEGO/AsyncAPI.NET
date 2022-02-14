@@ -232,7 +232,7 @@ namespace LEGO.AsyncAPI.Models
 
         /// <inheritdoc/>
         [JsonIgnore]
-        public bool UnresolvedReference { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool? UnresolvedReference { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <inheritdoc/>
         [JsonIgnore]

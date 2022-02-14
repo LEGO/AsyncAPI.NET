@@ -29,8 +29,7 @@
     "quuz": null
   },
   "correlationId": {
-    "$id": "4",
-    "unresolvedReference": false
+    "$id": "4"
   },
   "schemaFormat": "application/vnd.aai.asyncapi;version=2.3.0",
   "contentType": "application/json",

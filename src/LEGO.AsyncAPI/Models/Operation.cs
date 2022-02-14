@@ -29,7 +29,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A list of tags for API documentation control. Tags can be used for logical grouping of operations.
         /// </summary>
-        public IList<Tag> Tags { get; set; } = new List<Tag>();
+        public IList<Tag> Tags { get; set; }
 
         /// <summary>
         /// Additional external documentation for this operation.
@@ -39,12 +39,12 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the operation.
         /// </summary>
-        public IDictionary<string, IOperationBinding> Bindings { get; set; } = new Dictionary<string, IOperationBinding>();
+        public IDictionary<string, IOperationBinding> Bindings { get; set; }
 
         /// <summary>
         /// A list of traits to apply to the operation object.
         /// </summary>
-        public IList<OperationTrait> Traits { get; set; } = new List<OperationTrait>();
+        public IList<OperationTrait> Traits { get; set; }
 
         /// <summary>
         /// A definition of the message that will be published or received on this channel.

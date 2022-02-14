@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Indicates if object is populated with data or is just a reference to the data.
         /// </summary>
-        bool UnresolvedReference { get; set; }
+        bool? UnresolvedReference { get; set; }
 
         /// <summary>
         /// Reference object.
