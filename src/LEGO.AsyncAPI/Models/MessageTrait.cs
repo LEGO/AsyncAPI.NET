@@ -85,7 +85,7 @@ namespace LEGO.AsyncAPI.Models
         public IList<MessageTrait> Traits { get; set; } = new List<MessageTrait>();
 
         /// <inheritdoc/>
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
 
         /// <inheritdoc/>
         public bool? UnresolvedReference { get; set; }

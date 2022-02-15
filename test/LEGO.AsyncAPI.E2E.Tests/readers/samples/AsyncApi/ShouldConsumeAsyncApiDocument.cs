@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         [Fact]
         public async void JsonPropertyMinimalSpec()
         {
-            var output = _asyncApiAsyncApiReader.Consume(GetStream("Minimal.json"));
+            var output = _asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
         
             Assert.Equal("2.3.0", output.AsyncApi);
             Assert.Equal("foo", output.Info.Title);

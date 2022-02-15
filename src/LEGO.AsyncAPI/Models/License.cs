@@ -30,8 +30,7 @@ namespace LEGO.AsyncAPI.Models
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
-        [JsonExtensionData]
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
 
         public override bool Equals(object? obj)
         {

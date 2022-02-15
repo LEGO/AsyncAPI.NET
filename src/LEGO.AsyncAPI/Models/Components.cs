@@ -70,6 +70,6 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IMessageBinding> MessageBindings { get; set; } = new Dictionary<string, IMessageBinding>();
 
         /// <inheritdoc/>
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

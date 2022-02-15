@@ -40,7 +40,7 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IOperationBinding> Bindings { get; set; } = new Dictionary<string, IOperationBinding>();
 
         /// <inheritdoc/>
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
 
         /// <inheritdoc/>
         public bool? UnresolvedReference { get; set; }

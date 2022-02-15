@@ -64,14 +64,11 @@ public class PayloadConverterWriteJsonTest
     [Fact]
     public void ShouldProduceArray()
     {
-        var output = GetOutputFor(new Array {Value = new List<IAny>
-        {
+        var output = GetOutputFor(new Array { 
             new String {Value = "foo"},
             new String {Value = "bar"},
             new Double {Value = 13.13},
             new Object ()
-        }
-            
         });
         
         Assert.Equal("[\"foo\",\"bar\",13.13,{}]", output);

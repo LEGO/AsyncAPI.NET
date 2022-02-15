@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Any
     /// <summary>
     /// Async API null.
     /// </summary>
-    public class String : Primitive<string>
+    public class String : PrimitiveValue<string>
     {
         public String()
         {
@@ -22,5 +22,9 @@ namespace LEGO.AsyncAPI.Any
         public override PrimitiveType PrimitiveType { get; } = PrimitiveType.String;
 
         public override string? Value { get; set; }
+
+        public static explicit operator string?(String s) => s.Value;
+
+        public static explicit operator String(string s) => new () { Value = s };
     }
 }

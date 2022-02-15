@@ -14,8 +14,8 @@ public class ShouldConsumeProduceBase<T>
     protected ShouldConsumeProduceBase(Type child)
     {
         _SampleFolderPath = GetPath(child);
-        _asyncApiAsyncApiReader = new AsyncApiAsyncApiReaderNewtonJson<T>();
-        _asyncApiWriter = new AsyncApiWriterNewtonJson<T>();
+        _asyncApiAsyncApiReader = new JsonAsyncApiReader<T>();
+        _asyncApiWriter = new JsonAsyncApiWriter<T>();
     }
 
     protected Stream? GetStream(string filename)

@@ -2,6 +2,6 @@ namespace LEGO.AsyncAPI
 {
     public interface IAsyncApiReader<T>
     {
-        public T Consume(Stream jsonDocument);
+        public T Read(Stream jsonDocument);
     }
 }

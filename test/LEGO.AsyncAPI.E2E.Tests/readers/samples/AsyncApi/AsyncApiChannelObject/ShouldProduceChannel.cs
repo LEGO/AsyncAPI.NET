@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Tests;
 using Newtonsoft.Json.Linq;
@@ -16,13 +17,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Produce(new Channel()));
+            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new Channel()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Produce(new Channel()
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new Channel()
             {
                 Description = "foo",
                 Servers = ImmutableList<string>.Empty,
@@ -40,6 +41,6 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
 
     public class KafkaBinding : IChannelBinding
     {
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

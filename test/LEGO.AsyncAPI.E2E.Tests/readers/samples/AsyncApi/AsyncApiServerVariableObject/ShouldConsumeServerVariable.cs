@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
 using Newtonsoft.Json.Linq;
 using Xunit;
@@ -15,7 +16,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerVariabl
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = _asyncApiAsyncApiReader.Consume(GetStream("Minimal.json"));
+            var output = _asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
 
             Assert.IsType<ServerVariable>(output);
         }
@@ -23,13 +24,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerVariabl
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Consume(GetStreamWithMockedExtensions("Complete.json"));
+            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal(new List<string> {"foo"}, output.Enum);
             Assert.Equal("bar", output.Default);
             Assert.Equal("baz", output.Description);
             Assert.Equal(new List<string> {"quz"}, output.Examples);
-            Assert.IsAssignableFrom<IDictionary<string, JToken>>(output.Extensions);
+            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
         }
     }
 }

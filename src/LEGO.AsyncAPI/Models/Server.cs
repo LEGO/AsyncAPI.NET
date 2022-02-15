@@ -64,7 +64,6 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IServerBinding> Bindings { get; set; }
 
         /// <inheritdoc/>
-        [JsonExtensionData]
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

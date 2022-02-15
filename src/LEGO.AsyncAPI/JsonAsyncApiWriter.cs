@@ -1,10 +1,10 @@
+using Newtonsoft.Json;
+
 namespace LEGO.AsyncAPI
 {
-    using Newtonsoft.Json;
-
-    public class AsyncApiWriterNewtonJson<T> : IAsyncApiWriter<T>
+    public class JsonAsyncApiWriter<T> : IAsyncApiWriter<T>
     {
-        public string Produce(T asyncApiDocument)
+        public string Write(T asyncApiDocument)
         {
             JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
             {
@@ -12,6 +12,7 @@ namespace LEGO.AsyncAPI
                 Formatting = Formatting.Indented,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                ContractResolver = new ExtensionDataContractResolver(),
             };
             return JsonConvert.SerializeObject(asyncApiDocument, jsonSerializerSettings);
         }

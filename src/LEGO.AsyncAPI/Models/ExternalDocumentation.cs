@@ -23,7 +23,6 @@ namespace LEGO.AsyncAPI.Models
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
-        [JsonIgnore]
-        public IDictionary<string, JToken> Extensions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

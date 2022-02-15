@@ -1,6 +1,7 @@
-namespace LEGO.AsyncAPI;
-
-public interface IAsyncApiWriter<T>
+namespace LEGO.AsyncAPI
 {
-    string Produce(T asyncApiDocument);
+    public interface IAsyncApiWriter<T>
+    {
+        string Write(T asyncApiDocument);
+    }
 }

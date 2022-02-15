@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LEGO.AsyncAPI.Any;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -6,33 +7,33 @@ namespace LEGO.AsyncAPI.Tests;
 
 public static class MockData
 {
-    public static Dictionary<string, JToken> Extensions()
+    public static Dictionary<string, IAny> Extensions()
     {
-        return new Dictionary<string, JToken>
+        return new Dictionary<string, IAny>
         {
-            {"x-ext-null", null},
-            {"x-ext-integer", 13},
-            {"x-ext-number", 13.13},
-            {"x-ext-string", "bar"},
-            {"x-ext-boolean", true},
-            {"x-ext-array", new JArray() { "foo", new JObject{ ["foo"] = "bar" } }},
-            {"x-ext-object", new JObject{ ["foo"] = "bar" }}
+            {"x-ext-null", new Null()},
+            {"x-ext-integer", (Long)13},
+            {"x-ext-number", (Double)13.13},
+            {"x-ext-string", (String)"bar"},
+            {"x-ext-boolean", (Boolean)true},
+            {"x-ext-array", new Array() { (String)"foo", new Object{ ["foo"] = (String)"bar" } }},
+            {"x-ext-object", new Object{ ["foo"] = (String)"bar" } }
         };
     }
 
-    public static JToken Payload()
+    public static Object Payload()
     {
-        var payload = new JObject();
-        payload.Add("foo", "bar");
-        payload.Add("baz", 13);
-        payload.Add("bazz", 13.13);
-        payload.Add("grault", new JObject
+        var payload = new Object();
+        payload.Add("foo", (String)"bar");
+        payload.Add("baz", (Long)13);
+        payload.Add("bazz", (Double)13.13);
+        payload.Add("grault", new Object
         {
-            { "garply", JValue.CreateString("waldo") }
+            { "garply", (String)"waldo" }
         });
-        payload.Add("qux", new JArray { JValue.CreateString("foo") });
-        payload.Add("quux", true);
-        payload.Add("quuz", null);
+        payload.Add("qux", new Array {(String)"foo" });
+        payload.Add("quux", (Boolean)true);
+        payload.Add("quuz", new Null());
         return payload;
     }
 }

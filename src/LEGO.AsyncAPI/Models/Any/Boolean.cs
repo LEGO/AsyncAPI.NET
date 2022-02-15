@@ -1,6 +1,6 @@
 namespace LEGO.AsyncAPI.Any
 {
-    public class Boolean : Primitive<bool?>
+    public class Boolean : PrimitiveValue<bool?>
     {
         private bool? _value;
 
@@ -14,5 +14,8 @@ namespace LEGO.AsyncAPI.Any
             get { return _value; }
             set { _value = value; }
         }
+
+        public static explicit operator bool?(Boolean b) => b.Value;
+        public static explicit operator Boolean(bool b) => new () { Value = b };
     }
 }

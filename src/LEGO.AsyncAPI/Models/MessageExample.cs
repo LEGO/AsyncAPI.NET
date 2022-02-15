@@ -33,6 +33,6 @@ namespace LEGO.AsyncAPI.Models
         public string Summary { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

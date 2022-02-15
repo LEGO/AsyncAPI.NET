@@ -30,7 +30,6 @@ namespace LEGO.AsyncAPI.Models
         public Reference Reference { get; set; }
 
         /// <inheritdoc/>
-        [JsonIgnore]
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

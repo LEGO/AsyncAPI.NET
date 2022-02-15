@@ -13,14 +13,14 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         public void ShouldProduceMinimalSpec()
         {
             Assert.Equal(GetString("Minimal.json"),
-                _asyncApiWriter.Produce(new AsyncApiDocument
+                _asyncApiWriter.Write(new AsyncApiDocument
                     {AsyncApi = "2.3.0", Info = new Info( "foo", "bar")}));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Produce(new AsyncApiDocument
+            Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Write(new AsyncApiDocument
             {
                 AsyncApi = "2.3.0",
                 Id = "urn:com:smartylighting:streetlights:server",

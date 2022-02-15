@@ -16,14 +16,14 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiInfoObject
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Produce(new Info("foo", "bar")));
+            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new Info("foo", "bar")));
         }
         
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
             var license = new License("Apache 2.0");
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Produce(new Info("foo", "bar")
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new Info("foo", "bar")
             {
                 Description = "quz",
                 TermsOfService = new Uri("https://lego.com"),

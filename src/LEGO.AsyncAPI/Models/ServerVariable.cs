@@ -1,5 +1,7 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Any;
+
 namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -36,7 +38,6 @@ namespace LEGO.AsyncAPI.Models
         public IList<string> Examples { get; set; }
 
         /// <inheritdoc/>
-        [JsonExtensionData]
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

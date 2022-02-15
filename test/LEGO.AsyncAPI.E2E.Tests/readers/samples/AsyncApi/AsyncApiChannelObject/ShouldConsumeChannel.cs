@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = _asyncApiAsyncApiReader.Consume(GetStream("Minimal.json"));
+            var output = _asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
 
             Assert.IsType<Channel>(output);
         }
@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Consume(GetStreamWithMockedExtensions("Complete.json"));
+            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.Description);
             Assert.IsAssignableFrom<IList<string>>(output.Servers);
@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
             Assert.IsType<Operation>(output.Publish);
             Assert.IsAssignableFrom<IDictionary<string, Parameter>>(output.Parameters);
             Assert.IsAssignableFrom<IDictionary<string, IChannelBinding>>(output.Bindings);
-            Assert.IsAssignableFrom<IDictionary<string, JToken>>(output.Extensions);
+            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
         }
     }
 }

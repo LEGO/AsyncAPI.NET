@@ -55,7 +55,6 @@ namespace LEGO.AsyncAPI.Models
         public List<License> License { get; set; }
 
         /// <inheritdoc/>
-        [JsonExtensionData]
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

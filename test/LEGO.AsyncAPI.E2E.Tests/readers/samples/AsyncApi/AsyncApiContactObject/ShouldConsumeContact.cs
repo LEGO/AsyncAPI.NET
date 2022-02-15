@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Newtonsoft.Json.Linq;
 using Xunit;
+using String = LEGO.AsyncAPI.Any.String;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
 {
@@ -17,20 +16,21 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            Assert.IsType<Contact>(_asyncApiAsyncApiReader.Consume(GetStream("Minimal.json")));
+            Assert.IsType<Contact>(_asyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
         }
 
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Consume(GetStreamWithMockedExtensions("Complete.json"));
+            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.Name);
             Assert.Equal(new Uri("https://lego.com"), output.Url);
             Assert.Equal("asyncApiContactObject@lego.com", output.Email);
             var extensions = output.Extensions;
-            Assert.IsAssignableFrom<IDictionary<string, JToken>>(extensions);
-            Assert.Equal("bar", extensions["x-ext-string"].Value<string>());
+            Assert.IsAssignableFrom<IDictionary<string, IAny>>(extensions);
+            var extension = extensions["x-ext-string"] as String;
+            Assert.Equal("bar", (string) extension!);
         }
     }
 }

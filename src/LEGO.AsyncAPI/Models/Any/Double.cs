@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Any
     /// <summary>
     /// Async API null.
     /// </summary>
-    public class Double : Primitive<double?>
+    public class Double : PrimitiveValue<double?>
     {
         private double? _value;
 
@@ -19,5 +19,9 @@ namespace LEGO.AsyncAPI.Any
             get { return _value; }
             set { _value = value; }
         }
+
+        public static explicit operator double?(Double d) => d.Value;
+
+        public static explicit operator Double(double d) => new () { Value = d };
     }
 }

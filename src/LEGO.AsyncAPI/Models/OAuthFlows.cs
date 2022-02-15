@@ -32,6 +32,6 @@ namespace LEGO.AsyncAPI.Models
         public OAuthFlow AuthorizationCode { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

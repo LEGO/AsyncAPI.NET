@@ -55,6 +55,6 @@ namespace LEGO.AsyncAPI.Models
         public Message Message { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

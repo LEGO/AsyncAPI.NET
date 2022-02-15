@@ -15,16 +15,16 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
         [Fact]
         public async void ShouldConsumeMinimalSpec()
         {
-            Assert.NotNull(_asyncApiAsyncApiReader.Consume(GetStream("Minimal.json")));
+            Assert.NotNull(_asyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
         }
 
         [Fact]
         public async void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Consume(GetStream("Complete.json"));
+            var output = _asyncApiAsyncApiReader.Read(GetStream("Complete.json"));
         
             Assert.IsType<Schema>(output.Headers);
-            Assert.IsAssignableFrom<JToken>(output.Payload);
+            Assert.IsAssignableFrom<IAny>(output.Payload);
             Assert.IsType<CorrelationId>(output.CorrelationId);
             Assert.Equal("application/vnd.aai.asyncapi;version=2.3.0", output.SchemaFormat);
             Assert.Equal("application/json", output.ContentType);

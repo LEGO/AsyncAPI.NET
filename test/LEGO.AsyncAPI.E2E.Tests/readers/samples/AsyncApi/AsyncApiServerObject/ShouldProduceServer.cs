@@ -16,13 +16,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerObject
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Produce(new Server("https://lego.com", "http")));
+            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new Server("https://lego.com", "http")));
         }
         
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Produce(new Server("https://lego.com", "http")
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new Server("https://lego.com", "http")
             {
                 ProtocolVersion = "0.0.1",
                 Description = "foo",

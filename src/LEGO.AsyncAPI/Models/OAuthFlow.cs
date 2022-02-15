@@ -32,6 +32,6 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, string> Scopes { get; set; } = new Dictionary<string, string>();
 
         /// <inheritdoc/>
-        public IDictionary<string, JToken> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }
