@@ -2,9 +2,10 @@
 {
     using System.Text.Json;
     using Json.Schema;
+    using Newtonsoft.Json.Linq;
 
     public interface IAsyncApiSchemaValidator
     {
-        Task<ValidationResults> ValidateAsync(JsonDocument jsonDocument);
+        Task<ValidationResults> ValidateAsync(JObject jsonDocument, CancellationToken cancellationToken);
     }
 }

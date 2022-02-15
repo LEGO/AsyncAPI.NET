@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="YamlDotNet" Version="11.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LEGO.AsyncAPI.Surface.Stubs\LEGO.AsyncAPI.Surface.Stubs.csproj" />
     <ProjectReference Include="..\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
   </ItemGroup>

@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Surface", "LE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Surface.Stubs", "LEGO.AsyncAPI.Surface.Stubs\LEGO.AsyncAPI.Surface.Stubs.csproj", "{3AE22735-01D4-430F-9039-EDBE698A99D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Surface.Tests", "..\test\LEGO.AsyncAPI.Surface.Tests\LEGO.AsyncAPI.Surface.Tests.csproj", "{F72C8B56-A5C1-4AAB-ADD4-F157140E51B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{3AE22735-01D4-430F-9039-EDBE698A99D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AE22735-01D4-430F-9039-EDBE698A99D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AE22735-01D4-430F-9039-EDBE698A99D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F72C8B56-A5C1-4AAB-ADD4-F157140E51B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F72C8B56-A5C1-4AAB-ADD4-F157140E51B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F72C8B56-A5C1-4AAB-ADD4-F157140E51B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F72C8B56-A5C1-4AAB-ADD4-F157140E51B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
