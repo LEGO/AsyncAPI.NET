@@ -23,13 +23,13 @@ public class Reader : IReader
         return await ValidateAndReadJsonDocument(jObject, cancellationToken);
     }
 
-    public async Task<ReaderReadResult> ReadAsync(string asyncApiDefinition, CancellationToken cancellationToken)
+    public async Task<ReaderReadResult> ReadAsync(string jsonAsyncApiDefinition, CancellationToken cancellationToken)
     {
         JObject jObject;
 
         try
         {
-            jObject = JObject.Parse(asyncApiDefinition);
+            jObject = JObject.Parse(jsonAsyncApiDefinition);
         }
         catch (Exception e)
         {
@@ -76,11 +76,11 @@ public class Reader : IReader
 
     private async Task<ReaderReadResult> ValidateAndReadJsonDocument(JObject jObject, CancellationToken cancellationToken)
     {
-        var validateResults = await _apiSchemaValidator.ValidateAsync(jObject, cancellationToken);
+        var validatorResults = await _apiSchemaValidator.ValidateAsync(jObject, cancellationToken);
 
-        if (!validateResults.IsValid)
+        if (!validatorResults.IsValid)
         {
-            return new ReaderReadResult { DiagnosticObject = DiagnosticObject.OnValidateError(validateResults) };
+            return new ReaderReadResult { DiagnosticObject = DiagnosticObject.OnValidateError(validatorResults) };
         }
 
         AsyncApiDocument deserializationResult;
