@@ -12,6 +12,10 @@
     "$id": "4"
   },
   "bindings": {
-    "kafka": {}
+    "$id": "1",
+    "kafka": {
+      "$id": "2",
+      "x-ext-string": "foo"
+    }
   }
 }

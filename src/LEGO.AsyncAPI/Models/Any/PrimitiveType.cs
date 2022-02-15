@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Any
         String,
         Long,
         Double,
-        Boolean
+        Boolean,
+        Null
     }
 }

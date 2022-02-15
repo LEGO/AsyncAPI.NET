@@ -21,16 +21,31 @@ public class ChannelBindingConverterWriteJsonTest
     [Fact]
     public void ShouldProduceObject()
     {
-        var output = GetOutputFor(new Dictionary<string, IChannelBinding>(){{"kafka", new KafkaChannelBinding()}});
-        Assert.Equal("{\"kafka\":{}}", output);
+        var extensions = new Dictionary<string, IAny>{{"x-ext-string", new String {Value = "foo"}}};
+        var output = GetOutputFor(new Dictionary<string, IChannelBinding>(){{"kafka", new KafkaChannelBinding(){Extensions = extensions}}});
+        Assert.Equal(@"{
+  ""$id"": ""1"",
+  ""kafka"": {
+    ""$id"": ""2"",
+    ""x-ext-string"": ""foo""
+  }
+}", output);
+    }
+    
+    [Fact]
+    public void ShouldProduceObjectWithoutExtensionData()
+    {
+        var output = GetOutputFor(new Dictionary<string, IChannelBinding>(){{"kafka", new KafkaChannelBinding(){Extensions = null}}});
+        Assert.Equal(@"{
+  ""$id"": ""1"",
+  ""kafka"": {
+    ""$id"": ""2""
+  }
+}", output);
     }
 
     private static string GetOutputFor(IDictionary<string, IChannelBinding> input)
     {
-        var converter = new ChannelBindingConverter();
-        var stringWriter = new StringWriter();
-        JsonWriter jsonTextWriter = new JsonTextWriter(stringWriter);
-        converter.WriteJson(jsonTextWriter, input, JsonSerializer.CreateDefault());
-        return stringWriter.ToString();
+        return new JsonAsyncApiWriter<IDictionary<string, IChannelBinding>>().Write(input);
     }
 }

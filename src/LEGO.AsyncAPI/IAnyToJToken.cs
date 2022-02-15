@@ -20,6 +20,7 @@ public class IAnyToJToken
                 PrimitiveType.Long => Map(o as Long),
                 PrimitiveType.Double => Map(o as Double),
                 PrimitiveType.Boolean => Map(o as Boolean),
+                PrimitiveType.Null => Map(o as Null),
                 _ => throw new ArgumentOutOfRangeException()
             },
             AnyType.Null => Map(o as Null),
@@ -49,9 +50,9 @@ public class IAnyToJToken
         return obj.Value;
     }
 
-    public static JToken Map(Null ignored)
+    public static JToken Map(Null obj)
     {
-        return JToken.Parse("null");
+        return obj.Value;
     }
 
     public static JToken Map(Array obj)

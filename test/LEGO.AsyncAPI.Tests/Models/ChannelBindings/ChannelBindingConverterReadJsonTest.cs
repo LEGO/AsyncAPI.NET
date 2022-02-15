@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
@@ -21,16 +22,13 @@ public class ChannelBindingConverterReadJsonTest
     [Fact]
     public void ShouldConsumeObject()
     {
-        var output = GetOutputFor("{\"kafka\":{}}");
-        Assert.IsAssignableFrom<IDictionary<string, IChannelBinding>>(output);
+        var output = GetOutputFor("{\"kafka\":{\"x-ext-string\":\"foo\"}}");
+        Assert.IsAssignableFrom<IDictionary<string, KafkaChannelBinding>>(output);
+        Assert.IsAssignableFrom<IDictionary<string, IAny>>(output["kafka"].Extensions);
     }
 
-    private static IDictionary<string, IChannelBinding>? GetOutputFor(string input)
+    private static IDictionary<string, KafkaChannelBinding>? GetOutputFor(string input)
     {
-        var converter = new ChannelBindingConverter();
-        var jsonTextReader = new JsonTextReader(new StringReader(input));
-        jsonTextReader.Read();
-        var output = converter.ReadJson(jsonTextReader, typeof(IDictionary<string, IChannelBinding>), null, JsonSerializer.CreateDefault()) as IDictionary<string, IChannelBinding>;
-        return output;
+        return new JsonAsyncApiReader<IDictionary<string, KafkaChannelBinding>>().Read(new MemoryStream(Encoding.UTF8.GetBytes(input)));
     }
 }

@@ -32,7 +32,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
                 Parameters = ImmutableDictionary<string, Parameter>.Empty,
                 Bindings = new Dictionary<string, IChannelBinding>()
                 {
-                    {"kafka", new KafkaBinding()}
+                    {"kafka", new KafkaBinding(){Extensions = new Dictionary<string, IAny>{{"x-ext-string", new String(){Value = "foo"}}}}}
                 },
                 Extensions = MockData.Extensions()
             }));
