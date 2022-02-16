@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Surface\LEGO.AsyncAPI.Surface.csproj" />
+    <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Readers.Stubs\LEGO.AsyncAPI.Readers.Stubs.csproj" />
+    <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj" />
   </ItemGroup>
 
 </Project>

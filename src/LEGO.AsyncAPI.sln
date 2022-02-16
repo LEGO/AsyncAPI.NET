@@ -10,11 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Surface", "LEGO.AsyncAPI.Surface\LEGO.AsyncAPI.Surface.csproj", "{506CD0F5-661C-4EAA-BD99-9D07F8416178}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Readers", "LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj", "{506CD0F5-661C-4EAA-BD99-9D07F8416178}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Surface.Stubs", "LEGO.AsyncAPI.Surface.Stubs\LEGO.AsyncAPI.Surface.Stubs.csproj", "{3AE22735-01D4-430F-9039-EDBE698A99D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Readers.Stubs", "LEGO.AsyncAPI.Readers.Stubs\LEGO.AsyncAPI.Readers.Stubs.csproj", "{3AE22735-01D4-430F-9039-EDBE698A99D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Surface.Tests", "..\test\LEGO.AsyncAPI.Surface.Tests\LEGO.AsyncAPI.Surface.Tests.csproj", "{F72C8B56-A5C1-4AAB-ADD4-F157140E51B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Readers.Tests", "..\test\LEGO.AsyncAPI.Readers.Tests\LEGO.AsyncAPI.Readers.Tests.csproj", "{F72C8B56-A5C1-4AAB-ADD4-F157140E51B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
