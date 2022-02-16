@@ -1,0 +1,11 @@
+{
+  "$id": "1",
+  "type": "http",
+  "name": "baz",
+  "in": "quz",
+  "scheme": "quuz",
+  "flows": {
+    "$id": "2"
+  },
+  "openIdConnectUrl": "https://lego.com"
+}

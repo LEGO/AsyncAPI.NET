@@ -2,6 +2,8 @@
 
 using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models.Interfaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 namespace LEGO.AsyncAPI.Models
@@ -11,6 +13,16 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class SecurityScheme : IExtensible, IReferenceable
     {
+        public SecurityScheme(SecuritySchemeType type, string name, string @in, string scheme, OAuthFlows flows, Uri openIdConnectUrl)
+        {
+            Type = type;
+            Name = name;
+            In = @in;
+            Scheme = scheme;
+            Flows = flows;
+            OpenIdConnectUrl = openIdConnectUrl;
+        }
+
         /// <summary>
         /// REQUIRED. The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect".
         /// </summary>
@@ -31,6 +43,11 @@ namespace LEGO.AsyncAPI.Models
         /// Applies to type: <see cref="SecuritySchemeType.HttpApiKey"/>.
         /// </remarks>
         public string Name { get; set; }
+        
+        /// <summary>
+        /// REQUIRED. The location of the API key. Valid values are "user" and "password" for apiKey and "query", "header" or "cookie" for httpApiKey.
+        /// </summary>
+        public string In { get; set; }
 
         /// <summary>
         /// REQUIRED. The name of the HTTP Authorization scheme to be used in the Authorization header as defined in RFC7235.

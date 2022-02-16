@@ -30,6 +30,8 @@
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiChannelObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiContactObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiContactObject\Minimal.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiExternalDocsObject\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiExternalDocsObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiInfoObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiInfoObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiLicenseObject\Complete.json" />
@@ -44,6 +46,8 @@
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiOperationTraitObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiParameterObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiParameterObject\Minimal.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiSecuritySchemaObject\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiSecuritySchemaObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiServerObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiServerObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiServerVariableObject\Complete.json" />
