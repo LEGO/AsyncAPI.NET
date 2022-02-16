@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace LEGO.AsyncAPI.Surface.Tests
+﻿namespace LEGO.AsyncAPI.Surface.Tests
 {
+    using System;
     using System.IO;
     using System.Text.Json;
     using System.Threading;
+    using System.Threading.Tasks;
     using Models;
     using Moq;
     using Newtonsoft.Json.Linq;

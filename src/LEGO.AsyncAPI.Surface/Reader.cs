@@ -20,7 +20,7 @@ public class Reader : IReader
 
     public async Task<ReaderReadResult> ReadAsync(JObject jObject, CancellationToken cancellationToken)
     {
-        return await ValidateAndReadJsonDocument(jObject, cancellationToken);
+        return await ValidateAndReadJObject(jObject, cancellationToken);
     }
 
     public async Task<ReaderReadResult> ReadAsync(string jsonAsyncApiDefinition, CancellationToken cancellationToken)
@@ -36,7 +36,7 @@ public class Reader : IReader
             return new ReaderReadResult { DiagnosticObject = DiagnosticObject.OnParseError(e) };
         }
 
-        return await ValidateAndReadJsonDocument(jObject, cancellationToken);
+        return await ValidateAndReadJObject(jObject, cancellationToken);
     }
 
     public async Task<ReaderReadResult> ReadAsync(Stream stream, CancellationToken cancellationToken)
@@ -56,7 +56,7 @@ public class Reader : IReader
             return new ReaderReadResult { DiagnosticObject = DiagnosticObject.OnParseError(e) };
         }
 
-        return await ValidateAndReadJsonDocument(jObject, cancellationToken);
+        return await ValidateAndReadJObject(jObject, cancellationToken);
     }
 
     public Task<ReaderReadResult> ReadAsync(JsonDocument jsonDocument, CancellationToken cancellationToken)
@@ -74,7 +74,7 @@ public class Reader : IReader
         return ReadAsync(jsonString, cancellationToken);
     }
 
-    private async Task<ReaderReadResult> ValidateAndReadJsonDocument(JObject jObject, CancellationToken cancellationToken)
+    private async Task<ReaderReadResult> ValidateAndReadJObject(JObject jObject, CancellationToken cancellationToken)
     {
         var validatorResults = await _apiSchemaValidator.ValidateAsync(jObject, cancellationToken);
 

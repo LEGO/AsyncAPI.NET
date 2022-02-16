@@ -1,7 +1,6 @@
 ﻿namespace LEGO.AsyncAPI.Surface;
 
 using System;
-using Json.Schema;
 using Stubs;
 
 public class DiagnosticObject
