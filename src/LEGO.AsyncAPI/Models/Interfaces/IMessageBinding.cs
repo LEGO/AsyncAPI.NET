@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Describes a protocol-specific binding.
     /// </summary>
-    public interface IMessageBinding : IExtensible
+    public interface IMessageBinding : IBinding
     {
     }
 }

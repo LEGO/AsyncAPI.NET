@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.Json;
 using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.ChannelBindings;
+using LEGO.AsyncAPI.Models.Bindings.ChannelBindings;
 using Newtonsoft.Json;
 using Xunit;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;

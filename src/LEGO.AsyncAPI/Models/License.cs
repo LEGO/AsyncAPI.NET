@@ -20,13 +20,11 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// REQUIRED. The license name used for the API.
         /// </summary>
-        [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// A URL to the license used for the API. MUST be in the format of a URL.
         /// </summary>
-        [JsonProperty("url")]
         public Uri Url { get; set; }
 
         /// <inheritdoc/>

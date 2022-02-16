@@ -2,6 +2,7 @@
 
 using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models.Interfaces;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace LEGO.AsyncAPI.Models

@@ -23,7 +23,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
             Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new Contact
             {
                 Name = "foo",
-                Url = new Uri("https://lego.com"),
+                Uri = new Uri("https://lego.com"),
                 Email = "asyncApiContactObject@lego.com",
                 Extensions = MockData.Extensions()
             }));

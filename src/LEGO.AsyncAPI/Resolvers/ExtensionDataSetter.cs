@@ -1,5 +1,6 @@
 using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models.Interfaces;
+using LEGO.AsyncAPI.NewtonUtils;
 using Newtonsoft.Json.Linq;
 
 namespace LEGO.AsyncAPI;

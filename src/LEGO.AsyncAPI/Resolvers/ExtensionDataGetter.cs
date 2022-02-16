@@ -1,3 +1,5 @@
+using LEGO.AsyncAPI.NewtonUtils;
+
 namespace LEGO.AsyncAPI
 {
     using LEGO.AsyncAPI.Models.Interfaces;

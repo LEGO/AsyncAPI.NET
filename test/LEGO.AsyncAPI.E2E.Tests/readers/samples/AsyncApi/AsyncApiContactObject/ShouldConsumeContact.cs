@@ -25,11 +25,11 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
             var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.Name);
-            Assert.Equal(new Uri("https://lego.com"), output.Url);
+            Assert.Equal(new Uri("https://lego.com"), output.Uri);
             Assert.Equal("asyncApiContactObject@lego.com", output.Email);
             var extensions = output.Extensions;
             Assert.IsAssignableFrom<IDictionary<string, IAny>>(extensions);
-            var extension = extensions["x-ext-string"] as String;
+            var extension = (String)extensions["x-ext-string"];
             Assert.Equal("bar", (string) extension!);
         }
     }

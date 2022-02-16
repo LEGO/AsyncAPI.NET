@@ -1,20 +1,13 @@
-using Newtonsoft.Json;
-
 namespace LEGO.AsyncAPI
 {
+    using LEGO.AsyncAPI.NewtonUtils;
+    using Newtonsoft.Json;
+
     public class JsonAsyncApiReader<T> : IAsyncApiReader<T>
     {
         public T Read(Stream stream)
         {
-            return JsonConvert.DeserializeObject<T>(new StreamReader(stream).ReadToEnd(), new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Error,
-                MissingMemberHandling = MissingMemberHandling.Ignore,
-                ObjectCreationHandling = ObjectCreationHandling.Auto,
-                NullValueHandling = NullValueHandling.Include,
-                DefaultValueHandling = DefaultValueHandling.Include,
-                ContractResolver = new ExtensionDataContractResolver(),
-            });
+            return JsonConvert.DeserializeObject<T>(new StreamReader(stream).ReadToEnd(), JsonSerializerUtils.GetSettings());
         }
     }
 }

@@ -5,7 +5,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using LEGO.AsyncAPI.Any;
+using LEGO.AsyncAPI.Converters;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Any;
+using LEGO.AsyncAPI.NewtonUtils;
 using Newtonsoft.Json;
 using Xunit;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
@@ -84,10 +87,10 @@ public class PayloadConverterWriteJsonTest
 
     private static string GetOutputFor(IAny input)
     {
-        var converter = new PayloadConverter();
+        var converter = new IAnyConverter();
         var stringWriter = new StringWriter();
         JsonWriter jsonTextWriter = new JsonTextWriter(stringWriter);
-        converter.WriteJson(jsonTextWriter, input, JsonSerializer.CreateDefault());
+        converter.WriteJson(jsonTextWriter, input, JsonSerializerUtils.GetSerializer());
         return stringWriter.ToString();
     }
 }

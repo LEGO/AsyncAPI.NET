@@ -1,10 +1,12 @@
-using LEGO.AsyncAPI.Any;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using LEGO.AsyncAPI.NewtonUtils;
 
-namespace LEGO.AsyncAPI.Models
+namespace LEGO.AsyncAPI.Converters
 {
-    public class PayloadConverter : JsonConverter
+    using LEGO.AsyncAPI.Any;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
+    public class IAnyConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

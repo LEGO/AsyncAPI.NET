@@ -5,14 +5,16 @@ namespace LEGO.AsyncAPI.Any
     /// <summary>
     /// Async API null.
     /// </summary>
-    public class Long : PrimitiveValue<long?>
+    public struct Long : PrimitiveValue<long?>
     {
         /// <summary>
         /// The type of <see cref="IOpenApiAny"/>.
         /// </summary>
-        public override PrimitiveType PrimitiveType { get; } = PrimitiveType.Long;
+        public PrimitiveType PrimitiveType { get; } = PrimitiveType.Long;
+        
+        public AnyType AnyType => AnyType.Primitive;
 
-        public override long? Value { get; set; }
+        public long? Value { get; set; }
 
         public static explicit operator long?(Long l) => l.Value;
 

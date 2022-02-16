@@ -1,9 +1,9 @@
 namespace LEGO.AsyncAPI.Any
 {
-    public abstract class Primitive : IAny
+    public interface Primitive : IAny
     {
         public AnyType AnyType => AnyType.Primitive;
 
-        public abstract PrimitiveType PrimitiveType { get; }
+        public PrimitiveType PrimitiveType { get; }
     }
 }

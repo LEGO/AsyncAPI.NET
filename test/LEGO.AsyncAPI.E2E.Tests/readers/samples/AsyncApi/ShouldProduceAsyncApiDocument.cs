@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         {
             Assert.Equal(GetString("Minimal.json"),
                 _asyncApiWriter.Write(new AsyncApiDocument
-                    {AsyncApi = "2.3.0", Info = new Info( "foo", "bar")}));
+                    {Asyncapi = "2.3.0", Info = new Info( "foo", "bar")}));
         }
 
         [Fact]
@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         {
             Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Write(new AsyncApiDocument
             {
-                AsyncApi = "2.3.0",
+                Asyncapi = "2.3.0",
                 Id = "urn:com:smartylighting:streetlights:server",
                 Info = new Info("foo", "bar")
             }));

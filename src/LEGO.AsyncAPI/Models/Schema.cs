@@ -76,7 +76,6 @@ namespace LEGO.AsyncAPI.Models
         /// A property MUST NOT be marked as both readOnly and writeOnly being true.
         /// Default value is false.
         /// </summary>
-        [JsonProperty("readOnly")]
         public bool ReadOnly { get; set; }
 
         /// <summary>
@@ -87,28 +86,24 @@ namespace LEGO.AsyncAPI.Models
         /// A property MUST NOT be marked as both readOnly and writeOnly being true.
         /// Default value is false.
         /// </summary>
-        [JsonProperty("writeOnly")]
         public bool WriteOnly { get; set; }
 
         /// <summary>
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        [JsonProperty("allOf")]
         public IList<Schema> AllOf { get; set; } = new List<Schema>();
 
         /// <summary>
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        [JsonProperty("oneOf")]
         public IList<Schema> OneOf { get; set; } = new List<Schema>();
 
         /// <summary>
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        [JsonProperty("anyOf")]
         public IList<Schema> AnyOf { get; set; } = new List<Schema>();
 
         /// <summary>
@@ -140,7 +135,6 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
         /// </summary>
-        [JsonProperty("required")]
         public ISet<string> Required { get; set; } = new HashSet<string>();
 
         /// <summary>
@@ -169,7 +163,6 @@ namespace LEGO.AsyncAPI.Models
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
         /// Property definitions MUST be a Schema Object and not a standard JSON Schema (inline or referenced).
         /// </summary>
-        [JsonProperty("properties")]
         public IDictionary<string, Schema> Properties { get; set; } = new Dictionary<string, Schema>();
 
         /// <summary>
@@ -214,20 +207,17 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Allows sending a null value for the defined schema. Default value is false.
         /// </summary>
-        [JsonProperty("nullable")]
         public bool Nullable { get; set; }
 
         /// <summary>
         /// Additional external documentation for this schema.
         /// </summary>
-        [JsonProperty("externalDocs")]
         public ExternalDocumentation ExternalDocs { get; set; }
 
         /// <summary>
         /// Specifies that a schema is deprecated and SHOULD be transitioned out of usage.
         /// Default value is false.
         /// </summary>
-        [JsonProperty("deprecated")]
         public bool Deprecated { get; set; }
 
         /// <inheritdoc/>

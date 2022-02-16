@@ -1,0 +1,70 @@
+{
+  "$id": "1",
+  "operationId": "foo",
+  "summary": "bar",
+  "description": "baz",
+  "tags": [],
+  "externalDocs": {
+    "$id": "2"
+  },
+  "bindings": {
+    "$id": "1",
+    "kafka": {
+      "$id": "2",
+      "groupId": {
+        "$id": "3",
+        "readOnly": false,
+        "writeOnly": false,
+        "allOf": [],
+        "oneOf": [],
+        "anyOf": [],
+        "required": [],
+        "properties": {
+          "$id": "4"
+        },
+        "enum": [],
+        "nullable": false,
+        "deprecated": false
+      },
+      "clientId": {
+        "$id": "5",
+        "readOnly": false,
+        "writeOnly": false,
+        "allOf": [],
+        "oneOf": [],
+        "anyOf": [],
+        "required": [],
+        "properties": {
+          "$id": "6"
+        },
+        "enum": [],
+        "nullable": false,
+        "deprecated": false
+      },
+      "bindingVersion": "quz",
+      "x-ext-string": "foo"
+    },
+    "http": {
+      "$id": "7",
+      "type": "request",
+      "method": "GET",
+      "query": {
+        "$id": "8",
+        "readOnly": false,
+        "writeOnly": false,
+        "allOf": [],
+        "oneOf": [],
+        "anyOf": [],
+        "required": [],
+        "properties": {
+          "$id": "9"
+        },
+        "enum": [],
+        "nullable": false,
+        "deprecated": false
+      },
+      "bindingVersion": "quz",
+      "x-ext-string": "foo"
+    }
+  }
+}

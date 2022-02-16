@@ -23,7 +23,6 @@ namespace LEGO.AsyncAPI.Models
         public string Location { get; set; }
 
         /// <inheritdoc/>
-        [JsonProperty("unresolvedReference")]
         public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>

@@ -16,19 +16,16 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// The identifying name of the contact person/organization.
         /// </summary>
-        [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// The URL pointing to the contact information. MUST be in the format of a URL.
         /// </summary>
-        [JsonProperty("uri")]
-        public Uri Url { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary>
         /// The email address of the contact person/organization. MUST be in the format of an email address.
         /// </summary>
-        [JsonProperty("email")]
         public string Email { get; set; }
 
         /// <inheritdoc/>

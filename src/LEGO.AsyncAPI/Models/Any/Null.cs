@@ -1,20 +1,23 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
+﻿using JetBrains.Annotations;
+using LEGO.AsyncAPI.Any;
+using Null = System.Object;
 
-namespace LEGO.AsyncAPI.Any
+namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
     /// Async API null.
     /// </summary>
-    public class Null : PrimitiveValue<string>
+    public struct Null : PrimitiveValue<string>
     {
         /// <summary>
         /// The type of <see cref="IOpenApiAny"/>.
         /// </summary>
-        public AnyType AnyType { get; } = AnyType.Null;
+        public AnyType AnyType { get; } = AnyType.Primitive;
 
-        public override PrimitiveType PrimitiveType { get => PrimitiveType.Null; }
+        public PrimitiveType PrimitiveType { get => PrimitiveType.Null; }
 
-        public override string? Value
+        [CanBeNull]
+        public string Value
         {
             get => null;
             set => throw new NotImplementedException();

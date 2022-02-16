@@ -1,7 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Bindings.ServerBindings;
+using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Tests;
 using Xunit;
 
@@ -28,7 +30,10 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerObject
                 Description = "foo",
                 Variables = ImmutableDictionary<string, ServerVariable>.Empty,
                 Security = ImmutableDictionary<string, string[]>.Empty,
-                Bindings = ImmutableDictionary<string, IServerBinding>.Empty,
+                Bindings = new Dictionary<string, IServerBinding>
+                {
+                    {"kafka", new KafkaServerBinding {Extensions = new Dictionary<string, IAny>{{"x-ext-string", new String {Value = "foo"}}}}}
+                },
                 Extensions = MockData.Extensions()
             }));
         }

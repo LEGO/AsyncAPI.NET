@@ -17,19 +17,16 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// REQUIRED. Specifies the AsyncAPI Specification version being used.
         /// </summary>
-        [JsonProperty("asyncapi")]
-        public string AsyncApi { get; set; }
+        public string Asyncapi { get; set; }
 
         /// <summary>
         /// Identifier of the application the AsyncAPI document is defining.
         /// </summary>
-        [JsonProperty("id")]
         public string Id { get; set; }
 
         /// <summary>
         /// REQUIRED. Provides metadata about the API. The metadata can be used by the clients if needed.
         /// </summary>
-        [JsonProperty("info")]
         public Info Info { get; set; }
 
         /// <summary>
@@ -49,7 +46,6 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// REQUIRED. The available channels and messages for the API.
         /// </summary>
-        [JsonProperty("channels")]
         public IDictionary<string, Channel> Channels { get; set; } = new Dictionary<string, Channel>();
 
         /// <summary>

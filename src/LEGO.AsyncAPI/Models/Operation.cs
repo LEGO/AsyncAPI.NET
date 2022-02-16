@@ -1,7 +1,9 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 using LEGO.AsyncAPI.Any;
+using LEGO.AsyncAPI.Converters;
 using LEGO.AsyncAPI.Models.Interfaces;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace LEGO.AsyncAPI.Models
@@ -39,6 +41,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the operation.
         /// </summary>
+        [JsonConverter(typeof(OperationBindingConverter))]
         public IDictionary<string, IOperationBinding> Bindings { get; set; }
 
         /// <summary>
@@ -52,7 +55,7 @@ namespace LEGO.AsyncAPI.Models
         /// <remarks>
         /// `oneOf` is allowed here to specify multiple messages, however, a message MUST be valid only against one of the referenced message objects.
         /// </remarks>
-        public Message Message { get; set; }
+        public IDictionary<string, List<Message>> Message { get; set; }
 
         /// <inheritdoc/>
         public IDictionary<string, IAny> Extensions { get; set; }
