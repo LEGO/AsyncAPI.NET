@@ -6,6 +6,6 @@ public class InternalAsyncApiStreamReaderMock : IAsyncApiReader
 {
     public AsyncApiDocument Read(Stream stream)
     {
-        throw new NotImplementedException();
+        return new AsyncApiDocument() { Id = Guid.NewGuid().ToString() };
     }
 }
