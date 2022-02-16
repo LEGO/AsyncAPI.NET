@@ -1,11 +1,14 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Any;
+using LEGO.AsyncAPI.Models.Interfaces;
+
 namespace LEGO.AsyncAPI.Models
 {
     /// <summary>
     /// Allows adding meta data to a single tag.
     /// </summary>
-    public class Tag
+    public class Tag: IExtensible
     {
         /// <summary>
         /// REQUIRED. The name of the tag.
@@ -21,5 +24,7 @@ namespace LEGO.AsyncAPI.Models
         /// Additional external documentation for this tag.
         /// </summary>
         public ExternalDocumentation ExternalDocs { get; set; }
+
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

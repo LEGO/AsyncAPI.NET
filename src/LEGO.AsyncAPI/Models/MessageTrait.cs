@@ -1,7 +1,9 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 using LEGO.AsyncAPI.Any;
+using LEGO.AsyncAPI.Converters;
 using LEGO.AsyncAPI.Models.Interfaces;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace LEGO.AsyncAPI.Models
@@ -15,11 +17,6 @@ namespace LEGO.AsyncAPI.Models
         /// Schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
         public Schema Headers { get; set; }
-
-        /// <summary>
-        /// Definition of the message payload.
-        /// </summary>
-        public Schema Payload { get; set; }
 
         /// <summary>
         /// Definition of the correlation ID used for message tracing or matching.
@@ -72,17 +69,13 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
         /// </summary>
+        [JsonConverter(typeof(MessageBindingConverter))]
         public IDictionary<string, IMessageBinding> Bindings { get; set; } = new Dictionary<string, IMessageBinding>();
 
         /// <summary>
         /// List of examples.
         /// </summary>
         public IList<MessageExample> Examples { get; set; } = new List<MessageExample>();
-
-        /// <summary>
-        /// A list of traits to apply to the operation object.
-        /// </summary>
-        public IList<MessageTrait> Traits { get; set; } = new List<MessageTrait>();
 
         /// <inheritdoc/>
         public IDictionary<string, IAny> Extensions { get; set; }

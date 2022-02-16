@@ -1,30 +1,29 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Tests;
-using Newtonsoft.Json.Linq;
 using Xunit;
-using Double = LEGO.AsyncAPI.Any.Double;
 
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
+namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageTraitObject
 {
-    public class ShouldProduceMessage: ShouldConsumeProduceBase<Message>
+    public class ShouldProduceMessageTrait: ShouldConsumeProduceBase<MessageTrait>
     {
-        public ShouldProduceMessage(): base(typeof(ShouldProduceMessage))
+        public ShouldProduceMessageTrait(): base(typeof(ShouldProduceMessageTrait))
         {
         }
 
         [Fact]
         public async void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new Message()));
+            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new MessageTrait()));
         }
         
         [Fact]
         public async void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Write(new Message()
+            Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Write(new MessageTrait()
             {
                 Name = "UserSignup",
                 Title = "User signup",
@@ -32,13 +31,16 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
                 Description = "A longer description",
                 ContentType = "application/json",
                 Headers = new Schema(),
-                Payload = MockData.Payload(),
                 SchemaFormat = "application/vnd.aai.asyncapi;version=2.3.0",
                 CorrelationId = new CorrelationId(),
-                Traits = new List<MessageTrait>(),
                 ExternalDocs = new ExternalDocumentation(),
                 Tags = ImmutableArray<Tag>.Empty,
-                Bindings = ImmutableDictionary<string, IMessageBinding>.Empty,
+                Bindings = new Dictionary<string, IMessageBinding>(){{"http", new HttpMessageBinding
+                    {
+                        Headers = new Schema(),
+                        BindingVersion = "foo"
+                    }
+                }},
                 Examples = ImmutableList<MessageExample>.Empty
             }));
         }

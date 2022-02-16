@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
 using LEGO.AsyncAPI.Models.Interfaces;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
+namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageTraitObject
 {
-    public class ShouldConsumeMessage: ShouldConsumeProduceBase<Message>
+    public class ShouldConsumeMessageTrait: ShouldConsumeProduceBase<MessageTrait>
     {
-        public ShouldConsumeMessage(): base(typeof(ShouldConsumeMessage))
+        public ShouldConsumeMessageTrait(): base(typeof(ShouldConsumeMessageTrait))
         {
         }
 
@@ -25,7 +25,6 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
             var output = _asyncApiAsyncApiReader.Read(GetStream("Complete.json"));
         
             Assert.IsType<Schema>(output.Headers);
-            Assert.IsAssignableFrom<IAny>(output.Payload);
             Assert.IsType<CorrelationId>(output.CorrelationId);
             Assert.Equal("application/vnd.aai.asyncapi;version=2.3.0", output.SchemaFormat);
             Assert.Equal("application/json", output.ContentType);
@@ -35,9 +34,10 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
             Assert.Equal("A longer description", output.Description);
             Assert.IsType<List<Tag>>(output.Tags);
             Assert.IsType<ExternalDocumentation>(output.ExternalDocs);
-            Assert.IsAssignableFrom<IDictionary<string, IMessageBinding>>(output.Bindings);
+            var messageBindings = output.Bindings;
+            Assert.IsAssignableFrom<IDictionary<string, IMessageBinding>>(messageBindings);
+            Assert.IsType<HttpMessageBinding>(messageBindings["http"]);
             Assert.IsType<List<MessageExample>>(output.Examples);
-            Assert.IsType<List<MessageTrait>>(output.Traits);
         }
     }
 }
