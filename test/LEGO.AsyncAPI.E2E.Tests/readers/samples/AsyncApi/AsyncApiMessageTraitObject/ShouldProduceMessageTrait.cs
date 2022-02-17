@@ -32,7 +32,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageTraitO
                 ContentType = "application/json",
                 Headers = new Schema(),
                 SchemaFormat = "application/vnd.aai.asyncapi;version=2.3.0",
-                CorrelationId = new CorrelationId(),
+                CorrelationId = new CorrelationId("foo"),
                 ExternalDocs = new ExternalDocumentation(),
                 Tags = ImmutableArray<Tag>.Empty,
                 Bindings = new Dictionary<string, IMessageBinding>(){{"http", new HttpMessageBinding

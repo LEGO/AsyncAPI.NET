@@ -29,7 +29,8 @@
     "quuz": null
   },
   "correlationId": {
-    "$id": "4"
+    "$id": "4",
+    "location": "foo"
   },
   "schemaFormat": "application/vnd.aai.asyncapi;version=2.3.0",
   "contentType": "application/json",

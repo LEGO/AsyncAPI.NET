@@ -34,7 +34,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
                 Headers = new Schema(),
                 Payload = MockData.Payload(),
                 SchemaFormat = "application/vnd.aai.asyncapi;version=2.3.0",
-                CorrelationId = new CorrelationId(),
+                CorrelationId = new CorrelationId("foo"),
                 Traits = new List<MessageTrait>(),
                 ExternalDocs = new ExternalDocumentation(),
                 Tags = ImmutableArray<Tag>.Empty,

@@ -30,6 +30,8 @@
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiChannelObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiContactObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiContactObject\Minimal.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiCorrelationIdObject\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiCorrelationIdObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiExternalDocsObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiExternalDocsObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiInfoObject\Minimal.json" />
@@ -40,6 +42,10 @@
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiMessageObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiMessageTraitObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiMessageTraitObject\Minimal.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiOAuthFlowObject\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiOAuthFlowObject\Minimal.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiOAuthFlowsObject\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiOAuthFlowsObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiOperationObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiOperationObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiOperationTraitObject\Complete.json" />
