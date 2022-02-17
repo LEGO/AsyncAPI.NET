@@ -1,8 +1,7 @@
-using LEGO.AsyncAPI.NewtonUtils;
-
-namespace LEGO.AsyncAPI
+namespace LEGO.AsyncAPI.Resolvers
 {
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.NewtonUtils;
 
     public class ExtensionDataGetter
     {

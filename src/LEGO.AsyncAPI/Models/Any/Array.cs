@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Any
+﻿namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
     /// Async API array.

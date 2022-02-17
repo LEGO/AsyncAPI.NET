@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Any;
 using Xunit;
-using String = LEGO.AsyncAPI.Any.String;
+using String = LEGO.AsyncAPI.Models.Any.String;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
 {

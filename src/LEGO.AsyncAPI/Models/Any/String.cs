@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Any
+﻿namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
     /// Async API null.
@@ -22,6 +20,7 @@ namespace LEGO.AsyncAPI.Any
         public static explicit operator string?(String s) => s.Value;
 
         public static explicit operator String(string s) => new () { Value = s };
+
         public AnyType AnyType => AnyType.Primitive;
     }
 }

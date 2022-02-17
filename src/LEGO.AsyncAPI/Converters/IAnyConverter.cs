@@ -1,8 +1,8 @@
+using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.NewtonUtils;
 
 namespace LEGO.AsyncAPI.Converters
 {
-    using LEGO.AsyncAPI.Any;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 

@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Any
+﻿namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
     /// Async API null.
@@ -11,7 +9,7 @@ namespace LEGO.AsyncAPI.Any
         /// The type of <see cref="IOpenApiAny"/>.
         /// </summary>
         public PrimitiveType PrimitiveType { get; } = PrimitiveType.Long;
-        
+
         public AnyType AnyType => AnyType.Primitive;
 
         public long? Value { get; set; }

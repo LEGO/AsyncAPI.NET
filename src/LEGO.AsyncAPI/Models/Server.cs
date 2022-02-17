@@ -1,13 +1,10 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-using LEGO.AsyncAPI.Any;
-using LEGO.AsyncAPI.Converters;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Converters;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// The definition of a server this application MAY connect to.
     /// </summary>

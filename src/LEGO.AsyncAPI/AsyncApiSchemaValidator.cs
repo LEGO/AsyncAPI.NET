@@ -1,11 +1,8 @@
-using System.Text.Json;
-using Json.Schema;
-using LEGO.AsyncAPI.Any;
-using LEGO.AsyncAPI.Models;
-using Newtonsoft.Json;
-
 namespace LEGO.AsyncAPI
 {
+    using System.Text.Json;
+    using Json.Schema;
+
     public class AsyncApiSchemaValidator
     {
         private const string SampleFolderPath = "";

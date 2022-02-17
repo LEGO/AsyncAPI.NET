@@ -1,6 +1,6 @@
 namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
 {
-    using LEGO.AsyncAPI.Any;
+    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     public class HttpMessageBinding : IMessageBinding

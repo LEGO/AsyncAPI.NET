@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
+using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Tests;
 using Xunit;
 

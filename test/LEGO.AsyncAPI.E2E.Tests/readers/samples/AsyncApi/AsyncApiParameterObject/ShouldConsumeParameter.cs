@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Any;
 using Xunit;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiParameterObject

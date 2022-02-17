@@ -1,14 +1,10 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-using System.Collections.Immutable;
-using LEGO.AsyncAPI.Any;
-using LEGO.AsyncAPI.Converters;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Converters;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Describes the operations available on a single channel.
     /// </summary>

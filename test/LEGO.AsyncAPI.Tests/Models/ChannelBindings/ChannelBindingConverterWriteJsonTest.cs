@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.Models.Bindings.ChannelBindings;
+using LEGO.AsyncAPI.Models.Interfaces;
 using Newtonsoft.Json;
 using Xunit;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;

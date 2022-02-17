@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.Models.Bindings.ChannelBindings;
@@ -11,11 +10,11 @@ using LEGO.AsyncAPI.Models.Bindings.ServerBindings;
 using LEGO.AsyncAPI.Models.Interfaces;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Array = LEGO.AsyncAPI.Any.Array;
-using Boolean = LEGO.AsyncAPI.Any.Boolean;
-using Double = LEGO.AsyncAPI.Any.Double;
-using Object = LEGO.AsyncAPI.Any.Object;
-using String = LEGO.AsyncAPI.Any.String;
+using Array = LEGO.AsyncAPI.Models.Any.Array;
+using Boolean = LEGO.AsyncAPI.Models.Any.Boolean;
+using Double = LEGO.AsyncAPI.Models.Any.Double;
+using Object = LEGO.AsyncAPI.Models.Any.Object;
+using String = LEGO.AsyncAPI.Models.Any.String;
 
 namespace LEGO.AsyncAPI.Tests;
 

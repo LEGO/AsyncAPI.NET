@@ -1,12 +1,7 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-using LEGO.AsyncAPI.Any;
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// Contact information for the exposed API.

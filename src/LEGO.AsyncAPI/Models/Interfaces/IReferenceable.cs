@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models.Interfaces
 {
     /// <summary>
     /// Defines that an AsyncAPI Element can be referenced.

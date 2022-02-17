@@ -1,7 +1,7 @@
 namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
 {
-    using LEGO.AsyncAPI.Any;
-    using Newtonsoft.Json;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
 
     public class HttpOperationBinding : IOperationBinding
     {

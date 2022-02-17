@@ -1,6 +1,7 @@
 namespace LEGO.AsyncAPI.Models.Bindings.ChannelBindings
 {
-    using LEGO.AsyncAPI.Any;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
 
     public class KafkaChannelBinding : IChannelBinding
     {

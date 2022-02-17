@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.Json;
-using LEGO.AsyncAPI.Any;
 using LEGO.AsyncAPI.Converters;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Any;

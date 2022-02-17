@@ -1,8 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-using LEGO.AsyncAPI.Models.Interfaces;
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models.Interfaces
 {
     /// <summary>
     /// Describes a protocol-specific binding.

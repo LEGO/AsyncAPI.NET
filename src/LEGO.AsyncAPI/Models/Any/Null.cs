@@ -1,9 +1,7 @@
-﻿using JetBrains.Annotations;
-using LEGO.AsyncAPI.Any;
-using Null = System.Object;
-
-namespace LEGO.AsyncAPI.Models.Any
+﻿namespace LEGO.AsyncAPI.Models.Any
 {
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Async API null.
     /// </summary>

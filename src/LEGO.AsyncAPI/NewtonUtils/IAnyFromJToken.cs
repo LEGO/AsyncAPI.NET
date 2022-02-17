@@ -1,15 +1,13 @@
-using LEGO.AsyncAPI.Models.Any;
-
 namespace LEGO.AsyncAPI.NewtonUtils
 {
-    using LEGO.AsyncAPI.Any;
+    using LEGO.AsyncAPI.Models.Any;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using Array = LEGO.AsyncAPI.Any.Array;
-    using Boolean = LEGO.AsyncAPI.Any.Boolean;
-    using Double = LEGO.AsyncAPI.Any.Double;
-    using Object = LEGO.AsyncAPI.Any.Object;
-    using String = LEGO.AsyncAPI.Any.String;
+    using Array = LEGO.AsyncAPI.Models.Any.Array;
+    using Boolean = LEGO.AsyncAPI.Models.Any.Boolean;
+    using Double = LEGO.AsyncAPI.Models.Any.Double;
+    using Object = LEGO.AsyncAPI.Models.Any.Object;
+    using String = LEGO.AsyncAPI.Models.Any.String;
 
     public static class IAnyFromJToken
     {

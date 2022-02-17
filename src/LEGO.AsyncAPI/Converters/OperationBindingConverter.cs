@@ -1,3 +1,5 @@
+using LEGO.AsyncAPI.Models.Interfaces;
+
 namespace LEGO.AsyncAPI.Converters
 {
     using LEGO.AsyncAPI.Models;

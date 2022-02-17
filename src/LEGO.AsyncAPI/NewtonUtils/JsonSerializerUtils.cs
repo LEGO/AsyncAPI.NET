@@ -1,9 +1,9 @@
-using LEGO.AsyncAPI.Converters;
-using Newtonsoft.Json.Converters;
+using LEGO.AsyncAPI.Resolvers;
 
 namespace LEGO.AsyncAPI.NewtonUtils
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
 
     public static class JsonSerializerUtils
     {

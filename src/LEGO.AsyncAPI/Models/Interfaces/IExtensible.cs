@@ -1,9 +1,7 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-using LEGO.AsyncAPI.Any;
-
-namespace LEGO.AsyncAPI.Models.Interfaces
+﻿namespace LEGO.AsyncAPI.Models.Interfaces
 {
+    using LEGO.AsyncAPI.Models.Any;
+
     /// <summary>
     /// Defines that an AsyncAPI element can be extended.
     /// </summary>

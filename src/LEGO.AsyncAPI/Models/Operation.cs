@@ -1,13 +1,10 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-using LEGO.AsyncAPI.Any;
-using LEGO.AsyncAPI.Converters;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Converters;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Describes a publish or a subscribe operation. This provides a place to document how and why messages are sent and received.
     /// </summary>

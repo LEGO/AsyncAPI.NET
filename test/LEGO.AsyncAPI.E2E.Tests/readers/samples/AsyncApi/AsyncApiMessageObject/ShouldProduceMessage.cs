@@ -6,7 +6,7 @@ using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Tests;
 using Newtonsoft.Json.Linq;
 using Xunit;
-using Double = LEGO.AsyncAPI.Any.Double;
+using Double = LEGO.AsyncAPI.Models.Any.Double;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
 {

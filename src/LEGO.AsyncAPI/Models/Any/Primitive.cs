@@ -1,4 +1,4 @@
-namespace LEGO.AsyncAPI.Any
+namespace LEGO.AsyncAPI.Models.Any
 {
     public interface Primitive : IAny
     {

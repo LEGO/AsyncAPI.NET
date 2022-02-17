@@ -1,12 +1,9 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
-    using LEGO.AsyncAPI.Any;
     using LEGO.AsyncAPI.Converters;
+    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// Describes a trait that MAY be applied to an Operation Object.

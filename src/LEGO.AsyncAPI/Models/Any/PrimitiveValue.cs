@@ -1,6 +1,7 @@
-namespace LEGO.AsyncAPI.Any;
-
-public interface PrimitiveValue<T> : Primitive
+namespace LEGO.AsyncAPI.Models.Any
 {
-    public T? Value { get; set; }
+    public interface PrimitiveValue<T> : Primitive
+    {
+        public T? Value { get; set; }
+    }
 }
