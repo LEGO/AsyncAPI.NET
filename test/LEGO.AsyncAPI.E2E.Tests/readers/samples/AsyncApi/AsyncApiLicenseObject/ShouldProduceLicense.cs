@@ -21,11 +21,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiLicenseObject
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new License("Apache 2.0")
-            {
-                Url = new Uri("https://lego.com"),
-                Extensions = MockData.Extensions()
-            }));
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(MockData.License()));
         }
     }
 }

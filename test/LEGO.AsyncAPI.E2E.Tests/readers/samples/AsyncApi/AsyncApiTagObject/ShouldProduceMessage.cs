@@ -23,13 +23,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiTagObject
         [Fact]
         public async void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new Tag()
-            {
-                Name = "foo",
-                Description = "bar",
-                ExternalDocs = new ExternalDocumentation(),
-                Extensions = MockData.Extensions()
-            }));
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(MockData.Tag()));
         }
     }
 }

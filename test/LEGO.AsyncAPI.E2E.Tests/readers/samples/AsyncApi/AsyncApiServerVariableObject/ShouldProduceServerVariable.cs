@@ -21,14 +21,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerVariabl
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new ServerVariable()
-            {
-                Enum = new List<string> {"foo"},
-                Default = "bar",
-                Description = "baz",
-                Examples = new List<string> {"quz"},
-                Extensions = MockData.Extensions()
-            }));
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(MockData.ServerVariable()));
         }
     }
 }

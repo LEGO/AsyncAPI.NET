@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Tests;
 using Newtonsoft.Json.Linq;
@@ -9,9 +10,9 @@ using Double = LEGO.AsyncAPI.Any.Double;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
 {
-    public class ShouldProduceMessage: ShouldConsumeProduceBase<Message>
+    public class ShouldProduceMessage : ShouldConsumeProduceBase<Message>
     {
-        public ShouldProduceMessage(): base(typeof(ShouldProduceMessage))
+        public ShouldProduceMessage() : base(typeof(ShouldProduceMessage))
         {
         }
 
@@ -20,11 +21,11 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
         {
             Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new Message()));
         }
-        
+
         [Fact]
         public async void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Write(new Message()
+            Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Write(new Message
             {
                 Name = "UserSignup",
                 Title = "User signup",
@@ -38,7 +39,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
                 Traits = new List<MessageTrait>(),
                 ExternalDocs = new ExternalDocumentation(),
                 Tags = ImmutableArray<Tag>.Empty,
-                Bindings = ImmutableDictionary<string, IMessageBinding>.Empty,
+                Bindings = MockData.MessageBindings(),
                 Examples = ImmutableList<MessageExample>.Empty
             }));
         }

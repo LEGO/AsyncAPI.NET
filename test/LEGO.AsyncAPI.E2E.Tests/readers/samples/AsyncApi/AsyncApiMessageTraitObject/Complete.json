@@ -30,11 +30,11 @@
     "$id": "5"
   },
   "bindings": {
-    "$id": "1",
+    "$id": "6",
     "http": {
-      "$id": "2",
+      "$id": "7",
       "headers": {
-        "$id": "3",
+        "$id": "8",
         "readOnly": false,
         "writeOnly": false,
         "allOf": [],
@@ -42,7 +42,7 @@
         "anyOf": [],
         "required": [],
         "properties": {
-          "$id": "4"
+          "$id": "9"
         },
         "enum": [],
         "nullable": false,

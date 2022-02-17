@@ -45,7 +45,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the channel.
         /// </summary>
-        [JsonConverter(typeof(ChannelBindingConverter))]
+        [JsonConverter(typeof(ChannelJsonDictionaryContractBindingConverter))]
         public IDictionary<string, IChannelBinding> Bindings { get; set; }
 
         /// <inheritdoc/>

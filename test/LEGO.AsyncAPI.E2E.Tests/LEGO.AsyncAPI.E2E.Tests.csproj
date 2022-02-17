@@ -28,6 +28,8 @@
     <ItemGroup>
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiChannelObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiChannelObject\Minimal.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiComponentsObject\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiComponentsObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiContactObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiContactObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiCorrelationIdObject\Complete.json" />
@@ -61,6 +63,7 @@
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiTagObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiTagObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\CompleteUsingComponentReferences.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\schema-v2.3.0.json" />
       <None Remove="readers\samples\AsyncApi\MockExtensions.json" />

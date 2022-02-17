@@ -1,3 +1,4 @@
+using LEGO.AsyncAPI.Converters;
 using Newtonsoft.Json.Converters;
 
 namespace LEGO.AsyncAPI.NewtonUtils
@@ -18,7 +19,10 @@ namespace LEGO.AsyncAPI.NewtonUtils
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 ObjectCreationHandling = ObjectCreationHandling.Auto,
                 DefaultValueHandling = DefaultValueHandling.Include,
-                Converters = new List<JsonConverter> { new StringEnumConverter(true) },
+                Converters = new List<JsonConverter>
+                {
+                    new StringEnumConverter(true),
+                },
             };
         }
 

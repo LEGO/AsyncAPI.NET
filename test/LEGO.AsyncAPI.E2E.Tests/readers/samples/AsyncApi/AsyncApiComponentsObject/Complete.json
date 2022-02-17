@@ -1,18 +1,46 @@
 {
   "$id": "1",
-  "operationId": "foo",
-  "summary": "bar",
-  "description": "baz",
-  "tags": [],
-  "externalDocs": {
+  "schemas": {
     "$id": "2"
   },
-  "bindings": {
-    "$id": "3",
+  "messages": {
+    "$id": "3"
+  },
+  "securitySchemes": {
+    "$id": "4"
+  },
+  "parameters": {
+    "$id": "5"
+  },
+  "correlationIds": {
+    "$id": "6"
+  },
+  "operationTraits": {
+    "$id": "7"
+  },
+  "messageTraits": {
+    "$id": "8"
+  },
+  "serverBindings": {
+    "$id": "9",
     "kafka": {
-      "$id": "4",
+      "$id": "10",
+      "x-ext-string": "foo"
+    }
+  },
+  "channelBindings": {
+    "$id": "11",
+    "kafka": {
+      "$id": "12",
+      "x-ext-string": "foo"
+    }
+  },
+  "operationBindings": {
+    "$id": "13",
+    "kafka": {
+      "$id": "14",
       "groupId": {
-        "$id": "5",
+        "$id": "15",
         "readOnly": false,
         "writeOnly": false,
         "allOf": [],
@@ -20,14 +48,14 @@
         "anyOf": [],
         "required": [],
         "properties": {
-          "$id": "6"
+          "$id": "16"
         },
         "enum": [],
         "nullable": false,
         "deprecated": false
       },
       "clientId": {
-        "$id": "7",
+        "$id": "17",
         "readOnly": false,
         "writeOnly": false,
         "allOf": [],
@@ -35,7 +63,7 @@
         "anyOf": [],
         "required": [],
         "properties": {
-          "$id": "8"
+          "$id": "18"
         },
         "enum": [],
         "nullable": false,
@@ -45,11 +73,11 @@
       "x-ext-string": "foo"
     },
     "http": {
-      "$id": "9",
+      "$id": "19",
       "type": "request",
       "method": "GET",
       "query": {
-        "$id": "10",
+        "$id": "20",
         "readOnly": false,
         "writeOnly": false,
         "allOf": [],
@@ -57,7 +85,7 @@
         "anyOf": [],
         "required": [],
         "properties": {
-          "$id": "11"
+          "$id": "21"
         },
         "enum": [],
         "nullable": false,
@@ -66,5 +94,18 @@
       "bindingVersion": "quz",
       "x-ext-string": "foo"
     }
+  },
+  "messageBindings": {
+    "$id": "22",
+    "http": {
+      "$id": "23",
+      "x-ext-string": "foo"
+    }
+  },
+  "servers": {
+    "$id": "24"
+  },
+  "channels": {
+    "$id": "25"
   }
 }

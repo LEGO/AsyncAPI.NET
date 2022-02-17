@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiInfoObject
             Assert.Equal("quz", output.Description);
             Assert.Equal(new Uri("https://lego.com"), output.TermsOfService);
             Assert.IsType<Contact>(output.Contact);
-            Assert.Equal(new List<License> {new("Apache 2.0"), new("Apache 2.0")}, output.License);
+            Assert.Equal(new List<License> {new("Apache 2.0")}, output.License);
             Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
         }
     }

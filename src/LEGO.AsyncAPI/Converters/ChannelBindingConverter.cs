@@ -1,17 +1,22 @@
-using LEGO.AsyncAPI.Models.Bindings.ChannelBindings;
-
 namespace LEGO.AsyncAPI.Converters
 {
-    using System.Collections.Immutable;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings.ChannelBindings;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json.Serialization;
 
-    public class ChannelBindingConverter : BindingConverter<IChannelBinding>
+    public class ChannelJsonDictionaryContractBindingConverter : JsonDictionaryContractBindingConverter<IChannelBinding>
     {
-        protected override ImmutableDictionary<string, Type> GetBindingTypeMap()
+        protected override void Populate(JObject obj, Dictionary<string, IChannelBinding> value, JsonSerializer serializer)
         {
-            var builder = ImmutableDictionary.CreateBuilder<string, Type>();
-            builder.Add(new KeyValuePair<string, Type>("kafka", typeof(KafkaChannelBinding)));
-            return builder.ToImmutable();
+            populateInternal<IChannelBinding>(obj, value, serializer, new[] { new KeyValuePair<string, Type>("kafka", typeof(KafkaChannelBinding)) });
+        }
+
+        protected override void WriteProperties(JsonWriter writer, Dictionary<string, IChannelBinding> value,
+            JsonSerializer serializer, JsonDictionaryContract contract)
+        {
+            WritePropertiesInternal(writer, value, serializer, contract);
         }
     }
 }

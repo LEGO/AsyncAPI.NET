@@ -43,7 +43,11 @@
     "$id": "5"
   },
   "bindings": {
-    "$id": "6"
+    "$id": "6",
+    "http": {
+      "$id": "7",
+      "x-ext-string": "foo"
+    }
   },
   "examples": [],
   "traits": []

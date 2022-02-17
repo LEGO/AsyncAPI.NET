@@ -1,7 +1,9 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 using LEGO.AsyncAPI.Any;
+using LEGO.AsyncAPI.Converters;
 using LEGO.AsyncAPI.Models.Interfaces;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace LEGO.AsyncAPI.Models
@@ -52,24 +54,32 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// An object to hold reusable Server Bindings Objects.
         /// </summary>
+        [JsonConverter(typeof(ServerBindingConverter))]
         public IDictionary<string, IServerBinding> ServerBindings { get; set; } = new Dictionary<string, IServerBinding>();
 
         /// <summary>
         /// An object to hold reusable Channel Bindings Objects.
         /// </summary>
+        [JsonConverter(typeof(ChannelJsonDictionaryContractBindingConverter))]
         public IDictionary<string, IChannelBinding> ChannelBindings { get; set; } = new Dictionary<string, IChannelBinding>();
 
         /// <summary>
         /// An object to hold reusable Operation Bindings Objects.
         /// </summary>
+        [JsonConverter(typeof(OperationBindingConverter))]
         public IDictionary<string, IOperationBinding> OperationBindings { get; set; } = new Dictionary<string, IOperationBinding>();
 
         /// <summary>
         /// An object to hold reusable Message Bindings Objects.
         /// </summary>
+        [JsonConverter(typeof(MessageJsonDictionaryContractBindingConverter))]
         public IDictionary<string, IMessageBinding> MessageBindings { get; set; } = new Dictionary<string, IMessageBinding>();
 
         /// <inheritdoc/>
         public IDictionary<string, IAny> Extensions { get; set; }
+
+        public IDictionary<string, Server> Servers { get; set; } = new Dictionary<string, Server>();
+
+        public IDictionary<string, Channel> Channels { get; set; } = new Dictionary<string, Channel>();
     }
 }

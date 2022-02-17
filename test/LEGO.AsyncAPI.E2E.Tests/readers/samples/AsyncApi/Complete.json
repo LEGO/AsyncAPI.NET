@@ -5,9 +5,212 @@
   "info": {
     "$id": "2",
     "title": "foo",
-    "version": "bar"
+    "version": "bar",
+    "description": "quz",
+    "termsOfService": "https://lego.com",
+    "contact": {
+      "$id": "3",
+      "name": "foo",
+      "uri": "https://lego.com",
+      "email": "asyncApiContactObject@lego.com"
+    },
+    "license": [
+      {
+        "$id": "4",
+        "name": "Apache 2.0",
+        "url": "https://lego.com"
+      }
+    ]
   },
+  "servers": {
+    "$id": "5",
+    "production": {
+      "$id": "6",
+      "url": "https://lego.com",
+      "protocol": "http",
+      "protocolVersion": "0.0.1",
+      "description": "foo",
+      "variables": {
+        "$id": "7",
+        "username": {
+          "$id": "8",
+          "enum": [
+            "foo"
+          ],
+          "default": "bar",
+          "description": "baz",
+          "examples": [
+            "quz"
+          ]
+        }
+      },
+      "security": {
+        "$id": "9",
+        "petstore_auth": [
+          "write:pets",
+          "read:pets"
+        ]
+      },
+      "bindings": {
+        "$id": "10",
+        "kafka": {
+          "$id": "11",
+          "x-ext-string": "foo"
+        }
+      }
+    }
+  },
+  "defaultContentType": "application/json",
   "channels": {
-    "$id": "3"
+    "$id": "12",
+    "subscribe": {
+      "$id": "13",
+      "description": "foo",
+      "servers": [
+        "production"
+      ],
+      "subscribe": {
+        "$id": "14"
+      },
+      "publish": {
+        "$id": "15"
+      },
+      "parameters": {
+        "$id": "16"
+      },
+      "bindings": {
+        "$id": "17",
+        "kafka": {
+          "$id": "18",
+          "x-ext-string": "foo"
+        }
+      }
+    }
+  },
+  "components": {
+    "$id": "19",
+    "schemas": {
+      "$id": "20"
+    },
+    "messages": {
+      "$id": "21"
+    },
+    "securitySchemes": {
+      "$id": "22"
+    },
+    "parameters": {
+      "$id": "23"
+    },
+    "correlationIds": {
+      "$id": "24"
+    },
+    "operationTraits": {
+      "$id": "25"
+    },
+    "messageTraits": {
+      "$id": "26"
+    },
+    "serverBindings": {
+      "$id": "27",
+      "kafka": {
+        "$id": "28",
+        "x-ext-string": "foo"
+      }
+    },
+    "channelBindings": {
+      "$id": "29",
+      "kafka": {
+        "$id": "30",
+        "x-ext-string": "foo"
+      }
+    },
+    "operationBindings": {
+      "$id": "31",
+      "kafka": {
+        "$id": "32",
+        "groupId": {
+          "$id": "33",
+          "readOnly": false,
+          "writeOnly": false,
+          "allOf": [],
+          "oneOf": [],
+          "anyOf": [],
+          "required": [],
+          "properties": {
+            "$id": "34"
+          },
+          "enum": [],
+          "nullable": false,
+          "deprecated": false
+        },
+        "clientId": {
+          "$id": "35",
+          "readOnly": false,
+          "writeOnly": false,
+          "allOf": [],
+          "oneOf": [],
+          "anyOf": [],
+          "required": [],
+          "properties": {
+            "$id": "36"
+          },
+          "enum": [],
+          "nullable": false,
+          "deprecated": false
+        },
+        "bindingVersion": "quz",
+        "x-ext-string": "foo"
+      },
+      "http": {
+        "$id": "37",
+        "type": "request",
+        "method": "GET",
+        "query": {
+          "$id": "38",
+          "readOnly": false,
+          "writeOnly": false,
+          "allOf": [],
+          "oneOf": [],
+          "anyOf": [],
+          "required": [],
+          "properties": {
+            "$id": "39"
+          },
+          "enum": [],
+          "nullable": false,
+          "deprecated": false
+        },
+        "bindingVersion": "quz",
+        "x-ext-string": "foo"
+      }
+    },
+    "messageBindings": {
+      "$id": "40",
+      "http": {
+        "$id": "41",
+        "x-ext-string": "foo"
+      }
+    },
+    "servers": {
+      "$id": "42"
+    },
+    "channels": {
+      "$id": "43"
+    }
+  },
+  "tags": [
+    {
+      "$id": "44",
+      "name": "foo",
+      "description": "bar",
+      "externalDocs": {
+        "$id": "45"
+      }
+    }
+  ],
+  "externalDocs": {
+    "$id": "46",
+    "description": "foo",
+    "url": "https://lego.com"
   }
 }

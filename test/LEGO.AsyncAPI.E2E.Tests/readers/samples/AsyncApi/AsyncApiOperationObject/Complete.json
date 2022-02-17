@@ -8,25 +8,10 @@
     "$id": "2"
   },
   "bindings": {
-    "$id": "1",
+    "$id": "3",
     "kafka": {
-      "$id": "2",
+      "$id": "4",
       "groupId": {
-        "$id": "3",
-        "readOnly": false,
-        "writeOnly": false,
-        "allOf": [],
-        "oneOf": [],
-        "anyOf": [],
-        "required": [],
-        "properties": {
-          "$id": "4"
-        },
-        "enum": [],
-        "nullable": false,
-        "deprecated": false
-      },
-      "clientId": {
         "$id": "5",
         "readOnly": false,
         "writeOnly": false,
@@ -41,15 +26,8 @@
         "nullable": false,
         "deprecated": false
       },
-      "bindingVersion": "quz",
-      "x-ext-string": "foo"
-    },
-    "http": {
-      "$id": "7",
-      "type": "request",
-      "method": "GET",
-      "query": {
-        "$id": "8",
+      "clientId": {
+        "$id": "7",
         "readOnly": false,
         "writeOnly": false,
         "allOf": [],
@@ -57,7 +35,29 @@
         "anyOf": [],
         "required": [],
         "properties": {
-          "$id": "9"
+          "$id": "8"
+        },
+        "enum": [],
+        "nullable": false,
+        "deprecated": false
+      },
+      "bindingVersion": "quz",
+      "x-ext-string": "foo"
+    },
+    "http": {
+      "$id": "9",
+      "type": "request",
+      "method": "GET",
+      "query": {
+        "$id": "10",
+        "readOnly": false,
+        "writeOnly": false,
+        "allOf": [],
+        "oneOf": [],
+        "anyOf": [],
+        "required": [],
+        "properties": {
+          "$id": "11"
         },
         "enum": [],
         "nullable": false,
@@ -69,10 +69,10 @@
   },
   "traits": [],
   "message": {
-    "$id": "3",
+    "$id": "12",
     "oneOf": [
       {
-        "$id": "4"
+        "$id": "13"
       }
     ]
   }

@@ -1,7 +1,9 @@
 {
   "$id": "1",
   "description": "foo",
-  "servers": [],
+  "servers": [
+    "production"
+  ],
   "subscribe": {
     "$id": "2"
   },
@@ -12,9 +14,9 @@
     "$id": "4"
   },
   "bindings": {
-    "$id": "1",
+    "$id": "5",
     "kafka": {
-      "$id": "2",
+      "$id": "6",
       "x-ext-string": "foo"
     }
   }

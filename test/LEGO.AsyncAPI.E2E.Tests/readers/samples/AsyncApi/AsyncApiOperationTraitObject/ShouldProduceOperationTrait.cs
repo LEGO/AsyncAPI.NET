@@ -73,9 +73,4 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationTrai
             }));
         }
     }
-
-    public class KafkaBinding : IChannelBinding
-    {
-        public IDictionary<string, IAny> Extensions { get; set; }
-    }
 }

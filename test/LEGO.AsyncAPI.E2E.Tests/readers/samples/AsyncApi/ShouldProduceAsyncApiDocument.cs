@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Tests;
 using Xunit;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
@@ -14,17 +17,33 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         {
             Assert.Equal(GetString("Minimal.json"),
                 _asyncApiWriter.Write(new AsyncApiDocument
-                    {Asyncapi = "2.3.0", Info = new Info( "foo", "bar")}));
+                    {Asyncapi = "2.3.0", Info = new Info("foo", "bar")}));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Write(new AsyncApiDocument
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new AsyncApiDocument
             {
                 Asyncapi = "2.3.0",
                 Id = "urn:com:smartylighting:streetlights:server",
-                Info = new Info("foo", "bar")
+                Info = MockData.Info(MockData.Contact(false), MockData.License(false), false),
+                Servers = new Dictionary<string, Server>
+                {
+                    {
+                        "production",
+                        MockData.Server(
+                            new Dictionary<string, ServerVariable>() {{"username", MockData.ServerVariable(false)}},
+                            new Dictionary<string, string[]>(){{"petstore_auth", new []{"write:pets", "read:pets"}}},
+                            false)
+                    }
+                },
+                DefaultContentType = "application/json",
+                Channels = new Dictionary<string, Channel>(){{"subscribe", MockData.Channel(false)}},
+                Components = MockData.Components(false),
+                Tags = new [] { MockData.Tag(false) },
+                ExternalDocs = MockData.ExternalDocs(false),
+                Extensions = MockData.Extensions()
             }));
         }
     }
