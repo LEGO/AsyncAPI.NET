@@ -1,7 +1,10 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Converters;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Describes a message received on a given channel and operation.
     /// </summary>
@@ -11,6 +14,12 @@ namespace LEGO.AsyncAPI.Models
         /// Schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
         public Schema Headers { get; set; }
+
+        /// <summary>
+        /// Definition of the message payload. It can be of any type but defaults to Schema object. It must match the schema format, including encoding type - e.g Avro should be inlined as either a YAML or JSON object NOT a string to be parsed as YAML or JSON.
+        /// </summary>
+        [JsonConverter(typeof(IAnyConverter))]
+        public IAny Payload { get; set; }
 
         /// <summary>
         /// Definition of the correlation ID used for message tracing or matching.
@@ -53,7 +62,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A list of tags for API documentation control. Tags can be used for logical grouping of messages.
         /// </summary>
-        public IList<Tag> Tags { get; set; } = new List<Tag>();
+        public IList<Tag> Tags { get; set; }
 
         /// <summary>
         /// Additional external documentation for this message.
@@ -63,20 +72,28 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
         /// </summary>
-        public IDictionary<string, IMessageBinding> Bindings { get; set; } = new Dictionary<string, IMessageBinding>();
+        [JsonConverter(typeof(MessageJsonDictionaryContractBindingConverter))]
+        public IDictionary<string, IMessageBinding> Bindings { get; set; }
 
         /// <summary>
         /// List of examples.
         /// </summary>
-        public IList<MessageExample> Examples { get; set; } = new List<MessageExample>();
+        public IList<MessageExample> Examples { get; set; }
+
+        /// <summary>
+        /// A list of traits to apply to the message object. Traits MUST be merged into the message object using the JSON Merge Patch algorithm in the same order they are defined here. The resulting object MUST be a valid Message Object.
+        /// </summary>
+        public List<MessageTrait> Traits { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, IAny> Extensions { get; set; }
 
         /// <inheritdoc/>
-        public bool UnresolvedReference { get; set; }
+        [JsonIgnore]
+        public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
+        [JsonIgnore]
         public Reference Reference { get; set; }
     }
 }

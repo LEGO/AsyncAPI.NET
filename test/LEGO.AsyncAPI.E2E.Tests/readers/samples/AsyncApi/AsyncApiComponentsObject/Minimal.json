@@ -1,0 +1,42 @@
+{
+  "$id": "1",
+  "schemas": {
+    "$id": "2"
+  },
+  "messages": {
+    "$id": "3"
+  },
+  "securitySchemes": {
+    "$id": "4"
+  },
+  "parameters": {
+    "$id": "5"
+  },
+  "correlationIds": {
+    "$id": "6"
+  },
+  "operationTraits": {
+    "$id": "7"
+  },
+  "messageTraits": {
+    "$id": "8"
+  },
+  "serverBindings": {
+    "$id": "9"
+  },
+  "channelBindings": {
+    "$id": "10"
+  },
+  "operationBindings": {
+    "$id": "11"
+  },
+  "messageBindings": {
+    "$id": "12"
+  },
+  "servers": {
+    "$id": "13"
+  },
+  "channels": {
+    "$id": "14"
+  }
+}

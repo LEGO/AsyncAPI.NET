@@ -1,0 +1,111 @@
+{
+  "$id": "1",
+  "schemas": {
+    "$id": "2"
+  },
+  "messages": {
+    "$id": "3"
+  },
+  "securitySchemes": {
+    "$id": "4"
+  },
+  "parameters": {
+    "$id": "5"
+  },
+  "correlationIds": {
+    "$id": "6"
+  },
+  "operationTraits": {
+    "$id": "7"
+  },
+  "messageTraits": {
+    "$id": "8"
+  },
+  "serverBindings": {
+    "$id": "9",
+    "kafka": {
+      "$id": "10",
+      "x-ext-string": "foo"
+    }
+  },
+  "channelBindings": {
+    "$id": "11",
+    "kafka": {
+      "$id": "12",
+      "x-ext-string": "foo"
+    }
+  },
+  "operationBindings": {
+    "$id": "13",
+    "kafka": {
+      "$id": "14",
+      "groupId": {
+        "$id": "15",
+        "readOnly": false,
+        "writeOnly": false,
+        "allOf": [],
+        "oneOf": [],
+        "anyOf": [],
+        "required": [],
+        "properties": {
+          "$id": "16"
+        },
+        "enum": [],
+        "nullable": false,
+        "deprecated": false
+      },
+      "clientId": {
+        "$id": "17",
+        "readOnly": false,
+        "writeOnly": false,
+        "allOf": [],
+        "oneOf": [],
+        "anyOf": [],
+        "required": [],
+        "properties": {
+          "$id": "18"
+        },
+        "enum": [],
+        "nullable": false,
+        "deprecated": false
+      },
+      "bindingVersion": "quz",
+      "x-ext-string": "foo"
+    },
+    "http": {
+      "$id": "19",
+      "type": "request",
+      "method": "GET",
+      "query": {
+        "$id": "20",
+        "readOnly": false,
+        "writeOnly": false,
+        "allOf": [],
+        "oneOf": [],
+        "anyOf": [],
+        "required": [],
+        "properties": {
+          "$id": "21"
+        },
+        "enum": [],
+        "nullable": false,
+        "deprecated": false
+      },
+      "bindingVersion": "quz",
+      "x-ext-string": "foo"
+    }
+  },
+  "messageBindings": {
+    "$id": "22",
+    "http": {
+      "$id": "23",
+      "x-ext-string": "foo"
+    }
+  },
+  "servers": {
+    "$id": "24"
+  },
+  "channels": {
+    "$id": "25"
+  }
+}

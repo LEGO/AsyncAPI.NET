@@ -1,8 +1,7 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
-    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
     /// This is the root document object for the API specification. It combines resource listing and API declaration together into one document.
@@ -12,7 +11,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// REQUIRED. Specifies the AsyncAPI Specification version being used.
         /// </summary>
-        public string AsyncApi { get; set; }
+        public string Asyncapi { get; set; }
 
         /// <summary>
         /// Identifier of the application the AsyncAPI document is defining.
@@ -27,7 +26,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Provides connection details of servers. Field pattern ^[A-Za-z0-9_\-]+$.
         /// </summary>
-        public IDictionary<string, Server> Servers { get; set; } = new Dictionary<string, Server>();
+        public IDictionary<string, Server> Servers { get; set; }
 
         /// <summary>
         /// Default content type to use when encoding/decoding a message's payload.
@@ -51,7 +50,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A list of tags used by the specification with additional metadata. Each tag name in the list MUST be unique.
         /// </summary>
-        public IList<Tag> Tags { get; set; } = new List<Tag>();
+        public IList<Tag> Tags { get; set; }
 
         /// <summary>
         /// Additional external documentation.
@@ -59,6 +58,6 @@ namespace LEGO.AsyncAPI.Models
         public ExternalDocumentation ExternalDocs { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

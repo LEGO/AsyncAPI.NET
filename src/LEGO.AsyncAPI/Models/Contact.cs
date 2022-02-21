@@ -1,7 +1,8 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
     /// Contact information for the exposed API.
     /// </summary>
@@ -15,7 +16,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// The URL pointing to the contact information. MUST be in the format of a URL.
         /// </summary>
-        public Uri Url { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary>
         /// The email address of the contact person/organization. MUST be in the format of an email address.
@@ -23,6 +24,6 @@ namespace LEGO.AsyncAPI.Models
         public string Email { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

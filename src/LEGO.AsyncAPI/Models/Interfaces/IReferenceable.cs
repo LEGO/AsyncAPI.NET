@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models.Interfaces
 {
     /// <summary>
     /// Defines that an AsyncAPI Element can be referenced.
@@ -10,7 +8,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Indicates if object is populated with data or is just a reference to the data.
         /// </summary>
-        bool UnresolvedReference { get; set; }
+        bool? UnresolvedReference { get; set; }
 
         /// <summary>
         /// Reference object.

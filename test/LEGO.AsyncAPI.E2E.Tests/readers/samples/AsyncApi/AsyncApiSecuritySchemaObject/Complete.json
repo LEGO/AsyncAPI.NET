@@ -1,0 +1,13 @@
+{
+  "$id": "1",
+  "type": "http",
+  "description": "bar",
+  "name": "baz",
+  "in": "quz",
+  "scheme": "quuz",
+  "bearerFormat": "qoz",
+  "flows": {
+    "$id": "2"
+  },
+  "openIdConnectUrl": "https://lego.com"
+}

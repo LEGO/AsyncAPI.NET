@@ -1,15 +1,24 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Any
+﻿namespace LEGO.AsyncAPI.Models.Any
 {
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Async API null.
     /// </summary>
-    public class Null : IAny
+    public struct Null : PrimitiveValue<string>
     {
         /// <summary>
         /// The type of <see cref="IOpenApiAny"/>.
         /// </summary>
-        public AnyType AnyType { get; } = AnyType.Null;
+        public AnyType AnyType { get; } = AnyType.Primitive;
+
+        public PrimitiveType PrimitiveType { get => PrimitiveType.Null; }
+
+        [CanBeNull]
+        public string Value
+        {
+            get => null;
+            set => throw new NotImplementedException();
+        }
     }
 }

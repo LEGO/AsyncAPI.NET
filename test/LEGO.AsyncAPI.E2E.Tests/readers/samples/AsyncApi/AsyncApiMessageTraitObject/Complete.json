@@ -1,0 +1,55 @@
+{
+  "$id": "1",
+  "headers": {
+    "$id": "2",
+    "readOnly": false,
+    "writeOnly": false,
+    "allOf": [],
+    "oneOf": [],
+    "anyOf": [],
+    "required": [],
+    "properties": {
+      "$id": "3"
+    },
+    "enum": [],
+    "nullable": false,
+    "deprecated": false
+  },
+  "correlationId": {
+    "$id": "4",
+    "location": "foo"
+  },
+  "schemaFormat": "application/vnd.aai.asyncapi;version=2.3.0",
+  "contentType": "application/json",
+  "name": "UserSignup",
+  "title": "User signup",
+  "summary": "Action to sign a user up.",
+  "description": "A longer description",
+  "tags": [],
+  "externalDocs": {
+    "$id": "5"
+  },
+  "bindings": {
+    "$id": "6",
+    "http": {
+      "$id": "7",
+      "headers": {
+        "$id": "8",
+        "readOnly": false,
+        "writeOnly": false,
+        "allOf": [],
+        "oneOf": [],
+        "anyOf": [],
+        "required": [],
+        "properties": {
+          "$id": "9"
+        },
+        "enum": [],
+        "nullable": false,
+        "deprecated": false
+      },
+      "bindingVersion": "foo"
+    }
+  },
+  "examples": []
+}

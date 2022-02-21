@@ -1,11 +1,14 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Converters;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Describes a trait that MAY be applied to an Operation Object.
     /// </summary>
-    public class OperationTrait : IExtensible, IReferenceable
+    public class OperationTrait : IExtensible
     {
         /// <summary>
         /// Unique string used to identify the operation.
@@ -14,6 +17,11 @@ namespace LEGO.AsyncAPI.Models
         /// The id MUST be unique among all operations described in the API.
         /// </remarks>
         public string OperationId { get; set; }
+
+        /// <summary>
+        /// A short summary of what the operation is about.
+        /// </summary>
+        public string Summary { get; set; }
 
         /// <summary>
         /// A short summary of what the operation is about.
@@ -33,15 +41,10 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the operation.
         /// </summary>
+        [JsonConverter(typeof(OperationBindingConverter))]
         public IDictionary<string, IOperationBinding> Bindings { get; set; } = new Dictionary<string, IOperationBinding>();
 
         /// <inheritdoc/>
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
-
-        /// <inheritdoc/>
-        public bool UnresolvedReference { get; set; }
-
-        /// <inheritdoc/>
-        public Reference Reference { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }
