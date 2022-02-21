@@ -1,0 +1,23 @@
+{
+  "$id": "1",
+  "description": "foo",
+  "servers": [
+    "production"
+  ],
+  "subscribe": {
+    "$id": "2"
+  },
+  "publish": {
+    "$id": "3"
+  },
+  "parameters": {
+    "$id": "4"
+  },
+  "bindings": {
+    "$id": "5",
+    "kafka": {
+      "$id": "6",
+      "x-ext-string": "foo"
+    }
+  }
+}

@@ -1,8 +1,8 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
-    using LEGO.AsyncAPI.Any;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// The Schema Object allows the definition of input and output data types.
@@ -194,6 +194,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
         /// </summary>
+        [JsonProperty("enum")]
         public IList<IAny> Enum { get; set; } = new List<IAny>();
 
         /// <summary>
@@ -218,9 +219,11 @@ namespace LEGO.AsyncAPI.Models
         public bool Deprecated { get; set; }
 
         /// <inheritdoc/>
-        public bool UnresolvedReference { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        [JsonIgnore]
+        public bool? UnresolvedReference { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <inheritdoc/>
+        [JsonIgnore]
         public Reference Reference { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

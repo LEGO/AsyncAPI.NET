@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="JsonSchema.Net" Version="2.0.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+        <PackageReference Include="NUnit" Version="3.13.2" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+        <PackageReference Include="coverlet.collector" Version="3.1.0" />
+        <PackageReference Include="SharpYaml" Version="1.8.0" />
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="YamlDotNet" Version="11.2.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="readers\Basic.yaml" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="readers\samples\AsyncApi\AsyncApiChannelObject\Basic.yaml" />
+      <None Remove="readers\samples\AsyncApi\AsyncApiInfoObject\Advanced.yaml" />
+      <None Remove="readers\samples\AsyncApi\AsyncApiInfoObject\Basic.yaml" />
+      <None Remove="readers\samples\AsyncApi\Basic.yaml" />
+      <None Remove="readers\samples\AsyncApi\schema-v2.3.0.json" />
+    </ItemGroup>
+</Project>

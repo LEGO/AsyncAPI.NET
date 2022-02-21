@@ -1,0 +1,12 @@
+{
+  "$id": "1",
+  "asyncapi": "2.3.0",
+  "info": {
+    "$id": "2",
+    "title": "foo",
+    "version": "bar"
+  },
+  "channels": {
+    "$id": "3"
+  }
+}

@@ -1,7 +1,8 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
     /// Allows referencing an external resource for extended documentation.
     /// </summary>
@@ -18,6 +19,6 @@ namespace LEGO.AsyncAPI.Models
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, string> Extensions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

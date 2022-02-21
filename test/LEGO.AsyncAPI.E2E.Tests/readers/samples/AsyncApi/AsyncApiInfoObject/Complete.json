@@ -1,0 +1,16 @@
+{
+  "$id": "1",
+  "title": "foo",
+  "version": "bar",
+  "description": "quz",
+  "termsOfService": "https://lego.com",
+  "contact": {
+    "$id": "2"
+  },
+  "license": [
+    {
+      "$id": "3",
+      "name": "Apache 2.0"
+    }
+  ]
+}

@@ -1,12 +1,23 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
     /// Defines a security scheme that can be used by the operations.
     /// </summary>
     public class SecurityScheme : IExtensible, IReferenceable
     {
+        public SecurityScheme(SecuritySchemeType type, string name, string @in, string scheme, OAuthFlows flows, Uri openIdConnectUrl)
+        {
+            Type = type;
+            Name = name;
+            In = @in;
+            Scheme = scheme;
+            Flows = flows;
+            OpenIdConnectUrl = openIdConnectUrl;
+        }
+
         /// <summary>
         /// REQUIRED. The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect".
         /// </summary>
@@ -27,6 +38,11 @@ namespace LEGO.AsyncAPI.Models
         /// Applies to type: <see cref="SecuritySchemeType.HttpApiKey"/>.
         /// </remarks>
         public string Name { get; set; }
+        
+        /// <summary>
+        /// REQUIRED. The location of the API key. Valid values are "user" and "password" for apiKey and "query", "header" or "cookie" for httpApiKey.
+        /// </summary>
+        public string In { get; set; }
 
         /// <summary>
         /// REQUIRED. The name of the HTTP Authorization scheme to be used in the Authorization header as defined in RFC7235.
@@ -63,10 +79,10 @@ namespace LEGO.AsyncAPI.Models
         public Uri OpenIdConnectUrl { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, IAny> Extensions { get; set; }
 
         /// <inheritdoc/>
-        public bool UnresolvedReference { get; set; }
+        public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
         public Reference Reference { get; set; }

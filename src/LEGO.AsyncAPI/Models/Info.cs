@@ -1,12 +1,19 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
     /// The object provides metadata about the API. The metadata can be used by the clients if needed.
     /// </summary>
     public class Info : IExtensible
     {
+        public Info(string title, string version)
+        {
+            Title = title;
+            Version = version;
+        }
+
         /// <summary>
         /// REQUIRED. The title of the application.
         /// </summary>
@@ -35,9 +42,9 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// The license information for the exposed API.
         /// </summary>
-        public License License { get; set; }
+        public List<License> License { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, IAny> Extensions { get; set; }
     }
 }

@@ -1,7 +1,8 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
     /// Describes a parameter included in a channel name.
     /// </summary>
@@ -23,10 +24,10 @@ namespace LEGO.AsyncAPI.Models
         public string Location { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, IAny> Extensions { get; set; }
 
         /// <inheritdoc/>
-        public bool UnresolvedReference { get; set; }
+        public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
         public Reference Reference { get; set; }

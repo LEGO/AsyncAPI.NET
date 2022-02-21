@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Any
+﻿namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
     /// Type of an <see cref="IOpenApiAny"/>.
@@ -25,6 +23,6 @@ namespace LEGO.AsyncAPI.Any
         /// <summary>
         /// Object.
         /// </summary>
-        Object,
+        Object
     }
 }

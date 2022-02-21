@@ -1,0 +1,11 @@
+{
+  "$id": "1",
+  "enum": [
+    "foo"
+  ],
+  "default": "bar",
+  "description": "baz",
+  "examples": [
+    "quz"
+  ]
+}

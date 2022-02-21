@@ -1,7 +1,10 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Converters;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Describes the operations available on a single channel.
     /// </summary>
@@ -18,7 +21,7 @@ namespace LEGO.AsyncAPI.Models
         /// <remarks>
         /// If servers is absent or empty then this channel must be available on all servers defined in the Servers Object.
         /// </remarks>
-        public IList<string> Servers { get; set; } = new List<string>();
+        public IList<string> Servers { get; set; }
 
         /// <summary>
         /// A definition of the SUBSCRIBE operation, which defines the messages produced by the application and sent to the channel.
@@ -30,13 +33,25 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public Operation Publish { get; set; }
 
-        /// <inheritdoc/>
-        public IDictionary<string, string> Extensions { get; set; } = new Dictionary<string, string>();
+        /// <summary>
+        /// A map of the parameters included in the channel name. It SHOULD be present only when using channels with expressions (as defined by RFC 6570 section 2.2).
+        /// </summary>
+        public IDictionary<string, Parameter> Parameters { get; set; }
+
+        /// <summary>
+        /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the channel.
+        /// </summary>
+        [JsonConverter(typeof(ChannelJsonDictionaryContractBindingConverter))]
+        public IDictionary<string, IChannelBinding> Bindings { get; set; }
 
         /// <inheritdoc/>
-        public bool UnresolvedReference { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; }
+
+        /// <inheritdoc/>
+        public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
         public Reference Reference { get; set; }
+
     }
 }
