@@ -1,13 +1,14 @@
-﻿namespace LEGO.AsyncAPI.Readers;
-
-using System;
-
-/// <summary>
-/// Object containing errors that happened during AsyncApi parsing.
-/// </summary>
-public class AsyncApiDiagnostic
+﻿namespace LEGO.AsyncAPI.Readers
 {
-    public static AsyncApiDiagnostic OnError(Exception e) => new() { Error = e };
+    using System;
 
-    public Exception Error { get; set; }
+    /// <summary>
+    /// Object containing errors that happened during AsyncApi parsing.
+    /// </summary>
+    public class AsyncApiDiagnostic
+    {
+        public static AsyncApiDiagnostic OnError(Exception e) => new() { Error = e };
+
+        public Exception Error { get; set; }
+    }
 }

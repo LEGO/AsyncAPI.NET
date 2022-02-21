@@ -41,5 +41,17 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
             Assert.Equal("bar", output.Info.Version);
             Assert.IsType<KafkaServerBinding>(output.Servers["production"].Bindings["kafka"]);
         }
+
+        [Fact]
+        public async void CompleteJsonWithKafkaSpecExampleData()
+        {
+            //var serializer = new YamlToJsonSerializer();
+            //var json = serializer.Serialize(GetString("CompleteWithRealData.yml"));
+            //var output = _asyncApiAsyncApiReader.Read(GenerateStreamFromString(json));
+
+            var output = _asyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
+
+            Assert.Equal("2.3.0", output.Asyncapi);
+        }
     }
 }

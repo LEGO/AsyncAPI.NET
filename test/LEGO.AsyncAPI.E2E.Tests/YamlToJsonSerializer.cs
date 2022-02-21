@@ -1,4 +1,4 @@
-﻿namespace LEGO.AsyncAPI.Readers.Serializers
+﻿namespace LEGO.AsyncAPI.E2E.Tests
 {
     using YamlDotNet.Serialization;
 

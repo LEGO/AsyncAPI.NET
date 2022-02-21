@@ -42,7 +42,7 @@
         /// <summary>
         /// The license information for the exposed API.
         /// </summary>
-        public List<License> License { get; set; }
+        public License License { get; set; }
 
         /// <inheritdoc/>
         public IDictionary<string, IAny> Extensions { get; set; }

@@ -34,7 +34,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationObje
             Assert.IsType<KafkaOperationBinding>(output.Bindings["kafka"]);
             Assert.IsType<HttpOperationBinding>(output.Bindings["http"]);
             Assert.IsType<List<OperationTrait>>(output.Traits);
-            Assert.IsType<Dictionary<string, List<Message>>>(output.Message);
+            Assert.IsType<Message>(output.Message);
         }
     }
 }

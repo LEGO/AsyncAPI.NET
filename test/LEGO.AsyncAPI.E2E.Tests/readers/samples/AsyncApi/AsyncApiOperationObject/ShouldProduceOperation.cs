@@ -31,10 +31,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationObje
                 ExternalDocs = new ExternalDocumentation(),
                 Bindings = MockData.OperationBindings(),
                 Traits = ImmutableList<OperationTrait>.Empty,
-                Message = new Dictionary<string, List<Message>>()
-                {
-                    { "oneOf", new List<Message>() {new()}}
-                },
+                Message = new Message(),
                 Extensions = MockData.Extensions()
             }));
         }

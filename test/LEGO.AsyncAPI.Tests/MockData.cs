@@ -144,10 +144,7 @@ public static class MockData
             Description = "quz",
             TermsOfService = new Uri("https://lego.com"),
             Contact = contact??new Contact(),
-            License = new List<License>()
-            {
-                license??new License("Apache 2.0")
-            },
+            License = license??new License("Apache 2.0"),
             Extensions = WithExtensionData(withExtensionData)
         };
     }
@@ -172,14 +169,14 @@ public static class MockData
         };
     }
 
-    public static Server Server(IDictionary<string, ServerVariable>? variables = null, IDictionary<string, string[]>? security = null, bool withExtensionData = true)
+    public static Server Server(IDictionary<string, ServerVariable>? variables = null, IList<SecurityRequirement>? security = null, bool withExtensionData = true)
     {
         return new Server("https://lego.com", "http")
         {
             ProtocolVersion = "0.0.1",
             Description = "foo",
             Variables = variables??ImmutableDictionary<string, ServerVariable>.Empty,
-            Security = security??ImmutableDictionary<string, string[]>.Empty,
+            Security = security ?? new List<SecurityRequirement>(),
             Bindings = ServerBindings(),
             Extensions = WithExtensionData(withExtensionData)
         };

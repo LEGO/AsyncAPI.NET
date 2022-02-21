@@ -47,7 +47,7 @@
         /// <remarks>
         /// The name used for each property MUST correspond to a security scheme declared in the Security Schemes under the Components Object.
         /// </remarks>
-        public IDictionary<string, string[]> Security { get; set; }
+        public IList<SecurityRequirement> Security { get; set; }
 
         /// <summary>
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.

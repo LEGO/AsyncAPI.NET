@@ -125,13 +125,11 @@
       "uri": "https://lego.com",
       "email": "asyncApiContactObject@lego.com"
     },
-    "license": [
-      {
+    "license": {
         "$id": "4",
         "name": "Apache 2.0",
         "url": "https://lego.com"
-      }
-    ]
+    }
   },
   "servers": {
     "$id": "5",

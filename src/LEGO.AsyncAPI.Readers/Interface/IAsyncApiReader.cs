@@ -1,18 +1,19 @@
-﻿namespace LEGO.AsyncAPI.Readers.Interface;
-
-using Models;
-
-/// <summary>
-/// Interface for AsyncApi readers.
-/// </summary>
-/// <typeparam name="TInput">The type of input to read from.</typeparam>
-public interface IAsyncApiReader<TInput>
+﻿namespace LEGO.AsyncAPI.Readers.Interface
 {
+    using Models;
+
     /// <summary>
-    /// Reads the input and parses it into an AsyncApi document.
+    /// Interface for AsyncApi readers.
     /// </summary>
-    /// <param name="input">The input to read from.</param>
-    /// <param name="diagnostic">The diagnostic entity containing information from the reading process.</param>
-    /// <returns>The AsyncApiDocument.</returns>
-    AsyncApiDocument Read(TInput input, out AsyncApiDiagnostic diagnostic);
+    /// <typeparam name="TInput">The type of input to read from.</typeparam>
+    public interface IAsyncApiReader<TInput>
+    {
+        /// <summary>
+        /// Reads the input and parses it into an AsyncApi document.
+        /// </summary>
+        /// <param name="input">The input to read from.</param>
+        /// <param name="diagnostic">The diagnostic entity containing information from the reading process.</param>
+        /// <returns>The AsyncApiDocument.</returns>
+        AsyncApiDocument Read(TInput input, out AsyncApiDiagnostic diagnostic);
+    }
 }

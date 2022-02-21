@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Readers.Stubs\LEGO.AsyncAPI.Readers.Stubs.csproj" />
     <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj" />
   </ItemGroup>
 

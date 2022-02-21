@@ -7,10 +7,8 @@
   "contact": {
     "$id": "2"
   },
-  "license": [
-    {
-      "$id": "3",
-      "name": "Apache 2.0"
-    }
-  ]
+  "license": {
+    "$id": "3",
+    "name": "Apache 2.0"
+  }
 }

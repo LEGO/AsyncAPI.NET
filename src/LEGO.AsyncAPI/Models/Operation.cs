@@ -52,7 +52,7 @@
         /// <remarks>
         /// `oneOf` is allowed here to specify multiple messages, however, a message MUST be valid only against one of the referenced message objects.
         /// </remarks>
-        public IDictionary<string, List<Message>> Message { get; set; }
+        public Message Message { get; set; }
 
         /// <inheritdoc/>
         public IDictionary<string, IAny> Extensions { get; set; }

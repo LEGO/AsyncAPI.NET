@@ -34,7 +34,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
                         "production",
                         MockData.Server(
                             new Dictionary<string, ServerVariable>() {{"username", MockData.ServerVariable(false)}},
-                            new Dictionary<string, string[]>(){{"petstore_auth", new []{"write:pets", "read:pets"}}},
+                            new List<SecurityRequirement>(){new SecurityRequirement()}, //"petstore_auth", new []{"write:pets", "read:pets"}
                             false)
                     }
                 },

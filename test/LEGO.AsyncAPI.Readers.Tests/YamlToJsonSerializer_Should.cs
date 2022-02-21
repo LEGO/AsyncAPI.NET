@@ -1,25 +1,25 @@
-﻿namespace LEGO.AsyncAPI.Readers.Tests;
-
-using System.Linq;
-using Newtonsoft.Json.Linq;
-using Serializers;
-using Xunit;
-using YamlDotNet.Core;
-
-public class YamlToJsonSerializer_Should
+﻿namespace LEGO.AsyncAPI.Readers.Tests
 {
-    private readonly YamlToJsonSerializer _sut;
+    using System.Linq;
+    using Newtonsoft.Json.Linq;
+    using Serializers;
+    using Xunit;
+    using YamlDotNet.Core;
 
-    public YamlToJsonSerializer_Should()
+    public class YamlToJsonSerializer_Should
     {
-        _sut = new YamlToJsonSerializer();
-    }
+        private readonly YamlToJsonSerializer _sut;
 
-    [Fact]
-    public void Serialize_Yaml_ThenReturnsCorrectJsonString()
-    {
-        //Arrange
-        var input = @"
+        public YamlToJsonSerializer_Should()
+        {
+            _sut = new YamlToJsonSerializer();
+        }
+
+        [Fact]
+        public void Serialize_Yaml_ThenReturnsCorrectJsonString()
+        {
+            //Arrange
+            var input = @"
 List:
   - a
   - b
@@ -27,50 +27,51 @@ xyz: xyz_value
 foo: foo_value
 ";
 
-        //Act
-        var result = _sut.Serialize(input);
+            //Act
+            var result = _sut.Serialize(input);
 
-        //Assert
-        VerifyResult(result);
-    }
+            //Assert
+            VerifyResult(result);
+        }
 
-    [Fact]
-    public void Serialize_Json_ThenReturnsCorrectJsonString()
-    {
-        //Arrange
-        var input = "{\"List\":[\"a\",\"b\"], \"xyz\":\"xyz_value\", \"foo\":\"foo_value\"}";
+        [Fact]
+        public void Serialize_Json_ThenReturnsCorrectJsonString()
+        {
+            //Arrange
+            var input = "{\"List\":[\"a\",\"b\"], \"xyz\":\"xyz_value\", \"foo\":\"foo_value\"}";
 
-        //Act
-        var result = _sut.Serialize(input);
+            //Act
+            var result = _sut.Serialize(input);
 
-        //Assert
-        VerifyResult(result);
-    }
+            //Assert
+            VerifyResult(result);
+        }
 
-    [Fact]
-    public void Serialize_InvalidFormat_ThenThrows()
-    {
-        //Arrange
-        var input = @"
+        [Fact]
+        public void Serialize_InvalidFormat_ThenThrows()
+        {
+            //Arrange
+            var input = @"
 foo:  
  xyz:
 xyz_value
 ";
 
-        //Act
-        //Assert
-        Assert.Throws<SemanticErrorException>(() =>  _sut.Serialize(input));
-    }
+            //Act
+            //Assert
+            Assert.Throws<SemanticErrorException>(() =>  _sut.Serialize(input));
+        }
 
-    private void VerifyResult(string json)
-    {
-        var jObject = JObject.Parse(json);
+        private void VerifyResult(string json)
+        {
+            var jObject = JObject.Parse(json);
 
-        Assert.True(jObject.HasValues);
-        Assert.True(jObject.ContainsKey("xyz"));
-        Assert.True(jObject.ContainsKey("foo"));
-        Assert.Equal("xyz_value", jObject["xyz"].Value<string>());
-        Assert.Equal("foo_value", jObject["foo"].Value<string>());
-        Assert.Equal(2, jObject["List"].Values().Count());
+            Assert.True(jObject.HasValues);
+            Assert.True(jObject.ContainsKey("xyz"));
+            Assert.True(jObject.ContainsKey("foo"));
+            Assert.Equal("xyz_value", jObject["xyz"].Value<string>());
+            Assert.Equal("foo_value", jObject["foo"].Value<string>());
+            Assert.Equal(2, jObject["List"].Values().Count());
+        }
     }
 }

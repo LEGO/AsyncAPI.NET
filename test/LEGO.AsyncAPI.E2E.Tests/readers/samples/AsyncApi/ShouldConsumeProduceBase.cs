@@ -37,12 +37,12 @@ public class ShouldConsumeProduceBase<T>
     {
         var body = GetString(filename);
         var extensionsBody = ReadFile("LEGO/AsyncAPI/E2E/Tests/readers/samples/AsyncApi", "MockExtensions.json");
-        return new StringBuilder(body.Substring(0, body.Length - 2)).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString();
+        return new StringBuilder(body.Substring(0, body.Length - 3)).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString();
     }
 
     private string ReadFile(string sampleFolderPath, string filename)
     {
-        var combine = Path.Combine(sampleFolderPath, filename).Replace("/", ".");
+        var combine = Path.Combine(sampleFolderPath, filename).Replace("/", ".").Replace("\\",".");
         Stream? stream = GetType().Assembly.GetManifestResourceStream(combine);
         if (stream == null)
         {
@@ -58,7 +58,7 @@ public class ShouldConsumeProduceBase<T>
         return split[1];
     }
     
-    static Stream GenerateStreamFromString(string s)
+    protected static Stream GenerateStreamFromString(string s)
     {
         var stream = new MemoryStream();
         var writer = new StreamWriter(stream);

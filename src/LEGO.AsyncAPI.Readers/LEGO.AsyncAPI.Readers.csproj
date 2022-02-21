@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LEGO.AsyncAPI.Readers.Stubs\LEGO.AsyncAPI.Readers.Stubs.csproj" />
     <ProjectReference Include="..\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
   </ItemGroup>
 
