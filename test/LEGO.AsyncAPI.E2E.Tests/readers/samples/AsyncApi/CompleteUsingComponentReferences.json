@@ -153,13 +153,15 @@
           ]
         }
       },
-      "security": {
-        "$id": "9",
-        "petstore_auth": [
-          "write:pets",
-          "read:pets"
-        ]
-      },
+      "security": [
+        {
+          "$id": "9",
+          "petstore_auth": [
+            "write:pets",
+            "read:pets"
+          ]
+        }
+      ],
       "bindings": {
         "$ref": "#/components/serverBindings/kafka"
       }

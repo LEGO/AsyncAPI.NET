@@ -176,7 +176,7 @@ public static class MockData
             ProtocolVersion = "0.0.1",
             Description = "foo",
             Variables = variables??ImmutableDictionary<string, ServerVariable>.Empty,
-            Security = security ?? new List<SecurityRequirement>(),
+            Security = security ?? new List<SecurityRequirement> {new ()},
             Bindings = ServerBindings(),
             Extensions = WithExtensionData(withExtensionData)
         };

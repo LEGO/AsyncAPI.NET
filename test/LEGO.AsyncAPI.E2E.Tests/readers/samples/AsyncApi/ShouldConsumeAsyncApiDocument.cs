@@ -1,10 +1,9 @@
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.ServerBindings;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
 {
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings.ServerBindings;
+    using Xunit;
+
     public class ShouldConsumeAsyncApiDocument: ShouldConsumeProduceBase<AsyncApiDocument>
     {
         public ShouldConsumeAsyncApiDocument(): base(typeof(ShouldConsumeAsyncApiDocument))

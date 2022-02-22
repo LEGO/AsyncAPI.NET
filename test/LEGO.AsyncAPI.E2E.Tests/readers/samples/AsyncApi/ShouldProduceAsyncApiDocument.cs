@@ -6,6 +6,8 @@ using Xunit;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
 {
+    using Models.Any;
+
     public class ShouldProduceAsyncApiDocument : ShouldConsumeProduceBase<AsyncApiDocument>
     {
         public ShouldProduceAsyncApiDocument() : base(typeof(ShouldProduceAsyncApiDocument))
@@ -33,8 +35,8 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
                     {
                         "production",
                         MockData.Server(
-                            new Dictionary<string, ServerVariable>() {{"username", MockData.ServerVariable(false)}},
-                            new List<SecurityRequirement>(){new SecurityRequirement()}, //"petstore_auth", new []{"write:pets", "read:pets"}
+                            new Dictionary<string, ServerVariable> {{"username", MockData.ServerVariable(false)}},
+                            new List<SecurityRequirement> { new() {Extensions = new Dictionary<string, IAny> {{ "petstore_auth", new Array {(String)"write:pets", (String)"read:pets"}}}}},
                             false)
                     }
                 },

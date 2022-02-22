@@ -7,11 +7,15 @@
   "variables": {
     "$id": "2"
   },
-  "security": [],
+  "security": [
+    {
+      "$id": "3"
+    }
+  ],
   "bindings": {
-    "$id": "3",
+    "$id": "4",
     "kafka": {
-      "$id": "4",
+      "$id": "5",
       "x-ext-string": "foo"
     }
   }

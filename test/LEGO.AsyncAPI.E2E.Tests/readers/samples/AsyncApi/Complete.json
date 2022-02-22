@@ -15,10 +15,10 @@
       "email": "asyncApiContactObject@lego.com"
     },
     "license": {
-        "$id": "4",
-        "name": "Apache 2.0",
-        "url": "https://lego.com"
-      }
+      "$id": "4",
+      "name": "Apache 2.0",
+      "url": "https://lego.com"
+    }
   },
   "servers": {
     "$id": "5",
