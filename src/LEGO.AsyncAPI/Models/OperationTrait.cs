@@ -8,7 +8,7 @@
     /// <summary>
     /// Describes a trait that MAY be applied to an Operation Object.
     /// </summary>
-    public class OperationTrait : IExtensible
+    public class OperationTrait : IExtensible, IReferenceable
     {
         /// <summary>
         /// Unique string used to identify the operation.
@@ -46,5 +46,13 @@
 
         /// <inheritdoc/>
         public IDictionary<string, IAny> Extensions { get; set; }
+
+        /// <inheritdoc/>
+        [JsonIgnore]
+        public bool? UnresolvedReference { get; set; }
+
+        /// <inheritdoc/>
+        [JsonIgnore]
+        public Reference Reference { get; set; }
     }
 }

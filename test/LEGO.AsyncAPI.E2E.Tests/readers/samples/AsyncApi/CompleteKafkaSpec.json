@@ -38,7 +38,7 @@
             "$ref": "#/components/operationTraits/kafka"
           }
         ],
-        "message1": {
+        "message_TEMP": {
           "$ref": "#/components/messages/lightMeasured"
         }
       }
@@ -56,7 +56,7 @@
             "$ref": "#/components/operationTraits/kafka"
           }
         ],
-        "message1": {
+        "message_TEMP": {
           "$ref": "#/components/messages/turnOnOff"
         }
       }
@@ -74,7 +74,7 @@
             "$ref": "#/components/operationTraits/kafka"
           }
         ],
-        "message1": {
+        "message_TEMP": {
           "$ref": "#/components/messages/turnOnOff"
         }
       }
@@ -92,7 +92,7 @@
             "$ref": "#/components/operationTraits/kafka"
           }
         ],
-        "message1": {
+        "message_TEMP": {
           "$ref": "#/components/messages/dimLight"
         }
       }
