@@ -7,6 +7,10 @@
     /// </summary>
     public struct Null : PrimitiveValue<string>
     {
+        public Null()
+        {
+        }
+
         public static readonly Null Instance = new();
 
         /// <summary>
