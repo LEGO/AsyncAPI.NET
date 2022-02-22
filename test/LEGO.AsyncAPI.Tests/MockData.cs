@@ -24,7 +24,7 @@ public static class MockData
     {
         return new Dictionary<string, IAny>
         {
-            {"x-ext-null", new Null()},
+            {"x-ext-null", Null.Instance},
             {"x-ext-integer", (Long) 13},
             {"x-ext-number", (Double) 13.13},
             {"x-ext-string", (String) "bar"},
@@ -46,7 +46,7 @@ public static class MockData
         });
         payload.Add("qux", new Array {(String) "foo"});
         payload.Add("quux", (Boolean) true);
-        payload.Add("quuz", new Null());
+        payload.Add("quuz", Null.Instance);
         return payload;
     }
 

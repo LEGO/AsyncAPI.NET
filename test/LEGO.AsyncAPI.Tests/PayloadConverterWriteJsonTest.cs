@@ -19,7 +19,7 @@ public class PayloadConverterWriteJsonTest
     [Fact]
     public void ShouldProduceNull()
     {
-        Assert.Equal("null", GetOutputFor(new Null()));
+        Assert.Equal("null", GetOutputFor(Null.Instance));
     }
 
     [Fact]
@@ -27,14 +27,14 @@ public class PayloadConverterWriteJsonTest
     {
         Object obj = new Object();
         obj.Add("foo", new String(){Value = "bar"});
-        obj.Add("baz", new Long(){Value = 13});
-        obj.Add("bazz", new Double(){Value = 13.13});
+        obj.Add("baz", new Long(value: 13));
+        obj.Add("bazz", new Double(value: 13.13));
         var grault = new Object();
         grault.Add("garply", new String() { Value = "waldo"});
         obj.Add("grault", grault);
         obj.Add("qux", new Array());
-        obj.Add("quux", new Boolean(){Value = true});
-        obj.Add("quuz", new Null());
+        obj.Add("quux", new Boolean(value: true));
+        obj.Add("quuz", Null.Instance);
         var output = GetOutputFor(obj);
         Assert.Equal("{\"foo\":\"bar\",\"baz\":13,\"bazz\":13.13,\"grault\":{\"garply\":\"waldo\"},\"qux\":[],\"quux\":true,\"quuz\":null}", output);
     }
@@ -50,7 +50,7 @@ public class PayloadConverterWriteJsonTest
     [Fact]
     public void ShouldProduceDouble()
     {
-        var output = GetOutputFor(new Double(){Value = 13.13});
+        var output = GetOutputFor(new Double(value: 13.13));
         
         Assert.Equal("13.13", output);
     }
@@ -58,7 +58,7 @@ public class PayloadConverterWriteJsonTest
     [Fact]
     public void ShouldProduceLong()
     {
-        var output = GetOutputFor(new Long(){Value = 134341421});
+        var output = GetOutputFor(new Long(value: 134341421));
         
         Assert.Equal("134341421", output);
     }
@@ -69,7 +69,7 @@ public class PayloadConverterWriteJsonTest
         var output = GetOutputFor(new Array { 
             new String {Value = "foo"},
             new String {Value = "bar"},
-            new Double {Value = 13.13},
+            new Double(value: 13.13),
             new Object ()
         });
         
@@ -79,7 +79,7 @@ public class PayloadConverterWriteJsonTest
     [Fact]
     public void ShouldProduceBoolean()
     {
-        var output = GetOutputFor(new Boolean(){Value = true});
+        var output = GetOutputFor(new Boolean(value: true));
         
         Assert.Equal("true", output);
     }

@@ -5,22 +5,22 @@
     /// </summary>
     public struct Double : PrimitiveValue<double?>
     {
-        private double? _value;
+        public Double(double? value) : this()
+        {
+            Value = value;
+        }
 
         /// <summary>
         /// The type of <see cref="IOpenApiAny"/>.
         /// </summary>
         public PrimitiveType PrimitiveType { get; } = PrimitiveType.Double;
 
-        public double? Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public double? Value { get; set; }
 
         public static explicit operator double?(Double d) => d.Value;
 
-        public static explicit operator Double(double d) => new () { Value = d };
+        public static explicit operator Double(double d) => new(value: d);
+
         public AnyType AnyType => AnyType.Primitive;
     }
 }
