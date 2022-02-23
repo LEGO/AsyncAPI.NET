@@ -37,7 +37,7 @@ public class ShouldConsumeProduceBase<T>
     {
         var body = GetString(filename);
         var extensionsBody = ReadFile("LEGO/AsyncAPI/E2E/Tests/readers/samples/AsyncApi", "MockExtensions.json");
-        return new StringBuilder(body.Substring(0, body.Length - 2)).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString();
+        return new StringBuilder(body.Trim().Substring(0, body.Length - 3)).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString();
     }
 
     private string ReadFile(string sampleFolderPath, string filename)
