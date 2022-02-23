@@ -14,7 +14,13 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest      
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    defaults:
+      run:
+        working-directory: ./src/
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
