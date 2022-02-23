@@ -63,8 +63,8 @@
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiTagObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiTagObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\Complete.json" />
-      <EmbeddedResource Include="readers\samples\AsyncApi\CompleteUsingComponentReferences.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\CompleteKafkaSpec.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\CompleteUsingComponentReferences.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\CompleteKafkaSpec.yml" />
       <EmbeddedResource Include="readers\samples\AsyncApi\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\schema-v2.3.0.json" />

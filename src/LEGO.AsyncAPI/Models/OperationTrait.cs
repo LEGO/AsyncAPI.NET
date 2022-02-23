@@ -48,11 +48,9 @@
         public IDictionary<string, IAny> Extensions { get; set; }
 
         /// <inheritdoc/>
-        [JsonIgnore]
         public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
-        [JsonIgnore]
         public Reference Reference { get; set; }
     }
 }

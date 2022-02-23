@@ -3,7 +3,7 @@
   "info": {
     "title": "Streetlights Kafka API",
     "version": "1.0.0",
-    "description": "The Smartylighting Streetlights API allows you to remotely manage the city lights.",
+    "description": "The Smartylighting Streetlights API allows you to remotely manage the city lights.\n",
     "license": {
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0"
@@ -38,7 +38,7 @@
             "$ref": "#/components/operationTraits/kafka"
           }
         ],
-        "message_TEMP": {
+        "message": {
           "$ref": "#/components/messages/lightMeasured"
         }
       }
@@ -56,7 +56,7 @@
             "$ref": "#/components/operationTraits/kafka"
           }
         ],
-        "message_TEMP": {
+        "message": {
           "$ref": "#/components/messages/turnOnOff"
         }
       }
@@ -74,7 +74,7 @@
             "$ref": "#/components/operationTraits/kafka"
           }
         ],
-        "message_TEMP": {
+        "message": {
           "$ref": "#/components/messages/turnOnOff"
         }
       }
@@ -92,7 +92,7 @@
             "$ref": "#/components/operationTraits/kafka"
           }
         ],
-        "message_TEMP": {
+        "message": {
           "$ref": "#/components/messages/dimLight"
         }
       }
@@ -160,7 +160,7 @@
         "properties": {
           "command": {
             "type": "string",
-            "enum": ["on", "off"],
+            "enum": [ "on", "off" ],
             "description": "Whether to turn on or off the light."
           },
           "sentAt": {
@@ -220,10 +220,10 @@
       "kafka": {
         "bindings": {
           "kafka": {
-             "clientId": {
-                "type": "string",
-                "enum": [ "my-app-id" ]
-             }
+            "clientId": {
+              "type": "string",
+              "enum": [ "my-app-id" ]
+            }
           }
         }
       }
