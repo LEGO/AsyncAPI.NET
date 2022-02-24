@@ -1,13 +1,16 @@
-﻿namespace LEGO.AsyncAPI.Readers
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Readers
 {
     using System.Text;
-    using Models;
-    using Serializers;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.Interface;
+    using LEGO.AsyncAPI.Readers.Serializers;
 
     /// <summary>
-    /// Converts contents on JSON/YAML string into AsyncApiDocument instance 
+    /// Converts contents on JSON/YAML string into AsyncApiDocument instance.
     /// </summary>
-    public class AsyncApiStringReader : Interface.IAsyncApiReader<string>
+    public class AsyncApiStringReader : IAsyncApiReader<string>
     {
         /// <summary>
         /// Reads the string input and parses it into an AsyncApiDocument.

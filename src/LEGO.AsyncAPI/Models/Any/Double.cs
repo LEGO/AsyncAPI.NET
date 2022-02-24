@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models.Any
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
     /// Async API null.
@@ -7,7 +9,7 @@
     {
         public Double(double? value) : this()
         {
-            Value = value;
+            this.Value = value;
         }
 
         /// <summary>
@@ -19,7 +21,7 @@
 
         public static explicit operator double?(Double d) => d.Value;
 
-        public static explicit operator Double(double d) => new(value: d);
+        public static explicit operator Double(double d) => new (value: d);
 
         public AnyType AnyType => AnyType.Primitive;
     }

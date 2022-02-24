@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models.Any
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models.Any
 {
     using JetBrains.Annotations;
 
@@ -11,7 +13,7 @@
         {
         }
 
-        public static readonly Null Instance = new();
+        public static readonly Null Instance = new ();
 
         /// <summary>
         /// The type of <see cref="IOpenApiAny"/>.

@@ -1,6 +1,8 @@
-﻿namespace LEGO.AsyncAPI.Readers.Interface
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Readers.Interface
 {
-    using Models;
+    using LEGO.AsyncAPI.Models;
 
     /// <summary>
     /// Interface for AsyncApi readers.

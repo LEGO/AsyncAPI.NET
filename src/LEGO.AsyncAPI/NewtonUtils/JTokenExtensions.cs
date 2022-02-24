@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.NewtonUtils
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.NewtonUtils
 {
     using System.Globalization;
     using Newtonsoft.Json.Linq;

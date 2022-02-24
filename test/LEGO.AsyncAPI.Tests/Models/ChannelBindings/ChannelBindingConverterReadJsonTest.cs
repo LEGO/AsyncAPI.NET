@@ -29,6 +29,6 @@ public class ChannelBindingConverterReadJsonTest
 
     private static IDictionary<string, KafkaChannelBinding>? GetOutputFor(string input)
     {
-        return new JsonAsyncApiReader<IDictionary<string, KafkaChannelBinding>>().Read(new MemoryStream(Encoding.UTF8.GetBytes(input)));
+        return new InternalJsonAsyncApiReader<IDictionary<string, KafkaChannelBinding>>().Read(new MemoryStream(Encoding.UTF8.GetBytes(input)));
     }
 }

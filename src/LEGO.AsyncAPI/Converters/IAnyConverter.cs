@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.NewtonUtils;
 

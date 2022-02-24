@@ -1,6 +1,7 @@
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using LEGO.AsyncAPI.Models;
     using Models.Bindings.OperationBindings;
     using Xunit;
@@ -12,7 +13,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         }
 
         [Fact]
-        public async void JsonPropertyMinimalSpec()
+        public async Task JsonPropertyMinimalSpec()
         {
             var output = _asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
         
@@ -22,7 +23,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         }
         
         [Fact]
-        public async void JsonPropertyCompleteSpec()
+        public async Task JsonPropertyCompleteSpec()
         {
             var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
         
@@ -32,7 +33,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         }
         
         [Fact]
-        public async void JsonPropertyCompleteUsingComponentReferencesSpec()
+        public async Task JsonPropertyCompleteUsingComponentReferencesSpec()
         {
             var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("CompleteUsingComponentReferences.json"));
             
@@ -45,7 +46,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         }
 
         [Fact]
-        public async void CompleteJsonWithKafkaSpecExampleData()
+        public async Task CompleteJsonWithKafkaSpecExampleData()
         {
             var output = _asyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
 

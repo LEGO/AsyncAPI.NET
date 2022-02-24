@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 using LEGO.AsyncAPI.Models.Interfaces;
 
 namespace LEGO.AsyncAPI.Converters
@@ -12,7 +14,7 @@ namespace LEGO.AsyncAPI.Converters
     {
         protected override void Populate(JObject obj, Dictionary<string, IOperationBinding> value, JsonSerializer serializer)
         {
-            populateInternal<IOperationBinding>(obj, value, serializer, new[]
+            this.populateInternal<IOperationBinding>(obj, value, serializer, new[]
             {
                 new KeyValuePair<string, Type>("kafka", typeof(KafkaOperationBinding)),
                 new KeyValuePair<string, Type>("http", typeof(HttpOperationBinding)),
@@ -21,7 +23,7 @@ namespace LEGO.AsyncAPI.Converters
 
         protected override void WriteProperties(JsonWriter writer, Dictionary<string, IOperationBinding> value, JsonSerializer serializer, JsonDictionaryContract contract)
         {
-            WritePropertiesInternal(writer, value, serializer, contract);
+            this.WritePropertiesInternal(writer, value, serializer, contract);
         }
     }
 }

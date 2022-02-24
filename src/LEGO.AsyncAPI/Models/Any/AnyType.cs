@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models.Any
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
     /// Type of an <see cref="IOpenApiAny"/>.

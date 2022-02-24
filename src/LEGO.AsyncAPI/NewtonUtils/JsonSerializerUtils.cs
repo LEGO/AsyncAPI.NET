@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 using LEGO.AsyncAPI.Resolvers;
 
 namespace LEGO.AsyncAPI.NewtonUtils

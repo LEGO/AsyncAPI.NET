@@ -47,6 +47,6 @@ public class ChannelBindingConverterWriteJsonTest
 
     private static string GetOutputFor(IDictionary<string, IChannelBinding> input)
     {
-        return new JsonAsyncApiWriter<IDictionary<string, IChannelBinding>>().Write(input);
+        return new InternalJsonAsyncApiWriter<IDictionary<string, IChannelBinding>>().Write(input);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models.Any
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
     /// Async API null.
@@ -7,7 +9,7 @@
     {
         public Long(long? value) : this()
         {
-            Value = value;
+            this.Value = value;
         }
 
         /// <summary>
@@ -21,6 +23,6 @@
 
         public static explicit operator long?(Long l) => l.Value;
 
-        public static explicit operator Long(long l) => new(value: l);
+        public static explicit operator Long(long l) => new (value: l);
     }
 }

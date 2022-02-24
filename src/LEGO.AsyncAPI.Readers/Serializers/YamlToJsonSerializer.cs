@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Readers.Serializers
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Readers.Serializers
 {
     using YamlDotNet.Serialization;
 
@@ -10,7 +12,7 @@
             var yamlObject = deserializer.Deserialize<object>(input);
 
             var serializer = new SerializerBuilder().JsonCompatible().Build();
-            
+
             return serializer.Serialize(yamlObject);
         }
     }

@@ -1,10 +1,12 @@
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI
 {
     using LEGO.AsyncAPI.NewtonUtils;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    public class JsonAsyncApiReader<T> : IAsyncApiReader<T>
+    public class InternalJsonAsyncApiReader<T> : IInternalAsyncApiReader<T>
     {
         public T Read(Stream stream)
         {

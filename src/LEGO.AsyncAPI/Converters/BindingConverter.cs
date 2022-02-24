@@ -1,4 +1,5 @@
-// See https://stackoverflow.com/a/53716866 for the detail covered in this class
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Converters
 {
     using Newtonsoft.Json;
@@ -45,7 +46,7 @@ namespace LEGO.AsyncAPI.Converters
                 writer.WritePropertyName(idProperty);
                 writer.WriteValue(serializer.ReferenceResolver.GetReference(serializer, value));
 
-                WriteProperties(writer, (T)value, serializer, contract as U);
+                this.WriteProperties(writer, (T)value, serializer, contract as U);
             }
 
             writer.WriteEndObject();
@@ -83,7 +84,7 @@ namespace LEGO.AsyncAPI.Converters
                 }
             }
 
-            var value = Create(objectType, (T)existingValue, serializer, obj);
+            var value = this.Create(objectType, (T)existingValue, serializer, obj);
 
             if (objId != null)
             {
@@ -91,7 +92,7 @@ namespace LEGO.AsyncAPI.Converters
                 serializer.ReferenceResolver.AddReference(serializer, objId, value);
             }
 
-            Populate(obj, value, serializer);
+            this.Populate(obj, value, serializer);
 
             return value;
         }

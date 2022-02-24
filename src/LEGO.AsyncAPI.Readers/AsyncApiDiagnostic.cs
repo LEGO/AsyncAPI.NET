@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Readers
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Readers
 {
     using System;
 
@@ -7,8 +9,19 @@
     /// </summary>
     public class AsyncApiDiagnostic
     {
-        public static AsyncApiDiagnostic OnError(Exception e) => new() { Error = e };
-
+        /// <summary>
+        /// The Error.
+        /// </summary>
         public Exception Error { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        public static AsyncApiDiagnostic OnError(Exception ex)
+        {
+            return new () { Error = ex };
+        }
     }
 }

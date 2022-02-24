@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 using LEGO.AsyncAPI.Models.Interfaces;
 
 namespace LEGO.AsyncAPI.Converters
@@ -12,13 +14,13 @@ namespace LEGO.AsyncAPI.Converters
     {
         protected override void Populate(JObject obj, Dictionary<string, IChannelBinding> value, JsonSerializer serializer)
         {
-            populateInternal<IChannelBinding>(obj, value, serializer, new[] { new KeyValuePair<string, Type>("kafka", typeof(KafkaChannelBinding)) });
+            this.populateInternal<IChannelBinding>(obj, value, serializer, new[] { new KeyValuePair<string, Type>("kafka", typeof(KafkaChannelBinding)) });
         }
 
         protected override void WriteProperties(JsonWriter writer, Dictionary<string, IChannelBinding> value,
             JsonSerializer serializer, JsonDictionaryContract contract)
         {
-            WritePropertiesInternal(writer, value, serializer, contract);
+            this.WritePropertiesInternal(writer, value, serializer, contract);
         }
     }
 }

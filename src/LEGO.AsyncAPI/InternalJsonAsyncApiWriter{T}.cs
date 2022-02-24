@@ -1,9 +1,11 @@
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI
 {
     using LEGO.AsyncAPI.NewtonUtils;
     using Newtonsoft.Json;
 
-    public class JsonAsyncApiWriter<T> : IAsyncApiWriter<T>
+    public class InternalJsonAsyncApiWriter<T> : IInternalAsyncApiWriter<T>
     {
         public string Write(T asyncApiDocument)
         {

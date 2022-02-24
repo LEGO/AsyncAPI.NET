@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Resolvers
 {
     using Newtonsoft.Json;
@@ -39,8 +41,8 @@ namespace LEGO.AsyncAPI.Resolvers
             }
 
             var jsonObjectContract = resolveContract as JsonObjectContract;
-            jsonObjectContract.ExtensionDataSetter = extensionDataSetter.Setter;
-            jsonObjectContract.ExtensionDataGetter = extensionDataGetter.Getter;
+            jsonObjectContract.ExtensionDataSetter = this.extensionDataSetter.Setter;
+            jsonObjectContract.ExtensionDataGetter = this.extensionDataGetter.Getter;
 
             return resolveContract;
         }

@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models.Any
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
     /// Async API null.
@@ -7,7 +9,7 @@
     {
         public String(string value)
         {
-            Value = value;
+            this.Value = value;
         }
 
         /// <summary>

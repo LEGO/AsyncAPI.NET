@@ -7,15 +7,15 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi;
 
 public class ShouldConsumeProduceBase<T>
 {
-    protected IAsyncApiWriter<T> _asyncApiWriter;
-    protected IAsyncApiReader<T> _asyncApiAsyncApiReader;
+    protected IInternalAsyncApiWriter<T> _asyncApiWriter;
+    protected IInternalAsyncApiReader<T> _asyncApiAsyncApiReader;
     private readonly string _SampleFolderPath;
 
     protected ShouldConsumeProduceBase(Type child)
     {
         _SampleFolderPath = GetPath(child);
-        _asyncApiAsyncApiReader = new JsonAsyncApiReader<T>();
-        _asyncApiWriter = new JsonAsyncApiWriter<T>();
+        _asyncApiAsyncApiReader = new InternalJsonAsyncApiReader<T>();
+        _asyncApiWriter = new InternalJsonAsyncApiWriter<T>();
     }
 
     protected Stream? GetStream(string filename)

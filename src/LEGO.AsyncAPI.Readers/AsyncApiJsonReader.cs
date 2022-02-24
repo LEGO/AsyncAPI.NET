@@ -1,11 +1,14 @@
-﻿namespace LEGO.AsyncAPI.Readers
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Readers
 {
-    using Models;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.Interface;
 
     /// <summary>
-    /// Internal class, converts contents on JSON string stream to AsyncApiDocument instance 
+    /// Internal class, converts contents on JSON string stream to AsyncApiDocument instance.
     /// </summary>
-    internal class AsyncApiJsonReader : Interface.IAsyncApiReader<Stream>
+    internal class AsyncApiJsonReader : IAsyncApiReader<Stream>
     {
         /// <summary>
         /// Converts AsyncApi JSON definition into an instance of AsyncApiDocument.
@@ -19,8 +22,8 @@
 
             AsyncApiDocument document;
 
-            var internalAsyncApiReader = new JsonAsyncApiReader<AsyncApiDocument>();
-        
+            var internalAsyncApiReader = new InternalJsonAsyncApiReader<AsyncApiDocument>();
+
             try
             {
                 document = internalAsyncApiReader.Read(input);

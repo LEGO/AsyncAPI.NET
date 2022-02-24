@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models.Interfaces
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models.Interfaces
 {
     using LEGO.AsyncAPI.Models.Any;
 

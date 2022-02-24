@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI
 {
     using System.Text.Json;
@@ -15,7 +17,6 @@ namespace LEGO.AsyncAPI
             Stream schemaStream = type.Assembly.GetManifestResourceStream(schemaPath);
 
             var schema = JsonSchema.FromText(new StreamReader(schemaStream).ReadToEnd());
-
 
             var json = jsonDocument;
 
