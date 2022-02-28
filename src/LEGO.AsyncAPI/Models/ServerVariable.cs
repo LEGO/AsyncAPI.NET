@@ -11,7 +11,7 @@
         /// <summary>
         /// An enumeration of string values to be used if the substitution options are from a limited set.
         /// </summary>
-        public IList<string> Enum { get; set; }
+        public IList<string> Enum { get; set; } = new List<string>();
 
         /// <summary>
         /// The default value to use for substitution, and to send, if an alternate value is not supplied.
@@ -26,9 +26,9 @@
         /// <summary>
         /// An array of examples of the server variable.
         /// </summary>
-        public IList<string> Examples { get; set; }
+        public IList<string> Examples { get; set; } = new List<string>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
     }
 }

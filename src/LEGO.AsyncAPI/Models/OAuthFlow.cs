@@ -29,6 +29,6 @@
         public IDictionary<string, string> Scopes { get; set; } = new Dictionary<string, string>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
     }
 }

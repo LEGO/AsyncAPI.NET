@@ -70,10 +70,14 @@
         "production"
       ],
       "subscribe": {
-        "$id": "14"
+        "$id": "14",
+        "tags": [],
+        "traits": []
       },
       "publish": {
-        "$id": "15"
+        "$id": "15",
+        "tags": [],
+        "traits": []
       },
       "parameters": {
         "$id": "16"

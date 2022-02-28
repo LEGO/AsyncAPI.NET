@@ -69,6 +69,12 @@
   },
   "traits": [],
   "message": {
-    "$id": "12"
+    "$id": "12",
+    "tags": [],
+    "bindings": {
+      "$id": "13"
+    },
+    "examples": [],
+    "traits": []
   }
 }

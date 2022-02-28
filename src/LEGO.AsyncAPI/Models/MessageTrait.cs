@@ -75,7 +75,7 @@
         public IList<MessageExample> Examples { get; set; } = new List<MessageExample>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
 
         /// <inheritdoc/>
         public bool? UnresolvedReference { get; set; }

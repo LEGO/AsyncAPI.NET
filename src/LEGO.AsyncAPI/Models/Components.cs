@@ -73,7 +73,7 @@
         public IDictionary<string, IMessageBinding> MessageBindings { get; set; } = new Dictionary<string, IMessageBinding>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
 
         public IDictionary<string, Server> Servers { get; set; } = new Dictionary<string, Server>();
 

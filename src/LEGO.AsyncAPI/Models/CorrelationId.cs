@@ -34,6 +34,6 @@
         public Reference Reference { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
     }
 }

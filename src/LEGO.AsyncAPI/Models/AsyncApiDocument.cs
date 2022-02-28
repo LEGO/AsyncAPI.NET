@@ -26,7 +26,7 @@
         /// <summary>
         /// Provides connection details of servers. Field pattern ^[A-Za-z0-9_\-]+$.
         /// </summary>
-        public IDictionary<string, Server> Servers { get; set; }
+        public IDictionary<string, Server> Servers { get; set; } = new Dictionary<string, Server>();
 
         /// <summary>
         /// Default content type to use when encoding/decoding a message's payload.
@@ -50,7 +50,7 @@
         /// <summary>
         /// A list of tags used by the specification with additional metadata. Each tag name in the list MUST be unique.
         /// </summary>
-        public IList<Tag> Tags { get; set; }
+        public IList<Tag> Tags { get; set; } = new List<Tag>();
 
         /// <summary>
         /// Additional external documentation.
@@ -58,6 +58,6 @@
         public ExternalDocumentation ExternalDocs { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
     }
 }

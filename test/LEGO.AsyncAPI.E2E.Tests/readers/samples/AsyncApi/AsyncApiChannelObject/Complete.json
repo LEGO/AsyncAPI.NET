@@ -5,10 +5,14 @@
     "production"
   ],
   "subscribe": {
-    "$id": "2"
+    "$id": "2",
+    "tags": [],
+    "traits": []
   },
   "publish": {
-    "$id": "3"
+    "$id": "3",
+    "tags": [],
+    "traits": []
   },
   "parameters": {
     "$id": "4"
