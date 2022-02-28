@@ -23,7 +23,7 @@ jobs:
         with:
           source-url: https://nuget.pkg.github.com/LEGO/index.json
         env:
-          NUGET_AUTH_TOKEN: ${{secrets.LEGO_GITHUB_DOCKER_REGISTR_READ_WRITE_DELETE_TOKEN}}   
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}   
       - name: Build LEGO.AsyncAPI project and pack NuGet package
         run: dotnet pack src/LEGO.AsyncAPI/LEGO.AsyncAPI.csproj -c Release -o out
 #     next step to be uncommented when LEGO.AsyncAPI is complete
