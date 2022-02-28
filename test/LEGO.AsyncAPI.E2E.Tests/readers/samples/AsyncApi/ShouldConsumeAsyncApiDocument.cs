@@ -46,7 +46,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         }
 
         [Fact]
-        public async Task CompleteJsonWithKafkaSpecExampleData()
+        public void CompleteJsonWithKafkaSpecExampleData()
         {
             var output = _asyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
 
