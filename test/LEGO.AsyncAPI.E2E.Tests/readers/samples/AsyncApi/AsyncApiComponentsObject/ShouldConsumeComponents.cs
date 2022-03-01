@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiComponentsObject
 {
+    using System.Collections.Generic;
+    using Models;
+    using Models.Any;
+    using Models.Interfaces;
+    using Xunit;
+
     public class ShouldConsumeComponents : ShouldConsumeProduceBase<Components>
     {
         public ShouldConsumeComponents() : base(typeof(ShouldConsumeComponents))

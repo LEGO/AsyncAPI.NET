@@ -1,10 +1,9 @@
-using System;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiExternalDocsObject
 {
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceExternalDocs: ShouldConsumeProduceBase<ExternalDocumentation>
     {
         public ShouldProduceExternalDocs(): base(typeof(ShouldProduceExternalDocs))

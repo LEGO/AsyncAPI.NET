@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageTraitObject
 {
+    using System.Collections.Generic;
+    using Models;
+    using Models.Bindings.MessageBindings;
+    using Models.Interfaces;
+    using Xunit;
+
     public class ShouldConsumeMessageTrait: ShouldConsumeProduceBase<MessageTrait>
     {
         public ShouldConsumeMessageTrait(): base(typeof(ShouldConsumeMessageTrait))

@@ -1,12 +1,11 @@
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Newtonsoft.Json.Linq;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
 {
+    using System.Collections.Generic;
+    using Models;
+    using Models.Any;
+    using Models.Interfaces;
+    using Xunit;
+
     public class ShouldConsumeMessage: ShouldConsumeProduceBase<Message>
     {
         public ShouldConsumeMessage(): base(typeof(ShouldConsumeMessage))

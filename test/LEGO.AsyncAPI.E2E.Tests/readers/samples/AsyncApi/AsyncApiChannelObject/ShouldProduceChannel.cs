@@ -1,11 +1,9 @@
-using System.Collections.Immutable;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Newtonsoft.Json.Linq;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
 {
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceChannel : ShouldConsumeProduceBase<Channel>
     {
         public ShouldProduceChannel() : base(typeof(ShouldProduceChannel))

@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiInfoObject
 {
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceInfo: ShouldConsumeProduceBase<Info>
     {
         public ShouldProduceInfo(): base(typeof(ShouldProduceInfo))

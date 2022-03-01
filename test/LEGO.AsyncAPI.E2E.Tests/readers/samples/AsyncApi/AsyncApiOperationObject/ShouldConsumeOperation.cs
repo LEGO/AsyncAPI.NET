@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationObject
 {
+    using System.Collections.Generic;
+    using Models;
+    using Models.Bindings.OperationBindings;
+    using Models.Interfaces;
+    using Xunit;
+
     public class ShouldConsumeOperation : ShouldConsumeProduceBase<Operation>
     {
         public ShouldConsumeOperation() : base(typeof(ShouldConsumeOperation))

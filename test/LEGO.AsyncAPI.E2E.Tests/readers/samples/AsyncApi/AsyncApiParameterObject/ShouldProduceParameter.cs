@@ -1,9 +1,9 @@
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiParameterObject
 {
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceParameter : ShouldConsumeProduceBase<Parameter>
     {
         public ShouldProduceParameter() : base(typeof(ShouldProduceParameter))

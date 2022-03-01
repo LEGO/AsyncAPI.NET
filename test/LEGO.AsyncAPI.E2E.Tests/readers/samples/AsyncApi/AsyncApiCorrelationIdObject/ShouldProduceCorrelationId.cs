@@ -1,9 +1,9 @@
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiCorrelationIdObject
 {
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceCorrelationId: ShouldConsumeProduceBase<CorrelationId>
     {
         public ShouldProduceCorrelationId(): base(typeof(ShouldProduceCorrelationId))

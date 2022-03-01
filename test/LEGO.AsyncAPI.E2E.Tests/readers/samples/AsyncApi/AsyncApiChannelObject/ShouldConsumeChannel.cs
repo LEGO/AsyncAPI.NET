@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
 {
+    using System.Collections.Generic;
+    using Models;
+    using Models.Any;
+    using Models.Interfaces;
+    using Xunit;
+
     public class ShouldConsumeChannel : ShouldConsumeProduceBase<Channel>
     {
         public ShouldConsumeChannel() : base(typeof(ShouldConsumeChannel))

@@ -3,13 +3,11 @@ using System.Collections.Immutable;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Tests;
-using Newtonsoft.Json.Linq;
-using Xunit;
-using Double = LEGO.AsyncAPI.Models.Any.Double;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
 {
+    using AsyncAPI.Tests;
+    using Xunit;
+
     public class ShouldProduceMessage : ShouldConsumeProduceBase<Message>
     {
         public ShouldProduceMessage() : base(typeof(ShouldProduceMessage))

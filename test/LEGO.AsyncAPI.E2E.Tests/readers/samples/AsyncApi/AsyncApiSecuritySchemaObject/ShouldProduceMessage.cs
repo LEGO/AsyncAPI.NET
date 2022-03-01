@@ -1,11 +1,10 @@
-using System;
-using LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiExternalDocsObject;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiSecuritySchemaObject
 {
+    using System;
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceSecuritySchema: ShouldConsumeProduceBase<SecurityScheme>
     {
         public ShouldProduceSecuritySchema(): base(typeof(ShouldProduceSecuritySchema))

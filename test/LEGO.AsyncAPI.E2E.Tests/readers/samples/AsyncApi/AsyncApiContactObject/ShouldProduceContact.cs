@@ -1,10 +1,9 @@
-using System;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
 {
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceContact: ShouldConsumeProduceBase<Contact>
     {
         public ShouldProduceContact(): base(typeof(ShouldProduceContact))

@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiSecuritySchemaObject
 {
+    using System;
+    using System.Collections.Generic;
+    using Models;
+    using Models.Any;
+    using Xunit;
+
     public class ShouldConsumeSecuritySchema: ShouldConsumeProduceBase<SecurityScheme>
     {
         public ShouldConsumeSecuritySchema(): base(typeof(ShouldConsumeSecuritySchema))
