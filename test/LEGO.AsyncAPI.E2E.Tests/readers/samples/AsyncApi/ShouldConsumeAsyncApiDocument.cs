@@ -58,7 +58,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         {
             var output = _asyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
 
-            var serializedDoc = _asyncApiWriter.Write(doc);
+            var serializedDoc = _asyncApiWriter.Write(output);
 
             var output2 = _asyncApiAsyncApiReader.Read(GenerateStreamFromString(serializedDoc));
             
