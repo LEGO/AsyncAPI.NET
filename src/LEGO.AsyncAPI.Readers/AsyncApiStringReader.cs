@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Readers
     /// <summary>
     /// Converts contents on JSON/YAML string into AsyncApiDocument instance.
     /// </summary>
-    public class AsyncApiStringReader : IAsyncApiReader<string>
+    internal class AsyncApiStringReader : IAsyncApiReader<string>
     {
         /// <summary>
         /// Reads the string input and parses it into an AsyncApiDocument.

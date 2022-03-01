@@ -7,9 +7,9 @@ namespace LEGO.AsyncAPI
 
     public class InternalJsonAsyncApiWriter<T> : IInternalAsyncApiWriter<T>
     {
-        public string Write(T asyncApiDocument)
+        public string Write(T asyncApiObject)
         {
-            return JsonConvert.SerializeObject(asyncApiDocument, JsonSerializerUtils.GetSettings());
+            return JsonConvert.SerializeObject(asyncApiObject, JsonSerializerUtils.GetSettings());
         }
     }
 }

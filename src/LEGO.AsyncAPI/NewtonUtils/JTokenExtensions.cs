@@ -5,10 +5,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
     using System.Globalization;
     using Newtonsoft.Json.Linq;
 
-    /// <summary>
-    /// Based on https://stackoverflow.com/a/60158588/322644.
-    /// </summary>
-    public static class JTokenExtensions
+    internal static class JTokenExtensions
     {
         private const string RefPropertyName = "$ref";
 

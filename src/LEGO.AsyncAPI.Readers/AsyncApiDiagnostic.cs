@@ -12,16 +12,15 @@ namespace LEGO.AsyncAPI.Readers
         /// <summary>
         /// The Error.
         /// </summary>
-        public Exception Error { get; set; }
+        public Exception Error { get; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ex"></param>
-        /// <returns></returns>
-        public static AsyncApiDiagnostic OnError(Exception ex)
+        public AsyncApiDiagnostic()
         {
-            return new () { Error = ex };
+        }
+
+        public AsyncApiDiagnostic(Exception e)
+        {
+            Error = e;
         }
     }
 }

@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
 {
     using Newtonsoft.Json.Linq;
 
-    public static class ObjectToJToken
+    internal static class ObjectToJToken
     {
         public static JToken Map(object o)
         {

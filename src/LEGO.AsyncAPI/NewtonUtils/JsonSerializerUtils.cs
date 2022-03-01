@@ -1,9 +1,8 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Resolvers;
-
 namespace LEGO.AsyncAPI.NewtonUtils
 {
+    using LEGO.AsyncAPI.Resolvers;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -21,10 +20,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 ObjectCreationHandling = ObjectCreationHandling.Auto,
                 DefaultValueHandling = DefaultValueHandling.Include,
-                Converters = new List<JsonConverter>
-                {
-                    new StringEnumConverter(true),
-                },
+                Converters = new List<JsonConverter> { new StringEnumConverter(true) },
             };
         }
 

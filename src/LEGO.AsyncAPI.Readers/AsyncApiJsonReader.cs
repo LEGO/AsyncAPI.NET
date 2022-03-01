@@ -29,7 +29,7 @@ namespace LEGO.AsyncAPI.Readers
             }
             catch (Exception e)
             {
-                diagnostic = AsyncApiDiagnostic.OnError(e);
+                diagnostic = new AsyncApiDiagnostic(e);
                 return new AsyncApiDocument();
             }
 
