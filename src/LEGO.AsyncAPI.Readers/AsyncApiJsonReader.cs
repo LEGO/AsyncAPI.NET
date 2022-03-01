@@ -32,6 +32,7 @@ namespace LEGO.AsyncAPI.Readers
 
             try
             {
+
                 document = _internalJsonAsyncApiReader.Read(input);
             }
             catch (Exception e)
