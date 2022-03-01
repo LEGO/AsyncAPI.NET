@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Readers.Interface;
 
     /// <summary>
     /// Internal class, converts contents on JSON string stream to AsyncApiDocument instance.

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -9,26 +9,27 @@ using Newtonsoft.Json;
 using Xunit;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
-namespace LEGO.AsyncAPI.Tests.Models.ChannelBindings;
-
-public class ChannelBindingConverterReadJsonTest
+namespace LEGO.AsyncAPI.Tests.Models.ChannelBindings
 {
-    [Fact]
-    public void ShouldMapNull()
+    public class ChannelBindingConverterReadJsonTest
     {
-        Assert.Null(GetOutputFor("null"));
-    }
+        [Fact]
+        public void ShouldMapNull()
+        {
+            Assert.Null(GetOutputFor("null"));
+        }
 
-    [Fact]
-    public void ShouldConsumeObject()
-    {
-        var output = GetOutputFor("{\"kafka\":{\"x-ext-string\":\"foo\"}}");
-        Assert.IsAssignableFrom<IDictionary<string, KafkaChannelBinding>>(output);
-        Assert.IsAssignableFrom<IDictionary<string, IAny>>(output["kafka"].Extensions);
-    }
+        [Fact]
+        public void ShouldConsumeObject()
+        {
+            var output = GetOutputFor("{\"kafka\":{\"x-ext-string\":\"foo\"}}");
+            Assert.IsAssignableFrom<IDictionary<string, KafkaChannelBinding>>(output);
+            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output["kafka"].Extensions);
+        }
 
-    private static IDictionary<string, KafkaChannelBinding>? GetOutputFor(string input)
-    {
-        return new InternalJsonAsyncApiReader<IDictionary<string, KafkaChannelBinding>>().Read(new MemoryStream(Encoding.UTF8.GetBytes(input)));
+        private static IDictionary<string, KafkaChannelBinding>? GetOutputFor(string input)
+        {
+            return new InternalJsonAsyncApiReader<IDictionary<string, KafkaChannelBinding>>().Read(new MemoryStream(Encoding.UTF8.GetBytes(input)));
+        }
     }
 }

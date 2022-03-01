@@ -1,11 +1,12 @@
-﻿namespace LEGO.AsyncAPI.Readers.Stubs;
-
-using Models;
-
-public class InternalAsyncApiStreamReaderMock : IAsyncApiReader
+﻿namespace LEGO.AsyncAPI.Readers.Stubs
 {
-    public AsyncApiDocument Read(Stream stream)
+    using Models;
+
+    public class InternalAsyncApiStreamReaderMock : IAsyncApiReader
     {
-        return new AsyncApiDocument() { Id = Guid.NewGuid().ToString() };
+        public AsyncApiDocument Read(Stream stream)
+        {
+            return new AsyncApiDocument() { Id = Guid.NewGuid().ToString() };
+        }
     }
 }
