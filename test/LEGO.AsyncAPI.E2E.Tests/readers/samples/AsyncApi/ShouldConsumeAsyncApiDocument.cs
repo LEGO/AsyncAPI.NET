@@ -50,9 +50,26 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         {
             var output = _asyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
 
-            Assert.Equal("2.3.0", output.Asyncapi);
-            Assert.Equal(4, output.Channels.Count);
-            Assert.True(output.Channels.TryGetValue("smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured", out var channel));
+            AssertKafkaSpecExample(output);
+        }
+
+        [Fact]
+        public void CompleteJsonWithKafkaSpecExampleDataDeserializedTwice()
+        {
+            var output = _asyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
+
+            var serializedDoc = _asyncApiWriter.Write(doc);
+
+            var output2 = _asyncApiAsyncApiReader.Read(GenerateStreamFromString(serializedDoc));
+            
+            AssertKafkaSpecExample(output2);
+        }
+
+        private void AssertKafkaSpecExample(AsyncApiDocument doc)
+        {
+            Assert.Equal("2.3.0", doc.Asyncapi);
+            Assert.Equal(4, doc.Channels.Count);
+            Assert.True(doc.Channels.TryGetValue("smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured", out var channel));
             Assert.Equal("The topic on which measured values may be produced and consumed.", channel.Description);
             Assert.Equal("The ID of the streetlight.", channel.Parameters["streetlightId"].Description);
             Assert.Equal("Inform about environmental lighting conditions of a particular streetlight.", channel.Publish.Summary);
