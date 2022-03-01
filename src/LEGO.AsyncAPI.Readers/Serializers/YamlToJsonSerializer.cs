@@ -4,16 +4,23 @@ namespace LEGO.AsyncAPI.Readers.Serializers
 {
     using YamlDotNet.Serialization;
 
-    public class YamlToJsonSerializer
+    internal class YamlToJsonSerializer
     {
+        private readonly IDeserializer _deserializer;
+        private ISerializer _serializer;
+
+        public YamlToJsonSerializer()
+        {
+            _deserializer = new Deserializer();
+
+            _serializer = new SerializerBuilder().JsonCompatible().Build();
+        }
+
         public string Serialize(string input)
         {
-            var deserializer = new Deserializer();
-            var yamlObject = deserializer.Deserialize<object>(input);
+            var yamlObject = _deserializer.Deserialize<object>(input);
 
-            var serializer = new SerializerBuilder().JsonCompatible().Build();
-
-            return serializer.Serialize(yamlObject);
+            return _serializer.Serialize(yamlObject);
         }
     }
 }

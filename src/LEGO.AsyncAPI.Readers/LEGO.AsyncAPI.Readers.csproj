@@ -27,4 +27,8 @@
     <ProjectReference Include="..\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="LEGO.AsyncAPI.Tests" />
+  </ItemGroup>
+
 </Project>

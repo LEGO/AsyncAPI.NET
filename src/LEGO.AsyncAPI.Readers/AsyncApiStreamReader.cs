@@ -11,6 +11,15 @@ namespace LEGO.AsyncAPI.Readers
     /// </summary>
     public class AsyncApiStreamReader : IAsyncApiReader<Stream>
     {
+        private YamlToJsonSerializer _serializer;
+        private IAsyncApiReader<Stream> _jsonAsyncApiReader;
+
+        public AsyncApiStreamReader()
+        {
+            _serializer = new YamlToJsonSerializer();
+            _jsonAsyncApiReader = new AsyncApiJsonReader();
+        }
+
         /// <summary>
         /// Reads the stream input and parses it into an AsyncApiDocument.
         /// </summary>
@@ -19,23 +28,21 @@ namespace LEGO.AsyncAPI.Readers
         /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public AsyncApiDocument Read(Stream input, out AsyncApiDiagnostic diagnostic)
         {
-            var yamlToJsonSerializer = new YamlToJsonSerializer();
-
-            string jsonObject;
+            AsyncApiDocument output = new AsyncApiDocument();
 
             try
             {
-                jsonObject = yamlToJsonSerializer.Serialize(new StreamReader(input, Encoding.UTF8).ReadToEnd());
+                var jsonObject = _serializer.Serialize(new StreamReader(input, Encoding.UTF8).ReadToEnd());
+
+                output = _jsonAsyncApiReader.Read(new MemoryStream(Encoding.UTF8.GetBytes(jsonObject)), out diagnostic);
             }
             catch (Exception e)
             {
                 diagnostic = new AsyncApiDiagnostic(e);
-                return new AsyncApiDocument();
+                return output;
             }
 
-            var apiAsyncJsonReader = new AsyncApiJsonReader();
-
-            return apiAsyncJsonReader.Read(new MemoryStream(Encoding.UTF8.GetBytes(jsonObject)), out diagnostic);
+            return output;
         }
     }
 }

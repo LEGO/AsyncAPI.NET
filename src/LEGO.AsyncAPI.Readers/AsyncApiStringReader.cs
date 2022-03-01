@@ -4,13 +4,19 @@ namespace LEGO.AsyncAPI.Readers
 {
     using System.Text;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Readers.Serializers;
 
     /// <summary>
     /// Converts contents on JSON/YAML string into AsyncApiDocument instance.
     /// </summary>
     internal class AsyncApiStringReader : IAsyncApiReader<string>
     {
+        private IAsyncApiReader<Stream> _jsonAsyncApiReader;
+
+        public AsyncApiStringReader()
+        {
+            _jsonAsyncApiReader = new AsyncApiJsonReader();
+        }
+
         /// <summary>
         /// Reads the string input and parses it into an AsyncApiDocument.
         /// </summary>
@@ -19,13 +25,19 @@ namespace LEGO.AsyncAPI.Readers
         /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public AsyncApiDocument Read(string input, out AsyncApiDiagnostic diagnostic)
         {
-            var yamlToJsonSerializer = new YamlToJsonSerializer();
+            AsyncApiDocument output = new AsyncApiDocument();
 
-            var jsonObject = yamlToJsonSerializer.Serialize(input);
+            try
+            {
+                output = _jsonAsyncApiReader.Read(new MemoryStream(Encoding.UTF8.GetBytes(input)), out diagnostic);
+            }
+            catch (Exception e)
+            {
+                diagnostic = new AsyncApiDiagnostic(e);
+                return output;
+            }
 
-            var apiAsyncJsonReader = new AsyncApiJsonReader();
-
-            return apiAsyncJsonReader.Read(new MemoryStream(Encoding.UTF8.GetBytes(jsonObject)), out diagnostic);
+            return output;
         }
     }
 }
