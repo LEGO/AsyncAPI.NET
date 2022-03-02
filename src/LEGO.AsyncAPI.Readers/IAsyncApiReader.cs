@@ -2,7 +2,7 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using Models;
+    using LEGO.AsyncAPI.Models;
 
     /// <summary>
     /// Interface for AsyncApi readers.

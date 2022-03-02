@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.Readers
 {
     using System.Text;
     using LEGO.AsyncAPI.Models;
-    using Serializers;
+    using LEGO.AsyncAPI.Readers.Serializers;
 
     /// <summary>
     /// Converts contents on JSON/YAML string into AsyncApiDocument instance.

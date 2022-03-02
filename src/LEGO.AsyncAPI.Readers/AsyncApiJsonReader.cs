@@ -27,18 +27,15 @@ namespace LEGO.AsyncAPI.Readers
         public AsyncApiDocument Read(Stream input, out AsyncApiDiagnostic diagnostic)
         {
             diagnostic = new AsyncApiDiagnostic(null);
-
-            AsyncApiDocument document;
+            var document = new AsyncApiDocument();
 
             try
             {
-
                 document = _internalJsonAsyncApiReader.Read(input);
             }
             catch (Exception e)
             {
                 diagnostic = new AsyncApiDiagnostic(e);
-                return new AsyncApiDocument();
             }
 
             return document;
