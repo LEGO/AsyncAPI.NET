@@ -5,9 +5,10 @@ namespace LEGO.AsyncAPI.Models.Any
     /// <summary>
     /// Async API null.
     /// </summary>
-    public struct Long : PrimitiveValue<long?>
+    public struct Long : IPrimitiveValue<long?>
     {
-        public Long(long? value) : this()
+        public Long(long? value)
+            : this()
         {
             this.Value = value;
         }

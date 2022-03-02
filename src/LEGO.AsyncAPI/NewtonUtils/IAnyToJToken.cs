@@ -16,7 +16,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
         {
             return o.AnyType switch
             {
-                AnyType.Primitive => (Primitive)o switch
+                AnyType.Primitive => (IPrimitive)o switch
                 {
                     String s => ObjectToJToken.Map(s.Value),
                     Long l => ObjectToJToken.Map(l.Value),
@@ -33,7 +33,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
 
         private static JToken Map(Array obj)
         {
-            JArray tokenArray = new JArray();
+            JArray tokenArray = new ();
 
             foreach (var item in obj)
             {
@@ -45,7 +45,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
 
         private static JToken Map(Object obj)
         {
-            JObject tokenObject = new JObject();
+            JObject tokenObject = new ();
 
             foreach (var key in obj.Keys)
             {

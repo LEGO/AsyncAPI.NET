@@ -1,10 +1,9 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.NewtonUtils;
-
 namespace LEGO.AsyncAPI.Converters
 {
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.NewtonUtils;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 

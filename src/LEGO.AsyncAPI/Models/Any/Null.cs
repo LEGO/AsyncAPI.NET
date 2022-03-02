@@ -7,13 +7,13 @@ namespace LEGO.AsyncAPI.Models.Any
     /// <summary>
     /// Async API null.
     /// </summary>
-    public struct Null : PrimitiveValue<string>
+    public struct Null : IPrimitiveValue<string>
     {
+        public static readonly Null Instance = new ();
+
         public Null()
         {
         }
-
-        public static readonly Null Instance = new ();
 
         /// <summary>
         /// The type of <see cref="IOpenApiAny"/>.

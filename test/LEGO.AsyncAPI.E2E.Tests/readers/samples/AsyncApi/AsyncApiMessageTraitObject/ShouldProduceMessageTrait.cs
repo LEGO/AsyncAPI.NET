@@ -14,13 +14,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageTraitO
         }
 
         [Fact]
-        public async void ShouldProduceMinimalSpec()
+        public void ShouldProduceMinimalSpec()
         {
             Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new MessageTrait()));
         }
         
         [Fact]
-        public async void ShouldProduceCompleteSpec()
+        public void ShouldProduceCompleteSpec()
         {
             Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Write(new MessageTrait()
             {

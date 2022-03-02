@@ -2,7 +2,7 @@
 
 namespace LEGO.AsyncAPI.Models.Any
 {
-    public interface PrimitiveValue<T> : Primitive
+    public interface IPrimitiveValue<T> : IPrimitive
     {
         public T? Value { get; set; }
     }

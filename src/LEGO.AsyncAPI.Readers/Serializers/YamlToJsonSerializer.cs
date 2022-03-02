@@ -9,13 +9,13 @@ namespace LEGO.AsyncAPI.Readers.Serializers
     /// </summary>
     internal class YamlToJsonSerializer
     {
-        private readonly IDeserializer _deserializer;
-        private ISerializer _serializer;
+        private readonly IDeserializer deserializer;
+        private readonly ISerializer serializer;
 
         public YamlToJsonSerializer()
         {
-            _deserializer = new Deserializer();
-            _serializer = new SerializerBuilder().JsonCompatible().Build();
+            this.deserializer = new Deserializer();
+            this.serializer = new SerializerBuilder().JsonCompatible().Build();
         }
 
         /// <summary>
@@ -25,8 +25,8 @@ namespace LEGO.AsyncAPI.Readers.Serializers
         /// <returns>JSON string.</returns>
         public string Serialize(string input)
         {
-            var yamlObject = _deserializer.Deserialize<object>(input.RemoveNonAsciiSymbols());
-            return _serializer.Serialize(yamlObject);
+            var yamlObject = this.deserializer.Deserialize<object>(input.RemoveNonAsciiSymbols());
+            return this.serializer.Serialize(yamlObject);
         }
     }
 }

@@ -8,6 +8,6 @@ namespace LEGO.AsyncAPI.Models.Any
         Long,
         Double,
         Boolean,
-        Null
+        Null,
     }
 }

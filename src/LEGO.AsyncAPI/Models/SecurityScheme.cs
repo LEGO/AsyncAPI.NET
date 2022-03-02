@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -10,12 +12,12 @@
     {
         public SecurityScheme(SecuritySchemeType type, string name, string @in, string scheme, OAuthFlows flows, Uri openIdConnectUrl)
         {
-            Type = type;
-            Name = name;
-            In = @in;
-            Scheme = scheme;
-            Flows = flows;
-            OpenIdConnectUrl = openIdConnectUrl;
+            this.Type = type;
+            this.Name = name;
+            this.In = @in;
+            this.Scheme = scheme;
+            this.Flows = flows;
+            this.OpenIdConnectUrl = openIdConnectUrl;
         }
 
         /// <summary>
@@ -38,7 +40,7 @@
         /// Applies to type: <see cref="SecuritySchemeType.HttpApiKey"/>.
         /// </remarks>
         public string Name { get; set; }
-        
+
         /// <summary>
         /// REQUIRED. The location of the API key. Valid values are "user" and "password" for apiKey and "query", "header" or "cookie" for httpApiKey.
         /// </summary>

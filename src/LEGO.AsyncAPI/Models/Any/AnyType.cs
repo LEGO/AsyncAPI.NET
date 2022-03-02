@@ -25,6 +25,6 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// Object.
         /// </summary>
-        Object
+        Object,
     }
 }

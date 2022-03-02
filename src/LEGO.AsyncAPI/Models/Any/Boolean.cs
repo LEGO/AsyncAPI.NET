@@ -2,9 +2,10 @@
 
 namespace LEGO.AsyncAPI.Models.Any
 {
-    public struct Boolean : PrimitiveValue<bool>
+    public struct Boolean : IPrimitiveValue<bool>
     {
-        public Boolean(bool value) : this()
+        public Boolean(bool value)
+            : this()
         {
             this.Value = value;
         }
@@ -16,10 +17,10 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public bool Value { get; set; }
 
+        public AnyType AnyType => AnyType.Primitive;
+
         public static explicit operator bool(Boolean b) => b.Value;
 
         public static explicit operator Boolean(bool b) => new (value: b);
-
-        public AnyType AnyType => AnyType.Primitive;
     }
 }

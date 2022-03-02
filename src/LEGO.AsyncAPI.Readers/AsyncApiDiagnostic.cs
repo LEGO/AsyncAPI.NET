@@ -9,14 +9,14 @@ namespace LEGO.AsyncAPI.Readers
     /// </summary>
     public class AsyncApiDiagnostic
     {
+        public AsyncApiDiagnostic(Exception e)
+        {
+            this.Error = e;
+        }
+
         /// <summary>
         /// The Error.
         /// </summary>
         public Exception Error { get; }
-
-        public AsyncApiDiagnostic(Exception e)
-        {
-            Error = e;
-        }
     }
 }

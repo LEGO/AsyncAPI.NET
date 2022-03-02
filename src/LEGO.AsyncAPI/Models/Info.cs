@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -10,8 +12,8 @@
     {
         public Info(string title, string version)
         {
-            Title = title;
-            Version = version;
+            this.Title = title;
+            this.Version = version;
         }
 
         /// <summary>

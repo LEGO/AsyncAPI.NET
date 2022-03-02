@@ -5,20 +5,11 @@ namespace LEGO.AsyncAPI.Converters
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    public abstract class BindingConverter<T, U> : JsonConverter where U : class
+    public abstract class BindingConverter<T, U> : JsonConverter 
+        where U : class
     {
-        const string refProperty = "$ref";
-        const string idProperty = "$id";
-
-        protected virtual T Create(Type objectType, T existingValue, JsonSerializer serializer, JObject obj)
-        {
-            return existingValue ?? (T)serializer.ContractResolver.ResolveContract(objectType).DefaultCreator();
-        }
-
-        protected abstract void Populate(JObject obj, T value, JsonSerializer serializer);
-
-        protected abstract void WriteProperties(JsonWriter writer, T value, JsonSerializer serializer, U contract);
-
+        private const string RefProperty = "$ref";
+        private const string IdProperty = "$id";
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -38,12 +29,12 @@ namespace LEGO.AsyncAPI.Converters
 
             if (serializer.ReferenceResolver.IsReferenced(serializer, value))
             {
-                writer.WritePropertyName(refProperty);
+                writer.WritePropertyName(RefProperty);
                 writer.WriteValue(serializer.ReferenceResolver.GetReference(serializer, value));
             }
             else
             {
-                writer.WritePropertyName(idProperty);
+                writer.WritePropertyName(IdProperty);
                 writer.WriteValue(serializer.ReferenceResolver.GetReference(serializer, value));
 
                 this.WriteProperties(writer, (T)value, serializer, contract as U);
@@ -73,8 +64,8 @@ namespace LEGO.AsyncAPI.Converters
 
             var obj = JObject.Load(reader);
 
-            var refId = (string)obj[refProperty].RemoveFromLowestPossibleParent();
-            var objId = (string)obj[idProperty].RemoveFromLowestPossibleParent();
+            var refId = (string)obj[RefProperty].RemoveFromLowestPossibleParent();
+            var objId = (string)obj[IdProperty].RemoveFromLowestPossibleParent();
             if (refId != null)
             {
                 var reference = serializer.ReferenceResolver.ResolveReference(serializer, refId);
@@ -101,5 +92,14 @@ namespace LEGO.AsyncAPI.Converters
         {
             return objectType.IsAssignableTo(typeof(IDictionary<string, T>));
         }
+
+        protected virtual T Create(Type objectType, T existingValue, JsonSerializer serializer, JObject obj)
+        {
+            return existingValue ?? (T)serializer.ContractResolver.ResolveContract(objectType).DefaultCreator();
+        }
+
+        protected abstract void Populate(JObject obj, T value, JsonSerializer serializer);
+
+        protected abstract void WriteProperties(JsonWriter writer, T value, JsonSerializer serializer, U contract);
     }
 }

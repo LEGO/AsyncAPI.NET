@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Models.Any
     /// <summary>
     /// Async API null.
     /// </summary>
-    public struct String : PrimitiveValue<string>
+    public struct String : IPrimitiveValue<string>
     {
         public String(string value)
         {
@@ -19,10 +19,10 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public string? Value { get; set; }
 
+        public AnyType AnyType => AnyType.Primitive;
+
         public static explicit operator string?(String s) => s.Value;
 
         public static explicit operator String(string s) => new () { Value = s };
-
-        public AnyType AnyType => AnyType.Primitive;
     }
 }

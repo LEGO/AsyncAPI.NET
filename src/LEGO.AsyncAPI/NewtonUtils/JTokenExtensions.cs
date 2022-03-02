@@ -66,7 +66,6 @@ namespace LEGO.AsyncAPI.NewtonUtils
 
             int count = 0;
 
-
             foreach (var component in components)
             {
                 count++;

@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Any;
@@ -12,8 +14,8 @@
     {
         public Server(string url, string protocol)
         {
-            Url = new Uri(url);
-            Protocol = protocol;
+            this.Url = new Uri(url);
+            this.Protocol = protocol;
         }
 
         /// <summary>

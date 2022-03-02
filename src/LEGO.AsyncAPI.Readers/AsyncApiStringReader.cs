@@ -11,13 +11,13 @@ namespace LEGO.AsyncAPI.Readers
     /// </summary>
     public class AsyncApiStringReader : IAsyncApiReader<string>
     {
-        private YamlToJsonSerializer _serializer;
-        private IAsyncApiReader<Stream> _jsonAsyncApiReader;
+        private readonly YamlToJsonSerializer serializer;
+        private readonly IAsyncApiReader<Stream> jsonAsyncApiReader;
 
         public AsyncApiStringReader()
         {
-            _serializer = new YamlToJsonSerializer();
-            _jsonAsyncApiReader = new AsyncApiJsonReader();
+            this.serializer = new YamlToJsonSerializer();
+            this.jsonAsyncApiReader = new AsyncApiJsonReader();
         }
 
         /// <summary>
@@ -28,13 +28,12 @@ namespace LEGO.AsyncAPI.Readers
         /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public AsyncApiDocument Read(string input, out AsyncApiDiagnostic diagnostic)
         {
-            AsyncApiDocument output = new AsyncApiDocument();
+            AsyncApiDocument output = new ();
 
             try
             {
-                var jsonObject = _serializer.Serialize(input);
-
-                output = _jsonAsyncApiReader.Read(new MemoryStream(Encoding.UTF8.GetBytes(jsonObject)), out diagnostic);
+                var jsonObject = this.serializer.Serialize(input);
+                output = this.jsonAsyncApiReader.Read(new MemoryStream(Encoding.UTF8.GetBytes(jsonObject)), out diagnostic);
             }
             catch (Exception e)
             {

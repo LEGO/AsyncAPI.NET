@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -11,10 +13,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="CorrelationId"/> class.
         /// </summary>
-        /// <param name="location" />
+        /// <param name="location">Location.</param>
         public CorrelationId(string location)
         {
-            Location = location;
+            this.Location = location;
         }
 
         /// <summary>

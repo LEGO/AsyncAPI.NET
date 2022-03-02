@@ -25,16 +25,15 @@ namespace LEGO.AsyncAPI.Tests
         {
             var output = GetOutputForClass<Object>("{\"foo\":\"bar\",\"baz\":13,\"bazz\":13.13,\"grault\":{\"garply\":\"waldo\"},\"qux\":[],\"quux\":true,\"quuz\":null}");
             Assert.IsType<Object>(output);
-            var obj = output as Object;
-            Assert.IsType<String>(obj["foo"]);
-            Assert.IsType<Long>(obj["baz"]);
-            Assert.IsType<Double>(obj["bazz"]);
-            Assert.IsType<Array>(obj["qux"]);
-            Assert.IsType<Boolean>(obj["quux"]);
-            Assert.IsType<Null>(obj["quuz"]);
-            Assert.IsType<Object>(obj["grault"]);
-            var grault = obj["grault"] as Object;
-            Assert.IsType<String>(grault["garply"]);
+            Assert.IsType<String>(output?["foo"]);
+            Assert.IsType<Long>(output?["baz"]);
+            Assert.IsType<Double>(output["bazz"]);
+            Assert.IsType<Array>(output["qux"]);
+            Assert.IsType<Boolean>(output["quux"]);
+            Assert.IsType<Null>(output["quuz"]);
+            Assert.IsType<Object>(output["grault"]);
+            var grault = output["grault"] as Object;
+            Assert.IsType<String>(grault?["garply"]);
         }
     
         [Fact]
@@ -43,7 +42,7 @@ namespace LEGO.AsyncAPI.Tests
             var output = GetOutputFor<String>("\"foo\"");
         
             Assert.IsType<String>(output);
-            Assert.Equal("foo", output.Value.Value);
+            Assert.Equal("foo", output?.Value);
         }
     
         [Fact]
@@ -52,7 +51,7 @@ namespace LEGO.AsyncAPI.Tests
             var output = GetOutputFor<Double>("13.13");
         
             Assert.IsType<Double>(output);
-            Assert.Equal(13.13, output.Value.Value);
+            Assert.Equal(13.13, output?.Value);
         }
     
         [Fact]
@@ -61,7 +60,7 @@ namespace LEGO.AsyncAPI.Tests
             var output = GetOutputFor<Long>("134341421");
         
             Assert.IsType<Long>(output);
-            Assert.Equal(134341421, output.Value.Value);
+            Assert.Equal(134341421, output?.Value);
         }
     
         [Fact]

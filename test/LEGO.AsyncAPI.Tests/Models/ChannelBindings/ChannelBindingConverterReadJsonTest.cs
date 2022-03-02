@@ -24,7 +24,7 @@ namespace LEGO.AsyncAPI.Tests.Models.ChannelBindings
         {
             var output = GetOutputFor("{\"kafka\":{\"x-ext-string\":\"foo\"}}");
             Assert.IsAssignableFrom<IDictionary<string, KafkaChannelBinding>>(output);
-            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output["kafka"].Extensions);
+            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output?["kafka"].Extensions);
         }
 
         private static IDictionary<string, KafkaChannelBinding>? GetOutputFor(string input)

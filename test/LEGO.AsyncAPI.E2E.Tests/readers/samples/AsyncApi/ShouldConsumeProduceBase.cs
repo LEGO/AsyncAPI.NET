@@ -54,7 +54,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
 
         private static string GetPath(Type child)
         {
-            var split = Regex.Split(child.FullName, "(.*?)\\.Should.*?");
+            var split = Regex.Split(child.FullName ?? throw new ArgumentNullException(nameof(child)), "(.*?)\\.Should.*?");
             return split[1];
         }
     

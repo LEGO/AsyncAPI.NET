@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Converters
     {
         protected override void Populate(JObject obj, Dictionary<string, IServerBinding> value, JsonSerializer serializer)
         {
-            this.populateInternal<IServerBinding>(obj, value, serializer, new[] { new KeyValuePair<string, Type>("kafka", typeof(KafkaServerBinding)) });
+            this.PopulateInternal<IServerBinding>(obj, value, serializer, new[] { new KeyValuePair<string, Type>("kafka", typeof(KafkaServerBinding)) });
         }
 
         protected override void WriteProperties(JsonWriter writer, Dictionary<string, IServerBinding> value, JsonSerializer serializer, JsonDictionaryContract contract)
