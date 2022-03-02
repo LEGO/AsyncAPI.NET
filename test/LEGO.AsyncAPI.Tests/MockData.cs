@@ -8,8 +8,6 @@ using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
 using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
 using LEGO.AsyncAPI.Models.Bindings.ServerBindings;
 using LEGO.AsyncAPI.Models.Interfaces;
-using Newtonsoft.Json.Linq;
-using NUnit.Framework;
 using Array = LEGO.AsyncAPI.Models.Any.Array;
 using Boolean = LEGO.AsyncAPI.Models.Any.Boolean;
 using Double = LEGO.AsyncAPI.Models.Any.Double;
@@ -143,8 +141,8 @@ namespace LEGO.AsyncAPI.Tests
             {
                 Description = "quz",
                 TermsOfService = new Uri("https://lego.com"),
-                Contact = contact??new Contact(),
-                License = license??new License("Apache 2.0"),
+                Contact = contact ?? new Contact(),
+                License = license ?? new License("Apache 2.0"),
                 Extensions = WithExtensionData(withExtensionData)
             };
         }
@@ -175,7 +173,7 @@ namespace LEGO.AsyncAPI.Tests
             {
                 ProtocolVersion = "0.0.1",
                 Description = "foo",
-                Variables = variables??ImmutableDictionary<string, ServerVariable>.Empty,
+                Variables = variables ?? ImmutableDictionary<string, ServerVariable>.Empty,
                 Security = security ?? new List<SecurityRequirement> {new ()},
                 Bindings = ServerBindings(),
                 Extensions = WithExtensionData(withExtensionData)
