@@ -21,11 +21,11 @@
 
             if (diagnostic.Error != null)
             {
-                Console.WriteLine("Error during spec parsing: ", diagnostic.Error);
+                Console.WriteLine($"Error during spec parsing: {diagnostic.Error}");
             }
             else
             {
-                Console.WriteLine("Kafka Starlight spec successfully parsed into AsyncApiDocument object");
+                Console.WriteLine("Kafka Starlight YAML spec successfully parsed into AsyncApiDocument object");
                 Console.WriteLine($"Api version: {openApiDocument.Asyncapi}");
                 Console.WriteLine($"Number of channels: {openApiDocument.Channels.Count}");
             }
