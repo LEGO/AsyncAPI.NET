@@ -12,14 +12,12 @@ namespace LEGO.AsyncAPI.Readers.Serializers
         public YamlToJsonSerializer()
         {
             _deserializer = new Deserializer();
-
             _serializer = new SerializerBuilder().JsonCompatible().Build();
         }
 
         public string Serialize(string input)
         {
             var yamlObject = _deserializer.Deserialize<object>(input);
-
             return _serializer.Serialize(yamlObject);
         }
     }

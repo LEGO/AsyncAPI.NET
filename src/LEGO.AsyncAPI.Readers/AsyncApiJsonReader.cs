@@ -26,7 +26,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public AsyncApiDocument Read(Stream input, out AsyncApiDiagnostic diagnostic)
         {
-            diagnostic = new AsyncApiDiagnostic();
+            diagnostic = new AsyncApiDiagnostic(null);
 
             AsyncApiDocument document;
 
