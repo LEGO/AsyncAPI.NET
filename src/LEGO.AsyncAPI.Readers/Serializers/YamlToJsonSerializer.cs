@@ -17,7 +17,7 @@ namespace LEGO.AsyncAPI.Readers.Serializers
 
         public string Serialize(string input)
         {
-            var yamlObject = _deserializer.Deserialize<object>(input);
+            var yamlObject = _deserializer.Deserialize<object>(input.RemoveNonAsciiSymbols());
             return _serializer.Serialize(yamlObject);
         }
     }

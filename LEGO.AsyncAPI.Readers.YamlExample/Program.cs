@@ -17,9 +17,7 @@
 
             var streetlightKafkaSpec = await new StreamReader(stream, Encoding.UTF8).ReadToEndAsync();
 
-            RemoveNonAsciiSymbols(streetlightKafkaSpec);
-
-            var openApiDocument = new AsyncApiStringReader().Read(RemoveNonAsciiSymbols(streetlightKafkaSpec), out var diagnostic);
+            var openApiDocument = new AsyncApiStringReader().Read(streetlightKafkaSpec, out var diagnostic);
 
             if (diagnostic.Error != null)
             {
@@ -32,18 +30,5 @@
                 Console.WriteLine($"Number of channels: {openApiDocument.Channels.Count}");
             }
         }
-
-        private static string RemoveNonAsciiSymbols(string input) =>
-            Encoding.ASCII.GetString(
-                Encoding.Convert(
-                    Encoding.UTF8,
-                    Encoding.GetEncoding(
-                        Encoding.ASCII.EncodingName,
-                        new EncoderReplacementFallback(string.Empty),
-                        new DecoderExceptionFallback()
-                    ),
-                    Encoding.UTF8.GetBytes(input)
-                )
-            );
     }
 }

@@ -21,6 +21,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
                 ObjectCreationHandling = ObjectCreationHandling.Auto,
                 DefaultValueHandling = DefaultValueHandling.Include,
                 Converters = new List<JsonConverter> { new StringEnumConverter(true) },
+                StringEscapeHandling = StringEscapeHandling.EscapeNonAscii,
             };
         }
 
