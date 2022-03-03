@@ -23,8 +23,8 @@ jobs:
         with:
           source-url: https://nuget.pkg.github.com/LEGO/index.json
         env:
-          NUGET_AUTH_TOKEN: ${{secrets.LEGO_GITHUB_DOCKER_REGISTR_READ_WRITE_DELETE_TOKEN}}   
-      - name: Build LEGO.AsyncAPI.Readers project and pack NuGet package
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}   
+      - name: Build LEGO.AsyncAPI project and pack NuGet package
         run: dotnet pack src/LEGO.AsyncAPI.Readers/LEGO.AsyncAPI.Readers.csproj -c Release -o out
 #     next step to be uncommented when LEGO.AsyncAPI is complete
 #      - name: Push generated package to GitHub Packages registry
