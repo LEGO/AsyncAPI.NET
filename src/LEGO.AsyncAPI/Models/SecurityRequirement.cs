@@ -10,11 +10,6 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class SecurityRequirement : IExtensible
     {
-        /// <summary>
-        /// Additional external documentation for this security requirement.
-        /// </summary>
-        public ExternalDocumentation ExternalDocs { get; set; }
-
         public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
     }
 }
