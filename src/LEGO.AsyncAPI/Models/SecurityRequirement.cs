@@ -10,6 +10,16 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class SecurityRequirement : IExtensible
     {
+        /// <summary>
+        /// Additional properties of security requirement, defined as array of key value pairs.
+        /// Example:
+        /// {
+        ///   "petstore_auth": [
+        ///     "write:pets",
+        ///     "read:pets"
+        ///   ]
+        /// }.
+        /// </summary>
         public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
     }
 }
