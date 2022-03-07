@@ -29,7 +29,7 @@ namespace LEGO.AsyncAPI.Tests.Models.ChannelBindings
 
         private static IDictionary<string, KafkaChannelBinding>? GetOutputFor(string input)
         {
-            return new InternalJsonAsyncApiReader<IDictionary<string, KafkaChannelBinding>>().Read(new MemoryStream(Encoding.UTF8.GetBytes(input)));
+            return new JsonStreamReader<IDictionary<string, KafkaChannelBinding>>().Read(new MemoryStream(Encoding.UTF8.GetBytes(input)));
         }
     }
 }

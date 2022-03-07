@@ -19,10 +19,10 @@ namespace LEGO.AsyncAPI.Readers.Serializers
         }
 
         /// <summary>
-        /// Serialize YAML string into JSON.
+        /// Serialize YAML string into JSON. Also removes non-ascii symbols before serialization to JSON.
         /// </summary>
         /// <param name="input">YAML input as string.</param>
-        /// <returns>JSON string.</returns>
+        /// <returns>JSON string with non-ascii symbols removed.</returns>
         public string Serialize(string input)
         {
             var yamlObject = this.deserializer.Deserialize<object>(input.RemoveNonAsciiSymbols());

@@ -47,7 +47,7 @@ namespace LEGO.AsyncAPI.Tests.Models.ChannelBindings
 
         private static string GetOutputFor(IDictionary<string, IChannelBinding>? input)
         {
-            return new InternalJsonAsyncApiWriter<IDictionary<string, IChannelBinding>?>().Write(input);
+            return new JsonStringWriter<IDictionary<string, IChannelBinding>?>().Write(input);
         }
     }
 }

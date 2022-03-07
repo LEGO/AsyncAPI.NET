@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    public class InternalJsonAsyncApiReader<T> : IInternalAsyncApiReader<T>
+    public class JsonStreamReader<T> : IStreamReader<T>
     {
         public T Read(Stream stream)
         {
