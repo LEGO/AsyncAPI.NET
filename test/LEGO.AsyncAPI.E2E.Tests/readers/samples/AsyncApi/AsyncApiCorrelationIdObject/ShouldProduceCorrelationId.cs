@@ -13,13 +13,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiCorrelationId
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new CorrelationId("bar")));
+            Assert.Equal(GetString("Minimal.json"), asyncApiWriter.Write(new CorrelationId("bar")));
         }
         
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new CorrelationId("bar")
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), asyncApiWriter.Write(new CorrelationId("bar")
             {
                 Description = "foo",
                 Extensions = MockData.Extensions()

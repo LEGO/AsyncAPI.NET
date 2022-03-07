@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiSecuritySchem
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new SecurityScheme(
+            Assert.Equal(GetString("Minimal.json"), asyncApiWriter.Write(new SecurityScheme(
                 SecuritySchemeType.Http,
                 "baz",
                 "quz",
@@ -27,7 +27,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiSecuritySchem
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new SecurityScheme(
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), asyncApiWriter.Write(new SecurityScheme(
                 SecuritySchemeType.Http,
                 "baz",
                 "quz",

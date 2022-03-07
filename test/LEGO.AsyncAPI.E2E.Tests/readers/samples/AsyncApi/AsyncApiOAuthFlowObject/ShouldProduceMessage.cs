@@ -15,13 +15,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOAuthFlowObje
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new OAuthFlow()));
+            Assert.Equal(GetString("Minimal.json"), asyncApiWriter.Write(new OAuthFlow()));
         }
         
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new OAuthFlow
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), asyncApiWriter.Write(new OAuthFlow
             {
                 AuthorizationUrl = new Uri("https://lego.com/auth"),
                 TokenUrl = new Uri("https://lego.com/token"),

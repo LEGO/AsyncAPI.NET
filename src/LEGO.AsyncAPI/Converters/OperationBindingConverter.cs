@@ -2,7 +2,6 @@
 
 namespace LEGO.AsyncAPI.Converters
 {
-    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using Newtonsoft.Json;

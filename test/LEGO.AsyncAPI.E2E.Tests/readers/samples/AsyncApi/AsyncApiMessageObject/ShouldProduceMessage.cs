@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
-using LEGO.AsyncAPI.Models.Interfaces;
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
 {
+    using System.Collections.Generic;
+    using System.Collections.Immutable;
     using AsyncAPI.Tests;
+    using Models;
     using Xunit;
 
     public class ShouldProduceMessage : ShouldConsumeProduceBase<Message>
@@ -17,13 +15,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new Message()));
+            Assert.Equal(GetString("Minimal.json"), asyncApiWriter.Write(new Message()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Write(new Message
+            Assert.Equal(GetString("Complete.json"), asyncApiWriter.Write(new Message
             {
                 Name = "UserSignup",
                 Title = "User signup",

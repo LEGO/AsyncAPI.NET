@@ -3,7 +3,7 @@
 namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
-    /// Type of an <see cref="IOpenApiAny"/>.
+    /// Type of an <see cref="IAny"/>.
     /// </summary>
     public enum AnyType
     {

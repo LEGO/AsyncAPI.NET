@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Text.Json;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Bindings.ChannelBindings;
-using Newtonsoft.Json;
-using Xunit;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
-
-namespace LEGO.AsyncAPI.Tests.Models.ChannelBindings
+﻿namespace LEGO.AsyncAPI.Tests.Models.ChannelBindings
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+    using AsyncAPI.Models.Any;
+    using AsyncAPI.Models.Bindings.ChannelBindings;
+    using Xunit;
+
     public class ChannelBindingConverterReadJsonTest
     {
         [Fact]

@@ -16,7 +16,7 @@ namespace LEGO.AsyncAPI.Models.Any
         }
 
         /// <summary>
-        /// The type of <see cref="IOpenApiAny"/>.
+        /// The type of <see cref="IAny"/>.
         /// </summary>
         public AnyType AnyType { get; } = AnyType.Primitive;
 

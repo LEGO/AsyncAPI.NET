@@ -1,17 +1,12 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Text.Json;
-using LEGO.AsyncAPI.Converters;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.NewtonUtils;
-using Newtonsoft.Json;
-using Xunit;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
-
-namespace LEGO.AsyncAPI.Tests
+﻿namespace LEGO.AsyncAPI.Tests
 {
+    using System.IO;
+    using AsyncAPI.Models.Any;
+    using Converters;
+    using Newtonsoft.Json;
+    using NewtonUtils;
+    using Xunit;
+
     public class PayloadConverterReadJsonTest
     {
         [Fact]

@@ -14,13 +14,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiTagObject
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            Assert.NotNull(_asyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
+            Assert.NotNull(asyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
         }
 
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
         
             Assert.Equal("foo", output.Name);
             Assert.Equal("bar", output.Description);

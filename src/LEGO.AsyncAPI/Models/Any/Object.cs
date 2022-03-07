@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Models.Any
     public class Object : Dictionary<string, IAny>, IAny
     {
         /// <summary>
-        /// Type of <see cref="IOpenApiAny"/>.
+        /// Type of <see cref="IAny"/>.
         /// </summary>
         public AnyType AnyType { get; } = AnyType.Object;
     }

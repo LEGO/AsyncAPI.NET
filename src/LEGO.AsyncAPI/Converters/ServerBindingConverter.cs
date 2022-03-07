@@ -2,7 +2,6 @@
 
 namespace LEGO.AsyncAPI.Converters
 {
-    using System.Collections.Immutable;
     using LEGO.AsyncAPI.Models.Bindings.ServerBindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using Newtonsoft.Json;

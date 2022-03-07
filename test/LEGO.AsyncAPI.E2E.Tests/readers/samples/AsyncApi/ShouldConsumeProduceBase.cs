@@ -7,30 +7,30 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
 {
     public class ShouldConsumeProduceBase<T>
     {
-        protected IStringWriter<T> _asyncApiWriter;
-        protected IStreamReader<T> _asyncApiAsyncApiReader;
-        private readonly string _SampleFolderPath;
+        protected readonly IStringWriter<T> asyncApiWriter;
+        protected readonly IStreamReader<T> asyncApiAsyncApiReader;
+        private readonly string sampleFolderPath;
 
         protected ShouldConsumeProduceBase(Type child)
         {
-            _SampleFolderPath = GetPath(child);
-            _asyncApiAsyncApiReader = new JsonStreamReader<T>();
-            _asyncApiWriter = new JsonStringWriter<T>();
+            sampleFolderPath = GetPath(child);
+            asyncApiAsyncApiReader = new JsonStreamReader<T>();
+            asyncApiWriter = new JsonStringWriter<T>();
         }
 
-        protected Stream? GetStream(string filename)
+        protected Stream GetStream(string filename)
         {
             return GenerateStreamFromString(GetString(filename));
         }
     
-        protected Stream? GetStreamWithMockedExtensions(string filename)
+        protected Stream GetStreamWithMockedExtensions(string filename)
         {
             return GenerateStreamFromString(GetStringWithMockedExtensions(filename));
         }
 
         protected string GetString(string filename)
         {
-            return ReadFile(_SampleFolderPath, filename);
+            return ReadFile(sampleFolderPath, filename);
         }
 
         protected string GetStringWithMockedExtensions(string filename)
@@ -43,7 +43,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         private string ReadFile(string sampleFolderPath, string filename)
         {
             var combine = Path.Combine(sampleFolderPath, filename).Replace("/", ".").Replace("\\",".");
-            Stream? stream = GetType().Assembly.GetManifestResourceStream(combine);
+            var stream = GetType().Assembly.GetManifestResourceStream(combine);
             if (stream == null)
             {
                 throw new FileNotFoundException("The stream is null because the file was not found");

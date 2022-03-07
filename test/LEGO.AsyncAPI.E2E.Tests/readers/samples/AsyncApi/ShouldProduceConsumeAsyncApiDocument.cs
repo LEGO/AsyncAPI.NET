@@ -12,9 +12,9 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         [Fact]
         public void ShouldProduceConsumeCompleteSpec()
         {
-            var doc = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var doc = asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
-            var serializedDoc = _asyncApiWriter.Write(doc);
+            var serializedDoc = asyncApiWriter.Write(doc);
 
             Assert.Equal(GetStringWithMockedExtensions("Complete.json"), serializedDoc);
         }
@@ -22,13 +22,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         [Fact]
         public void ShouldProduceConsumeTwiceCompleteSpec()
         {
-            var doc = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var doc = asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
-            var serializedDoc = _asyncApiWriter.Write(doc);
+            var serializedDoc = asyncApiWriter.Write(doc);
 
-            var doc2 = _asyncApiAsyncApiReader.Read(GenerateStreamFromString(serializedDoc));
+            var doc2 = asyncApiAsyncApiReader.Read(GenerateStreamFromString(serializedDoc));
 
-            var serializedDoc2 = _asyncApiWriter.Write(doc2);
+            var serializedDoc2 = asyncApiWriter.Write(doc2);
 
             Assert.Equal(serializedDoc, serializedDoc2);
         }

@@ -16,7 +16,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerObject
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
 
             Assert.Equal(new Uri("https://lego.com"), output.Url);
             Assert.Equal("http", output.Protocol);
@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerObject
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal(new Uri("https://lego.com"), output.Url);
             Assert.Equal("http", output.Protocol);

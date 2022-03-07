@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Models.Any
     public class Array : List<IAny>, IAny
     {
         /// <summary>
-        /// The type of <see cref="IOpenApiAny"/>.
+        /// The type of <see cref="IAny"/>.
         /// </summary>
         public AnyType AnyType { get; } = AnyType.Array;
 
