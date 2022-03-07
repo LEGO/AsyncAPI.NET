@@ -8,6 +8,8 @@ namespace LEGO.AsyncAPI.NewtonUtils
 
     public static class JsonSerializerUtils
     {
+        private static readonly List<JsonConverter> JsonConverters = new List<JsonConverter> { new StringEnumConverter(true) };
+
         public static JsonSerializerSettings GetSettings()
         {
             return new JsonSerializerSettings
@@ -20,7 +22,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 ObjectCreationHandling = ObjectCreationHandling.Auto,
                 DefaultValueHandling = DefaultValueHandling.Include,
-                Converters = new List<JsonConverter> { new StringEnumConverter(true) },
+                Converters = JsonConverters,
                 StringEscapeHandling = StringEscapeHandling.EscapeNonAscii,
             };
         }

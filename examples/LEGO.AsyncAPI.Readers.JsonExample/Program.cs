@@ -21,7 +21,7 @@
 
             var openApiDocument = new AsyncApiStringReader().Read(streetlightKafkaJsonSpec, out var diagnostic);
 
-            if (diagnostic.Error != null)
+            if (diagnostic.HasError)
             {
                 Console.WriteLine($"Error during spec parsing: {diagnostic.Error}");
             }

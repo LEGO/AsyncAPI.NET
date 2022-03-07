@@ -14,6 +14,8 @@ namespace LEGO.AsyncAPI.Readers
             this.Error = e;
         }
 
+        public bool HasError => this.Error != null;
+
         /// <summary>
         /// The Error.
         /// </summary>
