@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,6 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="CompleteKafkaSpec.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="CompleteKafkaSpec.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj" />
