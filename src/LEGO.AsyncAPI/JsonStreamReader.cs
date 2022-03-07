@@ -11,10 +11,10 @@ namespace LEGO.AsyncAPI
         public T Read(Stream stream)
         {
             var jsonString = new StreamReader(stream).ReadToEnd();
-            var root = JsonConvert.DeserializeObject<JToken>(jsonString, JsonSerializerUtils.GetSettings());
+            var root = JsonConvert.DeserializeObject<JToken>(jsonString, JsonSerializerUtils.Settings);
             root.ResolveReferences();
 
-            return JsonConvert.DeserializeObject<T>(root.ToString(), JsonSerializerUtils.GetSettings());
+            return JsonConvert.DeserializeObject<T>(root.ToString(), JsonSerializerUtils.Settings);
         }
     }
 }

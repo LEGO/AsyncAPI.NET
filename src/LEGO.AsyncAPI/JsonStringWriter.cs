@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI
     {
         public string Write(T @object)
         {
-            return JsonConvert.SerializeObject(@object, JsonSerializerUtils.GetSettings());
+            return JsonConvert.SerializeObject(@object, JsonSerializerUtils.Settings);
         }
     }
 }

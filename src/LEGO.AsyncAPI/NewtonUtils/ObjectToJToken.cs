@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
     {
         public static JToken Map(object o)
         {
-            return o == null ? JToken.Parse("null") : JToken.FromObject(o, JsonSerializerUtils.GetSerializer());
+            return o == null ? JToken.Parse("null") : JToken.FromObject(o, JsonSerializerUtils.Serializer);
         }
     }
 }

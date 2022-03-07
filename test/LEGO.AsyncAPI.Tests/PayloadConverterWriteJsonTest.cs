@@ -89,7 +89,7 @@ namespace LEGO.AsyncAPI.Tests
             var converter = new IAnyConverter();
             var stringWriter = new StringWriter();
             JsonWriter jsonTextWriter = new JsonTextWriter(stringWriter);
-            converter.WriteJson(jsonTextWriter, input, JsonSerializerUtils.GetSerializer());
+            converter.WriteJson(jsonTextWriter, input, JsonSerializerUtils.Serializer);
             return stringWriter.ToString();
         }
     }

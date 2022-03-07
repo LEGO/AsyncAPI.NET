@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
     {
         public static T Map<T>(JToken token)
         {
-            return token.ToObject<T>(JsonSerializerUtils.GetSerializer());
+            return token.ToObject<T>(JsonSerializerUtils.Serializer);
         }
     }
 }

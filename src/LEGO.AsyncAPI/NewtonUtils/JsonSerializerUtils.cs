@@ -8,11 +8,22 @@ namespace LEGO.AsyncAPI.NewtonUtils
 
     public static class JsonSerializerUtils
     {
-        private static readonly List<JsonConverter> JsonConverters = new List<JsonConverter> { new StringEnumConverter(true) };
+        private static readonly List<JsonConverter> JsonConverters = new() { new StringEnumConverter(true) };
 
-        public static JsonSerializerSettings GetSettings()
+        static JsonSerializerUtils()
         {
-            return new JsonSerializerSettings
+            Serializer = JsonSerializer.Create(Settings);
+        }
+
+        /// <summary>
+        /// Serializer singleton with settings defined below.
+        /// </summary>
+        public static JsonSerializer Serializer { get; }
+
+        /// <summary>
+        /// Settings for JSON serializer with AsyncApiContractResolver as contract resolver.
+        /// </summary>
+        public static JsonSerializerSettings Settings = new ()
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 Formatting = Formatting.Indented,
@@ -25,11 +36,5 @@ namespace LEGO.AsyncAPI.NewtonUtils
                 Converters = JsonConverters,
                 StringEscapeHandling = StringEscapeHandling.EscapeNonAscii,
             };
-        }
-
-        public static JsonSerializer GetSerializer()
-        {
-            return JsonSerializer.Create(GetSettings());
-        }
     }
 }

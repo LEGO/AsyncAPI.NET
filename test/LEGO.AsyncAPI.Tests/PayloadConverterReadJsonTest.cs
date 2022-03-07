@@ -94,14 +94,14 @@ namespace LEGO.AsyncAPI.Tests
         {
             var jsonTextReader = new JsonTextReader(new StringReader(input));
             jsonTextReader.Read();
-            return (T)new IAnyConverter().ReadJson(jsonTextReader, typeof(T), null, JsonSerializerUtils.GetSerializer());
+            return (T)new IAnyConverter().ReadJson(jsonTextReader, typeof(T), null, JsonSerializerUtils.Serializer);
         }
     
         private static T? GetOutputForClass<T>(string input) where T : class
         {
             var jsonTextReader = new JsonTextReader(new StringReader(input));
             jsonTextReader.Read();
-            return (T)new IAnyConverter().ReadJson(jsonTextReader, typeof(T), null, JsonSerializerUtils.GetSerializer());
+            return (T)new IAnyConverter().ReadJson(jsonTextReader, typeof(T), null, JsonSerializerUtils.Serializer);
         }
     }
 }
