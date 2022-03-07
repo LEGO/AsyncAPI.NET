@@ -196,7 +196,6 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
         /// </summary>
-        [JsonProperty("enum")]
         public IList<string> Enum { get; set; } = new List<string>();
 
         /// <summary>
