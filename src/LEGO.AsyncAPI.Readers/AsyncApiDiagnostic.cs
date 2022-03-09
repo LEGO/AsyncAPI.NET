@@ -9,15 +9,22 @@ namespace LEGO.AsyncAPI.Readers
     /// </summary>
     public class AsyncApiDiagnostic
     {
+        /// <summary>
+        /// Initializes new instance of AsyncApiDiagnostic class.
+        /// </summary>
+        /// <param name="e"></param>
         public AsyncApiDiagnostic(Exception e)
         {
             this.Error = e;
         }
 
+        /// <summary>
+        /// Returns true if Error value is not null.
+        /// </summary>
         public bool HasError => this.Error != null;
 
         /// <summary>
-        /// The Error.
+        /// Gets an error.
         /// </summary>
         public Exception Error { get; }
     }

@@ -22,8 +22,14 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         public PrimitiveType PrimitiveType { get; } = PrimitiveType.Double;
 
+        /// <summary>
+        /// Value.
+        /// </summary>
         public double? Value { get; set; }
 
+        /// <summary>
+        /// AnyType.Primitive.
+        /// </summary>
         public AnyType AnyType => AnyType.Primitive;
 
         public static explicit operator double?(Double d) => d.Value;

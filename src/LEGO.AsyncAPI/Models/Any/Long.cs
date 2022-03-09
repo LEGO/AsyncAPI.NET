@@ -22,6 +22,9 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         public PrimitiveType PrimitiveType { get; } = PrimitiveType.Long;
 
+        /// <summary>
+        /// AnyType.Primitive.
+        /// </summary>
         public AnyType AnyType => AnyType.Primitive;
 
         /// <summary>

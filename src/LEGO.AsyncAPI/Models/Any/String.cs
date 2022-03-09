@@ -26,6 +26,9 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         public string? Value { get; set; }
 
+        /// <summary>
+        /// AnyType.Primitive.
+        /// </summary>
         public AnyType AnyType => AnyType.Primitive;
 
         public static explicit operator string?(String s) => s.Value;

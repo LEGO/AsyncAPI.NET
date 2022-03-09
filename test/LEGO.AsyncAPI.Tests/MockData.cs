@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Bindings.ChannelBindings;
-using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
-using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
-using LEGO.AsyncAPI.Models.Bindings.ServerBindings;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Array = LEGO.AsyncAPI.Models.Any.Array;
-using Boolean = LEGO.AsyncAPI.Models.Any.Boolean;
-using Double = LEGO.AsyncAPI.Models.Any.Double;
-using Object = LEGO.AsyncAPI.Models.Any.Object;
-using String = LEGO.AsyncAPI.Models.Any.String;
-
-namespace LEGO.AsyncAPI.Tests
+﻿namespace LEGO.AsyncAPI.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.Immutable;
+    using AsyncAPI.Models;
+    using AsyncAPI.Models.Any;
+    using AsyncAPI.Models.Bindings.ChannelBindings;
+    using AsyncAPI.Models.Bindings.MessageBindings;
+    using AsyncAPI.Models.Bindings.OperationBindings;
+    using AsyncAPI.Models.Bindings.ServerBindings;
+    using AsyncAPI.Models.Interfaces;
+    using Array = AsyncAPI.Models.Any.Array;
+    using Boolean = AsyncAPI.Models.Any.Boolean;
+    using Double = AsyncAPI.Models.Any.Double;
+    using Object = AsyncAPI.Models.Any.Object;
+    using String = AsyncAPI.Models.Any.String;
+
     public static class MockData
     {
         public static Dictionary<string, IAny> Extensions()

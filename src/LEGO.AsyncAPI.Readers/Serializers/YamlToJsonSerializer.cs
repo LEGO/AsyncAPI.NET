@@ -12,6 +12,9 @@ namespace LEGO.AsyncAPI.Readers.Serializers
         private readonly IDeserializer deserializer;
         private readonly ISerializer serializer;
 
+        /// <summary>
+        /// Initializes a new instance of YamlToJsonSerializer class.
+        /// </summary>
         public YamlToJsonSerializer()
         {
             this.deserializer = new Deserializer();

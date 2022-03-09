@@ -22,8 +22,14 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         public PrimitiveType PrimitiveType { get; } = PrimitiveType.Boolean;
 
+        /// <summary>
+        /// Value.
+        /// </summary>
         public bool Value { get; set; }
 
+        /// <summary>
+        /// AnyType.Primitive.
+        /// </summary>
         public AnyType AnyType => AnyType.Primitive;
 
         public static explicit operator bool(Boolean b) => b.Value;

@@ -9,6 +9,9 @@ namespace LEGO.AsyncAPI.Models.Any
     /// </summary>
     public struct Null : IPrimitiveValue<string>
     {
+        /// <summary>
+        /// Static instance of Null class.
+        /// </summary>
         public static readonly Null Instance = new ();
 
         /// <summary>
@@ -28,6 +31,9 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         public PrimitiveType PrimitiveType => PrimitiveType.Null;
 
+        /// <summary>
+        /// Null.
+        /// </summary>
         [CanBeNull]
         public string Value
         {

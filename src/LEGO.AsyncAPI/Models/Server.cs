@@ -12,6 +12,11 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class Server : IExtensible
     {
+        /// <summary>
+        /// Initializes Server object.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="protocol"></param>
         public Server(string url, string protocol)
         {
             this.Url = new Uri(url);
