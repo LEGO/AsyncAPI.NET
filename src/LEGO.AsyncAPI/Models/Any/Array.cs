@@ -12,6 +12,9 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         public AnyType AnyType { get; } = AnyType.Array;
 
+        /// <summary>
+        /// Array object value.
+        /// </summary>
         public List<IAny> Value { get; set; }
     }
 }

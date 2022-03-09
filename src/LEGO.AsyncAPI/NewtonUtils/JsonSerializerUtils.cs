@@ -6,6 +6,9 @@ namespace LEGO.AsyncAPI.NewtonUtils
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
+    /// <summary>
+    /// Static Utils class, exposes JSON settings and JSON serializer.
+    /// </summary>
     public static class JsonSerializerUtils
     {
         private static readonly List<JsonConverter> JsonConverters = new() { new StringEnumConverter(true) };

@@ -2,8 +2,15 @@
 
 namespace LEGO.AsyncAPI.Models.Any
 {
+    /// <summary>
+    /// Async API Boolean.
+    /// </summary>
     public struct Boolean : IPrimitiveValue<bool>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Boolean"/> class.
+        /// </summary>
+        /// <param name="value">Initialization value.</param>
         public Boolean(bool value)
             : this()
         {

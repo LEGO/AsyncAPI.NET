@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Models
     public class SecurityRequirement : IExtensible
     {
         /// <summary>
-        /// Additional properties of security requirement, defined as array of key value pairs.
+        /// Additional properties of security requirement, defined as object with array of strings.
         /// Example:
         /// {
         ///   "petstore_auth": [

@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Converters
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Serialization;
 
-    public class ServerBindingConverter : JsonDictionaryContractBindingConverter<IServerBinding>
+    internal class ServerBindingConverter : JsonDictionaryContractBindingConverter<IServerBinding>
     {
         protected override void Populate(JObject obj, Dictionary<string, IServerBinding> value, JsonSerializer serializer)
         {

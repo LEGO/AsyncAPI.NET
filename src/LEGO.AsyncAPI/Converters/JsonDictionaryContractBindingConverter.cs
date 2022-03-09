@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Converters
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Serialization;
 
-    public abstract class JsonDictionaryContractBindingConverter<T> : BindingConverter<Dictionary<string, T>, JsonDictionaryContract>
+    internal abstract class JsonDictionaryContractBindingConverter<T> : BindingConverter<Dictionary<string, T>, JsonDictionaryContract>
     {
         protected void PopulateInternal<G>(JObject obj, IDictionary<string, T> value, JsonSerializer serializer, KeyValuePair<string, Type>[] typeMap)
             where G : T

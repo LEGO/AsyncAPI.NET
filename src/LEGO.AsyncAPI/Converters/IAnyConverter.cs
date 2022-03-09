@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Converters
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    public class IAnyConverter : JsonConverter
+    internal class IAnyConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

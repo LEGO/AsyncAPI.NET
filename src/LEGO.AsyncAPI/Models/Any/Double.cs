@@ -3,10 +3,14 @@
 namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
-    /// Async API null.
+    /// Async API double.
     /// </summary>
     public struct Double : IPrimitiveValue<double?>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Double"/> class.
+        /// </summary>
+        /// <param name="value">Initialization value.</param>
         public Double(double? value)
             : this()
         {

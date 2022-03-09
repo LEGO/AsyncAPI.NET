@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Resolvers
     using LEGO.AsyncAPI.NewtonUtils;
     using Newtonsoft.Json.Linq;
 
-    public class ExtensionDataSetter
+    internal class ExtensionDataSetter
     {
         public void Setter(object o, string key, object value)
         {

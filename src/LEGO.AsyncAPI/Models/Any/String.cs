@@ -3,10 +3,14 @@
 namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
-    /// Async API null.
+    /// Async API string.
     /// </summary>
     public struct String : IPrimitiveValue<string>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="String"/> class.
+        /// </summary>
+        /// <param name="value">Initialization value.</param>
         public String(string value)
         {
             this.Value = value;
@@ -17,6 +21,9 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         public PrimitiveType PrimitiveType => PrimitiveType.String;
 
+        /// <summary>
+        /// Value.
+        /// </summary>
         public string? Value { get; set; }
 
         public AnyType AnyType => AnyType.Primitive;

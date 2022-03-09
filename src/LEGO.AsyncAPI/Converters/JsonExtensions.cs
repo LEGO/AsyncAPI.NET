@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Converters
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    public static class JsonExtensions
+    internal static class JsonExtensions
     {
         public static JsonReader MoveToContent(this JsonReader reader)
         {

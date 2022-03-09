@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Resolvers
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.NewtonUtils;
 
-    public class ExtensionDataGetter
+    internal class ExtensionDataGetter
     {
         public IEnumerable<KeyValuePair<object, object>> Getter(object o)
         {

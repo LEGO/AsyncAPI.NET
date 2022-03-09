@@ -5,6 +5,9 @@ namespace LEGO.AsyncAPI
     using System.Text.Json;
     using Json.Schema;
 
+    /// <summary>
+    /// AsyncApi json schema validator, based on schema v2.3.0.
+    /// </summary>
     public class AsyncApiSchemaValidator
     {
         private const string SampleFolderPath = "";

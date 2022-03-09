@@ -3,7 +3,7 @@
 namespace LEGO.AsyncAPI.Models.Interfaces
 {
     /// <summary>
-    /// Describes a protocol-specific binding.
+    /// Describes a server-specific binding.
     /// </summary>
     public interface IServerBinding : IBinding
     {

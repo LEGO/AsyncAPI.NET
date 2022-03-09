@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Resolvers
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
-    public class AsyncApiContractResolver : CamelCasePropertyNamesContractResolver
+    internal class AsyncApiContractResolver : CamelCasePropertyNamesContractResolver
     {
         private readonly ExtensionDataSetter extensionDataSetter = new ();
         private readonly ExtensionDataGetter extensionDataGetter = new ();

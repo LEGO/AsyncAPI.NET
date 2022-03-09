@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Converters
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    public abstract class BindingConverter<T, U> : JsonConverter 
+    internal abstract class BindingConverter<T, U> : JsonConverter
         where U : class
     {
         private const string RefProperty = "$ref";

@@ -3,10 +3,14 @@
 namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
-    /// Async API null.
+    /// Async API long.
     /// </summary>
     public struct Long : IPrimitiveValue<long?>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Long"/> class.
+        /// </summary>
+        /// <param name="value">Initialization value.</param>
         public Long(long? value)
             : this()
         {
@@ -20,6 +24,9 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public AnyType AnyType => AnyType.Primitive;
 
+        /// <summary>
+        /// Value of the struct.
+        /// </summary>
         public long? Value { get; set; }
 
         public static explicit operator long?(Long l) => l.Value;
