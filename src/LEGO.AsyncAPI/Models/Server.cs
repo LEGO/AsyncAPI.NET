@@ -49,7 +49,7 @@ namespace LEGO.AsyncAPI.Models
         /// <remarks>
         /// The name used for each property MUST correspond to a security scheme declared in the Security Schemes under the Components Object.
         /// </remarks>
-        public IList<SecurityRequirement> Security { get; set; } = new List<SecurityRequirement>();
+        public IList<Dictionary<string, string[]>> Security { get; set; } = new List<Dictionary<string, string[]>>();
 
         /// <summary>
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.

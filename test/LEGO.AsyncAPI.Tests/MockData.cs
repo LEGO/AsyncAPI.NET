@@ -167,14 +167,14 @@ namespace LEGO.AsyncAPI.Tests
             };
         }
 
-        public static Server Server(IDictionary<string, ServerVariable>? variables = null, IList<SecurityRequirement>? security = null, bool withExtensionData = true)
+        public static Server Server(IDictionary<string, ServerVariable>? variables = null, IList<Dictionary<string, string[]>>? security = null, bool withExtensionData = true)
         {
             return new Server("https://lego.com", "http")
             {
                 ProtocolVersion = "0.0.1",
                 Description = "foo",
                 Variables = variables ?? ImmutableDictionary<string, ServerVariable>.Empty,
-                Security = security ?? new List<SecurityRequirement> {new ()},
+                Security = security ?? new List<Dictionary<string, string[]>> {new () },
                 Bindings = ServerBindings(),
                 Extensions = WithExtensionData(withExtensionData)
             };

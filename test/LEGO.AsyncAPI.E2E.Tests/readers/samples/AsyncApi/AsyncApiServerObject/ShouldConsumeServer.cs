@@ -32,7 +32,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerObject
             Assert.Equal("0.0.1", output.ProtocolVersion);
             Assert.Equal("foo", output.Description);
             Assert.IsType<Dictionary<string, ServerVariable>>(output.Variables);
-            Assert.IsType<List<SecurityRequirement>> (output.Security);
+            Assert.IsType<List<Dictionary<string, string[]>>>(output.Security);
             Assert.IsType<Dictionary<string, IServerBinding>>(output.Bindings);
             Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
         }
