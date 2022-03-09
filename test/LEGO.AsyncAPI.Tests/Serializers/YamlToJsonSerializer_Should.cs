@@ -2,17 +2,17 @@
 {
     using System.Linq;
     using Newtonsoft.Json.Linq;
-    using Readers.Serializers;
+    using LEGO.AsyncAPI.Readers.Serializers;
     using Xunit;
     using YamlDotNet.Core;
 
-    public class YamlToJsonSerializer_Should
+    public class YamlToJsonSerializerShould
     {
-        private readonly YamlToJsonSerializer _sut;
+        private readonly YamlToJsonSerializer sut;
 
-        public YamlToJsonSerializer_Should()
+        public YamlToJsonSerializerShould()
         {
-            _sut = new YamlToJsonSerializer();
+            sut = new YamlToJsonSerializer();
         }
 
         [Fact]
@@ -28,7 +28,7 @@ foo: foo_value
 ";
 
             //Act
-            var result = _sut.Serialize(input);
+            var result = sut.Serialize(input);
 
             //Assert
             VerifyResult(result);
@@ -41,7 +41,7 @@ foo: foo_value
             var input = "{\"List\":[\"a\",\"b\"], \"xyz\":\"xyz_value\", \"foo\":\"foo_value\"}";
 
             //Act
-            var result = _sut.Serialize(input);
+            var result = sut.Serialize(input);
 
             //Assert
             VerifyResult(result);
@@ -59,7 +59,7 @@ xyz_value
 
             //Act
             //Assert
-            Assert.Throws<SemanticErrorException>(() =>  _sut.Serialize(input));
+            Assert.Throws<SemanticErrorException>(() =>  sut.Serialize(input));
         }
 
         private void VerifyResult(string json)
@@ -69,9 +69,9 @@ xyz_value
             Assert.True(jObject.HasValues);
             Assert.True(jObject.ContainsKey("xyz"));
             Assert.True(jObject.ContainsKey("foo"));
-            Assert.Equal("xyz_value", jObject["xyz"].Value<string>());
-            Assert.Equal("foo_value", jObject["foo"].Value<string>());
-            Assert.Equal(2, jObject["List"].Values().Count());
+            Assert.Equal("xyz_value", jObject["xyz"]?.Value<string>());
+            Assert.Equal("foo_value", jObject["foo"]?.Value<string>());
+            Assert.Equal(2, jObject["List"]?.Values().Count());
         }
     }
 }

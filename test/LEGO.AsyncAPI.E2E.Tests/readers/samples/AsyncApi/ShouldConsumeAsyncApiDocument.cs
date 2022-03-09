@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         [Fact]
         public void JsonPropertyMinimalSpec()
         {
-            var output = asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
         
             Assert.Equal("2.3.0", output.Asyncapi);
             Assert.Equal("foo", output.Info.Title);
@@ -24,7 +24,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         [Fact]
         public void JsonPropertyCompleteSpec()
         {
-            var output = asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
         
             Assert.Equal("2.3.0", output.Asyncapi);
             Assert.Equal("foo", output.Info.Title);
@@ -34,7 +34,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         [Fact]
         public void JsonPropertyCompleteUsingComponentReferencesSpec()
         {
-            var output = asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("CompleteUsingComponentReferences.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("CompleteUsingComponentReferences.json"));
             
             Assert.Equal("2.3.0", output.Asyncapi);
             Assert.Equal("foo", output.Info.Title);
@@ -47,7 +47,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         [Fact]
         public void CompleteJsonWithKafkaSpecExampleData()
         {
-            var output = asyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
 
             AssertKafkaSpecExample(output);
         }
@@ -55,11 +55,11 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         [Fact]
         public void CompleteJsonWithKafkaSpecExampleDataDeserializedTwice()
         {
-            var output = asyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
 
-            var serializedDoc = asyncApiWriter.Write(output);
+            var serializedDoc = AsyncApiWriter.Write(output);
 
-            var output2 = asyncApiAsyncApiReader.Read(GenerateStreamFromString(serializedDoc));
+            var output2 = AsyncApiAsyncApiReader.Read(GenerateStreamFromString(serializedDoc));
             
             AssertKafkaSpecExample(output2);
         }

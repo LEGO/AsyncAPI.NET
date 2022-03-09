@@ -5,8 +5,8 @@ namespace LEGO.AsyncAPI.Converters
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    internal abstract class BindingConverter<T, U> : JsonConverter
-        where U : class
+    internal abstract class BindingConverter<T, TU> : JsonConverter
+        where TU : class
     {
         private const string RefProperty = "$ref";
         private const string IdProperty = "$id";
@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.Converters
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var contract = serializer.ContractResolver.ResolveContract(value.GetType());
-            if (!(contract is U))
+            if (!(contract is TU))
             {
                 throw new JsonSerializationException($"Invalid non-object contract type {contract}");
             }
@@ -37,7 +37,7 @@ namespace LEGO.AsyncAPI.Converters
                 writer.WritePropertyName(IdProperty);
                 writer.WriteValue(serializer.ReferenceResolver.GetReference(serializer, value));
 
-                this.WriteProperties(writer, (T)value, serializer, contract as U);
+                this.WriteProperties(writer, (T)value, serializer, contract as TU);
             }
 
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace LEGO.AsyncAPI.Converters
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var contract = serializer.ContractResolver.ResolveContract(objectType);
-            if (contract is not U)
+            if (contract is not TU)
             {
                 throw new JsonSerializationException($"Invalid non-object contract type {contract}");
             }
@@ -100,6 +100,6 @@ namespace LEGO.AsyncAPI.Converters
 
         protected abstract void Populate(JObject obj, T value, JsonSerializer serializer);
 
-        protected abstract void WriteProperties(JsonWriter writer, T value, JsonSerializer serializer, U contract);
+        protected abstract void WriteProperties(JsonWriter writer, T value, JsonSerializer serializer, TU contract);
     }
 }

@@ -1,21 +1,21 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
-
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
+﻿namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
 {
+    using System;
+    using System.IO;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
     public class ShouldConsumeProduceBase<T>
     {
-        protected readonly IStringWriter<T> asyncApiWriter;
-        protected readonly IStreamReader<T> asyncApiAsyncApiReader;
+        protected readonly IStringWriter<T> AsyncApiWriter;
+        protected readonly IStreamReader<T> AsyncApiAsyncApiReader;
         private readonly string sampleFolderPath;
 
         protected ShouldConsumeProduceBase(Type child)
         {
             sampleFolderPath = GetPath(child);
-            asyncApiAsyncApiReader = new JsonStreamReader<T>();
-            asyncApiWriter = new JsonStringWriter<T>();
+            AsyncApiAsyncApiReader = new JsonStreamReader<T>();
+            AsyncApiWriter = new JsonStringWriter<T>();
         }
 
         protected Stream GetStream(string filename)

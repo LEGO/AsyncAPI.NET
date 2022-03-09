@@ -37,7 +37,7 @@ namespace LEGO.AsyncAPI.Models
         {
             return license != null &&
                    string.Compare(this.Name, license.Name, StringComparison.Ordinal) == 0 &&
-                   ((this.Url == null && license.Url == null) || this.Url.Equals(license.Url));
+                   ((this.Url == null && license.Url == null) || (this.Url != null && this.Url.Equals(license.Url)));
         }
 
         public override int GetHashCode()

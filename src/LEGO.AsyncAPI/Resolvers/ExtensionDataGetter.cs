@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.Resolvers
             IEnumerable<KeyValuePair<object, object>> obj = new Dictionary<object, object>();
             foreach (var (key, value) in extensible.Extensions)
             {
-                obj = obj.Append(new KeyValuePair<object, object>(key, IAnyToJToken.Map(value)));
+                obj = obj.Append(new KeyValuePair<object, object>(key, AnyToJToken.Map(value)));
             }
 
             return obj;

@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Converters
     /// <summary>
     /// Converts an IAny object to and from JSON.
     /// </summary>
-    internal class IAnyConverter : JsonConverter
+    internal class AnyConverter : JsonConverter
     {
         /// <summary>
         /// Convert IAny object to JToken.
@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Converters
         /// <param name="serializer">JSON serializer.</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            IAnyToJToken.Map(value as IAny).WriteTo(writer);
+            AnyToJToken.Map(value as IAny).WriteTo(writer);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace LEGO.AsyncAPI.Converters
         /// <returns>IAny object.</returns>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return IAnyFromJToken.Map(JToken.Load(reader));
+            return AnyFromJToken.Map(JToken.Load(reader));
         }
 
         /// <summary>

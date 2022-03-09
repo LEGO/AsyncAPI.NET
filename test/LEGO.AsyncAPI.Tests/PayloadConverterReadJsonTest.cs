@@ -22,12 +22,12 @@
             Assert.IsType<Object>(output);
             Assert.IsType<String>(output?["foo"]);
             Assert.IsType<Long>(output?["baz"]);
-            Assert.IsType<Double>(output["bazz"]);
-            Assert.IsType<Array>(output["qux"]);
-            Assert.IsType<Boolean>(output["quux"]);
-            Assert.IsType<Null>(output["quuz"]);
-            Assert.IsType<Object>(output["grault"]);
-            var grault = output["grault"] as Object;
+            Assert.IsType<Double>(output?["bazz"]);
+            Assert.IsType<Array>(output?["qux"]);
+            Assert.IsType<Boolean>(output?["quux"]);
+            Assert.IsType<Null>(output?["quuz"]);
+            Assert.IsType<Object>(output?["grault"]);
+            var grault = output?["grault"] as Object;
             Assert.IsType<String>(grault?["garply"]);
         }
 
@@ -64,11 +64,10 @@
             var output = GetOutputForClass<Array>("[ \"foo\", \"bar\", 13.13, {} ]");
 
             Assert.IsType<Array>(output);
-            var array = (output as Array);
-            Assert.Equal(4, array!.Count);
-            Assert.Equal("foo", ((String)array[0]).Value);
-            Assert.Equal(13.13, ((Double)array[2]).Value);
-            Assert.IsType<Object>(array[3]);
+            Assert.Equal(4, output.Count);
+            Assert.Equal("foo", ((String)output[0]).Value);
+            Assert.Equal(13.13, ((Double)output[2]).Value);
+            Assert.IsType<Object>(output[3]);
         }
 
         [Fact]
@@ -77,28 +76,28 @@
             var outputTrue = GetOutputFor<Boolean>("true");
 
             Assert.IsType<Boolean>(outputTrue);
-            Assert.True(outputTrue.Value.Value);
+            Assert.True(outputTrue.HasValue && outputTrue.Value.Value);
 
             var outputFalse = GetOutputFor<Boolean>("false");
 
             Assert.IsType<Boolean>(outputFalse);
-            Assert.False(outputFalse.Value.Value);
+            Assert.False(outputFalse != null && outputFalse.Value.Value);
         }
 
-        private static T? GetOutputFor<T>(string input) 
+        private static T? GetOutputFor<T>(string input)
             where T : struct
         {
             var jsonTextReader = new JsonTextReader(new StringReader(input));
             jsonTextReader.Read();
-            return (T)new IAnyConverter().ReadJson(jsonTextReader, typeof(T), null, JsonSerializerUtils.Serializer);
+            return (T)new AnyConverter().ReadJson(jsonTextReader, typeof(T), null, JsonSerializerUtils.Serializer);
         }
 
-        private static T? GetOutputForClass<T>(string input) 
+        private static T GetOutputForClass<T>(string input)
             where T : class
         {
             var jsonTextReader = new JsonTextReader(new StringReader(input));
             jsonTextReader.Read();
-            return (T)new IAnyConverter().ReadJson(jsonTextReader, typeof(T), null, JsonSerializerUtils.Serializer);
+            return (T)new AnyConverter().ReadJson(jsonTextReader, typeof(T), null, JsonSerializerUtils.Serializer);
         }
     }
 }

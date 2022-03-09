@@ -8,8 +8,8 @@ namespace LEGO.AsyncAPI.Converters
 
     internal abstract class JsonDictionaryContractBindingConverter<T> : BindingConverter<Dictionary<string, T>, JsonDictionaryContract>
     {
-        protected void PopulateInternal<G>(JObject obj, IDictionary<string, T> value, JsonSerializer serializer, KeyValuePair<string, Type>[] typeMap)
-            where G : T
+        protected void PopulateInternal<TG>(JObject obj, IDictionary<string, T> value, JsonSerializer serializer, KeyValuePair<string, Type>[] typeMap)
+            where TG : T
         {
             foreach (var (key, type) in typeMap)
             {
@@ -21,7 +21,7 @@ namespace LEGO.AsyncAPI.Converters
                 }
 
                 var binding = serializer.Deserialize(token.CreateReader(), type);
-                value.Add(key, (G)binding);
+                value.Add(key, (TG)binding);
             }
         }
 

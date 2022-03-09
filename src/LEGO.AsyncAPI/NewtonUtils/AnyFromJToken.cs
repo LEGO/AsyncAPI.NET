@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
     using Object = LEGO.AsyncAPI.Models.Any.Object;
     using String = LEGO.AsyncAPI.Models.Any.String;
 
-    internal static class IAnyFromJToken
+    internal static class AnyFromJToken
     {
         public static IAny Map(JToken token)
         {

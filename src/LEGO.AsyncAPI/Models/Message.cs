@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Definition of the message payload. It can be of any type but defaults to Schema object. It must match the schema format, including encoding type - e.g Avro should be inlined as either a YAML or JSON object NOT a string to be parsed as YAML or JSON.
         /// </summary>
-        [JsonConverter(typeof(IAnyConverter))]
+        [JsonConverter(typeof(AnyConverter))]
         public IAny Payload { get; set; }
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace LEGO.AsyncAPI.Converters
                 return null;
             }
 
-            var contained = node.AncestorsAndSelf().FirstOrDefault(t => t.Parent is JContainer && t.Parent.Type != JTokenType.Property);
+            var contained = node.AncestorsAndSelf().FirstOrDefault(t => t.Parent is not null && t.Parent.Type != JTokenType.Property);
             contained?.Remove();
 
             // Also detach the node from its immediate containing property -- Remove() does not do this even though it seems like it should

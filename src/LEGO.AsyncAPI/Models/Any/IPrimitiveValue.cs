@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Models.Any
     public interface IPrimitiveValue<T> : IPrimitive
     {
         /// <summary>
-        /// Value.
+        /// Gets value.
         /// </summary>
         public T? Value { get; set; }
     }

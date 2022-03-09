@@ -24,7 +24,7 @@ namespace LEGO.AsyncAPI
                              Path.Combine(SampleFolderPath, "schema-v2.3.0.json").Replace("/", ".");
             Stream schemaStream = type.Assembly.GetManifestResourceStream(schemaPath);
 
-            var schema = JsonSchema.FromText(new StreamReader(schemaStream).ReadToEnd());
+            var schema = JsonSchema.FromText(new StreamReader(schemaStream ?? throw new InvalidOperationException("Async Api JSON Schema not found.")).ReadToEnd());
 
             var json = jsonDocument;
 

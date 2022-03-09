@@ -16,13 +16,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            Assert.IsType<Contact>(asyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
+            Assert.IsType<Contact>(AsyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
         }
 
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.Name);
             Assert.Equal(new Uri("https://lego.com"), output.Uri);
