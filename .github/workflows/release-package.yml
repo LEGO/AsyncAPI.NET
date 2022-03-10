@@ -17,7 +17,7 @@ jobs:
     name: Publish a NuGet package
     steps:
       - name: Checkout repository with all history
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
         run: git fetch --prune --unshallow
         
       - name: Setup .NET Core @ Latest
