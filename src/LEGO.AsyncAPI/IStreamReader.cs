@@ -3,16 +3,16 @@
 namespace LEGO.AsyncAPI
 {
     /// <summary>
-    /// AsyncApi stream reader.
+    /// Generic stream reader.
     /// </summary>
-    /// <typeparam name="T">AsyncAPI object type.</typeparam>
+    /// <typeparam name="T">Generic object type.</typeparam>
     public interface IStreamReader<T>
     {
         /// <summary>
-        /// Deserializes stream into AsyncAPI object of type T.
+        /// Deserializes stream into object of type T.
         /// </summary>
         /// <param name="stream">Input stream.</param>
-        /// <returns>AsyncAPI object.</returns>
+        /// <returns>Object of type T.</returns>
         public T Read(Stream stream);
     }
 }
