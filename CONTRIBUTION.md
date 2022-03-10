@@ -5,7 +5,7 @@ This is great that you'd like to contribute to this project. All change requests
 ## Submitting a pull request
 
 1. [Fork][fork] and clone the repository
-1. Build solutionto restore dependencies.
+1. Build solution to restore dependencies.
 1. Create a new branch: `git checkout -b branch-name`
 1. Make your change, add tests, and make sure the tests still pass
 1. Push to your fork and [submit a pull request][pr]
