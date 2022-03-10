@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Any;
@@ -28,7 +30,7 @@
         /// <summary>
         /// A list of tags for API documentation control. Tags can be used for logical grouping of operations.
         /// </summary>
-        public IList<Tag> Tags { get; set; }
+        public IList<Tag> Tags { get; set; } = new List<Tag>();
 
         /// <summary>
         /// Additional external documentation for this operation.
@@ -44,7 +46,7 @@
         /// <summary>
         /// A list of traits to apply to the operation object.
         /// </summary>
-        public IList<OperationTrait> Traits { get; set; }
+        public IList<OperationTrait> Traits { get; set; } = new List<OperationTrait>();
 
         /// <summary>
         /// A definition of the message that will be published or received on this channel.
@@ -52,9 +54,9 @@
         /// <remarks>
         /// `oneOf` is allowed here to specify multiple messages, however, a message MUST be valid only against one of the referenced message objects.
         /// </remarks>
-        public IDictionary<string, List<Message>> Message { get; set; }
+        public Message Message { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
     }
 }

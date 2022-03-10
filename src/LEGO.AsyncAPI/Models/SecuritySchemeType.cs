@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     /// <summary>
     /// The type of the security scheme.

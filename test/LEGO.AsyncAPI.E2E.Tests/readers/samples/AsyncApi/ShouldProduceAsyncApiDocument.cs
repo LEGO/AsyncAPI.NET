@@ -6,6 +6,8 @@ using Xunit;
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
 {
+    using Models.Any;
+
     public class ShouldProduceAsyncApiDocument : ShouldConsumeProduceBase<AsyncApiDocument>
     {
         public ShouldProduceAsyncApiDocument() : base(typeof(ShouldProduceAsyncApiDocument))
@@ -16,14 +18,14 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
         public void ShouldProduceMinimalSpec()
         {
             Assert.Equal(GetString("Minimal.json"),
-                _asyncApiWriter.Write(new AsyncApiDocument
+                AsyncApiWriter.Write(new AsyncApiDocument
                     {Asyncapi = "2.3.0", Info = new Info("foo", "bar")}));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new AsyncApiDocument
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(new AsyncApiDocument
             {
                 Asyncapi = "2.3.0",
                 Id = "urn:com:smartylighting:streetlights:server",
@@ -33,8 +35,8 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
                     {
                         "production",
                         MockData.Server(
-                            new Dictionary<string, ServerVariable>() {{"username", MockData.ServerVariable(false)}},
-                            new Dictionary<string, string[]>(){{"petstore_auth", new []{"write:pets", "read:pets"}}},
+                            new Dictionary<string, ServerVariable> {{"username", MockData.ServerVariable(false)}},
+                            new List<Dictionary<string, string[]>> { new () { { "petstore_auth", new[] { "write:pets" , "read:pets" } } } },
                             false)
                     }
                 },

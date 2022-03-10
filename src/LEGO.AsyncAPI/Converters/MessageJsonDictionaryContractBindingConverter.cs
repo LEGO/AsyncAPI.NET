@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Serialization;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Converters
 {
@@ -6,18 +6,18 @@ namespace LEGO.AsyncAPI.Converters
     using LEGO.AsyncAPI.Models.Interfaces;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json.Serialization;
 
-    public class
-        MessageJsonDictionaryContractBindingConverter : JsonDictionaryContractBindingConverter<IMessageBinding>
+    internal class MessageJsonDictionaryContractBindingConverter : JsonDictionaryContractBindingConverter<IMessageBinding>
     {
         protected override void Populate(JObject obj, Dictionary<string, IMessageBinding> value, JsonSerializer serializer)
         {
-            populateInternal<IMessageBinding>(obj, value, serializer, new[] { new KeyValuePair<string, Type>("http", typeof(HttpMessageBinding)) });
+            this.PopulateInternal<IMessageBinding>(obj, value, serializer, new[] { new KeyValuePair<string, Type>("http", typeof(HttpMessageBinding)) });
         }
 
         protected override void WriteProperties(JsonWriter writer, Dictionary<string, IMessageBinding> value, JsonSerializer serializer, JsonDictionaryContract contract)
         {
-            WritePropertiesInternal(writer, value, serializer, contract);
+            this.WritePropertiesInternal(writer, value, serializer, contract);
         }
     }
 }

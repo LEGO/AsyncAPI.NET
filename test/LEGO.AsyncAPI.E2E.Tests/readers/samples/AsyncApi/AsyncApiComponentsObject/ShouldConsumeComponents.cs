@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiComponentsObject
 {
+    using System.Collections.Generic;
+    using Models;
+    using Models.Any;
+    using Models.Interfaces;
+    using Xunit;
+
     public class ShouldConsumeComponents : ShouldConsumeProduceBase<Components>
     {
         public ShouldConsumeComponents() : base(typeof(ShouldConsumeComponents))
@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiComponentsObj
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
 
             Assert.IsType<Components>(output);
         }
@@ -23,7 +23,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiComponentsObj
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.IsAssignableFrom<IDictionary<string, Schema>>(output.Schemas);
             Assert.IsAssignableFrom<IDictionary<string, Server>>(output.Servers);

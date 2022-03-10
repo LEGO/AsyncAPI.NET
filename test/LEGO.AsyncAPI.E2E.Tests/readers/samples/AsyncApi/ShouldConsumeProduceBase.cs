@@ -1,70 +1,71 @@
-using System;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
-
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi;
-
-public class ShouldConsumeProduceBase<T>
+﻿namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
 {
-    protected IAsyncApiWriter<T> _asyncApiWriter;
-    protected IAsyncApiReader<T> _asyncApiAsyncApiReader;
-    private readonly string _SampleFolderPath;
+    using System;
+    using System.IO;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
-    protected ShouldConsumeProduceBase(Type child)
+    public class ShouldConsumeProduceBase<T>
     {
-        _SampleFolderPath = GetPath(child);
-        _asyncApiAsyncApiReader = new JsonAsyncApiReader<T>();
-        _asyncApiWriter = new JsonAsyncApiWriter<T>();
-    }
+        protected readonly IStringWriter<T> AsyncApiWriter;
+        protected readonly IStreamReader<T> AsyncApiAsyncApiReader;
+        private readonly string sampleFolderPath;
 
-    protected Stream? GetStream(string filename)
-    {
-        return GenerateStreamFromString(GetString(filename));
-    }
-    
-    protected Stream? GetStreamWithMockedExtensions(string filename)
-    {
-        return GenerateStreamFromString(GetStringWithMockedExtensions(filename));
-    }
-
-    protected string GetString(string filename)
-    {
-        return ReadFile(_SampleFolderPath, filename);
-    }
-
-    protected string GetStringWithMockedExtensions(string filename)
-    {
-        var body = GetString(filename);
-        var extensionsBody = ReadFile("LEGO/AsyncAPI/E2E/Tests/readers/samples/AsyncApi", "MockExtensions.json");
-        return new StringBuilder(body.Substring(0, body.Length - 2)).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString();
-    }
-
-    private string ReadFile(string sampleFolderPath, string filename)
-    {
-        var combine = Path.Combine(sampleFolderPath, filename).Replace("/", ".");
-        Stream? stream = GetType().Assembly.GetManifestResourceStream(combine);
-        if (stream == null)
+        protected ShouldConsumeProduceBase(Type child)
         {
-            throw new FileNotFoundException("The stream is null because the file was not found");
+            sampleFolderPath = GetPath(child);
+            AsyncApiAsyncApiReader = new JsonStreamReader<T>();
+            AsyncApiWriter = new JsonStringWriter<T>();
         }
 
-        return new StreamReader(stream).ReadToEnd();
-    }
-
-    private static string GetPath(Type child)
-    {
-        var split = Regex.Split(child.FullName, "(.*?)\\.Should.*?");
-        return split[1];
-    }
+        protected Stream GetStream(string filename)
+        {
+            return GenerateStreamFromString(GetString(filename));
+        }
     
-    static Stream GenerateStreamFromString(string s)
-    {
-        var stream = new MemoryStream();
-        var writer = new StreamWriter(stream);
-        writer.Write(s);
-        writer.Flush();
-        stream.Position = 0;
-        return stream;
+        protected Stream GetStreamWithMockedExtensions(string filename)
+        {
+            return GenerateStreamFromString(GetStringWithMockedExtensions(filename));
+        }
+
+        protected string GetString(string filename)
+        {
+            return ReadFile(sampleFolderPath, filename);
+        }
+
+        protected string GetStringWithMockedExtensions(string filename)
+        {
+            var body = GetString(filename);
+            var extensionsBody = ReadFile("LEGO/AsyncAPI/E2E/Tests/readers/samples/AsyncApi", "MockExtensions.json");
+            return new StringBuilder(body.Substring(0, body.Length - 2).TrimEnd('\r')).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString();
+        }
+
+        private string ReadFile(string sampleFolderPath, string filename)
+        {
+            var combine = Path.Combine(sampleFolderPath, filename).Replace("/", ".").Replace("\\",".");
+            var stream = GetType().Assembly.GetManifestResourceStream(combine);
+            if (stream == null)
+            {
+                throw new FileNotFoundException("The stream is null because the file was not found");
+            }
+
+            return new StreamReader(stream).ReadToEnd();
+        }
+
+        private static string GetPath(Type child)
+        {
+            var split = Regex.Split(child.FullName ?? throw new ArgumentNullException(nameof(child)), "(.*?)\\.Should.*?");
+            return split[1];
+        }
+    
+        protected static Stream GenerateStreamFromString(string s)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
     }
 }

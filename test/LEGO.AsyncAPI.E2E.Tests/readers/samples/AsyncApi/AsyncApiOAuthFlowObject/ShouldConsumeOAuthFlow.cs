@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOAuthFlowObject
 {
+    using System;
+    using System.Collections.Generic;
+    using Models;
+    using Models.Any;
+    using Xunit;
+
     public class ShouldConsumeOAuthFlow: ShouldConsumeProduceBase<OAuthFlow>
     {
         public ShouldConsumeOAuthFlow(): base(typeof(ShouldConsumeOAuthFlow))
@@ -13,15 +13,15 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOAuthFlowObje
         }
 
         [Fact]
-        public async void ShouldConsumeMinimalSpec()
+        public void ShouldConsumeMinimalSpec()
         {
-            Assert.NotNull(_asyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
+            Assert.NotNull(AsyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
         }
 
         [Fact]
-        public async void ShouldConsumeCompleteSpec()
+        public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal(new Uri("https://lego.com/auth"), output.AuthorizationUrl);
             Assert.Equal(new Uri("https://lego.com/token"),output.TokenUrl);

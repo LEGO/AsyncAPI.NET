@@ -1,11 +1,10 @@
-using System;
-using LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiExternalDocsObject;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiSecuritySchemaObject
 {
+    using System;
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceSecuritySchema: ShouldConsumeProduceBase<SecurityScheme>
     {
         public ShouldProduceSecuritySchema(): base(typeof(ShouldProduceSecuritySchema))
@@ -13,9 +12,9 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiSecuritySchem
         }
 
         [Fact]
-        public async void ShouldProduceMinimalSpec()
+        public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new SecurityScheme(
+            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new SecurityScheme(
                 SecuritySchemeType.Http,
                 "baz",
                 "quz",
@@ -26,9 +25,9 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiSecuritySchem
         }
         
         [Fact]
-        public async void ShouldProduceCompleteSpec()
+        public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new SecurityScheme(
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(new SecurityScheme(
                 SecuritySchemeType.Http,
                 "baz",
                 "quz",

@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -19,6 +21,6 @@
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
     }
 }

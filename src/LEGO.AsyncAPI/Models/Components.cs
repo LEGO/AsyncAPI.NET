@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Any;
@@ -73,7 +75,7 @@
         public IDictionary<string, IMessageBinding> MessageBindings { get; set; } = new Dictionary<string, IMessageBinding>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
 
         public IDictionary<string, Server> Servers { get; set; } = new Dictionary<string, Server>();
 

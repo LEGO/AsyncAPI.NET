@@ -1,13 +1,15 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Converters
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Serialization;
 
-    public abstract class JsonDictionaryContractBindingConverter<T> : BindingConverter<Dictionary<string, T>, JsonDictionaryContract>
+    internal abstract class JsonDictionaryContractBindingConverter<T> : BindingConverter<Dictionary<string, T>, JsonDictionaryContract>
     {
-        protected void populateInternal<G>(JObject obj, IDictionary<string, T> value, JsonSerializer serializer, KeyValuePair<string, Type>[] typeMap)
-            where G : T
+        protected void PopulateInternal<TG>(JObject obj, IDictionary<string, T> value, JsonSerializer serializer, KeyValuePair<string, Type>[] typeMap)
+            where TG : T
         {
             foreach (var (key, type) in typeMap)
             {
@@ -19,7 +21,7 @@ namespace LEGO.AsyncAPI.Converters
                 }
 
                 var binding = serializer.Deserialize(token.CreateReader(), type);
-                value.Add(key, (G)binding);
+                value.Add(key, (TG)binding);
             }
         }
 

@@ -1,13 +1,29 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Resolvers
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
-    // See here https://stackoverflow.com/a/41094764 for a very good explanation of the difference between resolver and converters.
-    public class AsyncApiContractResolver : CamelCasePropertyNamesContractResolver
+    internal class AsyncApiContractResolver : CamelCasePropertyNamesContractResolver
     {
         private readonly ExtensionDataSetter extensionDataSetter = new ();
         private readonly ExtensionDataGetter extensionDataGetter = new ();
+
+        public override JsonContract ResolveContract(Type type)
+        {
+            var resolveContract = base.ResolveContract(type);
+            if (resolveContract.GetType() != typeof(JsonObjectContract))
+            {
+                return resolveContract;
+            }
+
+            var jsonObjectContract = resolveContract as JsonObjectContract;
+            jsonObjectContract.ExtensionDataSetter = this.extensionDataSetter.Setter;
+            jsonObjectContract.ExtensionDataGetter = this.extensionDataGetter.Getter;
+
+            return resolveContract;
+        }
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
@@ -22,27 +38,12 @@ namespace LEGO.AsyncAPI.Resolvers
                 // entirely, this seems like the lesser of two evils.
                 firstOrDefault.Ignored = true;
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 // no extensions found. This will only happen when the Model object does not extend the IExtensible interface
             }
 
             return jsonProperties;
-        }
-
-        public override JsonContract ResolveContract(Type type)
-        {
-            var resolveContract = base.ResolveContract(type);
-            if (resolveContract.GetType() != typeof(JsonObjectContract))
-            {
-                return resolveContract;
-            }
-
-            var jsonObjectContract = resolveContract as JsonObjectContract;
-            jsonObjectContract.ExtensionDataSetter = extensionDataSetter.Setter;
-            jsonObjectContract.ExtensionDataGetter = extensionDataGetter.Getter;
-
-            return resolveContract;
         }
     }
 }

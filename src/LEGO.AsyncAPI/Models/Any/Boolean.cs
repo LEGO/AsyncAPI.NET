@@ -1,24 +1,39 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Models.Any
 {
-    public struct Boolean : PrimitiveValue<bool>
+    /// <summary>
+    /// Async API Boolean.
+    /// </summary>
+    public struct Boolean : IPrimitiveValue<bool>
     {
-        private bool _value;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Boolean"/> class.
+        /// </summary>
+        /// <param name="value">Initialization value.</param>
+        public Boolean(bool value)
+            : this()
+        {
+            this.Value = value;
+        }
 
         /// <summary>
-        /// The type of <see cref="IOpenApiAny"/>.
+        /// The type of <see cref="IAny"/>.
         /// </summary>
         public PrimitiveType PrimitiveType { get; } = PrimitiveType.Boolean;
 
-        public bool Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        /// <summary>
+        /// Value.
+        /// </summary>
+        public bool Value { get; set; }
+
+        /// <summary>
+        /// AnyType.Primitive.
+        /// </summary>
+        public AnyType AnyType => AnyType.Primitive;
 
         public static explicit operator bool(Boolean b) => b.Value;
 
-        public static explicit operator Boolean(bool b) => new () { Value = b };
-
-        public AnyType AnyType => AnyType.Primitive;
+        public static explicit operator Boolean(bool b) => new (value: b);
     }
 }

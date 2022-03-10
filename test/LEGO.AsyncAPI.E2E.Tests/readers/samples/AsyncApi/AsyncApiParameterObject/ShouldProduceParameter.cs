@@ -1,9 +1,9 @@
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiParameterObject
 {
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceParameter : ShouldConsumeProduceBase<Parameter>
     {
         public ShouldProduceParameter() : base(typeof(ShouldProduceParameter))
@@ -13,13 +13,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiParameterObje
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new Parameter()));
+            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new Parameter()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new Parameter
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(new Parameter
             {
                 Description = "bar",
                 Schema = new Schema(),

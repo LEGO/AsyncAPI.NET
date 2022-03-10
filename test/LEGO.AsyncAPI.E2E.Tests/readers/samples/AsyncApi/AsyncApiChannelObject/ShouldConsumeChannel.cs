@@ -1,11 +1,13 @@
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Xunit;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
 {
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using Xunit;
+
     public class ShouldConsumeChannel : ShouldConsumeProduceBase<Channel>
     {
         public ShouldConsumeChannel() : base(typeof(ShouldConsumeChannel))
@@ -15,7 +17,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
 
             Assert.IsType<Channel>(output);
         }
@@ -23,7 +25,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.Description);
             Assert.IsAssignableFrom<IList<string>>(output.Servers);

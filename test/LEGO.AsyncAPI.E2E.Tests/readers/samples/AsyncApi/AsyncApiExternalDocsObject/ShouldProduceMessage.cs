@@ -1,10 +1,9 @@
-using System;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiExternalDocsObject
 {
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceExternalDocs: ShouldConsumeProduceBase<ExternalDocumentation>
     {
         public ShouldProduceExternalDocs(): base(typeof(ShouldProduceExternalDocs))
@@ -12,15 +11,15 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiExternalDocsO
         }
 
         [Fact]
-        public async void ShouldProduceMinimalSpec()
+        public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new ExternalDocumentation()));
+            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new ExternalDocumentation()));
         }
         
         [Fact]
-        public async void ShouldProduceCompleteSpec()
+        public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(MockData.ExternalDocs()));
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(MockData.ExternalDocs()));
         }
     }
 }

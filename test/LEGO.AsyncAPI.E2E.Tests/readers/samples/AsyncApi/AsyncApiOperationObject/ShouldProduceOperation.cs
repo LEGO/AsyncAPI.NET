@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationObject
 {
+    using System.Collections.Immutable;
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceOperation : ShouldConsumeProduceBase<Operation>
     {
         public ShouldProduceOperation() : base(typeof(ShouldProduceOperation))
@@ -16,13 +14,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationObje
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new Operation()));
+            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new Operation()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new Operation
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(new Operation
             {
                 OperationId = "foo",
                 Summary = "bar",
@@ -31,10 +29,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationObje
                 ExternalDocs = new ExternalDocumentation(),
                 Bindings = MockData.OperationBindings(),
                 Traits = ImmutableList<OperationTrait>.Empty,
-                Message = new Dictionary<string, List<Message>>()
-                {
-                    { "oneOf", new List<Message>() {new()}}
-                },
+                Message = new Message(),
                 Extensions = MockData.Extensions()
             }));
         }

@@ -1,26 +1,39 @@
-﻿namespace LEGO.AsyncAPI.Models.Any
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
-    /// Async API null.
+    /// Async API double.
     /// </summary>
-    public struct Double : PrimitiveValue<double?>
+    public struct Double : IPrimitiveValue<double?>
     {
-        private double? _value;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Double"/> class.
+        /// </summary>
+        /// <param name="value">Initialization value.</param>
+        public Double(double? value)
+            : this()
+        {
+            this.Value = value;
+        }
 
         /// <summary>
-        /// The type of <see cref="IOpenApiAny"/>.
+        /// The type of <see cref="IAny"/>.
         /// </summary>
         public PrimitiveType PrimitiveType { get; } = PrimitiveType.Double;
 
-        public double? Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        /// <summary>
+        /// Value.
+        /// </summary>
+        public double? Value { get; set; }
+
+        /// <summary>
+        /// AnyType.Primitive.
+        /// </summary>
+        public AnyType AnyType => AnyType.Primitive;
 
         public static explicit operator double?(Double d) => d.Value;
 
-        public static explicit operator Double(double d) => new () { Value = d };
-        public AnyType AnyType => AnyType.Primitive;
+        public static explicit operator Double(double d) => new (value: d);
     }
 }

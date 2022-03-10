@@ -1,7 +1,9 @@
-﻿namespace LEGO.AsyncAPI.Models.Any
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
-    /// Type of an <see cref="IOpenApiAny"/>.
+    /// Type of an <see cref="IAny"/>.
     /// </summary>
     public enum AnyType
     {
@@ -23,6 +25,6 @@
         /// <summary>
         /// Object.
         /// </summary>
-        Object
+        Object,
     }
 }

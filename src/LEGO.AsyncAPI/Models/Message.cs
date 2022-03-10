@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Any;
@@ -18,7 +20,7 @@
         /// <summary>
         /// Definition of the message payload. It can be of any type but defaults to Schema object. It must match the schema format, including encoding type - e.g Avro should be inlined as either a YAML or JSON object NOT a string to be parsed as YAML or JSON.
         /// </summary>
-        [JsonConverter(typeof(IAnyConverter))]
+        [JsonConverter(typeof(AnyConverter))]
         public IAny Payload { get; set; }
 
         /// <summary>
@@ -62,7 +64,7 @@
         /// <summary>
         /// A list of tags for API documentation control. Tags can be used for logical grouping of messages.
         /// </summary>
-        public IList<Tag> Tags { get; set; }
+        public IList<Tag> Tags { get; set; } = new List<Tag>();
 
         /// <summary>
         /// Additional external documentation for this message.
@@ -73,27 +75,25 @@
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
         /// </summary>
         [JsonConverter(typeof(MessageJsonDictionaryContractBindingConverter))]
-        public IDictionary<string, IMessageBinding> Bindings { get; set; }
+        public IDictionary<string, IMessageBinding> Bindings { get; set; } = new Dictionary<string, IMessageBinding>();
 
         /// <summary>
         /// List of examples.
         /// </summary>
-        public IList<MessageExample> Examples { get; set; }
+        public IList<MessageExample> Examples { get; set; } = new List<MessageExample>();
 
         /// <summary>
         /// A list of traits to apply to the message object. Traits MUST be merged into the message object using the JSON Merge Patch algorithm in the same order they are defined here. The resulting object MUST be a valid Message Object.
         /// </summary>
-        public List<MessageTrait> Traits { get; set; }
+        public List<MessageTrait> Traits { get; set; } = new ();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
 
         /// <inheritdoc/>
-        [JsonIgnore]
         public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
-        [JsonIgnore]
         public Reference Reference { get; set; }
     }
 }

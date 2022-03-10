@@ -70,10 +70,11 @@
   "traits": [],
   "message": {
     "$id": "12",
-    "oneOf": [
-      {
-        "$id": "13"
-      }
-    ]
+    "tags": [],
+    "bindings": {
+      "$id": "13"
+    },
+    "examples": [],
+    "traits": []
   }
 }

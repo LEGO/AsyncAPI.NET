@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Any;
@@ -10,10 +12,15 @@
     /// </summary>
     public class Server : IExtensible
     {
+        /// <summary>
+        /// Initializes Server object.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="protocol"></param>
         public Server(string url, string protocol)
         {
-            Url = new Uri(url);
-            Protocol = protocol;
+            this.Url = new Uri(url);
+            this.Protocol = protocol;
         }
 
         /// <summary>
@@ -39,7 +46,7 @@
         /// <summary>
         /// A map between a variable name and its value. The value is used for substitution in the server's URL template.
         /// </summary>
-        public IDictionary<string, ServerVariable> Variables { get; set; }
+        public IDictionary<string, ServerVariable> Variables { get; set; } = new Dictionary<string, ServerVariable>();
 
         /// <summary>
         /// A declaration of which security mechanisms can be used with this server. The list of values includes alternative security requirement objects that can be used.
@@ -47,15 +54,15 @@
         /// <remarks>
         /// The name used for each property MUST correspond to a security scheme declared in the Security Schemes under the Components Object.
         /// </remarks>
-        public IDictionary<string, string[]> Security { get; set; }
+        public IList<Dictionary<string, string[]>> Security { get; set; } = new List<Dictionary<string, string[]>>();
 
         /// <summary>
         /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
         /// </summary>
         [JsonConverter(typeof(ServerBindingConverter))]
-        public IDictionary<string, IServerBinding> Bindings { get; set; }
+        public IDictionary<string, IServerBinding> Bindings { get; set; } = new Dictionary<string, IServerBinding>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
     }
 }

@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using Xunit;
-using String = LEGO.AsyncAPI.Models.Any.String;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
 {
+    using System;
+    using System.Collections.Generic;
+    using Models;
+    using Models.Any;
+    using Xunit;
+    using String = Models.Any.String;
+
     public class ShouldConsumeContact : ShouldConsumeProduceBase<Contact>
     {
         public ShouldConsumeContact() : base(typeof(ShouldConsumeContact))
@@ -16,13 +16,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            Assert.IsType<Contact>(_asyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
+            Assert.IsType<Contact>(AsyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
         }
 
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.Name);
             Assert.Equal(new Uri("https://lego.com"), output.Uri);

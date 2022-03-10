@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageTraitObject
 {
+    using System.Collections.Generic;
+    using Models;
+    using Models.Bindings.MessageBindings;
+    using Models.Interfaces;
+    using Xunit;
+
     public class ShouldConsumeMessageTrait: ShouldConsumeProduceBase<MessageTrait>
     {
         public ShouldConsumeMessageTrait(): base(typeof(ShouldConsumeMessageTrait))
@@ -13,15 +13,15 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageTraitO
         }
 
         [Fact]
-        public async void ShouldConsumeMinimalSpec()
+        public void ShouldConsumeMinimalSpec()
         {
-            Assert.NotNull(_asyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
+            Assert.NotNull(AsyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
         }
 
         [Fact]
-        public async void ShouldConsumeCompleteSpec()
+        public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStream("Complete.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStream("Complete.json"));
         
             Assert.IsType<Schema>(output.Headers);
             Assert.IsType<CorrelationId>(output.CorrelationId);

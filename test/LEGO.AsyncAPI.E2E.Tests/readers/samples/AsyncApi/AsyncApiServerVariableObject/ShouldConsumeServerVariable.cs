@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using Newtonsoft.Json.Linq;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerVariableObject
 {
+    using System.Collections.Generic;
+    using Models;
+    using Models.Any;
+    using Xunit;
+
     public class ShouldConsumeServerVariable : ShouldConsumeProduceBase<ServerVariable>
     {
         public ShouldConsumeServerVariable() : base(typeof(ShouldConsumeServerVariable))
@@ -16,7 +14,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerVariabl
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
 
             Assert.IsType<ServerVariable>(output);
         }
@@ -24,7 +22,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerVariabl
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal(new List<string> {"foo"}, output.Enum);
             Assert.Equal("bar", output.Default);

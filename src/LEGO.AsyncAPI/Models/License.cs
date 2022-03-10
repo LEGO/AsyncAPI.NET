@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -10,7 +12,7 @@
     {
         public License(string name)
         {
-            Name = name;
+            this.Name = name;
         }
 
         /// <summary>
@@ -24,23 +26,23 @@
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
 
         public override bool Equals(object? obj)
         {
-            return Equals(obj as License);
+            return this.Equals(obj as License);
         }
 
         public bool Equals(License license)
         {
             return license != null &&
-                   string.Compare(Name, license.Name, StringComparison.Ordinal) == 0 &&
-                   ((Url == null && license.Url == null) || Url.Equals(license.Url));
+                   string.Compare(this.Name, license.Name, StringComparison.Ordinal) == 0 &&
+                   ((this.Url == null && license.Url == null) || (this.Url != null && this.Url.Equals(license.Url)));
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Name, Url);
+            return HashCode.Combine(this.Name, this.Url);
         }
     }
 }

@@ -6,7 +6,11 @@
     "title": "foo",
     "version": "bar"
   },
-  "channels": {
+  "servers": {
     "$id": "3"
-  }
+  },
+  "channels": {
+    "$id": "4"
+  },
+  "tags": []
 }

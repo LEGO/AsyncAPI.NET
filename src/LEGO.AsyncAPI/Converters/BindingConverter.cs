@@ -1,28 +1,20 @@
-// See https://stackoverflow.com/a/53716866 for the detail covered in this class
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Converters
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    public abstract class BindingConverter<T, U> : JsonConverter where U : class
+    internal abstract class BindingConverter<T, TU> : JsonConverter
+        where TU : class
     {
-        const string refProperty = "$ref";
-        const string idProperty = "$id";
-
-        protected virtual T Create(Type objectType, T existingValue, JsonSerializer serializer, JObject obj)
-        {
-            return existingValue ?? (T)serializer.ContractResolver.ResolveContract(objectType).DefaultCreator();
-        }
-
-        protected abstract void Populate(JObject obj, T value, JsonSerializer serializer);
-
-        protected abstract void WriteProperties(JsonWriter writer, T value, JsonSerializer serializer, U contract);
-
+        private const string RefProperty = "$ref";
+        private const string IdProperty = "$id";
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var contract = serializer.ContractResolver.ResolveContract(value.GetType());
-            if (!(contract is U))
+            if (!(contract is TU))
             {
                 throw new JsonSerializationException($"Invalid non-object contract type {contract}");
             }
@@ -37,15 +29,15 @@ namespace LEGO.AsyncAPI.Converters
 
             if (serializer.ReferenceResolver.IsReferenced(serializer, value))
             {
-                writer.WritePropertyName(refProperty);
+                writer.WritePropertyName(RefProperty);
                 writer.WriteValue(serializer.ReferenceResolver.GetReference(serializer, value));
             }
             else
             {
-                writer.WritePropertyName(idProperty);
+                writer.WritePropertyName(IdProperty);
                 writer.WriteValue(serializer.ReferenceResolver.GetReference(serializer, value));
 
-                WriteProperties(writer, (T)value, serializer, contract as U);
+                this.WriteProperties(writer, (T)value, serializer, contract as TU);
             }
 
             writer.WriteEndObject();
@@ -54,7 +46,7 @@ namespace LEGO.AsyncAPI.Converters
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var contract = serializer.ContractResolver.ResolveContract(objectType);
-            if (contract is not U)
+            if (contract is not TU)
             {
                 throw new JsonSerializationException($"Invalid non-object contract type {contract}");
             }
@@ -72,8 +64,8 @@ namespace LEGO.AsyncAPI.Converters
 
             var obj = JObject.Load(reader);
 
-            var refId = (string)obj[refProperty].RemoveFromLowestPossibleParent();
-            var objId = (string)obj[idProperty].RemoveFromLowestPossibleParent();
+            var refId = (string)obj[RefProperty].RemoveFromLowestPossibleParent();
+            var objId = (string)obj[IdProperty].RemoveFromLowestPossibleParent();
             if (refId != null)
             {
                 var reference = serializer.ReferenceResolver.ResolveReference(serializer, refId);
@@ -83,7 +75,7 @@ namespace LEGO.AsyncAPI.Converters
                 }
             }
 
-            var value = Create(objectType, (T)existingValue, serializer, obj);
+            var value = this.Create(objectType, (T)existingValue, serializer, obj);
 
             if (objId != null)
             {
@@ -91,7 +83,7 @@ namespace LEGO.AsyncAPI.Converters
                 serializer.ReferenceResolver.AddReference(serializer, objId, value);
             }
 
-            Populate(obj, value, serializer);
+            this.Populate(obj, value, serializer);
 
             return value;
         }
@@ -100,5 +92,14 @@ namespace LEGO.AsyncAPI.Converters
         {
             return objectType.IsAssignableTo(typeof(IDictionary<string, T>));
         }
+
+        protected virtual T Create(Type objectType, T existingValue, JsonSerializer serializer, JObject obj)
+        {
+            return existingValue ?? (T)serializer.ContractResolver.ResolveContract(objectType).DefaultCreator();
+        }
+
+        protected abstract void Populate(JObject obj, T value, JsonSerializer serializer);
+
+        protected abstract void WriteProperties(JsonWriter writer, T value, JsonSerializer serializer, TU contract);
     }
 }

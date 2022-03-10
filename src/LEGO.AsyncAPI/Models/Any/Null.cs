@@ -1,19 +1,39 @@
-﻿namespace LEGO.AsyncAPI.Models.Any
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models.Any
 {
     using JetBrains.Annotations;
 
     /// <summary>
     /// Async API null.
     /// </summary>
-    public struct Null : PrimitiveValue<string>
+    public struct Null : IPrimitiveValue<string>
     {
         /// <summary>
-        /// The type of <see cref="IOpenApiAny"/>.
+        /// Static instance of Null class.
+        /// </summary>
+        public static readonly Null Instance = new ();
+
+        /// <summary>
+        /// Default null primitive type constructor.
+        /// </summary>
+        public Null()
+        {
+        }
+
+        /// <summary>
+        /// The type of <see cref="IAny"/>.
         /// </summary>
         public AnyType AnyType { get; } = AnyType.Primitive;
 
-        public PrimitiveType PrimitiveType { get => PrimitiveType.Null; }
+        /// <summary>
+        /// The type of <see cref="IAny"/>.
+        /// </summary>
+        public PrimitiveType PrimitiveType => PrimitiveType.Null;
 
+        /// <summary>
+        /// Null.
+        /// </summary>
         [CanBeNull]
         public string Value
         {

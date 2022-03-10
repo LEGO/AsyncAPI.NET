@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Resolvers
 {
     using LEGO.AsyncAPI.Models.Any;
@@ -5,7 +7,7 @@ namespace LEGO.AsyncAPI.Resolvers
     using LEGO.AsyncAPI.NewtonUtils;
     using Newtonsoft.Json.Linq;
 
-    public class ExtensionDataSetter
+    internal class ExtensionDataSetter
     {
         public void Setter(object o, string key, object value)
         {
@@ -16,7 +18,7 @@ namespace LEGO.AsyncAPI.Resolvers
 
             var extensible = o as IExtensible;
             extensible.Extensions ??= new Dictionary<string, IAny>();
-            extensible.Extensions.Add(key, IAnyFromJToken.Map(RawObjectToJToken(value)));
+            extensible.Extensions.Add(key, AnyFromJToken.Map(RawObjectToJToken(value)));
         }
 
         private static JToken RawObjectToJToken(object o)

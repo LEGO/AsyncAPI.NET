@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiTagObject
 {
+    using System.Collections.Generic;
+    using Models;
+    using Models.Any;
+    using Xunit;
+
     public class ShouldConsumeTag: ShouldConsumeProduceBase<Tag>
     {
         public ShouldConsumeTag(): base(typeof(ShouldConsumeTag))
@@ -14,15 +12,15 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiTagObject
         }
 
         [Fact]
-        public async void ShouldConsumeMinimalSpec()
+        public void ShouldConsumeMinimalSpec()
         {
-            Assert.NotNull(_asyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
+            Assert.NotNull(AsyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
         }
 
         [Fact]
-        public async void ShouldConsumeCompleteSpec()
+        public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
         
             Assert.Equal("foo", output.Name);
             Assert.Equal("bar", output.Description);

@@ -1,9 +1,11 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Converters
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    public static partial class JsonExtensions
+    internal static class JsonExtensions
     {
         public static JsonReader MoveToContent(this JsonReader reader)
         {
@@ -12,7 +14,10 @@ namespace LEGO.AsyncAPI.Converters
                 reader.Read();
             }
 
-            while (reader.TokenType == JsonToken.Comment && reader.Read());
+            while (reader.TokenType == JsonToken.Comment && reader.Read())
+            {
+            }
+
             return reader;
         }
 
@@ -23,9 +28,9 @@ namespace LEGO.AsyncAPI.Converters
                 return null;
             }
 
-            var contained = node.AncestorsAndSelf().Where(t => t.Parent is JContainer && t.Parent.Type != JTokenType.Property).FirstOrDefault();
-            if (contained != null)
-                contained.Remove();
+            var contained = node.AncestorsAndSelf().FirstOrDefault(t => t.Parent is not null && t.Parent.Type != JTokenType.Property);
+            contained?.Remove();
+
             // Also detach the node from its immediate containing property -- Remove() does not do this even though it seems like it should
             if (node.Parent is JProperty)
             {

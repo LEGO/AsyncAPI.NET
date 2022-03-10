@@ -1,9 +1,11 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Resolvers
 {
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.NewtonUtils;
 
-    public class ExtensionDataGetter
+    internal class ExtensionDataGetter
     {
         public IEnumerable<KeyValuePair<object, object>> Getter(object o)
         {
@@ -20,7 +22,7 @@ namespace LEGO.AsyncAPI.Resolvers
             IEnumerable<KeyValuePair<object, object>> obj = new Dictionary<object, object>();
             foreach (var (key, value) in extensible.Extensions)
             {
-                obj = obj.Append(new KeyValuePair<object, object>(key, IAnyToJToken.Map(value)));
+                obj = obj.Append(new KeyValuePair<object, object>(key, AnyToJToken.Map(value)));
             }
 
             return obj;

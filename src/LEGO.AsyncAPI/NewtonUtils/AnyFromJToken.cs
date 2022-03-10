@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.NewtonUtils
 {
     using LEGO.AsyncAPI.Models.Any;
@@ -9,7 +11,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
     using Object = LEGO.AsyncAPI.Models.Any.Object;
     using String = LEGO.AsyncAPI.Models.Any.String;
 
-    public static class IAnyFromJToken
+    internal static class AnyFromJToken
     {
         public static IAny Map(JToken token)
         {

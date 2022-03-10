@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
-using LEGO.AsyncAPI.Models.Interfaces;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationObject
 {
+    using System.Collections.Generic;
+    using Models;
+    using Models.Bindings.OperationBindings;
+    using Models.Interfaces;
+    using Xunit;
+
     public class ShouldConsumeOperation : ShouldConsumeProduceBase<Operation>
     {
         public ShouldConsumeOperation() : base(typeof(ShouldConsumeOperation))
@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationObje
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
 
             Assert.IsType<Operation>(output);
         }
@@ -23,7 +23,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationObje
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = _asyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.OperationId);
             Assert.Equal("bar", output.Summary);
@@ -34,7 +34,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationObje
             Assert.IsType<KafkaOperationBinding>(output.Bindings["kafka"]);
             Assert.IsType<HttpOperationBinding>(output.Bindings["http"]);
             Assert.IsType<List<OperationTrait>>(output.Traits);
-            Assert.IsType<Dictionary<string, List<Message>>>(output.Message);
+            Assert.IsType<Message>(output.Message);
         }
     }
 }

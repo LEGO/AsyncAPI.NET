@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Any;
@@ -8,7 +10,7 @@
     /// <summary>
     /// Describes a trait that MAY be applied to an Operation Object.
     /// </summary>
-    public class OperationTrait : IExtensible
+    public class OperationTrait : IExtensible, IReferenceable
     {
         /// <summary>
         /// Unique string used to identify the operation.
@@ -45,6 +47,12 @@
         public IDictionary<string, IOperationBinding> Bindings { get; set; } = new Dictionary<string, IOperationBinding>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
+
+        /// <inheritdoc/>
+        public bool? UnresolvedReference { get; set; }
+
+        /// <inheritdoc/>
+        public Reference Reference { get; set; }
     }
 }

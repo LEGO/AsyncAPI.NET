@@ -1,15 +1,11 @@
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Tests;
-using Newtonsoft.Json.Linq;
-using Xunit;
-using Double = LEGO.AsyncAPI.Models.Any.Double;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
 {
+    using System.Collections.Generic;
+    using System.Collections.Immutable;
+    using AsyncAPI.Tests;
+    using Models;
+    using Xunit;
+
     public class ShouldProduceMessage : ShouldConsumeProduceBase<Message>
     {
         public ShouldProduceMessage() : base(typeof(ShouldProduceMessage))
@@ -17,15 +13,15 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
         }
 
         [Fact]
-        public async void ShouldProduceMinimalSpec()
+        public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new Message()));
+            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new Message()));
         }
 
         [Fact]
-        public async void ShouldProduceCompleteSpec()
+        public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetString("Complete.json"), _asyncApiWriter.Write(new Message
+            Assert.Equal(GetString("Complete.json"), AsyncApiWriter.Write(new Message
             {
                 Name = "UserSignup",
                 Title = "User signup",

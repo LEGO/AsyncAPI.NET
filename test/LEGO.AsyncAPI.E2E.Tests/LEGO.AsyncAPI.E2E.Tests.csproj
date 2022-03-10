@@ -9,6 +9,10 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -63,11 +67,17 @@
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiTagObject\Complete.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\AsyncApiTagObject\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\Complete.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\CompleteKafkaSpec.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\CompleteUsingComponentReferences.json" />
+      <EmbeddedResource Include="readers\samples\AsyncApi\CompleteKafkaSpec.yml" />
       <EmbeddedResource Include="readers\samples\AsyncApi\Minimal.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\schema-v2.3.0.json" />
+      <None Remove="readers\samples\AsyncApi\CompleteKafkaSpec.json" />
+      <None Remove="readers\samples\AsyncApi\CompleteKafkaSpec.yml" />
       <None Remove="readers\samples\AsyncApi\MockExtensions.json" />
       <EmbeddedResource Include="readers\samples\AsyncApi\MockExtensions.json" />
     </ItemGroup>
+
+    <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>

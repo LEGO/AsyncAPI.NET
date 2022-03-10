@@ -1,14 +1,14 @@
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
 namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationTraitObject
 {
+    using System.Collections.Generic;
+    using System.Collections.Immutable;
+    using AsyncAPI.Tests;
+    using Models;
+    using Models.Any;
+    using Models.Bindings.OperationBindings;
+    using Models.Interfaces;
+    using Xunit;
+
     public class ShouldProduceOperationTrait : ShouldConsumeProduceBase<OperationTrait>
     {
         public ShouldProduceOperationTrait() : base(typeof(ShouldProduceOperationTrait))
@@ -18,13 +18,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationTrai
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), _asyncApiWriter.Write(new OperationTrait()));
+            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new OperationTrait()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), _asyncApiWriter.Write(new OperationTrait
+            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(new OperationTrait
             {
                 OperationId = "foo",
                 Summary = "bar",

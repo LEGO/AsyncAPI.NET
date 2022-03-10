@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.NewtonUtils
 {
     using LEGO.AsyncAPI.Models.Any;
@@ -8,13 +10,13 @@ namespace LEGO.AsyncAPI.NewtonUtils
     using Object = LEGO.AsyncAPI.Models.Any.Object;
     using String = LEGO.AsyncAPI.Models.Any.String;
 
-    public static class IAnyToJToken
+    internal static class AnyToJToken
     {
         public static JToken Map(IAny o)
         {
             return o.AnyType switch
             {
-                AnyType.Primitive => (Primitive)o switch
+                AnyType.Primitive => (IPrimitive)o switch
                 {
                     String s => ObjectToJToken.Map(s.Value),
                     Long l => ObjectToJToken.Map(l.Value),
@@ -31,7 +33,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
 
         private static JToken Map(Array obj)
         {
-            JArray tokenArray = new JArray();
+            JArray tokenArray = new ();
 
             foreach (var item in obj)
             {
@@ -43,7 +45,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
 
         private static JToken Map(Object obj)
         {
-            JObject tokenObject = new JObject();
+            JObject tokenObject = new ();
 
             foreach (var key in obj.Keys)
             {

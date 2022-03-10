@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -194,8 +196,7 @@
         /// <summary>
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
         /// </summary>
-        [JsonProperty("enum")]
-        public IList<IAny> Enum { get; set; } = new List<IAny>();
+        public IList<string> Enum { get; set; } = new List<string>();
 
         /// <summary>
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
