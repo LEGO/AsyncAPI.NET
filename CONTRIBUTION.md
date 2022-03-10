@@ -8,7 +8,7 @@ This is great that you'd like to contribute to this project. All change requests
 1. Build solution to restore dependencies.
 1. Create a new branch: `git checkout -b branch-name`
 1. Make your change, add tests, and make sure the tests still pass
-1. Push to your fork and [submit a pull request][pr]
+1. Push to your fork and [submit a pull request](https://github.com/LEGO/AsyncAPI.NET/pull/new)
 1. Wait for your pull request to be reviewed and merged.
 
 Few tips to make good pull requests:
