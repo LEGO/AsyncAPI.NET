@@ -4,13 +4,10 @@ on:
     branches: [ main ]
     paths: 
       - 'src/LEGO.AsyncAPI.Readers/**'
-      - '!**/*.md'
-  pull_request:
-    types: [closed]
-    branches: [ main ]
-    paths: 
-      - 'src/LEGO.AsyncAPI.Readers/**'
-      - '!**/*.md'
+      - ".github/workflows/release-package.yml"
+      - '!**/*.md' 
+  workflow_dispatch:
+
 jobs:
   release:
     runs-on: ubuntu-latest
