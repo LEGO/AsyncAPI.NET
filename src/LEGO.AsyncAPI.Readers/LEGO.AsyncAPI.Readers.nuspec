@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>LEGO.AsyncAPI.Readers</id>
+		<version>1.0.0</version>
+		<title>AsyncAPI Readers</title>
+		<authors>LEGO</authors>
+		<owners>LEGO</owners>
+		<description>Package containing AsyncAPI Readers to produce AsyncApiDocument object based on YAML or JSON Async API specs.</description>
+		<dependencies>
+			<group targetFramework="net6.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="bin\Release\net6.0\LEGO.AsyncAPI.Readers.*.dll" target="lib\net6.0" />
+	</files>
+</package>
