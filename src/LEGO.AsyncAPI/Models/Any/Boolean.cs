@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// The type of <see cref="IAny"/>.
         /// </summary>
-        public PrimitiveType PrimitiveType { get; } = PrimitiveType.Boolean;
+        public PrimitiveType PrimitiveType => PrimitiveType.Boolean;
 
         /// <summary>
         /// Value.
@@ -34,6 +34,6 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public static explicit operator bool(Boolean b) => b.Value;
 
-        public static explicit operator Boolean(bool b) => new (value: b);
+        public static explicit operator Boolean(bool b) => new(value: b);
     }
 }

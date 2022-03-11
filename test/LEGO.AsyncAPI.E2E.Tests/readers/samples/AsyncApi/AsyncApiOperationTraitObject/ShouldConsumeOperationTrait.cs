@@ -1,21 +1,22 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationTraitObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTraitObject
 {
     using System.Collections.Generic;
-    using Models;
-    using Models.Bindings.OperationBindings;
-    using Models.Interfaces;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
     public class ShouldConsumeOperationTrait : ShouldConsumeProduceBase<OperationTrait>
     {
-        public ShouldConsumeOperationTrait() : base(typeof(ShouldConsumeOperationTrait))
+        public ShouldConsumeOperationTrait()
+            : base(typeof(ShouldConsumeOperationTrait))
         {
         }
 
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
             Assert.IsType<OperationTrait>(output);
         }
@@ -23,7 +24,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationTrai
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.OperationId);
             Assert.Equal("bar", output.Summary);

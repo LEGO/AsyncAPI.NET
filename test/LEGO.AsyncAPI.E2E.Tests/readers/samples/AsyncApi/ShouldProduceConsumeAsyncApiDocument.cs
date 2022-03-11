@@ -1,34 +1,35 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi
 {
-    using Models;
+    using LEGO.AsyncAPI.Models;
     using Xunit;
 
     public class ShouldProduceConsumeAsyncApiDocument : ShouldConsumeProduceBase<AsyncApiDocument>
     {
-        public ShouldProduceConsumeAsyncApiDocument() : base(typeof(ShouldProduceAsyncApiDocument))
+        public ShouldProduceConsumeAsyncApiDocument()
+            : base(typeof(ShouldProduceAsyncApiDocument))
         {
         }
 
         [Fact]
         public void ShouldProduceConsumeCompleteSpec()
         {
-            var doc = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var doc = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("Complete.json"));
 
-            var serializedDoc = AsyncApiWriter.Write(doc);
+            var serializedDoc = this.AsyncApiWriter.Write(doc);
 
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), serializedDoc);
+            Assert.Equal(this.GetStringWithMockedExtensions("Complete.json"), serializedDoc);
         }
 
         [Fact]
         public void ShouldProduceConsumeTwiceCompleteSpec()
         {
-            var doc = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var doc = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("Complete.json"));
 
-            var serializedDoc = AsyncApiWriter.Write(doc);
+            var serializedDoc = this.AsyncApiWriter.Write(doc);
 
-            var doc2 = AsyncApiAsyncApiReader.Read(GenerateStreamFromString(serializedDoc));
+            var doc2 = this.AsyncApiAsyncApiReader.Read(GenerateStreamFromString(serializedDoc));
 
-            var serializedDoc2 = AsyncApiWriter.Write(doc2);
+            var serializedDoc2 = this.AsyncApiWriter.Write(doc2);
 
             Assert.Equal(serializedDoc, serializedDoc2);
         }

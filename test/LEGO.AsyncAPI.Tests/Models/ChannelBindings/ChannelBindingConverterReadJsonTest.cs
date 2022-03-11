@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
-    using AsyncAPI.Models.Any;
-    using AsyncAPI.Models.Bindings.ChannelBindings;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Bindings.ChannelBindings;
     using Xunit;
 
     public class ChannelBindingConverterReadJsonTest

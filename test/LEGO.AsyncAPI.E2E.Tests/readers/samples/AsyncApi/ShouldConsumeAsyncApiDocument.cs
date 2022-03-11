@@ -1,67 +1,68 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi
 {
     using System.Linq;
     using LEGO.AsyncAPI.Models;
-    using Models.Bindings.OperationBindings;
+    using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
     using Xunit;
 
-    public class ShouldConsumeAsyncApiDocument: ShouldConsumeProduceBase<AsyncApiDocument>
+    public class ShouldConsumeAsyncApiDocument : ShouldConsumeProduceBase<AsyncApiDocument>
     {
-        public ShouldConsumeAsyncApiDocument(): base(typeof(ShouldConsumeAsyncApiDocument))
+        public ShouldConsumeAsyncApiDocument()
+            : base(typeof(ShouldConsumeAsyncApiDocument))
         {
         }
 
         [Fact]
         public void JsonPropertyMinimalSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
-        
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
+
             Assert.Equal("2.3.0", output.Asyncapi);
             Assert.Equal("foo", output.Info.Title);
             Assert.Equal("bar", output.Info.Version);
         }
-        
+
         [Fact]
         public void JsonPropertyCompleteSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
-        
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("Complete.json"));
+
             Assert.Equal("2.3.0", output.Asyncapi);
             Assert.Equal("foo", output.Info.Title);
             Assert.Equal("bar", output.Info.Version);
         }
-        
+
         [Fact]
         public void JsonPropertyCompleteUsingComponentReferencesSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("CompleteUsingComponentReferences.json"));
-            
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("CompleteUsingComponentReferences.json"));
+
             Assert.Equal("2.3.0", output.Asyncapi);
             Assert.Equal("foo", output.Info.Title);
             Assert.Equal("bar", output.Info.Version);
 
             // TODO Fix resolving $ref as link to $id, when $ref is pre-populated through JTokenExtensions.ResolveReferences
-            //Assert.IsType<KafkaServerBinding>(output.Servers["production"].Bindings["kafka"]);
+            // Assert.IsType<KafkaServerBinding>(output.Servers["production"].Bindings["kafka"]);
         }
 
         [Fact]
         public void CompleteJsonWithKafkaSpecExampleData()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("CompleteKafkaSpec.json"));
 
-            AssertKafkaSpecExample(output);
+            this.AssertKafkaSpecExample(output);
         }
 
         [Fact]
         public void CompleteJsonWithKafkaSpecExampleDataDeserializedTwice()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStream("CompleteKafkaSpec.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("CompleteKafkaSpec.json"));
 
-            var serializedDoc = AsyncApiWriter.Write(output);
+            var serializedDoc = this.AsyncApiWriter.Write(output);
 
-            var output2 = AsyncApiAsyncApiReader.Read(GenerateStreamFromString(serializedDoc));
-            
-            AssertKafkaSpecExample(output2);
+            var output2 = this.AsyncApiAsyncApiReader.Read(GenerateStreamFromString(serializedDoc));
+
+            this.AssertKafkaSpecExample(output2);
         }
 
         private void AssertKafkaSpecExample(AsyncApiDocument doc)

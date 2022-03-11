@@ -3,18 +3,18 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.Immutable;
-    using AsyncAPI.Models;
-    using AsyncAPI.Models.Any;
-    using AsyncAPI.Models.Bindings.ChannelBindings;
-    using AsyncAPI.Models.Bindings.MessageBindings;
-    using AsyncAPI.Models.Bindings.OperationBindings;
-    using AsyncAPI.Models.Bindings.ServerBindings;
-    using AsyncAPI.Models.Interfaces;
-    using Array = AsyncAPI.Models.Any.Array;
-    using Boolean = AsyncAPI.Models.Any.Boolean;
-    using Double = AsyncAPI.Models.Any.Double;
-    using Object = AsyncAPI.Models.Any.Object;
-    using String = AsyncAPI.Models.Any.String;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Bindings.ChannelBindings;
+    using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
+    using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
+    using LEGO.AsyncAPI.Models.Bindings.ServerBindings;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using Array = LEGO.AsyncAPI.Models.Any.Array;
+    using Boolean = LEGO.AsyncAPI.Models.Any.Boolean;
+    using Double = LEGO.AsyncAPI.Models.Any.Double;
+    using Object = LEGO.AsyncAPI.Models.Any.Object;
+    using String = LEGO.AsyncAPI.Models.Any.String;
 
     public static class MockData
     {
@@ -22,28 +22,28 @@
         {
             return new Dictionary<string, IAny>
             {
-                {"x-ext-null", Null.Instance},
-                {"x-ext-integer", (Long) 13},
-                {"x-ext-number", (Double) 13.13},
-                {"x-ext-string", (String) "bar"},
-                {"x-ext-boolean", (Boolean) true},
-                {"x-ext-array", new Array() {(String) "foo", new Object {["foo"] = (String) "bar"}}},
-                {"x-ext-object", new Object {["foo"] = (String) "bar"}}
+                { "x-ext-null", Null.Instance },
+                { "x-ext-integer", (Long)13 },
+                { "x-ext-number", (Double)13.13 },
+                { "x-ext-string", (String)"bar" },
+                { "x-ext-boolean", (Boolean)true },
+                { "x-ext-array", new Array() { (String)"foo", new Object { ["foo"] = (String)"bar" } } },
+                { "x-ext-object", new Object { ["foo"] = (String)"bar" } },
             };
         }
 
         public static Object Payload()
         {
             var payload = new Object();
-            payload.Add("foo", (String) "bar");
-            payload.Add("baz", (Long) 13);
-            payload.Add("bazz", (Double) 13.13);
+            payload.Add("foo", (String)"bar");
+            payload.Add("baz", (Long)13);
+            payload.Add("bazz", (Double)13.13);
             payload.Add("grault", new Object
             {
-                {"garply", (String) "waldo"}
+                { "garply", (String)"waldo" },
             });
-            payload.Add("qux", new Array {(String) "foo"});
-            payload.Add("quux", (Boolean) true);
+            payload.Add("qux", new Array { (String)"foo" });
+            payload.Add("quux", (Boolean)true);
             payload.Add("quuz", Null.Instance);
             return payload;
         }
@@ -63,10 +63,10 @@
                             {
                                 "x-ext-string", new String()
                                 {
-                                    Value = "foo"
+                                    Value = "foo",
                                 }
-                            }
-                        }
+                            },
+                        },
                     }
                 },
                 {
@@ -81,12 +81,12 @@
                             {
                                 "x-ext-string", new String()
                                 {
-                                    Value = "foo"
+                                    Value = "foo",
                                 }
-                            }
-                        }
+                            },
+                        },
                     }
-                }
+                },
             };
         }
 
@@ -102,12 +102,12 @@
                             {
                                 "x-ext-string", new String()
                                 {
-                                    Value = "foo"
+                                    Value = "foo",
                                 }
-                            }
-                        }
+                            },
+                        },
                     }
-                }
+                },
             };
         }
 
@@ -118,8 +118,8 @@
                 {
                     "kafka",
                     new KafkaChannelBinding()
-                        {Extensions = new Dictionary<string, IAny> {{"x-ext-string", new String() {Value = "foo"}}}}
-                }
+                        { Extensions = new Dictionary<string, IAny> { { "x-ext-string", new String() { Value = "foo" } } } }
+                },
             };
         }
 
@@ -130,8 +130,8 @@
                 {
                     "kafka",
                     new KafkaServerBinding
-                        {Extensions = new Dictionary<string, IAny> {{"x-ext-string", new String {Value = "foo"}}}}
-                }
+                        { Extensions = new Dictionary<string, IAny> { { "x-ext-string", new String { Value = "foo" } } } }
+                },
             };
         }
 
@@ -143,7 +143,7 @@
                 TermsOfService = new Uri("https://lego.com"),
                 Contact = contact ?? new Contact(),
                 License = license ?? new License("Apache 2.0"),
-                Extensions = WithExtensionData(withExtensionData)
+                Extensions = WithExtensionData(withExtensionData),
             };
         }
 
@@ -154,7 +154,7 @@
                 Name = "foo",
                 Uri = new Uri("https://lego.com"),
                 Email = "asyncApiContactObject@lego.com",
-                Extensions = WithExtensionData(withExtensionData)
+                Extensions = WithExtensionData(withExtensionData),
             };
         }
 
@@ -163,7 +163,7 @@
             return new License("Apache 2.0")
             {
                 Url = new Uri("https://lego.com"),
-                Extensions = WithExtensionData(withExtensionData)
+                Extensions = WithExtensionData(withExtensionData),
             };
         }
 
@@ -174,9 +174,9 @@
                 ProtocolVersion = "0.0.1",
                 Description = "foo",
                 Variables = variables ?? ImmutableDictionary<string, ServerVariable>.Empty,
-                Security = security ?? new List<Dictionary<string, string[]>> {new () },
+                Security = security ?? new List<Dictionary<string, string[]>> { new() },
                 Bindings = ServerBindings(),
-                Extensions = WithExtensionData(withExtensionData)
+                Extensions = WithExtensionData(withExtensionData),
             };
         }
 
@@ -189,11 +189,11 @@
         {
             return new ServerVariable()
             {
-                Enum = new List<string> {"foo"},
+                Enum = new List<string> { "foo" },
                 Default = "bar",
                 Description = "baz",
-                Examples = new List<string> {"quz"},
-                Extensions = WithExtensionData(withExtensionData)
+                Examples = new List<string> { "quz" },
+                Extensions = WithExtensionData(withExtensionData),
             };
         }
 
@@ -202,12 +202,12 @@
             return new Channel()
             {
                 Description = "foo",
-                Servers = new [] {"production"},
+                Servers = new[] { "production" },
                 Subscribe = new Operation(),
                 Publish = new Operation(),
                 Parameters = ImmutableDictionary<string, Parameter>.Empty,
                 Bindings = ChannelBindings(),
-                Extensions = WithExtensionData(withExtensionData)
+                Extensions = WithExtensionData(withExtensionData),
             };
         }
 
@@ -218,7 +218,7 @@
                 Name = "foo",
                 Description = "bar",
                 ExternalDocs = new ExternalDocumentation(),
-                Extensions = WithExtensionData(withExtensionData)
+                Extensions = WithExtensionData(withExtensionData),
             };
         }
 
@@ -228,7 +228,7 @@
             {
                 Description = "foo",
                 Url = new Uri("https://lego.com"),
-                Extensions = WithExtensionData(withExtensionData)
+                Extensions = WithExtensionData(withExtensionData),
             };
         }
 
@@ -240,7 +240,7 @@
                 MessageBindings = MessageBindings(),
                 ChannelBindings = ChannelBindings(),
                 ServerBindings = ServerBindings(),
-                Extensions = WithExtensionData(withExtensionData)
+                Extensions = WithExtensionData(withExtensionData),
             };
         }
     }

@@ -1,25 +1,26 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiInfoObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiInfoObject
 {
-    using AsyncAPI.Tests;
-    using Models;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Tests;
     using Xunit;
 
-    public class ShouldProduceInfo: ShouldConsumeProduceBase<Info>
+    public class ShouldProduceInfo : ShouldConsumeProduceBase<Info>
     {
-        public ShouldProduceInfo(): base(typeof(ShouldProduceInfo))
+        public ShouldProduceInfo()
+            : base(typeof(ShouldProduceInfo))
         {
         }
 
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new Info("foo", "bar")));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new Info("foo", "bar")));
         }
-        
+
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(MockData.Info()));
+            Assert.Equal(this.GetStringWithMockedExtensions("Complete.json"), this.AsyncApiWriter.Write(MockData.Info()));
         }
     }
 }

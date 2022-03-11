@@ -1,8 +1,8 @@
 ﻿namespace LEGO.AsyncAPI.Tests.Serializers
 {
     using System.Linq;
-    using Newtonsoft.Json.Linq;
     using LEGO.AsyncAPI.Readers.Serializers;
+    using Newtonsoft.Json.Linq;
     using Xunit;
     using YamlDotNet.Core;
 
@@ -12,13 +12,13 @@
 
         public YamlToJsonSerializerShould()
         {
-            sut = new YamlToJsonSerializer();
+            this.sut = new YamlToJsonSerializer();
         }
 
         [Fact]
         public void Serialize_Yaml_ThenReturnsCorrectJsonString()
         {
-            //Arrange
+            // Arrange
             var input = @"
 List:
   - a
@@ -27,39 +27,39 @@ xyz: xyz_value
 foo: foo_value
 ";
 
-            //Act
-            var result = sut.Serialize(input);
+            // Act
+            var result = this.sut.Serialize(input);
 
-            //Assert
-            VerifyResult(result);
+            // Assert
+            this.VerifyResult(result);
         }
 
         [Fact]
         public void Serialize_Json_ThenReturnsCorrectJsonString()
         {
-            //Arrange
+            // Arrange
             var input = "{\"List\":[\"a\",\"b\"], \"xyz\":\"xyz_value\", \"foo\":\"foo_value\"}";
 
-            //Act
-            var result = sut.Serialize(input);
+            // Act
+            var result = this.sut.Serialize(input);
 
-            //Assert
-            VerifyResult(result);
+            // Assert
+            this.VerifyResult(result);
         }
 
         [Fact]
         public void Serialize_InvalidFormat_ThenThrows()
         {
-            //Arrange
+            // Arrange
             var input = @"
 foo:  
  xyz:
 xyz_value
 ";
 
-            //Act
-            //Assert
-            Assert.Throws<SemanticErrorException>(() =>  sut.Serialize(input));
+            // Act
+            // Assert
+            Assert.Throws<SemanticErrorException>(() => this.sut.Serialize(input));
         }
 
         private void VerifyResult(string json)

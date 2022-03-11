@@ -1,25 +1,26 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiContactObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiContactObject
 {
-    using AsyncAPI.Tests;
-    using Models;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Tests;
     using Xunit;
 
-    public class ShouldProduceContact: ShouldConsumeProduceBase<Contact>
+    public class ShouldProduceContact : ShouldConsumeProduceBase<Contact>
     {
-        public ShouldProduceContact(): base(typeof(ShouldProduceContact))
+        public ShouldProduceContact()
+            : base(typeof(ShouldProduceContact))
         {
         }
 
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new Contact()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new Contact()));
         }
-        
+
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(MockData.Contact()));
+            Assert.Equal(this.GetStringWithMockedExtensions("Complete.json"), this.AsyncApiWriter.Write(MockData.Contact()));
         }
     }
 }

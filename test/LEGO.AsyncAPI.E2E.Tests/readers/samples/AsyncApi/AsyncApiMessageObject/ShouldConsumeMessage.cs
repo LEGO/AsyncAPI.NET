@@ -1,28 +1,29 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiMessageObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageObject
 {
     using System.Collections.Generic;
-    using Models;
-    using Models.Any;
-    using Models.Interfaces;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeMessage: ShouldConsumeProduceBase<Message>
+    public class ShouldConsumeMessage : ShouldConsumeProduceBase<Message>
     {
-        public ShouldConsumeMessage(): base(typeof(ShouldConsumeMessage))
+        public ShouldConsumeMessage()
+            : base(typeof(ShouldConsumeMessage))
         {
         }
 
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            Assert.NotNull(AsyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
+            Assert.NotNull(this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json")));
         }
 
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStream("Complete.json"));
-        
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Complete.json"));
+
             Assert.IsType<Schema>(output.Headers);
             Assert.IsAssignableFrom<IAny>(output.Payload);
             Assert.IsType<CorrelationId>(output.CorrelationId);

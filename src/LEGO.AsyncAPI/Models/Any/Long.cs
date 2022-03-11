@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// The type of <see cref="IAny"/>.
         /// </summary>
-        public PrimitiveType PrimitiveType { get; } = PrimitiveType.Long;
+        public PrimitiveType PrimitiveType => PrimitiveType.Long;
 
         /// <summary>
         /// AnyType.Primitive.
@@ -34,6 +34,6 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public static explicit operator long?(Long l) => l.Value;
 
-        public static explicit operator Long(long l) => new (value: l);
+        public static explicit operator Long(long l) => new(value: l);
     }
 }

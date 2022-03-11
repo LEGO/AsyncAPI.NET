@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Resolvers
 {
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.NewtonUtils;

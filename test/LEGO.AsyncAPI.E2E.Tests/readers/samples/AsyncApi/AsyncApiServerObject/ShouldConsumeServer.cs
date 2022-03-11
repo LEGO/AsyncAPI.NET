@@ -1,22 +1,23 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiServerObject
 {
     using System;
     using System.Collections.Generic;
-    using Models;
-    using Models.Any;
-    using Models.Interfaces;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
     public class ShouldConsumeServer : ShouldConsumeProduceBase<Server>
     {
-        public ShouldConsumeServer() : base(typeof(ShouldConsumeServer))
+        public ShouldConsumeServer()
+            : base(typeof(ShouldConsumeServer))
         {
         }
 
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
             Assert.Equal(new Uri("https://lego.com"), output.Url);
             Assert.Equal("http", output.Protocol);
@@ -25,7 +26,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerObject
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal(new Uri("https://lego.com"), output.Url);
             Assert.Equal("http", output.Protocol);

@@ -2,7 +2,7 @@
 
 namespace LEGO.AsyncAPI.Models.Any
 {
-    using JetBrains.Annotations;
+    using System;
 
     /// <summary>
     /// Async API null.
@@ -12,19 +12,12 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// Static instance of Null class.
         /// </summary>
-        public static readonly Null Instance = new ();
-
-        /// <summary>
-        /// Default null primitive type constructor.
-        /// </summary>
-        public Null()
-        {
-        }
+        public static readonly Null Instance = new();
 
         /// <summary>
         /// The type of <see cref="IAny"/>.
         /// </summary>
-        public AnyType AnyType { get; } = AnyType.Primitive;
+        public AnyType AnyType => AnyType.Primitive;
 
         /// <summary>
         /// The type of <see cref="IAny"/>.
@@ -34,7 +27,6 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// Null.
         /// </summary>
-        [CanBeNull]
         public string Value
         {
             get => null;

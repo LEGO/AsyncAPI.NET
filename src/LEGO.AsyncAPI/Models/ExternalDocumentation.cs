@@ -2,6 +2,8 @@
 
 namespace LEGO.AsyncAPI.Models
 {
+    using System;
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 

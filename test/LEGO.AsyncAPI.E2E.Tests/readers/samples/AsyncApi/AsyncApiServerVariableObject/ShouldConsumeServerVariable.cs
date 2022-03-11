@@ -1,20 +1,21 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerVariableObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiServerVariableObject
 {
     using System.Collections.Generic;
-    using Models;
-    using Models.Any;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
     using Xunit;
 
     public class ShouldConsumeServerVariable : ShouldConsumeProduceBase<ServerVariable>
     {
-        public ShouldConsumeServerVariable() : base(typeof(ShouldConsumeServerVariable))
+        public ShouldConsumeServerVariable()
+            : base(typeof(ShouldConsumeServerVariable))
         {
         }
 
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
             Assert.IsType<ServerVariable>(output);
         }
@@ -22,12 +23,12 @@ namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiServerVariabl
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("Complete.json"));
 
-            Assert.Equal(new List<string> {"foo"}, output.Enum);
+            Assert.Equal(new List<string> { "foo" }, output.Enum);
             Assert.Equal("bar", output.Default);
             Assert.Equal("baz", output.Description);
-            Assert.Equal(new List<string> {"quz"}, output.Examples);
+            Assert.Equal(new List<string> { "quz" }, output.Examples);
             Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
         }
     }

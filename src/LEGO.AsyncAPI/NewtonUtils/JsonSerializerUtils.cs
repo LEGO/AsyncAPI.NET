@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.NewtonUtils
 {
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Resolvers;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -26,18 +27,18 @@ namespace LEGO.AsyncAPI.NewtonUtils
         /// <summary>
         /// Settings for JSON serializer with AsyncApiContractResolver as contract resolver.
         /// </summary>
-        public static JsonSerializerSettings Settings = new ()
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                ContractResolver = new AsyncApiContractResolver(),
-                MissingMemberHandling = MissingMemberHandling.Ignore,
-                ObjectCreationHandling = ObjectCreationHandling.Auto,
-                DefaultValueHandling = DefaultValueHandling.Include,
-                Converters = JsonConverters,
-                StringEscapeHandling = StringEscapeHandling.EscapeNonAscii,
-            };
+        public static JsonSerializerSettings Settings = new()
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ContractResolver = new AsyncApiContractResolver(),
+            MissingMemberHandling = MissingMemberHandling.Ignore,
+            ObjectCreationHandling = ObjectCreationHandling.Auto,
+            DefaultValueHandling = DefaultValueHandling.Include,
+            Converters = JsonConverters,
+            StringEscapeHandling = StringEscapeHandling.EscapeNonAscii,
+        };
     }
 }
