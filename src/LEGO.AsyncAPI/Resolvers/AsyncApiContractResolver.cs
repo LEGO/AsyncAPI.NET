@@ -10,8 +10,8 @@ namespace LEGO.AsyncAPI.Resolvers
 
     internal class AsyncApiContractResolver : CamelCasePropertyNamesContractResolver
     {
-        private readonly ExtensionDataSetter extensionDataSetter = new ();
-        private readonly ExtensionDataGetter extensionDataGetter = new ();
+        private readonly ExtensionDataSetter extensionDataSetter = new();
+        private readonly ExtensionDataGetter extensionDataGetter = new();
 
         public override JsonContract ResolveContract(Type type)
         {

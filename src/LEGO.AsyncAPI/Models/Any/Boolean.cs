@@ -34,6 +34,6 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public static explicit operator bool(Boolean b) => b.Value;
 
-        public static explicit operator Boolean(bool b) => new (value: b);
+        public static explicit operator Boolean(bool b) => new(value: b);
     }
 }

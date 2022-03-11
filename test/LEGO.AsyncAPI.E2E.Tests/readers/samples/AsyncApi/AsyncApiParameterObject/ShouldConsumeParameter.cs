@@ -1,20 +1,21 @@
 namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiParameterObject
 {
     using System.Collections.Generic;
-    using Models;
-    using Models.Any;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
     using Xunit;
 
     public class ShouldConsumeParameter : ShouldConsumeProduceBase<Parameter>
     {
-        public ShouldConsumeParameter() : base(typeof(ShouldConsumeParameter))
+        public ShouldConsumeParameter()
+            : base(typeof(ShouldConsumeParameter))
         {
         }
 
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
             Assert.IsType<Parameter>(output);
         }
@@ -22,7 +23,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiParameterObje
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("bar", output.Description);
             Assert.IsType<Schema>(output.Schema);

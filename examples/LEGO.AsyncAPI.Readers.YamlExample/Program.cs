@@ -5,7 +5,7 @@
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
-    using Readers;
+    using LEGO.AsyncAPI.Readers;
 
     public class Program
     {
@@ -13,7 +13,7 @@
         {
             var httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://raw.githubusercontent.com/asyncapi/spec/")
+                BaseAddress = new Uri("https://raw.githubusercontent.com/asyncapi/spec/"),
             };
 
             var stream = await httpClient.GetStreamAsync("master/examples/streetlights-kafka.yml");

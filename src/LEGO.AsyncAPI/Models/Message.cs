@@ -86,7 +86,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A list of traits to apply to the message object. Traits MUST be merged into the message object using the JSON Merge Patch algorithm in the same order they are defined here. The resulting object MUST be a valid Message Object.
         /// </summary>
-        public List<MessageTrait> Traits { get; set; } = new ();
+        public List<MessageTrait> Traits { get; set; } = new();
 
         /// <inheritdoc/>
         public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();

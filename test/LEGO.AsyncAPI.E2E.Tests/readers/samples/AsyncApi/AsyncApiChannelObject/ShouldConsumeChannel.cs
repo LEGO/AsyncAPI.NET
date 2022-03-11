@@ -10,14 +10,15 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiChannelObject
 
     public class ShouldConsumeChannel : ShouldConsumeProduceBase<Channel>
     {
-        public ShouldConsumeChannel() : base(typeof(ShouldConsumeChannel))
+        public ShouldConsumeChannel()
+            : base(typeof(ShouldConsumeChannel))
         {
         }
 
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
             Assert.IsType<Channel>(output);
         }
@@ -25,7 +26,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiChannelObject
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.Description);
             Assert.IsAssignableFrom<IList<string>>(output.Servers);

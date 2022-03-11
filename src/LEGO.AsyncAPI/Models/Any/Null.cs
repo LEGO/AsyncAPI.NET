@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// Static instance of Null class.
         /// </summary>
-        public static readonly Null Instance = new ();
+        public static readonly Null Instance = new();
 
         /// <summary>
         /// The type of <see cref="IAny"/>.

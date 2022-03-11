@@ -2,20 +2,21 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiInfoObject
 {
     using System;
     using System.Collections.Generic;
-    using Models;
-    using Models.Any;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
     using Xunit;
 
     public class ShouldConsumeInfo : ShouldConsumeProduceBase<Info>
     {
-        public ShouldConsumeInfo() : base(typeof(ShouldConsumeInfo))
+        public ShouldConsumeInfo()
+            : base(typeof(ShouldConsumeInfo))
         {
         }
 
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStream("Minimal.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
             Assert.Equal("foo", output.Title);
             Assert.Equal("bar", output.Version);
@@ -24,7 +25,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiInfoObject
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("Complete.json"));
 
             Assert.Equal("foo", output.Title);
             Assert.Equal("bar", output.Version);

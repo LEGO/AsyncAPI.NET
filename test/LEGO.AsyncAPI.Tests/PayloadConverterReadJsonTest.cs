@@ -1,8 +1,8 @@
 ﻿namespace LEGO.AsyncAPI.Tests
 {
     using System.IO;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Converters;
+    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.NewtonUtils;
     using Newtonsoft.Json;
     using Xunit;

@@ -6,20 +6,21 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiChannelObject
 
     public class ShouldProduceChannel : ShouldConsumeProduceBase<Channel>
     {
-        public ShouldProduceChannel() : base(typeof(ShouldProduceChannel))
+        public ShouldProduceChannel()
+            : base(typeof(ShouldProduceChannel))
         {
         }
 
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new Channel()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new Channel()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(MockData.Channel()));
+            Assert.Equal(this.GetStringWithMockedExtensions("Complete.json"), this.AsyncApiWriter.Write(MockData.Channel()));
         }
     }
 }

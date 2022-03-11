@@ -34,6 +34,6 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public static explicit operator long?(Long l) => l.Value;
 
-        public static explicit operator Long(long l) => new (value: l);
+        public static explicit operator Long(long l) => new(value: l);
     }
 }

@@ -2,27 +2,28 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageTraitO
 {
     using System.Collections.Generic;
     using System.Collections.Immutable;
-    using Models;
-    using Models.Bindings.MessageBindings;
-    using Models.Interfaces;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldProduceMessageTrait: ShouldConsumeProduceBase<MessageTrait>
+    public class ShouldProduceMessageTrait : ShouldConsumeProduceBase<MessageTrait>
     {
-        public ShouldProduceMessageTrait(): base(typeof(ShouldProduceMessageTrait))
+        public ShouldProduceMessageTrait()
+            : base(typeof(ShouldProduceMessageTrait))
         {
         }
 
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new MessageTrait()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new MessageTrait()));
         }
-        
+
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetString("Complete.json"), AsyncApiWriter.Write(new MessageTrait()
+            Assert.Equal(this.GetString("Complete.json"), this.AsyncApiWriter.Write(new MessageTrait()
             {
                 Name = "UserSignup",
                 Title = "User signup",
@@ -34,13 +35,17 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageTraitO
                 CorrelationId = new CorrelationId("foo"),
                 ExternalDocs = new ExternalDocumentation(),
                 Tags = ImmutableArray<Tag>.Empty,
-                Bindings = new Dictionary<string, IMessageBinding>(){{"http", new HttpMessageBinding
+                Bindings = new Dictionary<string, IMessageBinding>()
+                {
                     {
-                        Headers = new Schema(),
-                        BindingVersion = "foo"
-                    }
-                }},
-                Examples = ImmutableList<MessageExample>.Empty
+                        "http", new HttpMessageBinding
+                        {
+                            Headers = new Schema(),
+                            BindingVersion = "foo",
+                        }
+                    },
+                },
+                Examples = ImmutableList<MessageExample>.Empty,
             }));
         }
     }

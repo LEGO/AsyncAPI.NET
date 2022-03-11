@@ -2,29 +2,30 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
 {
     using System.Collections.Generic;
     using System.Collections.Immutable;
-    using AsyncAPI.Tests;
-    using Models;
-    using Models.Any;
-    using Models.Bindings.OperationBindings;
-    using Models.Interfaces;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Tests;
     using Xunit;
 
     public class ShouldProduceOperationTrait : ShouldConsumeProduceBase<OperationTrait>
     {
-        public ShouldProduceOperationTrait() : base(typeof(ShouldProduceOperationTrait))
+        public ShouldProduceOperationTrait()
+            : base(typeof(ShouldProduceOperationTrait))
         {
         }
 
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new OperationTrait()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new OperationTrait()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(new OperationTrait
+            Assert.Equal(this.GetStringWithMockedExtensions("Complete.json"), this.AsyncApiWriter.Write(new OperationTrait
             {
                 OperationId = "foo",
                 Summary = "bar",
@@ -44,10 +45,10 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
                                 {
                                     "x-ext-string", new String()
                                     {
-                                        Value = "foo"
+                                        Value = "foo",
                                     }
-                                }
-                            }
+                                },
+                            },
                         }
                     },
                     {
@@ -62,15 +63,15 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
                                 {
                                     "x-ext-string", new String()
                                     {
-                                        Value = "foo"
+                                        Value = "foo",
                                     }
-                                }
-                            }
+                                },
+                            },
                         }
-                    }
+                    },
 
                 },
-                Extensions = MockData.Extensions()
+                Extensions = MockData.Extensions(),
             }));
         }
     }

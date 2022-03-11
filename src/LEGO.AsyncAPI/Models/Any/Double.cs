@@ -34,6 +34,6 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public static explicit operator double?(Double d) => d.Value;
 
-        public static explicit operator Double(double d) => new (value: d);
+        public static explicit operator Double(double d) => new(value: d);
     }
 }
