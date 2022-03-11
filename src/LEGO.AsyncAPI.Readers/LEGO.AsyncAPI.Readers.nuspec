@@ -2,6 +2,7 @@
 <package >
 	<metadata>
 		<id>LEGO.AsyncAPI.Readers</id>
+		<version>$versionSuffix$</version>
 		<title>AsyncAPI Readers</title>
 		<authors>LEGO</authors>
 		<owners>LEGO</owners>
