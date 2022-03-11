@@ -28,3 +28,6 @@ jobs:
 
       - name: Push generated package to GitHub Packages registry
         run: dotnet nuget push out/*.nupkg --skip-duplicate --no-symbols true
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+         
