@@ -23,7 +23,7 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}   
       
       - name: Build LEGO.AsyncAPI project and pack NuGet package
-        run: dotnet pack src/LEGO.AsyncAPI.Readers/LEGO.AsyncAPI.Readers.csproj -c Release -o out -p:PackageVersion=1.0.$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER  -p:NuspecFile=LEGO.AsyncAPI.Readers.nuspec
+        run: dotnet pack src/LEGO.AsyncAPI.Readers/LEGO.AsyncAPI.Readers.csproj -c Release -o out -p:PackageVersion=1.0.$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER -p:NuspecFile=LEGO.AsyncAPI.Readers.nuspec
 
       - name: Push generated package to GitHub Packages registry
         run: dotnet nuget push out/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}

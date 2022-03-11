@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <package >
 	<metadata>
 		<id>LEGO.AsyncAPI.Readers</id>
@@ -9,9 +9,12 @@
 		<description>Package containing AsyncAPI Readers to produce AsyncApiDocument object based on YAML or JSON Async API specs.</description>
 		<dependencies>
 			<group targetFramework="net6.0" />
+			    <dependency id="Newtonsoft.Json" version="13.0.1" />
+			    <dependency id="StyleCop.Analyzers" version="1.1.118" />
+			    <dependency id="YamlDotNet" version="11.2.1" />
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="bin\Release\net6.0\LEGO.AsyncAPI.Readers.*.dll" target="lib\net6.0" />
+		<file src="..\..\bin\Release\net6.0\LEGO.AsyncAPI.dll" target="lib\net6.0" />
 	</files>
 </package>
