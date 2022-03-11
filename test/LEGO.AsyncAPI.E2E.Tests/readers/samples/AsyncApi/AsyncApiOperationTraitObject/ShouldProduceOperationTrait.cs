@@ -69,7 +69,6 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
                             },
                         }
                     },
-
                 },
                 Extensions = MockData.Extensions(),
             }));
