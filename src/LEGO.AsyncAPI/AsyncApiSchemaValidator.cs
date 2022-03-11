@@ -2,6 +2,8 @@
 
 namespace LEGO.AsyncAPI
 {
+    using System;
+    using System.IO;
     using System.Text.Json;
     using Json.Schema;
 

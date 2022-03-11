@@ -1,4 +1,4 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOperationTraitObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTraitObject
 {
     using System.Collections.Generic;
     using Models;

@@ -1,4 +1,4 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiOAuthFlowsObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOAuthFlowsObject
 {
     using AsyncAPI.Tests;
     using Models;

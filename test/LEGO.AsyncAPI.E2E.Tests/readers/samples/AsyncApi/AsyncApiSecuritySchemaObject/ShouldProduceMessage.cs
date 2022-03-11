@@ -1,4 +1,4 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiSecuritySchemaObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiSecuritySchemaObject
 {
     using System;
     using AsyncAPI.Tests;

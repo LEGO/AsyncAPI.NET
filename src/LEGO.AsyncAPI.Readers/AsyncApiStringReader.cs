@@ -2,6 +2,8 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System;
+    using System.IO;
     using System.Text;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Serializers;

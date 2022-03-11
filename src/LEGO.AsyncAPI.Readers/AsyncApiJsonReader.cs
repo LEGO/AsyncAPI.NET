@@ -2,6 +2,8 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System;
+    using System.IO;
     using LEGO.AsyncAPI.Models;
 
     /// <summary>

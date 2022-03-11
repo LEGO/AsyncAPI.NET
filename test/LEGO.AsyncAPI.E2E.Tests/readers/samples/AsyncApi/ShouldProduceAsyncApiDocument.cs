@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Tests;
-using Xunit;
-
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi
 {
+    using System;
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Tests;
     using Models.Any;
+    using Xunit;
 
     public class ShouldProduceAsyncApiDocument : ShouldConsumeProduceBase<AsyncApiDocument>
     {

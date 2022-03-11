@@ -1,4 +1,4 @@
-﻿namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
+﻿namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi
 {
     using System;
     using System.IO;

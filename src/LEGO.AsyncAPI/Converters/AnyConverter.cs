@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Converters
 {
+    using System;
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.NewtonUtils;
     using Newtonsoft.Json;

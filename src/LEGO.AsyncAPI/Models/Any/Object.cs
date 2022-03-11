@@ -2,6 +2,8 @@
 
 namespace LEGO.AsyncAPI.Models.Any
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Async API object.
     /// </summary>

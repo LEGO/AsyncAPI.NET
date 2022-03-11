@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Models.Interfaces
 {
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Any;
 
     /// <summary>

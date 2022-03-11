@@ -1,7 +1,7 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiChannelObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiChannelObject
 {
-    using AsyncAPI.Tests;
-    using Models;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Tests;
     using Xunit;
 
     public class ShouldProduceChannel : ShouldConsumeProduceBase<Channel>

@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.NewtonUtils
 {
     using System.Globalization;
+    using System.Linq;
     using Newtonsoft.Json.Linq;
 
     internal static class JTokenExtensions
