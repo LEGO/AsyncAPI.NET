@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Publish a NuGet package
     steps:
-      - name: Checkout repository with all history
+      - name: Checkout repository
         uses: actions/checkout@v1
         
       - name: Setup .NET Core @ Latest
@@ -27,4 +27,4 @@ jobs:
         run: dotnet pack src/LEGO.AsyncAPI.Readers/LEGO.AsyncAPI.Readers.csproj -c Release -o out -p:PackageVersion=1.0.$GITHUB_RUN_ID
 
       - name: Push generated package to GitHub Packages registry
-        run: dotnet nuget push src/LEGO.AsyncAPI.Readers/out/*.nupkg --skip-duplicate --no-symbols true
+        run: dotnet nuget push out/*.nupkg --skip-duplicate --no-symbols true
