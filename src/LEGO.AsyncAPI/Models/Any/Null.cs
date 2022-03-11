@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Models.Any
 {
     using System;
-    using JetBrains.Annotations;
 
     /// <summary>
     /// Async API null.
@@ -28,7 +27,6 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// Null.
         /// </summary>
-        [CanBeNull]
         public string Value
         {
             get => null;
