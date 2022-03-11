@@ -16,6 +16,6 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="..\..\bin\Release\net6.0\LEGO.AsyncAPI.dll" target="lib\net6.0" />
+		<file src="\bin\Release\net6.0\LEGO.AsyncAPI.dll" target="lib\net6.0" />
 	</files>
 </package>
