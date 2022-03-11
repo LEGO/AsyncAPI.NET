@@ -6,6 +6,7 @@
 		<title>AsyncAPI Readers</title>
 		<authors>LEGO</authors>
 		<owners>LEGO</owners>
+		<repository type="git" url="https://github.com/LEGO/AsyncAPI.NET" />
 		<description>Package containing AsyncAPI Readers to produce AsyncApiDocument object based on YAML or JSON Async API specs.</description>
 		<dependencies>
 			<group targetFramework="net6.0">
