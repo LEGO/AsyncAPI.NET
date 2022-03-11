@@ -30,14 +30,15 @@
 
         protected string GetString(string filename)
         {
-            return this.ReadFile(this.sampleFolderPath, filename);
+            return this.ReadFile(this.sampleFolderPath, filename).ReplaceLineEndings();
         }
 
         protected string GetStringWithMockedExtensions(string filename)
         {
             var body = this.GetString(filename);
-            var extensionsBody = this.ReadFile("LEGO/AsyncAPI/E2E/Tests/readers/samples/AsyncApi", "MockExtensions.json");
-            return new StringBuilder(body.Substring(0, body.Length - 2).TrimEnd('\r')).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString();
+            var extensionsBody = this.ReadFile("LEGO/AsyncAPI/E2E/Tests/Readers/Samples/AsyncApi", "MockExtensions.json");
+            body = body.ReplaceLineEndings();
+            return new StringBuilder(body.Substring(0, body.Length - 2).TrimEnd('\r')).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString().ReplaceLineEndings();
         }
 
         private string ReadFile(string sampleFolderPath, string filename)
