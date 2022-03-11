@@ -2,6 +2,8 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System;
+    using System.IO;
     using System.Text;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Serializers;
@@ -28,7 +30,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public AsyncApiDocument Read(Stream input, out AsyncApiDiagnostic diagnostic)
         {
-            AsyncApiDocument output = new ();
+            AsyncApiDocument output = new();
 
             try
             {

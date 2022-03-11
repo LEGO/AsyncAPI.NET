@@ -1,28 +1,29 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiSecuritySchemaObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiSecuritySchemaObject
 {
     using System;
     using System.Collections.Generic;
-    using Models;
-    using Models.Any;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
     using Xunit;
 
-    public class ShouldConsumeSecuritySchema: ShouldConsumeProduceBase<SecurityScheme>
+    public class ShouldConsumeSecuritySchema : ShouldConsumeProduceBase<SecurityScheme>
     {
-        public ShouldConsumeSecuritySchema(): base(typeof(ShouldConsumeSecuritySchema))
+        public ShouldConsumeSecuritySchema()
+            : base(typeof(ShouldConsumeSecuritySchema))
         {
         }
 
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            Assert.NotNull(AsyncApiAsyncApiReader.Read(GetStream("Minimal.json")));
+            Assert.NotNull(this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json")));
         }
 
         [Fact]
         public void ShouldConsumeCompleteSpec()
         {
-            var output = AsyncApiAsyncApiReader.Read(GetStreamWithMockedExtensions("Complete.json"));
-        
+            var output = this.AsyncApiAsyncApiReader.Read(this.GetStreamWithMockedExtensions("Complete.json"));
+
             Assert.Equal(SecuritySchemeType.Http, output.Type);
             Assert.Equal("bar", output.Description);
             Assert.Equal("baz", output.Name);

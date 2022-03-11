@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Models.Bindings.ServerBindings
 {
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 

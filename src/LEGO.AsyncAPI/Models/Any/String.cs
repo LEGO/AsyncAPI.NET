@@ -33,6 +33,6 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public static explicit operator string?(String s) => s.Value;
 
-        public static explicit operator String(string s) => new () { Value = s };
+        public static explicit operator String(string s) => new() { Value = s };
     }
 }

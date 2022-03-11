@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.NewtonUtils
 {
+    using System;
     using LEGO.AsyncAPI.Models.Any;
     using Newtonsoft.Json.Linq;
     using Array = LEGO.AsyncAPI.Models.Any.Array;
@@ -33,7 +34,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
 
         private static JToken Map(Array obj)
         {
-            JArray tokenArray = new ();
+            JArray tokenArray = new();
 
             foreach (var item in obj)
             {
@@ -45,7 +46,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
 
         private static JToken Map(Object obj)
         {
-            JObject tokenObject = new ();
+            JObject tokenObject = new();
 
             foreach (var key in obj.Keys)
             {

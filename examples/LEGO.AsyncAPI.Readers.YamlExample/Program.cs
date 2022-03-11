@@ -1,8 +1,11 @@
 ﻿namespace LEGO.AsyncAPI.Readers.YamlExample
 {
     using System;
+    using System.IO;
+    using System.Net.Http;
     using System.Text;
-    using Readers;
+    using System.Threading.Tasks;
+    using LEGO.AsyncAPI.Readers;
 
     public class Program
     {
@@ -10,7 +13,7 @@
         {
             var httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://raw.githubusercontent.com/asyncapi/spec/")
+                BaseAddress = new Uri("https://raw.githubusercontent.com/asyncapi/spec/"),
             };
 
             var stream = await httpClient.GetStreamAsync("master/examples/streetlights-kafka.yml");

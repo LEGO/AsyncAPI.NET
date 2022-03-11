@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// The type of <see cref="IAny"/>.
         /// </summary>
-        public PrimitiveType PrimitiveType { get; } = PrimitiveType.Double;
+        public PrimitiveType PrimitiveType => PrimitiveType.Double;
 
         /// <summary>
         /// Value.
@@ -34,6 +34,6 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public static explicit operator double?(Double d) => d.Value;
 
-        public static explicit operator Double(double d) => new (value: d);
+        public static explicit operator Double(double d) => new(value: d);
     }
 }

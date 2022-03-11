@@ -1,28 +1,29 @@
-namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi.AsyncApiCorrelationIdObject
+namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiCorrelationIdObject
 {
-    using AsyncAPI.Tests;
-    using Models;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Tests;
     using Xunit;
 
-    public class ShouldProduceCorrelationId: ShouldConsumeProduceBase<CorrelationId>
+    public class ShouldProduceCorrelationId : ShouldConsumeProduceBase<CorrelationId>
     {
-        public ShouldProduceCorrelationId(): base(typeof(ShouldProduceCorrelationId))
+        public ShouldProduceCorrelationId()
+            : base(typeof(ShouldProduceCorrelationId))
         {
         }
 
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(GetString("Minimal.json"), AsyncApiWriter.Write(new CorrelationId("bar")));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new CorrelationId("bar")));
         }
-        
+
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(GetStringWithMockedExtensions("Complete.json"), AsyncApiWriter.Write(new CorrelationId("bar")
+            Assert.Equal(this.GetStringWithMockedExtensions("Complete.json"), this.AsyncApiWriter.Write(new CorrelationId("bar")
             {
                 Description = "foo",
-                Extensions = MockData.Extensions()
+                Extensions = MockData.Extensions(),
             }));
         }
     }

@@ -2,6 +2,8 @@
 
 namespace LEGO.AsyncAPI
 {
+    using System.IO;
+
     /// <summary>
     /// Generic stream reader.
     /// </summary>

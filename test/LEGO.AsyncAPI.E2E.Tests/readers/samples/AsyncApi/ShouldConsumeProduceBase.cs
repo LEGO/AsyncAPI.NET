@@ -1,4 +1,4 @@
-﻿namespace LEGO.AsyncAPI.E2E.Tests.readers.samples.AsyncApi
+﻿namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi
 {
     using System;
     using System.IO;
@@ -13,37 +13,38 @@
 
         protected ShouldConsumeProduceBase(Type child)
         {
-            sampleFolderPath = GetPath(child);
-            AsyncApiAsyncApiReader = new JsonStreamReader<T>();
-            AsyncApiWriter = new JsonStringWriter<T>();
+            this.sampleFolderPath = GetPath(child);
+            this.AsyncApiAsyncApiReader = new JsonStreamReader<T>();
+            this.AsyncApiWriter = new JsonStringWriter<T>();
         }
 
         protected Stream GetStream(string filename)
         {
-            return GenerateStreamFromString(GetString(filename));
+            return GenerateStreamFromString(this.GetString(filename));
         }
-    
+
         protected Stream GetStreamWithMockedExtensions(string filename)
         {
-            return GenerateStreamFromString(GetStringWithMockedExtensions(filename));
+            return GenerateStreamFromString(this.GetStringWithMockedExtensions(filename));
         }
 
         protected string GetString(string filename)
         {
-            return ReadFile(sampleFolderPath, filename);
+            return this.ReadFile(this.sampleFolderPath, filename).ReplaceLineEndings();
         }
 
         protected string GetStringWithMockedExtensions(string filename)
         {
-            var body = GetString(filename);
-            var extensionsBody = ReadFile("LEGO/AsyncAPI/E2E/Tests/readers/samples/AsyncApi", "MockExtensions.json");
-            return new StringBuilder(body.Substring(0, body.Length - 2).TrimEnd('\r')).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString();
+            var body = this.GetString(filename);
+            var extensionsBody = this.ReadFile("LEGO/AsyncAPI/E2E/Tests/Readers/Samples/AsyncApi", "MockExtensions.json");
+            body = body.ReplaceLineEndings();
+            return new StringBuilder(body.Substring(0, body.Length - 2).TrimEnd('\r')).AppendLine(",").AppendLine(extensionsBody).Append("}").ToString().ReplaceLineEndings();
         }
 
         private string ReadFile(string sampleFolderPath, string filename)
         {
-            var combine = Path.Combine(sampleFolderPath, filename).Replace("/", ".").Replace("\\",".");
-            var stream = GetType().Assembly.GetManifestResourceStream(combine);
+            var combine = Path.Combine(sampleFolderPath, filename).Replace("/", ".").Replace("\\", ".");
+            var stream = this.GetType().Assembly.GetManifestResourceStream(combine);
             if (stream == null)
             {
                 throw new FileNotFoundException("The stream is null because the file was not found");
@@ -57,7 +58,7 @@
             var split = Regex.Split(child.FullName ?? throw new ArgumentNullException(nameof(child)), "(.*?)\\.Should.*?");
             return split[1];
         }
-    
+
         protected static Stream GenerateStreamFromString(string s)
         {
             var stream = new MemoryStream();
