@@ -1,7 +1,8 @@
 name: Publish a NuGet package
 on:
   push:
-    paths: 
+    branches: [ main ]
+    paths:
       - 'src/LEGO.AsyncAPI.Readers/**'
       - ".github/workflows/release-package.yml"
       - '!**/*.md' 
