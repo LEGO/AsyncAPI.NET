@@ -4,9 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
-	<NuspecFile>LEGO.AsyncAPI.Readers.nuspec</NuspecFile>
-	<NuspecProperties>version=$(PackageVersion)</NuspecProperties>
-	<IsPackable>true</IsPackable>
+	<!--<NuspecFile>LEGO.AsyncAPI.Readers.nuspec</NuspecFile>
+	<NuspecProperties>version=$(PackageVersion)</NuspecProperties>-->
   </PropertyGroup>	
 
   <ItemGroup>
@@ -27,11 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
+    <InternalsVisibleTo Include="LEGO.AsyncAPI.Tests" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="LEGO.AsyncAPI.Tests" />
+    <ProjectReference Include="..\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>LEGO.AsyncAPI.Readers</id>
-		<version>1.0.0</version>
+		<version>2.0.0</version>
 		<title>AsyncAPI Readers</title>
 		<authors>LEGO</authors>
 		<owners>LEGO</owners>
@@ -16,7 +16,7 @@
 			</group>
 		</dependencies>
 	</metadata>
-	<files>
+	<!--<files>
 		<file src="..\..\src\LEGO.AsyncAPI\bin\Release\net6.0\LEGO.AsyncAPI.dll" target="lib\net6.0" />
-	</files>
+	</files>-->
 </package>
