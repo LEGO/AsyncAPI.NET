@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
 	  <PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
-	  <Description>OpenAPI.NET Readers for JSON and YAML documents</Description>
-	  <PackageTags>OpenAPI .NET</PackageTags>
+	  <Description>AsyncAPI.NET Readers for JSON and YAML documents</Description>
+	  <PackageTags>AsyncAPI .NET</PackageTags>
 	  <PackageId>LEGO.AsyncAPI</PackageId>
 	  <Version>1.0.0</Version>
 	  <AssemblyName>LEGO.AsyncAPI</AssemblyName>
