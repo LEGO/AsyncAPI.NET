@@ -1,7 +1,7 @@
 name: Build & Test
 on:
   push:
-    branches: [ main ]  
+    branches: [ main ]
     paths: 
       - 'src/**'
       - '!**/*.md'
