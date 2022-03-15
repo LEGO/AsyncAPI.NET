@@ -3,8 +3,10 @@
 namespace LEGO.AsyncAPI.Resolvers
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -47,6 +49,32 @@ namespace LEGO.AsyncAPI.Resolvers
             }
 
             return jsonProperties;
+        }
+
+        /// <summary>
+        /// Do not serialize an enumerable property if it is empty.
+        /// </summary>
+        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+        {
+            var property = base.CreateProperty(member, memberSerialization);
+
+            // only relevant to classes inheriting from IEnumerable excluding strings
+            if (property.PropertyType != typeof(string) && property.PropertyType.GetInterface(nameof(IEnumerable)) != null)
+            {
+                Predicate<object> oldShouldSerialize = property.ShouldSerialize;
+
+                Predicate<object> newShouldSerialize = instance =>
+                {
+                    var collection = property.ValueProvider.GetValue(instance) as ICollection;
+                    return collection == null || collection.Count != 0;
+                };
+
+                property.ShouldSerialize = oldShouldSerialize != null
+                    ? o => oldShouldSerialize(o) && newShouldSerialize(o)
+                    : newShouldSerialize;
+            }
+
+            return property;
         }
     }
 }
