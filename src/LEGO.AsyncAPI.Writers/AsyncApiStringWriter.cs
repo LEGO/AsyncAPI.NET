@@ -3,12 +3,10 @@
 namespace LEGO.AsyncAPI.Writers
 {
     using System;
-    using System.IO;
-    using System.Text;
     using LEGO.AsyncAPI.Models;
 
     /// <summary>
-    /// Converts contents on JSON/YAML string into AsyncApiDocument instance.
+    /// Converts contents AsyncApiDocument object to JSON string.
     /// </summary>
     public class AsyncApiStringWriter : IAsyncApiWriter
     {

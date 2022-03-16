@@ -1,12 +1,5 @@
 {
   "$id": "1",
   "url": "https://lego.com",
-  "protocol": "http",
-  "variables": {
-    "$id": "2"
-  },
-  "security": [],
-  "bindings": {
-    "$id": "3"
-  }
+  "protocol": "http"
 }

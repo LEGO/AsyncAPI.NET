@@ -4,18 +4,15 @@
   "protocol": "http",
   "protocolVersion": "0.0.1",
   "description": "foo",
-  "variables": {
-    "$id": "2"
-  },
   "security": [
     {
-      "$id": "3"
+      "$id": "2"
     }
   ],
   "bindings": {
-    "$id": "4",
+    "$id": "3",
     "kafka": {
-      "$id": "5",
+      "$id": "4",
       "x-ext-string": "foo"
     }
   }

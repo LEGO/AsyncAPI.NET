@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageTraitO
                 CorrelationId = new CorrelationId("foo"),
                 ExternalDocs = new ExternalDocumentation(),
                 Tags = ImmutableArray<Tag>.Empty,
-                Bindings = new Dictionary<string, IMessageBinding>()
+                Bindings = new Dictionary<string, IMessageBinding>
                 {
                     {
                         "http", new HttpMessageBinding
