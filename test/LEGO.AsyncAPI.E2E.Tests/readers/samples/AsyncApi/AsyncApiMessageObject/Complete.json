@@ -1,8 +1,7 @@
 {
   "$id": "1",
   "headers": {
-    "$id": "2",
-    "required": []
+    "$id": "2"
   },
   "payload": {
     "foo": "bar",

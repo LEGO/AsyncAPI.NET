@@ -105,12 +105,10 @@
       "kafka": {
         "$id": "24",
         "groupId": {
-          "$id": "25",
-          "required": []
+          "$id": "25"
         },
         "clientId": {
-          "$id": "26",
-          "required": []
+          "$id": "26"
         },
         "bindingVersion": "quz",
         "x-ext-string": "foo"
@@ -120,8 +118,7 @@
         "type": "request",
         "method": "GET",
         "query": {
-          "$id": "28",
-          "required": []
+          "$id": "28"
         },
         "bindingVersion": "quz",
         "x-ext-string": "foo"
