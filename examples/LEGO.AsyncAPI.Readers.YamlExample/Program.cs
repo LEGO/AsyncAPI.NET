@@ -20,7 +20,7 @@
 
             var streetlightKafkaSpec = await new StreamReader(stream, Encoding.UTF8).ReadToEndAsync();
 
-            var openApiDocument = new AsyncApiStringReader().Read(streetlightKafkaSpec, out var diagnostic);
+            var asyncApiDocument = new AsyncApiStringReader().Read(streetlightKafkaSpec, out var diagnostic);
 
             if (diagnostic.HasError)
             {
@@ -29,8 +29,8 @@
             else
             {
                 Console.WriteLine("Kafka Starlight YAML spec successfully parsed into AsyncApiDocument object");
-                Console.WriteLine($"Api version: {openApiDocument.Asyncapi}");
-                Console.WriteLine($"Number of channels: {openApiDocument.Channels.Count}");
+                Console.WriteLine($"Api version: {asyncApiDocument.Asyncapi}");
+                Console.WriteLine($"Number of channels: {asyncApiDocument.Channels.Count}");
             }
         }
     }
