@@ -45,6 +45,7 @@
             payload.Add("qux", new Array { (String)"foo" });
             payload.Add("quux", (Boolean)true);
             payload.Add("quuz", Null.Instance);
+            payload.Add("xyz", new Array());
             return payload;
         }
 

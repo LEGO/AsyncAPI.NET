@@ -14,7 +14,8 @@
       "foo"
     ],
     "quux": true,
-    "quuz": null
+    "quuz": null,
+    "xyz": []
   },
   "correlationId": {
     "$id": "3",
