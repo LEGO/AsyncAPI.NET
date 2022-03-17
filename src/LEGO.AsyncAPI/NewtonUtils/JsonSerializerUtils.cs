@@ -36,7 +36,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
             ContractResolver = new AsyncApiContractResolver(),
             MissingMemberHandling = MissingMemberHandling.Ignore,
             ObjectCreationHandling = ObjectCreationHandling.Auto,
-            DefaultValueHandling = DefaultValueHandling.Ignore,
+            DefaultValueHandling = DefaultValueHandling.Include,
             Converters = JsonConverters,
             StringEscapeHandling = StringEscapeHandling.EscapeNonAscii,
         };
