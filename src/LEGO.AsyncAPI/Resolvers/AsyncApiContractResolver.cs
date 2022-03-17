@@ -68,11 +68,6 @@ namespace LEGO.AsyncAPI.Resolvers
                     var collection = property.ValueProvider.GetValue(instance) as ICollection;
                     var stringCollection = property.ValueProvider.GetValue(instance) as ICollection<string>;
 
-                    if (property.PropertyName == "required")
-                    {
-                        var t = 1;
-                    }
-
                     return (collection == null || collection.Count > 0) &&
                            (stringCollection == null || stringCollection.Any());
                 };
