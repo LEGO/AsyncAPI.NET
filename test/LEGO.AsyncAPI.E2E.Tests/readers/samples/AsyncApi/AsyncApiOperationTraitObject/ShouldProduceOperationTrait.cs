@@ -43,7 +43,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
                             Extensions = new Dictionary<string, IAny>
                             {
                                 {
-                                    "x-ext-string", new String()
+                                    "x-ext-string", new AsyncAPIString()
                                     {
                                         Value = "foo",
                                     }
@@ -61,7 +61,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
                             Extensions = new Dictionary<string, IAny>
                             {
                                 {
-                                    "x-ext-string", new String()
+                                    "x-ext-string", new AsyncAPIString()
                                     {
                                         Value = "foo",
                                     }

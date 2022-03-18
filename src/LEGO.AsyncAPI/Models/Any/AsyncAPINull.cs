@@ -7,12 +7,12 @@ namespace LEGO.AsyncAPI.Models.Any
     /// <summary>
     /// Async API null.
     /// </summary>
-    public struct Null : IPrimitiveValue<string>
+    public struct AsyncAPINull : IPrimitiveValue<string>
     {
         /// <summary>
         /// Static instance of Null class.
         /// </summary>
-        public static readonly Null Instance = new();
+        public static readonly AsyncAPINull Instance = new();
 
         /// <summary>
         /// The type of <see cref="IAny"/>.

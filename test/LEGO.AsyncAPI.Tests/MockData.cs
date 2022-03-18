@@ -10,11 +10,6 @@
     using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
     using LEGO.AsyncAPI.Models.Bindings.ServerBindings;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using Array = LEGO.AsyncAPI.Models.Any.Array;
-    using Boolean = LEGO.AsyncAPI.Models.Any.Boolean;
-    using Double = LEGO.AsyncAPI.Models.Any.Double;
-    using Object = LEGO.AsyncAPI.Models.Any.Object;
-    using String = LEGO.AsyncAPI.Models.Any.String;
 
     public static class MockData
     {
@@ -22,30 +17,30 @@
         {
             return new Dictionary<string, IAny>
             {
-                { "x-ext-null", Null.Instance },
-                { "x-ext-integer", (Long)13 },
-                { "x-ext-number", (Double)13.13 },
-                { "x-ext-string", (String)"bar" },
-                { "x-ext-boolean", (Boolean)true },
-                { "x-ext-array", new Array() { (String)"foo", new Object { ["foo"] = (String)"bar" } } },
-                { "x-ext-object", new Object { ["foo"] = (String)"bar" } },
+                { "x-ext-null", AsyncAPINull.Instance },
+                { "x-ext-integer", (AsyncAPILong)13 },
+                { "x-ext-number", (AsyncAPIDouble)13.13 },
+                { "x-ext-string", (AsyncAPIString)"bar" },
+                { "x-ext-boolean", (AsyncAPIBoolean)true },
+                { "x-ext-array", new AsyncAPIArray() { (AsyncAPIString)"foo", new AsyncAPIObject { ["foo"] = (AsyncAPIString)"bar" } } },
+                { "x-ext-object", new AsyncAPIObject { ["foo"] = (AsyncAPIString)"bar" } },
             };
         }
 
-        public static Object Payload()
+        public static AsyncAPIObject Payload()
         {
-            var payload = new Object();
-            payload.Add("foo", (String)"bar");
-            payload.Add("baz", (Long)13);
-            payload.Add("bazz", (Double)13.13);
-            payload.Add("grault", new Object
+            var payload = new AsyncAPIObject();
+            payload.Add("foo", (AsyncAPIString)"bar");
+            payload.Add("baz", (AsyncAPILong)13);
+            payload.Add("bazz", (AsyncAPIDouble)13.13);
+            payload.Add("grault", new AsyncAPIObject
             {
-                { "garply", (String)"waldo" },
+                { "garply", (AsyncAPIString)"waldo" },
             });
-            payload.Add("qux", new Array { (String)"foo" });
-            payload.Add("quux", (Boolean)true);
-            payload.Add("quuz", Null.Instance);
-            payload.Add("xyz", new Array());
+            payload.Add("qux", new AsyncAPIArray { (AsyncAPIString)"foo" });
+            payload.Add("quux", (AsyncAPIBoolean)true);
+            payload.Add("quuz", AsyncAPINull.Instance);
+            payload.Add("xyz", new AsyncAPIArray());
             return payload;
         }
 
@@ -62,7 +57,7 @@
                         Extensions = new Dictionary<string, IAny>
                         {
                             {
-                                "x-ext-string", new String()
+                                "x-ext-string", new AsyncAPIString()
                                 {
                                     Value = "foo",
                                 }
@@ -80,7 +75,7 @@
                         Extensions = new Dictionary<string, IAny>
                         {
                             {
-                                "x-ext-string", new String()
+                                "x-ext-string", new AsyncAPIString()
                                 {
                                     Value = "foo",
                                 }
@@ -101,7 +96,7 @@
                         Extensions = new Dictionary<string, IAny>
                         {
                             {
-                                "x-ext-string", new String()
+                                "x-ext-string", new AsyncAPIString()
                                 {
                                     Value = "foo",
                                 }
@@ -119,7 +114,7 @@
                 {
                     "kafka",
                     new KafkaChannelBinding()
-                        { Extensions = new Dictionary<string, IAny> { { "x-ext-string", new String() { Value = "foo" } } } }
+                        { Extensions = new Dictionary<string, IAny> { { "x-ext-string", new AsyncAPIString() { Value = "foo" } } } }
                 },
             };
         }
@@ -131,7 +126,7 @@
                 {
                     "kafka",
                     new KafkaServerBinding
-                        { Extensions = new Dictionary<string, IAny> { { "x-ext-string", new String { Value = "foo" } } } }
+                        { Extensions = new Dictionary<string, IAny> { { "x-ext-string", new AsyncAPIString { Value = "foo" } } } }
                 },
             };
         }

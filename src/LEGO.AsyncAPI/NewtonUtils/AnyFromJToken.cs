@@ -6,11 +6,6 @@ namespace LEGO.AsyncAPI.NewtonUtils
     using LEGO.AsyncAPI.Models.Any;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using Array = LEGO.AsyncAPI.Models.Any.Array;
-    using Boolean = LEGO.AsyncAPI.Models.Any.Boolean;
-    using Double = LEGO.AsyncAPI.Models.Any.Double;
-    using Object = LEGO.AsyncAPI.Models.Any.Object;
-    using String = LEGO.AsyncAPI.Models.Any.String;
 
     internal static class AnyFromJToken
     {
@@ -20,20 +15,20 @@ namespace LEGO.AsyncAPI.NewtonUtils
             {
                 // Unfortunately we cannot us the Object mapper for this. Newton will always from an exception using the value is null
                 // see: ConvertUtils.ConvertResult.TryConvertInternal for details
-                JTokenType.Null => default(Null),
-                JTokenType.String => ObjectFromJToken.Map<String>(token),
-                JTokenType.Boolean => ObjectFromJToken.Map<Boolean>(token),
-                JTokenType.Integer => ObjectFromJToken.Map<Long>(token),
-                JTokenType.Float => ObjectFromJToken.Map<Double>(token),
+                JTokenType.Null => default(AsyncAPINull),
+                JTokenType.String => ObjectFromJToken.Map<AsyncAPIString>(token),
+                JTokenType.Boolean => ObjectFromJToken.Map<AsyncAPIBoolean>(token),
+                JTokenType.Integer => ObjectFromJToken.Map<AsyncAPILong>(token),
+                JTokenType.Float => ObjectFromJToken.Map<AsyncAPIDouble>(token),
                 JTokenType.Object => Map(token.Value<JObject>()),
                 JTokenType.Array => Map(token.Value<JArray>()),
                 _ => throw new JsonException("Value of type " + token.GetType() + " not handled for arrays")
             };
         }
 
-        private static Object Map(JObject value)
+        private static AsyncAPIObject Map(JObject value)
         {
-            var output = new Object();
+            var output = new AsyncAPIObject();
             foreach (var jProperty in value.Properties())
             {
                 output.Add(jProperty.Name, Map(jProperty.Value));
@@ -42,9 +37,9 @@ namespace LEGO.AsyncAPI.NewtonUtils
             return output;
         }
 
-        private static Array Map(JArray value)
+        private static AsyncAPIArray Map(JArray value)
         {
-            var output = new Array();
+            var output = new AsyncAPIArray();
             output.AddRange(value.Select(Map));
             return output;
         }

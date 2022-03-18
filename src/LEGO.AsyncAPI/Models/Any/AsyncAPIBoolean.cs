@@ -1,17 +1,17 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
-    /// Async API double.
+    /// Async API Boolean.
     /// </summary>
-    public struct Double : IPrimitiveValue<double?>
+    public struct AsyncAPIBoolean : IPrimitiveValue<bool>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Double"/> class.
+        /// Initializes a new instance of the <see cref="AsyncAPIBoolean"/> class.
         /// </summary>
         /// <param name="value">Initialization value.</param>
-        public Double(double? value)
+        public AsyncAPIBoolean(bool value)
             : this()
         {
             this.Value = value;
@@ -20,20 +20,20 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// The type of <see cref="IAny"/>.
         /// </summary>
-        public PrimitiveType PrimitiveType => PrimitiveType.Double;
+        public PrimitiveType PrimitiveType => PrimitiveType.Boolean;
 
         /// <summary>
         /// Value.
         /// </summary>
-        public double? Value { get; set; }
+        public bool Value { get; set; }
 
         /// <summary>
         /// AnyType.Primitive.
         /// </summary>
         public AnyType AnyType => AnyType.Primitive;
 
-        public static explicit operator double?(Double d) => d.Value;
+        public static explicit operator bool(AsyncAPIBoolean b) => b.Value;
 
-        public static explicit operator Double(double d) => new(value: d);
+        public static explicit operator AsyncAPIBoolean(bool b) => new(value: b);
     }
 }

@@ -5,13 +5,13 @@ namespace LEGO.AsyncAPI.Models.Any
     /// <summary>
     /// Async API long.
     /// </summary>
-    public struct Long : IPrimitiveValue<long?>
+    public struct AsyncAPILong : IPrimitiveValue<long?>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Long"/> class.
+        /// Initializes a new instance of the <see cref="AsyncAPILong"/> class.
         /// </summary>
         /// <param name="value">Initialization value.</param>
-        public Long(long? value)
+        public AsyncAPILong(long? value)
             : this()
         {
             this.Value = value;
@@ -32,8 +32,8 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         public long? Value { get; set; }
 
-        public static explicit operator long?(Long l) => l.Value;
+        public static explicit operator long?(AsyncAPILong l) => l.Value;
 
-        public static explicit operator Long(long l) => new(value: l);
+        public static explicit operator AsyncAPILong(long l) => new(value: l);
     }
 }

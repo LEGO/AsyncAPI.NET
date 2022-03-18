@@ -76,11 +76,11 @@
 
         private Message GetMockMessage()
         {
-            var payload = new Object
+            var payload = new AsyncAPIObject
             {
-                { "foo_Array", new Array { (String)"bar" } },
-                { "foo_Array_empty", new Array() },
-                { "foo_Array_with_null", new Array { Null.Instance } },
+                { "foo_Array", new AsyncAPIArray { (AsyncAPIString)"bar" } },
+                { "foo_Array_empty", new AsyncAPIArray() },
+                { "foo_Array_with_null", new AsyncAPIArray { AsyncAPINull.Instance } },
             };
 
             var headers = new Schema

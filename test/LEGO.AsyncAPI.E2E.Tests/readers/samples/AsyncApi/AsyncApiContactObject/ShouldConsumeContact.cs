@@ -5,7 +5,6 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiContactObject
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
     using Xunit;
-    using String = LEGO.AsyncAPI.Models.Any.String;
 
     public class ShouldConsumeContact : ShouldConsumeProduceBase<Contact>
     {
@@ -30,7 +29,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiContactObject
             Assert.Equal("asyncApiContactObject@lego.com", output.Email);
             var extensions = output.Extensions;
             Assert.IsAssignableFrom<IDictionary<string, IAny>>(extensions);
-            var extension = (String)extensions["x-ext-string"];
+            var extension = (AsyncAPIString)extensions["x-ext-string"];
             Assert.Equal("bar", (string)extension!);
         }
     }

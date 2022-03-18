@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Models.Any
     /// <summary>
     /// Async API array.
     /// </summary>
-    public class Array : List<IAny>, IAny
+    public class AsyncAPIArray : List<IAny>, IAny
     {
         /// <summary>
         /// The type of <see cref="IAny"/>.
