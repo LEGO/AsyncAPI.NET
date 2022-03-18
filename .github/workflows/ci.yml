@@ -29,5 +29,34 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Test      
+      run: |
+          dotnet test --no-restore --no-build --configuration $config --settings coverlet.runsettings --collect:"XPlat Code Coverage" --logger:"liquid.md;LogFileName=${{github.workspace}}/${{env.file_name}};Title=${{env.title}};"
+          dotnet ~/.nuget/packages/reportgenerator/4.8.11/tools/net5.0/ReportGenerator.dll "-reports:**/coverage.cobertura.xml;" "-targetdir:${{github.workspace}}/report" "-reporttypes:Html;MarkdownSummary"
+    - name: Create combined report for the PR conversation
+      run: |
+        OUTPUT=$(cat << EOF
+        $(cat ${{github.workspace}}/${{env.file_name}})
+        ## Code Coverage
+        <details>
+        <summary>Click to see Code Coverage results</summary>
+        
+        $(cat ${{github.workspace}}/report/Summary.md)
+        </details>
+        EOF
+        )
+        OUTPUT="${OUTPUT//'%'/'%25'}"
+        OUTPUT="${OUTPUT//$'\n'/'%0A'}"
+        OUTPUT="${OUTPUT//$'\r'/'%0D'}"
+        echo $OUTPUT
+        echo "::set-output name=report::$OUTPUT"
+      id: report      
+    - name: comment PR with the Report
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: ${{ github.event_name == 'pull_request' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        header: Coverage Report
+        recreate: true
+        message: ${{ steps.report.outputs.report }}
