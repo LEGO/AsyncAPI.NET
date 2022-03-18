@@ -31,7 +31,7 @@ jobs:
       run: dotnet build --no-restore
     - name: Test      
       run: |
-          dotnet test --no-restore --no-build --collect:"XPlat Code Coverage" --logger:"liquid.md;LogFileName=${{github.workspace}}/${{env.file_name}};Title=${{env.title}};"
+          dotnet test --no-restore --no-build --collect:"XPlat Code Coverage" 
           dotnet ~/.nuget/packages/reportgenerator/4.8.11/tools/net5.0/ReportGenerator.dll "-reports:**/coverage.cobertura.xml;" "-targetdir:${{github.workspace}}/report" "-reporttypes:Html;MarkdownSummary"
     - name: Create combined report for the PR conversation
       run: |
