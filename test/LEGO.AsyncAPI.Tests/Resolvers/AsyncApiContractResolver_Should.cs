@@ -1,10 +1,10 @@
-﻿namespace LEGO.AsyncAPI.Tests
+﻿namespace LEGO.AsyncAPI.Tests.Resolvers
 {
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Resolvers;
+    using AsyncAPI.Models;
+    using AsyncAPI.Models.Any;
     using Newtonsoft.Json;
+    using NewtonUtils;
     using Xunit;
 
     public class AsyncApiContractResolver_Should
@@ -12,6 +12,7 @@
         [Fact]
         public void NotSerializeEmptyArray()
         {
+            // Arrange
             var expected = "{\"foo\":\"bar\",\"baz\":13,\"bazz\":13.13,\"grault\":{\"garply\":\"waldo\",\"non_empty_array\":[\"xyz\"],\"quux\":true,\"quuz\":null}}";
 
             var @object = new
@@ -29,38 +30,34 @@
                 }
             };
 
-            var sut = new AsyncApiContractResolver();
+            // Act
+            var actual = JsonConvert.SerializeObject(@object, JsonSerializerUtils.Settings);
 
-            var actual = JsonConvert.SerializeObject(@object, new JsonSerializerSettings { ContractResolver = sut });
-
+            // Assert
             Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void SerializeMessageWithNonEmptyArrayHeaders_ThenArraysSerialized()
         {
+            // Arrange
             var expected =
                 "{\"headers\":{\"allOf\":[{}],\"required\":[\"Required\"],\"enum\":[\"on\",\"off\"]}," +
                 "\"payload\":{\"foo_Array\":[\"bar\"],\"foo_Array_empty\":[],\"foo_Array_with_null\":[null]},\"name\":\"foo\"}";
 
             var message = GetMockMessage();
 
-            var sut = new AsyncApiContractResolver();
+            // Act
+            var actual = JsonConvert.SerializeObject(message, JsonSerializerUtils.Settings);
 
-            var actual = JsonConvert.SerializeObject(message, new JsonSerializerSettings
-            {
-                ContractResolver = sut,
-                NullValueHandling = NullValueHandling.Ignore,
-                DefaultValueHandling = DefaultValueHandling.Include,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            });
-
+            // Assert
             Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void SerializeMessageWithEmptyArrayHeaders_ThenArraysNotSerialized()
         {
+            // Arrange
             var expected =
                 "{\"headers\":{}," +
                 "\"payload\":{\"foo_Array\":[\"bar\"],\"foo_Array_empty\":[],\"foo_Array_with_null\":[null]},\"name\":\"foo\"}";
@@ -70,16 +67,10 @@
             message.Headers.Enum = new List<string>();
             message.Headers.AllOf = new List<Schema>();
 
-            var sut = new AsyncApiContractResolver();
+            // Act
+            var actual = JsonConvert.SerializeObject(message, JsonSerializerUtils.Settings);
 
-            var actual = JsonConvert.SerializeObject(message, new JsonSerializerSettings
-            {
-                ContractResolver = sut,
-                NullValueHandling = NullValueHandling.Ignore,
-                DefaultValueHandling = DefaultValueHandling.Include,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            });
-
+            // Assert
             Assert.Equal(expected, actual);
         }
 
