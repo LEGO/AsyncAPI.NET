@@ -4,6 +4,7 @@ on:
     paths:
       - 'src/LEGO.AsyncAPI/**'
       - 'src/LEGO.AsyncAPI.Readers/**'
+      - 'src/LEGO.AsyncAPI.Writers/**'
       - ".github/workflows/release-package.yml"
       - '!**/*.md' 
   workflow_dispatch:
