@@ -1,7 +1,6 @@
 name: Publish a NuGet package
 on:
   push:
-    branches: [ main ]
     paths:
       - 'src/LEGO.AsyncAPI/**'
       - 'src/LEGO.AsyncAPI.Readers/**'
