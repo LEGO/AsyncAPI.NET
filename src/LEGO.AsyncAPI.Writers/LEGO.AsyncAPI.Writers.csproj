@@ -1,9 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <ImplicitUsings>disable</ImplicitUsings>
+	  <Nullable>disable</Nullable>
+	  <PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
+	  <Description>AsyncAPI.NET Writers</Description>
+	  <PackageTags>AsyncAPI .NET</PackageTags>
+	  <PackageId>LEGO.AsyncAPI.Writers</PackageId>
+	  <Version>1.0.0</Version>
+	  <AssemblyName>LEGO.AsyncAPI.Writers</AssemblyName>
+	  <RootNamespace>LEGO.AsyncAPI.Writers</RootNamespace>
+	  <RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
