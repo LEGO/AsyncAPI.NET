@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj" />
-    <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Writers\LEGO.AsyncAPI.Writers.csproj" />
+    <PackageReference Include="LEGO.AsyncAPI.Readers" Version="0.1.2008926433.35-prerelease" />
+    <PackageReference Include="LEGO.AsyncAPI.Writers" Version="0.1.2008926433.35-prerelease" />
   </ItemGroup>
 
 </Project>
