@@ -25,10 +25,12 @@ jobs:
       with:
         dotnet-version: '6.0.x'
         include-prerelease: true
+    - name: Add Nuget source Lego
+      run: dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/lego/index.json"
+    - name: Add Nuget source Nuget.org
+      run: dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
     - name: Restore dependencies
-      run: dotnet restore -s https://api.nuget.org/v3/index.json -s https://nuget.pkg.github.com/lego/index.json
-      env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      run: dotnet restore     
     - name: Build
       run: dotnet build --no-restore
     - name: Test
