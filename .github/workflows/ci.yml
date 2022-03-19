@@ -26,7 +26,9 @@ jobs:
         dotnet-version: '6.0.x'
         include-prerelease: true
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore -s https://api.nuget.org/v3/index.json -s https://nuget.pkg.github.com/lego/index.json
+      env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Build
       run: dotnet build --no-restore
     - name: Test
