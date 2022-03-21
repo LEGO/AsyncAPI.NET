@@ -2,8 +2,6 @@
 
 namespace LEGO.AsyncAPI.Models.Any
 {
-    using JetBrains.Annotations;
-
     /// <summary>
     /// Async API string.
     /// </summary>
@@ -13,7 +11,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// Initializes a new instance of the <see cref="AsyncAPIString"/> class.
         /// </summary>
         /// <param name="value">Initialization value.</param>
-        public AsyncAPIString([CanBeNull] string value = null)
+        public AsyncAPIString(string value = null)
         {
             this.Value = value;
         }
