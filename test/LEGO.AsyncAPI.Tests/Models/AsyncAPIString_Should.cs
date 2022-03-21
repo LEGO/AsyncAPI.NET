@@ -8,7 +8,7 @@
         [Fact]
         public void HaveValueNull_WhenCreatedWithDefaultConstructor()
         {
-            var sut = new AsyncAPIString();
+            var sut = new AsyncAPIString(null);
             var value = sut.Value;
             Assert.Null(value);
         }

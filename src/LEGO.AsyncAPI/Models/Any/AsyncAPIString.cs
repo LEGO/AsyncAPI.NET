@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// Initializes a new instance of the <see cref="AsyncAPIString"/> class.
         /// </summary>
         /// <param name="value">Initialization value.</param>
-        public AsyncAPIString(string value = null)
+        public AsyncAPIString(string value)
         {
             this.Value = value;
         }
@@ -33,6 +33,6 @@ namespace LEGO.AsyncAPI.Models.Any
 
         public static explicit operator string(AsyncAPIString s) => s.Value;
 
-        public static explicit operator AsyncAPIString(string s) => new () { Value = s };
+        public static explicit operator AsyncAPIString(string s) => new (s);
     }
 }

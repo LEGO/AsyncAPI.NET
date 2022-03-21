@@ -1,5 +1,6 @@
 ﻿namespace LEGO.AsyncAPI.Tests
 {
+    using System;
     using System.IO;
     using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Any;
@@ -19,11 +20,11 @@
         public void ShouldConsumeObject()
         {
             AsyncAPIObject obj = new AsyncAPIObject();
-            obj.Add("foo", new AsyncAPIString() { Value = "bar" });
+            obj.Add("foo", new AsyncAPIString("bar"));
             obj.Add("baz", new AsyncAPILong(value: 13));
             obj.Add("bazz", new AsyncAPIDouble(value: 13.13));
             var grault = new AsyncAPIObject();
-            grault.Add("garply", new AsyncAPIString() { Value = "waldo" });
+            grault.Add("garply", new AsyncAPIString("waldo"));
             obj.Add("grault", grault);
             obj.Add("qux", new AsyncAPIArray());
             obj.Add("quux", new AsyncAPIBoolean(value: true));
@@ -35,7 +36,7 @@
         [Fact]
         public void ShouldProduceString()
         {
-            var output = GetOutputFor(new AsyncAPIString() { Value = "foo" });
+            var output = GetOutputFor(new AsyncAPIString("foo"));
 
             Assert.Equal("\"foo\"", output);
         }
@@ -61,8 +62,8 @@
         {
             var output = GetOutputFor(new AsyncAPIArray
             {
-                new AsyncAPIString { Value = "foo" },
-                new AsyncAPIString { Value = "bar" },
+                new AsyncAPIString("foo"),
+                new AsyncAPIString("bar"),
                 new AsyncAPIDouble(value: 13.13),
                 new AsyncAPIObject(),
             });

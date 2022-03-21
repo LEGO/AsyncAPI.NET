@@ -57,10 +57,7 @@
                         Extensions = new Dictionary<string, IAny>
                         {
                             {
-                                "x-ext-string", new AsyncAPIString()
-                                {
-                                    Value = "foo",
-                                }
+                                "x-ext-string", new AsyncAPIString("foo")
                             },
                         },
                     }
@@ -75,10 +72,7 @@
                         Extensions = new Dictionary<string, IAny>
                         {
                             {
-                                "x-ext-string", new AsyncAPIString()
-                                {
-                                    Value = "foo",
-                                }
+                                "x-ext-string", new AsyncAPIString("foo")
                             },
                         },
                     }
@@ -96,10 +90,7 @@
                         Extensions = new Dictionary<string, IAny>
                         {
                             {
-                                "x-ext-string", new AsyncAPIString()
-                                {
-                                    Value = "foo",
-                                }
+                                "x-ext-string", new AsyncAPIString("foo")
                             },
                         },
                     }
@@ -113,8 +104,15 @@
             {
                 {
                     "kafka",
-                    new KafkaChannelBinding()
-                        { Extensions = new Dictionary<string, IAny> { { "x-ext-string", new AsyncAPIString() { Value = "foo" } } } }
+                    new KafkaChannelBinding
+                    {
+                        Extensions = new Dictionary<string, IAny>
+                        {
+                            {
+                                "x-ext-string", new AsyncAPIString("foo")
+                            }
+                        }
+                    }
                 },
             };
         }
@@ -126,7 +124,15 @@
                 {
                     "kafka",
                     new KafkaServerBinding
-                        { Extensions = new Dictionary<string, IAny> { { "x-ext-string", new AsyncAPIString { Value = "foo" } } } }
+                    {
+                        Extensions = new Dictionary<string, IAny>
+                        {
+                            {
+                                "x-ext-string", new AsyncAPIString("foo")
+
+                            }
+                        }
+                    }
                 },
             };
         }
