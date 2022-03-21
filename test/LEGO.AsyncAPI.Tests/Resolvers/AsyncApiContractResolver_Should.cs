@@ -13,8 +13,20 @@
         public void NotSerializeEmptyArray()
         {
             // Arrange
-            var expected = "{\"foo\":\"bar\",\"baz\":13,\"bazz\":13.13,\"grault\":{\"garply\":\"waldo\",\"non_empty_array\":[\"xyz\"],\"quux\":true,\"quuz\":null}}";
-
+            var expected = @"{
+  ""$id"": ""1"",
+  ""foo"": ""bar"",
+  ""baz"": 13,
+  ""bazz"": 13.13,
+  ""grault"": {
+    ""$id"": ""2"",
+    ""garply"": ""waldo"",
+    ""non_empty_array"": [
+      ""xyz""
+    ],
+    ""quux"": true
+  }
+}";
             var @object = new
             {
                 foo = "bar",
@@ -41,9 +53,34 @@
         public void SerializeMessageWithNonEmptyArrayHeaders_ThenArraysSerialized()
         {
             // Arrange
-            var expected =
-                "{\"headers\":{\"allOf\":[{}],\"required\":[\"Required\"],\"enum\":[\"on\",\"off\"]}," +
-                "\"payload\":{\"foo_Array\":[\"bar\"],\"foo_Array_empty\":[],\"foo_Array_with_null\":[null]},\"name\":\"foo\"}";
+            var expected = @"{
+  ""$id"": ""1"",
+  ""headers"": {
+    ""$id"": ""2"",
+    ""allOf"": [
+      {
+        ""$id"": ""3""
+      }
+    ],
+    ""required"": [
+      ""Required""
+    ],
+    ""enum"": [
+      ""on"",
+      ""off""
+    ]
+  },
+  ""payload"": {
+    ""foo_Array"": [
+      ""bar""
+    ],
+    ""foo_Array_empty"": [],
+    ""foo_Array_with_null"": [
+      null
+    ]
+  },
+  ""name"": ""foo""
+}";
 
             var message = GetMockMessage();
 
@@ -58,9 +95,22 @@
         public void SerializeMessageWithEmptyArrayHeaders_ThenArraysNotSerialized()
         {
             // Arrange
-            var expected =
-                "{\"headers\":{}," +
-                "\"payload\":{\"foo_Array\":[\"bar\"],\"foo_Array_empty\":[],\"foo_Array_with_null\":[null]},\"name\":\"foo\"}";
+            var expected = @"{
+  ""$id"": ""1"",
+  ""headers"": {
+    ""$id"": ""2""
+  },
+  ""payload"": {
+    ""foo_Array"": [
+      ""bar""
+    ],
+    ""foo_Array_empty"": [],
+    ""foo_Array_with_null"": [
+      null
+    ]
+  },
+  ""name"": ""foo""
+}";
 
             var message = GetMockMessage();
             message.Headers.Required = new HashSet<string>();

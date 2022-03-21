@@ -5,13 +5,13 @@ namespace LEGO.AsyncAPI.Models.Any
     /// <summary>
     /// Async API double.
     /// </summary>
-    public struct AsyncAPIDouble : IPrimitiveValue<double?>
+    public struct AsyncAPIDouble : IPrimitiveValue<double>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncAPIDouble"/> class.
         /// </summary>
         /// <param name="value">Initialization value.</param>
-        public AsyncAPIDouble(double? value)
+        public AsyncAPIDouble(double value)
             : this()
         {
             this.Value = value;
@@ -25,15 +25,15 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// Value.
         /// </summary>
-        public double? Value { get; set; }
+        public double Value { get; set; }
 
         /// <summary>
         /// AnyType.Primitive.
         /// </summary>
         public AnyType AnyType => AnyType.Primitive;
 
-        public static explicit operator double?(AsyncAPIDouble d) => d.Value;
+        public static explicit operator double(AsyncAPIDouble d) => d.Value;
 
-        public static explicit operator AsyncAPIDouble(double d) => new(value: d);
+        public static explicit operator AsyncAPIDouble(double d) => new (value: d);
     }
 }

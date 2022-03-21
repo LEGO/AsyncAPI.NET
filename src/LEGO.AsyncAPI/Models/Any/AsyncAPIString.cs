@@ -24,15 +24,15 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <summary>
         /// Value.
         /// </summary>
-        public string? Value { get; set; }
+        public string Value { get; set; }
 
         /// <summary>
         /// AnyType.Primitive.
         /// </summary>
         public AnyType AnyType => AnyType.Primitive;
 
-        public static explicit operator string?(AsyncAPIString s) => s.Value;
+        public static explicit operator string(AsyncAPIString s) => s.Value;
 
-        public static explicit operator AsyncAPIString(string s) => new() { Value = s };
+        public static explicit operator AsyncAPIString(string s) => new () { Value = s };
     }
 }
