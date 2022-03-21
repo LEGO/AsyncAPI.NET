@@ -10,6 +10,11 @@ namespace LEGO.AsyncAPI.NewtonUtils
     {
         public static JToken Map(IAny o)
         {
+            if (o == null)
+            {
+                return ObjectToJToken.Map(null);
+            }
+
             return o.AnyType switch
             {
                 AnyType.Primitive => (IPrimitive)o switch

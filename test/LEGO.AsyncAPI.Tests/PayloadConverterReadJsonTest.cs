@@ -12,20 +12,22 @@
         [Fact]
         public void ShouldMapNull()
         {
-            Assert.IsType<AsyncAPINull>(GetOutputFor<AsyncAPINull>("null"));
+            var output = GetOutputFor<AsyncAPINull>("null");
+            Assert.Null(output);
         }
 
         [Fact]
         public void ShouldConsumeObject()
         {
             var output = GetOutputForClass<AsyncAPIObject>("{\"foo\":\"bar\",\"baz\":13,\"bazz\":13.13,\"grault\":{\"garply\":\"waldo\"},\"qux\":[],\"quux\":true,\"quuz\":null}");
+            Assert.NotNull(output);
             Assert.IsType<AsyncAPIObject>(output);
             Assert.IsType<AsyncAPIString>(output?["foo"]);
             Assert.IsType<AsyncAPILong>(output?["baz"]);
             Assert.IsType<AsyncAPIDouble>(output?["bazz"]);
             Assert.IsType<AsyncAPIArray>(output?["qux"]);
             Assert.IsType<AsyncAPIBoolean>(output?["quux"]);
-            Assert.IsType<AsyncAPINull>(output?["quuz"]);
+            Assert.Null(output["quuz"]);
             Assert.IsType<AsyncAPIObject>(output?["grault"]);
             var grault = output?["grault"] as AsyncAPIObject;
             Assert.IsType<AsyncAPIString>(grault?["garply"]);
@@ -76,16 +78,18 @@
             var outputTrue = GetOutputFor<AsyncAPIBoolean>("true");
 
             Assert.IsType<AsyncAPIBoolean>(outputTrue);
-            Assert.True(outputTrue.HasValue && outputTrue.Value.Value);
+            Assert.NotNull(outputTrue);
+            Assert.True(outputTrue?.Value);
 
             var outputFalse = GetOutputFor<AsyncAPIBoolean>("false");
 
             Assert.IsType<AsyncAPIBoolean>(outputFalse);
-            Assert.False(outputFalse != null && outputFalse.Value.Value);
+            Assert.NotNull(outputTrue);
+            Assert.False(outputFalse?.Value);
         }
 
-        private static T? GetOutputFor<T>(string input)
-            where T : struct
+        private static T GetOutputFor<T>(string input)
+            where T : class
         {
             var jsonTextReader = new JsonTextReader(new StringReader(input));
             jsonTextReader.Read();

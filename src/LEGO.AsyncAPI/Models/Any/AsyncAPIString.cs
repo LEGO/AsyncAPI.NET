@@ -2,16 +2,18 @@
 
 namespace LEGO.AsyncAPI.Models.Any
 {
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Async API string.
     /// </summary>
-    public struct AsyncAPIString : IPrimitiveValue<string>
+    public class AsyncAPIString : IPrimitiveValue<string>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncAPIString"/> class.
         /// </summary>
         /// <param name="value">Initialization value.</param>
-        public AsyncAPIString(string value)
+        public AsyncAPIString([CanBeNull] string value = null)
         {
             this.Value = value;
         }
