@@ -40,7 +40,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi
                     },
                 },
                 DefaultContentType = "application/json",
-                Channels = new Dictionary<string, Channel>() { { "subscribe", MockData.Channel(false) } },
+                Channels = new Dictionary<string, Channel> { { "subscribe", MockData.Channel(false) } },
                 Components = MockData.Components(false),
                 Tags = new[] { MockData.Tag(false) },
                 ExternalDocs = MockData.ExternalDocs(false),

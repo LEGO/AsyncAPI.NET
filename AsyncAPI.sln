@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEGO.AsyncAPI.Readers.YamlE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEGO.AsyncAPI.Readers.JsonExample", "examples\LEGO.AsyncAPI.Readers.JsonExample\LEGO.AsyncAPI.Readers.JsonExample.csproj", "{DACCA48F-6BA9-4552-B5A4-2D7ECAD328BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Writers", "src\LEGO.AsyncAPI.Writers\LEGO.AsyncAPI.Writers.csproj", "{3CC2CCB8-BDF8-4C1F-AF59-851EC5B5968C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEGO.AsyncAPI.Writers.Example", "examples\LEGO.AsyncAPI.Writers.Example\LEGO.AsyncAPI.Writers.Example.csproj", "{09C8FC87-D785-41C2-84B1-14B2F40099D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{DACCA48F-6BA9-4552-B5A4-2D7ECAD328BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DACCA48F-6BA9-4552-B5A4-2D7ECAD328BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DACCA48F-6BA9-4552-B5A4-2D7ECAD328BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC2CCB8-BDF8-4C1F-AF59-851EC5B5968C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC2CCB8-BDF8-4C1F-AF59-851EC5B5968C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC2CCB8-BDF8-4C1F-AF59-851EC5B5968C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC2CCB8-BDF8-4C1F-AF59-851EC5B5968C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09C8FC87-D785-41C2-84B1-14B2F40099D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09C8FC87-D785-41C2-84B1-14B2F40099D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09C8FC87-D785-41C2-84B1-14B2F40099D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09C8FC87-D785-41C2-84B1-14B2F40099D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

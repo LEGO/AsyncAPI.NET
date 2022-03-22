@@ -12,80 +12,84 @@
         [Fact]
         public void ShouldMapNull()
         {
-            Assert.IsType<Null>(GetOutputFor<Null>("null"));
+            var output = GetOutputFor<AsyncAPINull>("null");
+            Assert.Null(output);
         }
 
         [Fact]
         public void ShouldConsumeObject()
         {
-            var output = GetOutputForClass<Object>("{\"foo\":\"bar\",\"baz\":13,\"bazz\":13.13,\"grault\":{\"garply\":\"waldo\"},\"qux\":[],\"quux\":true,\"quuz\":null}");
-            Assert.IsType<Object>(output);
-            Assert.IsType<String>(output?["foo"]);
-            Assert.IsType<Long>(output?["baz"]);
-            Assert.IsType<Double>(output?["bazz"]);
-            Assert.IsType<Array>(output?["qux"]);
-            Assert.IsType<Boolean>(output?["quux"]);
-            Assert.IsType<Null>(output?["quuz"]);
-            Assert.IsType<Object>(output?["grault"]);
-            var grault = output?["grault"] as Object;
-            Assert.IsType<String>(grault?["garply"]);
+            var output = GetOutputForClass<AsyncAPIObject>("{\"foo\":\"bar\",\"baz\":13,\"bazz\":13.13,\"grault\":{\"garply\":\"waldo\"},\"qux\":[],\"quux\":true,\"quuz\":null}");
+            Assert.NotNull(output);
+            Assert.IsType<AsyncAPIObject>(output);
+            Assert.IsType<AsyncAPIString>(output?["foo"]);
+            Assert.IsType<AsyncAPILong>(output?["baz"]);
+            Assert.IsType<AsyncAPIDouble>(output?["bazz"]);
+            Assert.IsType<AsyncAPIArray>(output?["qux"]);
+            Assert.IsType<AsyncAPIBoolean>(output?["quux"]);
+            Assert.Null(output["quuz"]);
+            Assert.IsType<AsyncAPIObject>(output?["grault"]);
+            var grault = output?["grault"] as AsyncAPIObject;
+            Assert.IsType<AsyncAPIString>(grault?["garply"]);
         }
 
         [Fact]
         public void ShouldConsumeString()
         {
-            var output = GetOutputFor<String>("\"foo\"");
+            var output = GetOutputFor<AsyncAPIString>("\"foo\"");
 
-            Assert.IsType<String>(output);
+            Assert.IsType<AsyncAPIString>(output);
             Assert.Equal("foo", output?.Value);
         }
 
         [Fact]
         public void ShouldConsumeDouble()
         {
-            var output = GetOutputFor<Double>("13.13");
+            var output = GetOutputFor<AsyncAPIDouble>("13.13");
 
-            Assert.IsType<Double>(output);
+            Assert.IsType<AsyncAPIDouble>(output);
             Assert.Equal(13.13, output?.Value);
         }
 
         [Fact]
         public void ShouldConsumeLong()
         {
-            var output = GetOutputFor<Long>("134341421");
+            var output = GetOutputFor<AsyncAPILong>("134341421");
 
-            Assert.IsType<Long>(output);
+            Assert.IsType<AsyncAPILong>(output);
             Assert.Equal(134341421, output?.Value);
         }
 
         [Fact]
         public void ShouldConsumeArray()
         {
-            var output = GetOutputForClass<Array>("[ \"foo\", \"bar\", 13.13, {} ]");
+            var output = GetOutputForClass<AsyncAPIArray>("[ \"foo\", \"bar\", 13.13, {} ]");
 
-            Assert.IsType<Array>(output);
+            Assert.IsType<AsyncAPIArray>(output);
             Assert.Equal(4, output.Count);
-            Assert.Equal("foo", ((String)output[0]).Value);
-            Assert.Equal(13.13, ((Double)output[2]).Value);
-            Assert.IsType<Object>(output[3]);
+            Assert.Equal("foo", ((AsyncAPIString)output[0]).Value);
+            Assert.Equal(13.13, ((AsyncAPIDouble)output[2]).Value);
+            Assert.IsType<AsyncAPIObject>(output[3]);
         }
 
         [Fact]
         public void ShouldConsumeBoolean()
         {
-            var outputTrue = GetOutputFor<Boolean>("true");
+            var outputTrue = GetOutputFor<AsyncAPIBoolean>("true");
 
-            Assert.IsType<Boolean>(outputTrue);
-            Assert.True(outputTrue.HasValue && outputTrue.Value.Value);
+            Assert.IsType<AsyncAPIBoolean>(outputTrue);
+            Assert.NotNull(outputTrue);
+            Assert.True(outputTrue?.Value);
 
-            var outputFalse = GetOutputFor<Boolean>("false");
+            var outputFalse = GetOutputFor<AsyncAPIBoolean>("false");
 
-            Assert.IsType<Boolean>(outputFalse);
-            Assert.False(outputFalse != null && outputFalse.Value.Value);
+            Assert.IsType<AsyncAPIBoolean>(outputFalse);
+            Assert.NotNull(outputTrue);
+            Assert.False(outputFalse?.Value);
         }
 
-        private static T? GetOutputFor<T>(string input)
-            where T : struct
+        private static T GetOutputFor<T>(string input)
+            where T : class
         {
             var jsonTextReader = new JsonTextReader(new StringReader(input));
             jsonTextReader.Read();

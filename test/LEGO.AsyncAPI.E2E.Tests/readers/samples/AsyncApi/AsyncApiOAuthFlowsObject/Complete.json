@@ -1,27 +1,15 @@
 {
   "$id": "1",
   "implicit": {
-    "$id": "2",
-    "scopes": {
-      "$id": "3"
-    }
+    "$id": "2"
   },
   "password": {
-    "$id": "4",
-    "scopes": {
-      "$id": "5"
-    }
+    "$id": "3"
   },
   "clientCredentials": {
-    "$id": "6",
-    "scopes": {
-      "$id": "7"
-    }
+    "$id": "4"
   },
   "authorizationCode": {
-    "$id": "8",
-    "scopes": {
-      "$id": "9"
-    }
+    "$id": "5"
   }
 }

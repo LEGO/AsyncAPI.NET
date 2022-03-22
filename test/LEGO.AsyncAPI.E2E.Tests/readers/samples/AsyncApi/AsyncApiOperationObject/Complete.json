@@ -3,7 +3,6 @@
   "operationId": "foo",
   "summary": "bar",
   "description": "baz",
-  "tags": [],
   "externalDocs": {
     "$id": "2"
   },
@@ -12,69 +11,26 @@
     "kafka": {
       "$id": "4",
       "groupId": {
-        "$id": "5",
-        "readOnly": false,
-        "writeOnly": false,
-        "allOf": [],
-        "oneOf": [],
-        "anyOf": [],
-        "required": [],
-        "properties": {
-          "$id": "6"
-        },
-        "enum": [],
-        "nullable": false,
-        "deprecated": false
+        "$id": "5"
       },
       "clientId": {
-        "$id": "7",
-        "readOnly": false,
-        "writeOnly": false,
-        "allOf": [],
-        "oneOf": [],
-        "anyOf": [],
-        "required": [],
-        "properties": {
-          "$id": "8"
-        },
-        "enum": [],
-        "nullable": false,
-        "deprecated": false
+        "$id": "6"
       },
       "bindingVersion": "quz",
       "x-ext-string": "foo"
     },
     "http": {
-      "$id": "9",
+      "$id": "7",
       "type": "request",
       "method": "GET",
       "query": {
-        "$id": "10",
-        "readOnly": false,
-        "writeOnly": false,
-        "allOf": [],
-        "oneOf": [],
-        "anyOf": [],
-        "required": [],
-        "properties": {
-          "$id": "11"
-        },
-        "enum": [],
-        "nullable": false,
-        "deprecated": false
+        "$id": "8"
       },
       "bindingVersion": "quz",
       "x-ext-string": "foo"
     }
   },
-  "traits": [],
   "message": {
-    "$id": "12",
-    "tags": [],
-    "bindings": {
-      "$id": "13"
-    },
-    "examples": [],
-    "traits": []
+    "$id": "9"
   }
 }

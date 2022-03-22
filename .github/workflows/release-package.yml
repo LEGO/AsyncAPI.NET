@@ -5,6 +5,7 @@ on:
     paths:
       - 'src/LEGO.AsyncAPI/**'
       - 'src/LEGO.AsyncAPI.Readers/**'
+      - 'src/LEGO.AsyncAPI.Writers/**'
       - ".github/workflows/release-package.yml"
       - '!**/*.md' 
   workflow_dispatch:
@@ -12,7 +13,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    name: Publish a NuGet package
+    name: Publish NuGet packages
+    strategy:
+      matrix:
+        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers", "LEGO.AsyncAPI.Writers"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
@@ -24,15 +28,9 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}   
       
-      - name: Build LEGO.AsyncAPI project and pack NuGet package
-        run: dotnet pack src/LEGO.AsyncAPI/LEGO.AsyncAPI.csproj -c Release -o out -p:PackageVersion=1.0.$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER
+      - name: Build ${{ matrix.package-name }} project and pack NuGet package
+        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=0.1.$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER-prerelease
 
       - name: Push generated package to GitHub Packages registry
-        run: dotnet nuget push out/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}
-
-      - name: Build LEGO.AsyncAPI.Readers project and pack NuGet package
-        run: dotnet pack src/LEGO.AsyncAPI.Readers/LEGO.AsyncAPI.Readers.csproj -c Release -o out_readers -p:PackageVersion=1.0.$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER
-
-      - name: Push generated package to GitHub Packages registry
-        run: dotnet nuget push out_readers/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}
+        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}      
              

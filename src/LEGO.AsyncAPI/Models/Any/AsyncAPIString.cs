@@ -5,13 +5,13 @@ namespace LEGO.AsyncAPI.Models.Any
     /// <summary>
     /// Async API string.
     /// </summary>
-    public struct String : IPrimitiveValue<string>
+    public class AsyncAPIString : IPrimitiveValue<string>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="String"/> class.
+        /// Initializes a new instance of the <see cref="AsyncAPIString"/> class.
         /// </summary>
         /// <param name="value">Initialization value.</param>
-        public String(string value)
+        public AsyncAPIString(string value)
         {
             this.Value = value;
         }
@@ -31,8 +31,8 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         public AnyType AnyType => AnyType.Primitive;
 
-        public static explicit operator string(String s) => s.Value;
+        public static explicit operator string(AsyncAPIString s) => s.Value;
 
-        public static explicit operator String(string s) => new() { Value = s };
+        public static explicit operator AsyncAPIString(string s) => new (s);
     }
 }

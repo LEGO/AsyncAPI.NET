@@ -5,12 +5,5 @@
     "$id": "2",
     "title": "foo",
     "version": "bar"
-  },
-  "servers": {
-    "$id": "3"
-  },
-  "channels": {
-    "$id": "4"
-  },
-  "tags": []
+  }
 }

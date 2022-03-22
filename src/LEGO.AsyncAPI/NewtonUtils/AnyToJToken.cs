@@ -5,34 +5,34 @@ namespace LEGO.AsyncAPI.NewtonUtils
     using System;
     using LEGO.AsyncAPI.Models.Any;
     using Newtonsoft.Json.Linq;
-    using Array = LEGO.AsyncAPI.Models.Any.Array;
-    using Boolean = LEGO.AsyncAPI.Models.Any.Boolean;
-    using Double = LEGO.AsyncAPI.Models.Any.Double;
-    using Object = LEGO.AsyncAPI.Models.Any.Object;
-    using String = LEGO.AsyncAPI.Models.Any.String;
 
     internal static class AnyToJToken
     {
         public static JToken Map(IAny o)
         {
+            if (o == null)
+            {
+                return ObjectToJToken.Map(null);
+            }
+
             return o.AnyType switch
             {
                 AnyType.Primitive => (IPrimitive)o switch
                 {
-                    String s => ObjectToJToken.Map(s.Value),
-                    Long l => ObjectToJToken.Map(l.Value),
-                    Double d => ObjectToJToken.Map(d.Value),
-                    Boolean b => ObjectToJToken.Map(b.Value),
-                    Null n => ObjectToJToken.Map(n.Value),
+                    AsyncAPIString s => ObjectToJToken.Map(s.Value),
+                    AsyncAPILong l => ObjectToJToken.Map(l.Value),
+                    AsyncAPIDouble d => ObjectToJToken.Map(d.Value),
+                    AsyncAPIBoolean b => ObjectToJToken.Map(b.Value),
+                    AsyncAPINull n => ObjectToJToken.Map(n.Value),
                     _ => throw new ArgumentOutOfRangeException()
                 },
-                AnyType.Array => Map(o as Array),
-                AnyType.Object => Map(o as Object),
+                AnyType.Array => Map(o as AsyncAPIArray),
+                AnyType.Object => Map(o as AsyncAPIObject),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
 
-        private static JToken Map(Array obj)
+        private static JToken Map(AsyncAPIArray obj)
         {
             JArray tokenArray = new();
 
@@ -44,7 +44,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
             return tokenArray;
         }
 
-        private static JToken Map(Object obj)
+        private static JToken Map(AsyncAPIObject obj)
         {
             JObject tokenObject = new();
 

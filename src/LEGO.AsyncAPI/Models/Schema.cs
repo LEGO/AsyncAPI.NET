@@ -78,6 +78,7 @@ namespace LEGO.AsyncAPI.Models
         /// A property MUST NOT be marked as both readOnly and writeOnly being true.
         /// Default value is false.
         /// </summary>
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool ReadOnly { get; set; }
 
         /// <summary>
@@ -88,6 +89,7 @@ namespace LEGO.AsyncAPI.Models
         /// A property MUST NOT be marked as both readOnly and writeOnly being true.
         /// Default value is false.
         /// </summary>
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool WriteOnly { get; set; }
 
         /// <summary>
@@ -208,6 +210,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Allows sending a null value for the defined schema. Default value is false.
         /// </summary>
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool Nullable { get; set; }
 
         /// <summary>
@@ -219,6 +222,7 @@ namespace LEGO.AsyncAPI.Models
         /// Specifies that a schema is deprecated and SHOULD be transitioned out of usage.
         /// Default value is false.
         /// </summary>
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool Deprecated { get; set; }
 
         /// <inheritdoc/>

@@ -2,19 +2,7 @@
   "$id": "1",
   "description": "bar",
   "schema": {
-    "$id": "2",
-    "readOnly": false,
-    "writeOnly": false,
-    "allOf": [],
-    "oneOf": [],
-    "anyOf": [],
-    "required": [],
-    "properties": {
-      "$id": "3"
-    },
-    "enum": [],
-    "nullable": false,
-    "deprecated": false
+    "$id": "2"
   },
   "location": "$message.payload#/user/id"
 }

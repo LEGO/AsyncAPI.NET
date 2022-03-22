@@ -8,7 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+		<PackageReference Include="LiquidTestReports.Markdown" Version="1.0.9" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+		<PackageReference Include="ReportGenerator" Version="5.1.2" />
         <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,7 +20,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="coverlet.collector" Version="3.1.0">
+        <PackageReference Include="coverlet.collector" Version="3.1.2">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>

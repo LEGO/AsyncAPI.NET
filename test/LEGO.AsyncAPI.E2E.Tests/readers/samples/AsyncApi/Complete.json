@@ -70,150 +70,80 @@
         "production"
       ],
       "subscribe": {
-        "$id": "14",
-        "tags": [],
-        "traits": []
+        "$id": "14"
       },
       "publish": {
-        "$id": "15",
-        "tags": [],
-        "traits": []
-      },
-      "parameters": {
-        "$id": "16"
+        "$id": "15"
       },
       "bindings": {
-        "$id": "17",
+        "$id": "16",
         "kafka": {
-          "$id": "18",
+          "$id": "17",
           "x-ext-string": "foo"
         }
       }
     }
   },
   "components": {
-    "$id": "19",
-    "schemas": {
-      "$id": "20"
-    },
-    "messages": {
-      "$id": "21"
-    },
-    "securitySchemes": {
-      "$id": "22"
-    },
-    "parameters": {
-      "$id": "23"
-    },
-    "correlationIds": {
-      "$id": "24"
-    },
-    "operationTraits": {
-      "$id": "25"
-    },
-    "messageTraits": {
-      "$id": "26"
-    },
+    "$id": "18",
     "serverBindings": {
-      "$id": "27",
+      "$id": "19",
       "kafka": {
-        "$id": "28",
+        "$id": "20",
         "x-ext-string": "foo"
       }
     },
     "channelBindings": {
-      "$id": "29",
+      "$id": "21",
       "kafka": {
-        "$id": "30",
+        "$id": "22",
         "x-ext-string": "foo"
       }
     },
     "operationBindings": {
-      "$id": "31",
+      "$id": "23",
       "kafka": {
-        "$id": "32",
+        "$id": "24",
         "groupId": {
-          "$id": "33",
-          "readOnly": false,
-          "writeOnly": false,
-          "allOf": [],
-          "oneOf": [],
-          "anyOf": [],
-          "required": [],
-          "properties": {
-            "$id": "34"
-          },
-          "enum": [],
-          "nullable": false,
-          "deprecated": false
+          "$id": "25"
         },
         "clientId": {
-          "$id": "35",
-          "readOnly": false,
-          "writeOnly": false,
-          "allOf": [],
-          "oneOf": [],
-          "anyOf": [],
-          "required": [],
-          "properties": {
-            "$id": "36"
-          },
-          "enum": [],
-          "nullable": false,
-          "deprecated": false
+          "$id": "26"
         },
         "bindingVersion": "quz",
         "x-ext-string": "foo"
       },
       "http": {
-        "$id": "37",
+        "$id": "27",
         "type": "request",
         "method": "GET",
         "query": {
-          "$id": "38",
-          "readOnly": false,
-          "writeOnly": false,
-          "allOf": [],
-          "oneOf": [],
-          "anyOf": [],
-          "required": [],
-          "properties": {
-            "$id": "39"
-          },
-          "enum": [],
-          "nullable": false,
-          "deprecated": false
+          "$id": "28"
         },
         "bindingVersion": "quz",
         "x-ext-string": "foo"
       }
     },
     "messageBindings": {
-      "$id": "40",
+      "$id": "29",
       "http": {
-        "$id": "41",
+        "$id": "30",
         "x-ext-string": "foo"
       }
-    },
-    "servers": {
-      "$id": "42"
-    },
-    "channels": {
-      "$id": "43"
     }
   },
   "tags": [
     {
-      "$id": "44",
+      "$id": "31",
       "name": "foo",
       "description": "bar",
       "externalDocs": {
-        "$id": "45"
+        "$id": "32"
       }
     }
   ],
   "externalDocs": {
-    "$id": "46",
+    "$id": "33",
     "description": "foo",
     "url": "https://lego.com"
   }

@@ -70,8 +70,9 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi
             Assert.Equal("2.3.0", doc.Asyncapi);
             Assert.Equal(4, doc.Channels.Count);
             Assert.True(doc.Channels.TryGetValue("smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured", out var channel));
-            Assert.Equal("The topic on which measured values may be produced and consumed.", channel?.Description);
-            Assert.Equal("The ID of the streetlight.", channel?.Parameters["streetlightId"].Description);
+            Assert.NotNull(channel);
+            Assert.Equal("The topic on which measured values may be produced and consumed.", channel.Description);
+            Assert.Equal("The ID of the streetlight.", channel.Parameters["streetlightId"].Description);
             Assert.Equal("Inform about environmental lighting conditions of a particular streetlight.", channel?.Publish.Summary);
             Assert.Equal("receiveLightMeasurement", channel.Publish.OperationId);
             Assert.True(channel.Publish.Traits.First().Bindings.TryGetValue("kafka", out var binding));

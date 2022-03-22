@@ -5,14 +5,13 @@ namespace LEGO.AsyncAPI.Models.Any
     /// <summary>
     /// Async API Boolean.
     /// </summary>
-    public struct Boolean : IPrimitiveValue<bool>
+    public class AsyncAPIBoolean : IPrimitiveValue<bool>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Boolean"/> class.
+        /// Initializes a new instance of the <see cref="AsyncAPIBoolean"/> class.
         /// </summary>
         /// <param name="value">Initialization value.</param>
-        public Boolean(bool value)
-            : this()
+        public AsyncAPIBoolean(bool value)
         {
             this.Value = value;
         }
@@ -32,8 +31,8 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         public AnyType AnyType => AnyType.Primitive;
 
-        public static explicit operator bool(Boolean b) => b.Value;
+        public static explicit operator bool(AsyncAPIBoolean b) => b.Value;
 
-        public static explicit operator Boolean(bool b) => new(value: b);
+        public static explicit operator AsyncAPIBoolean(bool b) => new(value: b);
     }
 }
