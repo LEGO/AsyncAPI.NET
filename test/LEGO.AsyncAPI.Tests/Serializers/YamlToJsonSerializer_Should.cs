@@ -11,7 +11,7 @@
         private readonly YamlToJsonSerializer sut;
 
         private const string Json =
-            "{\"List\": [\"a\", \"b\"], \"xyz\": \"xyz_value\", \"foo\": true, \"bar\": 100, \"baz\": 111.1}";
+            "{\"List\": [\"a\", \"b\"], \"xyz\": \"xyz_value\", \"foo\": true, \"bar\": 100, \"baz\": 111.1, \"should_be_integer_0\": 0, \"should_be_integer_1\": 1}";
 
         public YamlToJsonSerializerShould()
         {
@@ -30,6 +30,8 @@ xyz: xyz_value
 foo: true
 bar: 100
 baz: 111.1
+should_be_integer_0: 0
+should_be_integer_1: 1
 ";
 
             // Act
@@ -79,6 +81,8 @@ xyz_value
             Assert.Equal(true, jObject["foo"]?.Value<bool>());
             Assert.Equal(100, jObject["bar"]?.Value<int>());
             Assert.Equal(111.1, jObject["baz"]?.Value<double>());
+            Assert.Equal(0, jObject["should_be_integer_0"]?.Value<int>());
+            Assert.Equal(1, jObject["should_be_integer_1"]?.Value<int>());
             Assert.Equal(2, jObject["List"]?.Values().Count());
         }
     }
