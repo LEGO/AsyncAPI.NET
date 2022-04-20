@@ -17,7 +17,7 @@ namespace LEGO.AsyncAPI.Readers.Serializers
         /// </summary>
         public YamlToJsonSerializer()
         {
-            this.deserializer = new Deserializer();
+            this.deserializer = new DeserializerBuilder().WithNodeTypeResolver(new PrimitiveTypeNodeResolver()).Build();
             this.serializer = new SerializerBuilder().JsonCompatible().Build();
         }
 

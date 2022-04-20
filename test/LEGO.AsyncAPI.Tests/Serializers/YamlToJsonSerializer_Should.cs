@@ -10,13 +10,16 @@
     {
         private readonly YamlToJsonSerializer sut;
 
+        private const string Json =
+            "{\"List\": [\"a\", \"b\"], \"xyz\": \"xyz_value\", \"foo\": true, \"bar\": 100, \"baz\": 111.1, \"should_be_integer_0\": 0, \"should_be_integer_1\": 1}";
+
         public YamlToJsonSerializerShould()
         {
             this.sut = new YamlToJsonSerializer();
         }
 
         [Fact]
-        public void Serialize_Yaml_ThenReturnsCorrectJsonString()
+        public void Serialize_Yaml_ThenReturnsJsonWithCorrectPrimitiveTypes()
         {
             // Arrange
             var input = @"
@@ -24,7 +27,11 @@ List:
   - a
   - b
 xyz: xyz_value
-foo: foo_value
+foo: true
+bar: 100
+baz: 111.1
+should_be_integer_0: 0
+should_be_integer_1: 1
 ";
 
             // Act
@@ -35,20 +42,17 @@ foo: foo_value
         }
 
         [Fact]
-        public void Serialize_Json_ThenReturnsCorrectJsonString()
+        public void Serialize_Json_ThenReturnsJsonWithCorrectPrimitiveTypes()
         {
-            // Arrange
-            var input = "{\"List\":[\"a\",\"b\"], \"xyz\":\"xyz_value\", \"foo\":\"foo_value\"}";
-
             // Act
-            var result = this.sut.Serialize(input);
+            var result = this.sut.Serialize(Json);
 
             // Assert
             this.VerifyResult(result);
         }
 
         [Fact]
-        public void Serialize_InvalidFormat_ThenThrows()
+        public void Serialize_InvalidYamlFormat_ThenThrows()
         {
             // Arrange
             var input = @"
@@ -64,13 +68,21 @@ xyz_value
 
         private void VerifyResult(string json)
         {
+            Assert.Equal(Json, json.TrimEnd());
+
             var jObject = JObject.Parse(json);
 
             Assert.True(jObject.HasValues);
             Assert.True(jObject.ContainsKey("xyz"));
             Assert.True(jObject.ContainsKey("foo"));
+            Assert.True(jObject.ContainsKey("bar"));
+            Assert.True(jObject.ContainsKey("baz"));
             Assert.Equal("xyz_value", jObject["xyz"]?.Value<string>());
-            Assert.Equal("foo_value", jObject["foo"]?.Value<string>());
+            Assert.Equal(true, jObject["foo"]?.Value<bool>());
+            Assert.Equal(100, jObject["bar"]?.Value<int>());
+            Assert.Equal(111.1, jObject["baz"]?.Value<double>());
+            Assert.Equal(0, jObject["should_be_integer_0"]?.Value<int>());
+            Assert.Equal(1, jObject["should_be_integer_1"]?.Value<int>());
             Assert.Equal(2, jObject["List"]?.Values().Count());
         }
     }
