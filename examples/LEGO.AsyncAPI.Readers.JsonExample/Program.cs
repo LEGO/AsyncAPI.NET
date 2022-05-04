@@ -16,7 +16,7 @@
 
             if (diagnostic.HasError)
             {
-                Console.WriteLine($"Error during spec parsing: {diagnostic.Error}");
+                Console.WriteLine($"Error during spec parsing: {diagnostic.Errors.First()}");
             }
             else
             {

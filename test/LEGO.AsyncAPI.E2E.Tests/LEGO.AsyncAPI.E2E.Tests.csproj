@@ -73,6 +73,7 @@
       <EmbeddedResource Include="Readers\Samples\AsyncApi\CompleteUsingComponentReferences.json" />
       <EmbeddedResource Include="Readers\Samples\AsyncApi\CompleteKafkaSpec.yml" />
       <EmbeddedResource Include="Readers\Samples\AsyncApi\Minimal.json" />
+      <EmbeddedResource Include="Readers\Samples\AsyncApi\MissingRefCompleteKafkaSpec.json" />
       <EmbeddedResource Include="Readers\Samples\AsyncApi\schema-v2.3.0.json" />
       <None Remove="Readers\Samples\AsyncApi\CompleteKafkaSpec.json" />
       <None Remove="Readers\Samples\AsyncApi\CompleteKafkaSpec.yml" />
