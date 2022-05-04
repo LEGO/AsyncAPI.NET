@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.NewtonUtils
 {
+    using System;
     using System.Globalization;
     using System.Linq;
     using Newtonsoft.Json.Linq;
@@ -31,6 +32,10 @@ namespace LEGO.AsyncAPI.NewtonUtils
                     if (original != null)
                     {
                         refObj.Replace(original);
+                    }
+                    else
+                    {
+                        throw new Exception($"Reference '{path}' could not be found.");
                     }
                 }
             }
@@ -74,7 +79,7 @@ namespace LEGO.AsyncAPI.NewtonUtils
                 if (token is JObject obj)
                 {
                     token = obj[component];
-                    if (token["$id"] != null && count == components.Length)
+                    if (token?["$id"] != null && count == components.Length)
                     {
                         token = obj[component].DeepClone();
                         token["$id"].Parent.Remove();
@@ -83,10 +88,6 @@ namespace LEGO.AsyncAPI.NewtonUtils
                 else if (token is JArray)
                 {
                     token = token[int.Parse(component, NumberFormatInfo.InvariantInfo)];
-                }
-                else
-                {
-                    return null;
                 }
             }
 

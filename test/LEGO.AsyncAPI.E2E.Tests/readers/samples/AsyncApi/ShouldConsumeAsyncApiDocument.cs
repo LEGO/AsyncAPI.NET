@@ -1,5 +1,6 @@
 namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi
 {
+    using System;
     using System.Linq;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
@@ -51,6 +52,12 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi
             var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("CompleteKafkaSpec.json"));
 
             this.AssertKafkaSpecExample(output);
+        }
+
+        [Fact]
+        public void CompleteJsonWithMissingRefKafkaSpecExampleData()
+        {
+            Assert.Throws<Exception>(() => this.AsyncApiAsyncApiReader.Read(this.GetStream("MissingRefCompleteKafkaSpec.json")));
         }
 
         [Fact]

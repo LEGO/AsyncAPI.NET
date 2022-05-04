@@ -3,6 +3,8 @@
 namespace LEGO.AsyncAPI.Readers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Object containing errors that happened during AsyncApi parsing.
@@ -15,17 +17,21 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="e"></param>
         public AsyncApiDiagnostic(Exception e = null)
         {
-            this.Error = e;
+            this.Errors = new List<Exception>();
+            if (e is not null)
+            {
+                this.Errors.Add(e);
+            }
         }
 
         /// <summary>
         /// Returns true if Error value is not null.
         /// </summary>
-        public bool HasError => this.Error != null;
+        public bool HasError => this.Errors.Any();
 
         /// <summary>
         /// Gets an error.
         /// </summary>
-        public Exception Error { get; }
+        public List<Exception> Errors { get; }
     }
 }
