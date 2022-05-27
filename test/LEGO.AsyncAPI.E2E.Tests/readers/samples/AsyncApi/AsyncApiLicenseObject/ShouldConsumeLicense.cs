@@ -3,7 +3,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiLicenseObject
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
     public class ShouldConsumeLicense : ShouldConsumeProduceBase<License>
@@ -28,7 +28,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiLicenseObject
 
             Assert.Equal("Apache 2.0", output.Name);
             Assert.Equal(new Uri("https://lego.com"), output.Url);
-            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
+            Assert.IsAssignableFrom<IDictionary<string, IAsyncApiAny>>(output.Extensions);
         }
     }
 }

@@ -2,35 +2,26 @@
 
 namespace LEGO.AsyncAPI.Models.Any
 {
-    using System;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Async API null.
+    /// Open API null.
     /// </summary>
-    public class AsyncAPINull : IPrimitiveValue<string>
+    public class AsyncApiNull : IAsyncApiAny
     {
         /// <summary>
-        /// Static instance of Null class.
+        /// The type of <see cref="IAsyncApiAny"/>
         /// </summary>
-        public static readonly AsyncAPINull Instance = new ();
+        public AnyType AnyType { get; } = AnyType.Null;
 
         /// <summary>
-        /// The type of <see cref="IAny"/>.
+        /// Write out null representation
         /// </summary>
-        public AnyType AnyType => AnyType.Primitive;
-
-        /// <summary>
-        /// The type of <see cref="IAny"/>.
-        /// </summary>
-        public PrimitiveType PrimitiveType => PrimitiveType.Null;
-
-        /// <summary>
-        /// Null.
-        /// </summary>
-        public string Value
+        /// <param name="writer"></param>
+        public void Write(IAsyncApiWriter writer)
         {
-            get => null;
-            set => throw new NotImplementedException();
+            writer.WriteAny(this);
         }
     }
 }

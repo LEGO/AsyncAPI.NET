@@ -2,7 +2,6 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageObject
 {
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
@@ -25,7 +24,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageObject
             var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Complete.json"));
 
             Assert.IsType<Schema>(output.Headers);
-            Assert.IsAssignableFrom<IAny>(output.Payload);
+            Assert.IsAssignableFrom<IAsyncApiAny>(output.Payload);
             Assert.IsType<CorrelationId>(output.CorrelationId);
             Assert.Equal("application/vnd.aai.asyncapi;version=2.3.0", output.SchemaFormat);
             Assert.Equal("application/json", output.ContentType);

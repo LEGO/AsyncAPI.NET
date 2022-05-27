@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Bindings.ChannelBindings;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
     public class ChannelBindingConverterReadJsonTest
@@ -20,7 +20,7 @@
         {
             var output = GetOutputFor("{\"kafka\":{\"x-ext-string\":\"foo\"}}");
             Assert.IsAssignableFrom<IDictionary<string, KafkaChannelBinding>>(output);
-            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output?["kafka"].Extensions);
+            Assert.IsAssignableFrom<IDictionary<string, IAsyncApiAny>>(output?["kafka"].Extensions);
         }
 
         private static IDictionary<string, KafkaChannelBinding>? GetOutputFor(string input)

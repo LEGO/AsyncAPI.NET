@@ -4,6 +4,7 @@
     using System.IO;
     using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.NewtonUtils;
     using Newtonsoft.Json;
     using Xunit;
@@ -79,7 +80,7 @@
             Assert.Equal("true", output);
         }
 
-        private static string GetOutputFor(IAny input)
+        private static string GetOutputFor(IAsyncApiAny input)
         {
             var converter = new AnyConverter();
             var stringWriter = new StringWriter();

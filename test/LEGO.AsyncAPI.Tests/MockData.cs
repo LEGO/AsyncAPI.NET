@@ -13,9 +13,9 @@
 
     public static class MockData
     {
-        public static Dictionary<string, IAny> Extensions()
+        public static Dictionary<string, IAsyncApiAny> Extensions()
         {
-            return new Dictionary<string, IAny>
+            return new Dictionary<string, IAsyncApiAny>
             {
                 { "x-ext-null", AsyncAPINull.Instance },
                 { "x-ext-integer", (AsyncAPILong)13 },
@@ -54,7 +54,7 @@
                         GroupId = new Schema(),
                         ClientId = new Schema(),
                         BindingVersion = "quz",
-                        Extensions = new Dictionary<string, IAny>
+                        Extensions = new Dictionary<string, IAsyncApiAny>
                         {
                             {
                                 "x-ext-string", new AsyncAPIString("foo")
@@ -69,7 +69,7 @@
                         Method = "GET",
                         Query = new Schema(),
                         BindingVersion = "quz",
-                        Extensions = new Dictionary<string, IAny>
+                        Extensions = new Dictionary<string, IAsyncApiAny>
                         {
                             {
                                 "x-ext-string", new AsyncAPIString("foo")
@@ -87,7 +87,7 @@
                 {
                     "http", new HttpMessageBinding()
                     {
-                        Extensions = new Dictionary<string, IAny>
+                        Extensions = new Dictionary<string, IAsyncApiAny>
                         {
                             {
                                 "x-ext-string", new AsyncAPIString("foo")
@@ -106,7 +106,7 @@
                     "kafka",
                     new KafkaChannelBinding
                     {
-                        Extensions = new Dictionary<string, IAny>
+                        Extensions = new Dictionary<string, IAsyncApiAny>
                         {
                             {
                                 "x-ext-string", new AsyncAPIString("foo")
@@ -125,7 +125,7 @@
                     "kafka",
                     new KafkaServerBinding
                     {
-                        Extensions = new Dictionary<string, IAny>
+                        Extensions = new Dictionary<string, IAsyncApiAny>
                         {
                             {
                                 "x-ext-string", new AsyncAPIString("foo")
@@ -182,7 +182,7 @@
             };
         }
 
-        private static Dictionary<string, IAny>? WithExtensionData(bool withExtensionData)
+        private static Dictionary<string, IAsyncApiAny>? WithExtensionData(bool withExtensionData)
         {
             return withExtensionData ? Extensions() : null;
         }

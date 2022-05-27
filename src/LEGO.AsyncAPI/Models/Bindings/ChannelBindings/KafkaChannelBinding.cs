@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Models.Bindings.ChannelBindings
 {
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
@@ -12,6 +11,6 @@ namespace LEGO.AsyncAPI.Models.Bindings.ChannelBindings
     public class KafkaChannelBinding : IChannelBinding
     {
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAsyncApiAny> Extensions { get; set; }
     }
 }

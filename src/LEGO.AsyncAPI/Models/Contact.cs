@@ -4,30 +4,29 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
     /// Contact information for the exposed API.
     /// </summary>
-    public class Contact : IExtensible
+    public class Contact : IAsyncApiExtensible
     {
         /// <summary>
-        /// The identifying name of the contact person/organization.
+        /// Gets or sets the identifying name of the contact person/organization.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// The URL pointing to the contact information. MUST be in the format of a URL.
+        /// Gets or sets the URL pointing to the contact information. MUST be in the format of a URL.
         /// </summary>
         public Uri Uri { get; set; }
 
         /// <summary>
-        /// The email address of the contact person/organization. MUST be in the format of an email address.
+        /// Gets or sets the email address of the contact person/organization. MUST be in the format of an email address.
         /// </summary>
         public string Email { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
+        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
     }
 }

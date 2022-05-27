@@ -4,33 +4,32 @@ namespace LEGO.AsyncAPI.Models
 {
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Converters;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using Newtonsoft.Json;
 
     /// <summary>
     /// Describes a message received on a given channel and operation.
     /// </summary>
-    public class Message : IExtensible, IReferenceable
+    public class Message : IAsyncApiExtensible, IReferenceable
     {
         /// <summary>
-        /// Schema definition of the application headers. Schema MUST be of type "object".
+        /// Gets or sets schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
         public Schema Headers { get; set; }
 
         /// <summary>
-        /// Definition of the message payload. It can be of any type but defaults to Schema object. It must match the schema format, including encoding type - e.g Avro should be inlined as either a YAML or JSON object NOT a string to be parsed as YAML or JSON.
+        /// Gets or sets definition of the message payload. It can be of any type but defaults to Schema object. It must match the schema format, including encoding type - e.g Avro should be inlined as either a YAML or JSON object NOT a string to be parsed as YAML or JSON.
         /// </summary>
         [JsonConverter(typeof(AnyConverter))]
-        public IAny Payload { get; set; }
+        public IAsyncApiAny Payload { get; set; }
 
         /// <summary>
-        /// Definition of the correlation ID used for message tracing or matching.
+        /// Gets or sets definition of the correlation ID used for message tracing or matching.
         /// </summary>
         public CorrelationId CorrelationId { get; set; }
 
         /// <summary>
-        /// A string containing the name of the schema format used to define the message payload.
+        /// Gets or sets a string containing the name of the schema format used to define the message payload.
         /// </summary>
         /// <remarks>
         /// If omitted, implementations should parse the payload as a Schema object.
@@ -38,63 +37,63 @@ namespace LEGO.AsyncAPI.Models
         public string SchemaFormat { get; set; }
 
         /// <summary>
-        /// The content type to use when encoding/decoding a message's payload.
+        /// Gets or sets the content type to use when encoding/decoding a message's payload.
         /// </summary>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// A machine-friendly name for the message.
+        /// Gets or sets a machine-friendly name for the message.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// A human-friendly title for the message.
+        /// Gets or sets a human-friendly title for the message.
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// A short summary of what the message is about.
+        /// Gets or sets a short summary of what the message is about.
         /// </summary>
         public string Summary { get; set; }
 
         /// <summary>
-        /// A verbose explanation of the message. CommonMark syntax can be used for rich text representation.
+        /// Gets or sets a verbose explanation of the message. CommonMark syntax can be used for rich text representation.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// A list of tags for API documentation control. Tags can be used for logical grouping of messages.
+        /// Gets or sets a list of tags for API documentation control. Tags can be used for logical grouping of messages.
         /// </summary>
         public IList<Tag> Tags { get; set; } = new List<Tag>();
 
         /// <summary>
-        /// Additional external documentation for this message.
+        /// Gets or sets additional external documentation for this message.
         /// </summary>
         public ExternalDocumentation ExternalDocs { get; set; }
 
         /// <summary>
-        /// A map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
+        /// Gets or sets a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
         /// </summary>
         [JsonConverter(typeof(MessageJsonDictionaryContractBindingConverter))]
         public IDictionary<string, IMessageBinding> Bindings { get; set; } = new Dictionary<string, IMessageBinding>();
 
         /// <summary>
-        /// List of examples.
+        /// Gets or sets list of examples.
         /// </summary>
         public IList<MessageExample> Examples { get; set; } = new List<MessageExample>();
 
         /// <summary>
-        /// A list of traits to apply to the message object. Traits MUST be merged into the message object using the JSON Merge Patch algorithm in the same order they are defined here. The resulting object MUST be a valid Message Object.
+        /// Gets or sets a list of traits to apply to the message object. Traits MUST be merged into the message object using the JSON Merge Patch algorithm in the same order they are defined here. The resulting object MUST be a valid Message Object.
         /// </summary>
         public List<MessageTrait> Traits { get; set; } = new();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
+        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
 
         /// <inheritdoc/>
         public bool? UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
-        public Reference Reference { get; set; }
+        public AsyncApiReference Reference { get; set; }
     }
 }

@@ -1,38 +1,70 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license. 
+
+using LEGO.AsyncAPI.Models.Interfaces;
 
 namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
-    /// Async API string.
+    /// Open API string type.
     /// </summary>
-    public class AsyncAPIString : IPrimitiveValue<string>
+    public class AsyncApiString : AsyncApiPrimitive<string>
     {
+        private bool isExplicit;
+        private bool isRawString;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncAPIString"/> class.
+        /// Initializes the <see cref="AsyncApiString"/> class.
         /// </summary>
-        /// <param name="value">Initialization value.</param>
-        public AsyncAPIString(string value)
+        /// <param name="value"></param>
+        public AsyncApiString(string value)
+            : this(value, false)
         {
-            this.Value = value;
+        }
+        
+        /// <summary>
+        /// Initializes the <see cref="AsyncApiString"/> class.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="isExplicit">Used to indicate if a string is quoted.</param>
+        public AsyncApiString(string value, bool isExplicit)
+            : base(value)
+        {
+            this.isExplicit = isExplicit;
         }
 
         /// <summary>
-        /// The type of <see cref="IAny"/>.
+        /// Initializes the <see cref="AsyncApiString"/> class.
         /// </summary>
-        public PrimitiveType PrimitiveType => PrimitiveType.String;
+        /// <param name="value"></param>
+        /// <param name="isExplicit">Used to indicate if a string is quoted.</param>
+        /// <param name="isRawString">Used to indicate to the writer that the value should be written without encoding.</param>
+        public AsyncApiString(string value, bool isExplicit, bool isRawString)
+            : base(value)
+        {
+            this.isExplicit = isExplicit;
+            this.isRawString = isRawString;
+        }
 
         /// <summary>
-        /// Value.
+        /// The primitive class this object represents.
         /// </summary>
-        public string Value { get; set; }
+        public override PrimitiveType PrimitiveType { get; } = PrimitiveType.String;
 
         /// <summary>
-        /// AnyType.Primitive.
+        /// True if string was specified explicitly by the means of double quotes, single quotes, or literal or folded style.
         /// </summary>
-        public AnyType AnyType => AnyType.Primitive;
+        public bool IsExplicit()
+        {
+            return this.isExplicit;
+        }
 
-        public static explicit operator string(AsyncAPIString s) => s.Value;
-
-        public static explicit operator AsyncAPIString(string s) => new (s);
+        /// <summary>
+        /// True if the writer should process the value as supplied without encoding.
+        /// </summary>
+        public bool IsRawString()
+        {
+            return this.isRawString;
+        }
     }
 }

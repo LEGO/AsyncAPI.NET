@@ -4,13 +4,12 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
     /// License information for the exposed API.
     /// </summary>
-    public class License : IExtensible
+    public class License : IAsyncApiExtensible
     {
         public License(string name)
         {
@@ -18,17 +17,17 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// REQUIRED. The license name used for the API.
+        /// Gets or sets rEQUIRED. The license name used for the API.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// A URL to the license used for the API. MUST be in the format of a URL.
+        /// Gets or sets a URL to the license used for the API. MUST be in the format of a URL.
         /// </summary>
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
+        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
 
         public override bool Equals(object? obj)
         {

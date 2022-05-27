@@ -8,13 +8,13 @@ namespace LEGO.AsyncAPI.Models.Interfaces
     public interface IReferenceable
     {
         /// <summary>
-        /// Indicates if object is populated with data or is just a reference to the data.
+        /// Gets or sets indicates if object is populated with data or is just a reference to the data.
         /// </summary>
         bool? UnresolvedReference { get; set; }
 
         /// <summary>
-        /// Reference object.
+        /// Gets or sets reference object.
         /// </summary>
-        Reference Reference { get; set; }
+        AsyncApiReference Reference { get; set; }
     }
 }

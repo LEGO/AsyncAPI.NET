@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
 {
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
@@ -12,26 +11,26 @@ namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
     public class HttpOperationBinding : IOperationBinding
     {
         /// <summary>
-        /// Type of binding.
+        /// Gets or sets type of binding.
         /// </summary>
         public string Type { get; set; }
 
         /// <summary>
-        /// Http method.
+        /// Gets or sets http method.
         /// </summary>
         public string Method { get; set; }
 
         /// <summary>
-        /// Http query.
+        /// Gets or sets http query.
         /// </summary>
         public Schema Query { get; set; }
 
         /// <summary>
-        /// Property containing version of a binding.
+        /// Gets or sets property containing version of a binding.
         /// </summary>
         public string BindingVersion { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAsyncApiAny> Extensions { get; set; }
     }
 }

@@ -4,25 +4,24 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
     /// Allows referencing an external resource for extended documentation.
     /// </summary>
-    public class ExternalDocumentation : IExtensible
+    public class ExternalDocumentation : IAsyncApiExtensible
     {
         /// <summary>
-        /// A short description of the target documentation. CommonMark syntax can be used for rich text representation.
+        /// Gets or sets a short description of the target documentation. CommonMark syntax can be used for rich text representation.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// REQUIRED. The URL for the target documentation. Value MUST be in the format of a URL.
+        /// Gets or sets rEQUIRED. The URL for the target documentation. Value MUST be in the format of a URL.
         /// </summary>
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
+        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
     }
 }

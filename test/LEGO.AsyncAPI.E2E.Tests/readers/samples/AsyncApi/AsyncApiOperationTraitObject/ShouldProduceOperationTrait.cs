@@ -40,7 +40,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
                             GroupId = new Schema(),
                             ClientId = new Schema(),
                             BindingVersion = "quz",
-                            Extensions = new Dictionary<string, IAny>
+                            Extensions = new Dictionary<string, IAsyncApiAny>
                             {
                                 {
                                     "x-ext-string", new AsyncAPIString("foo")
@@ -55,7 +55,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
                             Method = "GET",
                             Query = new Schema(),
                             BindingVersion = "quz",
-                            Extensions = new Dictionary<string, IAny>
+                            Extensions = new Dictionary<string, IAsyncApiAny>
                             {
                                 {
                                     "x-ext-string", new AsyncAPIString("foo")

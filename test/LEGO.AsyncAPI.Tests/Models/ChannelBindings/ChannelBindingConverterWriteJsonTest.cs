@@ -17,7 +17,7 @@
         [Fact]
         public void ShouldProduceObject()
         {
-            var extensions = new Dictionary<string, IAny> { { "x-ext-string", new AsyncAPIString("foo") } };
+            var extensions = new Dictionary<string, IAsyncApiAny> { { "x-ext-string", new AsyncAPIString("foo") } };
             var output = GetOutputFor(new Dictionary<string, IChannelBinding>() { { "kafka", new KafkaChannelBinding() { Extensions = extensions } } });
             Assert.Equal(
                 @"{

@@ -3,29 +3,28 @@
 namespace LEGO.AsyncAPI.Models
 {
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
     /// Allows adding meta data to a single tag.
     /// </summary>
-    public class Tag : IExtensible
+    public class Tag : IAsyncApiExtensible
     {
         /// <summary>
-        /// REQUIRED. The name of the tag.
+        /// Gets or sets rEQUIRED. The name of the tag.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// A short description for the tag. CommonMark syntax can be used for rich text representation.
+        /// Gets or sets a short description for the tag. CommonMark syntax can be used for rich text representation.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Additional external documentation for this tag.
+        /// Gets or sets additional external documentation for this tag.
         /// </summary>
         public ExternalDocumentation ExternalDocs { get; set; }
 
-        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
+        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
     }
 }

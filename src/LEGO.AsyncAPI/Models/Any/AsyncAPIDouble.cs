@@ -1,38 +1,25 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Models.Interfaces;
+
 namespace LEGO.AsyncAPI.Models.Any
 {
     /// <summary>
-    /// Async API double.
+    /// Open API Double
     /// </summary>
-    public class AsyncAPIDouble : IPrimitiveValue<double>
+    public class AsyncApiDouble : AsyncApiPrimitive<double>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncAPIDouble"/> class.
+        /// Initializes the <see cref="AsyncApiDouble"/> class.
         /// </summary>
-        /// <param name="value">Initialization value.</param>
-        public AsyncAPIDouble(double value)
+        public AsyncApiDouble(double value)
+            : base(value)
         {
-            this.Value = value;
         }
 
         /// <summary>
-        /// The type of <see cref="IAny"/>.
+        /// Primitive type this object represents.
         /// </summary>
-        public PrimitiveType PrimitiveType => PrimitiveType.Double;
-
-        /// <summary>
-        /// Value.
-        /// </summary>
-        public double Value { get; set; }
-
-        /// <summary>
-        /// AnyType.Primitive.
-        /// </summary>
-        public AnyType AnyType => AnyType.Primitive;
-
-        public static explicit operator double(AsyncAPIDouble d) => d.Value;
-
-        public static explicit operator AsyncAPIDouble(double d) => new (value: d);
+        public override PrimitiveType PrimitiveType { get; } = PrimitiveType.Double;
     }
 }

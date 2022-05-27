@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
 {
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
@@ -12,16 +11,16 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
     public class HttpMessageBinding : IMessageBinding
     {
         /// <summary>
-        /// Property containing http headers.
+        /// Gets or sets property containing http headers.
         /// </summary>
         public Schema Headers { get; set; }
 
         /// <summary>
-        /// Property containing version of a binding.
+        /// Gets or sets property containing version of a binding.
         /// </summary>
         public string BindingVersion { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
+        public IDictionary<string, IAsyncApiAny> Extensions { get; set; }
     }
 }
