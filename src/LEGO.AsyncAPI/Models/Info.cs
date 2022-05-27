@@ -18,12 +18,12 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The title of the application.
+        /// Gets or sets REQUIRED. The title of the application.
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. Provides the version of the application API (not to be confused with the specification version).
+        /// Gets or sets REQUIRED. Provides the version of the application API (not to be confused with the specification version).
         /// </summary>
         public string Version { get; set; }
 
@@ -48,6 +48,6 @@ namespace LEGO.AsyncAPI.Models
         public License License { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
     }
 }

@@ -4,9 +4,7 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// The definition of a server this application MAY connect to.
@@ -25,12 +23,12 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. A URL to the target host.
+        /// Gets or sets REQUIRED. A URL to the target host.
         /// </summary>
         public Uri Url { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The protocol this URL supports for connection.
+        /// Gets or sets REQUIRED. The protocol this URL supports for connection.
         /// </summary>
         public string Protocol { get; set; }
 
@@ -60,10 +58,9 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
         /// </summary>
-        [JsonConverter(typeof(ServerBindingConverter))]
         public IDictionary<string, IServerBinding> Bindings { get; set; } = new Dictionary<string, IServerBinding>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
     }
 }

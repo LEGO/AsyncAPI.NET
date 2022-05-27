@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Models
     public class Tag : IAsyncApiExtensible
     {
         /// <summary>
-        /// Gets or sets rEQUIRED. The name of the tag.
+        /// Gets or sets REQUIRED. The name of the tag.
         /// </summary>
         public string Name { get; set; }
 
@@ -25,6 +25,6 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public ExternalDocumentation ExternalDocs { get; set; }
 
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
     }
 }

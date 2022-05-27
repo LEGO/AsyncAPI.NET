@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect".
+        /// Gets or sets REQUIRED. The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect".
         /// </summary>
         public SecuritySchemeType Type { get; set; }
 
@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The name of the header, query or cookie parameter to be used.
+        /// Gets or sets REQUIRED. The name of the header, query or cookie parameter to be used.
         /// </summary>
         /// <remarks>
         /// Applies to type: <see cref="SecuritySchemeType.HttpApiKey"/>.
@@ -43,12 +43,12 @@ namespace LEGO.AsyncAPI.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The location of the API key. Valid values are "user" and "password" for apiKey and "query", "header" or "cookie" for httpApiKey.
+        /// Gets or sets REQUIRED. The location of the API key. Valid values are "user" and "password" for apiKey and "query", "header" or "cookie" for httpApiKey.
         /// </summary>
         public string In { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The name of the HTTP Authorization scheme to be used in the Authorization header as defined in RFC7235.
+        /// Gets or sets REQUIRED. The name of the HTTP Authorization scheme to be used in the Authorization header as defined in RFC7235.
         /// </summary>
         /// <remarks>
         /// Applies to type: <see cref="SecuritySchemeType.Http"/>.
@@ -66,7 +66,7 @@ namespace LEGO.AsyncAPI.Models
         public string BearerFormat { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. An object containing configuration information for the flow types supported.
+        /// Gets or sets REQUIRED. An object containing configuration information for the flow types supported.
         /// </summary>
         /// <remarks>
         /// Applies to type: <see cref="SecuritySchemeType.Oauth2"/>.
@@ -74,7 +74,7 @@ namespace LEGO.AsyncAPI.Models
         public OAuthFlows Flows { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. OpenId Connect URL to discover OAuth2 configuration values.
+        /// Gets or sets REQUIRED. OpenId Connect URL to discover OAuth2 configuration values.
         /// </summary>
         /// <remarks>
         /// Applies to type: <see cref="SecuritySchemeType.Oauth2"/>.
@@ -82,7 +82,7 @@ namespace LEGO.AsyncAPI.Models
         public Uri OpenIdConnectUrl { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <inheritdoc/>
         public bool? UnresolvedReference { get; set; }

@@ -17,7 +17,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The license name used for the API.
+        /// Gets or sets REQUIRED. The license name used for the API.
         /// </summary>
         public string Name { get; set; }
 
@@ -27,7 +27,7 @@ namespace LEGO.AsyncAPI.Models
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public override bool Equals(object? obj)
         {

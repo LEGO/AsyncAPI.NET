@@ -17,11 +17,11 @@ namespace LEGO.AsyncAPI.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The URL for the target documentation. Value MUST be in the format of a URL.
+        /// Gets or sets REQUIRED. The URL for the target documentation. Value MUST be in the format of a URL.
         /// </summary>
         public Uri Url { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
     }
 }

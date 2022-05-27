@@ -12,12 +12,12 @@ namespace LEGO.AsyncAPI.Models
     public class OAuthFlow : IAsyncApiExtensible
     {
         /// <summary>
-        /// Gets or sets rEQUIRED. The authorization URL to be used for this flow. This MUST be in the form of a URL.
+        /// Gets or sets REQUIRED. The authorization URL to be used for this flow. This MUST be in the form of a URL.
         /// </summary>
         public Uri AuthorizationUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The token URL to be used for this flow. This MUST be in the form of a URL.
+        /// Gets or sets REQUIRED. The token URL to be used for this flow. This MUST be in the form of a URL.
         /// </summary>
         public Uri TokenUrl { get; set; }
 
@@ -27,11 +27,11 @@ namespace LEGO.AsyncAPI.Models
         public Uri RefreshUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it.
+        /// Gets or sets REQUIRED. The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it.
         /// </summary>
         public IDictionary<string, string> Scopes { get; set; } = new Dictionary<string, string>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
     }
 }

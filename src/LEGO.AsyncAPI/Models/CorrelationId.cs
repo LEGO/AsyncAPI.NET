@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets rEQUIRED. A runtime expression that specifies the location of the correlation ID.
+        /// Gets REQUIRED. A runtime expression that specifies the location of the correlation ID.
         /// </summary>
         public string Location { get; init; }
 
@@ -36,6 +36,6 @@ namespace LEGO.AsyncAPI.Models
         public AsyncApiReference Reference { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
     }
 }
