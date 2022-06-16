@@ -215,7 +215,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets additional external documentation for this schema.
         /// </summary>
-        public ExternalDocumentation ExternalDocs { get; set; }
+        public AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether specifies that a schema is deprecated and SHOULD be transitioned out of usage.

@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiDocument : IAsyncApiExtensible, IAsyncApiSerializable
     {
         /// <summary>
-        /// Gets or sets rEQUIRED. Specifies the AsyncAPI Specification version being used.
+        /// Gets or sets REQUIRED. Specifies the AsyncAPI Specification version being used.
         /// </summary>
         public string Asyncapi { get; set; }
 
@@ -23,14 +23,14 @@ namespace LEGO.AsyncAPI.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. Provides metadata about the API. The metadata can be used by the clients if needed.
+        /// Gets or sets REQUIRED. Provides metadata about the API. The metadata can be used by the clients if needed.
         /// </summary>
-        public Info Info { get; set; }
+        public AsyncApiInfo Info { get; set; }
 
         /// <summary>
         /// Gets or sets provides connection details of servers. Field pattern ^[A-Za-z0-9_\-]+$.
         /// </summary>
-        public IDictionary<string, Server> Servers { get; set; } = new Dictionary<string, Server>();
+        public IDictionary<string, AsyncApiServer> Servers { get; set; } = new Dictionary<string, AsyncApiServer>();
 
         /// <summary>
         /// Gets or sets default content type to use when encoding/decoding a message's payload.
@@ -42,29 +42,29 @@ namespace LEGO.AsyncAPI.Models
         public string DefaultContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets rEQUIRED. The available channels and messages for the API.
+        /// Gets or sets REQUIRED. The available channels and messages for the API.
         /// </summary>
-        public IDictionary<string, Channel> Channels { get; set; } = new Dictionary<string, Channel>();
+        public IList<AsyncApiChannel> Channels { get; set; } = new List<AsyncApiChannel>();
 
         /// <summary>
         /// Gets or sets an element to hold various schemas for the specification.
         /// </summary>
-        public Components Components { get; set; }
+        public AsyncApiComponents Components { get; set; }
 
         /// <summary>
         /// Gets or sets a list of tags used by the specification with additional metadata. Each tag name in the list MUST be unique.
         /// </summary>
-        public IList<Tag> Tags { get; set; } = new List<Tag>();
+        public IList<AsyncApiTag> Tags { get; set; } = new List<AsyncApiTag>();
 
         /// <summary>
         /// Gets or sets additional external documentation.
         /// </summary>
-        public ExternalDocumentation ExternalDocs { get; set; }
+        public AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        public void Serialize(IAsyncApiWriter writer)
+        public void SerializeV2(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -73,35 +73,29 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteStartObject();
 
-            // openapi
-            writer.WriteProperty(AsyncApiConstants.AsyncApi, "3.0.1");
+            // asyncApi
+            writer.WriteProperty(AsyncApiConstants.AsyncApi, "2.4.0");
 
             // info
-            writer.WriteRequiredObject(OpenApiConstants.Info, Info, (w, i) => i.SerializeAsV3(w));
+            writer.WriteRequiredObject(AsyncApiConstants.Info, this.Info, (w, i) => i.SerializeV2(w));
 
             // servers
-            writer.WriteOptionalCollection(OpenApiConstants.Servers, Servers, (w, s) => s.SerializeAsV3(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.Servers, this.Servers, (w, s) => s.SerializeV2(w));
 
-            // paths
-            writer.WriteRequiredObject(OpenApiConstants.Paths, Paths, (w, p) => p.SerializeAsV3(w));
+            // channels
+            writer.WriteRequiredObject(AsyncApiConstants.Channels, this.Channels, (w, p) => p.SerializeV2(w));
 
             // components
-            writer.WriteOptionalObject(OpenApiConstants.Components, Components, (w, c) => c.SerializeAsV3(w));
-
-            // security
-            writer.WriteOptionalCollection(
-                OpenApiConstants.Security,
-                SecurityRequirements,
-                (w, s) => s.SerializeAsV3(w));
+            writer.WriteOptionalObject(AsyncApiConstants.Components, this.Components, (w, c) => c.SerializeV2(w));
 
             // tags
-            writer.WriteOptionalCollection(OpenApiConstants.Tags, Tags, (w, t) => t.SerializeAsV3WithoutReference(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV2WithoutReference(w));
 
             // external docs
-            writer.WriteOptionalObject(OpenApiConstants.ExternalDocs, ExternalDocs, (w, e) => e.SerializeAsV3(w));
+            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
 
             // extensions
-            writer.WriteExtensions(Extensions, OpenApiSpecVersion.OpenApi3_0);
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_2_0);
 
             writer.WriteEndObject();
         }

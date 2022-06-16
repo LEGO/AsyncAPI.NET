@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Allows adding meta data to a single tag.
     /// </summary>
-    public class Tag : IAsyncApiExtensible
+    public class AsyncApiTag : IAsyncApiExtensible
     {
         /// <summary>
         /// Gets or sets REQUIRED. The name of the tag.
@@ -23,7 +23,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets additional external documentation for this tag.
         /// </summary>
-        public ExternalDocumentation ExternalDocs { get; set; }
+        public AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
     }

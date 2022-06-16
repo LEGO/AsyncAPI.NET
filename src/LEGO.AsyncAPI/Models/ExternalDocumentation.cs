@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Allows referencing an external resource for extended documentation.
     /// </summary>
-    public class ExternalDocumentation : IAsyncApiExtensible
+    public class AsyncApiExternalDocumentation : IAsyncApiExtensible
     {
         /// <summary>
         /// Gets or sets a short description of the target documentation. CommonMark syntax can be used for rich text representation.

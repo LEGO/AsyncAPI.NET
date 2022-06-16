@@ -40,22 +40,22 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override void WriteStartObject()
         {
-            var previousScope = CurrentScope();
+            var previousScope = this.CurrentScope();
 
-            var currentScope = StartScope(ScopeType.Object);
+            var currentScope = this.StartScope(ScopeType.Object);
 
             if (previousScope != null && previousScope.Type == ScopeType.Array)
             {
                 currentScope.IsInArray = true;
 
-                Writer.WriteLine();
+                this.Writer.WriteLine();
 
-                WriteIndentation();
+                this.WriteIndentation();
 
-                Writer.Write(WriterConstants.PrefixOfArrayItem);
+                this.Writer.Write(WriterConstants.PrefixOfArrayItem);
             }
 
-            IncreaseIndentation();
+            this.IncreaseIndentation();
         }
 
         /// <summary>
@@ -63,10 +63,10 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override void WriteEndObject()
         {
-            var previousScope = EndScope(ScopeType.Object);
-            DecreaseIndentation();
+            var previousScope = this.EndScope(ScopeType.Object);
+            this.DecreaseIndentation();
 
-            var currentScope = CurrentScope();
+            var currentScope = this.CurrentScope();
 
             // If the object is empty, indicate it by writing { }
             if (previousScope.ObjectCount == 0)
@@ -74,10 +74,10 @@ namespace LEGO.AsyncAPI.Writers
                 // If we are in an object, write a white space preceding the braces.
                 if (currentScope != null && currentScope.Type == ScopeType.Object)
                 {
-                    Writer.Write(" ");
+                    this.Writer.Write(" ");
                 }
 
-                Writer.Write(WriterConstants.EmptyObject);
+                this.Writer.Write(WriterConstants.EmptyObject);
             }
         }
 
@@ -86,22 +86,22 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override void WriteStartArray()
         {
-            var previousScope = CurrentScope();
+            var previousScope = this.CurrentScope();
 
-            var currentScope = StartScope(ScopeType.Array);
+            var currentScope = this.StartScope(ScopeType.Array);
 
             if (previousScope != null && previousScope.Type == ScopeType.Array)
             {
                 currentScope.IsInArray = true;
 
-                Writer.WriteLine();
+                this.Writer.WriteLine();
 
-                WriteIndentation();
+                this.WriteIndentation();
 
-                Writer.Write(WriterConstants.PrefixOfArrayItem);
+                this.Writer.Write(WriterConstants.PrefixOfArrayItem);
             }
 
-            IncreaseIndentation();
+            this.IncreaseIndentation();
         }
 
         /// <summary>
@@ -109,10 +109,10 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override void WriteEndArray()
         {
-            var previousScope = EndScope(ScopeType.Array);
-            DecreaseIndentation();
+            var previousScope = this.EndScope(ScopeType.Array);
+            this.DecreaseIndentation();
 
-            var currentScope = CurrentScope();
+            var currentScope = this.CurrentScope();
 
             // If the array is empty, indicate it by writing [ ]
             if (previousScope.ObjectCount == 0)
@@ -120,10 +120,10 @@ namespace LEGO.AsyncAPI.Writers
                 // If we are in an object, write a white space preceding the braces.
                 if (currentScope != null && currentScope.Type == ScopeType.Object)
                 {
-                    Writer.Write(" ");
+                    this.Writer.Write(" ");
                 }
 
-                Writer.Write(WriterConstants.EmptyArray);
+                this.Writer.Write(WriterConstants.EmptyArray);
             }
         }
 
@@ -132,29 +132,29 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override void WritePropertyName(string name)
         {
-            VerifyCanWritePropertyName(name);
+            this.VerifyCanWritePropertyName(name);
 
-            var currentScope = CurrentScope();
+            var currentScope = this.CurrentScope();
 
             // If this is NOT the first property in the object, always start a new line and add indentation.
             if (currentScope.ObjectCount != 0)
             {
-                Writer.WriteLine();
-                WriteIndentation();
+                this.Writer.WriteLine();
+                this.WriteIndentation();
             }
             // Only add newline and indentation when this object is not in the top level scope and not in an array.
             // The top level scope should have no indentation and it is already in its own line.
             // The first property of an object inside array can go after the array prefix (-) directly.
-            else if (!IsTopLevelScope() && !currentScope.IsInArray)
+            else if (!this.IsTopLevelScope() && !currentScope.IsInArray)
             {
-                Writer.WriteLine();
-                WriteIndentation();
+                this.Writer.WriteLine();
+                this.WriteIndentation();
             }
 
             name = name.GetYamlCompatibleString();
 
-            Writer.Write(name);
-            Writer.Write(":");
+            this.Writer.Write(name);
+            this.Writer.Write(":");
 
             currentScope.ObjectCount++;
         }
@@ -165,34 +165,34 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="value">The string value.</param>
         public override void WriteValue(string value)
         {
-            if (!UseLiteralStyle || value.IndexOfAny(new[] { '\n', '\r' }) == -1)
+            if (!this.UseLiteralStyle || value.IndexOfAny(new[] { '\n', '\r' }) == -1)
             {
-                WriteValueSeparator();
+                this.WriteValueSeparator();
 
                 value = value.GetYamlCompatibleString();
 
-                Writer.Write(value);
+                this.Writer.Write(value);
             }
             else
             {
-                if (CurrentScope() != null)
+                if (this.CurrentScope() != null)
                 {
-                    WriteValueSeparator();
+                    this.WriteValueSeparator();
                 }
 
-                Writer.Write("|");
+                this.Writer.Write("|");
 
-                WriteChompingIndicator(value);
+                this.WriteChompingIndicator(value);
 
                 // Write indentation indicator when it starts with spaces
                 if (value.StartsWith(" "))
                 {
-                    Writer.Write(IndentationString.Length);
+                    this.Writer.Write(IndentationString.Length);
                 }
 
-                Writer.WriteLine();
+                this.Writer.WriteLine();
 
-                IncreaseIndentation();
+                this.IncreaseIndentation();
 
                 using (var reader = new StringReader(value))
                 {
@@ -202,19 +202,19 @@ namespace LEGO.AsyncAPI.Writers
                         if (firstLine)
                             firstLine = false;
                         else
-                            Writer.WriteLine();
+                            this.Writer.WriteLine();
 
                         // Indentations for empty lines aren't needed.
                         if (line.Length > 0)
                         {
-                            WriteIndentation();
+                            this.WriteIndentation();
                         }
 
-                        Writer.Write(line);
+                        this.Writer.Write(line);
                     }
                 }
 
-                DecreaseIndentation();
+                this.DecreaseIndentation();
             }
         }
 
@@ -254,14 +254,14 @@ namespace LEGO.AsyncAPI.Writers
             {
                 case 0:
                     // "strip" chomping indicator
-                    Writer.Write("-");
+                    this.Writer.Write("-");
                     break;
                 case 1:
                     // "clip"
                     break;
                 default:
                     // "keep" chomping indicator
-                    Writer.Write("+");
+                    this.Writer.Write("+");
                     break;
             }
         }
@@ -273,7 +273,7 @@ namespace LEGO.AsyncAPI.Writers
         {
             // YAML allows null value to be represented by either nothing or the word null.
             // We will write nothing here.
-            WriteValueSeparator();
+            this.WriteValueSeparator();
         }
 
         /// <summary>
@@ -281,22 +281,22 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         protected override void WriteValueSeparator()
         {
-            if (IsArrayScope())
+            if (this.IsArrayScope())
             {
                 // If array is the outermost scope and this is the first item, there is no need to insert a newline.
-                if (!IsTopLevelScope() || CurrentScope().ObjectCount != 0)
+                if (!this.IsTopLevelScope() || this.CurrentScope().ObjectCount != 0)
                 {
-                    Writer.WriteLine();
+                    this.Writer.WriteLine();
                 }
 
-                WriteIndentation();
-                Writer.Write(WriterConstants.PrefixOfArrayItem);
+                this.WriteIndentation();
+                this.Writer.Write(WriterConstants.PrefixOfArrayItem);
 
-                CurrentScope().ObjectCount++;
+                this.CurrentScope().ObjectCount++;
             }
             else
             {
-                Writer.Write(" ");
+                this.Writer.Write(" ");
             }
         }
 
@@ -305,8 +305,8 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override void WriteRaw(string value)
         {
-            WriteValueSeparator();
-            Writer.Write(value);
+            this.WriteValueSeparator();
+            this.Writer.Write(value);
         }
     }
 }

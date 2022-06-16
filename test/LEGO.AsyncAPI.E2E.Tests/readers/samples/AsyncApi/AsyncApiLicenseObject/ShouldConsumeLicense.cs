@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiLicenseObject
     using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeLicense : ShouldConsumeProduceBase<License>
+    public class ShouldConsumeLicense : ShouldConsumeProduceBase<AsyncApiLicense>
     {
         public ShouldConsumeLicense()
             : base(typeof(ShouldConsumeLicense))

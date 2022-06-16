@@ -32,8 +32,8 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageTraitO
             Assert.Equal("User signup", output.Title);
             Assert.Equal("Action to sign a user up.", output.Summary);
             Assert.Equal("A longer description", output.Description);
-            Assert.IsType<List<Tag>>(output.Tags);
-            Assert.IsType<ExternalDocumentation>(output.ExternalDocs);
+            Assert.IsType<List<AsyncApiTag>>(output.Tags);
+            Assert.IsType<AsyncApiExternalDocumentation>(output.ExternalDocs);
             var messageBindings = output.Bindings;
             Assert.IsAssignableFrom<IDictionary<string, IMessageBinding>>(messageBindings);
             Assert.IsType<HttpMessageBinding>(messageBindings["http"]);

@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiChannelObject
     using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeChannel : ShouldConsumeProduceBase<Channel>
+    public class ShouldConsumeChannel : ShouldConsumeProduceBase<AsyncApiChannel>
     {
         public ShouldConsumeChannel()
             : base(typeof(ShouldConsumeChannel))
@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiChannelObject
         {
             var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
-            Assert.IsType<Channel>(output);
+            Assert.IsType<AsyncApiChannel>(output);
         }
 
         [Fact]

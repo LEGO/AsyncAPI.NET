@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// An object representing a Server Variable for server URL template substitution.
     /// </summary>
-    public class ServerVariable : IAsyncApiExtensible
+    public class AsyncApiServerVariable : IAsyncApiExtensible
     {
         /// <summary>
         /// Gets or sets an enumeration of string values to be used if the substitution options are from a limited set.

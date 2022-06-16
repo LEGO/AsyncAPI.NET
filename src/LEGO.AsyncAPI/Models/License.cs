@@ -5,13 +5,14 @@ namespace LEGO.AsyncAPI.Models
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// License information for the exposed API.
     /// </summary>
-    public class License : IAsyncApiExtensible
+    public class AsyncApiLicense : IAsyncApiSerializable, IAsyncApiExtensible
     {
-        public License(string name)
+        public AsyncApiLicense(string name)
         {
             this.Name = name;
         }
@@ -29,21 +30,25 @@ namespace LEGO.AsyncAPI.Models
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        public override bool Equals(object? obj)
+        public void SerializeV2(IAsyncApiWriter writer)
         {
-            return this.Equals(obj as License);
-        }
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
 
-        public bool Equals(License license)
-        {
-            return license != null &&
-                   string.Compare(this.Name, license.Name, StringComparison.Ordinal) == 0 &&
-                   ((this.Url == null && license.Url == null) || (this.Url != null && this.Url.Equals(license.Url)));
-        }
+            writer.WriteStartObject();
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(this.Name, this.Url);
+            // name
+            writer.WriteProperty(AsyncApiConstants.Name, this.Name);
+
+            // url
+            writer.WriteProperty(AsyncApiConstants.Url, this.Url?.OriginalString);
+
+            // specification extensions
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_2_0);
+
+            writer.WriteEndObject();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiContactObject
     using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeContact : ShouldConsumeProduceBase<Contact>
+    public class ShouldConsumeContact : ShouldConsumeProduceBase<AsyncApiContact>
     {
         public ShouldConsumeContact()
             : base(typeof(ShouldConsumeContact))
@@ -17,7 +17,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiContactObject
         [Fact]
         public void ShouldConsumeMinimalSpec()
         {
-            Assert.IsType<Contact>(this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json")));
+            Assert.IsType<AsyncApiContact>(this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json")));
         }
 
         [Fact]

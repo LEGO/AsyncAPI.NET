@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Models
     /// <remarks>
     /// All objects defined within the components object will have no effect on the API unless they are explicitly referenced from properties outside the components object.
     /// </remarks>
-    public class Components : IAsyncApiExtensible
+    public class AsyncApiComponents : IAsyncApiExtensible
     {
         /// <summary>
         /// Gets or sets an object to hold reusable Schema Objects.
@@ -77,8 +77,8 @@ namespace LEGO.AsyncAPI.Models
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
 
-        public IDictionary<string, Server> Servers { get; set; } = new Dictionary<string, Server>();
+        public IDictionary<string, AsyncApiServer> Servers { get; set; } = new Dictionary<string, AsyncApiServer>();
 
-        public IDictionary<string, Channel> Channels { get; set; } = new Dictionary<string, Channel>();
+        public IDictionary<string, AsyncApiChannel> Channels { get; set; } = new Dictionary<string, AsyncApiChannel>();
     }
 }

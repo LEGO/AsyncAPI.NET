@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Describes the operations available on a single channel.
     /// </summary>
-    public class Channel : IReferenceable, IAsyncApiExtensible
+    public class AsyncApiChannel : IReferenceable, IAsyncApiExtensible
     {
         /// <summary>
         /// Gets or sets an optional description of this channel item. CommonMark syntax can be used for rich text representation.

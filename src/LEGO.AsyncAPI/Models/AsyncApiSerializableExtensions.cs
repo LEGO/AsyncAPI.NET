@@ -84,7 +84,7 @@ namespace LEGO.AsyncAPI.Models
                 AsyncApiFormat.Yaml => new AsyncApiYamlWriter(streamWriter, settings),
                 _ => throw new AsyncApiException(string.Format("The given AsyncApi format '{0}' is not supported.", format)),
             };
-            element.Serialize(writer);
+            element.SerializeV2(writer);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            element.Serialize(writer);
+            element.SerializeV2(writer);
 
             writer.Flush();
         }

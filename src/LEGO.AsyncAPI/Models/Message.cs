@@ -64,12 +64,12 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets a list of tags for API documentation control. Tags can be used for logical grouping of messages.
         /// </summary>
-        public IList<Tag> Tags { get; set; } = new List<Tag>();
+        public IList<AsyncApiTag> Tags { get; set; } = new List<AsyncApiTag>();
 
         /// <summary>
         /// Gets or sets additional external documentation for this message.
         /// </summary>
-        public ExternalDocumentation ExternalDocs { get; set; }
+        public AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
         /// <summary>
         /// Gets or sets a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.

@@ -137,45 +137,45 @@
             };
         }
 
-        public static Info Info(Contact? contact = null, License? license = null, bool withExtensionData = true)
+        public static AsyncApiInfo Info(AsyncApiContact? contact = null, AsyncApiLicense? license = null, bool withExtensionData = true)
         {
-            return new Info("foo", "bar")
+            return new AsyncApiInfo("foo", "bar")
             {
                 Description = "quz",
                 TermsOfService = new Uri("https://lego.com"),
-                Contact = contact ?? new Contact(),
-                License = license ?? new License("Apache 2.0"),
+                Contact = contact ?? new AsyncApiContact(),
+                License = license ?? new AsyncApiLicense("Apache 2.0"),
                 Extensions = WithExtensionData(withExtensionData),
             };
         }
 
-        public static Contact Contact(bool withExtensionData = true)
+        public static AsyncApiContact Contact(bool withExtensionData = true)
         {
-            return new Contact
+            return new AsyncApiContact
             {
                 Name = "foo",
-                Uri = new Uri("https://lego.com"),
+                Url = new Uri("https://lego.com"),
                 Email = "asyncApiContactObject@lego.com",
                 Extensions = WithExtensionData(withExtensionData),
             };
         }
 
-        public static License License(bool withExtensionData = true)
+        public static AsyncApiLicense License(bool withExtensionData = true)
         {
-            return new License("Apache 2.0")
+            return new AsyncApiLicense("Apache 2.0")
             {
                 Url = new Uri("https://lego.com"),
                 Extensions = WithExtensionData(withExtensionData),
             };
         }
 
-        public static Server Server(IDictionary<string, ServerVariable>? variables = null, IList<Dictionary<string, string[]>>? security = null, bool withExtensionData = true)
+        public static AsyncApiServer Server(IDictionary<string, AsyncApiServerVariable>? variables = null, IList<Dictionary<string, string[]>>? security = null, bool withExtensionData = true)
         {
-            return new Server("https://lego.com", "http")
+            return new AsyncApiServer("https://lego.com", "http")
             {
                 ProtocolVersion = "0.0.1",
                 Description = "foo",
-                Variables = variables ?? ImmutableDictionary<string, ServerVariable>.Empty,
+                Variables = variables ?? ImmutableDictionary<string, AsyncApiServerVariable>.Empty,
                 Security = security ?? new List<Dictionary<string, string[]>> { new() },
                 Bindings = ServerBindings(),
                 Extensions = WithExtensionData(withExtensionData),
@@ -187,9 +187,9 @@
             return withExtensionData ? Extensions() : null;
         }
 
-        public static ServerVariable ServerVariable(bool withExtensionData = true)
+        public static AsyncApiServerVariable ServerVariable(bool withExtensionData = true)
         {
-            return new ServerVariable()
+            return new AsyncApiServerVariable()
             {
                 Enum = new List<string> { "foo" },
                 Default = "bar",
@@ -199,9 +199,9 @@
             };
         }
 
-        public static Channel Channel(bool withExtensionData = true)
+        public static AsyncApiChannel Channel(bool withExtensionData = true)
         {
-            return new Channel()
+            return new AsyncApiChannel()
             {
                 Description = "foo",
                 Servers = new[] { "production" },
@@ -213,20 +213,20 @@
             };
         }
 
-        public static Tag Tag(bool withExtensionData = true)
+        public static AsyncApiTag Tag(bool withExtensionData = true)
         {
-            return new Tag()
+            return new AsyncApiTag()
             {
                 Name = "foo",
                 Description = "bar",
-                ExternalDocs = new ExternalDocumentation(),
+                ExternalDocs = new AsyncApiExternalDocumentation(),
                 Extensions = WithExtensionData(withExtensionData),
             };
         }
 
-        public static ExternalDocumentation ExternalDocs(bool withExtensionData = true)
+        public static AsyncApiExternalDocumentation ExternalDocs(bool withExtensionData = true)
         {
-            return new ExternalDocumentation()
+            return new AsyncApiExternalDocumentation()
             {
                 Description = "foo",
                 Url = new Uri("https://lego.com"),
@@ -234,9 +234,9 @@
             };
         }
 
-        public static Components Components(bool withExtensionData = true)
+        public static AsyncApiComponents Components(bool withExtensionData = true)
         {
-            return new Components
+            return new AsyncApiComponents
             {
                 OperationBindings = OperationBindings(),
                 MessageBindings = MessageBindings(),

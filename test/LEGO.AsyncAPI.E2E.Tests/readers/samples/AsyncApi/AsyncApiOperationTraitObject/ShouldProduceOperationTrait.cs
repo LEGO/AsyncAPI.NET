@@ -30,8 +30,8 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
                 OperationId = "foo",
                 Summary = "bar",
                 Description = "baz",
-                Tags = ImmutableList<Tag>.Empty,
-                ExternalDocs = new ExternalDocumentation(),
+                Tags = ImmutableList<AsyncApiTag>.Empty,
+                ExternalDocs = new AsyncApiExternalDocumentation(),
                 Bindings = new Dictionary<string, IOperationBinding>()
                 {
                     {

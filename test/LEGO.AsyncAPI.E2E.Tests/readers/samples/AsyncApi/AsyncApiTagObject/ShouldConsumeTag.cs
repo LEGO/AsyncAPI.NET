@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiTagObject
     using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeTag : ShouldConsumeProduceBase<Tag>
+    public class ShouldConsumeTag : ShouldConsumeProduceBase<AsyncApiTag>
     {
         public ShouldConsumeTag()
             : base(typeof(ShouldConsumeTag))
@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiTagObject
 
             Assert.Equal("foo", output.Name);
             Assert.Equal("bar", output.Description);
-            Assert.IsType<ExternalDocumentation>(output.ExternalDocs);
+            Assert.IsType<AsyncApiExternalDocumentation>(output.ExternalDocs);
             Assert.IsAssignableFrom<IDictionary<string, IAsyncApiAny>>(output.Extensions);
         }
     }

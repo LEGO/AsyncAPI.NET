@@ -29,8 +29,8 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
             Assert.Equal("foo", output.OperationId);
             Assert.Equal("bar", output.Summary);
             Assert.Equal("baz", output.Description);
-            Assert.IsAssignableFrom<IList<Tag>>(output.Tags);
-            Assert.IsType<ExternalDocumentation>(output.ExternalDocs);
+            Assert.IsAssignableFrom<IList<AsyncApiTag>>(output.Tags);
+            Assert.IsType<AsyncApiExternalDocumentation>(output.ExternalDocs);
             Assert.IsAssignableFrom<IDictionary<string, IOperationBinding>>(output.Bindings);
             Assert.IsType<KafkaOperationBinding>(output.Bindings["kafka"]);
             Assert.IsType<HttpOperationBinding>(output.Bindings["http"]);

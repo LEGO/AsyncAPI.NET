@@ -5,18 +5,19 @@ namespace LEGO.AsyncAPI.Models
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// The definition of a server this application MAY connect to.
     /// </summary>
-    public class Server : IAsyncApiExtensible
+    public class AsyncApiServer : IAsyncApiSerializable, IAsyncApiExtensible
     {
         /// <summary>
         /// Initializes Server object.
         /// </summary>
         /// <param name="url"></param>
         /// <param name="protocol"></param>
-        public Server(string url, string protocol)
+        public AsyncApiServer(string url, string protocol)
         {
             this.Url = new Uri(url);
             this.Protocol = protocol;
@@ -45,7 +46,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets a map between a variable name and its value. The value is used for substitution in the server's URL template.
         /// </summary>
-        public IDictionary<string, ServerVariable> Variables { get; set; } = new Dictionary<string, ServerVariable>();
+        public IDictionary<string, AsyncApiServerVariable> Variables { get; set; } = new Dictionary<string, AsyncApiServerVariable>();
 
         /// <summary>
         /// Gets or sets a declaration of which security mechanisms can be used with this server. The list of values includes alternative security requirement objects that can be used.
@@ -53,7 +54,7 @@ namespace LEGO.AsyncAPI.Models
         /// <remarks>
         /// The name used for each property MUST correspond to a security scheme declared in the Security Schemes under the Components Object.
         /// </remarks>
-        public IList<Dictionary<string, string[]>> Security { get; set; } = new List<Dictionary<string, string[]>>();
+        public IList<AsyncApiSecurityRequirement> Security { get; set; } = new List<AsyncApiSecurityRequirement>();
 
         /// <summary>
         /// Gets or sets a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
@@ -62,5 +63,33 @@ namespace LEGO.AsyncAPI.Models
 
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
+        public void SerializeV2(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.WriteStartObject();
+
+            writer.WriteRequiredProperty(AsyncApiConstants.Url, Url?.OriginalString);
+
+            writer.WriteRequiredProperty(AsyncApiConstants.Protocol, Protocol);
+
+            writer.WriteProperty(AsyncApiConstants.ProtocolVersion, this.ProtocolVersion);
+
+            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+
+            writer.WriteOptionalMap(AsyncApiConstants.Parameters, Variables, (w, p) => p.WriteValue(w));
+
+            writer.WriteOptionalObject(AsyncApiConstants.RequestBody, RequestBody, (w, r) => r.WriteValue(w));
+
+            writer.WriteProperty(AsyncApiConstants.Description, Description);
+
+            writer.WriteOptionalObject(AsyncApiConstants.Server, Server, (w, s) => s.SerializeAsV3(w));
+
+            writer.WriteEndObject();
+        }
     }
 }

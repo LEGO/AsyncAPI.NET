@@ -2,12 +2,11 @@
 
 namespace LEGO.AsyncAPI.Writers
 {
-    using LEGO.AsyncAPI.Exceptions;
-    using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Interfaces;
     using System;
     using System.Collections.Generic;
-    using System.IO;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     public static class AsyncApiWriterAnyExtensions
     {
         /// <summary>
@@ -16,7 +15,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="writer">The Open API writer.</param>
         /// <param name="extensions">The specification extensions.</param>
         /// <param name="specVersion">Version of the AsyncApi specification that that will be output.</param>
-        public static void WriteExtensions(this IAsyncApiWriter writer, IDictionary<string, IAsyncApiExtension> extensions)
+        public static void WriteExtensions(this IAsyncApiWriter writer, IDictionary<string, IAsyncApiExtension> extensions, AsyncApiVersion specVersion)
         {
             if (writer is null)
             {
@@ -28,7 +27,7 @@ namespace LEGO.AsyncAPI.Writers
                 foreach (var item in extensions)
                 {
                     writer.WritePropertyName(item.Key);
-                    item.Value.Write(writer);
+                    item.Value.Write(writer, specVersion);
                 }
             }
         }

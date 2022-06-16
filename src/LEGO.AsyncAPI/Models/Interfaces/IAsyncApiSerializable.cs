@@ -6,6 +6,6 @@ namespace LEGO.AsyncAPI.Models.Interfaces
 
     public interface IAsyncApiSerializable
     {
-        void Serialize(IAsyncApiWriter writer);
+        void SerializeV2(IAsyncApiWriter writer);
     }
 }

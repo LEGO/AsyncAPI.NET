@@ -5,13 +5,14 @@ namespace LEGO.AsyncAPI.Models
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// The object provides metadata about the API. The metadata can be used by the clients if needed.
     /// </summary>
-    public class Info : IAsyncApiExtensible
+    public class AsyncApiInfo : IAsyncApiSerializable, IAsyncApiExtensible
     {
-        public Info(string title, string version)
+        public AsyncApiInfo(string title, string version)
         {
             this.Title = title;
             this.Version = version;
@@ -40,14 +41,47 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets the contact information for the exposed API.
         /// </summary>
-        public Contact Contact { get; set; }
+        public AsyncApiContact Contact { get; set; }
 
         /// <summary>
         /// Gets or sets the license information for the exposed API.
         /// </summary>
-        public License License { get; set; }
+        public AsyncApiLicense License { get; set; }
 
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
+        public void SerializeV2(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.WriteStartObject();
+
+            // title
+            writer.WriteProperty(AsyncApiConstants.Title, this.Title);
+
+            // description
+            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+
+            // termsOfService
+            writer.WriteProperty(AsyncApiConstants.TermsOfService, this.TermsOfService?.OriginalString);
+
+            // contact object
+            writer.WriteOptionalObject(AsyncApiConstants.Contact, this.Contact, (w, c) => c.SerializeV2(w));
+
+            // license object
+            writer.WriteOptionalObject(AsyncApiConstants.License, this.License, (w, l) => l.SerializeV2(w));
+
+            // version
+            writer.WriteProperty(AsyncApiConstants.Version, this.Version);
+
+            // specification extensions
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_2_0);
+
+            writer.WriteEndObject();
+        }
     }
 }

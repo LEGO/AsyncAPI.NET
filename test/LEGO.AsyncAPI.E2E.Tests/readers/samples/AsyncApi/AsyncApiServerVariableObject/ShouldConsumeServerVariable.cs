@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiServerVariabl
     using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeServerVariable : ShouldConsumeProduceBase<ServerVariable>
+    public class ShouldConsumeServerVariable : ShouldConsumeProduceBase<AsyncApiServerVariable>
     {
         public ShouldConsumeServerVariable()
             : base(typeof(ShouldConsumeServerVariable))
@@ -17,7 +17,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiServerVariabl
         {
             var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
-            Assert.IsType<ServerVariable>(output);
+            Assert.IsType<AsyncApiServerVariable>(output);
         }
 
         [Fact]

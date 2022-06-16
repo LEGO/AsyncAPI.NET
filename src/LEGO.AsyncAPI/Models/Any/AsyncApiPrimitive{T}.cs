@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// <param name="value"></param>
         public AsyncApiPrimitive(T value)
         {
-            Value = value;
+            this.Value = value;
         }
 
         /// <summary>
