@@ -1,12 +1,12 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using System;
-using System.Text;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Writers;
-
 namespace LEGO.AsyncAPI.Models.Any
 {
+    using System;
+    using System.Text;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
+
     /// <summary>
     /// Open API primitive class.
     /// </summary>

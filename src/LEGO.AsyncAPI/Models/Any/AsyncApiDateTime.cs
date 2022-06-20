@@ -1,10 +1,10 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Models.Interfaces;
-using System;
-
 namespace LEGO.AsyncAPI.Models.Any
 {
+    using System;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
     /// Open API Datetime
     /// </summary>

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license. 
 
-using LEGO.AsyncAPI.Models.Interfaces;
-
 namespace LEGO.AsyncAPI.Models.Any
 {
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
     /// Open API string type.
     /// </summary>

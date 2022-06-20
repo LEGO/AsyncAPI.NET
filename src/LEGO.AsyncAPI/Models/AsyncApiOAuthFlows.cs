@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Attributes;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -51,25 +50,25 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // implicit
-            writer.WriteOptionalObject(AsyncApiConstants.Implicit, Implicit, (w, o) => o.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.Implicit, this.Implicit, (w, o) => o.SerializeV2(w));
 
             // password
-            writer.WriteOptionalObject(AsyncApiConstants.Password, Password, (w, o) => o.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.Password, this.Password, (w, o) => o.SerializeV2(w));
 
             // clientCredentials
             writer.WriteOptionalObject(
                 AsyncApiConstants.ClientCredentials,
-                ClientCredentials,
+                this.ClientCredentials,
                 (w, o) => o.SerializeV2(w));
 
             // authorizationCode
             writer.WriteOptionalObject(
                 AsyncApiConstants.AuthorizationCode,
-                AuthorizationCode,
+                this.AuthorizationCode,
                 (w, o) => o.SerializeV2(w));
 
             // extensions
-            writer.WriteExtensions(Extensions, AsyncApiVersion.AsyncApi2_2_0);
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_2_0);
 
             writer.WriteEndObject();
         }

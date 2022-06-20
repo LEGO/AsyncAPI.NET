@@ -1,9 +1,9 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Models.Interfaces;
-
 namespace LEGO.AsyncAPI.Models.Any
 {
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
     /// Primitive interface for all AsyncApi primitive types.
     /// </summary>

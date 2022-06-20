@@ -73,21 +73,21 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteStartObject();
 
-            writer.WriteRequiredProperty(AsyncApiConstants.Url, Url?.OriginalString);
+            writer.WriteRequiredProperty(AsyncApiConstants.Url, this.Url?.OriginalString);
 
-            writer.WriteRequiredProperty(AsyncApiConstants.Protocol, Protocol);
+            writer.WriteRequiredProperty(AsyncApiConstants.Protocol, this.Protocol);
 
             writer.WriteProperty(AsyncApiConstants.ProtocolVersion, this.ProtocolVersion);
 
             writer.WriteProperty(AsyncApiConstants.Description, this.Description);
 
-            writer.WriteOptionalMap(AsyncApiConstants.Parameters, Variables, (w, p) => p.WriteValue(w));
+            writer.WriteOptionalMap(AsyncApiConstants.Variables, this.Variables, (w, v) => v.SerializeV2(w));
 
-            writer.WriteOptionalObject(AsyncApiConstants.RequestBody, RequestBody, (w, r) => r.WriteValue(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.Security, this.Security, (w, s) => s.SerializeV2(w));
 
-            writer.WriteProperty(AsyncApiConstants.Description, Description);
+            writer.WriteOptionalMap(AsyncApiConstants.Bindings, this.Bindings, (w, b) => b.SerializeV2(w));
 
-            writer.WriteOptionalObject(AsyncApiConstants.Server, Server, (w, s) => s.SerializeAsV3(w));
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_2_0);
 
             writer.WriteEndObject();
         }

@@ -7,11 +7,10 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public class AsyncApiSecurityRequirement : Dictionary<AsyncApiSecurityScheme, IList<string>>,
-       IAsyncApiSerializable
+    public class AsyncApiSecurityRequirement : Dictionary<AsyncApiSecurityScheme, IList<string>>, IAsyncApiSerializable
     {
         /// <summary>
-        /// Initializes the <see cref="AsyncApiSecurityRequirement"/> class.
+        /// Initializes a new instance of the <see cref="AsyncApiSecurityRequirement"/> class.
         /// This constructor ensures that only Reference.Id is considered when two dictionary keys
         /// of type <see cref="AsyncApiSecurityScheme"/> are compared.
         /// </summary>
@@ -21,47 +20,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Serialize <see cref="AsyncApiSecurityRequirement"/> to Open Api v3.0
-        /// </summary>
-        public void SerializeAsV3(IAsyncApiWriter writer)
-        {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            writer.WriteStartObject();
-
-            foreach (var securitySchemeAndScopesValuePair in this)
-            {
-                var securityScheme = securitySchemeAndScopesValuePair.Key;
-                var scopes = securitySchemeAndScopesValuePair.Value;
-
-                if (securityScheme.Reference == null)
-                {
-                    // Reaching this point means the reference to a specific AsyncApiSecurityScheme fails.
-                    // We are not able to serialize this SecurityScheme/Scopes key value pair since we do not know what
-                    // string to output.
-                    continue;
-                }
-
-                securityScheme.SerializeV2(writer);
-
-                writer.WriteStartArray();
-
-                foreach (var scope in scopes)
-                {
-                    writer.WriteValue(scope);
-                }
-
-                writer.WriteEndArray();
-            }
-
-            writer.WriteEndObject();
-        }
-
-        /// <summary>
-        /// Serialize <see cref="AsyncApiSecurityRequirement"/> to Open Api v2.0
+        /// Serialize <see cref="AsyncApiSecurityRequirement"/> to Async Api v2
         /// </summary>
         public void SerializeV2(IAsyncApiWriter writer)
         {
@@ -102,7 +61,7 @@ namespace LEGO.AsyncAPI.Models
 
         /// <summary>
         /// Comparer for AsyncApiSecurityScheme that only considers the Id in the Reference
-        /// (i.e. the string that will actually be displayed in the written document)
+        /// (i.e. the string that will actually be displayed in the written document).
         /// </summary>
         private class AsyncApiSecuritySchemeReferenceEqualityComparer : IEqualityComparer<AsyncApiSecurityScheme>
         {

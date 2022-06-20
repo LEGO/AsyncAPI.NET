@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-     public class AsyncApiSecurityScheme : IAsyncApiSerializable, IAsyncApiReferenceable, IAsyncApiExtensible
+    public class AsyncApiSecurityScheme : IAsyncApiSerializable, IAsyncApiReferenceable, IAsyncApiExtensible
     {
         /// <summary>
         /// REQUIRED. The type of the security scheme. Valid values are "userPassword", "apiKey", "X509", "symmetricEncryption", "asymmetricEncryption", "httpApiKey", "http", "oauth2", "openIdConnect", "plain", "scramSha256", "scramSha512", and "gssapi".
@@ -77,13 +77,13 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (Reference != null)
+            if (this.Reference != null)
             {
-                Reference.SerializeV2(writer);
+                this.Reference.SerializeV2(writer);
                 return;
             }
 
-            SerializeV2WithoutReference(writer);
+            this.SerializeV2WithoutReference(writer);
         }
 
         /// <summary>
@@ -94,119 +94,54 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // type
-            writer.WriteProperty(AsyncApiConstants.Type, Type.GetDisplayName());
+            writer.WriteProperty(AsyncApiConstants.Type, this.Type.GetDisplayName());
 
             // description
-            writer.WriteProperty(AsyncApiConstants.Description, Description);
+            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
 
-            switch (Type)
+            switch (this.Type)
             {
+                case SecuritySchemeType.None:
+                    break;
+                case SecuritySchemeType.UserPassword:
+                    break;
                 case SecuritySchemeType.ApiKey:
-                    // These properties apply to apiKey type only.
-                    // name
-                    // in
-                    writer.WriteProperty(AsyncApiConstants.Name, Name);
-                    writer.WriteProperty(AsyncApiConstants.In, In.GetDisplayName());
+                    writer.WriteProperty(AsyncApiConstants.In, this.In.GetDisplayName());
+                    break;
+                case SecuritySchemeType.X509:
+                    break;
+                case SecuritySchemeType.SymmetricEncryption:
+                    break;
+                case SecuritySchemeType.AsymmetricEncryption:
+                    break;
+                case SecuritySchemeType.HttpApiKey:
+                    writer.WriteProperty(AsyncApiConstants.Name, this.Name);
+                    writer.WriteProperty(AsyncApiConstants.In, this.In.GetDisplayName());
                     break;
                 case SecuritySchemeType.Http:
-                    // These properties apply to http type only.
-                    // scheme
-                    // bearerFormat
-                    writer.WriteProperty(AsyncApiConstants.Scheme, Scheme);
-                    writer.WriteProperty(AsyncApiConstants.BearerFormat, BearerFormat);
+                    writer.WriteProperty(AsyncApiConstants.Scheme, this.Scheme);
+                    writer.WriteProperty(AsyncApiConstants.BearerFormat, this.BearerFormat);
                     break;
                 case SecuritySchemeType.OAuth2:
-                    // This property apply to oauth2 type only.
-                    // flows
-                    writer.WriteOptionalObject(AsyncApiConstants.Flows, Flows, (w, o) => o.SerializeAsV3(w));
+                    writer.WriteOptionalObject(AsyncApiConstants.Flows, this.Flows, (w, o) => o.SerializeV2(w));
                     break;
                 case SecuritySchemeType.OpenIdConnect:
-                    // This property apply to openIdConnect only.
-                    // openIdConnectUrl
-                    writer.WriteProperty(AsyncApiConstants.OpenIdConnectUrl, OpenIdConnectUrl?.ToString());
+                    writer.WriteProperty(AsyncApiConstants.OpenIdConnectUrl, this.OpenIdConnectUrl?.ToString());
+                    break;
+                case SecuritySchemeType.Plain:
+                    break;
+                case SecuritySchemeType.ScramSha256:
+                    break;
+                case SecuritySchemeType.ScramSha512:
+                    break;
+                case SecuritySchemeType.Gssapi:
+                    break;
+                default:
                     break;
             }
 
             // extensions
-            writer.WriteExtensions(Extensions, AsyncApiVersion.AsyncApi2_2_0);
-
-            writer.WriteEndObject();
-        }
-
-        /// <summary>
-        /// Serialize <see cref="AsyncApiSecurityScheme"/> to Open Api v2.0
-        /// </summary>
-        public void SerializeAsV2(IAsyncApiWriter writer)
-        {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            if (Reference != null)
-            {
-                Reference.SerializeV2(writer);
-                return;
-            }
-
-            SerializeAsV2WithoutReference(writer);
-        }
-
-        /// <summary>
-        /// Serialize to AsyncApi V2 document without using reference.
-        /// </summary>
-        public void SerializeAsV2WithoutReference(IAsyncApiWriter writer)
-        {
-            if (Type == SecuritySchemeType.Http && Scheme != AsyncApiConstants.Basic)
-            {
-                // Bail because V2 does not support non-basic HTTP scheme
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-                return;
-            }
-
-            if (Type == SecuritySchemeType.OpenIdConnect)
-            {
-                // Bail because V2 does not support OpenIdConnect
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-                return;
-            }
-
-            writer.WriteStartObject();
-
-            // type
-            switch (Type)
-            {
-                case SecuritySchemeType.Http:
-                    writer.WriteProperty(AsyncApiConstants.Type, AsyncApiConstants.Basic);
-                    break;
-
-                case SecuritySchemeType.Oauth2:
-                    // These properties apply to ouauth2 type only.
-                    // flow
-                    // authorizationUrl
-                    // tokenUrl
-                    // scopes
-                    writer.WriteProperty(AsyncApiConstants.Type, Type.GetDisplayName());
-                    WriteOAuthFlowForV2(writer, Flows);
-                    break;
-
-                case SecuritySchemeType.ApiKey:
-                    // These properties apply to apiKey type only.
-                    // name
-                    // in
-                    writer.WriteProperty(AsyncApiConstants.Type, Type.GetDisplayName());
-                    writer.WriteProperty(AsyncApiConstants.Name, Name);
-                    writer.WriteProperty(AsyncApiConstants.In, In.GetDisplayName());
-                    break;
-            }
-
-            // description
-            writer.WriteProperty(AsyncApiConstants.Description, Description);
-
-            // extensions
-            writer.WriteExtensions(Extensions, AsyncApiVersion.AsyncApi2_2_0);
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_2_0);
 
             writer.WriteEndObject();
         }
