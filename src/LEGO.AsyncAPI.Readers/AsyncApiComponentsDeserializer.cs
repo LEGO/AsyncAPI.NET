@@ -7,9 +7,7 @@ namespace LEGO.AsyncAPI.Readers
     {
         private static FixedFieldMap<AsyncApiComponents> _componentsFixedFields = new FixedFieldMap<AsyncApiComponents>
         {
-            {
-                "schemas", (a, n) => a.Schemas = n.CreateMapWithReference(ReferenceType.Schema, LoadSchema)
-            },
+            {"schemas", (a, n) => a.Schemas = n.CreateMapWithReference(ReferenceType.Schema, LoadSchema)},
             {"responses", (a, n) => a.Responses = n.CreateMapWithReference(ReferenceType.Response, LoadResponse)},
             {"parameters", (a, n) => a.Parameters = n.CreateMapWithReference(ReferenceType.Parameter, LoadParameter)},
             {"examples", (a, n) => a.Examples = n.CreateMapWithReference(ReferenceType.Example, LoadExample)},
