@@ -95,5 +95,10 @@ namespace LEGO.AsyncAPI.Models
         /// Callbacks item.
         /// </summary>
         [Display("callbacks")] Callback,
+        
+        /// <summary>
+        /// Tags item.
+        /// </summary>
+        [Display("tags")] Tag,
     }
 }
