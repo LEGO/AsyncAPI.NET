@@ -27,7 +27,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 "correlationId", (o, n) =>
                 {
-                    o.CorrelationId = LoadRuntimeExpression(n)
+                    o.CorrelationId = 
                 }
             },
             {

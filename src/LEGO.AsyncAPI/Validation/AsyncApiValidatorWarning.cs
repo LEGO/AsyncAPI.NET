@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using LEGO.AsyncAPI.Models.Exceptions;
+using LEGO.AsyncAPI.Models;
 
 namespace LEGO.AsyncAPI.Validations
 {    
