@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageTraitO
     using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldProduceMessageTrait : ShouldConsumeProduceBase<MessageTrait>
+    public class ShouldProduceMessageTrait : ShouldConsumeProduceBase<AsyncApiMessageTrait>
     {
         public ShouldProduceMessageTrait()
             : base(typeof(ShouldProduceMessageTrait))
@@ -17,13 +17,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageTraitO
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new MessageTrait()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new AsyncApiMessageTrait()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(this.GetString("Complete.json"), this.AsyncApiWriter.Write(new MessageTrait()
+            Assert.Equal(this.GetString("Complete.json"), this.AsyncApiWriter.Write(new AsyncApiMessageTrait()
             {
                 Name = "UserSignup",
                 Title = "User signup",
@@ -45,7 +45,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageTraitO
                         }
                     },
                 },
-                Examples = ImmutableList<MessageExample>.Empty,
+                Examples = ImmutableList<AsyncApiMessageExample>.Empty,
             }));
         }
     }

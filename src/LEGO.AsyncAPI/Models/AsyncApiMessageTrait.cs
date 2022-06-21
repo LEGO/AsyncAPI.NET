@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Describes a trait that MAY be applied to a Message Object.
     /// </summary>
-    public class MessageTrait : IAsyncApiExtensible, IAsyncApiReferenceable, IAsyncApiSerializable
+    public class AsyncApiMessageTrait : IAsyncApiExtensible, IAsyncApiReferenceable, IAsyncApiSerializable
     {
         /// <summary>
         /// schema definition of the application headers. Schema MUST be of type "object".
@@ -73,7 +73,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// list of examples.
         /// </summary>
-        public IList<MessageExample> Examples { get; set; } = new List<MessageExample>();
+        public IList<AsyncApiMessageExample> Examples { get; set; } = new List<AsyncApiMessageExample>();
 
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();

@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Represents an example of a Message Object and MUST contain either headers and/or payload fields.
     /// </summary>
-    public class MessageExample : IAsyncApiExtensible, IAsyncApiSerializable
+    public class AsyncApiMessageExample : IAsyncApiExtensible, IAsyncApiSerializable
     {
         /// <summary>
         /// Gets or sets the value of this field MUST validate against the Message Object's headers field.
