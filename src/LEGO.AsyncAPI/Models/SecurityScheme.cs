@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Models
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// Defines a security scheme that can be used by the operations.
@@ -85,9 +86,19 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <inheritdoc/>
-        public bool? UnresolvedReference { get; set; }
+        public bool UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
         public AsyncApiReference Reference { get; set; }
+
+        public void SerializeV2(IAsyncApiWriter writer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

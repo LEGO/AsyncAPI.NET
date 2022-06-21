@@ -168,7 +168,7 @@ namespace LEGO.AsyncAPI.Models
 
             // messages
             writer.WriteOptionalMap(
-                AsyncApiConstants.Message,
+                AsyncApiConstants.Messages,
                 this.Messages,
                 (w, key, component) =>
                 {
@@ -222,7 +222,7 @@ namespace LEGO.AsyncAPI.Models
 
             // correlationIds
             writer.WriteOptionalMap(
-                AsyncApiConstants.CorrelationId,
+                AsyncApiConstants.CorrelationIds,
                 this.CorrelationIds,
                 (w, key, component) =>
                 {
@@ -240,7 +240,7 @@ namespace LEGO.AsyncAPI.Models
 
             // operationTraits
             writer.WriteOptionalMap(
-                AsyncApiConstants.OperationTrait,
+                AsyncApiConstants.OperationTraits,
                 this.OperationTraits,
                 (w, key, component) =>
                 {
@@ -258,7 +258,7 @@ namespace LEGO.AsyncAPI.Models
 
             // messageTraits
             writer.WriteOptionalMap(
-                AsyncApiConstants.MessageTrait,
+                AsyncApiConstants.MessageTraits,
                 this.MessageTraits,
                 (w, key, component) =>
                 {
@@ -276,7 +276,7 @@ namespace LEGO.AsyncAPI.Models
 
             // serverBindings
             writer.WriteOptionalMap(
-                AsyncApiConstants.ServerBinding,
+                AsyncApiConstants.ServerBindings,
                 this.ServerBindings,
                 (w, key, component) =>
                 {
@@ -294,7 +294,7 @@ namespace LEGO.AsyncAPI.Models
 
             // channelBindings
             writer.WriteOptionalMap(
-                AsyncApiConstants.ChannelBinding,
+                AsyncApiConstants.ChannelBindings,
                 this.ChannelBindings,
                 (w, key, component) =>
                 {
@@ -312,7 +312,7 @@ namespace LEGO.AsyncAPI.Models
 
             // operationBindings
             writer.WriteOptionalMap(
-                AsyncApiConstants.OperationBinding,
+                AsyncApiConstants.OperationBindings,
                 this.OperationBindings,
                 (w, key, component) =>
                 {
@@ -330,7 +330,7 @@ namespace LEGO.AsyncAPI.Models
 
             // messageBindings
             writer.WriteOptionalMap(
-                AsyncApiConstants.MessageBinding,
+                AsyncApiConstants.MessageBindings,
                 this.MessageBindings,
                 (w, key, component) =>
                 {
