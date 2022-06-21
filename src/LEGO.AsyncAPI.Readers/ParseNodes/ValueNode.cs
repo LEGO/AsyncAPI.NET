@@ -1,3 +1,6 @@
+using LEGO.AsyncAPI.Models.Any;
+using LEGO.AsyncAPI.Models.Interfaces;
+using LEGO.AsyncApi.Readers.Exceptions;
 using SharpYaml;
 using SharpYaml.Serialization;
 

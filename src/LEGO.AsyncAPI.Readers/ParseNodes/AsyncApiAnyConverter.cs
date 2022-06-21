@@ -2,6 +2,9 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Any;
+using LEGO.AsyncAPI.Models.Interfaces;
 using Microsoft.AsyncApi.Any;
 using Microsoft.AsyncApi.Models;
 
