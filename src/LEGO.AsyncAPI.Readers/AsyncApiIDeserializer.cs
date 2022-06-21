@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using LEGO.AsyncAPI.Exceptions;
+using LEGO.AsyncAPI.Models.Interfaces;
+using LEGO.AsyncApi.Readers.ParseNodes;
 
 namespace LEGO.AsyncApi.Readers
 {
