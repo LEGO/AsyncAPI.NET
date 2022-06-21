@@ -28,13 +28,161 @@ namespace LEGO.AsyncAPI.Services
 
             this.visitor.Visit(doc);
 
-            Walk(AsyncApiConstants.Info, () => Walk(doc.Info));
-            Walk(AsyncApiConstants.Servers, () => Walk(doc.Servers));
-            Walk(AsyncApiConstants.Channels, () => Walk(doc.Channels));
-            Walk(AsyncApiConstants.Components, () => Walk(doc.Components));
+            this.Walk(AsyncApiConstants.Info, () => this.Walk(doc.Info));
+            this.Walk(AsyncApiConstants.Servers, () => this.Walk(doc.Servers));
+            this.Walk(AsyncApiConstants.Channels, () => this.Walk(doc.Channels));
+            this.Walk(AsyncApiConstants.Components, () => this.Walk(doc.Components));
             Walk(AsyncApiConstants.Tags, () => Walk(doc.Tags));
-            Walk(AsyncApiConstants.ExternalDocs, () => Walk(doc.ExternalDocs));
-            Walk(doc as IAsyncApiExtensible);
+            this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(doc.ExternalDocs));
+            this.Walk(doc as IAsyncApiExtensible);
+        }
+
+        internal void Walk(IDictionary<string, AsyncApiChannel> channels)
+        {
+            if (channels == null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(channels);
+
+            if (channels != null)
+            {
+                foreach (var channel in channels)
+                {
+                    this.visitor.CurrentKeys.Channel = channel.Key;
+                    this.Walk(channel.Key, () => this.Walk(channel.Value));
+                    this.visitor.CurrentKeys.Channel = null;
+                }
+            }
+        }
+
+        internal void Walk(AsyncApiChannel channel, bool isComponent = false)
+        {
+            if (channel == null || ProcessAsReference(channel, isComponent))
+            {
+                return;
+            }
+
+            this.visitor.Visit(channel);
+
+            if (channel != null)
+            {
+                this.Walk(AsyncApiConstants.Subscribe, () => this.Walk(channel.Subscribe));
+                this.Walk(AsyncApiConstants.Publish, () => this.Walk(channel.Publish));
+                // TODO: Figure out bindings
+                Walk(AsyncApiConstants.Parameters, () => Walk(channel.Parameters));
+            }
+
+            this.Walk(channel as IAsyncApiExtensible);
+        }
+
+        internal void Walk(AsyncApiOperation operation)
+        {
+            if (operation == null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(operation);
+
+            if (operation != null)
+            {
+                Walk(AsyncApiConstants.Tags, () => this.Walk(operation.Tags));
+                Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(operation.ExternalDocs));
+                Walk(AsyncApiConstants.Traits, () => this.Walk(operation.Traits));
+                //TODO: Figure out bindings
+                Walk(AsyncApiConstants.Message, () => this.Walk(operation.Message));
+            }
+
+            this.Walk(operation as IAsyncApiExtensible);
+        }
+
+        private void Walk(IList<AsyncApiOperationTrait> traits)
+        {
+            if (traits == null)
+            {
+                return;
+            }
+
+            visitor.Visit(traits);
+
+            // Visit traits
+            if (traits != null)
+            {
+                for (int i = 0; i < traits.Count; i++)
+                {
+                    Walk(i.ToString(), () => Walk(traits[i]));
+                }
+            }
+        }
+
+        internal void Walk (AsyncApiOperationTrait trait, bool isComponent = false)
+        {
+            if (trait == null || ProcessAsReference(trait, isComponent))
+            {
+                return;
+            }
+
+            visitor.Visit(trait);
+
+            if(trait != null)
+            {
+                Walk(AsyncApiConstants.ExternalDocs, () => Walk(trait.ExternalDocs));
+                Walk(AsyncApiConstants.Tags, () => Walk(trait.Tags));
+                // Todo: Figure out bindings;
+            }
+
+            this.Walk(trait as IAsyncApiExtensible);
+        }
+
+        internal void Walk (AsyncApiMessage message, bool isComponent = false)
+        {
+            if(message == null || ProcessAsReference(message, isComponent))
+            {
+                return;
+            }
+
+            this.visitor.Visit(message);
+
+            if (message != null)
+            {
+                Walk(AsyncApiConstants.Headers, () => Walk(message.Headers));
+                sdlfkjhsdf
+            }
+
+            this.Walk(message as IAsyncApiExtensible);
+        }
+
+        internal void Walk(AsyncApiTag tag)
+        {
+            if (tag == null)
+            {
+                return;
+            }
+
+            visitor.Visit(tag);
+            visitor.Visit(tag.ExternalDocs);
+            visitor.Visit(tag as IAsyncApiExtensible);
+        }
+
+        internal void Walk(IList<AsyncApiTag> tags)
+        {
+            if (tags == null)
+            {
+                return;
+            }
+
+            visitor.Visit(tags);
+
+            // Visit tags
+            if (tags != null)
+            {
+                for (int i = 0; i < tags.Count; i++)
+                {
+                    Walk(i.ToString(), () => Walk(tags[i]));
+                }
+            }
         }
 
         internal void Walk(AsyncApiInfo info)
@@ -44,29 +192,29 @@ namespace LEGO.AsyncAPI.Services
                 return;
             }
 
-            visitor.Visit(info);
+            this.visitor.Visit(info);
 
             if (info != null)
             {
-                Walk(AsyncApiConstants.Contact, () => Walk(info.Contact));
-                Walk(AsyncApiConstants.License, () => Walk(info.License));
+                this.Walk(AsyncApiConstants.Contact, () => this.Walk(info.Contact));
+                this.Walk(AsyncApiConstants.License, () => this.Walk(info.License));
             }
 
-            Walk(info as IAsyncApiExtensible);
+            this.Walk(info as IAsyncApiExtensible);
         }
 
-        internal void Walk(AsyncApiServer server)
+        internal void Walk(AsyncApiServer server, bool isComponent = false)
         {
-            if (server == null)
+            if (server == null || ProcessAsReference(server, isComponent))
             {
                 return;
             }
 
-            visitor.Visit(server);
-            Walk(AsyncApiConstants.Variables, () => Walk(server.Variables));
-            Walk(AsyncApiConstants.Security, () => Walk(server.Security));
+            this.visitor.Visit(server);
+            this.Walk(AsyncApiConstants.Variables, () => this.Walk(server.Variables));
+            this.Walk(AsyncApiConstants.Security, () => this.Walk(server.Security));
             // TODO: Figure out bindings
-            visitor.Visit(server as IAsyncApiExtensible);
+            this.visitor.Visit(server as IAsyncApiExtensible);
         }
 
         internal void Walk(IList<AsyncApiSecurityRequirement> securityRequirements)
@@ -76,14 +224,14 @@ namespace LEGO.AsyncAPI.Services
                 return;
             }
 
-            visitor.Visit(securityRequirements);
+            this.visitor.Visit(securityRequirements);
 
             // Visit Examples
             if (securityRequirements != null)
             {
                 for (int i = 0; i < securityRequirements.Count; i++)
                 {
-                    Walk(i.ToString(), () => Walk(securityRequirements[i]));
+                    this.Walk(i.ToString(), () => this.Walk(securityRequirements[i]));
                 }
             }
         }
@@ -95,8 +243,8 @@ namespace LEGO.AsyncAPI.Services
                 return;
             }
 
-            visitor.Visit(securityRequirement);
-            Walk(securityRequirement as IAsyncApiExtensible);
+            this.visitor.Visit(securityRequirement);
+            this.Walk(securityRequirement as IAsyncApiExtensible);
         }
 
         internal void Walk(IDictionary<string, AsyncApiServer> servers)
@@ -106,15 +254,15 @@ namespace LEGO.AsyncAPI.Services
                 return;
             }
 
-            visitor.Visit(servers);
+            this.visitor.Visit(servers);
 
             if (servers != null)
             {
-                foreach (var variable in servers)
+                foreach (var server in servers)
                 {
-                    visitor.CurrentKeys.Server = variable.Key;
-                    Walk(variable.Key, () => Walk(variable.Value));
-                    visitor.CurrentKeys.Server = null;
+                    this.visitor.CurrentKeys.Server = server.Key;
+                    this.Walk(server.Key, () => this.Walk(server.Value));
+                    this.visitor.CurrentKeys.Server = null;
                 }
             }
         }
@@ -126,15 +274,15 @@ namespace LEGO.AsyncAPI.Services
                 return;
             }
 
-            visitor.Visit(serverVariables);
+            this.visitor.Visit(serverVariables);
 
             if (serverVariables != null)
             {
                 foreach (var variable in serverVariables)
                 {
-                    visitor.CurrentKeys.ServerVariable = variable.Key;
-                    Walk(variable.Key, () => Walk(variable.Value));
-                    visitor.CurrentKeys.ServerVariable = null;
+                    this.visitor.CurrentKeys.ServerVariable = variable.Key;
+                    this.Walk(variable.Key, () => this.Walk(variable.Value));
+                    this.visitor.CurrentKeys.ServerVariable = null;
                 }
             }
         }
@@ -146,7 +294,7 @@ namespace LEGO.AsyncAPI.Services
                 return;
             }
 
-            visitor.Visit(license);
+            this.visitor.Visit(license);
         }
 
         internal void Walk(AsyncApiContact contact)
@@ -156,14 +304,24 @@ namespace LEGO.AsyncAPI.Services
                 return;
             }
 
-            visitor.Visit(contact);
+            this.visitor.Visit(contact);
+        }
+
+        internal void Walk(IAsyncApiAny any)
+        {
+            if (any == null)
+            {
+                return;
+            }
+
+            visitor.Visit(any);
         }
 
         private void Walk(string context, Action walk)
         {
-            visitor.Enter(context.Replace("/", "~1"));
+            this.visitor.Enter(context.Replace("/", "~1"));
             walk();
-            visitor.Exit();
+            this.visitor.Exit();
         }
 
         internal void Walk(IAsyncApiExtensible asyncApiExtensible)
@@ -173,15 +331,15 @@ namespace LEGO.AsyncAPI.Services
                 return;
             }
 
-            visitor.Visit(asyncApiExtensible);
+            this.visitor.Visit(asyncApiExtensible);
 
             if (asyncApiExtensible != null)
             {
                 foreach (var item in asyncApiExtensible.Extensions)
                 {
-                    visitor.CurrentKeys.Extension = item.Key;
+                    this.visitor.CurrentKeys.Extension = item.Key;
                     Walk(item.Key, () => Walk(item.Value));
-                    visitor.CurrentKeys.Extension = null;
+                    this.visitor.CurrentKeys.Extension = null;
                 }
             }
         }
@@ -191,7 +349,7 @@ namespace LEGO.AsyncAPI.Services
             var isReference = referenceable.Reference != null && !isComponent;
             if (isReference)
             {
-                Walk(referenceable);
+                this.Walk(referenceable);
             }
 
             return isReference;
@@ -199,7 +357,7 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(IAsyncApiReferenceable referenceable)
         {
-            visitor.Visit(referenceable);
+            this.visitor.Visit(referenceable);
         }
     }
 
@@ -243,7 +401,7 @@ namespace LEGO.AsyncAPI.Services
         {
             get
             {
-                return "#/" + String.Join("/", path.Reverse());
+                return "#/" + String.Join("/", this.path.Reverse());
             }
         }
 
@@ -340,6 +498,9 @@ namespace LEGO.AsyncAPI.Services
         {
         }
 
+        public virtual void Visit(AsyncApiMessage message)
+        {
+        }
 
         /// <summary>
         /// Visits <see cref="AsyncApiTag"/>
@@ -413,6 +574,22 @@ namespace LEGO.AsyncAPI.Services
         }
 
         public virtual void Visit(IDictionary<string, AsyncApiServer> servers)
+        {
+        }
+
+        public virtual void Visit(IDictionary<string, AsyncApiChannel> channels)
+        {
+        }
+
+        public virtual void Visit(AsyncApiChannel channel)
+        {
+        }
+
+        public virtual void Visit(IList<AsyncApiOperationTrait> traits)
+        {
+        }
+
+        public virtual void Visit(AsyncApiOperationTrait traits)
         {
         }
     }
