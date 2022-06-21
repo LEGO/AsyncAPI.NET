@@ -35,8 +35,8 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageObject
             Assert.IsType<List<AsyncApiTag>>(output.Tags);
             Assert.IsType<AsyncApiExternalDocumentation>(output.ExternalDocs);
             Assert.IsAssignableFrom<IDictionary<string, IMessageBinding>>(output.Bindings);
-            Assert.IsType<List<MessageExample>>(output.Examples);
-            Assert.IsType<List<MessageTrait>>(output.Traits);
+            Assert.IsType<List<AsyncApiMessageExample>>(output.Examples);
+            Assert.IsType<List<AsyncApiMessageTrait>>(output.Traits);
         }
     }
 }

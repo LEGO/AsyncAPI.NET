@@ -33,7 +33,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiComponentsObj
             Assert.IsAssignableFrom<IDictionary<string, AsyncApiParameter>>(output.Parameters);
             Assert.IsAssignableFrom<IDictionary<string, AsyncApiCorrelationId>>(output.CorrelationIds);
             Assert.IsAssignableFrom<IDictionary<string, AsyncApiOperationTrait>>(output.OperationTraits);
-            Assert.IsAssignableFrom<IDictionary<string, MessageTrait>>(output.MessageTraits);
+            Assert.IsAssignableFrom<IDictionary<string, AsyncApiMessageTrait>>(output.MessageTraits);
             Assert.IsAssignableFrom<IDictionary<string, IServerBinding>>(output.ServerBindings);
             Assert.IsAssignableFrom<IDictionary<string, IChannelBinding>>(output.ChannelBindings);
             Assert.IsAssignableFrom<IDictionary<string, IOperationBinding>>(output.OperationBindings);

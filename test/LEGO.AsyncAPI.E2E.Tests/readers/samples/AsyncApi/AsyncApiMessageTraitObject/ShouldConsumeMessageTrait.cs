@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageTraitO
     using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeMessageTrait : ShouldConsumeProduceBase<MessageTrait>
+    public class ShouldConsumeMessageTrait : ShouldConsumeProduceBase<AsyncApiMessageTrait>
     {
         public ShouldConsumeMessageTrait()
             : base(typeof(ShouldConsumeMessageTrait))
@@ -37,7 +37,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageTraitO
             var messageBindings = output.Bindings;
             Assert.IsAssignableFrom<IDictionary<string, IMessageBinding>>(messageBindings);
             Assert.IsType<HttpMessageBinding>(messageBindings["http"]);
-            Assert.IsType<List<MessageExample>>(output.Examples);
+            Assert.IsType<List<AsyncApiMessageExample>>(output.Examples);
         }
     }
 }

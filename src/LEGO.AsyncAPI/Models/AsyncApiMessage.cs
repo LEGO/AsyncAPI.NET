@@ -78,12 +78,12 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// list of examples.
         /// </summary>
-        public IList<MessageExample> Examples { get; set; } = new List<MessageExample>();
+        public IList<AsyncApiMessageExample> Examples { get; set; } = new List<AsyncApiMessageExample>();
 
         /// <summary>
         /// a list of traits to apply to the message object. Traits MUST be merged into the message object using the JSON Merge Patch algorithm in the same order they are defined here. The resulting object MUST be a valid Message Object.
         /// </summary>
-        public IList<MessageTrait> Traits { get; set; } = new List<MessageTrait>();
+        public IList<AsyncApiMessageTrait> Traits { get; set; } = new List<AsyncApiMessageTrait>();
 
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();

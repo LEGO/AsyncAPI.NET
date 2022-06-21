@@ -4,7 +4,7 @@ using System.Linq;
 using LEGO.AsyncAPI.Exceptions;
 using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncApi.Readers.Exceptions;
+using LEGO.AsyncAPI.Readers.Exceptions;
 using SharpYaml.Serialization;
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes

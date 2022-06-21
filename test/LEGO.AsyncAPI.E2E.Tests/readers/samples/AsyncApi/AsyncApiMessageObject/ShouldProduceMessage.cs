@@ -33,11 +33,11 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageObject
                 Payload = MockData.Payload(),
                 SchemaFormat = "application/vnd.aai.asyncapi;version=2.3.0",
                 CorrelationId = new CorrelationId("foo"),
-                Traits = new List<MessageTrait>(),
+                Traits = new List<AsyncApiMessageTrait>(),
                 ExternalDocs = new AsyncApiExternalDocumentation(),
                 Tags = ImmutableArray<AsyncApiTag>.Empty,
                 Bindings = MockData.MessageBindings(),
-                Examples = ImmutableList<MessageExample>.Empty,
+                Examples = ImmutableList<AsyncApiMessageExample>.Empty,
             }));
         }
     }

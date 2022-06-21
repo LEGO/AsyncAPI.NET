@@ -52,7 +52,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets an object to hold reusable Message Trait Objects.
         /// </summary>
-        public IDictionary<string, MessageTrait> MessageTraits { get; set; } = new Dictionary<string, MessageTrait>();
+        public IDictionary<string, AsyncApiMessageTrait> MessageTraits { get; set; } = new Dictionary<string, AsyncApiMessageTrait>();
 
         /// <summary>
         /// Gets or sets an object to hold reusable Server Bindings Objects.
