@@ -13,27 +13,27 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiDocument : IAsyncApiExtensible, IAsyncApiSerializable
     {
         /// <summary>
-        /// Gets or sets REQUIRED. Specifies the AsyncAPI Specification version being used.
+        /// REQUIRED. Specifies the AsyncAPI Specification version being used.
         /// </summary>
         public string Asyncapi { get; set; }
 
         /// <summary>
-        /// Gets or sets identifier of the application the AsyncAPI document is defining.
+        ///identifier of the application the AsyncAPI document is defining.
         /// </summary>
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets REQUIRED. Provides metadata about the API. The metadata can be used by the clients if needed.
+        /// REQUIRED. Provides metadata about the API. The metadata can be used by the clients if needed.
         /// </summary>
         public AsyncApiInfo Info { get; set; }
 
         /// <summary>
-        /// Gets or sets provides connection details of servers. Field pattern ^[A-Za-z0-9_\-]+$.
+        /// provides connection details of servers.
         /// </summary>
         public IDictionary<string, AsyncApiServer> Servers { get; set; } = new Dictionary<string, AsyncApiServer>();
 
         /// <summary>
-        /// Gets or sets default content type to use when encoding/decoding a message's payload.
+        /// default content type to use when encoding/decoding a message's payload.
         /// </summary>
         /// <remarks>
         /// A string representing the default content type to use when encoding/decoding a message's payload.
@@ -42,22 +42,22 @@ namespace LEGO.AsyncAPI.Models
         public string DefaultContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets REQUIRED. The available channels and messages for the API.
+        /// REQUIRED. The available channels and messages for the API.
         /// </summary>
-        public IList<AsyncApiChannel> Channels { get; set; } = new List<AsyncApiChannel>();
+        public IDictionary<string, AsyncApiChannel> Channels { get; set; } = new Dictionary<string, AsyncApiChannel>();
 
         /// <summary>
-        /// Gets or sets an element to hold various schemas for the specification.
+        /// an element to hold various schemas for the specification.
         /// </summary>
         public AsyncApiComponents Components { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of tags used by the specification with additional metadata. Each tag name in the list MUST be unique.
+        /// a list of tags used by the specification with additional metadata. Each tag name in the list MUST be unique.
         /// </summary>
         public IList<AsyncApiTag> Tags { get; set; } = new List<AsyncApiTag>();
 
         /// <summary>
-        /// Gets or sets additional external documentation.
+        /// additional external documentation.
         /// </summary>
         public AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
@@ -74,22 +74,28 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // asyncApi
-            writer.WriteProperty(AsyncApiConstants.AsyncApi, "2.2.0");
+            writer.WriteProperty(AsyncApiConstants.AsyncApi, "2.3.0");
 
             // info
             writer.WriteRequiredObject(AsyncApiConstants.Info, this.Info, (w, i) => i.SerializeV2(w));
 
+            // id
+            writer.WriteProperty(AsyncApiConstants.Id, this.Id);
+
             // servers
             writer.WriteOptionalMap(AsyncApiConstants.Servers, this.Servers, (w, s) => s.SerializeV2(w));
 
+            // content type
+            writer.WriteProperty(AsyncApiConstants.DefaultContentType, this.DefaultContentType);
+
             // channels
-            writer.WriteRequiredObject(AsyncApiConstants.Channels, this.Channels, (w, p) => p.SerializeV2(w));
+            writer.WriteRequiredMap(AsyncApiConstants.Channels, this.Channels, (w, p) => p.SerializeV2(w));
 
             // components
             writer.WriteOptionalObject(AsyncApiConstants.Components, this.Components, (w, c) => c.SerializeV2(w));
 
             // tags
-            writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV2WithoutReference(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV2(w));
 
             // external docs
             writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));

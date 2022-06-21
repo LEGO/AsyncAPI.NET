@@ -42,7 +42,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="specVersion"></param>
-        public void Write(IAsyncApiWriter writer)
+        public void Write(IAsyncApiWriter writer, AsyncApiVersion specVersion)
         {
             switch (this.PrimitiveType)
             {

@@ -205,9 +205,9 @@
             {
                 Description = "foo",
                 Servers = new[] { "production" },
-                Subscribe = new Operation(),
-                Publish = new Operation(),
-                Parameters = ImmutableDictionary<string, Parameter>.Empty,
+                Subscribe = new AsyncApiOperation(),
+                Publish = new AsyncApiOperation(),
+                Parameters = ImmutableDictionary<string, AsyncApiParameter>.Empty,
                 Bindings = ChannelBindings(),
                 Extensions = WithExtensionData(withExtensionData),
             };

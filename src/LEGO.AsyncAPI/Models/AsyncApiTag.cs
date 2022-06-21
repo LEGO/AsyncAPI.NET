@@ -8,21 +8,25 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Allows referencing an external resource for extended documentation.
+    /// Allows adding meta data to a single tag.
     /// </summary>
-    public class AsyncApiExternalDocumentation : IAsyncApiExtensible, IAsyncApiSerializable
+    public class AsyncApiTag : IAsyncApiExtensible, IAsyncApiSerializable
     {
         /// <summary>
-        /// a short description of the target documentation. CommonMark syntax can be used for rich text representation.
+        /// REQUIRED. The name of the tag.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// a short description for the tag. CommonMark syntax can be used for rich text representation.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// REQUIRED. The URL for the target documentation. Value MUST be in the format of a URL.
+        /// additional external documentation for this tag.
         /// </summary>
-        public Uri Url { get; set; }
+        public AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
-        /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public void SerializeV2(IAsyncApiWriter writer)
@@ -34,9 +38,11 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteStartObject();
 
+            writer.WriteRequiredProperty(AsyncApiConstants.Name, this.Name);
+
             writer.WriteProperty(AsyncApiConstants.Description, this.Description);
 
-            writer.WriteRequiredProperty(AsyncApiConstants.Url, this.Url?.OriginalString);
+            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
 
             writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
 

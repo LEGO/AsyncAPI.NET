@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageObject
     using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeMessage : ShouldConsumeProduceBase<Message>
+    public class ShouldConsumeMessage : ShouldConsumeProduceBase<AsyncApiMessage>
     {
         public ShouldConsumeMessage()
             : base(typeof(ShouldConsumeMessage))
