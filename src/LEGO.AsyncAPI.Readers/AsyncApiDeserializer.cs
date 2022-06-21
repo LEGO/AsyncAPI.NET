@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using LEGO.AsyncAPI;
 using LEGO.AsyncAPI.Exceptions;
+using LEGO.AsyncAPI.Expressions;
+using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.ParseNodes;
