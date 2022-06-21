@@ -5,13 +5,21 @@ namespace LEGO.AsyncAPI.Readers
 {
     internal static partial class AsyncApiDeserializer
     {
-        private static FixedFieldMap<AsyncApiComponents> _componentsFixedFields = new FixedFieldMap<AsyncApiComponents>
+        private static FixedFieldMap<AsyncApiComponents> _componentsFixedFields = new()
         {
             {"schemas", (a, n) => a.Schemas = n.CreateMapWithReference(ReferenceType.Schema, LoadSchema)},
-            {"servers", (a, n) => a.Servers = n.CreateMapWithReference(ReferenceType.Server, )},
-            {"channels", (a, n) => a.Channels = n.CreateMapWithReference(ReferenceType.Channel, )},
-            {"messages", (a, n) => a.Messages = n.CreateMapWithReference(ReferenceType.Message, )},
-            {"securitySchemas", (a, n) => a.SecuritySchemes = n.CreateMapWithReference(ReferenceType.SecurityScheme, )},
+            {"servers", (a, n) => a.Servers = n.CreateMapWithReference(ReferenceType.Server, LoadServer)},
+            {"channels", (a, n) => a.Channels = n.CreateMapWithReference(ReferenceType.Channel, LoadChannel)},
+            {"messages", (a, n) => a.Messages = n.CreateMapWithReference(ReferenceType.Message, LoadMessage)},
+            {"securitySchemas", (a, n) => a.SecuritySchemes = n.CreateMapWithReference(ReferenceType.SecurityScheme, LoadSecuritySchema)},
+            {"parameters", (a, n) => a.Parameters = n.CreateMapWithReference(ReferenceType.Parameter, LoadParameter)},
+            {"correlationIds", (a, n) => a.CorrelationIds = n.CreateMapWithReference(ReferenceType.CorrelationId, LoadCorrelationId)},
+            {"operationTraits", (a, n) => a.OperationTraits = n.CreateMapWithReference(ReferenceType.OperationTrait, LoadOperationTrait)},
+            {"messageTraits", (a, n) => a.MessageTraits = n.CreateMapWithReference(ReferenceType.MessageTrait, LoadMessageTrait)},
+            {"serverBindings", (a, n) => a.ServerBindings = n.CreateMapWithReference(ReferenceType.ServerBinding, LoadServerBinding)},
+            {"channelBindings", (a, n) => a.ChannelBindings = n.CreateMapWithReference(ReferenceType.ChannelBinding, LoadChannelBinding)},
+            {"operationBindings", (a, n) => a.OperationBindings = n.CreateMapWithReference(ReferenceType.OperationBinding, LoadOperationBinding)},
+            {"messageBindings", (a, n) => a.MessageBindings = n.CreateMapWithReference(ReferenceType.MessageBinding, LoadMessageBinding)},
         };
 
 
