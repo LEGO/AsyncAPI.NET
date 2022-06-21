@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Defines a security scheme that can be used by the operations.
     /// </summary>
-    public class SecurityScheme : IAsyncApiExtensible, IReferenceable
+    public class SecurityScheme : IAsyncApiExtensible, IAsyncApiReferenceable
     {
         public SecurityScheme(SecuritySchemeType type, string name, string @in, string scheme, OAuthFlows flows, Uri openIdConnectUrl)
         {
