@@ -80,5 +80,20 @@ namespace LEGO.AsyncAPI.Models
         /// Links item.
         /// </summary>
         [Display("links")] Link,
+        
+        /// <summary>
+        /// Examples item.
+        /// </summary>
+        [Display("examples")] Example,
+        
+        /// <summary>
+        /// Headers item.
+        /// </summary>
+        [Display("headers")] Header,
+        
+        /// <summary>
+        /// Callbacks item.
+        /// </summary>
+        [Display("callbacks")] Callback,
     }
 }
