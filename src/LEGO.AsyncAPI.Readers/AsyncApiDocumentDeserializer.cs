@@ -1,8 +1,8 @@
-namespace LEGO.AsyncAPI.Readers
+namespace LEGO.AsyncApi.Readers
 {
     internal static partial class AsyncApiDeserializer
     {
-        private static FixedFieldMap<AsyncAPIDocument> _asyncAPIFixedFields = new FixedFieldMap<AsyncAPIDocument>
+        private static FixedFieldMap<AsyncApiDocument> _asyncApiFixedFields = new FixedFieldMap<AsyncApiDocument>
         {
             {
                 "openapi", (o, n) =>
@@ -16,7 +16,7 @@ namespace LEGO.AsyncAPI.Readers
             {"tags", (o, n) => {o.Tags = n.CreateList(LoadTag);
                 foreach (var tag in o.Tags)
     {
-                    tag.Reference = new AsyncAPIReference()
+                    tag.Reference = new AsyncApiReference()
                     {
                         Id = tag.Name,
                         Type = ReferenceType.Tag
@@ -27,20 +27,20 @@ namespace LEGO.AsyncAPI.Readers
             {"security", (o, n) => o.SecurityRequirements = n.CreateList(LoadSecurityRequirement)}
         };
 
-        private static PatternFieldMap<AsyncAPIDocument> _asyncAPIPatternFields = new PatternFieldMap<AsyncAPIDocument>
+        private static PatternFieldMap<AsyncApiDocument> _asyncApiPatternFields = new PatternFieldMap<AsyncApiDocument>
         {
             {s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n))}
         };
 
-        public static AsyncAPIDocument LoadAsyncAPI(RootNode rootNode)
+        public static AsyncApiDocument LoadAsyncApi(RootNode rootNode)
         {
-            var asyncAPIdoc = new AsyncAPIDocument();
+            var asyncApidoc = new AsyncApiDocument();
 
-            var asyncAPINode = rootNode.GetMap();
+            var asyncApiNode = rootNode.GetMap();
 
-            ParseMap(asyncAPINode, asyncAPIdoc, _asyncAPIFixedFields, _asyncAPIPatternFields);
+            ParseMap(asyncApiNode, asyncApidoc, _asyncApiFixedFields, _asyncApiPatternFields);
 
-            return asyncAPIdoc;
+            return asyncApidoc;
         }
     }
 }

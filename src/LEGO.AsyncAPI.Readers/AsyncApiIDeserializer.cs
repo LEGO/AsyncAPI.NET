@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LEGO.AsyncAPI.Readers
+namespace LEGO.AsyncApi.Readers
 {
     internal static partial class AsyncApiDeserializer
     {
@@ -34,16 +34,16 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     mapNode.Context.StartObject(anyFieldName);
 
-                    var convertedAsyncAPIAny = AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(
+                    var convertedAsyncApiAny = AsyncApiAnyConverter.GetSpecificAsyncApiAny(
                         anyFieldMap[anyFieldName].PropertyGetter(domainObject),
                         anyFieldMap[anyFieldName].SchemaGetter(domainObject));
 
-                    anyFieldMap[anyFieldName].PropertySetter(domainObject, convertedAsyncAPIAny);
+                    anyFieldMap[anyFieldName].PropertySetter(domainObject, convertedAsyncApiAny);
                 }
-                catch (AsyncAPIException exception)
+                catch (AsyncApiException exception)
                 {
                     exception.Pointer = mapNode.Context.GetLocation();
-                    mapNode.Context.Diagnostic.Errors.Add(new AsyncAPIError(exception));
+                    mapNode.Context.Diagnostic.Errors.Add(new AsyncApiError(exception));
                 }
                 finally
                 {
@@ -61,24 +61,24 @@ namespace LEGO.AsyncAPI.Readers
             {
                 try
                 {
-                    var newProperty = new List<IAsyncAPIAny>();
+                    var newProperty = new List<IAsyncApiAny>();
 
                     mapNode.Context.StartObject(anyListFieldName);
 
                     foreach (var propertyElement in anyListFieldMap[anyListFieldName].PropertyGetter(domainObject))
                     {
                         newProperty.Add(
-                            AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(
+                            AsyncApiAnyConverter.GetSpecificAsyncApiAny(
                                 propertyElement,
                                 anyListFieldMap[anyListFieldName].SchemaGetter(domainObject)));
                     }
 
                     anyListFieldMap[anyListFieldName].PropertySetter(domainObject, newProperty);
                 }
-                catch (AsyncAPIException exception)
+                catch (AsyncApiException exception)
                 {
                     exception.Pointer = mapNode.Context.GetLocation();
-                    mapNode.Context.Diagnostic.Errors.Add(new AsyncAPIError(exception));
+                    mapNode.Context.Diagnostic.Errors.Add(new AsyncApiError(exception));
                 }
                 finally
                 {
@@ -96,7 +96,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 try
                 {
-                    var newProperty = new List<IAsyncAPIAny>();
+                    var newProperty = new List<IAsyncApiAny>();
 
                     mapNode.Context.StartObject(anyMapFieldName);
 
@@ -108,7 +108,7 @@ namespace LEGO.AsyncAPI.Readers
                         {
                             var any = anyMapFieldMap[anyMapFieldName].PropertyGetter(propertyMapElement.Value);
 
-                            var newAny = AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(
+                            var newAny = AsyncApiAnyConverter.GetSpecificAsyncApiAny(
                                     any,
                                     anyMapFieldMap[anyMapFieldName].SchemaGetter(domainObject));
 
@@ -116,10 +116,10 @@ namespace LEGO.AsyncAPI.Readers
                         }
                     }
                 }
-                catch (AsyncAPIException exception)
+                catch (AsyncApiException exception)
                 {
                     exception.Pointer = mapNode.Context.GetLocation();
-                    mapNode.Context.Diagnostic.Errors.Add(new AsyncAPIError(exception));
+                    mapNode.Context.Diagnostic.Errors.Add(new AsyncApiError(exception));
                 }
                 finally
                 {
@@ -148,26 +148,26 @@ namespace LEGO.AsyncAPI.Readers
 
             return new RuntimeExpressionAnyWrapper
             {
-                Any = AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(node.CreateAny())
+                Any = AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny())
             };
         }
 
-        public static IAsyncAPIAny LoadAny(ParseNode node)
+        public static IAsyncApiAny LoadAny(ParseNode node)
         {
-            return AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(node.CreateAny());
+            return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
         }
 
-        private static IAsyncAPIExtension LoadExtension(string name, ParseNode node)
+        private static IAsyncApiExtension LoadExtension(string name, ParseNode node)
         {
             if (node.Context.ExtensionParsers.TryGetValue(name, out var parser))
             {
                 return parser(
-                    AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(node.CreateAny()),
-                    AsyncAPISpecVersion.AsyncAPI3_0);
+                    AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny()),
+                    AsyncApiSpecVersion.AsyncApi3_0);
             }
             else
             {
-                return AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(node.CreateAny());
+                return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
             }
         }
 
