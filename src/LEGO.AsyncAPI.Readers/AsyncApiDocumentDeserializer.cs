@@ -1,3 +1,4 @@
+using LEGO.AsyncApi.Extensions;
 using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Readers.ParseNodes;
