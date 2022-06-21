@@ -19,12 +19,12 @@ namespace LEGO.AsyncAPI.Models
         {
             get
             {
-                return _any;
+                return this._any;
             }
             set
             {
-                _expression = null;
-                _any = value;
+                this._expression = null;
+                this._any = value;
             }
         }
 
@@ -35,12 +35,12 @@ namespace LEGO.AsyncAPI.Models
         {
             get
             {
-                return _expression;
+                return this._expression;
             }
             set
             {
-                _any = null;
-                _expression = value;
+                this._any = null;
+                this._expression = value;
             }
         }
 
@@ -54,13 +54,13 @@ namespace LEGO.AsyncAPI.Models
                 throw Error.ArgumentNull(nameof(writer));
             }
 
-            if (_any != null)
+            if (this._any != null)
             {
-                writer.WriteAny(_any);
+                writer.WriteAny(this._any);
             }
-            else if (_expression != null)
+            else if (this._expression != null)
             {
-                writer.WriteValue(_expression.Expression);
+                writer.WriteValue(this._expression.Expression);
             }
         }
     }

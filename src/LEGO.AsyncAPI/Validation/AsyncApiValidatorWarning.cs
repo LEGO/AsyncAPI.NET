@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Validations
         /// </summary>
         public AsyncApiValidatorWarning(string ruleName, string pointer, string message) : base(pointer, message)
         {
-            RuleName = ruleName;
+            this.RuleName = ruleName;
         }
 
         /// <summary>

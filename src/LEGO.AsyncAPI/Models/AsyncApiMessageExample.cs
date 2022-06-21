@@ -42,8 +42,8 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            writer.WriteOptionalMap(AsyncApiConstants.Headers, Headers, (w, h) => w.WriteAny(h));
-            writer.WriteOptionalObject(AsyncApiConstants.Payload, Payload, (w, p) => w.WriteAny(p));
+            writer.WriteOptionalMap(AsyncApiConstants.Headers, this.Headers, (w, h) => w.WriteAny(h));
+            writer.WriteOptionalObject(AsyncApiConstants.Payload, this.Payload, (w, p) => w.WriteAny(p));
         }
     }
 }

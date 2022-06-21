@@ -23,21 +23,21 @@ namespace LEGO.AsyncAPI.Expressions
         /// <param name="expression"></param>
         public CompositeExpression(string expression)
         {
-            template = expression;
+            this.template = expression;
 
             // Extract subexpressions and convert to RuntimeExpressions
-            var matches = expressionPattern.Matches(expression);
+            var matches = this.expressionPattern.Matches(expression);
 
             foreach (var item in matches.Cast<Match>())
             {
                 var value = item.Groups["exp"].Captures.Cast<Capture>().First().Value;
-                ContainedExpressions.Add(RuntimeExpression.Build(value));
+                this.ContainedExpressions.Add(RuntimeExpression.Build(value));
             }
         }
 
         /// <summary>
         /// Return original string literal with embedded expression
         /// </summary>
-        public override string Expression => template;
+        public override string Expression => this.template;
     }
 }

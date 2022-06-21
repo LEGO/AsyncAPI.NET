@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Expressions
         {
             get
             {
-                return Query + Value;
+                return Query + this.Value;
             }
         }
 
@@ -41,7 +41,7 @@ namespace LEGO.AsyncAPI.Expressions
         {
             get
             {
-                return Value;
+                return this.Value;
             }
         }
     }

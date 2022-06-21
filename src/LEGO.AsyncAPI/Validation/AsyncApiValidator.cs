@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Validations
         /// <param name="ruleSet"></param>
         public AsyncApiValidator(ValidationRuleSet ruleSet)
         {
-            _ruleSet = ruleSet;
+            this._ruleSet = ruleSet;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Validations
         {
             get
             {
-                return _errors;
+                return this._errors;
             }
         }
 
@@ -41,7 +41,7 @@ namespace LEGO.AsyncAPI.Validations
         {
             get
             {
-                return _warnings;
+                return this._warnings;
             }
         }
 
@@ -56,7 +56,7 @@ namespace LEGO.AsyncAPI.Validations
                 throw Error.ArgumentNull(nameof(error));
             }
 
-            _errors.Add(error);
+            this._errors.Add(error);
         }
 
         /// <summary>
@@ -70,32 +70,32 @@ namespace LEGO.AsyncAPI.Validations
                 throw Error.ArgumentNull(nameof(warning));
             }
 
-            _warnings.Add(warning);
+            this._warnings.Add(warning);
         }
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiDocument"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiDocument item) => Validate(item);
+        public override void Visit(AsyncApiDocument item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiInfo"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiInfo item) => Validate(item);
+        public override void Visit(AsyncApiInfo item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiContact"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiContact item) => Validate(item);
+        public override void Visit(AsyncApiContact item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiComponents"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiComponents item) => Validate(item);
+        public override void Visit(AsyncApiComponents item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiHeader"/>
@@ -131,37 +131,37 @@ namespace LEGO.AsyncAPI.Validations
         /// Execute validation rules against an <see cref="AsyncApiLicense"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiLicense item) => Validate(item);
+        public override void Visit(AsyncApiLicense item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiOauthFlow"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiOauthFlow item) => Validate(item);
+        public override void Visit(AsyncApiOauthFlow item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiTag"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiTag item) => Validate(item);
+        public override void Visit(AsyncApiTag item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiParameter"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiParameter item) => Validate(item);
+        public override void Visit(AsyncApiParameter item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiSchema"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiSchema item) => Validate(item);
+        public override void Visit(AsyncApiSchema item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiServer"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiServer item) => Validate(item);
+        public override void Visit(AsyncApiServer item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiEncoding"/>
@@ -191,13 +191,13 @@ namespace LEGO.AsyncAPI.Validations
         /// Execute validation rules against a list of <see cref="AsyncApiExample"/>
         /// </summary>
         /// <param name="items">The object to be validated</param>
-        public override void Visit(IList<AsyncApiExample> items) => Validate(items, items.GetType());
+        public override void Visit(IList<AsyncApiExample> items) => this.Validate(items, items.GetType());
 
         private void Validate<T>(T item)
         {
             var type = typeof(T);
 
-            Validate(item, type);
+            this.Validate(item, type);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace LEGO.AsyncAPI.Validations
                 type = typeof(IAsyncApiReferenceable);
             }
 
-            var rules = _ruleSet.FindRules(type);
+            var rules = this._ruleSet.FindRules(type);
             foreach (var rule in rules)
             {
                 rule.Evaluate(this as IValidationContext, item);

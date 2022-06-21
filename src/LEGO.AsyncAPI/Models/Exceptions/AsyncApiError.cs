@@ -16,8 +16,8 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public AsyncApiError(string pointer, string message)
         {
-            Pointer = pointer;
-            Message = message;
+            this.Pointer = pointer;
+            this.Message = message;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public override string ToString()
         {
-            return Message + (!string.IsNullOrEmpty(Pointer) ? " [" + Pointer + "]" : "");
+            return this.Message + (!string.IsNullOrEmpty(this.Pointer) ? " [" + this.Pointer + "]" : "");
         }
     }
 }

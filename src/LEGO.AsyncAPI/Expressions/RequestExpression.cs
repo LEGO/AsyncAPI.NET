@@ -16,13 +16,13 @@ namespace LEGO.AsyncAPI.Expressions
         /// <param name="source">The source of the request.</param>
         public RequestExpression(SourceExpression source)
         {
-            Source = source ?? throw Error.ArgumentNull(nameof(source));
+            this.Source = source ?? throw Error.ArgumentNull(nameof(source));
         }
 
         /// <summary>
         /// Gets the expression string.
         /// </summary>
-        public override string Expression => Request + Source.Expression;
+        public override string Expression => Request + this.Source.Expression;
 
         /// <summary>
         /// The <see cref="SourceExpression"/> expression.

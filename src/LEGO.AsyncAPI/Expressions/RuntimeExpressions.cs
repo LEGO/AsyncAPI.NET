@@ -77,7 +77,7 @@ namespace LEGO.AsyncAPI.Expressions
         /// </summary>
         public override int GetHashCode()
         {
-            return Expression.GetHashCode();
+            return this.Expression.GetHashCode();
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace LEGO.AsyncAPI.Expressions
         /// </summary>
         public override bool Equals(object obj)
         {
-            return Equals(obj as RuntimeExpression);
+            return this.Equals(obj as RuntimeExpression);
         }
 
         /// <summary>
@@ -93,13 +93,13 @@ namespace LEGO.AsyncAPI.Expressions
         /// </summary>
         public bool Equals(RuntimeExpression obj)
         {
-            return obj != null && obj.Expression == Expression;
+            return obj != null && obj.Expression == this.Expression;
         }
 
         /// <inheritdoc />
         public override string ToString()
         {
-            return Expression;
+            return this.Expression;
         }
     }
 }

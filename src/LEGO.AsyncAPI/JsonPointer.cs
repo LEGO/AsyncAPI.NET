@@ -14,9 +14,9 @@ namespace LEGO.AsyncAPI
         /// <param name="pointer">Pointer as string.</param>
         public JsonPointer(string pointer)
         {
-            Tokens = string.IsNullOrEmpty(pointer) || pointer == "/"
+            this.Tokens = string.IsNullOrEmpty(pointer) || pointer == "/"
                 ? new string[0]
-                : pointer.Split('/').Skip(1).Select(Decode).ToArray();
+                : pointer.Split('/').Skip(1).Select(this.Decode).ToArray();
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI
         /// <param name="tokens">Pointer as tokenized string.</param>
         private JsonPointer(string[] tokens)
         {
-            Tokens = tokens;
+            this.Tokens = tokens;
         }
 
         /// <summary>
@@ -40,12 +40,12 @@ namespace LEGO.AsyncAPI
         {
             get
             {
-                if (Tokens.Length == 0)
+                if (this.Tokens.Length == 0)
                 {
                     return null;
                 }
 
-                return new JsonPointer(Tokens.Take(Tokens.Length - 1).ToArray());
+                return new JsonPointer(this.Tokens.Take(this.Tokens.Length - 1).ToArray());
             }
         }
 
@@ -62,7 +62,7 @@ namespace LEGO.AsyncAPI
         /// </summary>
         public override string ToString()
         {
-            return "/" + string.Join("/", Tokens);
+            return "/" + string.Join("/", this.Tokens);
         }
     }
 }
