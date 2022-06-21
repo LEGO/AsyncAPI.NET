@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LEGO.AsyncAPI;
 using LEGO.AsyncApi.Any;
 using LEGO.AsyncApi.Interfaces;
 using LEGO.AsyncApi.Models;
+using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncApi.Readers.Exceptions;
 using LEGO.AsyncApi.Readers.Interface;
 using LEGO.AsyncApi.Readers.ParseNodes;
@@ -83,7 +85,7 @@ namespace LEGO.AsyncApi.Readers
         
         private static string GetVersion(RootNode rootNode)
         {
-            var versionNode = rootNode.Find(new JsonPointer("/openapi"));
+            var versionNode = rootNode.Find(new JsonPointer("/asyncapi"));
 
             if (versionNode != null)
             {

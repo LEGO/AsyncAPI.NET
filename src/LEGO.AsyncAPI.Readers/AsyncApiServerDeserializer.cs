@@ -1,3 +1,4 @@
+using LEGO.AsyncApi.Extensions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncApi.Readers.ParseNodes;
 
@@ -32,19 +33,19 @@ namespace LEGO.AsyncApi.Readers
             {
                 "security", (o, n) =>
                 {
-                    o.Security = n.
+                    o.Security = n.CreateList(LoadSecurityRequirement);
                 }
             },
-            {
-                "bindings", (o, n) =>
-                {
-                    o.Bindings = n.
-                }
-            },
+            // { TODO, figure out bindings
+            //     "bindings", (o, n) =>
+            //     {
+            //         o.Bindings = n.
+            //     }
+            // },
             {
                 "protocolVersion", (o, n) =>
                 {
-                    o.ProtocolVersion = n.CreateMap(LoadServerVariable);
+                    o.ProtocolVersion = n.GetScalarValue();
                 }
             },
             {
