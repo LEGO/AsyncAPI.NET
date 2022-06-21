@@ -5,8 +5,6 @@ using System.Text;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.Models.Interfaces;
-using Microsoft.AsyncApi.Any;
-using Microsoft.AsyncApi.Models;
 
 namespace LEGO.AsyncApi.Readers.ParseNodes
 {
