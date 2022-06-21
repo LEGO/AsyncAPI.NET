@@ -77,7 +77,7 @@ namespace LEGO.AsyncApi
         /// <returns>The logged <see cref="Exception"/>.</returns>
         internal static ArgumentException ArgumentNullOrWhiteSpace(string parameterName)
         {
-            return Argument(parameterName, SRResource.ArgumentNullOrWhiteSpace, parameterName);
+            return Argument(parameterName, "The argument '{0}' is null, empty or consists only of white-space.", parameterName);
         }
 
         /// <summary>
