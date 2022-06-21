@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers
             {"servers", (a, n) => a.Servers = n.CreateMapWithReference(ReferenceType.Server, LoadServer)},
             {"channels", (a, n) => a.Channels = n.CreateMapWithReference(ReferenceType.Channel, LoadChannel)},
             {"messages", (a, n) => a.Messages = n.CreateMapWithReference(ReferenceType.Message, LoadMessage)},
-            {"securitySchemas", (a, n) => a.SecuritySchemes = n.CreateMapWithReference(ReferenceType.SecurityScheme, LoadSecuritySchema)},
+            {"securitySchemas", (a, n) => a.SecuritySchemes = n.CreateMapWithReference(ReferenceType.SecurityScheme, LoadSecurityScheme)},
             {"parameters", (a, n) => a.Parameters = n.CreateMapWithReference(ReferenceType.Parameter, LoadParameter)},
             {"correlationIds", (a, n) => a.CorrelationIds = n.CreateMapWithReference(ReferenceType.CorrelationId, LoadCorrelationId)},
             {"operationTraits", (a, n) => a.OperationTraits = n.CreateMapWithReference(ReferenceType.OperationTrait, LoadOperationTrait)},
