@@ -1,0 +1,179 @@
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LEGO.AsyncAPI.Readers
+{
+    internal static partial class AsyncApiDeserializer
+    {
+        private static void ParseMap<T>(
+            MapNode mapNode,
+            T domainObject,
+            FixedFieldMap<T> fixedFieldMap,
+            PatternFieldMap<T> patternFieldMap)
+        {
+            if (mapNode == null)
+            {
+                return;
+            }
+
+            foreach (var propertyNode in mapNode)
+            {
+                propertyNode.ParseField(domainObject, fixedFieldMap, patternFieldMap);
+            }
+
+        }
+
+        private static void ProcessAnyFields<T>(
+            MapNode mapNode,
+            T domainObject,
+            AnyFieldMap<T> anyFieldMap)
+        {
+            foreach (var anyFieldName in anyFieldMap.Keys.ToList())
+            {
+                try
+                {
+                    mapNode.Context.StartObject(anyFieldName);
+
+                    var convertedAsyncAPIAny = AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(
+                        anyFieldMap[anyFieldName].PropertyGetter(domainObject),
+                        anyFieldMap[anyFieldName].SchemaGetter(domainObject));
+
+                    anyFieldMap[anyFieldName].PropertySetter(domainObject, convertedAsyncAPIAny);
+                }
+                catch (AsyncAPIException exception)
+                {
+                    exception.Pointer = mapNode.Context.GetLocation();
+                    mapNode.Context.Diagnostic.Errors.Add(new AsyncAPIError(exception));
+                }
+                finally
+                {
+                    mapNode.Context.EndObject();
+                }
+            }
+        }
+
+        private static void ProcessAnyListFields<T>(
+            MapNode mapNode,
+            T domainObject,
+            AnyListFieldMap<T> anyListFieldMap)
+        {
+            foreach (var anyListFieldName in anyListFieldMap.Keys.ToList())
+            {
+                try
+                {
+                    var newProperty = new List<IAsyncAPIAny>();
+
+                    mapNode.Context.StartObject(anyListFieldName);
+
+                    foreach (var propertyElement in anyListFieldMap[anyListFieldName].PropertyGetter(domainObject))
+                    {
+                        newProperty.Add(
+                            AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(
+                                propertyElement,
+                                anyListFieldMap[anyListFieldName].SchemaGetter(domainObject)));
+                    }
+
+                    anyListFieldMap[anyListFieldName].PropertySetter(domainObject, newProperty);
+                }
+                catch (AsyncAPIException exception)
+                {
+                    exception.Pointer = mapNode.Context.GetLocation();
+                    mapNode.Context.Diagnostic.Errors.Add(new AsyncAPIError(exception));
+                }
+                finally
+                {
+                    mapNode.Context.EndObject();
+                }
+            }
+        }
+
+        private static void ProcessAnyMapFields<T, U>(
+            MapNode mapNode,
+            T domainObject,
+            AnyMapFieldMap<T, U> anyMapFieldMap)
+        {
+            foreach (var anyMapFieldName in anyMapFieldMap.Keys.ToList())
+            {
+                try
+                {
+                    var newProperty = new List<IAsyncAPIAny>();
+
+                    mapNode.Context.StartObject(anyMapFieldName);
+
+                    foreach (var propertyMapElement in anyMapFieldMap[anyMapFieldName].PropertyMapGetter(domainObject))
+                    {
+                        mapNode.Context.StartObject(propertyMapElement.Key);
+
+                        if (propertyMapElement.Value != null)
+                        {
+                            var any = anyMapFieldMap[anyMapFieldName].PropertyGetter(propertyMapElement.Value);
+
+                            var newAny = AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(
+                                    any,
+                                    anyMapFieldMap[anyMapFieldName].SchemaGetter(domainObject));
+
+                            anyMapFieldMap[anyMapFieldName].PropertySetter(propertyMapElement.Value, newAny);
+                        }
+                    }
+                }
+                catch (AsyncAPIException exception)
+                {
+                    exception.Pointer = mapNode.Context.GetLocation();
+                    mapNode.Context.Diagnostic.Errors.Add(new AsyncAPIError(exception));
+                }
+                finally
+                {
+                    mapNode.Context.EndObject();
+                }
+            }
+        }
+
+        private static RuntimeExpression LoadRuntimeExpression(ParseNode node)
+        {
+            var value = node.GetScalarValue();
+            return RuntimeExpression.Build(value);
+        }
+
+        private static RuntimeExpressionAnyWrapper LoadRuntimeExpressionAnyWrapper(ParseNode node)
+        {
+            var value = node.GetScalarValue();
+
+            if (value != null && value.StartsWith("$"))
+            {
+                return new RuntimeExpressionAnyWrapper
+                {
+                    Expression = RuntimeExpression.Build(value)
+                };
+            }
+
+            return new RuntimeExpressionAnyWrapper
+            {
+                Any = AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(node.CreateAny())
+            };
+        }
+
+        public static IAsyncAPIAny LoadAny(ParseNode node)
+        {
+            return AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(node.CreateAny());
+        }
+
+        private static IAsyncAPIExtension LoadExtension(string name, ParseNode node)
+        {
+            if (node.Context.ExtensionParsers.TryGetValue(name, out var parser))
+            {
+                return parser(
+                    AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(node.CreateAny()),
+                    AsyncAPISpecVersion.AsyncAPI3_0);
+            }
+            else
+            {
+                return AsyncAPIAnyConverter.GetSpecificAsyncAPIAny(node.CreateAny());
+            }
+        }
+
+        private static string LoadString(ParseNode node)
+        {
+            return node.GetScalarValue();
+        }
+    }
+}
