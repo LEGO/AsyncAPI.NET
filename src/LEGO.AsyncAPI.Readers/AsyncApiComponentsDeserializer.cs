@@ -8,14 +8,10 @@ namespace LEGO.AsyncAPI.Readers
         private static FixedFieldMap<AsyncApiComponents> _componentsFixedFields = new FixedFieldMap<AsyncApiComponents>
         {
             {"schemas", (a, n) => a.Schemas = n.CreateMapWithReference(ReferenceType.Schema, LoadSchema)},
-            {"responses", (a, n) => a.Responses = n.CreateMapWithReference(ReferenceType.Response, LoadResponse)},
-            {"parameters", (a, n) => a.Parameters = n.CreateMapWithReference(ReferenceType.Parameter, LoadParameter)},
-            {"examples", (a, n) => a.Examples = n.CreateMapWithReference(ReferenceType.Example, LoadExample)},
-            {"requestBodies", (a, n) => a.RequestBodies = n.CreateMapWithReference(ReferenceType.RequestBody, LoadRequestBody)},
-            {"headers", (a, n) => a.Headers = n.CreateMapWithReference(ReferenceType.Header, LoadHeader)},
-            {"securitySchemes", (a, n) => a.SecuritySchemes = n.CreateMapWithReference(ReferenceType.SecurityScheme, LoadSecurityScheme)},
-            {"links", (a, n) => a.Links = n.CreateMapWithReference(ReferenceType.Link, LoadLink)},
-            {"callbacks", (a, n) => a.Callbacks = n.CreateMapWithReference(ReferenceType.Callback, LoadCallback)},
+            {"servers", (a, n) => a.Servers = n.CreateMapWithReference(ReferenceType.Server, )},
+            {"channels", (a, n) => a.Channels = n.CreateMapWithReference(ReferenceType.Channel, )},
+            {"messages", (a, n) => a.Messages = n.CreateMapWithReference(ReferenceType.Message, )},
+            {"securitySchemas", (a, n) => a.SecuritySchemes = n.CreateMapWithReference(ReferenceType.SecurityScheme, )},
         };
 
 
