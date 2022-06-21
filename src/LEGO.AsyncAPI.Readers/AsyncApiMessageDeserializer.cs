@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 "headers", (o, n) =>
                 {
-                    o.Headers = n.GetScalarValue();
+                    o.Headers = LoadSchema(n);
                 }
             },
             {
@@ -27,49 +27,46 @@ namespace LEGO.AsyncAPI.Readers
             {
                 "correlationId", (o, n) =>
                 {
-                    o.CorrelationId = LoadRuntimeExpression(n)
+                    o.CorrelationId = LoadCorrelationId(n);
                 }
             },
             {
                 "schemaFormat", (o, n) =>
                 {
-                    o.Url = n.GetScalarValue();
+                    o.SchemaFormat = n.GetScalarValue();
                 }
             },
             {
                 "contentType", (o, n) =>
                 {
-                    o.Url = n.GetScalarValue();
+                    o.ContentType = n.GetScalarValue();
                 }
             },
             {
                 "name", (o, n) =>
                 {
-                    o.Url = n.GetScalarValue();
+                    o.Name = n.GetScalarValue();
                 }
             },
             {
                 "title", (o, n) =>
                 {
-                    o.Url = n.GetScalarValue();
+                    o.Name = n.GetScalarValue();
                 }
             },
             {
                 "description", (o, n) =>
                 {
-                    o.Url = n.GetScalarValue();
+                    o.Description = n.GetScalarValue();
                 }
             },
             {
-                "tags", (o, n) =>
-                {
-                    o.Url = n.GetScalarValue();
-                }
+                "tags", (a, n) => a.Tags = n.CreateList(LoadTag)
             },
             {
                 "externalDocs", (o, n) =>
                 {
-                    o.Url = n.GetScalarValue();
+                    o.ExternalDocs = LoadExternalDocs(n);
                 }
             },
             // { TODO
@@ -79,16 +76,10 @@ namespace LEGO.AsyncAPI.Readers
             //     }
             // },
             {
-                "examples", (o, n) =>
-                {
-                    o.Url = n.GetScalarValue();
-                }
+                "examples", (a, n) => a.Examples = n.CreateList(LoadExample)
             },
             {
-                "traits", (o, n) =>
-                {
-                    o.Url = n.GetScalarValue();
-                }
+                "traits", (a, n) => a.Traits = n.CreateList(LoadTrait)
             },
         };
 
