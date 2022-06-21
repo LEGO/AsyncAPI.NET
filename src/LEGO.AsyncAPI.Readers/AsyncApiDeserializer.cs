@@ -4,9 +4,9 @@ using LEGO.AsyncAPI;
 using LEGO.AsyncAPI.Exceptions;
 using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncApi.Readers.ParseNodes;
+using LEGO.AsyncAPI.Readers.ParseNodes;
 
-namespace LEGO.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     internal static partial class AsyncApiDeserializer
     {

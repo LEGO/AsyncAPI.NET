@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace LEGO.AsyncApi.Readers.ParseNodes
+namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     internal class AnyFieldMap<T> : Dictionary<string, AnyFieldMapParameter<T>>
     {

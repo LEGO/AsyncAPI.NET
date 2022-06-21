@@ -1,6 +1,6 @@
 using LEGO.AsyncAPI.Models;
 
-namespace LEGO.AsyncApi.Readers.Interface
+namespace LEGO.AsyncAPI.Readers.Interface
 {
     public interface IAsyncApiReader<TInput, TDiagnostic> where TDiagnostic : IDiagnostic
     {

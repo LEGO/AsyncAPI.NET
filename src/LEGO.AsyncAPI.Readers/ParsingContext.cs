@@ -2,17 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LEGO.AsyncAPI;
-using LEGO.AsyncApi.Any;
-using LEGO.AsyncApi.Interfaces;
-using LEGO.AsyncApi.Models;
+using LEGO.AsyncAPI.Any;
+using LEGO.AsyncAPI.Interfaces;
+using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncApi.Readers.Exceptions;
-using LEGO.AsyncApi.Readers.Interface;
-using LEGO.AsyncApi.Readers.ParseNodes;
-using LEGO.AsyncApi.Readers;
+using LEGO.AsyncAPI.Readers.Exceptions;
+using LEGO.AsyncAPI.Readers.Interface;
+using LEGO.AsyncAPI.Readers.ParseNodes;
+using LEGO.AsyncAPI.Readers;
 using SharpYaml.Serialization;
 
-namespace LEGO.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     public class ParsingContext
     {

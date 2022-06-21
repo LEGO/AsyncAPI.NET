@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 
-namespace LEGO.AsyncApi.Readers.Exceptions
+namespace LEGO.AsyncAPI.Readers.Exceptions
 {
     /// <summary>
     /// Defines an exception indicating AsyncApi Reader encountered an unsupported specification version while reading.

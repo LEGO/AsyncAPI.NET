@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 
-namespace LEGO.AsyncApi.Readers.ParseNodes
+namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     internal class AnyMapFieldMapParameter<T, U>
     {

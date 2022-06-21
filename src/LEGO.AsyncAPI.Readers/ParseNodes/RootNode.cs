@@ -1,6 +1,6 @@
 using SharpYaml.Serialization;
 
-namespace LEGO.AsyncApi.Readers.ParseNodes
+namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     internal class RootNode : ParseNode
     {

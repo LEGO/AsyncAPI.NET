@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 
-namespace LEGO.AsyncApi.Readers.Services
+namespace LEGO.AsyncAPI.Readers.Services
 {
     internal class AsyncApiRemoteReferenceCollector : AsyncApiVisitorBase
     {
