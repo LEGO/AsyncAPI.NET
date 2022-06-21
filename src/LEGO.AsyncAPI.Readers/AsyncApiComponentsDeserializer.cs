@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.Readers
 
 
         private static PatternFieldMap<AsyncApiComponents> _componentsPatternFields =
-            new PatternFieldMap<AsyncApiComponents>
+            new()
             {
                 {s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n))}
             };

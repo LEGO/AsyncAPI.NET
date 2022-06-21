@@ -29,6 +29,7 @@ namespace LEGO.AsyncAPI.Models
         public const string Type = "";
         public const string In = "";
         public const string Scheme = "";
+        public const string Schema = "schema";
         public const string BearerFormat = "";
         public const string OpenIdConnectUrl = "";
         public const string Flows = "";
