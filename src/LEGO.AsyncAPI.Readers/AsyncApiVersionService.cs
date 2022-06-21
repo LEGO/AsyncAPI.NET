@@ -132,7 +132,7 @@ namespace LEGO.AsyncAPI.Readers
                 }
             }
 
-            throw new AsyncApiException(string.Format(SRResource.ReferenceHasInvalidFormat, reference));
+            throw new AsyncApiException(string.Format("The reference string '{0}' has invalid format.", reference));
         }
 
         public AsyncApiDocument LoadDocument(RootNode rootNode)
@@ -149,7 +149,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             if (string.IsNullOrWhiteSpace(localReference))
             {
-                throw new ArgumentException(string.Format(SRResource.ArgumentNullOrWhiteSpace, nameof(localReference)));
+                throw new ArgumentException(string.Format("The argument '{0}' is null, empty or consists only of white-space.", nameof(localReference)));
             }
 
             var segments = localReference.Split('/');
@@ -163,7 +163,7 @@ namespace LEGO.AsyncAPI.Readers
                 }
             }
 
-            throw new AsyncApiException(string.Format(SRResource.ReferenceHasInvalidFormat, localReference));
+            throw new AsyncApiException(string.Format("The reference string '{0}' has invalid format.", localReference));
         }
     }
 }

@@ -97,11 +97,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                             return new AsyncApiDateTime(dateTimeValue);
                         }
                     }
-
-                    if (format == "password")
-                    {
-                        return new AsyncApiPassword(value);
-                    }
+                    
                 }
 
                 return openApiAny;
@@ -229,11 +225,6 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     {
                         return new AsyncApiDateTime(dateTimeValue);
                     }
-                }
-
-                if (type == "string" && format == "password")
-                {
-                    return new AsyncApiPassword(value);
                 }
 
                 if (type == "string")

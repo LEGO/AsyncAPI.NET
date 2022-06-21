@@ -31,7 +31,7 @@ namespace LEGO.AsyncApi.Extensions
 
             if (!name.StartsWith(AsyncApiConstants.ExtensionFieldNamePrefix))
             {
-                throw new AsyncApiException(string.Format(SRResource.ExtensionFieldNameMustBeginWithXDash, name));
+                throw new AsyncApiException(string.Format("The filed name '{0}' of extension doesn't begin with x-.", name));
             }
 
             element.Extensions[name] = any ?? throw Error.ArgumentNull(nameof(any));
