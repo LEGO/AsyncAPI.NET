@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets REQUIRED. A URL to the target host.
         /// </summary>
-        public Uri Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets REQUIRED. The protocol this URL supports for connection.
