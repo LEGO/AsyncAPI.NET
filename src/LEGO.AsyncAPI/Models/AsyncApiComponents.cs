@@ -3,9 +3,7 @@
 namespace LEGO.AsyncAPI.Models
 {
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Holds a set of reusable objects for different aspects of the AsyncAPI specification.
@@ -23,7 +21,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets an object to hold reusable Message Objects.
         /// </summary>
-        public IDictionary<string, Message> Messages { get; set; } = new Dictionary<string, Message>();
+        public IDictionary<string, AsyncApiMessage> Messages { get; set; } = new Dictionary<string, AsyncApiMessage>();
 
         /// <summary>
         /// Gets or sets an object to hold reusable Security Scheme Objects.
@@ -33,7 +31,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets an object to hold reusable Parameter Objects.
         /// </summary>
-        public IDictionary<string, Parameter> Parameters { get; set; } = new Dictionary<string, Parameter>();
+        public IDictionary<string, AsyncApiParameter> Parameters { get; set; } = new Dictionary<string, AsyncApiParameter>();
 
         /// <summary>
         /// Gets or sets an object to hold reusable Correlation ID Objects.
@@ -43,7 +41,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets an object to hold reusable Operation Trait Objects.
         /// </summary>
-        public IDictionary<string, OperationTrait> OperationTraits { get; set; } = new Dictionary<string, OperationTrait>();
+        public IDictionary<string, AsyncApiOperationTrait> OperationTraits { get; set; } = new Dictionary<string, AsyncApiOperationTrait>();
 
         /// <summary>
         /// Gets or sets an object to hold reusable Message Trait Objects.
@@ -53,32 +51,27 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets an object to hold reusable Server Bindings Objects.
         /// </summary>
-        [JsonConverter(typeof(ServerBindingConverter))]
         public IDictionary<string, IServerBinding> ServerBindings { get; set; } = new Dictionary<string, IServerBinding>();
 
         /// <summary>
         /// Gets or sets an object to hold reusable Channel Bindings Objects.
         /// </summary>
-        [JsonConverter(typeof(ChannelJsonDictionaryContractBindingConverter))]
         public IDictionary<string, IChannelBinding> ChannelBindings { get; set; } = new Dictionary<string, IChannelBinding>();
 
         /// <summary>
         /// Gets or sets an object to hold reusable Operation Bindings Objects.
         /// </summary>
-        [JsonConverter(typeof(OperationBindingConverter))]
         public IDictionary<string, IOperationBinding> OperationBindings { get; set; } = new Dictionary<string, IOperationBinding>();
 
         /// <summary>
         /// Gets or sets an object to hold reusable Message Bindings Objects.
         /// </summary>
-        [JsonConverter(typeof(MessageJsonDictionaryContractBindingConverter))]
         public IDictionary<string, IMessageBinding> MessageBindings { get; set; } = new Dictionary<string, IMessageBinding>();
-
-        /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
 
         public IDictionary<string, AsyncApiServer> Servers { get; set; } = new Dictionary<string, AsyncApiServer>();
 
         public IDictionary<string, AsyncApiChannel> Channels { get; set; } = new Dictionary<string, AsyncApiChannel>();
+
+        IDictionary<string, IAsyncApiExtension> IAsyncApiExtensible.Extensions { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
     }
 }

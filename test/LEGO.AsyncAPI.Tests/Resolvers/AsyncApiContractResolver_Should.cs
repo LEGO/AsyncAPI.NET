@@ -124,7 +124,7 @@
             Assert.Equal(expected, actual);
         }
 
-        private Message GetMockMessage()
+        private AsyncApiMessage GetMockMessage()
         {
             var payload = new AsyncAPIObject
             {
@@ -141,7 +141,7 @@
             headers.AllOf.Add(new Schema());
             headers.AnyOf = new List<Schema>();
 
-            var message = new Message
+            var message = new AsyncApiMessage
             {
                 Name = "foo",
                 Headers = headers,

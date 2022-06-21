@@ -2,13 +2,15 @@
 
 namespace LEGO.AsyncAPI.Models
 {
+    using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// An object representing a Server Variable for server URL template substitution.
     /// </summary>
-    public class AsyncApiServerVariable : IAsyncApiExtensible
+    public class AsyncApiServerVariable : IAsyncApiSerializable, IAsyncApiExtensible
     {
         /// <summary>
         /// Gets or sets an enumeration of string values to be used if the substitution options are from a limited set.
@@ -31,6 +33,33 @@ namespace LEGO.AsyncAPI.Models
         public IList<string> Examples { get; set; } = new List<string>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
+        public void SerializeV2(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.WriteStartObject();
+
+            // enums
+            writer.WriteOptionalCollection(AsyncApiConstants.Enum, this.Enum, (w, s) => w.WriteValue(s));
+
+            // default
+            writer.WriteProperty(AsyncApiConstants.Default, this.Default);
+
+            // description
+            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+
+            // examples
+            writer.WriteOptionalCollection(AsyncApiConstants.Examples, this.Examples, (w, e) => w.WriteValue(e));
+
+            // specification extensions
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_2_0);
+
+            writer.WriteEndObject();
+        }
     }
 }

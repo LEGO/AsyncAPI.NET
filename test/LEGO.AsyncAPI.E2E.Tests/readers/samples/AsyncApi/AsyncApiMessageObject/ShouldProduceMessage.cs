@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageObject
     using LEGO.AsyncAPI.Tests;
     using Xunit;
 
-    public class ShouldProduceMessage : ShouldConsumeProduceBase<Message>
+    public class ShouldProduceMessage : ShouldConsumeProduceBase<AsyncApiMessage>
     {
         public ShouldProduceMessage()
             : base(typeof(ShouldProduceMessage))
@@ -16,13 +16,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageObject
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new Message()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new AsyncApiMessage()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(this.GetString("Complete.json"), this.AsyncApiWriter.Write(new Message
+            Assert.Equal(this.GetString("Complete.json"), this.AsyncApiWriter.Write(new AsyncApiMessage
             {
                 Name = "UserSignup",
                 Title = "User signup",

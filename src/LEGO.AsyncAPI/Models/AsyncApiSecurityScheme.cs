@@ -68,7 +68,7 @@ namespace LEGO.AsyncAPI.Models
         public AsyncApiReference Reference { get; set; }
 
         /// <summary>
-        /// Serialize <see cref="AsyncApiSecurityScheme"/> to Open Api v3.0
+        /// Serialize <see cref="AsyncApiSecurityScheme"/> to Async Api v2.3.
         /// </summary>
         public void SerializeV2(IAsyncApiWriter writer)
         {
@@ -87,7 +87,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Serialize to AsyncApi V3 document without using reference.
+        /// Serialize to AsyncApi V2 document without using reference.
         /// </summary>
         public void SerializeV2WithoutReference(IAsyncApiWriter writer)
         {
@@ -141,7 +141,7 @@ namespace LEGO.AsyncAPI.Models
             }
 
             // extensions
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_2_0);
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
 
             writer.WriteEndObject();
         }

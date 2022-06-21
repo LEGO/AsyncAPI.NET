@@ -10,19 +10,8 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// The definition of a server this application MAY connect to.
     /// </summary>
-    public class AsyncApiServer : IAsyncApiSerializable, IAsyncApiExtensible
+    public class AsyncApiServer : IAsyncApiSerializable, IAsyncApiExtensible, IAsyncApiReferenceable
     {
-        /// <summary>
-        /// Initializes Server object.
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="protocol"></param>
-        public AsyncApiServer(string url, string protocol)
-        {
-            this.Url = new Uri(url);
-            this.Protocol = protocol;
-        }
-
         /// <summary>
         /// Gets or sets REQUIRED. A URL to the target host.
         /// </summary>
@@ -64,6 +53,10 @@ namespace LEGO.AsyncAPI.Models
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
+        public bool UnresolvedReference { get; set; }
+
+        public AsyncApiReference Reference { get; set; }
+
         public void SerializeV2(IAsyncApiWriter writer)
         {
             if (writer is null)
@@ -71,6 +64,17 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
+            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineLocalReferences)
+            {
+                this.Reference.SerializeV2(writer);
+                return;
+            }
+
+            this.SerializeV2WithoutReference(writer);
+        }
+
+        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        {
             writer.WriteStartObject();
 
             writer.WriteRequiredProperty(AsyncApiConstants.Url, this.Url?.OriginalString);
@@ -85,9 +89,10 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteOptionalCollection(AsyncApiConstants.Security, this.Security, (w, s) => s.SerializeV2(w));
 
-            writer.WriteOptionalMap(AsyncApiConstants.Bindings, this.Bindings, (w, b) => b.SerializeV2(w));
+            // TODO: figure out bindings
+            // writer.WriteOptionalMap(AsyncApiConstants.Bindings, this.Bindings, (w, b) => b.SerializeV2(w));
 
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_2_0);
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
 
             writer.WriteEndObject();
         }

@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
     using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeOperationTrait : ShouldConsumeProduceBase<OperationTrait>
+    public class ShouldConsumeOperationTrait : ShouldConsumeProduceBase<AsyncApiOperationTrait>
     {
         public ShouldConsumeOperationTrait()
             : base(typeof(ShouldConsumeOperationTrait))
@@ -18,7 +18,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
         {
             var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
-            Assert.IsType<OperationTrait>(output);
+            Assert.IsType<AsyncApiOperationTrait>(output);
         }
 
         [Fact]

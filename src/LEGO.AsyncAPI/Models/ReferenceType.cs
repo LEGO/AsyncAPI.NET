@@ -12,29 +12,19 @@ namespace LEGO.AsyncAPI.Models
         [Display("schemas")] Schema,
 
         /// <summary>
-        /// Responses item.
+        /// Servers item.
         /// </summary>
-        [Display("responses")] Response,
+        [Display("servers")] Server,
 
         /// <summary>
-        /// Parameters item.
+        /// Channels item.
         /// </summary>
-        [Display("parameters")] Parameter,
+        [Display("channels")] Channel,
 
         /// <summary>
-        /// Examples item.
+        /// Messages item.
         /// </summary>
-        [Display("examples")] Example,
-
-        /// <summary>
-        /// RequestBodies item.
-        /// </summary>
-        [Display("requestBodies")] RequestBody,
-
-        /// <summary>
-        /// Headers item.
-        /// </summary>
-        [Display("headers")] Header,
+        [Display("messages")] Message,
 
         /// <summary>
         /// SecuritySchemes item.
@@ -42,18 +32,43 @@ namespace LEGO.AsyncAPI.Models
         [Display("securitySchemes")] SecurityScheme,
 
         /// <summary>
-        /// Links item.
+        /// Parameters item.
         /// </summary>
-        [Display("links")] Link,
+        [Display("parameters")] Parameter,
 
         /// <summary>
-        /// Callbacks item.
+        /// CorrelationIds item.
         /// </summary>
-        [Display("callbacks")] Callback,
+        [Display("correlationIds")] CorrelationId,
 
         /// <summary>
-        /// Tags item.
+        /// OperationTraits item.
         /// </summary>
-        [Display("tags")] Tag
+        [Display("operationTraits")] OperationTrait,
+
+        /// <summary>
+        /// MessageTraits item.
+        /// </summary>
+        [Display("messageTraits")] MessageTrait,
+
+        /// <summary>
+        /// ServerBindings item.
+        /// </summary>
+        [Display("serverBindings")] ServerBinding,
+
+        /// <summary>
+        /// ChannelBindings item.
+        /// </summary>
+        [Display("channelBindings")] ChannelBinding,
+
+        /// <summary>
+        /// OperationBindings item.
+        /// </summary>
+        [Display("operationBindings")] OperationBinding,
+
+        /// <summary>
+        /// MessageBindings item.
+        /// </summary>
+        [Display("messageBindings")] MessageBinding,
     }
 }

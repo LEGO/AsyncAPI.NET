@@ -29,9 +29,9 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiChannelObject
 
             Assert.Equal("foo", output.Description);
             Assert.IsAssignableFrom<IList<string>>(output.Servers);
-            Assert.IsType<Operation>(output.Subscribe);
-            Assert.IsType<Operation>(output.Publish);
-            Assert.IsAssignableFrom<IDictionary<string, Parameter>>(output.Parameters);
+            Assert.IsType<AsyncApiOperation>(output.Subscribe);
+            Assert.IsType<AsyncApiOperation>(output.Publish);
+            Assert.IsAssignableFrom<IDictionary<string, AsyncApiParameter>>(output.Parameters);
             Assert.IsAssignableFrom<IDictionary<string, IChannelBinding>>(output.Bindings);
             Assert.IsAssignableFrom<IDictionary<string, IAsyncApiAny>>(output.Extensions);
         }

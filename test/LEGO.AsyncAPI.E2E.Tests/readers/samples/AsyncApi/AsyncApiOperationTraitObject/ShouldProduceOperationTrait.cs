@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
     using LEGO.AsyncAPI.Tests;
     using Xunit;
 
-    public class ShouldProduceOperationTrait : ShouldConsumeProduceBase<OperationTrait>
+    public class ShouldProduceOperationTrait : ShouldConsumeProduceBase<AsyncApiOperationTrait>
     {
         public ShouldProduceOperationTrait()
             : base(typeof(ShouldProduceOperationTrait))
@@ -19,13 +19,13 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationTrai
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new OperationTrait()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new AsyncApiOperationTrait()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(this.GetStringWithMockedExtensions("Complete.json"), this.AsyncApiWriter.Write(new OperationTrait
+            Assert.Equal(this.GetStringWithMockedExtensions("Complete.json"), this.AsyncApiWriter.Write(new AsyncApiOperationTrait
             {
                 OperationId = "foo",
                 Summary = "bar",
