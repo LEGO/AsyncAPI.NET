@@ -5,7 +5,7 @@ namespace LEGO.AsyncApi.Readers
         private static FixedFieldMap<AsyncApiDocument> _asyncApiFixedFields = new FixedFieldMap<AsyncApiDocument>
         {
             {
-                "openapi", (o, n) =>
+                "asyncApi", (o, n) =>
                 {
 
             },
