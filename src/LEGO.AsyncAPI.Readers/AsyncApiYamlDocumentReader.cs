@@ -8,12 +8,12 @@ using LEGO.AsyncAPI.Exceptions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncApi.Readers.Interface;
-using LEGO.AsyncApi.Readers.Services;
-using LEGO.AsyncApi.Validations;
+using LEGO.AsyncAPI.Readers.Interface;
+using LEGO.AsyncAPI.Readers.Services;
+using LEGO.AsyncAPI.Validations;
 using SharpYaml.Serialization;
 
-namespace LEGO.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     /// <summary>
     /// Service class for converting contents of TextReader into AsyncApiDocument instances

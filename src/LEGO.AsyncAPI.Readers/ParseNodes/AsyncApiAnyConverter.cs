@@ -6,7 +6,7 @@ using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.Models.Interfaces;
 
-namespace LEGO.AsyncApi.Readers.ParseNodes
+namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     internal static class AsyncApiAnyConverter
     {

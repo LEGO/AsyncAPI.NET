@@ -1,7 +1,7 @@
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncApi.Readers;
+using LEGO.AsyncAPI.Readers;
 
-namespace LEGO.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     /// <summary>
     /// Container object used for returning the result of reading an AsyncApi description.

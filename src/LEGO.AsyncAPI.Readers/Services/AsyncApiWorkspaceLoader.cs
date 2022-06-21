@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncApi.Readers.Interface;
+using LEGO.AsyncAPI.Readers.Interface;
 using SharpYaml.Model;
 
-namespace LEGO.AsyncApi.Readers.Services
+namespace LEGO.AsyncAPI.Readers.Services
 {
     internal class AsyncApiWorkspaceLoader 
     {

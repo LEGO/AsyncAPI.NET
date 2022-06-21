@@ -1,7 +1,7 @@
 using System;
 using SharpYaml.Serialization;
 
-namespace LEGO.AsyncApi.Readers.ParseNodes
+namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     public static class JsonPointerExtensions
     {

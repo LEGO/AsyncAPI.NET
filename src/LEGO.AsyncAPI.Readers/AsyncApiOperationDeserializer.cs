@@ -1,6 +1,6 @@
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncApi.Readers;
-using LEGO.AsyncApi.Readers.ParseNodes;
+using LEGO.AsyncAPI.Readers;
+using LEGO.AsyncAPI.Readers.ParseNodes;
 
 namespace LEGO.AsyncAPI.Readers
 {

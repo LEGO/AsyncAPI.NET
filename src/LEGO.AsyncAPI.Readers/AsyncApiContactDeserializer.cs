@@ -1,9 +1,9 @@
 using System;
 using LEGO.AsyncApi.Extensions;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncApi.Readers.ParseNodes;
+using LEGO.AsyncAPI.Readers.ParseNodes;
 
-namespace Microsoft.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     /// <summary>
     /// Class containing logic to deserialize AsyncApi  document into

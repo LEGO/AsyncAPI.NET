@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Globalization;
-using LEGO.AsyncApi.Extensions;
+using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncApi.Readers.ParseNodes;
+using LEGO.AsyncAPI.Readers.ParseNodes;
 
 namespace LEGO.AsyncAPI.Readers
 {

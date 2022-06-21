@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using LEGO.AsyncAPI;
 using LEGO.AsyncAPI.Models.Exceptions;
-using LEGO.AsyncApi.Readers.Interface;
+using LEGO.AsyncAPI.Readers.Interface;
 
-namespace LEGO.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     public class AsyncApiDiagnostic : IDiagnostic
     {

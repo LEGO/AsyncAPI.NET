@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncApi.Readers.Exceptions;
+using LEGO.AsyncAPI.Readers.Exceptions;
 using SharpYaml.Serialization;
 
-namespace LEGO.AsyncApi.Readers.ParseNodes
+namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     internal class ListNode : ParseNode, IEnumerable<ParseNode>
     {

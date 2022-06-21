@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using LEGO.AsyncApi.Readers.Interface;
+using LEGO.AsyncAPI.Readers.Interface;
 
-namespace LEGO.AsyncApi.Readers.Services
+namespace LEGO.AsyncAPI.Readers.Services
 {
     internal class DefaultStreamLoader : IStreamLoader
     {

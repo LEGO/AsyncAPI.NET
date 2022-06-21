@@ -3,7 +3,7 @@ using System.Linq;
 using LEGO.AsyncAPI.Exceptions;
 using SharpYaml.Serialization;
 
-namespace LEGO.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     internal static class YamlHelper
     {

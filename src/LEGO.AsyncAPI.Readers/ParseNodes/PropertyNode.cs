@@ -7,7 +7,7 @@ using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncApi.Readers.Exceptions;
 using SharpYaml.Serialization;
 
-namespace LEGO.AsyncApi.Readers.ParseNodes
+namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     internal class PropertyNode : ParseNode
     {

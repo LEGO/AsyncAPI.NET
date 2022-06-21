@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace LEGO.AsyncApi.Readers.Interface
+namespace LEGO.AsyncAPI.Readers.Interface
 {
     public interface IStreamLoader
     {

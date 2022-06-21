@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using LEGO.AsyncAPI;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncApi.Readers.Interface;
-using LEGO.AsyncApi.Validations;
+using LEGO.AsyncAPI.Readers.Interface;
+using LEGO.AsyncAPI.Validations;
 
-namespace LEGO.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     public enum ReferenceResolutionSetting
     {

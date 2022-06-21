@@ -1,7 +1,7 @@
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncApi.Readers.ParseNodes;
+using LEGO.AsyncAPI.Readers.ParseNodes;
 
-namespace LEGO.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     /// <summary>
     /// Class containing logic to deserialize AsyncApi  document into

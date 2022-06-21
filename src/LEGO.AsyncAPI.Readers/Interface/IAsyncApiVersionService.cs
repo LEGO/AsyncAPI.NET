@@ -1,8 +1,8 @@
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncApi.Readers.ParseNodes;
+using LEGO.AsyncAPI.Readers.ParseNodes;
 
-namespace LEGO.AsyncApi.Readers.Interface
+namespace LEGO.AsyncAPI.Readers.Interface
 {
     internal interface IAsyncApiVersionService
     {

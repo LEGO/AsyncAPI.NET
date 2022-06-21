@@ -5,12 +5,12 @@ using LEGO.AsyncAPI.Exceptions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncApi.Readers;
-using LEGO.AsyncApi.Readers.Interface;
-using LEGO.AsyncApi.Readers.ParseNodes;
+using LEGO.AsyncAPI.Readers;
+using LEGO.AsyncAPI.Readers.Interface;
+using LEGO.AsyncAPI.Readers.ParseNodes;
 using LEGO.AsyncAPI.Writers;
 
-namespace LEGO.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     internal class AsyncApiVersionService : IAsyncApiVersionService
     {
