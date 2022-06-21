@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Readers
 {
     internal static partial class AsyncApiDeserializer
     {
-        private static FixedFieldMap<AsyncApiDocument> _asyncApiFixedFields = new FixedFieldMap<AsyncApiDocument>
+        private static FixedFieldMap<AsyncApiDocument> _asyncApiFixedFields = new()
         {
             {
                 "asyncApi", (o, n) =>
