@@ -75,5 +75,10 @@ namespace LEGO.AsyncAPI.Models
         /// Responses item.
         /// </summary>
         [Display("responses")] Response,
+        
+        /// <summary>
+        /// Links item.
+        /// </summary>
+        [Display("links")] Link,
     }
 }
