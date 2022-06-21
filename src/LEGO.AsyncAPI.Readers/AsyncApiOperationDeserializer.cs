@@ -1,4 +1,3 @@
-using LEGO.AsyncApi.Extensions;
 using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -26,10 +25,10 @@ namespace LEGO.AsyncAPI.Readers
                     "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); }
                 },
                 {
-                    "bindings", (a, n) => { a.Bindings = LoadBindings(n); }
+                    "bindings", (a, n) => { a.Bindings; } //TODO: Figure out bindings LoadBindings(n)
                 },
                 {
-                    "traits", (a, n) => { a.Traits = LoadTraits(n); }
+                    "traits", (a, n) => { a.Traits = n.CreateList(LoadOperationTrait); }
                 },
                 { "message", (a, n) => { a.Message = LoadMessage(n); } }
             };
