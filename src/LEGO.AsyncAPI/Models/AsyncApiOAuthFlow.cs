@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
-    public class AsyncApiOauthFlow : IAsyncApiSerializable, IAsyncApiExtensible
+    public class AsyncApiOAuthFlow : IAsyncApiSerializable, IAsyncApiExtensible
     {
         /// <summary>
         /// REQUIRED. The authorization URL to be used for this flow.
@@ -36,7 +36,7 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <summary>
-        /// Serialize <see cref="AsyncApiOauthFlow"/> to Open Api v3.0
+        /// Serialize <see cref="AsyncApiOAuthFlow"/> to Open Api v3.0
         /// </summary>
         public void SerializeV2(IAsyncApiWriter writer)
         {
