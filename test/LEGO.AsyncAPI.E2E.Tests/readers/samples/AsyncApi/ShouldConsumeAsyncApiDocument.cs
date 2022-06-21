@@ -43,7 +43,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi
             Assert.Equal("bar", output.Info.Version);
 
             // TODO Fix resolving $ref as link to $id, when $ref is pre-populated through JTokenExtensions.ResolveReferences
-            // Assert.IsType<KafkaServerBinding>(output.Server["production"].Bindings["kafka"]);
+            // Assert.IsType<KafkaServerBinding>(output.Servers["production"].Bindings["kafka"]);
         }
 
         [Fact]

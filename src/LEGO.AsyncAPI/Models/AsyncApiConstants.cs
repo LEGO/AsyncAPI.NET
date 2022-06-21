@@ -29,7 +29,6 @@ namespace LEGO.AsyncAPI.Models
         public const string Type = "";
         public const string In = "";
         public const string Scheme = "";
-        public const string Schema = "schema";
         public const string BearerFormat = "";
         public const string OpenIdConnectUrl = "";
         public const string Flows = "";
@@ -47,7 +46,6 @@ namespace LEGO.AsyncAPI.Models
         public const string Enum = "";
         public const string Default = "";
         public const string Examples = "";
-        public const string Example = "";
         public const string Id = "";
         public const string DefaultContentType = "";
         public const string OperationId = "";
@@ -86,9 +84,13 @@ namespace LEGO.AsyncAPI.Models
         internal static string ReadOnly;
         internal static string WriteOnly;
         internal static string Deprecated;
+        internal static string Schema;
         internal static string Location;
         internal static string Subscribe;
         internal static string Publish;
         internal static string Parameters;
+        internal static string Schemas;
+        internal static string Messages;
+        internal static string SecuritySchemes;
     }
 }
