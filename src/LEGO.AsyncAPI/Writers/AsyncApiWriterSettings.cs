@@ -26,16 +26,10 @@ namespace LEGO.AsyncAPI.Writers
                 switch (this.referenceInline)
                 {
                     case ReferenceInlineSetting.DoNotInlineReferences:
-                        this.InlineLocalReferences = false;
-                        this.InlineExternalReferences = false;
+                        this.InLineReferences = false;
                         break;
-                    case ReferenceInlineSetting.InlineLocalReferences:
-                        this.InlineLocalReferences = true;
-                        this.InlineExternalReferences = false;
-                        break;
-                    case ReferenceInlineSetting.InlineAllReferences:
-                        this.InlineLocalReferences = true;
-                        this.InlineExternalReferences = true;
+                    case ReferenceInlineSetting.InlineReferences:
+                        this.InLineReferences = true;
                         break;
                 }
             }
@@ -44,17 +38,11 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Gets or sets a value indicating whether indicates if local references should be rendered as an inline object
         /// </summary>
-        public bool InlineLocalReferences { get; set; } = false;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether indicates if external references should be rendered as an inline object
-        /// </summary>
-        public bool InlineExternalReferences { get; set; } = false;
+        public bool InLineReferences { get; set; } = false;
 
         internal bool ShouldInlineReference(AsyncApiReference reference)
         {
-            return (reference.IsLocal && this.InlineLocalReferences)
-                             || (reference.IsExternal && this.InlineExternalReferences);
+            return this.InLineReferences;
         }
 
     }

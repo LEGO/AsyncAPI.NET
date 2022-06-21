@@ -81,7 +81,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="version">Version of the AsyncApi specification that the fragment conforms to.</param>
         /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing</param>
         /// <returns>Instance of newly created AsyncApiDocument</returns>
-        public T ReadFragment<T>(Stream input, AsyncApiSpecVersion version, out AsyncApiDiagnostic diagnostic) where T : IAsyncApiReferenceable
+        public T ReadFragment<T>(Stream input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic) where T : IAsyncApiReferenceable
         {
             using (var reader = new StreamReader(input))
             {

@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Readers
         private readonly Dictionary<string, object> _tempStorage = new Dictionary<string, object>();
         private readonly Dictionary<object, Dictionary<string, object>> _scopedTempStorage = new Dictionary<object, Dictionary<string, object>>();
         private readonly Dictionary<string, Stack<string>> _loopStacks = new Dictionary<string, Stack<string>>();
-        internal Dictionary<string, Func<IAsyncApiAny, AsyncApiSpecVersion, IAsyncApiExtension>> ExtensionParsers { get; set; } = new Dictionary<string, Func<IAsyncApiAny, AsyncApiSpecVersion, IAsyncApiExtension>>();
+        internal Dictionary<string, Func<IAsyncApiAny, AsyncApiVersion, IAsyncApiExtension>> ExtensionParsers { get; set; } = new Dictionary<string, Func<IAsyncApiAny, AsyncApiVersion, IAsyncApiExtension>>();
         internal RootNode RootNode { get; set; }
         internal List<AsyncApiTag> Tags { get; private set; } = new List<AsyncApiTag>();
         internal Uri BaseUrl { get; set; }
@@ -45,13 +45,13 @@ namespace LEGO.AsyncAPI.Readers
                 case string version when version == "2.0":
                     VersionService = new AsyncApiV2VersionService(Diagnostic);
                     doc = VersionService.LoadDocument(RootNode);
-                    this.Diagnostic.SpecificationVersion = AsyncApiSpecVersion.AsyncApi2_0;
+                    this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_0;
                     break;
 
                 case string version when version.StartsWith("3.0"):
                     VersionService = new AsyncApiV3VersionService(Diagnostic);
                     doc = VersionService.LoadDocument(RootNode);
-                    this.Diagnostic.SpecificationVersion = AsyncApiSpecVersion.AsyncApi3_0;
+                    this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi3_0;
                     break;
 
                 default:
@@ -61,7 +61,7 @@ namespace LEGO.AsyncAPI.Readers
             return doc;
         }
         
-        internal T ParseFragment<T>(YamlDocument yamlDocument, AsyncApiSpecVersion version) where T : IAsyncApiElement
+        internal T ParseFragment<T>(YamlDocument yamlDocument, AsyncApiVersion version) where T : IAsyncApiElement
         {
             var node = ParseNode.Create(this, yamlDocument.RootNode);
 
@@ -69,12 +69,12 @@ namespace LEGO.AsyncAPI.Readers
 
             switch (version)
             {
-                case AsyncApiSpecVersion.AsyncApi2_0:
+                case AsyncApiVersion.AsyncApi2_0:
                     VersionService = new AsyncApiV2VersionService(Diagnostic);
                     element = this.VersionService.LoadElement<T>(node);
                     break;
 
-                case AsyncApiSpecVersion.AsyncApi3_0:
+                case AsyncApiVersion.AsyncApi3_0:
                     this.VersionService = new AsyncApiV3VersionService(Diagnostic);
                     element = this.VersionService.LoadElement<T>(node);
                     break;

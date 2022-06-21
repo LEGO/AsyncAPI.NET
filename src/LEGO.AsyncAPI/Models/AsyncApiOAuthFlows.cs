@@ -68,7 +68,7 @@ namespace LEGO.AsyncAPI.Models
                 (w, o) => o.SerializeV2(w));
 
             // extensions
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_2_0);
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
 
             writer.WriteEndObject();
         }
