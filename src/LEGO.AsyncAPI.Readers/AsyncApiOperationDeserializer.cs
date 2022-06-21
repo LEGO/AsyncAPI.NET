@@ -1,5 +1,6 @@
+using LEGO.AsyncApi.Extensions;
+using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 
 namespace LEGO.AsyncAPI.Readers
@@ -19,7 +20,7 @@ namespace LEGO.AsyncAPI.Readers
                     "description", (a, n) => { a.Description = n.GetScalarValue(); }
                 },
                 {
-                    "tags", (a, n) => a.Tags = LoadTags(n)
+                    "tags", (a, n) => a.Tags = n.CreateList(LoadTag)
                 },
                 {
                     "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); }
@@ -34,7 +35,7 @@ namespace LEGO.AsyncAPI.Readers
             };
 
         private static readonly PatternFieldMap<AsyncApiOperation> _operationPatternFields =
-            new()
+            new ()
             {
                 { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) },
             };
@@ -48,23 +49,6 @@ namespace LEGO.AsyncAPI.Readers
             ParseMap(mapNode, operation, _operationFixedFields, _operationPatternFields);
 
             return operation;
-        }
-
-        private static AsyncApiTag LoadTagByReference(
-            ParsingContext context,
-            string tagName)
-        {
-            var tagObject = new AsyncApiTag
-            {
-                UnresolvedReference = true,
-                Reference = new AsyncApiReference
-                {
-                    Type = ReferenceType.Tag,
-                    Id = tagName
-                }
-            };
-
-            return tagObject;
         }
     }
 }
