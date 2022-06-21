@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LEGO.AsyncAPI;
 using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncApi.Readers.Interface;
 

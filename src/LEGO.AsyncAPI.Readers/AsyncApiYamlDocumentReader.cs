@@ -10,6 +10,7 @@ using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncApi.Readers.Interface;
 using LEGO.AsyncApi.Readers.Services;
+using LEGO.AsyncApi.Validations;
 using SharpYaml.Serialization;
 
 namespace LEGO.AsyncApi.Readers

@@ -4,8 +4,10 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using LEGO.AsyncAPI;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Exceptions;
+using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncApi.Readers.Interface;
 using SharpYaml;
 using SharpYaml.Serialization;
