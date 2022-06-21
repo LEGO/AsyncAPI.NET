@@ -70,5 +70,10 @@ namespace LEGO.AsyncAPI.Models
         /// MessageBindings item.
         /// </summary>
         [Display("messageBindings")] MessageBinding,
+
+        /// <summary>
+        /// Responses item.
+        /// </summary>
+        [Display("responses")] Response,
     }
 }
