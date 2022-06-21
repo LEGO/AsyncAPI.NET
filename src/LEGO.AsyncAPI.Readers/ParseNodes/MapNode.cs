@@ -2,6 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Any;
+using LEGO.AsyncAPI.Models.Interfaces;
+using LEGO.AsyncApi.Readers.Exceptions;
 using SharpYaml.Schemas;
 using SharpYaml.Serialization;
 

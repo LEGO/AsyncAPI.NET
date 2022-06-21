@@ -1,4 +1,6 @@
 using System;
+using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Interfaces;
 
 namespace LEGO.AsyncApi.Readers.ParseNodes
 {
