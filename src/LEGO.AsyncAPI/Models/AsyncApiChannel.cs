@@ -18,10 +18,10 @@ namespace LEGO.AsyncAPI.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// the servers on which this channel is available, specified as an optional unordered list of names (string keys) of Server Objects defined in the Server Object (a map).
+        /// the servers on which this channel is available, specified as an optional unordered list of names (string keys) of Server Objects defined in the Servers Object (a map).
         /// </summary>
         /// <remarks>
-        /// If servers is absent or empty then this channel must be available on all servers defined in the Server Object.
+        /// If servers is absent or empty then this channel must be available on all servers defined in the Servers Object.
         /// </remarks>
         public IList<string> Servers { get; set; } = new List<string>();
 
