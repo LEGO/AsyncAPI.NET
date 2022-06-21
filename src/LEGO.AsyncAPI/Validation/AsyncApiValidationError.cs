@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LEGO.AsyncApi.Validations
+namespace LEGO.AsyncAPI.Validations
 {
     /// <summary>
     /// Errors detected when validating an OpenAPI Element

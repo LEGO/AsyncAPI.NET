@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using LEGO.AsyncAPI.Models.Exceptions;
 
-namespace LEGO.AsyncApi.Validations
+namespace LEGO.AsyncAPI.Validations
 {    
     /// <summary>
     /// Warnings detected when validating an OpenAPI Element

@@ -2,7 +2,7 @@ using LEGO.AsyncAPI.Exceptions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 
-namespace LEGO.AsyncApi.Extensions
+namespace LEGO.AsyncAPI.Extensions
 {
     /// <summary>
     /// Extension methods to verify validatity and add an extension to Extensions property.

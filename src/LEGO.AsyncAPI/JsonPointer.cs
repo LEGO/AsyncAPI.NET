@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace LEGO.AsyncApi
+namespace LEGO.AsyncAPI
 {
     /// <summary>
     /// JSON pointer.

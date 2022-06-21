@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LEGO.AsyncAPI.Models;
 
-namespace LEGO.AsyncApi.Validations
+namespace LEGO.AsyncAPI.Validations
 {
     /// <summary>
     /// Class containing dispatchers to execute validation rules on for Open API document.

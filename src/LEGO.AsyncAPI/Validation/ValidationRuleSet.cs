@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using LEGO.AsyncAPI.Exceptions;
 
-namespace LEGO.AsyncApi.Validations
+namespace LEGO.AsyncAPI.Validations
 {
     /// <summary>
     /// The rule set of the validation.

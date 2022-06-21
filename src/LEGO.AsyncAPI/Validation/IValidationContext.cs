@@ -1,6 +1,6 @@
 using LEGO.AsyncApi.Validations;
 
-namespace LEGO.AsyncApi.Validations
+namespace LEGO.AsyncAPI.Validations
 {
     /// <summary>
     /// Constrained interface used to provide context to rule implementation

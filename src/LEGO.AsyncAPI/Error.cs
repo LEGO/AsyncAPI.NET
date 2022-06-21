@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 
-namespace LEGO.AsyncApi
+namespace LEGO.AsyncAPI
 {
     /// <summary>
     /// Utility class for creating and unwrapping <see cref="Exception"/> instances.

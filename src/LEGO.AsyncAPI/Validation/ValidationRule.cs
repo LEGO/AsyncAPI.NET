@@ -4,7 +4,7 @@
 using System;
 using LEGO.AsyncAPI.Models.Interfaces;
 
-namespace LEGO.AsyncApi.Validations
+namespace LEGO.AsyncAPI.Validations
 {
     /// <summary>
     /// Class containing validation rule logic.
