@@ -274,77 +274,79 @@ namespace LEGO.AsyncAPI.Models
                     }
                 });
 
-            // serverBindings
-            writer.WriteOptionalMap(
-                AsyncApiConstants.ServerBindings,
-                this.ServerBindings,
-                (w, key, component) =>
-                {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ServerBinding &&
-                        component.Reference.Id == key)
-                    {
-                        component.SerializeV2WithoutReference(w);
-                    }
-                    else
-                    {
-                        component.SerializeV2(w);
-                    }
-                });
+            // TODO: Figure out bindings
 
-            // channelBindings
-            writer.WriteOptionalMap(
-                AsyncApiConstants.ChannelBindings,
-                this.ChannelBindings,
-                (w, key, component) =>
-                {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ChannelBinding &&
-                        component.Reference.Id == key)
-                    {
-                        component.SerializeV2WithoutReference(w);
-                    }
-                    else
-                    {
-                        component.SerializeV2(w);
-                    }
-                });
+            //// serverBindings
+            //writer.WriteOptionalMap(
+            //    AsyncApiConstants.ServerBindings,
+            //    this.ServerBindings,
+            //    (w, key, component) =>
+            //    {
+            //        if (component.Reference != null &&
+            //            component.Reference.Type == ReferenceType.ServerBinding &&
+            //            component.Reference.Id == key)
+            //        {
+            //            component.SerializeV2WithoutReference(w);
+            //        }
+            //        else
+            //        {
+            //            component.SerializeV2(w);
+            //        }
+            //    });
 
-            // operationBindings
-            writer.WriteOptionalMap(
-                AsyncApiConstants.OperationBindings,
-                this.OperationBindings,
-                (w, key, component) =>
-                {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.OperationBinding &&
-                        component.Reference.Id == key)
-                    {
-                        component.SerializeV2WithoutReference(w);
-                    }
-                    else
-                    {
-                        component.SerializeV2(w);
-                    }
-                });
+            //// channelBindings
+            //writer.WriteOptionalMap(
+            //    AsyncApiConstants.ChannelBindings,
+            //    this.ChannelBindings,
+            //    (w, key, component) =>
+            //    {
+            //        if (component.Reference != null &&
+            //            component.Reference.Type == ReferenceType.ChannelBinding &&
+            //            component.Reference.Id == key)
+            //        {
+            //            component.SerializeV2WithoutReference(w);
+            //        }
+            //        else
+            //        {
+            //            component.SerializeV2(w);
+            //        }
+            //    });
 
-            // messageBindings
-            writer.WriteOptionalMap(
-                AsyncApiConstants.MessageBindings,
-                this.MessageBindings,
-                (w, key, component) =>
-                {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.MessageBinding &&
-                        component.Reference.Id == key)
-                    {
-                        component.SerializeV2WithoutReference(w);
-                    }
-                    else
-                    {
-                        component.SerializeV2(w);
-                    }
-                });
+            //// operationBindings
+            //writer.WriteOptionalMap(
+            //    AsyncApiConstants.OperationBindings,
+            //    this.OperationBindings,
+            //    (w, key, component) =>
+            //    {
+            //        if (component.Reference != null &&
+            //            component.Reference.Type == ReferenceType.OperationBinding &&
+            //            component.Reference.Id == key)
+            //        {
+            //            component.SerializeV2WithoutReference(w);
+            //        }
+            //        else
+            //        {
+            //            component.SerializeV2(w);
+            //        }
+            //    });
+
+            //// messageBindings
+            //writer.WriteOptionalMap(
+            //    AsyncApiConstants.MessageBindings,
+            //    this.MessageBindings,
+            //    (w, key, component) =>
+            //    {
+            //        if (component.Reference != null &&
+            //            component.Reference.Type == ReferenceType.MessageBinding &&
+            //            component.Reference.Id == key)
+            //        {
+            //            component.SerializeV2WithoutReference(w);
+            //        }
+            //        else
+            //        {
+            //            component.SerializeV2(w);
+            //        }
+            //    });
 
             // extensions
             writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);

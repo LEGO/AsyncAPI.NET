@@ -121,8 +121,8 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteStartObject();
             writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
-            writer.WriteOptionalObject(AsyncApiConstants.Payload, Payload, (w, p) => w.WriteAny(p));
-            writer.WriteOptionalObject(AsyncApiConstants.CorrelationId, CorrelationId, (w, c) => c.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.Payload, this.Payload, (w, p) => w.WriteAny(p));
+            writer.WriteOptionalObject(AsyncApiConstants.CorrelationId, this.CorrelationId, (w, c) => c.SerializeV2(w));
             writer.WriteProperty(AsyncApiConstants.SchemaFormat, this.SchemaFormat);
             writer.WriteProperty(AsyncApiConstants.ContentType, this.ContentType);
             writer.WriteProperty(AsyncApiConstants.Name, this.Name);

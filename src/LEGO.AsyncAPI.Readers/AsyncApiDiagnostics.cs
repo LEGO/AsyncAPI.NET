@@ -11,6 +11,6 @@ namespace LEGO.AsyncAPI.Readers
         
         public IList<AsyncApiError> Warnings { get; set; } = new List<AsyncApiError>();
         
-        public AsyncApiSpecVersion SpecificationVersion { get; set; }
+        public AsyncApiVersion SpecificationVersion { get; set; }
     }
 }

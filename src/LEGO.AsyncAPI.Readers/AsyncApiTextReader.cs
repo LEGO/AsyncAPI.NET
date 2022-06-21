@@ -91,7 +91,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="version">Version of the AsyncApi specification that the fragment conforms to.</param>
         /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing</param>
         /// <returns>Instance of newly created AsyncApiDocument</returns>
-        public T ReadFragment<T>(TextReader input, AsyncApiSpecVersion version, out AsyncApiDiagnostic diagnostic) where T : IAsyncApiElement
+        public T ReadFragment<T>(TextReader input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic) where T : IAsyncApiElement
         {
             YamlDocument yamlDocument;
 

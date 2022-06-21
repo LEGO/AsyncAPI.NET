@@ -170,7 +170,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 return parser(
                     AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny()),
-                    AsyncApiSpecVersion.AsyncApi2_3_0);
+                    AsyncApiVersion.AsyncApi2_3_0);
             }
             else
             {

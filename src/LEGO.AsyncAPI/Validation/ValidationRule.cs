@@ -38,7 +38,7 @@ namespace LEGO.AsyncAPI.Validations
         /// <param name="validate">Action to perform the validation.</param>
         public ValidationRule(Action<IValidationContext, T> validate)
         {
-            _validate = validate ?? throw Error.ArgumentNull(nameof(validate));
+            this._validate = validate ?? throw Error.ArgumentNull(nameof(validate));
         }
 
         internal override Type ElementType

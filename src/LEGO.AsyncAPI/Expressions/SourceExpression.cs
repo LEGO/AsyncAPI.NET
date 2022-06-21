@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Expressions
         /// <param name="value">The value string.</param>
         protected SourceExpression(string value)
         {
-            Value = value;
+            this.Value = value;
         }
 
         /// <summary>

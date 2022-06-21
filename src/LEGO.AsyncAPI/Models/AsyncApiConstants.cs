@@ -99,5 +99,6 @@ namespace LEGO.AsyncAPI.Models
         internal static string ChannelBindings;
         internal static string OperationBindings;
         internal static string MessageBindings;
+        internal static string RefreshUrl;
     }
 }

@@ -29,8 +29,8 @@ namespace LEGO.AsyncAPI.Validations
         public IList<ValidationRule> FindRules(Type type)
         {
             IList<ValidationRule> results = null;
-            _rules.TryGetValue(type, out results);
-            return results ?? _emptyRules;
+            this._rules.TryGetValue(type, out results);
+            return results ?? this._emptyRules;
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace LEGO.AsyncAPI.Validations
 
             foreach (ValidationRule rule in ruleSet)
             {
-                Add(rule);
+                this.Add(rule);
             }
         }
 
@@ -101,7 +101,7 @@ namespace LEGO.AsyncAPI.Validations
 
             foreach (ValidationRule rule in rules)
             {
-                Add(rule);
+                this.Add(rule);
             }
         }
 
@@ -112,7 +112,7 @@ namespace LEGO.AsyncAPI.Validations
         {
             get
             {
-                return _rules.Values.SelectMany(v => v).ToList();
+                return this._rules.Values.SelectMany(v => v).ToList();
             }
         }
 
@@ -122,17 +122,17 @@ namespace LEGO.AsyncAPI.Validations
         /// <param name="rule">The rule.</param>
         public void Add(ValidationRule rule)
         {
-            if (!_rules.ContainsKey(rule.ElementType))
+            if (!this._rules.ContainsKey(rule.ElementType))
             {
-                _rules[rule.ElementType] = new List<ValidationRule>();
+                this._rules[rule.ElementType] = new List<ValidationRule>();
             }
 
-            if (_rules[rule.ElementType].Contains(rule))
+            if (this._rules[rule.ElementType].Contains(rule))
             {
                 throw new AsyncApiException(SRResource.Validation_RuleAddTwice);
             }
 
-            _rules[rule.ElementType].Add(rule);
+            this._rules[rule.ElementType].Add(rule);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace LEGO.AsyncAPI.Validations
         /// <returns>The enumerator.</returns>
         public IEnumerator<ValidationRule> GetEnumerator()
         {
-            foreach (var ruleList in _rules.Values)
+            foreach (var ruleList in this._rules.Values)
             {
                 foreach (var rule in ruleList)
                 {

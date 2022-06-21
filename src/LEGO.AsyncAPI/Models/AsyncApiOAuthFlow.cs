@@ -4,10 +4,9 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Attributes;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
-    public class AsyncApiOAuthFlow : IAsyncApiSerializable, IAsyncApiExtensible
+    public class AsyncApiOauthFlow : IAsyncApiSerializable, IAsyncApiExtensible
     {
         /// <summary>
         /// REQUIRED. The authorization URL to be used for this flow.
@@ -37,7 +36,7 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <summary>
-        /// Serialize <see cref="AsyncApiOAuthFlow"/> to Open Api v3.0
+        /// Serialize <see cref="AsyncApiOauthFlow"/> to Open Api v3.0
         /// </summary>
         public void SerializeV2(IAsyncApiWriter writer)
         {
@@ -49,19 +48,19 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // authorizationUrl
-            writer.WriteProperty(AsyncApiConstants.AuthorizationUrl, AuthorizationUrl?.ToString());
+            writer.WriteProperty(AsyncApiConstants.AuthorizationUrl, this.AuthorizationUrl?.ToString());
 
             // tokenUrl
-            writer.WriteProperty(AsyncApiConstants.TokenUrl, TokenUrl?.ToString());
+            writer.WriteProperty(AsyncApiConstants.TokenUrl, this.TokenUrl?.ToString());
 
             // refreshUrl
-            writer.WriteProperty(AsyncApiConstants.RefreshUrl, RefreshUrl?.ToString());
+            writer.WriteProperty(AsyncApiConstants.RefreshUrl, this.RefreshUrl?.ToString());
 
             // scopes
-            writer.WriteRequiredMap(AsyncApiConstants.Scopes, Scopes, (w, s) => w.WriteValue(s));
+            writer.WriteRequiredMap(AsyncApiConstants.Scopes, this.Scopes, (w, s) => w.WriteValue(s));
 
             // extensions
-            writer.WriteExtensions(Extensions, AsyncApiVersion.AsyncApi2_2_0);
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
 
             writer.WriteEndObject();
         }

@@ -43,12 +43,12 @@ namespace LEGO.AsyncAPI.Expressions
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(Value))
+                if (string.IsNullOrWhiteSpace(this.Value))
                 {
                     return Body;
                 }
 
-                return Body + PointerPrefix + Value;
+                return Body + PointerPrefix + this.Value;
             }
         }
 
@@ -59,7 +59,7 @@ namespace LEGO.AsyncAPI.Expressions
         {
             get
             {
-                return Value;
+                return this.Value;
             }
         }
     }

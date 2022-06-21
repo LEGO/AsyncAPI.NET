@@ -43,7 +43,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <summary>
         /// Dictionary of parsers for converting extensions into strongly typed classes
         /// </summary>
-        public Dictionary<string, Func<IAsyncApiAny, AsyncApiSpecVersion, IAsyncApiExtension>> ExtensionParsers { get; set; } = new Dictionary<string, Func<IAsyncApiAny, AsyncApiSpecVersion, IAsyncApiExtension>>();
+        public Dictionary<string, Func<IAsyncApiAny, AsyncApiVersion, IAsyncApiExtension>> ExtensionParsers { get; set; } = new Dictionary<string, Func<IAsyncApiAny, AsyncApiVersion, IAsyncApiExtension>>();
 
         /// <summary>
         /// Rules to use for validating AsyncApi specification.  If none are provided a default set of rules are applied.
