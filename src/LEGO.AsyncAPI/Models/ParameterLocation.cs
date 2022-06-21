@@ -29,6 +29,6 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Used to pass a specific cookie value to the API.
         /// </summary>
-        [Display("cookie")] Cookie
+        [Display("cookie")] Cookie,
     }
 }
