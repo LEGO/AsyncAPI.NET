@@ -1,4 +1,4 @@
-using LEGO.AsyncApi.Validations;
+using LEGO.AsyncAPI.Validations;
 
 namespace LEGO.AsyncAPI.Validations
 {
