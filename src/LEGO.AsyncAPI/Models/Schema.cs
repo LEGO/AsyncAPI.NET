@@ -219,6 +219,13 @@ namespace LEGO.AsyncAPI.Models
         public IList<IAsyncApiAny> Examples { get; set; } = new List<IAsyncApiAny>();
 
         /// <summary>
+        /// A free-form property to include an example of an instance for this schema.
+        /// To represent examples that cannot be naturally represented in JSON or YAML,
+        /// a string value can be used to contain the example with escaping where necessary.
+        /// </summary>
+        public IAsyncApiAny Example { get; set; }
+        
+        /// <summary>
         /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
         /// </summary>
         public IAsyncApiAny Const { get; set; }

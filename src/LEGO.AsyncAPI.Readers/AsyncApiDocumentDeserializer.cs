@@ -1,3 +1,6 @@
+using LEGO.AsyncAPI.Models;
+using LEGO.AsyncApi.Readers.ParseNodes;
+
 namespace LEGO.AsyncApi.Readers
 {
     internal static partial class AsyncApiDeserializer

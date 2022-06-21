@@ -39,4 +39,8 @@
     <EmbeddedResource Include="schema-v2.3.0.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validation\Rules" />
+  </ItemGroup>
+
 </Project>
