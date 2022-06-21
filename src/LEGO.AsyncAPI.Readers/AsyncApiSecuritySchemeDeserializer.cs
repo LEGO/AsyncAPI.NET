@@ -1,13 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT license. 
-
 using System;
-using LEGO.AsyncApi.Extensions;
+using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncApi.Readers.ParseNodes;
+using LEGO.AsyncAPI.Readers.ParseNodes;
 using LEGO.AsyncAPI.Writers;
 
-namespace LEGO.AsyncApi.Readers
+namespace LEGO.AsyncAPI.Readers
 {
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
