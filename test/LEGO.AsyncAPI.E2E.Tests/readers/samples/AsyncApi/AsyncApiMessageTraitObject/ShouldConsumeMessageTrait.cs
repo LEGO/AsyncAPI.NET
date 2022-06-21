@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiMessageTraitO
             var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Complete.json"));
 
             Assert.IsType<Schema>(output.Headers);
-            Assert.IsType<CorrelationId>(output.CorrelationId);
+            Assert.IsType<AsyncApiCorrelationId>(output.CorrelationId);
             Assert.Equal("application/vnd.aai.asyncapi;version=2.3.0", output.SchemaFormat);
             Assert.Equal("application/json", output.ContentType);
             Assert.Equal("UserSignup", output.Name);

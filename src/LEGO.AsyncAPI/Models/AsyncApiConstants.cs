@@ -92,5 +92,12 @@ namespace LEGO.AsyncAPI.Models
         internal static string Schemas;
         internal static string Messages;
         internal static string SecuritySchemes;
+        internal static string CorrelationIds;
+        internal static string OperationTraits;
+        internal static string MessageTraits;
+        internal static string ServerBindings;
+        internal static string ChannelBindings;
+        internal static string OperationBindings;
+        internal static string MessageBindings;
     }
 }

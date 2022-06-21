@@ -2,28 +2,28 @@
 
 namespace LEGO.AsyncAPI.Models
 {
+    using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using Newtonsoft.Json;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// Describes a trait that MAY be applied to a Message Object.
     /// </summary>
-    public class MessageTrait : IAsyncApiExtensible, IReferenceable
+    public class MessageTrait : IAsyncApiExtensible, IAsyncApiReferenceable, IAsyncApiSerializable
     {
         /// <summary>
-        /// Gets or sets schema definition of the application headers. Schema MUST be of type "object".
+        /// schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
-        public Schema Headers { get; set; }
+        public AsyncApiSchema Headers { get; set; }
 
         /// <summary>
-        /// Gets or sets definition of the correlation ID used for message tracing or matching.
+        /// definition of the correlation ID used for message tracing or matching.
         /// </summary>
-        public CorrelationId CorrelationId { get; set; }
+        public AsyncApiCorrelationId CorrelationId { get; set; }
 
         /// <summary>
-        /// Gets or sets a string containing the name of the schema format used to define the message payload.
+        /// a string containing the name of the schema format used to define the message payload.
         /// </summary>
         /// <remarks>
         /// If omitted, implementations should parse the payload as a Schema object.
@@ -31,58 +31,98 @@ namespace LEGO.AsyncAPI.Models
         public string SchemaFormat { get; set; }
 
         /// <summary>
-        /// Gets or sets the content type to use when encoding/decoding a message's payload.
+        /// the content type to use when encoding/decoding a message's payload.
         /// </summary>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets a machine-friendly name for the message.
+        /// a machine-friendly name for the message.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a human-friendly title for the message.
+        /// a human-friendly title for the message.
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets a short summary of what the message is about.
+        /// a short summary of what the message is about.
         /// </summary>
         public string Summary { get; set; }
 
         /// <summary>
-        /// Gets or sets a verbose explanation of the message. CommonMark syntax can be used for rich text representation.
+        /// a verbose explanation of the message. CommonMark syntax can be used for rich text representation.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of tags for API documentation control. Tags can be used for logical grouping of messages.
+        /// a list of tags for API documentation control. Tags can be used for logical grouping of messages.
         /// </summary>
         public IList<AsyncApiTag> Tags { get; set; } = new List<AsyncApiTag>();
 
         /// <summary>
-        /// Gets or sets additional external documentation for this message.
+        /// additional external documentation for this message.
         /// </summary>
         public AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
         /// <summary>
-        /// Gets or sets a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
+        /// a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
         /// </summary>
-        [JsonConverter(typeof(MessageJsonDictionaryContractBindingConverter))]
         public IDictionary<string, IMessageBinding> Bindings { get; set; } = new Dictionary<string, IMessageBinding>();
 
         /// <summary>
-        /// Gets or sets list of examples.
+        /// list of examples.
         /// </summary>
         public IList<MessageExample> Examples { get; set; } = new List<MessageExample>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <inheritdoc/>
-        public bool? UnresolvedReference { get; set; }
+        public bool UnresolvedReference { get; set; }
 
         /// <inheritdoc/>
         public AsyncApiReference Reference { get; set; }
+
+        public void SerializeV2(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineAllReferences)
+            {
+                this.Reference.SerializeV2(writer);
+                return;
+            }
+
+            this.SerializeV2WithoutReference(writer);
+        }
+
+        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.WriteStartObject();
+            writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.CorrelationId, this.CorrelationId, (w, c) => c.SerializeV2(w));
+            writer.WriteProperty(AsyncApiConstants.SchemaFormat, this.SchemaFormat);
+            writer.WriteProperty(AsyncApiConstants.ContentType, this.ContentType);
+            writer.WriteProperty(AsyncApiConstants.Name, this.Name);
+            writer.WriteProperty(AsyncApiConstants.Title, this.Title);
+            writer.WriteProperty(AsyncApiConstants.Summary, this.Summary);
+            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
+            // TODO: figure out bindings
+
+            writer.WriteOptionalCollection(AsyncApiConstants.Examples, this.Examples, (w, e) => e.SerializeV2(w));
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteEndObject();
+        }
     }
 }

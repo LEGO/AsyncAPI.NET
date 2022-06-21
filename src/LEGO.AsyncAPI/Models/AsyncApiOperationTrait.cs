@@ -4,10 +4,8 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Converters;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Describes a trait that MAY be applied to an Operation Object.

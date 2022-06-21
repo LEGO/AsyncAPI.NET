@@ -42,7 +42,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets an object to hold reusable Correlation ID Objects.
         /// </summary>
-        public IDictionary<string, CorrelationId> CorrelationIds { get; set; } = new Dictionary<string, CorrelationId>();
+        public IDictionary<string, AsyncApiCorrelationId> CorrelationIds { get; set; } = new Dictionary<string, AsyncApiCorrelationId>();
 
         /// <summary>
         /// Gets or sets an object to hold reusable Operation Trait Objects.
