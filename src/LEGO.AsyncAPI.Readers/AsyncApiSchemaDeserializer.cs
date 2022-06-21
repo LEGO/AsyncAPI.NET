@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Globalization;
+using LEGO.AsyncApi.Extensions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncApi.Readers.ParseNodes;
 
@@ -231,7 +232,7 @@ namespace LEGO.AsyncAPI.Readers
 
         private static readonly PatternFieldMap<AsyncApiSchema> _schemaPatternFields = new PatternFieldMap<AsyncApiSchema>
         {
-            {s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p,n))}
+            {s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p,n))}
         };
 
         private static readonly AnyFieldMap<AsyncApiSchema> _schemaAnyFields = new AnyFieldMap<AsyncApiSchema>
