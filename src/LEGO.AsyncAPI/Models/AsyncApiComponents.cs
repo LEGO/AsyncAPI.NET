@@ -32,7 +32,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets an object to hold reusable Security Scheme Objects.
         /// </summary>
-        public IDictionary<string, SecurityScheme> SecuritySchemes { get; set; } = new Dictionary<string, SecurityScheme>();
+        public IDictionary<string, AsyncApiSecurityScheme> SecuritySchemes { get; set; } = new Dictionary<string, AsyncApiSecurityScheme>();
 
         /// <summary>
         /// Gets or sets an object to hold reusable Parameter Objects.

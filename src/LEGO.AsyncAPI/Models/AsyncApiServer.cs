@@ -13,32 +13,32 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiServer : IAsyncApiSerializable, IAsyncApiExtensible, IAsyncApiReferenceable
     {
         /// <summary>
-        /// Gets or sets REQUIRED. A URL to the target host.
+        /// REQUIRED. A URL to the target host.
         /// </summary>
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets REQUIRED. The protocol this URL supports for connection.
+        /// REQUIRED. The protocol this URL supports for connection.
         /// </summary>
         public string Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets the version of the protocol used for connection.
+        /// the version of the protocol used for connection.
         /// </summary>
         public string ProtocolVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets an optional string describing the host designated by the URL.
+        /// an optional string describing the host designated by the URL.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets a map between a variable name and its value. The value is used for substitution in the server's URL template.
+        /// a map between a variable name and its value. The value is used for substitution in the server's URL template.
         /// </summary>
         public IDictionary<string, AsyncApiServerVariable> Variables { get; set; } = new Dictionary<string, AsyncApiServerVariable>();
 
         /// <summary>
-        /// Gets or sets a declaration of which security mechanisms can be used with this server. The list of values includes alternative security requirement objects that can be used.
+        /// a declaration of which security mechanisms can be used with this server. The list of values includes alternative security requirement objects that can be used.
         /// </summary>
         /// <remarks>
         /// The name used for each property MUST correspond to a security scheme declared in the Security Schemes under the Components Object.
@@ -46,7 +46,7 @@ namespace LEGO.AsyncAPI.Models
         public IList<AsyncApiSecurityRequirement> Security { get; set; } = new List<AsyncApiSecurityRequirement>();
 
         /// <summary>
-        /// Gets or sets a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
+        /// a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
         /// </summary>
         public IDictionary<string, IServerBinding> Bindings { get; set; } = new Dictionary<string, IServerBinding>();
 
