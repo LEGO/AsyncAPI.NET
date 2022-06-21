@@ -10,27 +10,27 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// OAuth Flows Object.
     /// </summary>
-    public class AsyncApiOAuthFlows : IAsyncApiSerializable, IAsyncApiExtensible
+    public class AsyncApiOauthFlows : IAsyncApiSerializable, IAsyncApiExtensible
     {
         /// <summary>
         /// Configuration for the OAuth Implicit flow
         /// </summary>
-        public AsyncApiOAuthFlow Implicit { get; set; }
+        public AsyncApiOauthFlow Implicit { get; set; }
 
         /// <summary>
         /// Configuration for the OAuth Resource Owner Password flow.
         /// </summary>
-        public AsyncApiOAuthFlow Password { get; set; }
+        public AsyncApiOauthFlow Password { get; set; }
 
         /// <summary>
         /// Configuration for the OAuth Client Credentials flow.
         /// </summary>
-        public AsyncApiOAuthFlow ClientCredentials { get; set; }
+        public AsyncApiOauthFlow ClientCredentials { get; set; }
 
         /// <summary>
         /// Configuration for the OAuth Authorization Code flow.
         /// </summary>
-        public AsyncApiOAuthFlow AuthorizationCode { get; set; }
+        public AsyncApiOauthFlow AuthorizationCode { get; set; }
 
         /// <summary>
         /// Specification Extensions.
@@ -38,7 +38,7 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <summary>
-        /// Serialize <see cref="AsyncApiOAuthFlows"/> to Open Api v3.0
+        /// Serialize <see cref="AsyncApiOauthFlows"/> to Open Api v3.0
         /// </summary>
         public void SerializeV2(IAsyncApiWriter writer)
         {

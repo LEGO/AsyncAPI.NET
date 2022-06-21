@@ -21,7 +21,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="specVersion">Version of the AsyncApi specification that that will be output.</param>
-        public void Write(IAsyncApiWriter writer)
+        public void Write(IAsyncApiWriter writer, AsyncApiVersion asyncApiVersion)
         {
             writer.WriteStartObject();
 

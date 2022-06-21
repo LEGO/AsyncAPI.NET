@@ -45,7 +45,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// REQUIRED. An object containing configuration information for the flow types supported.
         /// </summary>
-        public AsyncApiOAuthFlows Flows { get; set; }
+        public AsyncApiOauthFlows Flows { get; set; }
 
         /// <summary>
         /// REQUIRED. OpenId Connect URL to discover OAuth2 configuration values.
@@ -147,10 +147,10 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Arbitrarily chooses one <see cref="AsyncApiOAuthFlow"/> object from the <see cref="AsyncApiOAuthFlows"/>
+        /// Arbitrarily chooses one <see cref="AsyncApiOauthFlow"/> object from the <see cref="AsyncApiOauthFlows"/>
         /// to populate in V2 security scheme.
         /// </summary>
-        private static void WriteOAuthFlowForV2(IAsyncApiWriter writer, AsyncApiOAuthFlows flows)
+        private static void WriteOAuthFlowForV2(IAsyncApiWriter writer, AsyncApiOauthFlows flows)
         {
             if (flows != null)
             {
@@ -173,7 +173,7 @@ namespace LEGO.AsyncAPI.Models
             }
         }
 
-        private static void WriteOAuthFlowForV2(IAsyncApiWriter writer, string flowValue, AsyncApiOAuthFlow flow)
+        private static void WriteOAuthFlowForV2(IAsyncApiWriter writer, string flowValue, AsyncApiOauthFlow flow)
         {
             // flow
             writer.WriteProperty(AsyncApiConstants.Flow, flowValue);

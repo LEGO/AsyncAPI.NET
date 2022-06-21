@@ -1,6 +1,6 @@
 using LEGO.AsyncAPI.Exceptions;
 
-namespace LEGO.AsyncAPI.Models.Exceptions
+namespace LEGO.AsyncAPI.Models
 {
     public class AsyncApiError
     {

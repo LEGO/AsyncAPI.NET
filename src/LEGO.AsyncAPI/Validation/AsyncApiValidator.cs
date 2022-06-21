@@ -134,10 +134,10 @@ namespace LEGO.AsyncAPI.Validations
         public override void Visit(AsyncApiLicense item) => Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiOAuthFlow"/>
+        /// Execute validation rules against an <see cref="AsyncApiOauthFlow"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiOAuthFlow item) => Validate(item);
+        public override void Visit(AsyncApiOauthFlow item) => Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiTag"/>
