@@ -1,92 +1,35 @@
-using System;
 using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 
 namespace LEGO.AsyncAPI.Readers
 {
-    /// <summary>
-    /// Class containing logic to deserialize AsyncAPI document into
-    /// runtime AsyncAPI object model.
-    /// </summary>
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiMessageTrait> _traitFixedFields =
-            new FixedFieldMap<AsyncApiMessageTrait>
+        private static FixedFieldMap<AsyncApiOperationTrait> _operationTraitFixedFields = new ()
+        {
+            { "operationId", (a, n) => { a.OperationId = n.GetScalarValue(); } },
+            { "summary", (a, n) => { a.Summary = n.GetScalarValue(); } },
+            { "description", (a, n) => { a.Description = n.GetScalarValue(); } },
+            { "tags", (a, n) => { a.Tags = n.CreateList(LoadTag); } },
+            { "externalDocs", (a, n) => { a.Tags = n.CreateList(LoadTag); } },
+            { "bindings", (a, n) => { ; } }, //TODO: Figure out bindings
+        };
+        
+        private static PatternFieldMap<AsyncApiOperationTrait> _operationTraitPatternFields =
+            new ()
             {
-                {
-                    "headers", (o, n) =>
-                    {
-                        o.Headers = LoadSchema(n);
-                    }
-                },
-                {
-                    "correlationId", (o, n) =>
-                    {
-                        o.CorrelationId = LoadCorrelationId(n);
-                    }
-                },
-                {
-                    "schemaFormat", (o, n) =>
-                    {
-                        o.SchemaFormat = n.GetScalarValue();
-                    }
-                },
-                {
-                    "contentType", (o, n) =>
-                    {
-                        o.ContentType = n.GetScalarValue();
-                    }
-                },
-                {
-                    "name", (o, n) =>
-                    {
-                        o.Name = n.GetScalarValue();
-                    }
-                },
-                {
-                    "title", (o, n) =>
-                    {
-                        o.Name = n.GetScalarValue();
-                    }
-                },
-                {
-                    "description", (o, n) =>
-                    {
-                        o.Description = n.GetScalarValue();
-                    }
-                },
-                {
-                    "tags", (a, n) => a.Tags = n.CreateList(LoadTag)
-                },
-                {
-                    "externalDocs", (o, n) =>
-                    {
-                        o.ExternalDocs = LoadExternalDocs(n);
-                    }
-                },
-                {
-                    "examples", (a, n) => a.Examples = n.CreateList(LoadExample)
-                },
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
             };
 
-        private static readonly PatternFieldMap<AsyncApiMessageTrait> _traitPatternFields =
-            new PatternFieldMap<AsyncApiMessageTrait>
-            {
-                {s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p,n))}
-            };
-
-        public static AsyncApiMessageTrait LoadTrait(ParseNode node)
+        public static AsyncApiOperationTrait LoadOperationTrait(ParseNode node)
         {
             var mapNode = node.CheckMapNode("traits");
+            var operationTrait = new AsyncApiOperationTrait();
 
-            var trait = new AsyncApiMessageTrait();
-            foreach (var property in mapNode)
-            {
-                property.ParseField(trait, _traitFixedFields, _traitPatternFields);
-            }
+            ParseMap(mapNode, operationTrait, _operationTraitFixedFields, _operationTraitPatternFields);
 
-            return trait;
+            return operationTrait;
         }
     }
 }
