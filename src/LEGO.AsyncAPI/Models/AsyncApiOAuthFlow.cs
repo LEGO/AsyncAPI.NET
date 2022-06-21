@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
-    public class AsyncApiOauthFlow : IAsyncApiSerializable, IAsyncApiExtensible
+    public class AsyncApiOAuthFlow : IAsyncApiSerializable, IAsyncApiExtensible
     {
         /// <summary>
         /// REQUIRED. The authorization URL to be used for this flow.
