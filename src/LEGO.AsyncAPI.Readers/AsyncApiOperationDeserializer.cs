@@ -30,7 +30,8 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     "traits", (a, n) => { a.Traits = n.CreateList(LoadOperationTrait); }
                 },
-                { "message", (a, n) => { a.Message = LoadMessage(n); } 
+                {
+                    "message", (a, n) => { a.Message = LoadMessage(n); }
                 }
             };
 
@@ -42,7 +43,7 @@ namespace LEGO.AsyncAPI.Readers
 
         internal static AsyncApiOperation LoadOperation(ParseNode node)
         {
-            var mapNode = node.CheckMapNode("Operation");
+            var mapNode = node.CheckMapNode("operation");
 
             var operation = new AsyncApiOperation();
 

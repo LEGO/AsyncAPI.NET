@@ -17,14 +17,14 @@ namespace LEGO.AsyncAPI.Readers
         };
 
         private static readonly PatternFieldMap<AsyncApiChannel> _channelPatternFields =
-            new PatternFieldMap<AsyncApiChannel>
+            new()
             {
                 { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
             };
         
         public static AsyncApiChannel LoadChannel(ParseNode node)
         {
-            var mapNode = node.CheckMapNode("PathItem");
+            var mapNode = node.CheckMapNode("channel");
 
             var pathItem = new AsyncApiChannel();
 

@@ -1,11 +1,8 @@
-
 using System;
 using System.Collections.Generic;
 using LEGO.AsyncAPI.Exceptions;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers;
 using LEGO.AsyncAPI.Readers.Interface;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 using LEGO.AsyncAPI.Writers;
@@ -19,7 +16,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <summary>
         /// Create Parsing Context
         /// </summary>
-        /// <param name="diagnostic">Provide instance for diagnotic object for collecting and accessing information about the parsing.</param>
+        /// <param name="diagnostic">Provide instance for diagnostic object for collecting and accessing information about the parsing.</param>
         public AsyncApiVersionService(AsyncApiDiagnostic diagnostic)
         {
             Diagnostic = diagnostic;
@@ -60,7 +57,7 @@ namespace LEGO.AsyncAPI.Readers
         /// Parse the string to a <see cref="AsyncApiReference"/> object.
         /// </summary>
         /// <param name="reference">The URL of the reference</param>
-        /// <param name="type">The type of object refefenced based on the context of the reference</param>
+        /// <param name="type">The type of object referenced based on the context of the reference</param>
         public AsyncApiReference ConvertToAsyncApiReference(
             string reference,
             ReferenceType? type)
@@ -102,8 +99,9 @@ namespace LEGO.AsyncAPI.Readers
                             return null;
                         }
                     }
+
                     // Where fragments point into a non-AsyncApi document, the id will be the complete fragment identifier
-                    string id = segments[1];
+                    var id = segments[1];
                     // $ref: externalSource.yaml#/Pet
                     if (id.StartsWith("/components/"))
                     {
@@ -112,7 +110,7 @@ namespace LEGO.AsyncAPI.Readers
                         if (type == null)
                         {
                             type = referencedType;
-                        } 
+                        }
                         else
                         {
                             if (type != referencedType)
@@ -120,6 +118,7 @@ namespace LEGO.AsyncAPI.Readers
                                 throw new AsyncApiException("Referenced type mismatch");
                             }
                         }
+
                         id = localSegments[3];
                     }
 
@@ -132,7 +131,7 @@ namespace LEGO.AsyncAPI.Readers
                 }
             }
 
-            throw new AsyncApiException(string.Format("The reference string '{0}' has invalid format.", reference));
+            throw new AsyncApiException($"The reference string '{reference}' has invalid format.");
         }
 
         public AsyncApiDocument LoadDocument(RootNode rootNode)
@@ -142,14 +141,15 @@ namespace LEGO.AsyncAPI.Readers
 
         public T LoadElement<T>(ParseNode node) where T : IAsyncApiElement
         {
-            return (T)_loaders[typeof(T)](node);
+            return (T) _loaders[typeof(T)](node);
         }
 
         private AsyncApiReference ParseLocalReference(string localReference)
         {
             if (string.IsNullOrWhiteSpace(localReference))
             {
-                throw new ArgumentException(string.Format("The argument '{0}' is null, empty or consists only of white-space.", nameof(localReference)));
+                throw new ArgumentException(
+                    $"The argument '{nameof(localReference)}' is null, empty or consists only of white-space.");
             }
 
             var segments = localReference.Split('/');
@@ -163,7 +163,7 @@ namespace LEGO.AsyncAPI.Readers
                 }
             }
 
-            throw new AsyncApiException(string.Format("The reference string '{0}' has invalid format.", localReference));
+            throw new AsyncApiException($"The reference string '{localReference}' has invalid format.");
         }
     }
 }

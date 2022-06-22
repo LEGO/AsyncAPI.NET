@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Readers
             { "externalDocs", (a, n) => { a.Tags = n.CreateList(LoadTag); } },
             { "bindings", (a, n) => { ; } }, //TODO: Figure out bindings
         };
-        
+
         private static PatternFieldMap<AsyncApiOperationTrait> _operationTraitPatternFields =
             new ()
             {

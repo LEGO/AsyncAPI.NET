@@ -1,28 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LEGO.AsyncAPI;
-using LEGO.AsyncAPI.Any;
-using LEGO.AsyncAPI.Interfaces;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.Exceptions;
 using LEGO.AsyncAPI.Readers.Interface;
 using LEGO.AsyncAPI.Readers.ParseNodes;
-using LEGO.AsyncAPI.Readers;
 using SharpYaml.Serialization;
 
 namespace LEGO.AsyncAPI.Readers
 {
     public class ParsingContext
     {
-        private readonly Stack<string> _currentLocation = new Stack<string>();
-        private readonly Dictionary<string, object> _tempStorage = new Dictionary<string, object>();
-        private readonly Dictionary<object, Dictionary<string, object>> _scopedTempStorage = new Dictionary<object, Dictionary<string, object>>();
-        private readonly Dictionary<string, Stack<string>> _loopStacks = new Dictionary<string, Stack<string>>();
-        internal Dictionary<string, Func<IAsyncApiAny, AsyncApiVersion, IAsyncApiExtension>> ExtensionParsers { get; set; } = new Dictionary<string, Func<IAsyncApiAny, AsyncApiVersion, IAsyncApiExtension>>();
+        private readonly Stack<string> _currentLocation = new ();
+        private readonly Dictionary<string, object> _tempStorage = new ();
+        private readonly Dictionary<object, Dictionary<string, object>> _scopedTempStorage = new ();
+        private readonly Dictionary<string, Stack<string>> _loopStacks = new ();
+        internal Dictionary<string, Func<IAsyncApiAny, AsyncApiVersion, IAsyncApiExtension>> ExtensionParsers { get; set; } = new ();
         internal RootNode RootNode { get; set; }
-        internal List<AsyncApiTag> Tags { get; private set; } = new List<AsyncApiTag>();
+        internal List<AsyncApiTag> Tags { get; private set; } = new ();
         internal Uri BaseUrl { get; set; }
 
         public AsyncApiDiagnostic Diagnostic { get; }
@@ -42,7 +38,7 @@ namespace LEGO.AsyncAPI.Readers
 
             switch (inputVersion)
             {
-                case string version when version == "2.0":
+                case string version and "2.0":
                     VersionService = new AsyncApiV2VersionService(Diagnostic);
                     doc = VersionService.LoadDocument(RootNode);
                     this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_0;

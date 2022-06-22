@@ -10,31 +10,19 @@ namespace LEGO.AsyncAPI.Readers
     /// </summary>
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiServer> _serverFixedFields = new FixedFieldMap<AsyncApiServer>
+        private static readonly FixedFieldMap<AsyncApiServer> _serverFixedFields = new ()
         {
             {
-                "url", (o, n) =>
-                {
-                    o.Url = n.GetScalarValue();
-                }
+                "url", (a, n) => { a.Url = n.GetScalarValue(); }
             },
             {
-                "description", (o, n) =>
-                {
-                    o.Description = n.GetScalarValue();
-                }
+                "description", (a, n) => { a.Description = n.GetScalarValue(); }
             },
             {
-                "variables", (o, n) =>
-                {
-                    o.Variables = n.CreateMap(LoadServerVariable);
-                }
+                "variables", (a, n) => { a.Variables = n.CreateMap(LoadServerVariable); }
             },
             {
-                "security", (o, n) =>
-                {
-                    o.Security = n.CreateList(LoadSecurityRequirement);
-                }
+                "security", (a, n) => { a.Security = n.CreateList(LoadSecurityRequirement); }
             },
             // { TODO, figure out bindings
             //     "bindings", (o, n) =>
@@ -43,23 +31,18 @@ namespace LEGO.AsyncAPI.Readers
             //     }
             // },
             {
-                "protocolVersion", (o, n) =>
-                {
-                    o.ProtocolVersion = n.GetScalarValue();
-                }
+                "protocolVersion", (a, n) => { a.ProtocolVersion = n.GetScalarValue(); }
             },
             {
-                "protocol", (o, n) =>
-                {
-                    o.Protocol = n.GetScalarValue();
-                }
+                "protocol", (a, n) => { a.Protocol = n.GetScalarValue(); }
             },
         };
 
-        private static readonly PatternFieldMap<AsyncApiServer> _serverPatternFields = new PatternFieldMap<AsyncApiServer>
-        {
-            {s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p,n))}
-        };
+        private static readonly PatternFieldMap<AsyncApiServer> _serverPatternFields =
+            new ()
+            {
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
+            };
 
         public static AsyncApiServer LoadServer(ParseNode node)
         {

@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI.Readers
 
         public static AsyncApiInfo LoadInfo(ParseNode node)
         {
-            var mapNode = node.CheckMapNode("traits");
+            var mapNode = node.CheckMapNode("info");
             var info = new AsyncApiInfo();
 
             ParseMap(mapNode, info, _infoFixedFields, _infoPatternFields);

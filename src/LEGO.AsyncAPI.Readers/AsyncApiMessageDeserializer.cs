@@ -10,82 +10,55 @@ namespace LEGO.AsyncAPI.Readers
     /// </summary>
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiMessage> _messageFixedFields = new FixedFieldMap<AsyncApiMessage>
+        private static readonly FixedFieldMap<AsyncApiMessage> _messageFixedFields = new()
         {
             {
-                "headers", (o, n) =>
-                {
-                    o.Headers = LoadSchema(n);
-                }
+                "headers", (a, n) => { a.Headers = LoadSchema(n); }
             },
             {
-                "payload", (o, n) =>
-                {
-                    o.Payload = n.CreateAny();
-                }
+                "payload", (a, n) => { a.Payload = n.CreateAny(); }
             },
             {
-                "correlationId", (o, n) =>
-                {
-                    o.CorrelationId = LoadCorrelationId(n);
-                }
+                "correlationId", (a, n) => { a.CorrelationId = LoadCorrelationId(n); }
             },
             {
-                "schemaFormat", (o, n) =>
-                {
-                    o.SchemaFormat = n.GetScalarValue();
-                }
+                "schemaFormat", (a, n) => { a.SchemaFormat = n.GetScalarValue(); }
             },
             {
-                "contentType", (o, n) =>
-                {
-                    o.ContentType = n.GetScalarValue();
-                }
+                "contentType", (a, n) => { a.ContentType = n.GetScalarValue(); }
             },
             {
-                "name", (o, n) =>
-                {
-                    o.Name = n.GetScalarValue();
-                }
+                "name", (a, n) => { a.Name = n.GetScalarValue(); }
             },
             {
-                "title", (o, n) =>
-                {
-                    o.Name = n.GetScalarValue();
-                }
+                "title", (a, n) => { a.Name = n.GetScalarValue(); }
             },
             {
-                "description", (o, n) =>
-                {
-                    o.Description = n.GetScalarValue();
-                }
+                "description", (a, n) => { a.Description = n.GetScalarValue(); }
             },
             {
                 "tags", (a, n) => a.Tags = n.CreateList(LoadTag)
             },
             {
-                "externalDocs", (o, n) =>
-                {
-                    o.ExternalDocs = LoadExternalDocs(n);
-                }
+                "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); }
             },
             // { TODO
-            //     "bindings", (o, n) =>
+            //     "bindings", (a, n) =>
             //     {
-            //         o.Url = n.GetScalarValue();
+            //         a.Url = n.GetScalarValue();
             //     }
             // },
             {
                 "examples", (a, n) => a.Examples = n.CreateList(LoadExample)
             },
             {
-                "traits", (a, n) => a.Traits = n.CreateList(LoadTrait)
+                "traits", (a, n) => a.Traits = n.CreateList(LoadMessageTrait)
             },
         };
 
-        private static readonly PatternFieldMap<AsyncApiMessage> _messagePatternFields = new PatternFieldMap<AsyncApiMessage>
+        private static readonly PatternFieldMap<AsyncApiMessage> _messagePatternFields = new ()
         {
-            {s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p,n))}
+            { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
         };
 
         public static AsyncApiMessage LoadMessage(ParseNode node)

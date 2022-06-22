@@ -11,32 +11,23 @@ namespace LEGO.AsyncAPI.Readers
     internal static partial class AsyncApiDeserializer
     {
         private static readonly FixedFieldMap<AsyncApiServerVariable> _serverVariableFixedFields =
-            new FixedFieldMap<AsyncApiServerVariable>
+            new ()
             {
                 {
-                    "enum", (o, n) =>
-                    {
-                        o.Enum = n.CreateSimpleList(s => s.GetScalarValue());
-                    }
+                    "enum", (a, n) => { a.Enum = n.CreateSimpleList(s => s.GetScalarValue()); }
                 },
                 {
-                    "default", (o, n) =>
-                    {
-                        o.Default = n.GetScalarValue();
-                    }
+                    "default", (a, n) => { a.Default = n.GetScalarValue(); }
                 },
                 {
-                    "description", (o, n) =>
-                    {
-                        o.Description = n.GetScalarValue();
-                    }
+                    "description", (a, n) => { a.Description = n.GetScalarValue(); }
                 },
             };
 
         private static readonly PatternFieldMap<AsyncApiServerVariable> _serverVariablePatternFields =
-            new PatternFieldMap<AsyncApiServerVariable>
+            new ()
             {
-                {s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p,n))}
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
             };
 
         public static AsyncApiServerVariable LoadServerVariable(ParseNode node)

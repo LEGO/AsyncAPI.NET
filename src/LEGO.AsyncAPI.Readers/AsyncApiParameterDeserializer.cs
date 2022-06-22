@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Readers
             { "schema", (a, n) => { a.Schema = LoadSchema(n); } },
             { "location", (a, n) => { a.Location = n.GetScalarValue(); } },
         };
-        
+
         private static PatternFieldMap<AsyncApiParameter> _parameterPatternFields =
             new ()
             {
@@ -28,7 +28,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 return mapNode.GetReferencedObject<AsyncApiParameter>(ReferenceType.Parameter, pointer);
             }
-            
+
             var parameter = new AsyncApiParameter();
 
             ParseMap(mapNode, parameter, _parameterFixedFields, _parameterPatternFields);

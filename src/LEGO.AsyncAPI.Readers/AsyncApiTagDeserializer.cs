@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Readers
             { "description", (a, n) => { a.Description = n.GetScalarValue(); } },
             { "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); } },
         };
-        
+
         private static PatternFieldMap<AsyncApiTag> _tagsPatternFields =
             new ()
             {

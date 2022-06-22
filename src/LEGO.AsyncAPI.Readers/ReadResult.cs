@@ -1,5 +1,4 @@
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers;
 
 namespace LEGO.AsyncAPI.Readers
 {
