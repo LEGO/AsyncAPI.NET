@@ -12,11 +12,6 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class AsyncApiLicense : IAsyncApiSerializable, IAsyncApiExtensible
     {
-        public AsyncApiLicense(string name)
-        {
-            this.Name = name;
-        }
-
         /// <summary>
         /// Gets or sets REQUIRED. The license name used for the API.
         /// </summary>
