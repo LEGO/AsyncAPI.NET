@@ -101,7 +101,7 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineAllReferences)
+            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
             {
                 this.Reference.SerializeV2(writer);
                 return;
@@ -116,8 +116,6 @@ namespace LEGO.AsyncAPI.Models
             {
                 throw new ArgumentNullException(nameof(writer));
             }
-
-            //TODO MISSING
 
             writer.WriteStartObject();
             writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));

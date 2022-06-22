@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// Write out null representation
         /// </summary>
         /// <param name="writer"></param>
-        public void Write(IAsyncApiWriter writer)
+        public void Write(IAsyncApiWriter writer, AsyncApiVersion asyncApiVersion)
         {
             writer.WriteAny(this);
         }

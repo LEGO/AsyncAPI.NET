@@ -30,7 +30,8 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     "traits", (a, n) => { a.Traits = n.CreateList(LoadOperationTrait); }
                 },
-                { "message", (a, n) => { a.Message = LoadMessage(n); } }
+                { "message", (a, n) => { a.Message = LoadMessage(n); } 
+                }
             };
 
         private static readonly PatternFieldMap<AsyncApiOperation> _operationPatternFields =

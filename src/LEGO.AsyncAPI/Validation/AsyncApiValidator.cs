@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Interfaces;
+using LEGO.AsyncAPI.Services;
 
 namespace LEGO.AsyncAPI.Validations
 {
@@ -134,10 +136,10 @@ namespace LEGO.AsyncAPI.Validations
         public override void Visit(AsyncApiLicense item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiOauthFlow"/>
+        /// Execute validation rules against an <see cref="AsyncApiOAuthFlow"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(AsyncApiOauthFlow item) => this.Validate(item);
+        public override void Visit(AsyncApiOAuthFlow item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiTag"/>

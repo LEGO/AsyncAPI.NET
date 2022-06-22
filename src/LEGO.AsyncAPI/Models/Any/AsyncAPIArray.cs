@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models.Any
         /// Write out contents of AsyncApiArray to passed writer
         /// </summary>
         /// <param name="writer">Instance of JSON or YAML writer.</param>
-        public void Write(IAsyncApiWriter writer)
+        public void Write(IAsyncApiWriter writer, AsyncApiVersion asyncApiVersion)
         {
             writer.WriteStartArray();
 
