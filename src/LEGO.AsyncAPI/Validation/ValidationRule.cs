@@ -60,7 +60,7 @@ namespace LEGO.AsyncAPI.Validations
 
             if (!(item is T))
             {
-                throw Error.Argument(string.Format(SRResource.InputItemShouldBeType, typeof(T).FullName));
+                throw Error.Argument(string.Format("Input type must be of type {0}", typeof(T).FullName));
             }
 
             T typedItem = (T)item;

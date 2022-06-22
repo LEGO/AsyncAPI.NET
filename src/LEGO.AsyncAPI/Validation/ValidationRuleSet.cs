@@ -129,7 +129,7 @@ namespace LEGO.AsyncAPI.Validations
 
             if (this._rules[rule.ElementType].Contains(rule))
             {
-                throw new AsyncApiException(SRResource.Validation_RuleAddTwice);
+                throw new AsyncApiException("Rules cannot be added twice");
             }
 
             this._rules[rule.ElementType].Add(rule);
