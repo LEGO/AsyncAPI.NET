@@ -1,10 +1,10 @@
-using System.Collections.ObjectModel;
+using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 
 namespace LEGO.AsyncAPI.Readers
 {
-    public class AsyncApiChannelDeserializer
+    internal static partial class AsyncApiDeserializer
     {
         private static readonly FixedFieldMap<AsyncApiChannel> _channelFixedFields = new ()
         {
