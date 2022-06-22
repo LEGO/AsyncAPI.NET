@@ -12,12 +12,6 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class AsyncApiInfo : IAsyncApiSerializable, IAsyncApiExtensible
     {
-        public AsyncApiInfo(string title, string version)
-        {
-            this.Title = title;
-            this.Version = version;
-        }
-
         /// <summary>
         /// Gets or sets REQUIRED. The title of the application.
         /// </summary>
