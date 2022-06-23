@@ -6,6 +6,7 @@ namespace LEGO.AsyncAPI.Writers
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
+    using Attributes;
 
     public static class StringExtensions
     {

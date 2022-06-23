@@ -838,8 +838,6 @@ namespace LEGO.AsyncAPI.Services
                 case IList<AsyncApiTag> e: Walk(e); break; 
                 case IDictionary<string, AsyncApiServerVariable> e: Walk(e);
                     break;
-                case AsyncApiServerVariable e: Walk(e);
-                    break;
                 case IAsyncApiExtensible e: Walk(e); break;
                 case IAsyncApiExtension e: Walk(e); break;
             }

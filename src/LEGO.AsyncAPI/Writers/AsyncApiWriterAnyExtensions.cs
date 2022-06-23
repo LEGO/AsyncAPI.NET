@@ -131,7 +131,7 @@ namespace LEGO.AsyncAPI.Writers
                 throw new ArgumentNullException(nameof(primitive));
             }
 
-            primitive.Write(writer);
+            primitive.Write(writer, AsyncApiVersion.AsyncApi2_3_0);
         }
     }
 }
