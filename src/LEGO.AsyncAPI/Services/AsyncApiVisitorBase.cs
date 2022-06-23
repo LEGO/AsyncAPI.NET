@@ -803,6 +803,47 @@ namespace LEGO.AsyncAPI.Services
         {
             this.visitor.Visit(referenceable);
         }
+
+        public void Walk(IAsyncApiElement element)
+        {
+            if (element == null)
+            {
+                return;
+            }
+
+            switch (element)
+            {
+                case AsyncApiDocument e: Walk(e); break;
+                case AsyncApiLicense e: Walk(e); break;
+                case AsyncApiInfo e: Walk(e); break;
+                case AsyncApiComponents e: Walk(e); break;
+                case AsyncApiContact e: Walk(e); break;
+                case AsyncApiCorrelationId e: Walk(e); break;
+                case AsyncApiMessageExample e: Walk(e); break;
+                case AsyncApiChannel e: Walk(e); break;
+                case AsyncApiExternalDocumentation e: Walk(e); break;
+                case AsyncApiMessage e: Walk(e); break;
+                case AsyncApiMessageTrait e: Walk(e); break;
+                case AsyncApiOperationTrait e: Walk(e); break;
+                case AsyncApiOAuthFlows e: Walk(e); break;
+                case AsyncApiOAuthFlow e: Walk(e); break;
+                case AsyncApiOperation e: Walk(e); break;
+                case AsyncApiParameter e: Walk(e); break;
+                case AsyncApiSchema e: Walk(e); break;
+                case AsyncApiSecurityRequirement e: Walk(e); break;
+                case AsyncApiSecurityScheme e: Walk(e); break;
+                case AsyncApiServer e: Walk(e); break;
+                case AsyncApiServerVariable e: Walk(e); break;
+                case AsyncApiTag e: Walk(e); break;
+                case IList<AsyncApiTag> e: Walk(e); break; 
+                case IDictionary<string, AsyncApiServerVariable> e: Walk(e);
+                    break;
+                case AsyncApiServerVariable e: Walk(e);
+                    break;
+                case IAsyncApiExtensible e: Walk(e); break;
+                case IAsyncApiExtension e: Walk(e); break;
+            }
+        }
     }
 
     public class CurrentKeys
