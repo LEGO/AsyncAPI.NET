@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
+using LEGO.AsyncAPI.Services;
 
 namespace LEGO.AsyncAPI.Readers.Services
 {

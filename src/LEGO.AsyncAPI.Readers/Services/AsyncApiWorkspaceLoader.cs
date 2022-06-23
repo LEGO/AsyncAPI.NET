@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Readers.Interface;
+using LEGO.AsyncAPI.Services;
 using SharpYaml.Model;
 
 namespace LEGO.AsyncAPI.Readers.Services
