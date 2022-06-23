@@ -148,7 +148,6 @@ namespace LEGO.AsyncAPI.Services
             if (message != null)
             {
                 Walk(AsyncApiConstants.Headers, () => Walk(message.Headers));
-                sdlfkjhsdf
             }
 
             this.Walk(message as IAsyncApiExtensible);
