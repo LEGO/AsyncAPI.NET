@@ -568,8 +568,8 @@ namespace LEGO.AsyncAPI.Services
         /// <summary>
         /// Visits IAsyncApiReferenceable instances that are references and not in components
         /// </summary>
-        /// <param name="referenceable">referenced object</param>
-        public virtual void Visit(IAsyncApiReferenceable referenceable)
+        /// <param name="referencable">referenced object</param>
+        public virtual void Visit(IAsyncApiReferenceable referencable)
         {
         }
 

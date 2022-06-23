@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Readers.Services
     internal class AsyncApiRemoteReferenceCollector : AsyncApiVisitorBase
     {
         private AsyncApiDocument _document;
-        private Dictionary<string, AsyncApiReference> _references = new Dictionary<string, AsyncApiReference>();
+        private Dictionary<string, AsyncApiReference> _references = new ();
         public AsyncApiRemoteReferenceCollector(AsyncApiDocument document)
         {
             _document = document;
@@ -21,9 +21,9 @@ namespace LEGO.AsyncAPI.Readers.Services
             }
         }
         
-        public override void Visit(IAsyncApiReferenceable referenceable)
+        public override void Visit(IAsyncApiReferenceable referencable)
         {
-            AddReference(referenceable.Reference);
+            AddReference(referencable.Reference);
         }
         
         private void AddReference(AsyncApiReference reference)
