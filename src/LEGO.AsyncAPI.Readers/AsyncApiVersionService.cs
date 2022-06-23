@@ -28,7 +28,7 @@ namespace LEGO.AsyncAPI.Readers
             [typeof(AsyncApiComponents)] = AsyncApiDeserializer.LoadComponents,
             [typeof(AsyncApiEncoding)] = AsyncApiDeserializer.LoadEncoding,
             [typeof(AsyncApiExample)] = AsyncApiDeserializer.LoadExample,
-            [typeof(AsyncApiExternalDocs)] = AsyncApiDeserializer.LoadExternalDocs,
+            [typeof(AsyncApiExternalDocumentation)] = AsyncApiDeserializer.LoadExternalDocs,
             [typeof(AsyncApiHeader)] = AsyncApiDeserializer.LoadHeader,
             [typeof(AsyncApiInfo)] = AsyncApiDeserializer.LoadInfo,
             [typeof(AsyncApiLicense)] = AsyncApiDeserializer.LoadLicense,
