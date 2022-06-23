@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using LEGO.AsyncAPI;
 using LEGO.AsyncAPI.Exceptions;
+using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.Interface;
 using LEGO.AsyncAPI.Readers.Services;
@@ -54,7 +52,8 @@ namespace LEGO.AsyncAPI.Readers
 
                 if (_settings.LoadExternalRefs)
                 {
-                    throw new InvalidOperationException("Cannot load external refs using the synchronous Read, use ReadAsync instead.");
+                    throw new InvalidOperationException(
+                        "Cannot load external refs using the synchronous Read, use ReadAsync instead.");
                 }
 
                 ResolveReferences(diagnostic, document);
@@ -72,11 +71,11 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     diagnostic.Errors.Add(item);
                 }
+
                 foreach (var item in openApiErrors.Where(e => e is AsyncApiValidatorWarning))
                 {
                     diagnostic.Warnings.Add(item);
                 }
-
             }
 
             return document;
@@ -96,12 +95,6 @@ namespace LEGO.AsyncAPI.Readers
             {
                 // Parse the AsyncApi Document
                 document = context.Parse(input);
-
-                if (_settings.LoadExternalRefs)
-                {
-                    await LoadExternalRefs(document);
-                }
-
                 ResolveReferences(diagnostic, document);
             }
             catch (AsyncApiException ex)
@@ -119,27 +112,16 @@ namespace LEGO.AsyncAPI.Readers
                 }
             }
 
-            return new ReadResult()
+            return new ReadResult
             {
                 AsyncApiDocument = document,
                 AsyncApiDiagnostic = diagnostic
             };
         }
 
-        private async Task LoadExternalRefs(AsyncApiDocument document)
-        {
-            // Create workspace for all documents to live in.
-            var openApiWorkSpace = new AsyncApiWorkspace();
-
-            // Load this root document into the workspace
-            var streamLoader = new DefaultStreamLoader(_settings.BaseUrl);
-            var workspaceLoader = new AsyncApiWorkspaceLoader(openApiWorkSpace, _settings.CustomExternalLoader ?? streamLoader, _settings);
-            await workspaceLoader.LoadAsync(new AsyncApiReference() { ExternalResource = "/" }, document);
-        }
-
         private void ResolveReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
         {
-            List<AsyncApiError> errors = new List<AsyncApiError>();
+            var errors = new List<AsyncApiError>();
 
             // Resolve References if requested
             switch (_settings.ReferenceResolution)
@@ -147,7 +129,6 @@ namespace LEGO.AsyncAPI.Readers
                 case ReferenceResolutionSetting.ResolveAllReferences:
                     throw new ArgumentException("Resolving external references is not supported");
                 case ReferenceResolutionSetting.ResolveLocalReferences:
-                    errors.AddRange(document.ResolveReferences());
                     break;
                 case ReferenceResolutionSetting.DoNotResolveReferences:
                     break;
@@ -167,7 +148,8 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="version">Version of the AsyncApi specification that the fragment conforms to.</param>
         /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing</param>
         /// <returns>Instance of newly created AsyncApiDocument</returns>
-        public T ReadFragment<T>(YamlDocument input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic) where T : IAsyncApiElement
+        public T ReadFragment<T>(YamlDocument input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic)
+            where T : IAsyncApiElement
         {
             diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
@@ -196,7 +178,7 @@ namespace LEGO.AsyncAPI.Readers
                 }
             }
 
-            return (T)element;
+            return (T) element;
         }
     }
 }

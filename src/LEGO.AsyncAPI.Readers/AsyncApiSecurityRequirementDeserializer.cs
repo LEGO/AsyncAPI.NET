@@ -1,5 +1,4 @@
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 
 namespace LEGO.AsyncAPI.Readers
@@ -18,10 +17,7 @@ namespace LEGO.AsyncAPI.Readers
 
             foreach (var property in mapNode)
             {
-                var scheme = LoadSecuritySchemeByReference(
-                    mapNode.Context,
-                    property.Name);
-
+                var scheme = LoadSecuritySchemeByReference(mapNode.Context, property.Name);
                 var scopes = property.Value.CreateSimpleList(value => value.GetScalarValue());
 
                 if (scheme != null)
@@ -42,10 +38,10 @@ namespace LEGO.AsyncAPI.Readers
             ParsingContext context,
             string schemeName)
         {
-            var securitySchemeObject = new AsyncApiSecurityScheme()
+            var securitySchemeObject = new AsyncApiSecurityScheme
             {
                 UnresolvedReference = true,
-                Reference = new AsyncApiReference()
+                Reference = new AsyncApiReference
                 {
                     Id = schemeName,
                     Type = ReferenceType.SecurityScheme

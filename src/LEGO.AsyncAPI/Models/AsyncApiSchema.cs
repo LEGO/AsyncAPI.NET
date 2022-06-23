@@ -1,12 +1,12 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using System;
+using System.Collections.Generic;
+using LEGO.AsyncAPI.Models.Interfaces;
+using LEGO.AsyncAPI.Writers;
+
 namespace LEGO.AsyncAPI.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Writers;
-
     /// <summary>
     /// The Schema Object allows the definition of input and output data types.
     /// </summary>
@@ -252,122 +252,122 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // title
-            writer.WriteProperty(AsyncApiConstants.Title, this.Title);
+            writer.WriteProperty(AsyncApiConstants.Title, Title);
 
             // multipleOf
-            writer.WriteProperty(AsyncApiConstants.MultipleOf, this.MultipleOf);
+            writer.WriteProperty(AsyncApiConstants.MultipleOf, MultipleOf);
 
             // maximum
-            writer.WriteProperty(AsyncApiConstants.Maximum, this.Maximum);
+            writer.WriteProperty(AsyncApiConstants.Maximum, Maximum);
 
             // exclusiveMaximum
-            writer.WriteProperty(AsyncApiConstants.ExclusiveMaximum, this.ExclusiveMaximum);
+            writer.WriteProperty(AsyncApiConstants.ExclusiveMaximum, ExclusiveMaximum);
 
             // minimum
-            writer.WriteProperty(AsyncApiConstants.Minimum, this.Minimum);
+            writer.WriteProperty(AsyncApiConstants.Minimum, Minimum);
 
             // exclusiveMinimum
-            writer.WriteProperty(AsyncApiConstants.ExclusiveMinimum, this.ExclusiveMinimum);
+            writer.WriteProperty(AsyncApiConstants.ExclusiveMinimum, ExclusiveMinimum);
 
             // maxLength
-            writer.WriteProperty(AsyncApiConstants.MaxLength, this.MaxLength);
+            writer.WriteProperty(AsyncApiConstants.MaxLength, MaxLength);
 
             // minLength
-            writer.WriteProperty(AsyncApiConstants.MinLength, this.MinLength);
+            writer.WriteProperty(AsyncApiConstants.MinLength, MinLength);
 
             // pattern
-            writer.WriteProperty(AsyncApiConstants.Pattern, this.Pattern);
+            writer.WriteProperty(AsyncApiConstants.Pattern, Pattern);
 
             // maxItems
-            writer.WriteProperty(AsyncApiConstants.MaxItems, this.MaxItems);
+            writer.WriteProperty(AsyncApiConstants.MaxItems, MaxItems);
 
             // minItems
-            writer.WriteProperty(AsyncApiConstants.MinItems, this.MinItems);
+            writer.WriteProperty(AsyncApiConstants.MinItems, MinItems);
 
             // uniqueItems
-            writer.WriteProperty(AsyncApiConstants.UniqueItems, this.UniqueItems);
+            writer.WriteProperty(AsyncApiConstants.UniqueItems, UniqueItems);
 
             // maxProperties
-            writer.WriteProperty(AsyncApiConstants.MaxProperties, this.MaxProperties);
+            writer.WriteProperty(AsyncApiConstants.MaxProperties, MaxProperties);
 
             // minProperties
-            writer.WriteProperty(AsyncApiConstants.MinProperties, this.MinProperties);
+            writer.WriteProperty(AsyncApiConstants.MinProperties, MinProperties);
 
             // required
-            writer.WriteOptionalCollection(AsyncApiConstants.Required, this.Required, (w, s) => w.WriteValue(s));
+            writer.WriteOptionalCollection(AsyncApiConstants.Required, Required, (w, s) => w.WriteValue(s));
 
             // enum
-            writer.WriteOptionalCollection(AsyncApiConstants.Enum, this.Enum, (nodeWriter, s) => nodeWriter.WriteAny(s));
+            writer.WriteOptionalCollection(AsyncApiConstants.Enum, Enum, (nodeWriter, s) => nodeWriter.WriteAny(s));
 
-            writer.WriteOptionalObject(AsyncApiConstants.Const, this.Const, (w, s) => w.WriteAny(s));
+            writer.WriteOptionalObject(AsyncApiConstants.Const, Const, (w, s) => w.WriteAny(s));
 
             // type
-            writer.WriteProperty(AsyncApiConstants.Type, this.Type);
+            writer.WriteProperty(AsyncApiConstants.Type, Type);
 
             // allOf
-            writer.WriteOptionalCollection(AsyncApiConstants.AllOf, this.AllOf, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.AllOf, AllOf, (w, s) => s.SerializeV2(w));
 
             // anyOf
-            writer.WriteOptionalCollection(AsyncApiConstants.AnyOf, this.AnyOf, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.AnyOf, AnyOf, (w, s) => s.SerializeV2(w));
 
             // oneOf
-            writer.WriteOptionalCollection(AsyncApiConstants.OneOf, this.OneOf, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.OneOf, OneOf, (w, s) => s.SerializeV2(w));
 
             // not
-            writer.WriteOptionalObject(AsyncApiConstants.Not, this.Not, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.Not, Not, (w, s) => s.SerializeV2(w));
 
-            writer.WriteOptionalCollection(AsyncApiConstants.Contains, this.AllOf, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.Contains, AllOf, (w, s) => s.SerializeV2(w));
 
             // anyOf
-            writer.WriteOptionalCollection(AsyncApiConstants.If, this.AnyOf, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.If, AnyOf, (w, s) => s.SerializeV2(w));
 
             // oneOf
-            writer.WriteOptionalCollection(AsyncApiConstants.Then, this.OneOf, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.Then, OneOf, (w, s) => s.SerializeV2(w));
 
             // not
-            writer.WriteOptionalObject(AsyncApiConstants.Else, this.Not, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.Else, Not, (w, s) => s.SerializeV2(w));
 
             // items
-            writer.WriteOptionalObject(AsyncApiConstants.Items, this.Items, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.Items, Items, (w, s) => s.SerializeV2(w));
 
             // properties
-            writer.WriteOptionalMap(AsyncApiConstants.Properties, this.Properties, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalMap(AsyncApiConstants.Properties, Properties, (w, s) => s.SerializeV2(w));
 
             // additionalProperties
-            writer.WriteOptionalObject(AsyncApiConstants.AdditionalProperties, this.AdditionalProperties, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.AdditionalProperties, AdditionalProperties, (w, s) => s.SerializeV2(w));
 
             // description
-            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteProperty(AsyncApiConstants.Description, Description);
 
             // format
-            writer.WriteProperty(AsyncApiConstants.Format, this.Format);
+            writer.WriteProperty(AsyncApiConstants.Format, Format);
 
             // default
-            writer.WriteOptionalObject(AsyncApiConstants.Default, this.Default, (w, d) => w.WriteAny(d));
+            writer.WriteOptionalObject(AsyncApiConstants.Default, Default, (w, d) => w.WriteAny(d));
 
             // nullable
-            writer.WriteProperty(AsyncApiConstants.Nullable, this.Nullable, false);
+            writer.WriteProperty(AsyncApiConstants.Nullable, Nullable, false);
 
             // discriminator
-            writer.WriteProperty(AsyncApiConstants.Discriminator, this.Discriminator);
+            writer.WriteProperty(AsyncApiConstants.Discriminator, Discriminator);
 
             // readOnly
-            writer.WriteProperty(AsyncApiConstants.ReadOnly, this.ReadOnly, false);
+            writer.WriteProperty(AsyncApiConstants.ReadOnly, ReadOnly, false);
 
             // writeOnly
-            writer.WriteProperty(AsyncApiConstants.WriteOnly, this.WriteOnly, false);
+            writer.WriteProperty(AsyncApiConstants.WriteOnly, WriteOnly, false);
 
             // externalDocs
-            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, ExternalDocs, (w, s) => s.SerializeV2(w));
 
             // example
-            writer.WriteOptionalCollection(AsyncApiConstants.Examples, this.Examples, (w, e) => w.WriteAny(e));
+            writer.WriteOptionalCollection(AsyncApiConstants.Examples, Examples, (w, e) => w.WriteAny(e));
 
             // deprecated
-            writer.WriteProperty(AsyncApiConstants.Deprecated, this.Deprecated, false);
+            writer.WriteProperty(AsyncApiConstants.Deprecated, Deprecated, false);
 
             // extensions
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteExtensions(Extensions, AsyncApiVersion.AsyncApi2_3_0);
 
             writer.WriteEndObject();
         }
@@ -381,26 +381,26 @@ namespace LEGO.AsyncAPI.Models
 
             var settings = writer.GetSettings();
 
-            if (this.Reference != null)
+            if (Reference != null)
             {
                 if (settings.ReferenceInline != ReferenceInlineSetting.InlineReferences)
                 {
-                    this.Reference.SerializeV2(writer);
+                    Reference.SerializeV2(writer);
                     return;
                 }
 
                 // If Loop is detected then just Serialize as a reference.
-                if (!settings.LoopDetector.PushLoop<AsyncApiSchema>(this))
+                if (!settings.LoopDetector.PushLoop(this))
                 {
                     settings.LoopDetector.SaveLoop(this);
-                    this.Reference.SerializeV2(writer);
+                    Reference.SerializeV2(writer);
                     return;
                 }
             }
 
-            this.SerializeV2WithoutReference(writer);
+            SerializeV2WithoutReference(writer);
 
-            if (this.Reference != null)
+            if (Reference != null)
             {
                 settings.LoopDetector.PopLoop<AsyncApiSchema>();
             }

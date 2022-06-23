@@ -13,62 +13,39 @@ namespace LEGO.AsyncAPI.Readers
     internal static partial class AsyncApiDeserializer
     {
         private static readonly FixedFieldMap<AsyncApiSecurityScheme> _securitySchemeFixedFields =
-            new FixedFieldMap<AsyncApiSecurityScheme>
+            new ()
             {
                 {
-                    "type", (o, n) =>
-                    {
-                        o.Type = n.GetScalarValue().GetEnumFromDisplayName<SecuritySchemeType>();
-                    }
+                    "type", (o, n) => { o.Type = n.GetScalarValue().GetEnumFromDisplayName<SecuritySchemeType>(); }
                 },
                 {
-                    "description", (o, n) =>
-                    {
-                        o.Description = n.GetScalarValue();
-                    }
+                    "description", (o, n) => { o.Description = n.GetScalarValue(); }
                 },
                 {
-                    "name", (o, n) =>
-                    {
-                        o.Name = n.GetScalarValue();
-                    }
+                    "name", (o, n) => { o.Name = n.GetScalarValue(); }
                 },
                 {
-                    "in", (o, n) =>
-                    {
-                        o.In = n.GetScalarValue().GetEnumFromDisplayName<ParameterLocation>();
-                    }
+                    "in", (o, n) => { o.In = n.GetScalarValue().GetEnumFromDisplayName<ParameterLocation>(); }
                 },
                 {
-                    "scheme", (o, n) =>
-                    {
-                        o.Scheme = n.GetScalarValue();
-                    }
+                    "scheme", (o, n) => { o.Scheme = n.GetScalarValue(); }
                 },
                 {
-                    "bearerFormat", (o, n) =>
-                    {
-                        o.BearerFormat = n.GetScalarValue();
-                    }
+                    "bearerFormat", (o, n) => { o.BearerFormat = n.GetScalarValue(); }
                 },
                 {
-                    "openIdConnectUrl", (o, n) =>
-                    {
-                        o.OpenIdConnectUrl = new Uri(n.GetScalarValue(), UriKind.RelativeOrAbsolute);
-                    }
+                    "openIdConnectUrl",
+                    (o, n) => { o.OpenIdConnectUrl = new Uri(n.GetScalarValue(), UriKind.RelativeOrAbsolute); }
                 },
                 {
-                    "flows", (o, n) =>
-                    {
-                        o.Flows = LoadOAuthFlows(n);
-                    }
+                    "flows", (o, n) => { o.Flows = LoadOAuthFlows(n); }
                 }
             };
 
         private static readonly PatternFieldMap<AsyncApiSecurityScheme> _securitySchemePatternFields =
-            new PatternFieldMap<AsyncApiSecurityScheme>
+            new ()
             {
-                {s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p,n))}
+                { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) }
             };
 
         public static AsyncApiSecurityScheme LoadSecurityScheme(ParseNode node)

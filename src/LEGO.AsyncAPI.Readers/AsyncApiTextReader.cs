@@ -1,12 +1,7 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT license. 
-
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using LEGO.AsyncAPI;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Exceptions;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.Interface;
 using SharpYaml;
@@ -91,7 +86,8 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="version">Version of the AsyncApi specification that the fragment conforms to.</param>
         /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing</param>
         /// <returns>Instance of newly created AsyncApiDocument</returns>
-        public T ReadFragment<T>(TextReader input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic) where T : IAsyncApiElement
+        public T ReadFragment<T>(TextReader input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic)
+            where T : IAsyncApiElement
         {
             YamlDocument yamlDocument;
 
@@ -107,7 +103,8 @@ namespace LEGO.AsyncAPI.Readers
                 return default(T);
             }
 
-            return new AsyncApiYamlDocumentReader(this._settings).ReadFragment<T>(yamlDocument, version, out diagnostic);
+            return new AsyncApiYamlDocumentReader(this._settings).ReadFragment<T>(yamlDocument, version,
+                out diagnostic);
         }
 
         /// <summary>

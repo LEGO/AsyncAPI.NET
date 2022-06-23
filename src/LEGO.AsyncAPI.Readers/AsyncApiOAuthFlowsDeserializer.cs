@@ -1,4 +1,3 @@
-
 using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -12,18 +11,18 @@ namespace LEGO.AsyncAPI.Readers
     internal static partial class AsyncApiDeserializer
     {
         private static readonly FixedFieldMap<AsyncApiOAuthFlows> _oAuthFlowsFixedFileds =
-            new FixedFieldMap<AsyncApiOAuthFlows>
+            new ()
             {
-                {"implicit", (o, n) => o.Implicit = LoadOAuthFlow(n)},
-                {"password", (o, n) => o.Password = LoadOAuthFlow(n)},
-                {"clientCredentials", (o, n) => o.ClientCredentials = LoadOAuthFlow(n)},
-                {"authorizationCode", (o, n) => o.AuthorizationCode = LoadOAuthFlow(n)}
+                { "implicit", (a, n) => a.Implicit = LoadOAuthFlow(n) },
+                { "password", (a, n) => a.Password = LoadOAuthFlow(n) },
+                { "clientCredentials", (a, n) => a.ClientCredentials = LoadOAuthFlow(n) },
+                { "authorizationCode", (a, n) => a.AuthorizationCode = LoadOAuthFlow(n) }
             };
 
         private static readonly PatternFieldMap<AsyncApiOAuthFlows> _oAuthFlowsPatternFields =
-            new PatternFieldMap<AsyncApiOAuthFlows>
+            new ()
             {
-                {s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p,n))}
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
             };
 
         public static AsyncApiOAuthFlows LoadOAuthFlows(ParseNode node)

@@ -5,14 +5,14 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiError
     {
         /// <summary>
-        /// Initializes the <see cref="OpenApiError"/> class using the message and pointer from the given exception.
+        /// Initializes the <see cref="AsyncApiError"/> class using the message and pointer from the given exception.
         /// </summary>
         public AsyncApiError(AsyncApiException exception) : this(exception.Pointer, exception.Message)
         {
         }
 
         /// <summary>
-        /// Initializes the <see cref="OpenApiError"/> class.
+        /// Initializes the <see cref="AsyncApiError"/> class.
         /// </summary>
         public AsyncApiError(string pointer, string message)
         {
@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.Models
         public string Pointer { get; set; }
 
         /// <summary>
-        /// Gets the string representation of <see cref="OpenApiError"/>.
+        /// Gets the string representation of <see cref="AsyncApiError"/>.
         /// </summary>
         public override string ToString()
         {

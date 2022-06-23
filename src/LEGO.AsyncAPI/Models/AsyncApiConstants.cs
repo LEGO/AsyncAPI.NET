@@ -45,7 +45,8 @@ namespace LEGO.AsyncAPI.Models
         public const string AccessCode = "";
         public const string Enum = "";
         public const string Default = "";
-        public const string Examples = "";
+        public const string Example = "example";
+        public const string Examples = "examples";
         public const string Id = "";
         public const string DefaultContentType = "";
         public const string OperationId = "";

@@ -11,31 +11,16 @@ namespace LEGO.AsyncAPI.Readers
     /// </summary>
     internal static partial class AsyncApiDeserializer
     {
-        private static FixedFieldMap<AsyncApiContact> _contactFixedFields = new FixedFieldMap<AsyncApiContact>
+        private static FixedFieldMap<AsyncApiContact> _contactFixedFields = new ()
         {
-            {
-                "name", (o, n) =>
-                {
-                    o.Name = n.GetScalarValue();
-                }
-            },
-            {
-                "email", (o, n) =>
-                {
-                    o.Email = n.GetScalarValue();
-                }
-            },
-            {
-                "url", (o, n) =>
-                {
-                    o.Url = new Uri(n.GetScalarValue(), UriKind.RelativeOrAbsolute);
-                }
-            },
+            { "name", (o, n) => { o.Name = n.GetScalarValue(); } },
+            { "email", (o, n) => { o.Email = n.GetScalarValue(); } },
+            { "url", (o, n) => { o.Url = new Uri(n.GetScalarValue(), UriKind.RelativeOrAbsolute); } },
         };
 
-        private static PatternFieldMap<AsyncApiContact> _contactPatternFields = new PatternFieldMap<AsyncApiContact>
+        private static PatternFieldMap<AsyncApiContact> _contactPatternFields = new ()
         {
-            {s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p,n))}
+            { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) }
         };
 
         public static AsyncApiContact LoadContact(ParseNode node)

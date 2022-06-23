@@ -11,8 +11,8 @@ namespace LEGO.AsyncAPI.Readers
     /// </summary>
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiOAuthFlow> _oAuthFlowFixedFileds =
-            new FixedFieldMap<AsyncApiOAuthFlow>
+        private static readonly FixedFieldMap<AsyncApiOAuthFlow> _oAuthFlowFixedFields =
+            new()
             {
                 {
                     "authorizationUrl", (o, n) =>
@@ -36,7 +36,7 @@ namespace LEGO.AsyncAPI.Readers
             };
 
         private static readonly PatternFieldMap<AsyncApiOAuthFlow> _oAuthFlowPatternFields =
-            new PatternFieldMap<AsyncApiOAuthFlow>
+            new()
             {
                 {s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p,n))}
             };
@@ -48,7 +48,7 @@ namespace LEGO.AsyncAPI.Readers
             var oauthFlow = new AsyncApiOAuthFlow();
             foreach (var property in mapNode)
             {
-                property.ParseField(oauthFlow, _oAuthFlowFixedFileds, _oAuthFlowPatternFields);
+                property.ParseField(oauthFlow, _oAuthFlowFixedFields, _oAuthFlowPatternFields);
             }
 
             return oauthFlow;

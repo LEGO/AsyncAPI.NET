@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LEGO.AsyncAPI.Exceptions;
-using LEGO.AsyncAPI.Models.Exceptions;
+using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.Exceptions;
 using SharpYaml.Serialization;
@@ -27,8 +27,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             IDictionary<string, Action<T, ParseNode>> fixedFields,
             IDictionary<Func<string, bool>, Action<T, string, ParseNode>> patternFields)
         {
-            Action<T, ParseNode> fixedFieldMap;
-            var found = fixedFields.TryGetValue(Name, out fixedFieldMap);
+            var found = fixedFields.TryGetValue(Name, out var fixedFieldMap);
 
             if (fixedFieldMap != null)
             {

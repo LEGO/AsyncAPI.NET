@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using LEGO.AsyncAPI;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.Interface;
@@ -23,7 +22,8 @@ namespace LEGO.AsyncAPI.Readers
         {
             _settings = settings ?? new AsyncApiReaderSettings();
 
-            if((_settings.ReferenceResolution == ReferenceResolutionSetting.ResolveAllReferences || _settings.LoadExternalRefs)
+            if ((_settings.ReferenceResolution == ReferenceResolutionSetting.ResolveAllReferences ||
+                 _settings.LoadExternalRefs)
                 && _settings.BaseUrl == null)
             {
                 throw new ArgumentException("BaseUrl must be provided to resolve external references.");
@@ -58,7 +58,7 @@ namespace LEGO.AsyncAPI.Readers
             MemoryStream bufferedStream;
             if (input is MemoryStream)
             {
-                bufferedStream = (MemoryStream)input;
+                bufferedStream = (MemoryStream) input;
             }
             else
             {
@@ -81,7 +81,8 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="version">Version of the AsyncApi specification that the fragment conforms to.</param>
         /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing</param>
         /// <returns>Instance of newly created AsyncApiDocument</returns>
-        public T ReadFragment<T>(Stream input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic) where T : IAsyncApiReferenceable
+        public T ReadFragment<T>(Stream input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic)
+            where T : IAsyncApiReferenceable
         {
             using (var reader = new StreamReader(input))
             {

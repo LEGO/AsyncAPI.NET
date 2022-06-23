@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Readers
     {
         private static FixedFieldMap<AsyncApiMessageExample> _exampleFixedFields = new ()
         {
-            { "headers", (a, n) => { a.Headers = n.CreateSimpleMap(LoadRuntimeExpressionAnyWrapper); } },
+            { "headers", (a, n) => { a.Headers = n.CreateMap(LoadAny); } },
             { "payload", (a, n) => { a.Payload = n.CreateAny(); } },
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
             { "summary", (a, n) => { a.Summary = n.GetScalarValue(); } },
