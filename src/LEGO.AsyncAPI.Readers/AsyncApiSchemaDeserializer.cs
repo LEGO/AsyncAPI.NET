@@ -14,6 +14,13 @@ namespace LEGO.AsyncAPI.Readers
                 "title", (a, n) => { a.Title = n.GetScalarValue(); }
             },
             {
+                "type", (a, n) => { a.Type = n.GetScalarValue(); }
+            },
+            {
+                "required",
+                (a, n) => { a.Required = new HashSet<string>(n.CreateSimpleList(n2 => n2.GetScalarValue())); }
+            },
+            {
                 "multipleOf",
                 (a, n) =>
                 {
@@ -67,14 +74,37 @@ namespace LEGO.AsyncAPI.Readers
                 (a, n) => { a.MinProperties = int.Parse(n.GetScalarValue(), CultureInfo.InvariantCulture); }
             },
             {
-                "required",
-                (a, n) => { a.Required = new HashSet<string>(n.CreateSimpleList(n2 => n2.GetScalarValue())); }
-            },
-            {
                 "enum", (a, n) => { a.Enum = n.CreateListOfAny(); }
             },
             {
-                "type", (a, n) => { a.Type = n.GetScalarValue(); }
+                "examples", (a, n) => { a.Examples = n.CreateListOfAny(); }
+            },
+            {
+                "if", (a, n) => { a.If = LoadSchema(n); }
+            },
+            {
+                "then", (a, n) => { a.Then = LoadSchema(n); }
+            },
+            {
+                "else", (a, n) => { a.Else = LoadSchema(n); }
+            },
+            {
+                "readOnly", (a, n) => { a.ReadOnly = bool.Parse(n.GetScalarValue()); }
+            },
+            {
+                "writeOnly", (a, n) => { a.WriteOnly = bool.Parse(n.GetScalarValue()); }
+            },
+            {
+                "properties", (a, n) => { a.Properties = n.CreateMap(LoadSchema); }
+            },
+            {
+                "additionalProperties", (a, n) => { a.AdditionalProperties = LoadSchema(n); }
+            },
+            {
+                "items", (a, n) => { a.Items = LoadSchema(n); }
+            },
+            {
+                "contains", (a, n) => { a.Contains = LoadSchema(n); }
             },
             {
                 "allOf", (a, n) => { a.AllOf = n.CreateList(LoadSchema); }
@@ -89,25 +119,6 @@ namespace LEGO.AsyncAPI.Readers
                 "not", (a, n) => { a.Not = LoadSchema(n); }
             },
             {
-                "items", (a, n) => { a.Items = LoadSchema(n); }
-            },
-            {
-                "properties", (a, n) => { a.Properties = n.CreateMap(LoadSchema); }
-            },
-            {
-                "additionalProperties", (a, n) =>
-                {
-                    if (n is ValueNode)
-                    {
-                        a.AdditionalPropertiesAllowed = bool.Parse(n.GetScalarValue());
-                    }
-                    else
-                    {
-                        a.AdditionalProperties = LoadSchema(n);
-                    }
-                }
-            },
-            {
                 "description", (a, n) => { a.Description = n.GetScalarValue(); }
             },
             {
@@ -116,40 +127,25 @@ namespace LEGO.AsyncAPI.Readers
             {
                 "default", (a, n) => { a.Default = n.CreateAny(); }
             },
-
             {
-                "nullable", (a, n) => { a.Nullable = bool.Parse(n.GetScalarValue()); }
-            },
-            {
-                "discriminator", (a, n) => { a.Discriminator = LoadDiscriminator(n); }
-            },
-            {
-                "readOnly", (a, n) => { a.ReadOnly = bool.Parse(n.GetScalarValue()); }
-            },
-            {
-                "writeOnly", (a, n) => { a.WriteOnly = bool.Parse(n.GetScalarValue()); }
-            },
-            {
-                "xml", (a, n) => { a.Xml = LoadXml(n); }
+                "discriminator", (a, n) => { a.Discriminator = n.GetScalarValue(); }
             },
             {
                 "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); }
             },
-            {
-                "example", (a, n) => { a.Example = n.CreateAny(); }
-            },
+
             {
                 "deprecated", (a, n) => { a.Deprecated = bool.Parse(n.GetScalarValue()); }
             },
         };
 
         private static readonly PatternFieldMap<AsyncApiSchema> _schemaPatternFields =
-            new PatternFieldMap<AsyncApiSchema>
+            new ()
             {
                 { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) }
             };
 
-        private static readonly AnyFieldMap<AsyncApiSchema> _schemaAnyFields = new AnyFieldMap<AsyncApiSchema>
+        private static readonly AnyFieldMap<AsyncApiSchema> _schemaAnyFields = new ()
         {
             {
                 AsyncApiConstants.Default,
@@ -158,13 +154,6 @@ namespace LEGO.AsyncAPI.Readers
                     (s, v) => s.Default = v,
                     s => s)
             },
-            {
-                AsyncApiConstants.Example,
-                new AnyFieldMapParameter<AsyncApiSchema>(
-                    s => s.Example,
-                    (s, v) => s.Example = v,
-                    s => s)
-            }
         };
 
         private static readonly AnyListFieldMap<AsyncApiSchema> _schemaAnyListFields = new ()
