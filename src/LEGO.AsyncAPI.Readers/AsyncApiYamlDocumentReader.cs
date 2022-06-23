@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LEGO.AsyncAPI.Exceptions;
+using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.Interface;
 using LEGO.AsyncAPI.Readers.Services;
-using LEGO.AsyncAPI.Services;
 using LEGO.AsyncAPI.Validations;
 using SharpYaml.Serialization;
 
@@ -94,12 +95,6 @@ namespace LEGO.AsyncAPI.Readers
             {
                 // Parse the AsyncApi Document
                 document = context.Parse(input);
-
-                if (_settings.LoadExternalRefs)
-                {
-                    await LoadExternalRefs(document);
-                }
-
                 ResolveReferences(diagnostic, document);
             }
             catch (AsyncApiException ex)
@@ -124,18 +119,6 @@ namespace LEGO.AsyncAPI.Readers
             };
         }
 
-        private async Task LoadExternalRefs(AsyncApiDocument document)
-        {
-            // Create workspace for all documents to live in.
-            var openApiWorkSpace = new AsyncApiWorkspace();
-
-            // Load this root document into the workspace
-            var streamLoader = new DefaultStreamLoader(_settings.BaseUrl);
-            var workspaceLoader = new AsyncApiWorkspaceLoader(openApiWorkSpace,
-                _settings.CustomExternalLoader ?? streamLoader, _settings);
-            await workspaceLoader.LoadAsync(new AsyncApiReference { ExternalResource = "/" }, document);
-        }
-
         private void ResolveReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
         {
             var errors = new List<AsyncApiError>();
@@ -146,7 +129,6 @@ namespace LEGO.AsyncAPI.Readers
                 case ReferenceResolutionSetting.ResolveAllReferences:
                     throw new ArgumentException("Resolving external references is not supported");
                 case ReferenceResolutionSetting.ResolveLocalReferences:
-                    errors.AddRange(document.ResolveReferences());
                     break;
                 case ReferenceResolutionSetting.DoNotResolveReferences:
                     break;

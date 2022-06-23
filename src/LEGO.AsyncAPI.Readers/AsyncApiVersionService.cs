@@ -26,7 +26,6 @@ namespace LEGO.AsyncAPI.Readers
         {
             [typeof(IAsyncApiAny)] = AsyncApiDeserializer.LoadAny,
             [typeof(AsyncApiComponents)] = AsyncApiDeserializer.LoadComponents,
-            [typeof(AsyncApiExample)] = AsyncApiDeserializer.LoadExample,
             [typeof(AsyncApiExternalDocumentation)] = AsyncApiDeserializer.LoadExternalDocs,
             [typeof(AsyncApiInfo)] = AsyncApiDeserializer.LoadInfo,
             [typeof(AsyncApiLicense)] = AsyncApiDeserializer.LoadLicense,
@@ -64,14 +63,6 @@ namespace LEGO.AsyncAPI.Readers
                             Id = reference
                         };
                     }
-
-                    // Either this is an external reference as an entire file
-                    // or a simple string-style reference for tag and security scheme.
-                    return new AsyncApiReference
-                    {
-                        Type = type,
-                        ExternalResource = segments[0]
-                    };
                 }
                 else if (segments.Length == 2)
                 {
@@ -113,7 +104,6 @@ namespace LEGO.AsyncAPI.Readers
 
                     return new AsyncApiReference
                     {
-                        ExternalResource = segments[0],
                         Type = type,
                         Id = id
                     };
