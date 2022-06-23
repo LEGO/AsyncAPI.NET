@@ -25,7 +25,6 @@ namespace LEGO.AsyncAPI.Readers
         private IDictionary<Type, Func<ParseNode, object>> _loaders = new Dictionary<Type, Func<ParseNode, object>>
         {
             [typeof(IAsyncApiAny)] = AsyncApiDeserializer.LoadAny,
-            [typeof(AsyncApiCallback)] = AsyncApiDeserializer.LoadCallback,
             [typeof(AsyncApiComponents)] = AsyncApiDeserializer.LoadComponents,
             [typeof(AsyncApiEncoding)] = AsyncApiDeserializer.LoadEncoding,
             [typeof(AsyncApiExample)] = AsyncApiDeserializer.LoadExample,
@@ -39,18 +38,12 @@ namespace LEGO.AsyncAPI.Readers
             [typeof(AsyncApiOAuthFlows)] = AsyncApiDeserializer.LoadOAuthFlows,
             [typeof(AsyncApiOperation)] = AsyncApiDeserializer.LoadOperation,
             [typeof(AsyncApiParameter)] = AsyncApiDeserializer.LoadParameter,
-            [typeof(AsyncApiPathItem)] = AsyncApiDeserializer.LoadPathItem,
-            [typeof(AsyncApiPaths)] = AsyncApiDeserializer.LoadPaths,
-            [typeof(AsyncApiRequestBody)] = AsyncApiDeserializer.LoadRequestBody,
-            [typeof(AsyncApiResponse)] = AsyncApiDeserializer.LoadResponse,
-            [typeof(AsyncApiResponses)] = AsyncApiDeserializer.LoadResponses,
             [typeof(AsyncApiSchema)] = AsyncApiDeserializer.LoadSchema,
             [typeof(AsyncApiSecurityRequirement)] = AsyncApiDeserializer.LoadSecurityRequirement,
             [typeof(AsyncApiSecurityScheme)] = AsyncApiDeserializer.LoadSecurityScheme,
             [typeof(AsyncApiServer)] = AsyncApiDeserializer.LoadServer,
             [typeof(AsyncApiServerVariable)] = AsyncApiDeserializer.LoadServerVariable,
             [typeof(AsyncApiTag)] = AsyncApiDeserializer.LoadTag,
-            [typeof(AsyncApiXml)] = AsyncApiDeserializer.LoadXml
         };
 
         /// <summary>

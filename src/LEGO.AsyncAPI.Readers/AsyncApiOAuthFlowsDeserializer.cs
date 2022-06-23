@@ -1,3 +1,4 @@
+using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 
@@ -21,7 +22,7 @@ namespace LEGO.AsyncAPI.Readers
         private static readonly PatternFieldMap<AsyncApiOAuthFlows> _oAuthFlowsPatternFields =
             new ()
             {
-                { s => s.StartsWith("x-"), (o, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
             };
 
         public static AsyncApiOAuthFlows LoadOAuthFlows(ParseNode node)

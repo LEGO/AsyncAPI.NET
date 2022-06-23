@@ -17,10 +17,10 @@ namespace LEGO.AsyncAPI.Readers
             {"correlationIds", (a, n) => a.CorrelationIds = n.CreateMapWithReference(ReferenceType.CorrelationId, LoadCorrelationId)},
             {"operationTraits", (a, n) => a.OperationTraits = n.CreateMapWithReference(ReferenceType.OperationTrait, LoadOperationTrait)},
             {"messageTraits", (a, n) => a.MessageTraits = n.CreateMapWithReference(ReferenceType.MessageTrait, LoadMessageTrait)},
-            {"serverBindings", (a, n) => a.ServerBindings = n.CreateMapWithReference(ReferenceType.ServerBinding, LoadServerBinding)}, // TODO: Do something with bindings
-            {"channelBindings", (a, n) => a.ChannelBindings = n.CreateMapWithReference(ReferenceType.ChannelBinding, LoadChannelBinding)},
-            {"operationBindings", (a, n) => a.OperationBindings = n.CreateMapWithReference(ReferenceType.OperationBinding, LoadOperationBinding)},
-            {"messageBindings", (a, n) => a.MessageBindings = n.CreateMapWithReference(ReferenceType.MessageBinding, LoadMessageBinding)},
+            //{"serverBindings", (a, n) => a.ServerBindings = n.CreateMapWithReference(ReferenceType.ServerBinding, LoadServerBinding)}, // TODO: Do something with bindings
+            //{"channelBindings", (a, n) => a.ChannelBindings = n.CreateMapWithReference(ReferenceType.ChannelBinding, LoadChannelBinding)},
+            //{"operationBindings", (a, n) => a.OperationBindings = n.CreateMapWithReference(ReferenceType.OperationBinding, LoadOperationBinding)},
+            //{"messageBindings", (a, n) => a.MessageBindings = n.CreateMapWithReference(ReferenceType.MessageBinding, LoadMessageBinding)},
         };
 
 
