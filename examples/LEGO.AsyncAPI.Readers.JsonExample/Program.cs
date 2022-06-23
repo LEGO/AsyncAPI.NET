@@ -14,7 +14,7 @@
 
             var asyncApiDocument = new AsyncApiStringReader().Read(await new StreamReader(stream).ReadToEndAsync(), out var diagnostic);
 
-            if (diagnostic.HasError)
+            if (diagnostic.Errors.Any())
             {
                 Console.WriteLine($"Error during spec parsing: {diagnostic.Errors.First()}");
             }
