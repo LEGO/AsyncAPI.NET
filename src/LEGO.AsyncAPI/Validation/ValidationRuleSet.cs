@@ -184,4 +184,9 @@ namespace LEGO.AsyncAPI.Validations
             return ruleSet;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class AsyncApiRuleAttribute : Attribute
+    {
+    }
 }
