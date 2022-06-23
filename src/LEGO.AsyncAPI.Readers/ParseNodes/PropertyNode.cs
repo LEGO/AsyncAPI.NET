@@ -39,7 +39,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 }
                 catch (AsyncApiReaderException ex)
                 {
-                    Context.Diagnostic.Errors.Add(new Async
+                    Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
                 }
                 catch (AsyncApiException ex)
                 {
