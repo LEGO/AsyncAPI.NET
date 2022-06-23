@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LEGO.AsyncAPI.Exceptions;
-using LEGO.AsyncAPI.Models.Exceptions;
+using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.Exceptions;
 using SharpYaml.Serialization;
@@ -39,7 +39,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 }
                 catch (AsyncApiReaderException ex)
                 {
-                    Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+                    Context.Diagnostic.Errors.Add(new Async
                 }
                 catch (AsyncApiException ex)
                 {
