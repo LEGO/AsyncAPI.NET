@@ -1,5 +1,7 @@
 //// Copyright (c) The LEGO Group. All rights reserved.
 
+// TODO: Everything
+
 //namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
 //{
 //    using System.Collections.Generic;
