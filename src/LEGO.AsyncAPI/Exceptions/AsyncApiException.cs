@@ -3,8 +3,6 @@
 namespace LEGO.AsyncAPI.Exceptions
 {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
 
     public class AsyncApiException : Exception
     {
@@ -44,7 +42,5 @@ namespace LEGO.AsyncAPI.Exceptions
         /// Currently only line= is provided because using char= causes tests to break due to CR/LF and LF differences
         /// </summary>
         public string Pointer { get; set; }
-
     }
-
 }
