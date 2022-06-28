@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-
-namespace LEGO.AsyncAPI.Services
+﻿namespace LEGO.AsyncAPI.Services
 {
-    using System.Runtime.CompilerServices;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
 
     public class AsyncApiWalker
     {
         private readonly AsyncApiVisitorBase visitor;
-        private readonly Stack<AsyncApiSchema> schemaLoop = new Stack<AsyncApiSchema>();
+        private readonly Stack<AsyncApiSchema> schemaLoop = new ();
 
         public AsyncApiWalker(AsyncApiVisitorBase visitor)
         {
@@ -33,7 +31,7 @@ namespace LEGO.AsyncAPI.Services
             this.Walk(AsyncApiConstants.Servers, () => this.Walk(doc.Servers));
             this.Walk(AsyncApiConstants.Channels, () => this.Walk(doc.Channels));
             this.Walk(AsyncApiConstants.Components, () => this.Walk(doc.Components));
-            Walk(AsyncApiConstants.Tags, () => this.Walk(doc.Tags));
+            this.Walk(AsyncApiConstants.Tags, () => this.Walk(doc.Tags));
             this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(doc.ExternalDocs));
             this.Walk(doc as IAsyncApiExtensible);
         }
