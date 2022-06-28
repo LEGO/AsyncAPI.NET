@@ -271,6 +271,18 @@ namespace LEGO.AsyncAPI.Writers
             writer.WriteMapInternal(name, elements, action);
         }
 
+        public static void WriteRequiredMap<T>(
+            this IAsyncApiWriter writer,
+            string name,
+            IDictionary<string, T> elements,
+            Action<IAsyncApiWriter, string, T> action) where T : IAsyncApiElement
+        {
+            if (elements != null && elements.Any())
+            {
+                writer.WriteMapInternal(name, elements, action);
+            }
+        }
+
         /// <summary>
         /// Write the optional AsyncApi element map.
         /// </summary>

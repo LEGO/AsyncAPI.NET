@@ -36,6 +36,7 @@ using Models.Interfaces;
                 referenceable.Reference.HostDocument = currentDocument;
             }
         }
+
         public override void Visit(AsyncApiComponents components)
         {
             ResolveMap(components.Parameters);
@@ -133,7 +134,10 @@ using Models.Interfaces;
 
         private void ResolveObject<T>(T entity, Action<T> assign) where T : class, IAsyncApiReferenceable, new()
         {
-            if (entity == null) return;
+            if (entity == null)
+            {
+                return;
+            }
 
             if (IsUnresolvedReference(entity))
             {
@@ -180,27 +184,6 @@ using Models.Interfaces;
                     errors.Add(new AsyncApiReferenceError(ex));
                     return null;
                 }
-            
-            // The concept of merging references with their target at load time is going away in the next major version
-            // External references will not support this approach.
-            //else if (_resolveRemoteReferences == true)
-            //{
-            //    if (_currentDocument.Workspace == null)
-            //    {
-            //        _errors.Add(new AsyncApiReferenceError(reference,"Cannot resolve external references for documents not in workspaces."));
-            //        // Leave as unresolved reference
-            //        return new T()
-            //        {
-            //            UnresolvedReference = true,
-            //            Reference = reference
-            //        };
-            //    }
-            //    var target = _currentDocument.Workspace.ResolveReference(reference);
-
-            //    // TODO:  If it is a document fragment, then we should resolve it within the current context
-
-            //    return target as T;
-            //}
         }
 
         private bool IsUnresolvedReference(IAsyncApiReferenceable possibleReference)
@@ -208,6 +191,4 @@ using Models.Interfaces;
             return (possibleReference != null && possibleReference.UnresolvedReference);
         }
     }
-}
-
 }

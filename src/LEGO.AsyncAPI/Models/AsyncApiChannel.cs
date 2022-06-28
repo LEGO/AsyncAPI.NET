@@ -90,7 +90,19 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject(AsyncApiConstants.Publish, this.Publish, (w, s) => s.SerializeV2(w));
 
             // parameters
-            writer.WriteOptionalMap(AsyncApiConstants.Parameters, this.Parameters, (w, p) => p.SerializeV2(w));
+            writer.WriteOptionalMap(AsyncApiConstants.Parameters, this.Parameters, (writer, key, component) =>
+            {
+                if (component.Reference != null &&
+                component.Reference.Type == ReferenceType.Channel &&
+                component.Reference.Id == key)
+                {
+                    component.SerializeV2WithoutReference(writer);
+                }
+                else
+                {
+                    component.SerializeV2(writer);
+                }
+            });
 
             // extensions
             writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);

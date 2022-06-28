@@ -31,7 +31,10 @@ namespace LEGO.AsyncAPI.Readers
                 "name", (a, n) => { a.Name = n.GetScalarValue(); }
             },
             {
-                "title", (a, n) => { a.Name = n.GetScalarValue(); }
+                "title", (a, n) => { a.Title = n.GetScalarValue(); }
+            },
+            {
+                "summary", (a, n) => { a.Summary = n.GetScalarValue(); }
             },
             {
                 "description", (a, n) => { a.Description = n.GetScalarValue(); }

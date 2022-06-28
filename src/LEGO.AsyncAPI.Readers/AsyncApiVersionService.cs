@@ -55,7 +55,7 @@ namespace LEGO.AsyncAPI.Readers
                 var segments = reference.Split('#');
                 if (segments.Length == 1)
                 {
-                    if (type == ReferenceType.Tag || type == ReferenceType.SecurityScheme)
+                    if (type == ReferenceType.SecurityScheme)
                     {
                         return new AsyncApiReference
                         {
@@ -71,7 +71,7 @@ namespace LEGO.AsyncAPI.Readers
                         // "$ref": "#/components/schemas/Pet"
                         try
                         {
-                            return ParseLocalReference(segments[1]);
+                            return ParseReference(segments[1]);
                         }
                         catch (AsyncApiException ex)
                         {
@@ -123,7 +123,7 @@ namespace LEGO.AsyncAPI.Readers
             return (T) _loaders[typeof(T)](node);
         }
 
-        private AsyncApiReference ParseLocalReference(string localReference)
+        private AsyncApiReference ParseReference(string localReference)
         {
             if (string.IsNullOrWhiteSpace(localReference))
             {
@@ -133,7 +133,7 @@ namespace LEGO.AsyncAPI.Readers
 
             var segments = localReference.Split('/');
 
-            if (segments.Length == 4) // /components/{type}/pet
+            if (segments.Length == 4) // /components/{type}/mything
             {
                 if (segments[1] == "components")
                 {

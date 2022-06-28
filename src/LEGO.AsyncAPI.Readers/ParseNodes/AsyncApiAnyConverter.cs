@@ -10,9 +10,9 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     internal static class AsyncApiAnyConverter
     {
-        public static IAsyncApiAny GetSpecificAsyncApiAny(IAsyncApiAny openApiAny, AsyncApiSchema schema = null)
+        public static IAsyncApiAny GetSpecificAsyncApiAny(IAsyncApiAny asyncApiAny, AsyncApiSchema schema = null)
         {
-            if (openApiAny is AsyncApiArray openApiArray)
+            if (asyncApiAny is AsyncApiArray openApiArray)
             {
                 var newArray = new AsyncApiArray();
                 foreach (var element in openApiArray)
@@ -23,7 +23,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 return newArray;
             }
 
-            if (openApiAny is AsyncApiObject openApiObject)
+            if (asyncApiAny is AsyncApiObject openApiObject)
             {
                 var newObject = new AsyncApiObject();
 
@@ -42,16 +42,16 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 return newObject;
             }
 
-            if (!(openApiAny is AsyncApiString))
+            if (!(asyncApiAny is AsyncApiString))
             {
-                return openApiAny;
+                return asyncApiAny;
             }
 
-            var value = ((AsyncApiString)openApiAny).Value;
+            var value = ((AsyncApiString)asyncApiAny).Value;
             var type = schema?.Type;
             var format = schema?.Format;
 
-            if (((AsyncApiString)openApiAny).IsExplicit())
+            if (((AsyncApiString)asyncApiAny).IsExplicit())
             {
                 if (schema == null)
                 {
@@ -97,10 +97,9 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                             return new AsyncApiDateTime(dateTimeValue);
                         }
                     }
-                    
                 }
 
-                return openApiAny;
+                return asyncApiAny;
             }
 
             if (value == null || value == "null")
@@ -229,7 +228,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
                 if (type == "string")
                 {
-                    return openApiAny;
+                    return asyncApiAny;
                 }
 
                 if (type == "boolean")
@@ -240,7 +239,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     }
                 }
             }
-            return openApiAny;
+            return asyncApiAny;
         }
     }
 }

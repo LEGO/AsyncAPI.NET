@@ -518,6 +518,15 @@ components:
 ";
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(text, out var diagnostic);
+            Assert.AreEqual((doc.Channels["workspace"].Extensions["x-eventarchetype"] as AsyncApiString).Value, "objectchanged");
+            Assert.AreEqual((doc.Channels["workspace"].Extensions["x-classification"] as AsyncApiString).Value, "green");
+            Assert.AreEqual((doc.Channels["workspace"].Extensions["x-datalakesubscription"] as AsyncApiBoolean).Value, true);
+            var message = doc.Channels["workspace"].Publish.Message;
+            Assert.AreEqual(message.SchemaFormat, "application/schema+yaml;version=draft-07");
+            Assert.AreEqual(message.Summary, "Metadata about a workspace that has been created, updated or deleted.");
+            var payload = doc.Channels["workspace"].Publish.Message.Payload;
+            Assert.NotNull(payload);
+            Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
         }
         
     }
