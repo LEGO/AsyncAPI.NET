@@ -41,7 +41,6 @@ namespace LEGO.AsyncAPI.Readers
             var context = new ParsingContext(diagnostic)
             {
                 ExtensionParsers = _settings.ExtensionParsers,
-                BaseUrl = _settings.BaseUrl
             };
 
             AsyncApiDocument document = null;
@@ -49,12 +48,6 @@ namespace LEGO.AsyncAPI.Readers
             {
                 // Parse the AsyncApi Document
                 document = context.Parse(input);
-
-                if (_settings.LoadExternalRefs)
-                {
-                    throw new InvalidOperationException(
-                        "Cannot load external refs using the synchronous Read, use ReadAsync instead.");
-                }
 
                 ResolveReferences(diagnostic, document);
             }
@@ -87,7 +80,6 @@ namespace LEGO.AsyncAPI.Readers
             var context = new ParsingContext(diagnostic)
             {
                 ExtensionParsers = _settings.ExtensionParsers,
-                BaseUrl = _settings.BaseUrl
             };
 
             AsyncApiDocument document = null;
@@ -126,9 +118,8 @@ namespace LEGO.AsyncAPI.Readers
             // Resolve References if requested
             switch (_settings.ReferenceResolution)
             {
-                case ReferenceResolutionSetting.ResolveAllReferences:
-                    throw new ArgumentException("Resolving external references is not supported");
-                case ReferenceResolutionSetting.ResolveLocalReferences:
+                case ReferenceResolutionSetting.ResolveReferences:
+                    errors.AddRange(document.ResolveReferences());
                     break;
                 case ReferenceResolutionSetting.DoNotResolveReferences:
                     break;

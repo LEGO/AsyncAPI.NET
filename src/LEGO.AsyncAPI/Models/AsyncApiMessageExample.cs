@@ -23,12 +23,12 @@ namespace LEGO.AsyncAPI.Models
         public IAsyncApiAny Payload { get; set; }
 
         /// <summary>
-        /// Gets or sets a machine-friendly name.
+        /// a machine-friendly name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a short summary of what the example is about.
+        /// a short summary of what the example is about.
         /// </summary>
         public string Summary { get; set; }
 
@@ -42,8 +42,13 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
+            writer.WriteStartObject();
+            writer.WriteProperty(AsyncApiConstants.Name, this.Name);
+            writer.WriteProperty(AsyncApiConstants.Summary, this.Summary);
             writer.WriteOptionalMap(AsyncApiConstants.Headers, this.Headers, (w, h) => w.WriteAny(h));
             writer.WriteOptionalObject(AsyncApiConstants.Payload, this.Payload, (w, p) => w.WriteAny(p));
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteEndObject();
         }
     }
 }

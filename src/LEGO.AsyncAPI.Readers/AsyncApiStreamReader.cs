@@ -21,13 +21,6 @@ namespace LEGO.AsyncAPI.Readers
         public AsyncApiStreamReader(AsyncApiReaderSettings settings = null)
         {
             _settings = settings ?? new AsyncApiReaderSettings();
-
-            if ((_settings.ReferenceResolution == ReferenceResolutionSetting.ResolveAllReferences ||
-                 _settings.LoadExternalRefs)
-                && _settings.BaseUrl == null)
-            {
-                throw new ArgumentException("BaseUrl must be provided to resolve external references.");
-            }
         }
 
         /// <summary>

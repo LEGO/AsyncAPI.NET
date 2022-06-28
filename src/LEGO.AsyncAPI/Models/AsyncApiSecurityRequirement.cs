@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Models
             {
                 var securityScheme = securitySchemeAndScopesValuePair.Key;
                 var scopes = securitySchemeAndScopesValuePair.Value;
-
+                
                 if (securityScheme.Reference == null)
                 {
                     // Reaching this point means the reference to a specific AsyncApiSecurityScheme fails.

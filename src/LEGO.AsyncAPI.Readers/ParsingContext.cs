@@ -25,7 +25,6 @@ namespace LEGO.AsyncAPI.Readers
 
         internal RootNode RootNode { get; set; }
         internal List<AsyncApiTag> Tags { get; private set; } = new ();
-        internal Uri BaseUrl { get; set; }
 
         public AsyncApiDiagnostic Diagnostic { get; }
 
@@ -82,9 +81,6 @@ namespace LEGO.AsyncAPI.Readers
             {
                 return versionNode.GetScalarValue();
             }
-
-            versionNode = rootNode.Find(new JsonPointer("/swagger"));
-
             return versionNode?.GetScalarValue();
         }
 

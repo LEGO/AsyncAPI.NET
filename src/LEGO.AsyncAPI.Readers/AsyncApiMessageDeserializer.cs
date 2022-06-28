@@ -64,7 +64,12 @@ namespace LEGO.AsyncAPI.Readers
         public static AsyncApiMessage LoadMessage(ParseNode node)
         {
             var mapNode = node.CheckMapNode("message");
-
+            var pointer = mapNode.GetReferencePointer();
+            if (pointer != null)
+            {
+                return mapNode.GetReferencedObject<AsyncApiMessage>(ReferenceType.Message, pointer);
+            }
+            
             var message = new AsyncApiMessage();
 
             ParseMap(mapNode, message, _messageFixedFields, _messagePatternFields);
