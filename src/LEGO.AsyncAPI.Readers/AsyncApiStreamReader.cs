@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI.Readers
         }
 
         /// <summary>
-        /// Reads the stream input and parses it into an Open API document.
+        /// Reads the stream input and parses it into an AsyncApi document.
         /// </summary>
         /// <param name="input">Stream containing AsyncApi description to parse.</param>
         /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing.</param>
@@ -43,7 +43,7 @@ namespace LEGO.AsyncAPI.Readers
         }
 
         /// <summary>
-        /// Reads the stream input and parses it into an Open API document.
+        /// Reads the stream input and parses it into an AsyncApi document.
         /// </summary>
         /// <param name="input">Stream containing AsyncApi description to parse.</param>
         /// <returns>Instance result containing newly created AsyncApiDocument and diagnostics object from the process</returns>

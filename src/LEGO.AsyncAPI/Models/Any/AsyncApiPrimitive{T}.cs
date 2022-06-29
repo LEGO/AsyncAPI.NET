@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Open API primitive class.
+    /// AsyncApi primitive class.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class AsyncApiPrimitive<T> : IAsyncApiPrimitive

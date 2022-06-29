@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Services
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     /// <summary>
-    /// Open API visitor base provides common logic for concrete visitors
+    /// AsyncApi visitor base provides common logic for concrete visitors
     /// </summary>
     public abstract class AsyncApiVisitorBase
     {

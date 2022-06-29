@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// Open API Byte
+    /// AsyncApi Byte
     /// </summary>
     public class AsyncApiByte : AsyncApiPrimitive<byte[]>
     {

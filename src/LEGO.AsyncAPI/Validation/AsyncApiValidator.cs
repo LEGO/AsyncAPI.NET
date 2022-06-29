@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Validations
     using LEGO.AsyncAPI.Services;
 
     /// <summary>
-    /// Class containing dispatchers to execute validation rules on for Open API document.
+    /// Class containing dispatchers to execute validation rules on for AsyncApi document.
     /// </summary>
     public class AsyncApiValidator : AsyncApiVisitorBase, IValidationContext
     {

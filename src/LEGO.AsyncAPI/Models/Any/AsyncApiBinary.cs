@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// Open API binary.
+    /// AsyncApi binary.
     /// </summary>
     public class AsyncApiBinary : AsyncApiPrimitive<byte[]>
     {

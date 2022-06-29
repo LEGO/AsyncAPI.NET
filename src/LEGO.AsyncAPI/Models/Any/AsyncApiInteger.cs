@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// Open API Integer
+    /// AsyncApi Integer
     /// </summary>
     public class AsyncApiInteger : AsyncApiPrimitive<int>
     {

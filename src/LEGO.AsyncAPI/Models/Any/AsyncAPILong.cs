@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// Open API long.
+    /// AsyncApi long.
     /// </summary>
     public class AsyncApiLong : AsyncApiPrimitive<long>
     {

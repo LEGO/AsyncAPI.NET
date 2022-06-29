@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.Writers
         public AsyncApiWriterSettings Settings { get; set; }
 
         /// <summary>
-        /// Scope of the Open API element - object, array, property.
+        /// Scope of the AsyncApi element - object, array, property.
         /// </summary>
         protected readonly Stack<Scope> Scopes;
 

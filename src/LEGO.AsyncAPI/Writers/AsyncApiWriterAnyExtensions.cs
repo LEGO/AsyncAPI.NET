@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write the specification extensions
         /// </summary>
-        /// <param name="writer">The Open API writer.</param>
+        /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="extensions">The specification extensions.</param>
         /// <param name="specVersion">Version of the AsyncApi specification that that will be output.</param>
         public static void WriteExtensions(this IAsyncApiWriter writer, IDictionary<string, IAsyncApiExtension> extensions, AsyncApiVersion specVersion)
@@ -35,8 +35,8 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write the <see cref="IAsyncApiAny"/> value.
         /// </summary>
-        /// <typeparam name="T">The Open API Any type.</typeparam>
-        /// <param name="writer">The Open API writer.</param>
+        /// <typeparam name="T">The AsyncApi Any type.</typeparam>
+        /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="any">The Any value</param>
         public static void WriteAny<T>(this IAsyncApiWriter writer, T any) where T : IAsyncApiAny
         {

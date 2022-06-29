@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// Open API string type.
+    /// AsyncApi string type.
     /// </summary>
     public class AsyncApiString : AsyncApiPrimitive<string>
     {

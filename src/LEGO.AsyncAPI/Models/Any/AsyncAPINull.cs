@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Open API null.
+    /// AsyncApi null.
     /// </summary>
     public class AsyncApiNull : IAsyncApiAny
     {

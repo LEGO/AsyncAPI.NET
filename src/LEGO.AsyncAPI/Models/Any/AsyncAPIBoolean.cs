@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// Open API boolean.
+    /// AsyncApi boolean.
     /// </summary>
     public class AsyncApiBoolean : AsyncApiPrimitive<bool>
     {

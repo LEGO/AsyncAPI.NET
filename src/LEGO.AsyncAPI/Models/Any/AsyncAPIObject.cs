@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Open API object.
+    /// AsyncApi object.
     /// </summary>
     public class AsyncApiObject : Dictionary<string, IAsyncApiAny>, IAsyncApiAny
     {
