@@ -2,6 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using LEGO.AsyncAPI.Models;
+
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
@@ -303,8 +305,10 @@ components:
         var reader = new AsyncApiStringReader();
         var doc = reader.Read(yaml, out var diagnostic);
         var scheme = doc.Components.SecuritySchemes.First();
-        Assert.AreEqual(new Uri("saslScram"), scheme.Key);
+        Assert.AreEqual("saslScram", scheme.Key);
+        Assert.AreEqual(SecuritySchemeType.ScramSha256, scheme.Value.Type);
+        Assert.AreEqual("Provide your username and password for SASL/SCRAM authentication", scheme.Value.Description);
       }
-      
+
     }
 }
