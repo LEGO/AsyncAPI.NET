@@ -32,7 +32,8 @@ namespace LEGO.AsyncAPI.Writers
         /// Initializes a new instance of the <see cref="AsyncApiWriterBase"/> class.
         /// </summary>
         /// <param name="textWriter">The text writer.</param>
-        public AsyncApiWriterBase(TextWriter textWriter) : this(textWriter, null)
+        public AsyncApiWriterBase(TextWriter textWriter)
+            : this(textWriter, null)
         {
         }
 

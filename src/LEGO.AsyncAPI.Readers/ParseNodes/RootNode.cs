@@ -10,7 +10,8 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public RootNode(
             ParsingContext context,
-            YamlDocument yamlDocument) : base(context)
+            YamlDocument yamlDocument)
+            : base(context)
         {
             this.yamlDocument = yamlDocument;
         }

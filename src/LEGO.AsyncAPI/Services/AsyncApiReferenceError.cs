@@ -7,7 +7,8 @@ namespace LEGO.AsyncAPI.Services
 
     internal class AsyncApiReferenceError : AsyncApiError
     {
-        public AsyncApiReferenceError(AsyncApiException exception) : base(exception)
+        public AsyncApiReferenceError(AsyncApiException exception)
+            : base(exception)
         {
         }
     }

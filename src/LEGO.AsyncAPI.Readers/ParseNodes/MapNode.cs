@@ -18,12 +18,13 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         private readonly YamlMappingNode node;
         private readonly List<PropertyNode> nodes;
 
-        public MapNode(ParsingContext context, string yamlString) :
-            this(context, (YamlMappingNode)YamlHelper.ParseYamlString(yamlString))
+        public MapNode(ParsingContext context, string yamlString)
+            : this(context, (YamlMappingNode)YamlHelper.ParseYamlString(yamlString))
         {
         }
 
-        public MapNode(ParsingContext context, YamlNode node) : base(
+        public MapNode(ParsingContext context, YamlNode node)
+            : base(
             context)
         {
             if (!(node is YamlMappingNode mapNode))

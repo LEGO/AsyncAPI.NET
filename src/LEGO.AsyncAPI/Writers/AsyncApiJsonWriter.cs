@@ -20,7 +20,8 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         /// <param name="textWriter">The text writer.</param>
         /// <param name="settings">Settings for controlling how the AsyncApi document will be written out.</param>
-        public AsyncApiJsonWriter(TextWriter textWriter, AsyncJsonWriterSettings settings) : base(textWriter, settings)
+        public AsyncApiJsonWriter(TextWriter textWriter, AsyncJsonWriterSettings settings)
+            : base(textWriter, settings)
         {
             this.produceTerseOutput = settings.Terse;
         }
@@ -31,7 +32,8 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="textWriter">The text writer.</param>
         /// <param name="settings">Settings for controlling how the AsyncApi document will be written out.</param>
         /// <param name="terseOutput"> Setting for allowing the JSON emitted to be in terse format.</param>
-        public AsyncApiJsonWriter(TextWriter textWriter, AsyncApiWriterSettings settings, bool terseOutput = false) : base(textWriter, settings)
+        public AsyncApiJsonWriter(TextWriter textWriter, AsyncApiWriterSettings settings, bool terseOutput = false)
+            : base(textWriter, settings)
         {
             this.produceTerseOutput = terseOutput;
         }

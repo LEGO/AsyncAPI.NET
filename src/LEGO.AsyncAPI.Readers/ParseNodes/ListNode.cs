@@ -15,7 +15,8 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     {
         private readonly YamlSequenceNode nodeList;
 
-        public ListNode(ParsingContext context, YamlSequenceNode sequenceNode) : base(
+        public ListNode(ParsingContext context, YamlSequenceNode sequenceNode)
+            : base(
             context)
         {
             this.nodeList = sequenceNode;

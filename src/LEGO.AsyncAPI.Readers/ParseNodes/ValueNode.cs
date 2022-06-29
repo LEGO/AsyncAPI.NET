@@ -12,7 +12,8 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     {
         private readonly YamlScalarNode node;
 
-        public ValueNode(ParsingContext context, YamlNode node) : base(
+        public ValueNode(ParsingContext context, YamlNode node)
+            : base(
             context)
         {
             if (!(node is YamlScalarNode scalarNode))

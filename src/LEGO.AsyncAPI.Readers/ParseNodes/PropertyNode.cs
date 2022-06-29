@@ -13,7 +13,8 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
     internal class PropertyNode : ParseNode
     {
-        public PropertyNode(ParsingContext context, string name, YamlNode node) : base(
+        public PropertyNode(ParsingContext context, string name, YamlNode node)
+            : base(
             context)
         {
             this.Name = name;

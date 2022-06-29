@@ -9,7 +9,8 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Initializes the <see cref="AsyncApiError"/> class using the message and pointer from the given exception.
         /// </summary>
-        public AsyncApiError(AsyncApiException exception) : this(exception.Pointer, exception.Message)
+        public AsyncApiError(AsyncApiException exception)
+            : this(exception.Pointer, exception.Message)
         {
         }
 

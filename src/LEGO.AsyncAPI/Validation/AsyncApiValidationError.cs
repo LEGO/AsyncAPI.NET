@@ -12,7 +12,8 @@ namespace LEGO.AsyncAPI.Validations
         /// <summary>
         /// Initializes the <see cref="AsyncApiError"/> class.
         /// </summary>
-        public AsyncApiValidatorError(string ruleName, string pointer, string message) : base(pointer, message)
+        public AsyncApiValidatorError(string ruleName, string pointer, string message)
+            : base(pointer, message)
         {
             this.RuleName = ruleName;
         }

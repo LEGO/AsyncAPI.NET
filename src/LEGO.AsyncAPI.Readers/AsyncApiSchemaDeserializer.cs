@@ -135,7 +135,6 @@ namespace LEGO.AsyncAPI.Readers
             {
                 "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); }
             },
-
             {
                 "deprecated", (a, n) => { a.Deprecated = bool.Parse(n.GetScalarValue()); }
             },

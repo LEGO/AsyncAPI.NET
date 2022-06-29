@@ -41,12 +41,12 @@ namespace LEGO.AsyncAPI.Services
         public override void Visit(AsyncApiComponents components)
         {
             this.ResolveMap(components.Parameters);
-            this.ResolveMap(components.Channels); // TODO override
+            this.ResolveMap(components.Channels);
             this.ResolveMap(components.Schemas);
-            this.ResolveMap(components.Servers); // TODO override
-            this.ResolveMap(components.CorrelationIds); // TODO override
-            this.ResolveMap(components.MessageTraits); // TODO override
-            this.ResolveMap(components.OperationTraits); // TODO override
+            this.ResolveMap(components.Servers);
+            this.ResolveMap(components.CorrelationIds);
+            this.ResolveMap(components.MessageTraits);
+            this.ResolveMap(components.OperationTraits);
             this.ResolveMap(components.SecuritySchemes);
 
             // TODO: figure out bindings
@@ -65,6 +65,11 @@ namespace LEGO.AsyncAPI.Services
             //ResolveMap(channel.Bindings);
         }
 
+        public override void Visit(AsyncApiMessageTrait trait)
+        {
+            this.ResolveObject(trait.CorrelationId, r => trait.CorrelationId = r);
+            this.ResolveObject(trait.Headers, r => trait.Headers = r);
+        }
 
         /// <summary>
         /// Resolve all references used in an operation
