@@ -3,6 +3,7 @@
 // </copyright>
 
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Writers;
 
 namespace LEGO.AsyncAPI.Tests
 {
@@ -308,6 +309,38 @@ components:
         Assert.AreEqual("saslScram", scheme.Key);
         Assert.AreEqual(SecuritySchemeType.ScramSha256, scheme.Value.Type);
         Assert.AreEqual("Provide your username and password for SASL/SCRAM authentication", scheme.Value.Description);
+      }
+      
+      [Test]
+      public void Read_WithBasicPlusOAuthFlowDeserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    x-something: yes
+components:
+  securitySchemes:
+    oauth2: 
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://example.com/api/oauth/dialog
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets      
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var scheme = doc.Components.SecuritySchemes.First();
+        var flow = scheme.Value.Flows;
+        Assert.AreEqual("oauth2", scheme.Key);
+        Assert.AreEqual(SecuritySchemeType.OAuth2, scheme.Value.Type);
+        Assert.AreEqual(new Uri("https://example.com/api/oauth/dialog"), flow.Implicit.AuthorizationUrl);
+        Assert.IsTrue(flow.Implicit.Scopes.ContainsKey("write:pets"));
+        Assert.IsTrue(flow.Implicit.Scopes.ContainsKey("read:pets"));
       }
 
     }
