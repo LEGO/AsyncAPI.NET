@@ -221,6 +221,38 @@ servers:
         Assert.AreEqual("pulsar+ssl", server.Value.Protocol);
         Assert.AreEqual("Pulsar broker", server.Value.Description);
       }
+      
+      [Test]
+      public void Read_WithBasicPlusServerVariablesDeserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    x-eventarchetype: objectchanged
+servers:
+  production:
+    url: 'pulsar+ssl://prod.events.managed.io:{port}'
+    protocol: pulsar+ssl
+    description: Pulsar broker
+    variables:
+      port:
+        description: Secure connection (TLS) is available through port 8883.
+        default: '1883'
+        enum:
+          - '1883'
+          - '8883'
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var server = doc.Servers.First();
+        var variable = server.Value.Variables.First();
+        Assert.AreEqual("production", server.Key);
+        Assert.AreEqual("port", variable.Key);
+        Assert.AreEqual("Secure connection (TLS) is available through port 8883.", variable.Value.Description);
+      }
     }
 }
 
