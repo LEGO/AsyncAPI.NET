@@ -2,6 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using LEGO.AsyncAPI.Readers;
+
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
@@ -118,5 +120,28 @@ components:
             Assert.NotNull(payload);
             Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
         }
+
+        [Test]
+        public void Read_WithBasicPlusContact_Deserializes()
+        {
+            var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+  contact:  
+    name: API Support
+    url: https://www.example.com/support
+    email: support@example.com
+channels:
+  workspace:
+    x-eventarchetype: objectchanged
+";
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+            Assert.AreEqual("support@example.com",doc.Info.Contact.Email);
+            Assert.AreEqual(new Uri("https://www.example.com/support"),doc.Info.Contact.Url);
+            Assert.AreEqual("API Support",doc.Info.Contact.Name);
+        }
     }
 }
+
