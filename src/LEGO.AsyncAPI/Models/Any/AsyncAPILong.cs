@@ -2,37 +2,24 @@
 
 namespace LEGO.AsyncAPI.Models.Any
 {
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
-    /// Async API long.
+    /// AsyncApi long.
     /// </summary>
-    public class AsyncAPILong : IPrimitiveValue<long>
+    public class AsyncApiLong : AsyncApiPrimitive<long>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncAPILong"/> class.
+        /// Initializes the <see cref="AsyncApiLong"/> class.
         /// </summary>
-        /// <param name="value">Initialization value.</param>
-        public AsyncAPILong(long value)
+        public AsyncApiLong(long value)
+            : base(value)
         {
-            this.Value = value;
         }
 
         /// <summary>
-        /// The type of <see cref="IAny"/>.
+        /// Primitive type this object represents.
         /// </summary>
-        public PrimitiveType PrimitiveType => PrimitiveType.Long;
-
-        /// <summary>
-        /// AnyType.Primitive.
-        /// </summary>
-        public AnyType AnyType => AnyType.Primitive;
-
-        /// <summary>
-        /// Value of the struct.
-        /// </summary>
-        public long Value { get; set; }
-
-        public static explicit operator long(AsyncAPILong l) => l.Value;
-
-        public static explicit operator AsyncAPILong(long l) => new (value: l);
+        public override PrimitiveType PrimitiveType { get; } = PrimitiveType.Long;
     }
 }

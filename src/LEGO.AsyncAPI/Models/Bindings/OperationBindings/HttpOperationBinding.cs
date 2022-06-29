@@ -1,37 +1,38 @@
-// Copyright (c) The LEGO Group. All rights reserved.
+//// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
-{
-    using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Interfaces;
+// TODO: Everything
 
-    /// <summary>
-    /// Binding class for http operations.
-    /// </summary>
-    public class HttpOperationBinding : IOperationBinding
-    {
-        /// <summary>
-        /// Type of binding.
-        /// </summary>
-        public string Type { get; set; }
+//namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
+//{
+//    using System.Collections.Generic;
+//    using LEGO.AsyncAPI.Models.Interfaces;
 
-        /// <summary>
-        /// Http method.
-        /// </summary>
-        public string Method { get; set; }
+//    /// <summary>
+//    /// Binding class for http operations.
+//    /// </summary>
+//    public class HttpOperationBinding : IOperationBinding
+//    {
+//        /// <summary>
+//        /// Gets or sets type of binding.
+//        /// </summary>
+//        public string Type { get; set; }
 
-        /// <summary>
-        /// Http query.
-        /// </summary>
-        public Schema Query { get; set; }
+//        /// <summary>
+//        /// Gets or sets http method.
+//        /// </summary>
+//        public string Method { get; set; }
 
-        /// <summary>
-        /// Property containing version of a binding.
-        /// </summary>
-        public string BindingVersion { get; set; }
+//        /// <summary>
+//        /// Gets or sets http query.
+//        /// </summary>
+//        public Schema Query { get; set; }
 
-        /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; }
-    }
-}
+//        /// <summary>
+//        /// Gets or sets property containing version of a binding.
+//        /// </summary>
+//        public string BindingVersion { get; set; }
+
+//        /// <inheritdoc/>
+//        public IDictionary<string, IAsyncApiAny> Extensions { get; set; }
+//    }
+//}

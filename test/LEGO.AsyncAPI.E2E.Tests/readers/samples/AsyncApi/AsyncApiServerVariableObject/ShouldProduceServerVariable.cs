@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiServerVariabl
     using LEGO.AsyncAPI.Tests;
     using Xunit;
 
-    public class ShouldProduceServerVariable : ShouldConsumeProduceBase<ServerVariable>
+    public class ShouldProduceServerVariable : ShouldConsumeProduceBase<AsyncApiServerVariable>
     {
         public ShouldProduceServerVariable()
             : base(typeof(ShouldProduceServerVariable))
@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiServerVariabl
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new ServerVariable()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new AsyncApiServerVariable()));
         }
 
         [Fact]

@@ -3,10 +3,10 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiInfoObject
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeInfo : ShouldConsumeProduceBase<Info>
+    public class ShouldConsumeInfo : ShouldConsumeProduceBase<AsyncApiInfo>
     {
         public ShouldConsumeInfo()
             : base(typeof(ShouldConsumeInfo))
@@ -31,9 +31,9 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiInfoObject
             Assert.Equal("bar", output.Version);
             Assert.Equal("quz", output.Description);
             Assert.Equal(new Uri("https://lego.com"), output.TermsOfService);
-            Assert.IsType<Contact>(output.Contact);
-            Assert.Equal(new License("Apache 2.0"), output.License);
-            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
+            Assert.IsType<AsyncApiContact>(output.Contact);
+            Assert.Equal(new AsyncApiLicense("Apache 2.0"), output.License);
+            Assert.IsAssignableFrom<IDictionary<string, IAsyncApiAny>>(output.Extensions);
         }
     }
 }

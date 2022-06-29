@@ -2,10 +2,10 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiParameterObje
 {
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeParameter : ShouldConsumeProduceBase<Parameter>
+    public class ShouldConsumeParameter : ShouldConsumeProduceBase<AsyncApiParameter>
     {
         public ShouldConsumeParameter()
             : base(typeof(ShouldConsumeParameter))
@@ -17,7 +17,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiParameterObje
         {
             var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
-            Assert.IsType<Parameter>(output);
+            Assert.IsType<AsyncApiParameter>(output);
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiParameterObje
             Assert.Equal("bar", output.Description);
             Assert.IsType<Schema>(output.Schema);
             Assert.Equal("$message.payload#/user/id", output.Location);
-            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
+            Assert.IsAssignableFrom<IDictionary<string, IAsyncApiAny>>(output.Extensions);
         }
     }
 }

@@ -2,14 +2,17 @@
 
 namespace LEGO.AsyncAPI.Models
 {
+    using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
+    using Services;
 
     /// <summary>
     /// This is the root document object for the API specification. It combines resource listing and API declaration together into one document.
     /// </summary>
-    public class AsyncApiDocument : IExtensible
+    public class AsyncApiDocument : IAsyncApiExtensible, IAsyncApiSerializable
     {
         /// <summary>
         /// REQUIRED. Specifies the AsyncAPI Specification version being used.
@@ -17,22 +20,22 @@ namespace LEGO.AsyncAPI.Models
         public string Asyncapi { get; set; }
 
         /// <summary>
-        /// Identifier of the application the AsyncAPI document is defining.
+        ///identifier of the application the AsyncAPI document is defining.
         /// </summary>
         public string Id { get; set; }
 
         /// <summary>
         /// REQUIRED. Provides metadata about the API. The metadata can be used by the clients if needed.
         /// </summary>
-        public Info Info { get; set; }
+        public AsyncApiInfo Info { get; set; }
 
         /// <summary>
-        /// Provides connection details of servers. Field pattern ^[A-Za-z0-9_\-]+$.
+        /// provides connection details of servers.
         /// </summary>
-        public IDictionary<string, Server> Servers { get; set; } = new Dictionary<string, Server>();
+        public IDictionary<string, AsyncApiServer> Servers { get; set; } = new Dictionary<string, AsyncApiServer>();
 
         /// <summary>
-        /// Default content type to use when encoding/decoding a message's payload.
+        /// default content type to use when encoding/decoding a message's payload.
         /// </summary>
         /// <remarks>
         /// A string representing the default content type to use when encoding/decoding a message's payload.
@@ -43,24 +46,158 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// REQUIRED. The available channels and messages for the API.
         /// </summary>
-        public IDictionary<string, Channel> Channels { get; set; } = new Dictionary<string, Channel>();
+        public IDictionary<string, AsyncApiChannel> Channels { get; set; } = new Dictionary<string, AsyncApiChannel>();
 
         /// <summary>
-        /// An element to hold various schemas for the specification.
+        /// an element to hold various schemas for the specification.
         /// </summary>
-        public Components Components { get; set; }
+        public AsyncApiComponents Components { get; set; }
 
         /// <summary>
-        /// A list of tags used by the specification with additional metadata. Each tag name in the list MUST be unique.
+        /// a list of tags used by the specification with additional metadata. Each tag name in the list MUST be unique.
         /// </summary>
-        public IList<Tag> Tags { get; set; } = new List<Tag>();
+        public IList<AsyncApiTag> Tags { get; set; } = new List<AsyncApiTag>();
 
         /// <summary>
-        /// Additional external documentation.
+        /// additional external documentation.
         /// </summary>
-        public ExternalDocumentation ExternalDocs { get; set; }
+        public AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAny> Extensions { get; set; } = new Dictionary<string, IAny>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
+        public void SerializeV2(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.WriteStartObject();
+
+            // asyncApi
+            writer.WriteProperty(AsyncApiConstants.AsyncApi, "2.3.0");
+
+            // info
+            writer.WriteRequiredObject(AsyncApiConstants.Info, this.Info, (w, i) => i.SerializeV2(w));
+
+            // id
+            writer.WriteProperty(AsyncApiConstants.Id, this.Id);
+
+            // servers
+            writer.WriteOptionalMap(AsyncApiConstants.Servers, this.Servers, (writer, key, component) =>
+            {
+                if (component.Reference != null &&
+                component.Reference.Type == ReferenceType.Server &&
+                component.Reference.Id == key)
+                {
+                    component.SerializeV2WithoutReference(writer);
+                }
+                else
+                {
+                    component.SerializeV2(writer);
+                }
+            });
+
+            // content type
+            writer.WriteProperty(AsyncApiConstants.DefaultContentType, this.DefaultContentType);
+
+            // channels
+            writer.WriteRequiredMap(AsyncApiConstants.Channels, this.Channels, (writer, key, component) =>
+            {
+                if (component.Reference != null &&
+                component.Reference.Type == ReferenceType.Channel &&
+                component.Reference.Id == key)
+                {
+                    component.SerializeV2WithoutReference(writer);
+                }
+                else
+                {
+                    component.SerializeV2(writer);
+                }
+            });
+
+            // components
+            writer.WriteOptionalObject(AsyncApiConstants.Components, this.Components, (w, c) => c.SerializeV2(w));
+
+            // tags
+            writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV2(w));
+
+            // external docs
+            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
+
+            // extensions
+            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+
+            writer.WriteEndObject();
+        }
+
+        public IEnumerable<AsyncApiError> ResolveReferences()
+        {
+            var resolver = new AsyncApiReferenceResolver(this);
+            var walker = new AsyncApiWalker(resolver);
+            walker.Walk(this);
+            return resolver.Errors;
+        }
+
+        public IAsyncApiReferenceable ResolveReference(AsyncApiReference reference)
+        {
+            if (reference == null)
+            {
+                return null;
+            }
+
+            if (!reference.Type.HasValue)
+            {
+                throw new ArgumentException("Reference must have a type.");
+            }
+
+
+            if (this.Components == null)
+            {
+                throw new AsyncApiException(string.Format("Invalid reference Id: '{0}'", reference.Id));
+            }
+
+            try
+            {
+                switch (reference.Type)
+                {
+                    case ReferenceType.Schema:
+                        return this.Components.Schemas[reference.Id];
+                    case ReferenceType.Server:
+                        return this.Components.Servers[reference.Id];
+                    case ReferenceType.Channel:
+                        return this.Components.Channels[reference.Id];
+                    case ReferenceType.Message:
+                        return this.Components.Messages[reference.Id];
+                    case ReferenceType.SecurityScheme:
+                        return this.Components.SecuritySchemes[reference.Id];
+                    case ReferenceType.Parameter:
+                        return this.Components.Parameters[reference.Id];
+                    case ReferenceType.CorrelationId:
+                        return this.Components.CorrelationIds[reference.Id];
+                    case ReferenceType.OperationTrait:
+                        return this.Components.OperationTraits[reference.Id];
+                    case ReferenceType.MessageTrait:
+                        return this.Components.MessageTraits[reference.Id];
+
+                    //case ReferenceType.ServerBinding:
+                    //    return this.Components.ServerBindings[reference.Id];
+                    //case ReferenceType.ChannelBinding:
+                    //    return this.Components.ChannelBindings[reference.Id];
+                    //case ReferenceType.OperationBinding:
+                    //    return this.Components.OperationBindings[reference.Id];
+                    //case ReferenceType.MessageBinding:
+                    //    return this.Components.MessageBindings[reference.Id]; 
+                    // TODO: Figure out bindings.
+                    default:
+                        throw new AsyncApiException("Invalid reference type.");
+                }
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new AsyncApiException(string.Format("Invalid reference Id: '{0}'", reference.Id));
+            }
+        }
     }
 }

@@ -2,8 +2,10 @@
 
 namespace LEGO.AsyncAPI.Models.Any
 {
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
-    /// Type of an <see cref="IAny"/>.
+    /// Type of an <see cref="IAsyncApiAny"/>.
     /// </summary>
     public enum AnyType
     {

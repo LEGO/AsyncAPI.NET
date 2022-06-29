@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiChannelObject
     using LEGO.AsyncAPI.Tests;
     using Xunit;
 
-    public class ShouldProduceChannel : ShouldConsumeProduceBase<Channel>
+    public class ShouldProduceChannel : ShouldConsumeProduceBase<AsyncApiChannel>
     {
         public ShouldProduceChannel()
             : base(typeof(ShouldProduceChannel))
@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiChannelObject
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new Channel()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new AsyncApiChannel()));
         }
 
         [Fact]

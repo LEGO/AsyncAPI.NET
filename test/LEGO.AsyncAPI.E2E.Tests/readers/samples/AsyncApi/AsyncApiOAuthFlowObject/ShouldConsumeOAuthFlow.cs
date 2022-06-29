@@ -3,7 +3,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOAuthFlowObje
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
     public class ShouldConsumeOAuthFlow : ShouldConsumeProduceBase<OAuthFlow>
@@ -28,7 +28,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOAuthFlowObje
             Assert.Equal(new Uri("https://lego.com/token"), output.TokenUrl);
             Assert.Equal(new Uri("https://lego.com/refresh"), output.RefreshUrl);
             Assert.IsType<Dictionary<string, string>>(output.Scopes);
-            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
+            Assert.IsAssignableFrom<IDictionary<string, IAsyncApiAny>>(output.Extensions);
         }
     }
 }

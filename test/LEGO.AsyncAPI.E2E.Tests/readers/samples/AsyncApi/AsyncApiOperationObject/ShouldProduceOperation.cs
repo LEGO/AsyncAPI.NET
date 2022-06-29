@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationObje
     using LEGO.AsyncAPI.Tests;
     using Xunit;
 
-    public class ShouldProduceOperation : ShouldConsumeProduceBase<Operation>
+    public class ShouldProduceOperation : ShouldConsumeProduceBase<AsyncApiOperation>
     {
         public ShouldProduceOperation()
             : base(typeof(ShouldProduceOperation))
@@ -15,22 +15,22 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiOperationObje
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new Operation()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new AsyncApiOperation()));
         }
 
         [Fact]
         public void ShouldProduceCompleteSpec()
         {
-            Assert.Equal(this.GetStringWithMockedExtensions("Complete.json"), this.AsyncApiWriter.Write(new Operation
+            Assert.Equal(this.GetStringWithMockedExtensions("Complete.json"), this.AsyncApiWriter.Write(new AsyncApiOperation
             {
                 OperationId = "foo",
                 Summary = "bar",
                 Description = "baz",
-                Tags = ImmutableList<Tag>.Empty,
-                ExternalDocs = new ExternalDocumentation(),
+                Tags = ImmutableList<AsyncApiTag>.Empty,
+                ExternalDocs = new AsyncApiExternalDocumentation(),
                 Bindings = MockData.OperationBindings(),
-                Traits = ImmutableList<OperationTrait>.Empty,
-                Message = new Message(),
+                Traits = ImmutableList<AsyncApiOperationTrait>.Empty,
+                Message = new AsyncApiMessage(),
                 Extensions = MockData.Extensions(),
             }));
         }

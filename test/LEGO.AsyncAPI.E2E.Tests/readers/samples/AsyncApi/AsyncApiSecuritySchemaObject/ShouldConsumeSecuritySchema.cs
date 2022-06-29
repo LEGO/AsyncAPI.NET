@@ -3,7 +3,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiSecuritySchem
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
     public class ShouldConsumeSecuritySchema : ShouldConsumeProduceBase<SecurityScheme>
@@ -32,7 +32,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiSecuritySchem
             Assert.Equal("qoz", output.BearerFormat);
             Assert.IsType<OAuthFlows>(output.Flows);
             Assert.Equal(new Uri("https://lego.com"), output.OpenIdConnectUrl);
-            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
+            Assert.IsAssignableFrom<IDictionary<string, IAsyncApiAny>>(output.Extensions);
         }
     }
 }

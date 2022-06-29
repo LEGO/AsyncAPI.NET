@@ -1,49 +1,49 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using System;
     using System.IO;
-    using System.Text;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Readers.Serializers;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Interface;
 
     /// <summary>
-    /// Converts contents on JSON/YAML string into AsyncApiDocument instance.
+    /// Service class for converting strings into AsyncApiDocument instances
     /// </summary>
-    public class AsyncApiStringReader : IAsyncApiReader<string>
+    public class AsyncApiStringReader : IAsyncApiReader<string, AsyncApiDiagnostic>
     {
-        private readonly YamlToJsonSerializer serializer;
-        private readonly IAsyncApiReader<Stream> jsonAsyncApiReader;
+        private readonly AsyncApiReaderSettings settings;
 
-        public AsyncApiStringReader()
+        /// <summary>
+        /// Constructor tha allows reader to use non-default settings
+        /// </summary>
+        /// <param name="settings"></param>
+        public AsyncApiStringReader(AsyncApiReaderSettings settings = null)
         {
-            this.serializer = new YamlToJsonSerializer();
-            this.jsonAsyncApiReader = new AsyncApiJsonReader();
+            this.settings = settings ?? new AsyncApiReaderSettings();
         }
 
         /// <summary>
-        /// Reads the string input and parses it into an AsyncApiDocument.
+        /// Reads the string input and parses it into an AsyncApi document.
         /// </summary>
-        /// <param name="input">String containing AsyncApi definition to parse. Supports JSON and YAML formats.</param>
-        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing.</param>
-        /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public AsyncApiDocument Read(string input, out AsyncApiDiagnostic diagnostic)
         {
-            AsyncApiDocument output = new();
-
-            try
+            using (var reader = new StringReader(input))
             {
-                var jsonObject = this.serializer.Serialize(input);
-                output = this.jsonAsyncApiReader.Read(new MemoryStream(Encoding.UTF8.GetBytes(jsonObject)), out diagnostic);
+                return new AsyncApiTextReaderReader(this.settings).Read(reader, out diagnostic);
             }
-            catch (Exception e)
-            {
-                diagnostic = new AsyncApiDiagnostic(e);
-                return output;
-            }
+        }
 
-            return output;
+        /// <summary>
+        /// Reads the string input and parses it into an AsyncApi element.
+        /// </summary>
+        public T ReadFragment<T>(string input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic)
+            where T : IAsyncApiElement
+        {
+            using (var reader = new StringReader(input))
+            {
+                return new AsyncApiTextReaderReader(this.settings).ReadFragment<T>(reader, version, out diagnostic);
+            }
         }
     }
 }
