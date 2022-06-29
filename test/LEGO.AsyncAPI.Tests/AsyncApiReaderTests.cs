@@ -2,6 +2,9 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Linq;
+using LEGO.AsyncAPI.Readers;
+
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
@@ -17,10 +20,10 @@ namespace LEGO.AsyncAPI.Tests
 
     public class AsyncApiReaderTests
     {
-        [Test]
-        public void Read_WithFullSpec_Deserializes()
-        {
-            var yaml = @"asyncapi: 2.3.0
+      [Test]
+      public void Read_WithFullSpec_Deserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
 info:
   title: AMMA
   version: 1.0.0
@@ -106,17 +109,150 @@ components:
                 type: string
                 description: Send an API request to this url for detailed data on the referenced API.
 ";
-            var reader = new AsyncApiStringReader();
-            var doc = reader.Read(yaml, out var diagnostic);
-            Assert.AreEqual((doc.Channels["workspace"].Extensions["x-eventarchetype"] as AsyncApiString).Value, "objectchanged");
-            Assert.AreEqual((doc.Channels["workspace"].Extensions["x-classification"] as AsyncApiString).Value, "green");
-            Assert.AreEqual((doc.Channels["workspace"].Extensions["x-datalakesubscription"] as AsyncApiBoolean).Value, true);
-            var message = doc.Channels["workspace"].Publish.Message;
-            Assert.AreEqual(message.SchemaFormat, "application/schema+yaml;version=draft-07");
-            Assert.AreEqual(message.Summary, "Metadata about a workspace that has been created, updated or deleted.");
-            var payload = doc.Channels["workspace"].Publish.Message.Payload;
-            Assert.NotNull(payload);
-            Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
-        }
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-eventarchetype"] as AsyncApiString).Value,
+          "objectchanged");
+        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-classification"] as AsyncApiString).Value, "green");
+        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-datalakesubscription"] as AsyncApiBoolean).Value,
+          true);
+        var message = doc.Channels["workspace"].Publish.Message;
+        Assert.AreEqual(message.SchemaFormat, "application/schema+yaml;version=draft-07");
+        Assert.AreEqual(message.Summary, "Metadata about a workspace that has been created, updated or deleted.");
+        var payload = doc.Channels["workspace"].Publish.Message.Payload;
+        Assert.NotNull(payload);
+        Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
+      }
+
+      [Test]
+      public void Read_WithBasicPlusContact_Deserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+  contact:  
+    name: API Support
+    url: https://www.example.com/support
+    email: support@example.com
+channels:
+  workspace:
+    x-eventarchetype: objectchanged
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        Assert.AreEqual("support@example.com", doc.Info.Contact.Email);
+        Assert.AreEqual(new Uri("https://www.example.com/support"), doc.Info.Contact.Url);
+        Assert.AreEqual("API Support", doc.Info.Contact.Name);
+      }
+
+      [Test]
+      public void Read_WithBasicPlusExternalDocs_Deserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    publish:
+      bindings:
+        http:
+          type: response
+      message:
+        $ref: '#/components/messages/WorkspaceEventPayload'
+components:
+  messages:
+    WorkspaceEventPayload:
+      schemaFormat: application/schema+yaml;version=draft-07
+      externalDocs: 
+        description: Find more info here
+        url: https://example.com           
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var message = doc.Channels["workspace"].Publish.Message;
+        Assert.AreEqual(new Uri("https://example.com"), message.ExternalDocs.Url);
+        Assert.AreEqual("Find more info here", message.ExternalDocs.Description);
+      }
+
+      [Test]
+      public void Read_WithBasicPlusTag_Deserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    x-eventarchetype: objectchanged
+tags:
+  - name: user
+    description: User-related messages       
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var tag = doc.Tags.First();
+        Assert.AreEqual("user", tag.Name);
+        Assert.AreEqual("User-related messages", tag.Description);
+      }
+
+      [Test]
+      public void Read_WithBasicPlusServerDeserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    x-eventarchetype: objectchanged
+servers:
+  production:
+    url: 'pulsar+ssl://prod.events.managed.io:1234'
+    protocol: pulsar+ssl
+    description: Pulsar broker   
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var server = doc.Servers.First();
+        Assert.AreEqual("production", server.Key);
+        Assert.AreEqual("pulsar+ssl://prod.events.managed.io:1234", server.Value.Url);
+        Assert.AreEqual("pulsar+ssl", server.Value.Protocol);
+        Assert.AreEqual("Pulsar broker", server.Value.Description);
+      }
+      
+      [Test]
+      public void Read_WithBasicPlusServerVariablesDeserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    x-eventarchetype: objectchanged
+servers:
+  production:
+    url: 'pulsar+ssl://prod.events.managed.io:{port}'
+    protocol: pulsar+ssl
+    description: Pulsar broker
+    variables:
+      port:
+        description: Secure connection (TLS) is available through port 8883.
+        default: '1883'
+        enum:
+          - '1883'
+          - '8883'
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var server = doc.Servers.First();
+        var variable = server.Value.Variables.First();
+        Assert.AreEqual("production", server.Key);
+        Assert.AreEqual("port", variable.Key);
+        Assert.AreEqual("Secure connection (TLS) is available through port 8883.", variable.Value.Description);
+      }
     }
 }
+
