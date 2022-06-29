@@ -20,10 +20,10 @@ namespace LEGO.AsyncAPI.Tests
 
     public class AsyncApiReaderTests
     {
-        [Test]
-        public void Read_WithFullSpec_Deserializes()
-        {
-            var yaml = @"asyncapi: 2.3.0
+      [Test]
+      public void Read_WithFullSpec_Deserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
 info:
   title: AMMA
   version: 1.0.0
@@ -109,23 +109,25 @@ components:
                 type: string
                 description: Send an API request to this url for detailed data on the referenced API.
 ";
-            var reader = new AsyncApiStringReader();
-            var doc = reader.Read(yaml, out var diagnostic);
-            Assert.AreEqual((doc.Channels["workspace"].Extensions["x-eventarchetype"] as AsyncApiString).Value, "objectchanged");
-            Assert.AreEqual((doc.Channels["workspace"].Extensions["x-classification"] as AsyncApiString).Value, "green");
-            Assert.AreEqual((doc.Channels["workspace"].Extensions["x-datalakesubscription"] as AsyncApiBoolean).Value, true);
-            var message = doc.Channels["workspace"].Publish.Message;
-            Assert.AreEqual(message.SchemaFormat, "application/schema+yaml;version=draft-07");
-            Assert.AreEqual(message.Summary, "Metadata about a workspace that has been created, updated or deleted.");
-            var payload = doc.Channels["workspace"].Publish.Message.Payload;
-            Assert.NotNull(payload);
-            Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
-        }
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-eventarchetype"] as AsyncApiString).Value,
+          "objectchanged");
+        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-classification"] as AsyncApiString).Value, "green");
+        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-datalakesubscription"] as AsyncApiBoolean).Value,
+          true);
+        var message = doc.Channels["workspace"].Publish.Message;
+        Assert.AreEqual(message.SchemaFormat, "application/schema+yaml;version=draft-07");
+        Assert.AreEqual(message.Summary, "Metadata about a workspace that has been created, updated or deleted.");
+        var payload = doc.Channels["workspace"].Publish.Message.Payload;
+        Assert.NotNull(payload);
+        Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
+      }
 
-        [Test]
-        public void Read_WithBasicPlusContact_Deserializes()
-        {
-            var yaml = @"asyncapi: 2.3.0
+      [Test]
+      public void Read_WithBasicPlusContact_Deserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
 info:
   title: AMMA
   version: 1.0.0
@@ -137,17 +139,17 @@ channels:
   workspace:
     x-eventarchetype: objectchanged
 ";
-            var reader = new AsyncApiStringReader();
-            var doc = reader.Read(yaml, out var diagnostic);
-            Assert.AreEqual("support@example.com",doc.Info.Contact.Email);
-            Assert.AreEqual(new Uri("https://www.example.com/support"),doc.Info.Contact.Url);
-            Assert.AreEqual("API Support",doc.Info.Contact.Name);
-        }
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        Assert.AreEqual("support@example.com", doc.Info.Contact.Email);
+        Assert.AreEqual(new Uri("https://www.example.com/support"), doc.Info.Contact.Url);
+        Assert.AreEqual("API Support", doc.Info.Contact.Name);
+      }
 
-        [Test]
-        public void Read_WithBasicPlusExternalDocs_Deserializes()
-        {
-          var yaml = @"asyncapi: 2.3.0
+      [Test]
+      public void Read_WithBasicPlusExternalDocs_Deserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
 info:
   title: AMMA
   version: 1.0.0
@@ -167,17 +169,17 @@ components:
         description: Find more info here
         url: https://example.com           
 ";
-          var reader = new AsyncApiStringReader();
-          var doc = reader.Read(yaml, out var diagnostic);
-          var message = doc.Channels["workspace"].Publish.Message;
-          Assert.AreEqual(new Uri("https://example.com"), message.ExternalDocs.Url);
-          Assert.AreEqual("Find more info here", message.ExternalDocs.Description);
-        }
-        
-        [Test]
-        public void Read_WithBasicPlusTag_Deserializes()
-        {
-          var yaml = @"asyncapi: 2.3.0
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var message = doc.Channels["workspace"].Publish.Message;
+        Assert.AreEqual(new Uri("https://example.com"), message.ExternalDocs.Url);
+        Assert.AreEqual("Find more info here", message.ExternalDocs.Description);
+      }
+
+      [Test]
+      public void Read_WithBasicPlusTag_Deserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
 info:
   title: AMMA
   version: 1.0.0
@@ -188,12 +190,37 @@ tags:
   - name: user
     description: User-related messages       
 ";
-          var reader = new AsyncApiStringReader();
-          var doc = reader.Read(yaml, out var diagnostic);
-          var tag = doc.Tags.First();
-          Assert.AreEqual("user", tag.Name);
-          Assert.AreEqual("User-related messages", tag.Description);
-        }
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var tag = doc.Tags.First();
+        Assert.AreEqual("user", tag.Name);
+        Assert.AreEqual("User-related messages", tag.Description);
+      }
+
+      [Test]
+      public void Read_WithBasicPlusServerDeserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    x-eventarchetype: objectchanged
+servers:
+  production:
+    url: 'pulsar+ssl://prod.events.managed.io:1234'
+    protocol: pulsar+ssl
+    description: Pulsar broker   
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var server = doc.Servers.First();
+        Assert.AreEqual("production", server.Key);
+        Assert.AreEqual("pulsar+ssl://prod.events.managed.io:1234", server.Value.Url);
+        Assert.AreEqual("pulsar+ssl", server.Value.Protocol);
+        Assert.AreEqual("Pulsar broker", server.Value.Description);
+      }
     }
 }
 
