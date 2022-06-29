@@ -173,6 +173,27 @@ components:
           Assert.AreEqual(new Uri("https://example.com"), message.ExternalDocs.Url);
           Assert.AreEqual("Find more info here", message.ExternalDocs.Description);
         }
+        
+        [Test]
+        public void Read_WithBasicPlusTag_Deserializes()
+        {
+          var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    x-eventarchetype: objectchanged
+tags:
+  - name: user
+    description: User-related messages       
+";
+          var reader = new AsyncApiStringReader();
+          var doc = reader.Read(yaml, out var diagnostic);
+          var tag = doc.Tags.First();
+          Assert.AreEqual("user", tag.Name);
+          Assert.AreEqual("User-related messages", tag.Description);
+        }
     }
 }
 
