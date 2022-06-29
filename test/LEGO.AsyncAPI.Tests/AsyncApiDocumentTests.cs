@@ -191,7 +191,7 @@ components:
                                 Type = SecuritySchemeType.OAuth2,
                                 Flows = new AsyncApiOAuthFlows
                                 {
-                                        
+
                                     Implicit = new AsyncApiOAuthFlow
                                     {
                                         Scopes = new Dictionary<string, string>
@@ -209,7 +209,7 @@ components:
                                 }}
                     }
                 }
-                    },
+                },
                 Servers = new Dictionary<string, AsyncApiServer>
                 {
                     {serverKey, new AsyncApiServer
@@ -226,7 +226,7 @@ components:
                                     new AsyncApiSecurityScheme()
                                     {
                                         Name = securitySchemeName,
-                                        
+
                                         Reference = new AsyncApiReference()
                                         {
                                             Id = securitySchemeName,
@@ -241,7 +241,7 @@ components:
                             },
                         },
                         }
-                    
+
                 },
                 },
                 Info = new AsyncApiInfo()
@@ -405,9 +405,10 @@ components:
                                     },
                                 },
                             },
-                        }},
+                        }
+                    },
                 },
-                
+
             };
 
             var outputString = new StringWriter(CultureInfo.InvariantCulture);
@@ -423,4 +424,5 @@ components:
             // Assert
             Assert.AreEqual(actual, expected);
         }
+    }
 }
