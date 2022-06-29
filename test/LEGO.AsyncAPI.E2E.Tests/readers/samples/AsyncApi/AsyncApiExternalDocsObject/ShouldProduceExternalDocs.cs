@@ -4,7 +4,7 @@
     using LEGO.AsyncAPI.Tests;
     using Xunit;
 
-    public class ShouldProduceExternalDocs : ShouldConsumeProduceBase<ExternalDocumentation>
+    public class ShouldProduceExternalDocs : ShouldConsumeProduceBase<AsyncApiExternalDocumentation>
     {
         public ShouldProduceExternalDocs()
             : base(typeof(ShouldProduceExternalDocs))
@@ -14,7 +14,7 @@
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new ExternalDocumentation()));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new AsyncApiExternalDocumentation()));
         }
 
         [Fact]

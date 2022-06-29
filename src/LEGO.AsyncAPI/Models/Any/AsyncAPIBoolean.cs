@@ -1,38 +1,26 @@
-// Copyright (c) The LEGO Group. All rights reserved.
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Models.Any
 {
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
-    /// Async API Boolean.
+    /// AsyncApi boolean.
     /// </summary>
-    public class AsyncAPIBoolean : IPrimitiveValue<bool>
+    public class AsyncApiBoolean : AsyncApiPrimitive<bool>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncAPIBoolean"/> class.
+        /// Initializes the <see cref="AsyncApiBoolean"/> class.
         /// </summary>
-        /// <param name="value">Initialization value.</param>
-        public AsyncAPIBoolean(bool value)
+        /// <param name="value"></param>
+        public AsyncApiBoolean(bool value)
+            : base(value)
         {
-            this.Value = value;
         }
 
         /// <summary>
-        /// The type of <see cref="IAny"/>.
+        /// Primitive type this object represents.
         /// </summary>
-        public PrimitiveType PrimitiveType => PrimitiveType.Boolean;
-
-        /// <summary>
-        /// Value.
-        /// </summary>
-        public bool Value { get; set; }
-
-        /// <summary>
-        /// AnyType.Primitive.
-        /// </summary>
-        public AnyType AnyType => AnyType.Primitive;
-
-        public static explicit operator bool(AsyncAPIBoolean b) => b.Value;
-
-        public static explicit operator AsyncAPIBoolean(bool b) => new(value: b);
+        public override PrimitiveType PrimitiveType { get; } = PrimitiveType.Boolean;
     }
 }

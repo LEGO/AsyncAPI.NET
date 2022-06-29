@@ -2,10 +2,10 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiServerVariabl
 {
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using Xunit;
 
-    public class ShouldConsumeServerVariable : ShouldConsumeProduceBase<ServerVariable>
+    public class ShouldConsumeServerVariable : ShouldConsumeProduceBase<AsyncApiServerVariable>
     {
         public ShouldConsumeServerVariable()
             : base(typeof(ShouldConsumeServerVariable))
@@ -17,7 +17,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiServerVariabl
         {
             var output = this.AsyncApiAsyncApiReader.Read(this.GetStream("Minimal.json"));
 
-            Assert.IsType<ServerVariable>(output);
+            Assert.IsType<AsyncApiServerVariable>(output);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiServerVariabl
             Assert.Equal("bar", output.Default);
             Assert.Equal("baz", output.Description);
             Assert.Equal(new List<string> { "quz" }, output.Examples);
-            Assert.IsAssignableFrom<IDictionary<string, IAny>>(output.Extensions);
+            Assert.IsAssignableFrom<IDictionary<string, IAsyncApiAny>>(output.Extensions);
         }
     }
 }

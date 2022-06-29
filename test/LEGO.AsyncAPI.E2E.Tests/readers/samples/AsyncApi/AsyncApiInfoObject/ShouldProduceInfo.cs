@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiInfoObject
     using LEGO.AsyncAPI.Tests;
     using Xunit;
 
-    public class ShouldProduceInfo : ShouldConsumeProduceBase<Info>
+    public class ShouldProduceInfo : ShouldConsumeProduceBase<AsyncApiInfo>
     {
         public ShouldProduceInfo()
             : base(typeof(ShouldProduceInfo))
@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.E2E.Tests.Readers.Samples.AsyncApi.AsyncApiInfoObject
         [Fact]
         public void ShouldProduceMinimalSpec()
         {
-            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new Info("foo", "bar")));
+            Assert.Equal(this.GetString("Minimal.json"), this.AsyncApiWriter.Write(new AsyncApiInfo("foo", "bar")));
         }
 
         [Fact]

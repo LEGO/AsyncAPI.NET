@@ -50,7 +50,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// OAuth2.
         /// </summary>
-        Oauth2,
+        OAuth2,
 
         /// <summary>
         /// OIDC.
