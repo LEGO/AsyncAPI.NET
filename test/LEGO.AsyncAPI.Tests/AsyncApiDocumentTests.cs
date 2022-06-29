@@ -111,7 +111,7 @@ channels:
 components:
   securitySchemes:
     securitySchemeName:
-      type: OAuth2
+      type: oauth2
       description: securitySchemeDescription
       flows:
         implicit:

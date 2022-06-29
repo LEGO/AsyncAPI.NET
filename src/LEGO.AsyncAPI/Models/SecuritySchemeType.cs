@@ -1,5 +1,7 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Attributes;
+
 namespace LEGO.AsyncAPI.Models
 {
     /// <summary>
@@ -10,71 +12,71 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// None.
         /// </summary>
-        None = 0,
+        [Display("None")]None = 0,
 
         /// <summary>
         /// Username & Password.
         /// </summary>
-        UserPassword,
+        [Display("userPassword")] UserPassword,
 
         /// <summary>
         /// Api Key.
         /// </summary>
-        ApiKey,
+        [Display("apiKey")] ApiKey,
 
         /// <summary>
         /// Certificate.
         /// </summary>
-        X509,
+        [Display("X509")] X509,
 
         /// <summary>
         /// Symmetric Encryption.
         /// </summary>
-        SymmetricEncryption,
+        [Display("symmetricEncryption")]SymmetricEncryption,
 
         /// <summary>
         /// Asymmetric Encryption.
         /// </summary>
-        AsymmetricEncryption,
+        [Display("asymmetricEncryption")]AsymmetricEncryption,
 
         /// <summary>
         /// Api Key.
         /// </summary>
-        HttpApiKey,
+        [Display("httpApiKey")]HttpApiKey,
 
         /// <summary>
         /// Basic or Bearer token authorization header.
         /// </summary>
-        Http,
+        [Display("http")]Http,
 
         /// <summary>
         /// OAuth2.
         /// </summary>
-        OAuth2,
+        [Display("oauth2")]OAuth2,
 
         /// <summary>
         /// OIDC.
         /// </summary>
-        OpenIdConnect,
+        [Display("openIdConnect")]OpenIdConnect,
 
         /// <summary>
         /// Plain.
         /// </summary>
-        Plain,
+        [Display("plain")]Plain,
 
         /// <summary>
         /// Sha256.
         /// </summary>
-        ScramSha256,
+        [Display("scramSha256")]ScramSha256,
 
         /// <summary>
         /// Sha512.
         /// </summary>
-        ScramSha512,
+        [Display("scramSha512")]ScramSha512,
 
         /// <summary>
         /// GssApi.
         /// </summary>
-        Gssapi,
+        [Display("gssapi")]Gssapi,
     }
 }
