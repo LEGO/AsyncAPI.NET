@@ -342,6 +342,45 @@ components:
         Assert.IsTrue(flow.Implicit.Scopes.ContainsKey("write:pets"));
         Assert.IsTrue(flow.Implicit.Scopes.ContainsKey("read:pets"));
       }
+      
+      [Test]
+      public void Read_WithBasicPlusSecurityRequirementsDeserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+servers:
+  production:
+    url: 'pulsar+ssl://prod.events.managed.io:1234'
+    protocol: pulsar+ssl
+    description: Pulsar broker
+    security:
+      - petstore_auth:
+        - write:pets
+        - read:pets
+channels:
+  workspace:
+    x-something: yes
+components:
+  securitySchemes:
+    petstore_auth: 
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://example.com/api/oauth/dialog
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets      
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var requirement = doc.Servers.First().Value.Security.First().First();
+        Assert.AreEqual(SecuritySchemeType.OAuth2, requirement.Key.Type);
+        Assert.IsTrue(requirement.Value.Contains("write:pets"));
+        Assert.IsTrue(requirement.Value.Contains("read:pets"));
+      }
 
     }
 }
+
