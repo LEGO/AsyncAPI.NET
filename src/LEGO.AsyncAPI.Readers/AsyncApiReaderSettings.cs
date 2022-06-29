@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Interface;
 using LEGO.AsyncAPI.Validations;
 
 namespace LEGO.AsyncAPI.Readers

@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Models.Interfaces
 {
     using LEGO.AsyncAPI.Models.Any;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Base interface for all the types that represent AsyncAPI Any.

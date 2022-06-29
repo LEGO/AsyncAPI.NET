@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Writers
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
 
     public class FormattingStreamWriter : StreamWriter

@@ -1,5 +1,4 @@
 using System.IO;
-using LEGO.AsyncAPI;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.Interface;

@@ -43,7 +43,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Serialize <see cref="AsyncApiReference"/> to Open Api v3.0.
+        /// Serialize <see cref="AsyncApiReference"/> to Async Api v2.4.
         /// </summary>
         public void SerializeV2(IAsyncApiWriter writer)
         {

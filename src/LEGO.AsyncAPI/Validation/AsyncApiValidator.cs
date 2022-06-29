@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Services;
@@ -17,7 +16,7 @@ namespace LEGO.AsyncAPI.Validations
         private readonly IList<AsyncApiValidatorWarning> _warnings = new List<AsyncApiValidatorWarning>();
 
         /// <summary>
-        /// Create a vistor that will validate an OpenAPIDocument
+        /// Create a vistor that will validate an AsyncApiDocument
         /// </summary>
         /// <param name="ruleSet"></param>
         public AsyncApiValidator(ValidationRuleSet ruleSet)

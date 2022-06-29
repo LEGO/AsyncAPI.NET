@@ -36,7 +36,7 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <summary>
-        /// Serialize <see cref="AsyncApiOAuthFlow"/> to Open Api v3.0
+        /// Serialize <see cref="AsyncApiOAuthFlow"/> to Async Api v2.4
         /// </summary>
         public void SerializeV2(IAsyncApiWriter writer)
         {

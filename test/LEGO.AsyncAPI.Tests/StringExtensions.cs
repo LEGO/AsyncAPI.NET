@@ -1,0 +1,14 @@
+﻿using System;
+
+namespace LEGO.AsyncAPI.Tests
+{
+    public static class StringExtensions
+    {
+        public static string MakeLineBreaksEnvironmentNeutral(this string input)
+        {
+            return input.Replace("\r\n", "\n")
+                .Replace("\r", "\n")
+                .Replace("\n", Environment.NewLine);
+        }
+    }
+}

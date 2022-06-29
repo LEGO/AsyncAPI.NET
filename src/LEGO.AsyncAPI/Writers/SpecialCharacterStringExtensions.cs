@@ -3,11 +3,8 @@
 namespace LEGO.AsyncAPI.Writers
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
-    using System.IO;
     using System.Linq;
-    using System.Reflection;
     public static class SpecialCharacterStringExtensions
     {
         // Plain style strings cannot start with indicators. 

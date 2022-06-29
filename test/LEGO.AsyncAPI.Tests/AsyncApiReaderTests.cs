@@ -1,11 +1,9 @@
-namespace LEGO.AsyncAPI.Tests
+﻿namespace LEGO.AsyncAPI.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-    using System.Net.Mime;
-    using System.Runtime.Serialization;
     using Models;
     using Models.Any;
     using Models.Interfaces;
@@ -13,15 +11,113 @@ namespace LEGO.AsyncAPI.Tests
     using Readers;
     using Writers;
 
-    public class WriterTests
-    {
         [Test]
-        public void Test()
+        public void SerializeV2_WithFullSpec_Serializes()
         {
+            var expected =
+                @"asyncapi: '2.3.0'
+info:
+  title: apiTitle
+  description: description
+  termsOfService: https://example.com/termsOfService
+  contact:
+    name: contactName
+    url: https://example.com/contact
+    email: contactEmail
+  license:
+    name: licenseName
+    url: https://example.com/license
+    x-extension: value
+  version: apiVersion
+  x-extension: value
+id: documentId
+servers:
+  myServer:
+    url: https://example.com/server
+    protocol: KafkaProtocol
+    protocolVersion: protocolVersion
+    description: serverDescription
+    security:
+      - '#/components/securitySchemes/securitySchemeName':
+          - requirementItem
+channels:
+  channel1:
+    description: channelDescription
+    subscribe:
+      operationId: myOperation
+      summary: operationSummary
+      description: operationDescription
+      tags:
+        - name: tagName
+          description: tagDescription
+      externalDocs:
+        description: externalDocsDescription
+        url: https://example.com/externalDocs
+      traits:
+        - operationId: myOperation
+          summary: traitSummary
+          description: traitDescription
+          tags:
+            - name: tagName
+              description: tagDescription
+          externalDocs:
+            description: externalDocsDescription
+            url: https://example.com/externalDocs
+          x-extension: value
+      message:
+        correlationId:
+          description: correlationDescription
+          location: correlationLocation
+        schemaFormat: schemaFormat
+        contentType: contentType
+        name: messageName
+        title: messageTitle
+        summary: messageSummary
+        description: messageDescription
+        traits:
+          - headers:
+              title: schemaTitle
+              description: schemaDescription
+              writeOnly: true
+              examples:
+                - key: value
+                  otherKey: 9223372036854775807
+            name: traitName
+            title: traitTitle
+            summary: traitSummary
+            description: traitDescription
+            tags:
+              - name: tagName
+                description: tagDescription
+            externalDocs:
+              description: externalDocsDescription
+              url: https://example.com/externalDocs
+            examples:
+              - name: exampleName
+                summary: exampleSummary
+                payload:
+                  key: value
+                  otherKey: 9223372036854775807
+                x-extension: value
+            x-extension: value
+        x-extension: value
+      x-extension: value
+components:
+  securitySchemes:
+    securitySchemeName:
+      type: OAuth2
+      description: securitySchemeDescription
+      flows:
+        implicit:
+          authorizationUrl: https://example.com/authorization
+          tokenUrl: https://example.com/tokenUrl
+          refreshUrl: https://example.com/refresh
+          scopes:
+            securitySchemeScopeKey: securitySchemeScopeValue
+          x-extension: value";
+
             // Arrange
             var title = "apiTitle";
-            var contact = "contact";
-            
             string contactName = "contactName";
             string contactEmail = "contactEmail";
             string contactUri = "https://example.com/contact";
@@ -312,125 +408,27 @@ namespace LEGO.AsyncAPI.Tests
                 },
                 
             };
+
             var outputString = new StringWriter(CultureInfo.InvariantCulture);
             var writer = new AsyncApiYamlWriter(outputString);
             // Act
-            
+
             document.SerializeV2(writer);
-            var yaml = outputString.GetStringBuilder().ToString();
+            var actual = outputString.GetStringBuilder().ToString();
+
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+
             // Assert
-
-            var expectedOutput = 
-                @"asyncapi: '2.3.0'
-info:
-  title: apiTitle
-  description: description
-  termsOfService: https://example.com/termsOfService
-  contact:
-    name: contactName
-    url: https://example.com/contact
-    email: contactEmail
-  license:
-    name: licenseName
-    url: https://example.com/license
-    x-extension: value
-  version: apiVersion
-  x-extension: value
-id: documentId
-servers:
-  myServer:
-    url: https://example.com/server
-    protocol: KafkaProtocol
-    protocolVersion: protocolVersion
-    description: serverDescription
-    security:
-      - '#/components/securitySchemes/securitySchemeName':
-          - requirementItem
-channels:
-  channel1:
-    description: channelDescription
-    subscribe:
-      operationId: myOperation
-      summary: operationSummary
-      description: operationDescription
-      tags:
-        - name: tagName
-          description: tagDescription
-      externalDocs:
-        description: externalDocsDescription
-        url: https://example.com/externalDocs
-      traits:
-        - operationId: myOperation
-          summary: traitSummary
-          description: traitDescription
-          tags:
-            - name: tagName
-              description: tagDescription
-          externalDocs:
-            description: externalDocsDescription
-            url: https://example.com/externalDocs
-          x-extension: value
-      message:
-        correlationId:
-          description: correlationDescription
-          location: correlationLocation
-        schemaFormat: schemaFormat
-        contentType: contentType
-        name: messageName
-        title: messageTitle
-        summary: messageSummary
-        description: messageDescription
-        traits:
-          - headers:
-              title: schemaTitle
-              description: schemaDescription
-              writeOnly: true
-              examples:
-                - key: value
-                  otherKey: 9223372036854775807
-            name: traitName
-            title: traitTitle
-            summary: traitSummary
-            description: traitDescription
-            tags:
-              - name: tagName
-                description: tagDescription
-            externalDocs:
-              description: externalDocsDescription
-              url: https://example.com/externalDocs
-            examples:
-              - name: exampleName
-                summary: exampleSummary
-                payload:
-                  key: value
-                  otherKey: 9223372036854775807
-                x-extension: value
-            x-extension: value
-        x-extension: value
-      x-extension: value
-components:
-  securitySchemes:
-    securitySchemeName:
-      type: OAuth2
-      description: securitySchemeDescription
-      flows:
-        implicit:
-          authorizationUrl: https://example.com/authorization
-          tokenUrl: https://example.com/tokenUrl
-          refreshUrl: https://example.com/refresh
-          scopes:
-            securitySchemeScopeKey: securitySchemeScopeValue
-          x-extension: value";
-            Assert.AreEqual(expectedOutput, yaml);
-
-            var reader = new AsyncApiStringReader();
-            var doc = reader.Read(expectedOutput, out var diagnostic);
+            Assert.AreEqual(actual, expected);
         }
 
+    public class AsyncApiReaderTests
+    {
         [Test]
-        public void ReaderTest()
+        public void Read_WithFullSpec_Deserializes()
         {
-            var text = @"asyncapi: 2.3.0
+            var yaml = @"asyncapi: 2.3.0
 info:
   title: AMMA
   version: 1.0.0
@@ -517,7 +515,7 @@ components:
                 description: Send an API request to this url for detailed data on the referenced API.
 ";
             var reader = new AsyncApiStringReader();
-            var doc = reader.Read(text, out var diagnostic);
+            var doc = reader.Read(yaml, out var diagnostic);
             Assert.AreEqual((doc.Channels["workspace"].Extensions["x-eventarchetype"] as AsyncApiString).Value, "objectchanged");
             Assert.AreEqual((doc.Channels["workspace"].Extensions["x-classification"] as AsyncApiString).Value, "green");
             Assert.AreEqual((doc.Channels["workspace"].Extensions["x-datalakesubscription"] as AsyncApiBoolean).Value, true);
@@ -528,6 +526,5 @@ components:
             Assert.NotNull(payload);
             Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
         }
-        
     }
 }

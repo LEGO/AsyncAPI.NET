@@ -2,9 +2,6 @@
 
 namespace LEGO.AsyncAPI.Writers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
     internal static class WriterConstants
     {
         /// <summary>

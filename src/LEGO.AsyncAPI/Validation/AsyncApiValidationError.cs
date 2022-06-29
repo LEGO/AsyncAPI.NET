@@ -3,7 +3,7 @@ using LEGO.AsyncAPI.Models;
 namespace LEGO.AsyncAPI.Validations
 {
     /// <summary>
-    /// Errors detected when validating an OpenAPI Element
+    /// Errors detected when validating an AsyncApi Element
     /// </summary>
     public class AsyncApiValidatorError : AsyncApiError
     {

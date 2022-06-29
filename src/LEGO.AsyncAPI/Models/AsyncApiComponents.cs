@@ -91,7 +91,7 @@ namespace LEGO.AsyncAPI.Models
                 writer.WriteStartObject();
                 if (loops.TryGetValue(typeof(AsyncApiSchema), out List<object> schemas))
                 {
-                    var openApiSchemas = schemas.Cast<AsyncApiSchema>().Distinct().ToList()
+                    var asyncApiSchemas = schemas.Cast<AsyncApiSchema>().Distinct().ToList()
                         .ToDictionary<AsyncApiSchema, string>(k => k.Reference.Id);
 
                     writer.WriteOptionalMap(

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using LEGO.AsyncAPI.Extensions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.Interface;
-using LEGO.AsyncAPI.Readers.Services;
 using LEGO.AsyncAPI.Validations;
 using SharpYaml.Serialization;
 
@@ -59,13 +57,13 @@ namespace LEGO.AsyncAPI.Readers
             // Validate the document
             if (_settings.RuleSet != null && _settings.RuleSet.Rules.Count > 0)
             {
-                var openApiErrors = document.Validate(_settings.RuleSet);
-                foreach (var item in openApiErrors.Where(e => e is AsyncApiValidatorError))
+                var asyncApiErrors = document.Validate(_settings.RuleSet);
+                foreach (var item in asyncApiErrors.Where(e => e is AsyncApiValidatorError))
                 {
                     diagnostic.Errors.Add(item);
                 }
 
-                foreach (var item in openApiErrors.Where(e => e is AsyncApiValidatorWarning))
+                foreach (var item in asyncApiErrors.Where(e => e is AsyncApiValidatorWarning))
                 {
                     diagnostic.Warnings.Add(item);
                 }

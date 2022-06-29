@@ -2,10 +2,8 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// Comparer for AsyncApiSecurityScheme that only considers the Id in the Reference

@@ -12,10 +12,10 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     {
         public static IAsyncApiAny GetSpecificAsyncApiAny(IAsyncApiAny asyncApiAny, AsyncApiSchema schema = null)
         {
-            if (asyncApiAny is AsyncApiArray openApiArray)
+            if (asyncApiAny is AsyncApiArray asyncApiArray)
             {
                 var newArray = new AsyncApiArray();
-                foreach (var element in openApiArray)
+                foreach (var element in asyncApiArray)
                 {
                     newArray.Add(GetSpecificAsyncApiAny(element, schema?.Items));
                 }
@@ -23,19 +23,19 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 return newArray;
             }
 
-            if (asyncApiAny is AsyncApiObject openApiObject)
+            if (asyncApiAny is AsyncApiObject asyncApiObject)
             {
                 var newObject = new AsyncApiObject();
 
-                foreach (var key in openApiObject.Keys.ToList())
+                foreach (var key in asyncApiObject.Keys.ToList())
                 {
                     if (schema?.Properties != null && schema.Properties.TryGetValue(key, out var property))
                     {
-                        newObject[key] = GetSpecificAsyncApiAny(openApiObject[key], property);
+                        newObject[key] = GetSpecificAsyncApiAny(asyncApiObject[key], property);
                     }
                     else
                     {
-                        newObject[key] = GetSpecificAsyncApiAny(openApiObject[key], schema?.AdditionalProperties);
+                        newObject[key] = GetSpecificAsyncApiAny(asyncApiObject[key], schema?.AdditionalProperties);
                     }
                 }
 
