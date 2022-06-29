@@ -30,7 +30,6 @@ namespace LEGO.AsyncAPI.Models.Any
             }
 
             writer.WriteEndArray();
-
         }
     }
 }

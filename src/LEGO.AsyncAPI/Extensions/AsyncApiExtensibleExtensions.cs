@@ -1,9 +1,11 @@
-using LEGO.AsyncAPI.Exceptions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Extensions
 {
+    using LEGO.AsyncAPI.Exceptions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
     /// Extension methods to verify validatity and add an extension to Extensions property.
     /// </summary>

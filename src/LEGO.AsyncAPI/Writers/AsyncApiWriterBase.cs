@@ -5,9 +5,9 @@ namespace LEGO.AsyncAPI.Writers
     using System;
     using System.Collections.Generic;
     using System.IO;
+
     public abstract class AsyncApiWriterBase : IAsyncApiWriter
     {
-
         /// <summary>
         /// The indentation string to prepand to each line for each indentation level.
         /// </summary>
@@ -41,7 +41,7 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         /// <param name="textWriter"></param>
         /// <param name="settings"></param>
-        public AsyncApiWriterBase(TextWriter textWriter, AsyncApiWriterSettings settings) 
+        public AsyncApiWriterBase(TextWriter textWriter, AsyncApiWriterSettings settings)
         {
             this.Writer = textWriter;
             this.Writer.NewLine = "\n";
@@ -404,5 +404,4 @@ namespace LEGO.AsyncAPI.Writers
             }
         }
     }
-
 }

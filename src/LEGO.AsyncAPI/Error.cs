@@ -1,8 +1,10 @@
-using System;
-using System.Globalization;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI
 {
+    using System;
+    using System.Globalization;
+
     /// <summary>
     /// Utility class for creating and unwrapping <see cref="Exception"/> instances.
     /// </summary>

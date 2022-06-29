@@ -1,8 +1,10 @@
-using System;
-using System.Linq;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI
 {
+    using System;
+    using System.Linq;
+
     /// <summary>
     /// JSON pointer.
     /// </summary>

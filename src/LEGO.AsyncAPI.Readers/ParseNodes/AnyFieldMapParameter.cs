@@ -1,9 +1,11 @@
-using System;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using System;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     internal class AnyFieldMapParameter<T>
     {
         public AnyFieldMapParameter(

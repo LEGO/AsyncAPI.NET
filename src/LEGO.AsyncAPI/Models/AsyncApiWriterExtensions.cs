@@ -12,6 +12,7 @@ namespace LEGO.AsyncAPI.Models
             {
                 return ((AsyncApiWriterBase)asyncApiWriter).Settings;
             }
+
             return new AsyncApiWriterSettings();
         }
     }

@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license. 
 
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using System;
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     internal class AnyListFieldMapParameter<T>
     {
         public AnyListFieldMapParameter(
@@ -23,7 +23,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         public Func<T, IList<IAsyncApiAny>> PropertyGetter { get; }
 
         public Action<T, IList<IAsyncApiAny>> PropertySetter { get; }
-        
+
         public Func<T, AsyncApiSchema> SchemaGetter { get; }
     }
 }

@@ -1,22 +1,24 @@
-using System;
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System;
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     internal static partial class AsyncApiDeserializer
     {
-        private static FixedFieldMap<AsyncApiLicense> _licenseFixedFields = new ()
+        private static FixedFieldMap<AsyncApiLicense> licenseFixedFields = new()
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
             { "url", (a, n) => { a.Url = new Uri(n.GetScalarValue()); } },
         };
-        
-        private static PatternFieldMap<AsyncApiLicense> _licensePatternFields =
-            new ()
+
+        private static PatternFieldMap<AsyncApiLicense> licensePatternFields =
+            new()
             {
-                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
             };
 
         public static AsyncApiLicense LoadLicense(ParseNode node)
@@ -24,7 +26,7 @@ namespace LEGO.AsyncAPI.Readers
             var mapNode = node.CheckMapNode("license");
             var license = new AsyncApiLicense();
 
-            ParseMap(mapNode, license, _licenseFixedFields, _licensePatternFields);
+            ParseMap(mapNode, license, licenseFixedFields, licensePatternFields);
 
             return license;
         }

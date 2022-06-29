@@ -78,8 +78,6 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
             writer.WriteEndObject();
-
         }
-
     }
 }

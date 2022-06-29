@@ -1,21 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using LEGO.AsyncAPI.Exceptions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Exceptions;
-using SharpYaml.Serialization;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using LEGO.AsyncAPI.Exceptions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Exceptions;
+    using SharpYaml.Serialization;
+
     internal class PropertyNode : ParseNode
     {
         public PropertyNode(ParsingContext context, string name, YamlNode node) : base(
             context)
         {
-            Name = name;
-            Value = Create(context, node);
+            this.Name = name;
+            this.Value = Create(context, node);
         }
 
         public string Name { get; set; }
@@ -27,57 +29,57 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             IDictionary<string, Action<T, ParseNode>> fixedFields,
             IDictionary<Func<string, bool>, Action<T, string, ParseNode>> patternFields)
         {
-            var found = fixedFields.TryGetValue(Name, out var fixedFieldMap);
+            var found = fixedFields.TryGetValue(this.Name, out var fixedFieldMap);
 
             if (fixedFieldMap != null)
             {
                 try
                 {
-                    Context.StartObject(Name);
-                    fixedFieldMap(parentInstance, Value);
+                    this.Context.StartObject(this.Name);
+                    fixedFieldMap(parentInstance, this.Value);
                 }
                 catch (AsyncApiReaderException ex)
                 {
-                    Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+                    this.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
                 }
                 catch (AsyncApiException ex)
                 {
-                    ex.Pointer = Context.GetLocation();
-                    Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+                    ex.Pointer = this.Context.GetLocation();
+                    this.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
                 }
                 finally
                 {
-                    Context.EndObject();
+                    this.Context.EndObject();
                 }
             }
             else
             {
-                var map = patternFields.Where(p => p.Key(Name)).Select(p => p.Value).FirstOrDefault();
+                var map = patternFields.Where(p => p.Key(this.Name)).Select(p => p.Value).FirstOrDefault();
                 if (map != null)
                 {
                     try
                     {
-                        Context.StartObject(Name);
-                        map(parentInstance, Name, Value);
+                        this.Context.StartObject(this.Name);
+                        map(parentInstance, this.Name, this.Value);
                     }
                     catch (AsyncApiReaderException ex)
                     {
-                        Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+                        this.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
                     }
                     catch (AsyncApiException ex)
                     {
-                        ex.Pointer = Context.GetLocation();
-                        Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+                        ex.Pointer = this.Context.GetLocation();
+                        this.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
                     }
                     finally
                     {
-                        Context.EndObject();
+                        this.Context.EndObject();
                     }
                 }
                 else
                 {
-                    Context.Diagnostic.Errors.Add(
-                        new AsyncApiError("", $"{Name} is not a valid property at {Context.GetLocation()}"));
+                    this.Context.Diagnostic.Errors.Add(
+                        new AsyncApiError("", $"{this.Name} is not a valid property at {this.Context.GetLocation()}"));
                 }
             }
         }

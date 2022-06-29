@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Services
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Services
 {
     using System;
     using System.Collections.Generic;
@@ -51,12 +53,12 @@
         public virtual void Visit(AsyncApiDocument doc)
         {
         }
-        
+
         public virtual void Visit(IDictionary<string, IAsyncApiAny> anys)
-        {}
+        { }
 
         public virtual void Visit(IList<AsyncApiMessageTrait> traits)
-        {}
+        { }
         /// <summary>
         /// Visits <see cref="AsyncApiInfo"/>
         /// </summary>
@@ -117,6 +119,7 @@
         public virtual void Visit(IDictionary<string, AsyncApiParameter> parameters)
         {
         }
+
         /// <summary>
         /// Visits <see cref="AsyncApiParameter"/>
         /// </summary>
@@ -198,10 +201,12 @@
         public virtual void Visit(IAsyncApiExtensible AsyncApiExtensible)
         {
         }
+
         public virtual void Visit(AsyncApiCorrelationId correlationId)
-        {}
+        { }
+
         public virtual void Visit(AsyncApiMessageTrait trait)
-        {}
+        { }
 
         /// <summary>
         /// Visits <see cref="IAsyncApiExtension"/>

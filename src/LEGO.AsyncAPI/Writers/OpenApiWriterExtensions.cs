@@ -421,11 +421,11 @@ namespace LEGO.AsyncAPI.Writers
             {
                 throw new ArgumentException($"'{nameof(name)}' cannot be null or empty.", nameof(name));
             }
+
             if (action is null)
             {
                 throw new ArgumentNullException(nameof(action));
             }
-
         }
 
         private static void CheckArguments<T>(IAsyncApiWriter writer, string name, Action<IAsyncApiWriter, string, T> action)

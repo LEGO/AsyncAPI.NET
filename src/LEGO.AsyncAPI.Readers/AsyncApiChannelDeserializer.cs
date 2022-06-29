@@ -1,12 +1,14 @@
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiChannel> _channelFixedFields = new ()
+        private static readonly FixedFieldMap<AsyncApiChannel> channelFixedFields = new()
         {
             { "description", (a, n) => { a.Description = n.GetScalarValue(); } },
             { "servers", (a, n) => { a.Servers = n.CreateSimpleList(s => s.GetScalarValue()); } },
@@ -16,19 +18,19 @@ namespace LEGO.AsyncAPI.Readers
             { "bindings", (a, n) => { ; } }, //TODO: Figure out bindings
         };
 
-        private static readonly PatternFieldMap<AsyncApiChannel> _channelPatternFields =
+        private static readonly PatternFieldMap<AsyncApiChannel> channelPatternFields =
             new()
             {
-                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
             };
-        
+
         public static AsyncApiChannel LoadChannel(ParseNode node)
         {
             var mapNode = node.CheckMapNode("channel");
 
             var pathItem = new AsyncApiChannel();
 
-            ParseMap(mapNode, pathItem, _channelFixedFields, _channelPatternFields);
+            ParseMap(mapNode, pathItem, channelFixedFields, channelPatternFields);
 
             return pathItem;
         }

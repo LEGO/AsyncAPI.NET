@@ -1,16 +1,18 @@
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
     /// </summary>
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiServer> _serverFixedFields = new ()
+        private static readonly FixedFieldMap<AsyncApiServer> serverFixedFields = new()
         {
             {
                 "url", (a, n) => { a.Url = n.GetScalarValue(); }
@@ -24,6 +26,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 "security", (a, n) => { a.Security = n.CreateList(LoadSecurityRequirement); }
             },
+
             // { TODO, figure out bindings
             //     "bindings", (o, n) =>
             //     {
@@ -38,10 +41,10 @@ namespace LEGO.AsyncAPI.Readers
             },
         };
 
-        private static readonly PatternFieldMap<AsyncApiServer> _serverPatternFields =
-            new ()
+        private static readonly PatternFieldMap<AsyncApiServer> serverPatternFields =
+            new()
             {
-                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
             };
 
         public static AsyncApiServer LoadServer(ParseNode node)
@@ -50,7 +53,7 @@ namespace LEGO.AsyncAPI.Readers
 
             var server = new AsyncApiServer();
 
-            ParseMap(mapNode, server, _serverFixedFields, _serverPatternFields);
+            ParseMap(mapNode, server, serverFixedFields, serverPatternFields);
 
             return server;
         }

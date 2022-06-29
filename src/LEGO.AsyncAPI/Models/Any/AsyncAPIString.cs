@@ -21,7 +21,7 @@ namespace LEGO.AsyncAPI.Models.Any
             : this(value, false)
         {
         }
-        
+
         /// <summary>
         /// Initializes the <see cref="AsyncApiString"/> class.
         /// </summary>

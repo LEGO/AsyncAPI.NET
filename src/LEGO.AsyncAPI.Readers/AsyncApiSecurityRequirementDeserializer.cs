@@ -1,8 +1,10 @@
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
@@ -44,8 +46,8 @@ namespace LEGO.AsyncAPI.Readers
                 Reference = new AsyncApiReference
                 {
                     Id = schemeName,
-                    Type = ReferenceType.SecurityScheme
-                }
+                    Type = ReferenceType.SecurityScheme,
+                },
             };
 
             return securitySchemeObject;

@@ -91,7 +91,6 @@ namespace LEGO.AsyncAPI.Models
 
             // TODO: figure out bindings
             // writer.WriteOptionalMap(AsyncApiConstants.Bindings, this.Bindings, (w, b) => b.SerializeV2(w));
-
             writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
 
             writer.WriteEndObject();

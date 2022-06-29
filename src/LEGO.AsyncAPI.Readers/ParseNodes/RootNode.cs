@@ -1,32 +1,34 @@
-using SharpYaml.Serialization;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using SharpYaml.Serialization;
+
     internal class RootNode : ParseNode
     {
-        private readonly YamlDocument _yamlDocument;
+        private readonly YamlDocument yamlDocument;
 
         public RootNode(
             ParsingContext context,
             YamlDocument yamlDocument) : base(context)
         {
-            _yamlDocument = yamlDocument;
+            this.yamlDocument = yamlDocument;
         }
 
         public ParseNode Find(JsonPointer referencePointer)
         {
-            var yamlNode = referencePointer.Find(_yamlDocument.RootNode);
+            var yamlNode = referencePointer.Find(this.yamlDocument.RootNode);
             if (yamlNode == null)
             {
                 return null;
             }
 
-            return Create(Context, yamlNode);
+            return Create(this.Context, yamlNode);
         }
 
         public MapNode GetMap()
         {
-            return new MapNode(Context, (YamlMappingNode)_yamlDocument.RootNode);
+            return new MapNode(this.Context, (YamlMappingNode)this.yamlDocument.RootNode);
         }
     }
 }

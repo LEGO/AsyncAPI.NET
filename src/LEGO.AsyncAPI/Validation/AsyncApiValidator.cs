@@ -1,19 +1,21 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Services;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Validations
 {
+    using System;
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Services;
+
     /// <summary>
     /// Class containing dispatchers to execute validation rules on for Open API document.
     /// </summary>
     public class AsyncApiValidator : AsyncApiVisitorBase, IValidationContext
     {
-        private readonly ValidationRuleSet _ruleSet;
-        private readonly IList<AsyncApiValidatorError> _errors = new List<AsyncApiValidatorError>();
-        private readonly IList<AsyncApiValidatorWarning> _warnings = new List<AsyncApiValidatorWarning>();
+        private readonly ValidationRuleSet ruleSet;
+        private readonly IList<AsyncApiValidatorError> errors = new List<AsyncApiValidatorError>();
+        private readonly IList<AsyncApiValidatorWarning> warnings = new List<AsyncApiValidatorWarning>();
 
         /// <summary>
         /// Create a vistor that will validate an AsyncApiDocument
@@ -21,7 +23,7 @@ namespace LEGO.AsyncAPI.Validations
         /// <param name="ruleSet"></param>
         public AsyncApiValidator(ValidationRuleSet ruleSet)
         {
-            this._ruleSet = ruleSet;
+            this.ruleSet = ruleSet;
         }
 
         /// <summary>
@@ -31,7 +33,7 @@ namespace LEGO.AsyncAPI.Validations
         {
             get
             {
-                return this._errors;
+                return this.errors;
             }
         }
 
@@ -42,7 +44,7 @@ namespace LEGO.AsyncAPI.Validations
         {
             get
             {
-                return this._warnings;
+                return this.warnings;
             }
         }
 
@@ -57,7 +59,7 @@ namespace LEGO.AsyncAPI.Validations
                 throw Error.ArgumentNull(nameof(error));
             }
 
-            this._errors.Add(error);
+            this.errors.Add(error);
         }
 
         /// <summary>
@@ -71,7 +73,7 @@ namespace LEGO.AsyncAPI.Validations
                 throw Error.ArgumentNull(nameof(warning));
             }
 
-            this._warnings.Add(warning);
+            this.warnings.Add(warning);
         }
 
         /// <summary>
@@ -138,13 +140,13 @@ namespace LEGO.AsyncAPI.Validations
         /// Execute validation rules against an <see cref="IAsyncApiExtensible"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(IAsyncApiExtensible item) => Validate(item);
+        public override void Visit(IAsyncApiExtensible item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="IAsyncApiExtension"/>
         /// </summary>
         /// <param name="item">The object to be validated</param>
-        public override void Visit(IAsyncApiExtension item) => Validate(item, item.GetType());
+        public override void Visit(IAsyncApiExtension item) => this.Validate(item, item.GetType());
 
         /// <summary>
         /// Execute validation rules against a list of <see cref="AsyncApiExample"/>
@@ -177,7 +179,7 @@ namespace LEGO.AsyncAPI.Validations
                 type = typeof(IAsyncApiReferenceable);
             }
 
-            var rules = this._ruleSet.FindRules(type);
+            var rules = this.ruleSet.FindRules(type);
             foreach (var rule in rules)
             {
                 rule.Evaluate(this as IValidationContext, item);

@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Writers
 {
     using LEGO.AsyncAPI.Exceptions;
     using System;
+
     public class AsyncApiWriterException : AsyncApiException
     {
         /// <summary>

@@ -1,22 +1,24 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LEGO.AsyncAPI.Exceptions;
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Interface;
-using LEGO.AsyncAPI.Validations;
-using SharpYaml.Serialization;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using LEGO.AsyncAPI.Exceptions;
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Interface;
+    using LEGO.AsyncAPI.Validations;
+    using SharpYaml.Serialization;
+
     /// <summary>
     /// Service class for converting contents of TextReader into AsyncApiDocument instances
     /// </summary>
     internal class AsyncApiYamlDocumentReader : IAsyncApiReader<YamlDocument, AsyncApiDiagnostic>
     {
-        private readonly AsyncApiReaderSettings _settings;
+        private readonly AsyncApiReaderSettings settings;
 
         /// <summary>
         /// Create stream reader with custom settings if desired.
@@ -24,7 +26,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="settings"></param>
         public AsyncApiYamlDocumentReader(AsyncApiReaderSettings settings = null)
         {
-            _settings = settings ?? new AsyncApiReaderSettings();
+            this.settings = settings ?? new AsyncApiReaderSettings();
         }
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace LEGO.AsyncAPI.Readers
             diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
             {
-                ExtensionParsers = _settings.ExtensionParsers,
+                ExtensionParsers = this.settings.ExtensionParsers,
             };
 
             AsyncApiDocument document = null;
@@ -47,7 +49,7 @@ namespace LEGO.AsyncAPI.Readers
                 // Parse the AsyncApi Document
                 document = context.Parse(input);
 
-                ResolveReferences(diagnostic, document);
+                this.ResolveReferences(diagnostic, document);
             }
             catch (AsyncApiException ex)
             {
@@ -55,9 +57,9 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             // Validate the document
-            if (_settings.RuleSet != null && _settings.RuleSet.Rules.Count > 0)
+            if (this.settings.RuleSet != null && this.settings.RuleSet.Rules.Count > 0)
             {
-                var asyncApiErrors = document.Validate(_settings.RuleSet);
+                var asyncApiErrors = document.Validate(this.settings.RuleSet);
                 foreach (var item in asyncApiErrors.Where(e => e is AsyncApiValidatorError))
                 {
                     diagnostic.Errors.Add(item);
@@ -77,7 +79,7 @@ namespace LEGO.AsyncAPI.Readers
             var diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
             {
-                ExtensionParsers = _settings.ExtensionParsers,
+                ExtensionParsers = this.settings.ExtensionParsers,
             };
 
             AsyncApiDocument document = null;
@@ -85,7 +87,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 // Parse the AsyncApi Document
                 document = context.Parse(input);
-                ResolveReferences(diagnostic, document);
+                this.ResolveReferences(diagnostic, document);
             }
             catch (AsyncApiException ex)
             {
@@ -93,9 +95,9 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             // Validate the document
-            if (_settings.RuleSet != null && _settings.RuleSet.Rules.Count > 0)
+            if (this.settings.RuleSet != null && this.settings.RuleSet.Rules.Count > 0)
             {
-                var errors = document.Validate(_settings.RuleSet);
+                var errors = document.Validate(this.settings.RuleSet);
                 foreach (var item in errors)
                 {
                     diagnostic.Errors.Add(item);
@@ -105,7 +107,7 @@ namespace LEGO.AsyncAPI.Readers
             return new ReadResult
             {
                 AsyncApiDocument = document,
-                AsyncApiDiagnostic = diagnostic
+                AsyncApiDiagnostic = diagnostic,
             };
         }
 
@@ -114,7 +116,7 @@ namespace LEGO.AsyncAPI.Readers
             var errors = new List<AsyncApiError>();
 
             // Resolve References if requested
-            switch (_settings.ReferenceResolution)
+            switch (this.settings.ReferenceResolution)
             {
                 case ReferenceResolutionSetting.ResolveReferences:
                     errors.AddRange(document.ResolveReferences());
@@ -143,7 +145,7 @@ namespace LEGO.AsyncAPI.Readers
             diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
             {
-                ExtensionParsers = _settings.ExtensionParsers
+                ExtensionParsers = this.settings.ExtensionParsers,
             };
 
             IAsyncApiElement element = null;
@@ -158,16 +160,16 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             // Validate the element
-            if (_settings.RuleSet != null && _settings.RuleSet.Rules.Count > 0)
+            if (this.settings.RuleSet != null && this.settings.RuleSet.Rules.Count > 0)
             {
-                var errors = element.Validate(_settings.RuleSet);
+                var errors = element.Validate(this.settings.RuleSet);
                 foreach (var item in errors)
                 {
                     diagnostic.Errors.Add(item);
                 }
             }
 
-            return (T) element;
+            return (T)element;
         }
     }
 }

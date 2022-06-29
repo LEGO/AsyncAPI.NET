@@ -1,13 +1,15 @@
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using System.Text;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     internal static class AsyncApiAnyConverter
     {
         public static IAsyncApiAny GetSpecificAsyncApiAny(IAsyncApiAny asyncApiAny, AsyncApiSchema schema = null)
@@ -239,6 +241,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     }
                 }
             }
+
             return asyncApiAny;
         }
     }

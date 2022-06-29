@@ -1,7 +1,9 @@
-using LEGO.AsyncAPI.Models;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Validations
-{    
+{
+    using LEGO.AsyncAPI.Models;
+
     /// <summary>
     /// Warnings detected when validating an AsyncApi Element
     /// </summary>
@@ -20,5 +22,4 @@ namespace LEGO.AsyncAPI.Validations
         /// </summary>
         public string RuleName { get; set; }
     }
-
 }

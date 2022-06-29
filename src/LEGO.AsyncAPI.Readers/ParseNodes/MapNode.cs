@@ -1,20 +1,22 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Exceptions;
-using SharpYaml.Schemas;
-using SharpYaml.Serialization;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Exceptions;
+    using SharpYaml.Schemas;
+    using SharpYaml.Serialization;
+
     internal class MapNode : ParseNode, IEnumerable<PropertyNode>
     {
-        private readonly YamlMappingNode _node;
-        private readonly List<PropertyNode> _nodes;
+        private readonly YamlMappingNode node;
+        private readonly List<PropertyNode> nodes;
 
         public MapNode(ParsingContext context, string yamlString) :
             this(context, (YamlMappingNode)YamlHelper.ParseYamlString(yamlString))
@@ -26,13 +28,13 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         {
             if (!(node is YamlMappingNode mapNode))
             {
-                throw new AsyncApiReaderException("Expected map.", Context);
+                throw new AsyncApiReaderException("Expected map.", this.Context);
             }
 
-            this._node = mapNode;
+            this.node = mapNode;
 
-            _nodes = this._node.Children
-                .Select(kvp => new PropertyNode(Context, kvp.Key.GetScalarValue(), kvp.Value))
+            this.nodes = this.node.Children
+                .Select(kvp => new PropertyNode(this.Context, kvp.Key.GetScalarValue(), kvp.Value))
                 .Cast<PropertyNode>()
                 .ToList();
         }
@@ -42,9 +44,9 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             get
             {
                 YamlNode node;
-                if (this._node.Children.TryGetValue(new YamlScalarNode(key), out node))
+                if (this.node.Children.TryGetValue(new YamlScalarNode(key), out node))
                 {
-                    return new PropertyNode(Context, key, node);
+                    return new PropertyNode(this.Context, key, node);
                 }
 
                 return null;
@@ -53,32 +55,33 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public override Dictionary<string, T> CreateMap<T>(Func<MapNode, T> map)
         {
-            var yamlMap = _node;
+            var yamlMap = this.node;
             if (yamlMap == null)
             {
-                throw new AsyncApiReaderException($"Expected map while parsing {typeof(T).Name}", Context);
+                throw new AsyncApiReaderException($"Expected map while parsing {typeof(T).Name}", this.Context);
             }
 
             var nodes = yamlMap.Select(
-                n => {
-                    
+                n =>
+                {
                     var key = n.Key.GetScalarValue();
                     T value;
                     try
                     {
-                        Context.StartObject(key);
+                        this.Context.StartObject(key);
                         value = n.Value as YamlMappingNode == null
                           ? default(T)
-                          : map(new MapNode(Context, n.Value as YamlMappingNode));
-                    } 
+                          : map(new MapNode(this.Context, n.Value as YamlMappingNode));
+                    }
                     finally
                     {
-                        Context.EndObject();
+                        this.Context.EndObject();
                     }
+
                     return new
                     {
                         key = key,
-                        value = value
+                        value = value,
                     };
                 });
 
@@ -87,12 +90,12 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public override Dictionary<string, T> CreateMapWithReference<T>(
             ReferenceType referenceType,
-            Func<MapNode, T> map) 
+            Func<MapNode, T> map)
         {
-            var yamlMap = _node;
+            var yamlMap = this.node;
             if (yamlMap == null)
             {
-                throw new AsyncApiReaderException($"Expected map while parsing {typeof(T).Name}", Context);
+                throw new AsyncApiReaderException($"Expected map while parsing {typeof(T).Name}", this.Context);
             }
 
             var nodes = yamlMap.Select(
@@ -102,14 +105,14 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     (string key, T value) entry;
                     try
                     {
-                        Context.StartObject(key);
+                        this.Context.StartObject(key);
                         entry = (
                             key: key,
-                            value: map(new MapNode(Context, (YamlMappingNode)n.Value))
+                            value: map(new MapNode(this.Context, (YamlMappingNode)n.Value))
                         );
                         if (entry.value == null)
                         {
-                            return default; 
+                            return default;
                         }
 
                         if (entry.value.Reference == null)
@@ -117,14 +120,15 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                             entry.value.Reference = new AsyncApiReference()
                             {
                                 Type = referenceType,
-                                Id = entry.key
+                                Id = entry.key,
                             };
                         }
-                     }
+                    }
                     finally
                     {
-                        Context.EndObject();
+                        this.Context.EndObject();
                     }
+
                     return entry;
                 }
                 );
@@ -133,10 +137,10 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public override Dictionary<string, T> CreateSimpleMap<T>(Func<ValueNode, T> map)
         {
-            var yamlMap = _node;
+            var yamlMap = this.node;
             if (yamlMap == null)
-            { 
-                throw new AsyncApiReaderException($"Expected map while parsing {typeof(T).Name}", Context);
+            {
+                throw new AsyncApiReaderException($"Expected map while parsing {typeof(T).Name}", this.Context);
             }
 
             var nodes = yamlMap.Select(
@@ -145,15 +149,18 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     var key = n.Key.GetScalarValue();
                     try
                     {
-                        Context.StartObject(key);
+                        this.Context.StartObject(key);
                         YamlScalarNode scalarNode = n.Value as YamlScalarNode;
                         if (scalarNode == null)
                         {
-                            throw new AsyncApiReaderException($"Expected scalar while parsing {typeof(T).Name}", Context);
+                            throw new AsyncApiReaderException($"Expected scalar while parsing {typeof(T).Name}", this.Context);
                         }
-                        return (key, value: map(new ValueNode(Context, (YamlScalarNode)n.Value)));
-                    } finally {
-                        Context.EndObject();
+
+                        return (key, value: map(new ValueNode(this.Context, (YamlScalarNode)n.Value)));
+                    }
+                    finally
+                    {
+                        this.Context.EndObject();
                     }
                 });
             return nodes.ToDictionary(k => k.key, v => v.value);
@@ -161,18 +168,18 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public IEnumerator<PropertyNode> GetEnumerator()
         {
-            return _nodes.GetEnumerator();
+            return this.nodes.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _nodes.GetEnumerator();
+            return this.nodes.GetEnumerator();
         }
 
         public override string GetRaw()
         {
             var x = new Serializer(new SerializerSettings(new JsonSchema()) { EmitJsonComptible = true });
-            return x.Serialize(_node);
+            return x.Serialize(this.node);
         }
 
         public T GetReferencedObject<T>(ReferenceType referenceType, string referenceId)
@@ -181,7 +188,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             return new T()
             {
                 UnresolvedReference = true,
-                Reference = Context.VersionService.ConvertToAsyncApiReference(referenceId, referenceType)
+                Reference = this.Context.VersionService.ConvertToAsyncApiReference(referenceId, referenceType),
             };
         }
 
@@ -189,7 +196,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         {
             YamlNode refNode;
 
-            if (!_node.Children.TryGetValue(new YamlScalarNode("$ref"), out refNode))
+            if (!this.node.Children.TryGetValue(new YamlScalarNode("$ref"), out refNode))
             {
                 return null;
             }
@@ -199,10 +206,10 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public string GetScalarValue(ValueNode key)
         {
-            var scalarNode = _node.Children[new YamlScalarNode(key.GetScalarValue())] as YamlScalarNode;
+            var scalarNode = this.node.Children[new YamlScalarNode(key.GetScalarValue())] as YamlScalarNode;
             if (scalarNode == null)
             {
-                throw new AsyncApiReaderException($"Expected scalar at line {_node.Start.Line} for key {key.GetScalarValue()}", Context);
+                throw new AsyncApiReaderException($"Expected scalar at line {this.node.Start.Line} for key {key.GetScalarValue()}", this.Context);
             }
 
             return scalarNode.Value;

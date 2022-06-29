@@ -1,16 +1,18 @@
-using LEGO.AsyncAPI.Expressions;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Writers;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Expressions;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
+
     /// <summary>
     /// The wrapper either for <see cref="IAsyncApiAny"/> or <see cref="RuntimeExpression"/>
     /// </summary>
     public class RuntimeExpressionAnyWrapper : IAsyncApiElement
     {
-        private IAsyncApiAny _any;
-        private RuntimeExpression _expression;
+        private IAsyncApiAny any;
+        private RuntimeExpression expression;
 
         /// <summary>
         /// Gets/Sets the <see cref="IAsyncApiAny"/>
@@ -19,12 +21,13 @@ namespace LEGO.AsyncAPI.Models
         {
             get
             {
-                return this._any;
+                return this.any;
             }
+
             set
             {
-                this._expression = null;
-                this._any = value;
+                this.expression = null;
+                this.any = value;
             }
         }
 
@@ -35,12 +38,13 @@ namespace LEGO.AsyncAPI.Models
         {
             get
             {
-                return this._expression;
+                return this.expression;
             }
+
             set
             {
-                this._any = null;
-                this._expression = value;
+                this.any = null;
+                this.expression = value;
             }
         }
 
@@ -54,13 +58,13 @@ namespace LEGO.AsyncAPI.Models
                 throw Error.ArgumentNull(nameof(writer));
             }
 
-            if (this._any != null)
+            if (this.any != null)
             {
-                writer.WriteAny(this._any);
+                writer.WriteAny(this.any);
             }
-            else if (this._expression != null)
+            else if (this.expression != null)
             {
-                writer.WriteValue(this._expression.Expression);
+                writer.WriteValue(this.expression.Expression);
             }
         }
     }

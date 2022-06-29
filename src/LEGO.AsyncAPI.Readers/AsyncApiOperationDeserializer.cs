@@ -1,13 +1,15 @@
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiOperation> _operationFixedFields =
-            new ()
+        private static readonly FixedFieldMap<AsyncApiOperation> operationFixedFields =
+            new()
             {
                 {
                     "operationId", (a, n) => { a.OperationId = n.GetScalarValue(); }
@@ -24,17 +26,18 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); }
                 },
+
                 // { "bindings", (a, n) => { a.Bindings; } }, //TODO: Figure out bindings LoadBindings(n)
                 {
                     "traits", (a, n) => { a.Traits = n.CreateList(LoadOperationTrait); }
                 },
                 {
                     "message", (a, n) => { a.Message = LoadMessage(n); }
-                }
+                },
             };
 
-        private static readonly PatternFieldMap<AsyncApiOperation> _operationPatternFields =
-            new ()
+        private static readonly PatternFieldMap<AsyncApiOperation> operationPatternFields =
+            new()
             {
                 { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) },
             };
@@ -45,7 +48,7 @@ namespace LEGO.AsyncAPI.Readers
 
             var operation = new AsyncApiOperation();
 
-            ParseMap(mapNode, operation, _operationFixedFields, _operationPatternFields);
+            ParseMap(mapNode, operation, operationFixedFields, operationPatternFields);
 
             return operation;
         }

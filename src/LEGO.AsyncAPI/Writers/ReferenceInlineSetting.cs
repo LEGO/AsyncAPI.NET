@@ -12,7 +12,6 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Render references as inline objects.
         /// </summary>
-        InlineReferences
+        InlineReferences,
     }
-
 }

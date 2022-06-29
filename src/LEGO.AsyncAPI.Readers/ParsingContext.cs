@@ -1,52 +1,57 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Exceptions;
-using LEGO.AsyncAPI.Readers.Interface;
-using LEGO.AsyncAPI.Readers.ParseNodes;
-using SharpYaml.Serialization;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Exceptions;
+    using LEGO.AsyncAPI.Readers.Interface;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+    using SharpYaml.Serialization;
+
     public class ParsingContext
     {
-        private readonly Stack<string> _currentLocation = new ();
-        private readonly Dictionary<string, object> _tempStorage = new ();
-        private readonly Dictionary<object, Dictionary<string, object>> _scopedTempStorage = new ();
-        private readonly Dictionary<string, Stack<string>> _loopStacks = new ();
+        private readonly Stack<string> _currentLocation = new();
+        private readonly Dictionary<string, object> _tempStorage = new();
+        private readonly Dictionary<object, Dictionary<string, object>> _scopedTempStorage = new();
+        private readonly Dictionary<string, Stack<string>> loopStacks = new();
 
         internal Dictionary<string, Func<IAsyncApiAny, AsyncApiVersion, IAsyncApiExtension>> ExtensionParsers
         {
             get;
             set;
-        } = new ();
+        }
+
+        = new();
 
         internal RootNode RootNode { get; set; }
-        internal List<AsyncApiTag> Tags { get; private set; } = new ();
+
+        internal List<AsyncApiTag> Tags { get; private set; } = new();
 
         public AsyncApiDiagnostic Diagnostic { get; }
 
         public ParsingContext(AsyncApiDiagnostic diagnostic)
         {
-            Diagnostic = diagnostic;
+            this.Diagnostic = diagnostic;
         }
 
         internal AsyncApiDocument Parse(YamlDocument yamlDocument)
         {
-            RootNode = new RootNode(this, yamlDocument);
+            this.RootNode = new RootNode(this, yamlDocument);
 
-            var inputVersion = GetVersion(RootNode);
+            var inputVersion = GetVersion(this.RootNode);
 
             AsyncApiDocument doc;
 
             switch (inputVersion)
             {
                 case string version when version.StartsWith("2.3"):
-                    VersionService = new AsyncApiVersionService(Diagnostic);
-                    doc = VersionService.LoadDocument(RootNode);
-                    Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_3_0;
+                    this.VersionService = new AsyncApiVersionService(this.Diagnostic);
+                    doc = this.VersionService.LoadDocument(this.RootNode);
+                    this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_3_0;
                     break;
 
                 default:
@@ -65,8 +70,8 @@ namespace LEGO.AsyncAPI.Readers
             switch (version)
             {
                 case AsyncApiVersion.AsyncApi2_3_0:
-                    VersionService = new AsyncApiVersionService(Diagnostic);
-                    element = VersionService.LoadElement<T>(node);
+                    this.VersionService = new AsyncApiVersionService(this.Diagnostic);
+                    element = this.VersionService.LoadElement<T>(node);
                     break;
             }
 
@@ -81,6 +86,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 return versionNode.GetScalarValue();
             }
+
             return versionNode?.GetScalarValue();
         }
 
@@ -88,13 +94,13 @@ namespace LEGO.AsyncAPI.Readers
 
         public void EndObject()
         {
-            _currentLocation.Pop();
+            this._currentLocation.Pop();
         }
 
         public string GetLocation()
         {
             return "#/" + string.Join("/",
-                _currentLocation.Reverse().Select(s => s.Replace("~", "~0").Replace("/", "~1")).ToArray());
+                this._currentLocation.Reverse().Select(s => s.Replace("~", "~0").Replace("/", "~1")).ToArray());
         }
 
         public T GetFromTempStorage<T>(string key, object scope = null)
@@ -103,14 +109,14 @@ namespace LEGO.AsyncAPI.Readers
 
             if (scope == null)
             {
-                storage = _tempStorage;
+                storage = this._tempStorage;
             }
-            else if (!_scopedTempStorage.TryGetValue(scope, out storage))
+            else if (!this._scopedTempStorage.TryGetValue(scope, out storage))
             {
                 return default(T);
             }
 
-            return storage.TryGetValue(key, out var value) ? (T) value : default(T);
+            return storage.TryGetValue(key, out var value) ? (T)value : default(T);
         }
 
         public void SetTempStorage(string key, object value, object scope = null)
@@ -119,11 +125,11 @@ namespace LEGO.AsyncAPI.Readers
 
             if (scope == null)
             {
-                storage = _tempStorage;
+                storage = this._tempStorage;
             }
-            else if (!_scopedTempStorage.TryGetValue(scope, out storage))
+            else if (!this._scopedTempStorage.TryGetValue(scope, out storage))
             {
-                storage = _scopedTempStorage[scope] = new Dictionary<string, object>();
+                storage = this._scopedTempStorage[scope] = new Dictionary<string, object>();
             }
 
             if (value == null)
@@ -138,16 +144,16 @@ namespace LEGO.AsyncAPI.Readers
 
         public void StartObject(string objectName)
         {
-            _currentLocation.Push(objectName);
+            this._currentLocation.Push(objectName);
         }
 
         public bool PushLoop(string loopId, string key)
         {
             Stack<string> stack;
-            if (!_loopStacks.TryGetValue(loopId, out stack))
+            if (!this.loopStacks.TryGetValue(loopId, out stack))
             {
                 stack = new Stack<string>();
-                _loopStacks.Add(loopId, stack);
+                this.loopStacks.Add(loopId, stack);
             }
 
             if (!stack.Contains(key))
@@ -161,14 +167,14 @@ namespace LEGO.AsyncAPI.Readers
 
         internal void ClearLoop(string loopid)
         {
-            _loopStacks[loopid].Clear();
+            this.loopStacks[loopid].Clear();
         }
 
         public void PopLoop(string loopid)
         {
-            if (_loopStacks[loopid].Count > 0)
+            if (this.loopStacks[loopid].Count > 0)
             {
-                _loopStacks[loopid].Pop();
+                this.loopStacks[loopid].Pop();
             }
         }
     }

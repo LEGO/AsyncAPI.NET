@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Writers
     using System;
     using System.Globalization;
     using System.Linq;
+
     public static class SpecialCharacterStringExtensions
     {
         // Plain style strings cannot start with indicators. 
@@ -36,7 +37,7 @@ namespace LEGO.AsyncAPI.Writers
 
         // Plain style strings cannot contain these character combinations.
         // http://www.yaml.org/spec/1.2/spec.html#style/flow/plain
-        private static readonly string[] _yamlPlainStringForbiddenCombinations =
+        private static readonly string[] yamlPlainStringForbiddenCombinations =
         {
             ": ",
             " #",
@@ -47,14 +48,14 @@ namespace LEGO.AsyncAPI.Writers
             "]",
             "{",
             "}",
-            ","
+            ",",
         };
 
         // Plain style strings cannot end with these characters.
         // http://www.yaml.org/spec/1.2/spec.html#style/flow/plain
         private static readonly string[] _yamlPlainStringForbiddenTerminals =
         {
-            ":"
+            ":",
         };
 
         // Double-quoted strings are needed for these non-printable control characters.
@@ -92,7 +93,7 @@ namespace LEGO.AsyncAPI.Writers
             '\x1c',
             '\x1d',
             '\x1e',
-            '\x1f'
+            '\x1f',
         };
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace LEGO.AsyncAPI.Writers
             // 3) has trailing/leading white spaces,
             // wrap the string in single quote.
             // http://www.yaml.org/spec/1.2/spec.html#style/flow/plain
-            if (_yamlPlainStringForbiddenCombinations.Any(fc => input.Contains(fc)) ||
+            if (yamlPlainStringForbiddenCombinations.Any(fc => input.Contains(fc)) ||
                 _yamlIndicators.Any(i => input.StartsWith(i.ToString())) ||
                 _yamlPlainStringForbiddenTerminals.Any(i => input.EndsWith(i.ToString())) ||
                 input.Trim() != input)

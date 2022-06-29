@@ -1,13 +1,14 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using System;
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+
     internal class AnyMapFieldMapParameter<T, U>
     {
-
         public AnyMapFieldMapParameter(
             Func<T, IDictionary<string, U>> propertyMapGetter,
             Func<U, IAsyncApiAny> propertyGetter,
@@ -23,9 +24,9 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         public Func<T, IDictionary<string, U>> PropertyMapGetter { get; }
 
         public Func<U, IAsyncApiAny> PropertyGetter { get; }
-        
+
         public Action<U, IAsyncApiAny> PropertySetter { get; }
-        
+
         public Func<T, AsyncApiSchema> SchemaGetter { get; }
     }
 }

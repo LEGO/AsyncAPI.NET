@@ -1,12 +1,14 @@
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     internal static partial class AsyncApiDeserializer
     {
-        private static FixedFieldMap<AsyncApiOperationTrait> _operationTraitFixedFields = new ()
+        private static FixedFieldMap<AsyncApiOperationTrait> operationTraitFixedFields = new()
         {
             { "operationId", (a, n) => { a.OperationId = n.GetScalarValue(); } },
             { "summary", (a, n) => { a.Summary = n.GetScalarValue(); } },
@@ -16,10 +18,10 @@ namespace LEGO.AsyncAPI.Readers
             { "bindings", (a, n) => { ; } }, //TODO: Figure out bindings
         };
 
-        private static PatternFieldMap<AsyncApiOperationTrait> _operationTraitPatternFields =
-            new ()
+        private static PatternFieldMap<AsyncApiOperationTrait> operationTraitPatternFields =
+            new()
             {
-                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
             };
 
         public static AsyncApiOperationTrait LoadOperationTrait(ParseNode node)
@@ -27,7 +29,7 @@ namespace LEGO.AsyncAPI.Readers
             var mapNode = node.CheckMapNode("traits");
             var operationTrait = new AsyncApiOperationTrait();
 
-            ParseMap(mapNode, operationTrait, _operationTraitFixedFields, _operationTraitPatternFields);
+            ParseMap(mapNode, operationTrait, operationTraitFixedFields, operationTraitPatternFields);
 
             return operationTrait;
         }

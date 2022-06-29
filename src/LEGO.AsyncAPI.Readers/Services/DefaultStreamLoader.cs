@@ -1,15 +1,17 @@
-using System;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
-using LEGO.AsyncAPI.Readers.Interface;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers.Services
 {
+    using System;
+    using System.IO;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using LEGO.AsyncAPI.Readers.Interface;
+
     internal class DefaultStreamLoader : IStreamLoader
     {
         private readonly Uri baseUrl;
-        private HttpClient _httpClient = new HttpClient();
+        private HttpClient httpClient = new HttpClient();
 
 
         public DefaultStreamLoader(Uri baseUrl)
@@ -19,14 +21,14 @@ namespace LEGO.AsyncAPI.Readers.Services
 
         public Stream Load(Uri uri)
         {
-            var absoluteUri = new Uri(baseUrl, uri);
+            var absoluteUri = new Uri(this.baseUrl, uri);
             switch (uri.Scheme)
             {
                 case "file":
                     return File.OpenRead(absoluteUri.AbsolutePath);
                 case "http":
                 case "https":
-                    return _httpClient.GetStreamAsync(absoluteUri).GetAwaiter().GetResult();
+                    return this.httpClient.GetStreamAsync(absoluteUri).GetAwaiter().GetResult();
                 default:
                     throw new ArgumentException("Unsupported scheme");
             }
@@ -34,7 +36,7 @@ namespace LEGO.AsyncAPI.Readers.Services
 
         public async Task<Stream> LoadAsync(Uri uri)
         {
-            var absoluteUri = new Uri(baseUrl, uri);
+            var absoluteUri = new Uri(this.baseUrl, uri);
 
             switch (absoluteUri.Scheme)
             {
@@ -42,7 +44,7 @@ namespace LEGO.AsyncAPI.Readers.Services
                     return File.OpenRead(absoluteUri.AbsolutePath);
                 case "http":
                 case "https":
-                    return await _httpClient.GetStreamAsync(absoluteUri);
+                    return await this.httpClient.GetStreamAsync(absoluteUri);
                 default:
                     throw new ArgumentException("Unsupported scheme");
             }

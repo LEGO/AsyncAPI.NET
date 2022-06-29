@@ -1,17 +1,19 @@
-using System.IO;
-using System.Threading.Tasks;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Interface;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System.IO;
+    using System.Threading.Tasks;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Interface;
+
     /// <summary>
     /// Service class for converting streams into AsyncApiDocument instances
     /// </summary>
     public class AsyncApiStreamReader : IAsyncApiReader<Stream, AsyncApiDiagnostic>
     {
-        private readonly AsyncApiReaderSettings _settings;
+        private readonly AsyncApiReaderSettings settings;
 
         /// <summary>
         /// Create stream reader with custom settings if desired.
@@ -19,7 +21,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="settings"></param>
         public AsyncApiStreamReader(AsyncApiReaderSettings settings = null)
         {
-            _settings = settings ?? new AsyncApiReaderSettings();
+            this.settings = settings ?? new AsyncApiReaderSettings();
         }
 
         /// <summary>
@@ -31,8 +33,8 @@ namespace LEGO.AsyncAPI.Readers
         public AsyncApiDocument Read(Stream input, out AsyncApiDiagnostic diagnostic)
         {
             var reader = new StreamReader(input);
-            var result = new AsyncApiTextReaderReader(_settings).Read(reader, out diagnostic);
-            if (!_settings.LeaveStreamOpen)
+            var result = new AsyncApiTextReaderReader(this.settings).Read(reader, out diagnostic);
+            if (!this.settings.LeaveStreamOpen)
             {
                 reader.Dispose();
             }
@@ -50,7 +52,7 @@ namespace LEGO.AsyncAPI.Readers
             MemoryStream bufferedStream;
             if (input is MemoryStream)
             {
-                bufferedStream = (MemoryStream) input;
+                bufferedStream = (MemoryStream)input;
             }
             else
             {
@@ -63,7 +65,7 @@ namespace LEGO.AsyncAPI.Readers
 
             var reader = new StreamReader(bufferedStream);
 
-            return await new AsyncApiTextReaderReader(_settings).ReadAsync(reader);
+            return await new AsyncApiTextReaderReader(this.settings).ReadAsync(reader);
         }
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             using (var reader = new StreamReader(input))
             {
-                return new AsyncApiTextReaderReader(_settings).ReadFragment<T>(reader, version, out diagnostic);
+                return new AsyncApiTextReaderReader(this.settings).ReadFragment<T>(reader, version, out diagnostic);
             }
         }
     }

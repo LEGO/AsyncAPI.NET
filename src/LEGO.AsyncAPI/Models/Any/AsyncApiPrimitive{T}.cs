@@ -69,9 +69,14 @@ namespace LEGO.AsyncAPI.Models.Any
                 case PrimitiveType.String:
                     var stringValue = (AsyncApiString)(IAsyncApiPrimitive)this;
                     if (stringValue.IsRawString())
+                    {
                         writer.WriteRaw(stringValue.Value);
+                    }
                     else
+                    {
                         writer.WriteValue(stringValue.Value);
+                    }
+
                     break;
 
                 case PrimitiveType.Byte:
@@ -121,7 +126,6 @@ namespace LEGO.AsyncAPI.Models.Any
                             "The given primitive type '{0}' is not supported.",
                             this.PrimitiveType));
             }
-
         }
     }
 }

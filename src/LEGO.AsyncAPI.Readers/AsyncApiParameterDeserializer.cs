@@ -1,22 +1,24 @@
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     internal static partial class AsyncApiDeserializer
     {
-        private static FixedFieldMap<AsyncApiParameter> _parameterFixedFields = new ()
+        private static FixedFieldMap<AsyncApiParameter> parameterFixedFields = new()
         {
             { "description", (a, n) => { a.Description = n.GetScalarValue(); } },
             { "schema", (a, n) => { a.Schema = LoadSchema(n); } },
             { "location", (a, n) => { a.Location = n.GetScalarValue(); } },
         };
 
-        private static PatternFieldMap<AsyncApiParameter> _parameterPatternFields =
-            new ()
+        private static PatternFieldMap<AsyncApiParameter> parameterPatternFields =
+            new()
             {
-                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
             };
 
         public static AsyncApiParameter LoadParameter(ParseNode node)
@@ -31,7 +33,7 @@ namespace LEGO.AsyncAPI.Readers
 
             var parameter = new AsyncApiParameter();
 
-            ParseMap(mapNode, parameter, _parameterFixedFields, _parameterPatternFields);
+            ParseMap(mapNode, parameter, parameterFixedFields, parameterPatternFields);
 
             return parameter;
         }

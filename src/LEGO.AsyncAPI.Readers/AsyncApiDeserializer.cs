@@ -1,13 +1,15 @@
-using System.Collections.Generic;
-using System.Linq;
-using LEGO.AsyncAPI.Exceptions;
-using LEGO.AsyncAPI.Expressions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using LEGO.AsyncAPI.Exceptions;
+    using LEGO.AsyncAPI.Expressions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     internal static partial class AsyncApiDeserializer
     {
         private static void ParseMap<T>(
@@ -25,7 +27,6 @@ namespace LEGO.AsyncAPI.Readers
             {
                 propertyNode.ParseField(domainObject, fixedFieldMap, patternFieldMap);
             }
-
         }
 
         private static void ProcessAnyFields<T>(
@@ -147,13 +148,13 @@ namespace LEGO.AsyncAPI.Readers
             {
                 return new RuntimeExpressionAnyWrapper
                 {
-                    Expression = RuntimeExpression.Build(value)
+                    Expression = RuntimeExpression.Build(value),
                 };
             }
 
             return new RuntimeExpressionAnyWrapper
             {
-                Any = AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny())
+                Any = AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny()),
             };
         }
 

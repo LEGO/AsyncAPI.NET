@@ -21,7 +21,6 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="settings"></param>
         public AsyncApiYamlWriter(TextWriter textWriter, AsyncApiWriterSettings settings) : base(textWriter, settings)
         {
-
         }
 
         /// <summary>
@@ -142,6 +141,7 @@ namespace LEGO.AsyncAPI.Writers
                 this.Writer.WriteLine();
                 this.WriteIndentation();
             }
+
             // Only add newline and indentation when this object is not in the top level scope and not in an array.
             // The top level scope should have no indentation and it is already in its own line.
             // The first property of an object inside array can go after the array prefix (-) directly.
@@ -200,9 +200,13 @@ namespace LEGO.AsyncAPI.Writers
                     while (reader.ReadLine() is var line && line != null)
                     {
                         if (firstLine)
+                        {
                             firstLine = false;
+                        }
                         else
+                        {
                             this.Writer.WriteLine();
+                        }
 
                         // Indentations for empty lines aren't needed.
                         if (line.Length > 0)
@@ -222,6 +226,7 @@ namespace LEGO.AsyncAPI.Writers
         {
             var trailingNewlines = 0;
             var end = value.Length - 1;
+
             // We only need to know whether there are 0, 1, or more trailing newlines
             while (end >= 0 && trailingNewlines < 2)
             {
@@ -247,6 +252,7 @@ namespace LEGO.AsyncAPI.Writers
                     // ends with \n
                     end -= 1;
                 }
+
                 trailingNewlines++;
             }
 

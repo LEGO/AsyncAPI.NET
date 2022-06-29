@@ -1,12 +1,14 @@
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     internal static partial class AsyncApiDeserializer
     {
-        private static FixedFieldMap<AsyncApiMessageTrait> _messageTraitFixedFields = new ()
+        private static FixedFieldMap<AsyncApiMessageTrait> messageTraitFixedFields = new()
         {
             { "headers", (a, n) => { a.Headers = LoadSchema(n); } },
             { "correlationId", (a, n) => { a.CorrelationId = LoadCorrelationId(n); } },
@@ -21,10 +23,10 @@ namespace LEGO.AsyncAPI.Readers
             { "bindings", (a, n) => { ; } }, // TODO: Do something with Bindings
         };
 
-        private static PatternFieldMap<AsyncApiMessageTrait> _messageTraitPatternFields =
-            new ()
+        private static PatternFieldMap<AsyncApiMessageTrait> messageTraitPatternFields =
+            new()
             {
-                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
             };
 
         public static AsyncApiMessageTrait LoadMessageTrait(ParseNode node)
@@ -32,7 +34,7 @@ namespace LEGO.AsyncAPI.Readers
             var mapNode = node.CheckMapNode("traits");
             var operationTrait = new AsyncApiMessageTrait();
 
-            ParseMap(mapNode, operationTrait, _messageTraitFixedFields, _messageTraitPatternFields);
+            ParseMap(mapNode, operationTrait, messageTraitFixedFields, messageTraitPatternFields);
 
             return operationTrait;
         }

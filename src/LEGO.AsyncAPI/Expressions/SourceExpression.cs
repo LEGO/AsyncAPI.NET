@@ -1,7 +1,9 @@
-using LEGO.AsyncAPI.Exceptions;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Expressions
 {
+    using LEGO.AsyncAPI.Exceptions;
+
     /// <summary>
     /// Source expression.
     /// </summary>

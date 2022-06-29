@@ -8,6 +8,7 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+
     public static class AsyncApiSerializableExtensions
     {
         /// <summary>

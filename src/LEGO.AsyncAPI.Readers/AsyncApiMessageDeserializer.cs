@@ -1,16 +1,18 @@
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
     /// </summary>
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiMessage> _messageFixedFields = new()
+        private static readonly FixedFieldMap<AsyncApiMessage> messageFixedFields = new()
         {
             {
                 "headers", (a, n) => { a.Headers = LoadSchema(n); }
@@ -45,6 +47,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); }
             },
+
             // { TODO
             //     "bindings", (a, n) =>
             //     {
@@ -59,9 +62,9 @@ namespace LEGO.AsyncAPI.Readers
             },
         };
 
-        private static readonly PatternFieldMap<AsyncApiMessage> _messagePatternFields = new ()
+        private static readonly PatternFieldMap<AsyncApiMessage> messagePatternFields = new()
         {
-            { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) }
+            { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
         };
 
         public static AsyncApiMessage LoadMessage(ParseNode node)
@@ -72,10 +75,10 @@ namespace LEGO.AsyncAPI.Readers
             {
                 return mapNode.GetReferencedObject<AsyncApiMessage>(ReferenceType.Message, pointer);
             }
-            
+
             var message = new AsyncApiMessage();
 
-            ParseMap(mapNode, message, _messageFixedFields, _messagePatternFields);
+            ParseMap(mapNode, message, messageFixedFields, messagePatternFields);
 
             return message;
         }

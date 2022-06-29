@@ -23,5 +23,4 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override IFormatProvider FormatProvider { get; }
     }
-
 }

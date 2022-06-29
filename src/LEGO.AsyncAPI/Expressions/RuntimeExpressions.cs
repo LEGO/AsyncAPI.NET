@@ -1,8 +1,10 @@
-using System;
-using LEGO.AsyncAPI.Exceptions;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Expressions
 {
+    using System;
+    using LEGO.AsyncAPI.Exceptions;
+
     /// <summary>
     /// Base class for the AsyncApi runtime expression.
     /// </summary>

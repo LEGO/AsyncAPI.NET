@@ -1,4 +1,8 @@
-﻿namespace LEGO.AsyncAPI.Tests
+﻿// <copyright file="AsyncApiReaderTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace LEGO.AsyncAPI.Tests
 {
     using System;
     using System.Collections.Generic;

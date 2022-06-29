@@ -1,14 +1,16 @@
-using System.Collections.Generic;
-using System.Globalization;
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiSchema> _schemaFixedFields = new ()
+        private static readonly FixedFieldMap<AsyncApiSchema> schemaFixedFields = new()
         {
             {
                 "title", (a, n) => { a.Title = n.GetScalarValue(); }
@@ -139,13 +141,13 @@ namespace LEGO.AsyncAPI.Readers
             },
         };
 
-        private static readonly PatternFieldMap<AsyncApiSchema> _schemaPatternFields =
-            new ()
+        private static readonly PatternFieldMap<AsyncApiSchema> schemaPatternFields =
+            new()
             {
-                { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) }
+                { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) },
             };
 
-        private static readonly AnyFieldMap<AsyncApiSchema> _schemaAnyFields = new ()
+        private static readonly AnyFieldMap<AsyncApiSchema> schemaAnyFields = new()
         {
             {
                 AsyncApiConstants.Default,
@@ -156,7 +158,7 @@ namespace LEGO.AsyncAPI.Readers
             },
         };
 
-        private static readonly AnyListFieldMap<AsyncApiSchema> _schemaAnyListFields = new ()
+        private static readonly AnyListFieldMap<AsyncApiSchema> schemaAnyListFields = new()
         {
             {
                 AsyncApiConstants.Enum,
@@ -164,7 +166,7 @@ namespace LEGO.AsyncAPI.Readers
                     s => s.Enum,
                     (s, v) => s.Enum = v,
                     s => s)
-            }
+            },
         };
 
         public static AsyncApiSchema LoadSchema(ParseNode node)
@@ -178,7 +180,7 @@ namespace LEGO.AsyncAPI.Readers
                 return new AsyncApiSchema
                 {
                     UnresolvedReference = true,
-                    Reference = node.Context.VersionService.ConvertToAsyncApiReference(pointer, ReferenceType.Schema)
+                    Reference = node.Context.VersionService.ConvertToAsyncApiReference(pointer, ReferenceType.Schema),
                 };
             }
 
@@ -186,11 +188,11 @@ namespace LEGO.AsyncAPI.Readers
 
             foreach (var propertyNode in mapNode)
             {
-                propertyNode.ParseField(schema, _schemaFixedFields, _schemaPatternFields);
+                propertyNode.ParseField(schema, schemaFixedFields, schemaPatternFields);
             }
 
-            ProcessAnyFields(mapNode, schema, _schemaAnyFields);
-            ProcessAnyListFields(mapNode, schema, _schemaAnyListFields);
+            ProcessAnyFields(mapNode, schema, schemaAnyFields);
+            ProcessAnyListFields(mapNode, schema, schemaAnyListFields);
 
             return schema;
         }

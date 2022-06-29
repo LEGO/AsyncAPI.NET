@@ -70,12 +70,12 @@ namespace LEGO.AsyncAPI.Models
         /// MessageBindings item.
         /// </summary>
         [Display("messageBindings")] MessageBinding,
-        
+
         /// <summary>
         /// Examples item.
         /// </summary>
         [Display("examples")] Example,
-        
+
         /// <summary>
         /// Headers item.
         /// </summary>

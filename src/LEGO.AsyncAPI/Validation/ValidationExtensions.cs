@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Validations
 {
     /// <summary>
@@ -22,6 +24,5 @@ namespace LEGO.AsyncAPI.Validations
             AsyncApiValidatorWarning warning = new AsyncApiValidatorWarning(ruleName, context.PathString, message);
             context.AddWarning(warning);
         }
-
     }
 }

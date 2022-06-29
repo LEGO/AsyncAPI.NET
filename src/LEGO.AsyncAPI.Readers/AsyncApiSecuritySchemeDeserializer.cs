@@ -1,19 +1,21 @@
-using System;
-using LEGO.AsyncAPI.Extensions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers.ParseNodes;
-using LEGO.AsyncAPI.Writers;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System;
+    using LEGO.AsyncAPI.Extensions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+    using LEGO.AsyncAPI.Writers;
+
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
     /// </summary>
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiSecurityScheme> _securitySchemeFixedFields =
-            new ()
+        private static readonly FixedFieldMap<AsyncApiSecurityScheme> securitySchemeFixedFields =
+            new()
             {
                 {
                     "type", (o, n) => { o.Type = n.GetScalarValue().GetEnumFromDisplayName<SecuritySchemeType>(); }
@@ -39,13 +41,13 @@ namespace LEGO.AsyncAPI.Readers
                 },
                 {
                     "flows", (o, n) => { o.Flows = LoadOAuthFlows(n); }
-                }
+                },
             };
 
-        private static readonly PatternFieldMap<AsyncApiSecurityScheme> _securitySchemePatternFields =
-            new ()
+        private static readonly PatternFieldMap<AsyncApiSecurityScheme> securitySchemePatternFields =
+            new()
             {
-                { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) }
+                { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) },
             };
 
         public static AsyncApiSecurityScheme LoadSecurityScheme(ParseNode node)
@@ -55,7 +57,7 @@ namespace LEGO.AsyncAPI.Readers
             var securityScheme = new AsyncApiSecurityScheme();
             foreach (var property in mapNode)
             {
-                property.ParseField(securityScheme, _securitySchemeFixedFields, _securitySchemePatternFields);
+                property.ParseField(securityScheme, securitySchemeFixedFields, securitySchemePatternFields);
             }
 
             return securityScheme;

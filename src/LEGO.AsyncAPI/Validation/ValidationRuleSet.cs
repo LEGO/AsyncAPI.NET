@@ -1,25 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license. 
 
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Collections;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Exceptions;
-
 namespace LEGO.AsyncAPI.Validations
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using LEGO.AsyncAPI.Exceptions;
+
     /// <summary>
     /// The rule set of the validation.
     /// </summary>
     public sealed class ValidationRuleSet : IEnumerable<ValidationRule>
     {
-        private IDictionary<Type, IList<ValidationRule>> _rules = new Dictionary<Type, IList<ValidationRule>>();
+        private IDictionary<Type, IList<ValidationRule>> rules = new Dictionary<Type, IList<ValidationRule>>();
 
-        private static ValidationRuleSet _defaultRuleSet;
+        private static ValidationRuleSet defaultRuleSet;
 
-        private IList<ValidationRule> _emptyRules = new List<ValidationRule>();
+        private IList<ValidationRule> emptyRules = new List<ValidationRule>();
 
         /// <summary>
         /// Retrieve the rules that are related to a specific type
@@ -29,8 +29,8 @@ namespace LEGO.AsyncAPI.Validations
         public IList<ValidationRule> FindRules(Type type)
         {
             IList<ValidationRule> results = null;
-            this._rules.TryGetValue(type, out results);
-            return results ?? this._emptyRules;
+            this.rules.TryGetValue(type, out results);
+            return results ?? this.emptyRules;
         }
 
         /// <summary>
@@ -44,14 +44,14 @@ namespace LEGO.AsyncAPI.Validations
         public static ValidationRuleSet GetDefaultRuleSet()
         {
             // Reflection can be an expensive operation, so we cache the default rule set that has already been built.
-            if (_defaultRuleSet == null)
+            if (defaultRuleSet == null)
             {
-                _defaultRuleSet = BuildDefaultRuleSet();
+                defaultRuleSet = BuildDefaultRuleSet();
             }
 
             // We create a new instance of ValidationRuleSet per call as a safeguard
             // against unintentional modification of the private _defaultRuleSet.
-            return new ValidationRuleSet(_defaultRuleSet);
+            return new ValidationRuleSet(defaultRuleSet);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace LEGO.AsyncAPI.Validations
         {
             get
             {
-                return this._rules.Values.SelectMany(v => v).ToList();
+                return this.rules.Values.SelectMany(v => v).ToList();
             }
         }
 
@@ -122,17 +122,17 @@ namespace LEGO.AsyncAPI.Validations
         /// <param name="rule">The rule.</param>
         public void Add(ValidationRule rule)
         {
-            if (!this._rules.ContainsKey(rule.ElementType))
+            if (!this.rules.ContainsKey(rule.ElementType))
             {
-                this._rules[rule.ElementType] = new List<ValidationRule>();
+                this.rules[rule.ElementType] = new List<ValidationRule>();
             }
 
-            if (this._rules[rule.ElementType].Contains(rule))
+            if (this.rules[rule.ElementType].Contains(rule))
             {
                 throw new AsyncApiException("Rules cannot be added twice");
             }
 
-            this._rules[rule.ElementType].Add(rule);
+            this.rules[rule.ElementType].Add(rule);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace LEGO.AsyncAPI.Validations
         /// <returns>The enumerator.</returns>
         public IEnumerator<ValidationRule> GetEnumerator()
         {
-            foreach (var ruleList in this._rules.Values)
+            foreach (var ruleList in this.rules.Values)
             {
                 foreach (var rule in ruleList)
                 {

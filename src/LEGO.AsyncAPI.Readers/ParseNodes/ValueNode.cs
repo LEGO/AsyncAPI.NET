@@ -1,14 +1,16 @@
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Exceptions;
-using SharpYaml;
-using SharpYaml.Serialization;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Exceptions;
+    using SharpYaml;
+    using SharpYaml.Serialization;
+
     internal class ValueNode : ParseNode
     {
-        private readonly YamlScalarNode _node;
+        private readonly YamlScalarNode node;
 
         public ValueNode(ParsingContext context, YamlNode node) : base(
             context)
@@ -17,18 +19,19 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             {
                 throw new AsyncApiReaderException("Expected a value.", node);
             }
-            _node = scalarNode;
+
+            this.node = scalarNode;
         }
 
         public override string GetScalarValue()
         {
-            return _node.Value;
+            return this.node.Value;
         }
-        
+
         public override IAsyncApiAny CreateAny()
         {
-            var value = GetScalarValue();
-            return new AsyncApiString(value, this._node.Style == ScalarStyle.SingleQuoted || this._node.Style == ScalarStyle.DoubleQuoted || this._node.Style == ScalarStyle.Literal || this._node.Style == ScalarStyle.Folded);
+            var value = this.GetScalarValue();
+            return new AsyncApiString(value, this.node.Style == ScalarStyle.SingleQuoted || this.node.Style == ScalarStyle.DoubleQuoted || this.node.Style == ScalarStyle.Literal || this.node.Style == ScalarStyle.Folded);
         }
     }
 }

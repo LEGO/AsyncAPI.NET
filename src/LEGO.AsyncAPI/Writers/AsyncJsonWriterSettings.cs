@@ -15,5 +15,4 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public bool Terse { get; set; } = false;
     }
-
 }

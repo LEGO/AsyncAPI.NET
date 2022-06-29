@@ -1,8 +1,10 @@
-using System;
-using SharpYaml.Serialization;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using System;
+    using SharpYaml.Serialization;
+
     public static class JsonPointerExtensions
     {
         public static YamlNode Find(this JsonPointer currentPointer, YamlNode baseYamlNode)

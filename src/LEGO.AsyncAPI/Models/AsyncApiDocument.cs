@@ -180,6 +180,7 @@ namespace LEGO.AsyncAPI.Models
                         return this.Components.OperationTraits[reference.Id];
                     case ReferenceType.MessageTrait:
                         return this.Components.MessageTraits[reference.Id];
+
                     //case ReferenceType.ServerBinding:
                     //    return this.Components.ServerBindings[reference.Id];
                     //case ReferenceType.ChannelBinding:
@@ -199,5 +200,4 @@ namespace LEGO.AsyncAPI.Models
             }
         }
     }
-
 }

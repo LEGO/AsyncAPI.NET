@@ -49,5 +49,4 @@ namespace LEGO.AsyncAPI.Writers
         /// </value>
         public bool IsInArray { get; set; } = false;
     }
-
 }

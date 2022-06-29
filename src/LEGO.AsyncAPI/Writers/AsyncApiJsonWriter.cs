@@ -92,6 +92,7 @@ namespace LEGO.AsyncAPI.Writers
                 {
                     this.Writer.Write(WriterConstants.WhiteSpaceForEmptyObject);
                 }
+
                 this.DecreaseIndentation();
             }
 

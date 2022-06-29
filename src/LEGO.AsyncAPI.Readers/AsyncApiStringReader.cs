@@ -1,16 +1,18 @@
-using System.IO;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Interface;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System.IO;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Interface;
+
     /// <summary>
     /// Service class for converting strings into AsyncApiDocument instances
     /// </summary>
     public class AsyncApiStringReader : IAsyncApiReader<string, AsyncApiDiagnostic>
     {
-        private readonly AsyncApiReaderSettings _settings;
+        private readonly AsyncApiReaderSettings settings;
 
         /// <summary>
         /// Constructor tha allows reader to use non-default settings
@@ -18,7 +20,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="settings"></param>
         public AsyncApiStringReader(AsyncApiReaderSettings settings = null)
         {
-            _settings = settings ?? new AsyncApiReaderSettings();
+            this.settings = settings ?? new AsyncApiReaderSettings();
         }
 
         /// <summary>
@@ -28,7 +30,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             using (var reader = new StringReader(input))
             {
-                return new AsyncApiTextReaderReader(_settings).Read(reader, out diagnostic);
+                return new AsyncApiTextReaderReader(this.settings).Read(reader, out diagnostic);
             }
         }
 
@@ -40,7 +42,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             using (var reader = new StringReader(input))
             {
-                return new AsyncApiTextReaderReader(_settings).ReadFragment<T>(reader, version, out diagnostic);
+                return new AsyncApiTextReaderReader(this.settings).ReadFragment<T>(reader, version, out diagnostic);
             }
         }
     }

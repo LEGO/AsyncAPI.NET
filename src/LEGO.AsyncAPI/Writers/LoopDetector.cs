@@ -71,5 +71,4 @@ namespace LEGO.AsyncAPI.Writers
             this.loopStacks[typeof(T)].Clear();
         }
     }
-
 }

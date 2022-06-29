@@ -6,6 +6,6 @@ namespace LEGO.AsyncAPI.Models.Interfaces
 
     public interface IAsyncApiExtension
     {
-         void Write(IAsyncApiWriter writer, AsyncApiVersion specVersion);
+        void Write(IAsyncApiWriter writer, AsyncApiVersion specVersion);
     }
 }

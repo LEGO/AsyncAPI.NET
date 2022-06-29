@@ -1,7 +1,9 @@
-using LEGO.AsyncAPI.Models;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Models;
+
     /// <summary>
     /// Container object used for returning the result of reading an AsyncApi description.
     /// </summary>

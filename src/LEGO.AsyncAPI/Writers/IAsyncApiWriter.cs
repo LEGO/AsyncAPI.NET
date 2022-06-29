@@ -69,5 +69,4 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         void Flush();
     }
-
 }

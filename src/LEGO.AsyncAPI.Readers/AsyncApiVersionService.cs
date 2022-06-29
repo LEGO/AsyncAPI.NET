@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Exceptions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Interface;
-using LEGO.AsyncAPI.Readers.ParseNodes;
-using LEGO.AsyncAPI.Writers;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System;
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Exceptions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Interface;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+    using LEGO.AsyncAPI.Writers;
+
     internal class AsyncApiVersionService : IAsyncApiVersionService
     {
         public AsyncApiDiagnostic Diagnostic { get; }
@@ -19,10 +21,10 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="diagnostic">Provide instance for diagnostic object for collecting and accessing information about the parsing.</param>
         public AsyncApiVersionService(AsyncApiDiagnostic diagnostic)
         {
-            Diagnostic = diagnostic;
+            this.Diagnostic = diagnostic;
         }
 
-        private IDictionary<Type, Func<ParseNode, object>> _loaders = new Dictionary<Type, Func<ParseNode, object>>
+        private IDictionary<Type, Func<ParseNode, object>> loaders = new Dictionary<Type, Func<ParseNode, object>>
         {
             [typeof(IAsyncApiAny)] = AsyncApiDeserializer.LoadAny,
             [typeof(AsyncApiComponents)] = AsyncApiDeserializer.LoadComponents,
@@ -60,7 +62,7 @@ namespace LEGO.AsyncAPI.Readers
                         return new AsyncApiReference
                         {
                             Type = type,
-                            Id = reference
+                            Id = reference,
                         };
                     }
                 }
@@ -71,17 +73,18 @@ namespace LEGO.AsyncAPI.Readers
                         // "$ref": "#/components/schemas/Pet"
                         try
                         {
-                            return ParseReference(segments[1]);
+                            return this.ParseReference(segments[1]);
                         }
                         catch (AsyncApiException ex)
                         {
-                            Diagnostic.Errors.Add(new AsyncApiError(ex));
+                            this.Diagnostic.Errors.Add(new AsyncApiError(ex));
                             return null;
                         }
                     }
 
                     // Where fragments point into a non-AsyncApi document, the id will be the complete fragment identifier
                     var id = segments[1];
+
                     // $ref: externalSource.yaml#/Pet
                     if (id.StartsWith("/components/"))
                     {
@@ -105,7 +108,7 @@ namespace LEGO.AsyncAPI.Readers
                     return new AsyncApiReference
                     {
                         Type = type,
-                        Id = id
+                        Id = id,
                     };
                 }
             }
@@ -120,7 +123,7 @@ namespace LEGO.AsyncAPI.Readers
 
         public T LoadElement<T>(ParseNode node) where T : IAsyncApiElement
         {
-            return (T) _loaders[typeof(T)](node);
+            return (T)this.loaders[typeof(T)](node);
         }
 
         private AsyncApiReference ParseReference(string localReference)

@@ -44,7 +44,5 @@ namespace LEGO.AsyncAPI.Writers
         {
             return this.InLineReferences;
         }
-
     }
-
 }

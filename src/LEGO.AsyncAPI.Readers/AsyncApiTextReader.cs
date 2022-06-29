@@ -1,20 +1,22 @@
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Interface;
-using SharpYaml;
-using SharpYaml.Serialization;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Interface;
+    using SharpYaml;
+    using SharpYaml.Serialization;
+
     /// <summary>
     /// Service class for converting contents of TextReader into AsyncApiDocument instances
     /// </summary>
     public class AsyncApiTextReaderReader : IAsyncApiReader<TextReader, AsyncApiDiagnostic>
     {
-        private readonly AsyncApiReaderSettings _settings;
+        private readonly AsyncApiReaderSettings settings;
 
         /// <summary>
         /// Create stream reader with custom settings if desired.
@@ -22,7 +24,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="settings"></param>
         public AsyncApiTextReaderReader(AsyncApiReaderSettings settings = null)
         {
-            _settings = settings ?? new AsyncApiReaderSettings();
+            this.settings = settings ?? new AsyncApiReaderSettings();
         }
 
         /// <summary>
@@ -47,7 +49,7 @@ namespace LEGO.AsyncAPI.Readers
                 return new AsyncApiDocument();
             }
 
-            return new AsyncApiYamlDocumentReader(this._settings).Read(yamlDocument, out diagnostic);
+            return new AsyncApiYamlDocumentReader(this.settings).Read(yamlDocument, out diagnostic);
         }
 
         /// <summary>
@@ -71,11 +73,11 @@ namespace LEGO.AsyncAPI.Readers
                 return new ReadResult
                 {
                     AsyncApiDocument = null,
-                    AsyncApiDiagnostic = diagnostic
+                    AsyncApiDiagnostic = diagnostic,
                 };
             }
 
-            return await new AsyncApiYamlDocumentReader(this._settings).ReadAsync(yamlDocument);
+            return await new AsyncApiYamlDocumentReader(this.settings).ReadAsync(yamlDocument);
         }
 
 
@@ -103,7 +105,7 @@ namespace LEGO.AsyncAPI.Readers
                 return default(T);
             }
 
-            return new AsyncApiYamlDocumentReader(this._settings).ReadFragment<T>(yamlDocument, version,
+            return new AsyncApiYamlDocumentReader(this.settings).ReadFragment<T>(yamlDocument, version,
                 out diagnostic);
         }
 

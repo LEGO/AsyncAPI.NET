@@ -1,14 +1,15 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Exceptions;
+    using Models;
+    using Models.Interfaces;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Exceptions;
-using Models;
-using Models.Interfaces;
-
-/// <summary>
+    /// <summary>
     /// This class is used to walk an AsyncApiDocument and convert unresolved references to references to populated objects
     /// </summary>
     internal class AsyncApiReferenceResolver : AsyncApiVisitorBase
@@ -25,7 +26,7 @@ using Models.Interfaces;
         {
             get
             {
-                return errors;
+                return this.errors;
             }
         }
 
@@ -33,44 +34,46 @@ using Models.Interfaces;
         {
             if (referenceable.Reference != null)
             {
-                referenceable.Reference.HostDocument = currentDocument;
+                referenceable.Reference.HostDocument = this.currentDocument;
             }
         }
 
         public override void Visit(AsyncApiComponents components)
         {
-            ResolveMap(components.Parameters);
-            ResolveMap(components.Channels); // TODO override
-            ResolveMap(components.Schemas);
-            ResolveMap(components.Servers); // TODO override
-            ResolveMap(components.CorrelationIds); // TODO override
-            ResolveMap(components.MessageTraits); // TODO override
-            ResolveMap(components.OperationTraits); // TODO override
-            ResolveMap(components.SecuritySchemes);
+            this.ResolveMap(components.Parameters);
+            this.ResolveMap(components.Channels); // TODO override
+            this.ResolveMap(components.Schemas);
+            this.ResolveMap(components.Servers); // TODO override
+            this.ResolveMap(components.CorrelationIds); // TODO override
+            this.ResolveMap(components.MessageTraits); // TODO override
+            this.ResolveMap(components.OperationTraits); // TODO override
+            this.ResolveMap(components.SecuritySchemes);
+
             // TODO: figure out bindings
             // ResolveMap(components.ChannelBindings);
             // ResolveMap(components.MessageBindings);
             // ResolveMap(components.OperationBindings);
             // ResolveMap(components.ServerBindings);
-            ResolveMap(components.Messages);
-            
+            this.ResolveMap(components.Messages);
         }
 
         public override void Visit(AsyncApiChannel channel)
         {
-            ResolveMap(channel.Parameters);
+            this.ResolveMap(channel.Parameters);
+
             // TODO: figure out bindings
             //ResolveMap(channel.Bindings);
         }
-        
+
 
         /// <summary>
         /// Resolve all references used in an operation
         /// </summary>
         public override void Visit(AsyncApiOperation operation)
         {
-            ResolveObject(operation.Message, r => operation.Message = r);
-            ResolveList(operation.Traits);
+            this.ResolveObject(operation.Message, r => operation.Message = r);
+            this.ResolveList(operation.Traits);
+
             // TODO: Figure out bindings
             // ResolveMap(operation.Bindings);
         }
@@ -82,7 +85,7 @@ using Models.Interfaces;
         {
             foreach (var scheme in securityRequirement.Keys.ToList())
             {
-                ResolveObject(scheme, (resolvedScheme) =>
+                this.ResolveObject(scheme, (resolvedScheme) =>
                 {
                     if (resolvedScheme != null)
                     {
@@ -101,7 +104,7 @@ using Models.Interfaces;
         /// </summary>
         public override void Visit(IList<AsyncApiParameter> parameters)
         {
-            ResolveList(parameters);
+            this.ResolveList(parameters);
         }
 
         /// <summary>
@@ -109,7 +112,7 @@ using Models.Interfaces;
         /// </summary>
         public override void Visit(AsyncApiParameter parameter)
         {
-            ResolveObject(parameter.Schema, r => parameter.Schema = r);
+            this.ResolveObject(parameter.Schema, r => parameter.Schema = r);
         }
 
         /// <summary>
@@ -117,19 +120,19 @@ using Models.Interfaces;
         /// </summary>
         public override void Visit(AsyncApiSchema schema)
         {
-            ResolveObject(schema.Items, r => schema.Items = r);
-            ResolveList(schema.OneOf);
-            ResolveList(schema.AllOf);
-            ResolveList(schema.AnyOf);
-            ResolveObject(schema.Contains, r => schema.Contains = r);
-            ResolveObject(schema.Else, r => schema.Else = r);
-            ResolveObject(schema.If, r => schema.If = r);
-            ResolveObject(schema.Items, r => schema.Items = r);
-            ResolveObject(schema.Not, r => schema.Not=r);
-            ResolveObject(schema.Then, r => schema.Then = r);
-            ResolveObject(schema.PropertyNames, r => schema.PropertyNames = r);
-            ResolveObject(schema.AdditionalProperties, r => schema.AdditionalProperties = r);
-            ResolveMap(schema.Properties);
+            this.ResolveObject(schema.Items, r => schema.Items = r);
+            this.ResolveList(schema.OneOf);
+            this.ResolveList(schema.AllOf);
+            this.ResolveList(schema.AnyOf);
+            this.ResolveObject(schema.Contains, r => schema.Contains = r);
+            this.ResolveObject(schema.Else, r => schema.Else = r);
+            this.ResolveObject(schema.If, r => schema.If = r);
+            this.ResolveObject(schema.Items, r => schema.Items = r);
+            this.ResolveObject(schema.Not, r => schema.Not = r);
+            this.ResolveObject(schema.Then, r => schema.Then = r);
+            this.ResolveObject(schema.PropertyNames, r => schema.PropertyNames = r);
+            this.ResolveObject(schema.AdditionalProperties, r => schema.AdditionalProperties = r);
+            this.ResolveMap(schema.Properties);
         }
 
         private void ResolveObject<T>(T entity, Action<T> assign) where T : class, IAsyncApiReferenceable, new()
@@ -139,36 +142,42 @@ using Models.Interfaces;
                 return;
             }
 
-            if (IsUnresolvedReference(entity))
+            if (this.IsUnresolvedReference(entity))
             {
-                assign(ResolveReference<T>(entity.Reference));
+                assign(this.ResolveReference<T>(entity.Reference));
             }
         }
 
         private void ResolveList<T>(IList<T> list) where T : class, IAsyncApiReferenceable, new()
         {
-            if (list == null) return;
+            if (list == null)
+            {
+                return;
+            }
 
             for (int i = 0; i < list.Count; i++)
             {
                 var entity = list[i];
-                if (IsUnresolvedReference(entity))
+                if (this.IsUnresolvedReference(entity))
                 {
-                    list[i] = ResolveReference<T>(entity.Reference);
+                    list[i] = this.ResolveReference<T>(entity.Reference);
                 }
             }
         }
 
         private void ResolveMap<T>(IDictionary<string, T> map) where T : class, IAsyncApiReferenceable, new()
         {
-            if (map == null) return;
+            if (map == null)
+            {
+                return;
+            }
 
             foreach (var key in map.Keys.ToList())
             {
                 var entity = map[key];
-                if (IsUnresolvedReference(entity))
+                if (this.IsUnresolvedReference(entity))
                 {
-                    map[key] = ResolveReference<T>(entity.Reference);
+                    map[key] = this.ResolveReference<T>(entity.Reference);
                 }
             }
         }
@@ -176,14 +185,14 @@ using Models.Interfaces;
         private T ResolveReference<T>(AsyncApiReference reference) where T : class, IAsyncApiReferenceable, new()
         {
             try
-                {
-                    return currentDocument.ResolveReference(reference) as T;
-                }
-                catch (AsyncApiException ex)
-                {
-                    errors.Add(new AsyncApiReferenceError(ex));
-                    return null;
-                }
+            {
+                return this.currentDocument.ResolveReference(reference) as T;
+            }
+            catch (AsyncApiException ex)
+            {
+                this.errors.Add(new AsyncApiReferenceError(ex));
+                return null;
+            }
         }
 
         private bool IsUnresolvedReference(IAsyncApiReferenceable possibleReference)

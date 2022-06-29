@@ -14,5 +14,4 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         Array = 1,
     }
-
 }

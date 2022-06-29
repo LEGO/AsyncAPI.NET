@@ -99,7 +99,7 @@ namespace LEGO.AsyncAPI.Models
                        this.Schemas,
                        (w, key, component) =>
                         {
-                           component.SerializeV2WithoutReference(w);
+                            component.SerializeV2WithoutReference(w);
                         });
                 }
 

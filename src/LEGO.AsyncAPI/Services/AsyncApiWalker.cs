@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Services
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Services
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +10,7 @@
     public class AsyncApiWalker
     {
         private readonly AsyncApiVisitorBase visitor;
-        private readonly Stack<AsyncApiSchema> schemaLoop = new ();
+        private readonly Stack<AsyncApiSchema> schemaLoop = new();
 
         public AsyncApiWalker(AsyncApiVisitorBase visitor)
         {
@@ -42,123 +44,124 @@
                 return;
             }
 
-            visitor.Visit(components);
+            this.visitor.Visit(components);
 
             if (components == null)
             {
                 return;
             }
 
-            Walk(AsyncApiConstants.Schemas, () =>
+            this.Walk(AsyncApiConstants.Schemas, () =>
             {
                 if (components.Schemas != null)
                 {
                     foreach (var item in components.Schemas)
                     {
-                        Walk(item.Key, () => Walk(item.Value, isComponent: true));
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
                     }
                 }
             });
 
-            Walk(AsyncApiConstants.Channels, () =>
+            this.Walk(AsyncApiConstants.Channels, () =>
             {
                 if (components.Channels != null)
                 {
                     foreach (var item in components.Channels)
                     {
-                        Walk(item.Key, () => Walk(item.Value, isComponent: true));
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
                     }
                 }
             });
 
-            Walk(AsyncApiConstants.Parameters, () =>
+            this.Walk(AsyncApiConstants.Parameters, () =>
             {
                 if (components.Parameters != null)
                 {
                     foreach (var item in components.Parameters)
                     {
-                        Walk(item.Key, () => Walk(item.Value, isComponent: true));
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
                     }
                 }
             });
 
-            Walk(AsyncApiConstants.Messages, () =>
+            this.Walk(AsyncApiConstants.Messages, () =>
             {
                 if (components.Messages != null)
                 {
                     foreach (var item in components.Messages)
                     {
-                        Walk(item.Key, () => Walk(item.Value, isComponent: true));
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
                     }
                 }
             });
 
-            Walk(AsyncApiConstants.Servers, () =>
+            this.Walk(AsyncApiConstants.Servers, () =>
             {
                 if (components.Servers != null)
                 {
                     foreach (var item in components.Servers)
                     {
-                        Walk(item.Key, () => Walk(item.Value, isComponent: true));
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
                     }
                 }
             });
 
-            Walk(AsyncApiConstants.CorrelationIds, () =>
+            this.Walk(AsyncApiConstants.CorrelationIds, () =>
             {
                 if (components.CorrelationIds != null)
                 {
                     foreach (var item in components.CorrelationIds)
                     {
-                        Walk(item.Key, () => Walk(item.Value, isComponent: true));
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
                     }
                 }
             });
 
-            Walk(AsyncApiConstants.MessageTraits, () =>
+            this.Walk(AsyncApiConstants.MessageTraits, () =>
             {
                 if (components.MessageTraits != null)
                 {
                     foreach (var item in components.MessageTraits)
                     {
-                        Walk(item.Key, () => Walk(item.Value, isComponent: true));
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
                     }
                 }
             });
 
-            Walk(AsyncApiConstants.OperationTraits, () =>
+            this.Walk(AsyncApiConstants.OperationTraits, () =>
             {
                 if (components.OperationTraits != null)
                 {
                     foreach (var item in components.OperationTraits)
                     {
-                        Walk(item.Key, () => Walk(item.Value, isComponent: true));
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
                     }
                 }
             });
-            
-            Walk(AsyncApiConstants.SecuritySchemes, () =>
+
+            this.Walk(AsyncApiConstants.SecuritySchemes, () =>
             {
                 if (components.SecuritySchemes != null)
                 {
                     foreach (var item in components.SecuritySchemes)
                     {
-                        Walk(item.Key, () => Walk(item.Value, isComponent: true));
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
                     }
                 }
             });
-            
-            Walk(components as IAsyncApiExtensible);
+
+            this.Walk(components as IAsyncApiExtensible);
         }
+
         internal void Walk(AsyncApiOAuthFlows flows)
         {
             if (flows == null)
             {
                 return;
             }
-            
-            visitor.Visit(flows);
-            Walk(flows as IAsyncApiExtensible);
+
+            this.visitor.Visit(flows);
+            this.Walk(flows as IAsyncApiExtensible);
         }
 
         internal void Walk(AsyncApiOAuthFlow oAuthFlow)
@@ -168,26 +171,27 @@
                 return;
             }
 
-            visitor.Visit(oAuthFlow);
-            Walk(oAuthFlow as IAsyncApiExtensible);
+            this.visitor.Visit(oAuthFlow);
+            this.Walk(oAuthFlow as IAsyncApiExtensible);
         }
+
         internal void Walk(AsyncApiSecurityScheme securityScheme, bool isComponent = false)
         {
-            if (securityScheme == null || ProcessAsReference(securityScheme, isComponent))
+            if (securityScheme == null || this.ProcessAsReference(securityScheme, isComponent))
             {
                 return;
             }
-            
-            visitor.Visit(securityScheme);
+
+            this.visitor.Visit(securityScheme);
 
             if (securityScheme != null)
             {
-                Walk(AsyncApiConstants.Flows, () => Walk(securityScheme.Flows));
+                this.Walk(AsyncApiConstants.Flows, () => this.Walk(securityScheme.Flows));
             }
-            
-            Walk(securityScheme as IAsyncApiExtensible);
+
+            this.Walk(securityScheme as IAsyncApiExtensible);
         }
-        
+
         internal void Walk(IDictionary<string, AsyncApiChannel> channels)
         {
             if (channels == null)
@@ -215,14 +219,14 @@
                 return;
             }
 
-            visitor.Visit(externalDocs);
+            this.visitor.Visit(externalDocs);
 
-            Walk(externalDocs as IAsyncApiExtensible);
+            this.Walk(externalDocs as IAsyncApiExtensible);
         }
 
         internal void Walk(AsyncApiChannel channel, bool isComponent = false)
         {
-            if (channel == null || ProcessAsReference(channel, isComponent))
+            if (channel == null || this.ProcessAsReference(channel, isComponent))
             {
                 return;
             }
@@ -233,8 +237,9 @@
             {
                 this.Walk(AsyncApiConstants.Subscribe, () => this.Walk(channel.Subscribe));
                 this.Walk(AsyncApiConstants.Publish, () => this.Walk(channel.Publish));
+
                 // TODO: Figure out bindings
-                Walk(AsyncApiConstants.Parameters, () => Walk(channel.Parameters));
+                this.Walk(AsyncApiConstants.Parameters, () => this.Walk(channel.Parameters));
             }
 
             this.Walk(channel as IAsyncApiExtensible);
@@ -246,7 +251,7 @@
             {
                 return;
             }
-            
+
             this.visitor.Visit(parameters);
 
             if (parameters != null)
@@ -262,54 +267,54 @@
 
         internal void Walk(AsyncApiParameter parameter, bool isComponent = false)
         {
-            if (parameter == null || ProcessAsReference(parameter, isComponent))
+            if (parameter == null || this.ProcessAsReference(parameter, isComponent))
             {
                 return;
             }
-            
+
             this.visitor.Visit(parameter);
 
             if (parameter != null)
             {
-                this.Walk(AsyncApiConstants.Schema, () => Walk(parameter.Schema));
+                this.Walk(AsyncApiConstants.Schema, () => this.Walk(parameter.Schema));
             }
-            
+
             this.Walk(parameter as IAsyncApiExtensible);
         }
 
         internal void Walk(AsyncApiSchema schema, bool isComponent = false)
         {
-            if (schema == null || ProcessAsReference(schema, isComponent))
+            if (schema == null || this.ProcessAsReference(schema, isComponent))
             {
                 return;
             }
 
-            if (schemaLoop.Contains(schema))
+            if (this.schemaLoop.Contains(schema))
             {
                 return;  // Loop detected, this schema has already been walked.
             }
             else
             {
-                schemaLoop.Push(schema);
+                this.schemaLoop.Push(schema);
             }
 
-            visitor.Visit(schema);
+            this.visitor.Visit(schema);
 
             if (schema.Items != null)
             {
-                Walk("items", () => Walk(schema.Items));
+                this.Walk("items", () => this.Walk(schema.Items));
             }
 
             if (schema.Default != null)
             {
-                Walk(AsyncApiConstants.Default, () => Walk(schema.Default));
+                this.Walk(AsyncApiConstants.Default, () => this.Walk(schema.Default));
             }
 
             if (schema.AllOf != null)
             {
                 foreach (var item in schema.AllOf)
                 {
-                    Walk("allOf", () => Walk(item));
+                    this.Walk("allOf", () => this.Walk(item));
                 }
             }
 
@@ -317,64 +322,69 @@
             {
                 foreach (var item in schema.AnyOf)
                 {
-                    Walk("anyOf", () => Walk(item));
+                    this.Walk("anyOf", () => this.Walk(item));
                 }
             }
 
             if (schema.Not != null)
             {
-                Walk("not", () => Walk(schema.Not));
+                this.Walk("not", () => this.Walk(schema.Not));
             }
+
             if (schema.Contains != null)
             {
-                Walk("contains", () => Walk(schema.Contains));
+                this.Walk("contains", () => this.Walk(schema.Contains));
             }
+
             if (schema.If != null)
             {
-                Walk("if", () => Walk(schema.If));
+                this.Walk("if", () => this.Walk(schema.If));
             }
+
             if (schema.Then != null)
             {
-                Walk("then", () => Walk(schema.Then));
+                this.Walk("then", () => this.Walk(schema.Then));
             }
+
             if (schema.Else != null)
             {
-                Walk("else", () => Walk(schema.Else));
+                this.Walk("else", () => this.Walk(schema.Else));
             }
+
             if (schema.OneOf != null)
             {
                 foreach (var item in schema.OneOf)
                 {
-                    Walk("oneOf", () => Walk(item));
+                    this.Walk("oneOf", () => this.Walk(item));
                 }
             }
 
             if (schema.Properties != null)
             {
-                Walk("properties", () =>
+                this.Walk("properties", () =>
                 {
                     foreach (var item in schema.Properties)
                     {
-                        Walk(item.Key, () => Walk(item.Value));
+                        this.Walk(item.Key, () => this.Walk(item.Value));
                     }
                 });
             }
 
             if (schema.AdditionalProperties != null)
             {
-                Walk("additionalProperties", () => Walk(schema.AdditionalProperties));
+                this.Walk("additionalProperties", () => this.Walk(schema.AdditionalProperties));
             }
 
             if (schema.PropertyNames != null)
             {
-                Walk("propertyNames", () => Walk(schema.PropertyNames));
+                this.Walk("propertyNames", () => this.Walk(schema.PropertyNames));
             }
 
             if (schema.Enum != null)
             {
                 foreach (var item in schema.Enum)
                 {
-                    Walk("enum", () => Walk(item));
+                    this.Walk("enum", () => this.Walk(item));
                 }
             }
 
@@ -382,20 +392,20 @@
             {
                 foreach (var item in schema.Examples)
                 {
-                    Walk("examples", () => Walk(item));
+                    this.Walk("examples", () => this.Walk(item));
                 }
             }
 
             if (schema.Const != null)
             {
-                Walk("const", () => Walk(schema.Const));
+                this.Walk("const", () => this.Walk(schema.Const));
             }
 
-            Walk(AsyncApiConstants.ExternalDocs, () => Walk(schema.ExternalDocs));
+            this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(schema.ExternalDocs));
 
-            Walk(schema as IAsyncApiExtensible);
+            this.Walk(schema as IAsyncApiExtensible);
 
-            schemaLoop.Pop();
+            this.schemaLoop.Pop();
         }
 
         internal void Walk(AsyncApiOperation operation)
@@ -409,11 +419,12 @@
 
             if (operation != null)
             {
-                Walk(AsyncApiConstants.Tags, () => this.Walk(operation.Tags));
-                Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(operation.ExternalDocs));
-                Walk(AsyncApiConstants.Traits, () => this.Walk(operation.Traits));
+                this.Walk(AsyncApiConstants.Tags, () => this.Walk(operation.Tags));
+                this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(operation.ExternalDocs));
+                this.Walk(AsyncApiConstants.Traits, () => this.Walk(operation.Traits));
+
                 //TODO: Figure out bindings
-                Walk(AsyncApiConstants.Message, () => this.Walk(operation.Message));
+                this.Walk(AsyncApiConstants.Message, () => this.Walk(operation.Message));
             }
 
             this.Walk(operation as IAsyncApiExtensible);
@@ -426,40 +437,41 @@
                 return;
             }
 
-            visitor.Visit(traits);
+            this.visitor.Visit(traits);
 
             // Visit traits
             if (traits != null)
             {
                 for (int i = 0; i < traits.Count; i++)
                 {
-                    Walk(i.ToString(), () => Walk(traits[i]));
+                    this.Walk(i.ToString(), () => this.Walk(traits[i]));
                 }
             }
         }
 
-        internal void Walk (AsyncApiOperationTrait trait, bool isComponent = false)
+        internal void Walk(AsyncApiOperationTrait trait, bool isComponent = false)
         {
-            if (trait == null || ProcessAsReference(trait, isComponent))
+            if (trait == null || this.ProcessAsReference(trait, isComponent))
             {
                 return;
             }
 
-            visitor.Visit(trait);
+            this.visitor.Visit(trait);
 
-            if(trait != null)
+            if (trait != null)
             {
-                Walk(AsyncApiConstants.ExternalDocs, () => Walk(trait.ExternalDocs));
-                Walk(AsyncApiConstants.Tags, () => Walk(trait.Tags));
+                this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(trait.ExternalDocs));
+                this.Walk(AsyncApiConstants.Tags, () => this.Walk(trait.Tags));
+
                 // Todo: Figure out bindings;
             }
 
             this.Walk(trait as IAsyncApiExtensible);
         }
 
-        internal void Walk (AsyncApiMessage message, bool isComponent = false)
+        internal void Walk(AsyncApiMessage message, bool isComponent = false)
         {
-            if(message == null || ProcessAsReference(message, isComponent))
+            if (message == null || this.ProcessAsReference(message, isComponent))
             {
                 return;
             }
@@ -468,19 +480,20 @@
 
             if (message != null)
             {
-                Walk(AsyncApiConstants.Headers, () => Walk(message.Headers));
-                Walk(AsyncApiConstants.Payload, () => Walk(message.Payload));
-                Walk(AsyncApiConstants.CorrelationId, () => Walk(message.CorrelationId));
-                Walk(AsyncApiConstants.Tags, () => Walk(message.Tags));
-                Walk(AsyncApiConstants.Examples, () => Walk(message.Examples));
-                Walk(AsyncApiConstants.ExternalDocs, () => Walk(message.ExternalDocs));
-                Walk(AsyncApiConstants.Traits, () => Walk(message.Traits));
+                this.Walk(AsyncApiConstants.Headers, () => this.Walk(message.Headers));
+                this.Walk(AsyncApiConstants.Payload, () => this.Walk(message.Payload));
+                this.Walk(AsyncApiConstants.CorrelationId, () => this.Walk(message.CorrelationId));
+                this.Walk(AsyncApiConstants.Tags, () => this.Walk(message.Tags));
+                this.Walk(AsyncApiConstants.Examples, () => this.Walk(message.Examples));
+                this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(message.ExternalDocs));
+                this.Walk(AsyncApiConstants.Traits, () => this.Walk(message.Traits));
+
                 // TODO: Figure out bindings.
             }
 
             this.Walk(message as IAsyncApiExtensible);
         }
-        
+
         private void Walk(IList<AsyncApiMessageTrait> traits)
         {
             if (traits == null)
@@ -488,37 +501,38 @@
                 return;
             }
 
-            visitor.Visit(traits);
+            this.visitor.Visit(traits);
 
             // Visit traits
             if (traits != null)
             {
                 for (int i = 0; i < traits.Count; i++)
                 {
-                    Walk(i.ToString(), () => Walk(traits[i]));
+                    this.Walk(i.ToString(), () => this.Walk(traits[i]));
                 }
             }
         }
 
         internal void Walk(AsyncApiMessageTrait trait, bool isComponent = false)
         {
-            if (trait == null || ProcessAsReference(trait, isComponent))
+            if (trait == null || this.ProcessAsReference(trait, isComponent))
             {
                 return;
             }
 
-            visitor.Visit(trait);
+            this.visitor.Visit(trait);
 
             if (trait != null)
             {
-                Walk(AsyncApiConstants.Headers, () => Walk(trait.Headers));
-                Walk(AsyncApiConstants.CorrelationId, () => Walk(trait.CorrelationId));
-                Walk(AsyncApiConstants.Tags, () => Walk(trait.Tags));
-                Walk(AsyncApiConstants.Examples, () => Walk(trait.Examples));
-                Walk(AsyncApiConstants.ExternalDocs, () => Walk(trait.ExternalDocs));
+                this.Walk(AsyncApiConstants.Headers, () => this.Walk(trait.Headers));
+                this.Walk(AsyncApiConstants.CorrelationId, () => this.Walk(trait.CorrelationId));
+                this.Walk(AsyncApiConstants.Tags, () => this.Walk(trait.Tags));
+                this.Walk(AsyncApiConstants.Examples, () => this.Walk(trait.Examples));
+                this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(trait.ExternalDocs));
+
                 // Todo: Figure out bindings;
             }
-            
+
             this.Walk(trait as IAsyncApiExtensible);
         }
 
@@ -529,13 +543,13 @@
                 return;
             }
 
-            visitor.Visit(examples);
+            this.visitor.Visit(examples);
 
             if (examples != null)
             {
                 for (int i = 0; i < examples.Count; i++)
                 {
-                    Walk(i.ToString(), () => Walk(examples[i]));
+                    this.Walk(i.ToString(), () => this.Walk(examples[i]));
                 }
             }
         }
@@ -546,13 +560,13 @@
             {
                 return;
             }
-            
-            visitor.Visit(example);
+
+            this.visitor.Visit(example);
 
             if (example != null)
             {
-                Walk(AsyncApiConstants.Headers, () => Walk(example.Headers));
-                Walk(AsyncApiConstants.Payload, () => Walk(example.Payload));
+                this.Walk(AsyncApiConstants.Headers, () => this.Walk(example.Headers));
+                this.Walk(AsyncApiConstants.Payload, () => this.Walk(example.Payload));
             }
 
             this.Walk(example as IAsyncApiExtensible);
@@ -564,8 +578,8 @@
             {
                 return;
             }
-            
-            visitor.Visit(anys);
+
+            this.visitor.Visit(anys);
 
             if (anys != null)
             {
@@ -577,19 +591,19 @@
                 }
             }
         }
-        
+
         internal void Walk(AsyncApiCorrelationId correlationId, bool isComponent = false)
         {
-            if (correlationId == null || ProcessAsReference(correlationId, isComponent))
+            if (correlationId == null || this.ProcessAsReference(correlationId, isComponent))
             {
                 return;
             }
 
-            visitor.Visit(correlationId);
+            this.visitor.Visit(correlationId);
 
             this.Walk(correlationId as IAsyncApiExtensible);
         }
-        
+
         internal void Walk(AsyncApiTag tag)
         {
             if (tag == null)
@@ -597,9 +611,9 @@
                 return;
             }
 
-            visitor.Visit(tag);
-            visitor.Visit(tag.ExternalDocs);
-            visitor.Visit(tag as IAsyncApiExtensible);
+            this.visitor.Visit(tag);
+            this.visitor.Visit(tag.ExternalDocs);
+            this.visitor.Visit(tag as IAsyncApiExtensible);
         }
 
         internal void Walk(IList<AsyncApiTag> tags)
@@ -609,14 +623,14 @@
                 return;
             }
 
-            visitor.Visit(tags);
+            this.visitor.Visit(tags);
 
             // Visit tags
             if (tags != null)
             {
                 for (int i = 0; i < tags.Count; i++)
                 {
-                    Walk(i.ToString(), () => Walk(tags[i]));
+                    this.Walk(i.ToString(), () => this.Walk(tags[i]));
                 }
             }
         }
@@ -641,7 +655,7 @@
 
         internal void Walk(AsyncApiServer server, bool isComponent = false)
         {
-            if (server == null || ProcessAsReference(server, isComponent))
+            if (server == null || this.ProcessAsReference(server, isComponent))
             {
                 return;
             }
@@ -649,6 +663,7 @@
             this.visitor.Visit(server);
             this.Walk(AsyncApiConstants.Variables, () => this.Walk(server.Variables));
             this.Walk(AsyncApiConstants.Security, () => this.Walk(server.Security));
+
             // TODO: Figure out bindings
             this.visitor.Visit(server as IAsyncApiExtensible);
         }
@@ -750,7 +765,7 @@
                 return;
             }
 
-            visitor.Visit(any);
+            this.visitor.Visit(any);
         }
 
         private void Walk(string context, Action walk)
@@ -774,12 +789,12 @@
                 foreach (var item in asyncApiExtensible.Extensions)
                 {
                     this.visitor.CurrentKeys.Extension = item.Key;
-                    Walk(item.Key, () => Walk(item.Value));
+                    this.Walk(item.Key, () => this.Walk(item.Value));
                     this.visitor.CurrentKeys.Extension = null;
                 }
             }
         }
-        
+
         internal void Walk(IAsyncApiExtension extension)
         {
             if (extension == null)
@@ -787,7 +802,7 @@
                 return;
             }
 
-            visitor.Visit(extension);
+            this.visitor.Visit(extension);
         }
 
         private bool ProcessAsReference(IAsyncApiReferenceable referenceable, bool isComponent = false)
@@ -815,33 +830,34 @@
 
             switch (element)
             {
-                case AsyncApiDocument e: Walk(e); break;
-                case AsyncApiLicense e: Walk(e); break;
-                case AsyncApiInfo e: Walk(e); break;
-                case AsyncApiComponents e: Walk(e); break;
-                case AsyncApiContact e: Walk(e); break;
-                case AsyncApiCorrelationId e: Walk(e); break;
-                case AsyncApiMessageExample e: Walk(e); break;
-                case AsyncApiChannel e: Walk(e); break;
-                case AsyncApiExternalDocumentation e: Walk(e); break;
-                case AsyncApiMessage e: Walk(e); break;
-                case AsyncApiMessageTrait e: Walk(e); break;
-                case AsyncApiOperationTrait e: Walk(e); break;
-                case AsyncApiOAuthFlows e: Walk(e); break;
-                case AsyncApiOAuthFlow e: Walk(e); break;
-                case AsyncApiOperation e: Walk(e); break;
-                case AsyncApiParameter e: Walk(e); break;
-                case AsyncApiSchema e: Walk(e); break;
-                case AsyncApiSecurityRequirement e: Walk(e); break;
-                case AsyncApiSecurityScheme e: Walk(e); break;
-                case AsyncApiServer e: Walk(e); break;
-                case AsyncApiServerVariable e: Walk(e); break;
-                case AsyncApiTag e: Walk(e); break;
-                case IList<AsyncApiTag> e: Walk(e); break; 
-                case IDictionary<string, AsyncApiServerVariable> e: Walk(e);
+                case AsyncApiDocument e: this.Walk(e); break;
+                case AsyncApiLicense e: this.Walk(e); break;
+                case AsyncApiInfo e: this.Walk(e); break;
+                case AsyncApiComponents e: this.Walk(e); break;
+                case AsyncApiContact e: this.Walk(e); break;
+                case AsyncApiCorrelationId e: this.Walk(e); break;
+                case AsyncApiMessageExample e: this.Walk(e); break;
+                case AsyncApiChannel e: this.Walk(e); break;
+                case AsyncApiExternalDocumentation e: this.Walk(e); break;
+                case AsyncApiMessage e: this.Walk(e); break;
+                case AsyncApiMessageTrait e: this.Walk(e); break;
+                case AsyncApiOperationTrait e: this.Walk(e); break;
+                case AsyncApiOAuthFlows e: this.Walk(e); break;
+                case AsyncApiOAuthFlow e: this.Walk(e); break;
+                case AsyncApiOperation e: this.Walk(e); break;
+                case AsyncApiParameter e: this.Walk(e); break;
+                case AsyncApiSchema e: this.Walk(e); break;
+                case AsyncApiSecurityRequirement e: this.Walk(e); break;
+                case AsyncApiSecurityScheme e: this.Walk(e); break;
+                case AsyncApiServer e: this.Walk(e); break;
+                case AsyncApiServerVariable e: this.Walk(e); break;
+                case AsyncApiTag e: this.Walk(e); break;
+                case IList<AsyncApiTag> e: this.Walk(e); break;
+                case IDictionary<string, AsyncApiServerVariable> e:
+                    this.Walk(e);
                     break;
-                case IAsyncApiExtensible e: Walk(e); break;
-                case IAsyncApiExtension e: Walk(e); break;
+                case IAsyncApiExtensible e: this.Walk(e); break;
+                case IAsyncApiExtension e: this.Walk(e); break;
             }
         }
     }
