@@ -2,24 +2,16 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-using System.Linq;
-using LEGO.AsyncAPI.Readers;
-
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using Models;
-    using Models.Any;
-    using Models.Interfaces;
+    using System.Linq;
+    using LEGO.AsyncAPI.Models.Any;
     using NUnit.Framework;
-    using Readers;
-    using Writers;
+    using LEGO.AsyncAPI.Readers;
 
     public class AsyncApiReaderTests
-    {
+         {
       [Test]
       public void Read_WithFullSpec_Deserializes()
       {
@@ -253,6 +245,66 @@ servers:
         Assert.AreEqual("port", variable.Key);
         Assert.AreEqual("Secure connection (TLS) is available through port 8883.", variable.Value.Description);
       }
+      
+      [Test]
+      public void Read_WithBasicPlusCorrelationIDDeserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    publish:
+      bindings:
+        http:
+          type: response
+      message:
+        $ref: '#/components/messages/WorkspaceEventPayload'
+components:
+  messages:
+    WorkspaceEventPayload:
+      schemaFormat: application/schema+yaml;version=draft-07
+      correlationId:
+        description: Default Correlation ID
+        location: $message.header#/correlationId          
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var message = doc.Channels["workspace"].Publish.Message;
+        Assert.AreEqual("Default Correlation ID", message.CorrelationId.Description);
+        Assert.AreEqual("$message.header#/correlationId", message.CorrelationId.Location);
+      }
+      
+      [Test]
+      public void Read_WithBasicPlusSecuritySchemeDeserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    publish:
+      bindings:
+        http:
+          type: response
+      message:
+        $ref: '#/components/messages/WorkspaceEventPayload'
+components:
+  messages:
+    WorkspaceEventPayload:
+      schemaFormat: application/schema+yaml;version=draft-07
+  securitySchemes:
+    saslScram:
+      type: scramSha256
+      description: Provide your username and password for SASL/SCRAM authentication       
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var scheme = doc.Components.SecuritySchemes.First();
+        Assert.AreEqual(new Uri("saslScram"), scheme.Key);
+      }
+      
     }
 }
-
