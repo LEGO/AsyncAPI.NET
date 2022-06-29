@@ -15,8 +15,8 @@ namespace LEGO.AsyncAPI.Readers
     public class ParsingContext
     {
         private readonly Stack<string> _currentLocation = new();
-        private readonly Dictionary<string, object> _tempStorage = new();
-        private readonly Dictionary<object, Dictionary<string, object>> _scopedTempStorage = new();
+        private readonly Dictionary<string, object> tempStorage = new();
+        private readonly Dictionary<object, Dictionary<string, object>> scopedTempStorage = new();
         private readonly Dictionary<string, Stack<string>> loopStacks = new();
 
         internal Dictionary<string, Func<IAsyncApiAny, AsyncApiVersion, IAsyncApiExtension>> ExtensionParsers
@@ -109,9 +109,9 @@ namespace LEGO.AsyncAPI.Readers
 
             if (scope == null)
             {
-                storage = this._tempStorage;
+                storage = this.tempStorage;
             }
-            else if (!this._scopedTempStorage.TryGetValue(scope, out storage))
+            else if (!this.scopedTempStorage.TryGetValue(scope, out storage))
             {
                 return default(T);
             }
@@ -125,11 +125,11 @@ namespace LEGO.AsyncAPI.Readers
 
             if (scope == null)
             {
-                storage = this._tempStorage;
+                storage = this.tempStorage;
             }
-            else if (!this._scopedTempStorage.TryGetValue(scope, out storage))
+            else if (!this.scopedTempStorage.TryGetValue(scope, out storage))
             {
-                storage = this._scopedTempStorage[scope] = new Dictionary<string, object>();
+                storage = this.scopedTempStorage[scope] = new Dictionary<string, object>();
             }
 
             if (value == null)

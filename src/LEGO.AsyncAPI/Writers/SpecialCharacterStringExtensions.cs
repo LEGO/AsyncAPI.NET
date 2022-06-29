@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Writers
     {
         // Plain style strings cannot start with indicators. 
         // http://www.yaml.org/spec/1.2/spec.html#indicator//
-        private static readonly char[] _yamlIndicators =
+        private static readonly char[] yamlIndicators =
         {
             '-',
             '?',
@@ -53,14 +53,14 @@ namespace LEGO.AsyncAPI.Writers
 
         // Plain style strings cannot end with these characters.
         // http://www.yaml.org/spec/1.2/spec.html#style/flow/plain
-        private static readonly string[] _yamlPlainStringForbiddenTerminals =
+        private static readonly string[] yamlPlainStringForbiddenTerminals =
         {
             ":",
         };
 
         // Double-quoted strings are needed for these non-printable control characters.
         // http://www.yaml.org/spec/1.2/spec.html#style/flow/double-quoted
-        private static readonly char[] _yamlControlCharacters =
+        private static readonly char[] yamlControlCharacters =
         {
             '\0',
             '\x01',
@@ -121,7 +121,7 @@ namespace LEGO.AsyncAPI.Writers
             }
 
             // If string includes a control character, wrapping in double quote is required.
-            if (input.Any(c => _yamlControlCharacters.Contains(c)))
+            if (input.Any(c => yamlControlCharacters.Contains(c)))
             {
                 // Replace the backslash first, so that the new backslashes created by other Replaces are not duplicated.
                 input = input.Replace("\\", "\\\\");
@@ -173,8 +173,8 @@ namespace LEGO.AsyncAPI.Writers
             // wrap the string in single quote.
             // http://www.yaml.org/spec/1.2/spec.html#style/flow/plain
             if (yamlPlainStringForbiddenCombinations.Any(fc => input.Contains(fc)) ||
-                _yamlIndicators.Any(i => input.StartsWith(i.ToString())) ||
-                _yamlPlainStringForbiddenTerminals.Any(i => input.EndsWith(i.ToString())) ||
+                yamlIndicators.Any(i => input.StartsWith(i.ToString())) ||
+                yamlPlainStringForbiddenTerminals.Any(i => input.EndsWith(i.ToString())) ||
                 input.Trim() != input)
             {
                 // Escape single quotes with two single quotes.
