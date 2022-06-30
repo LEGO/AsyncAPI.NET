@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Readers
             { "description", (a, n) => { a.Description = n.GetScalarValue(); } },
             { "tags", (a, n) => { a.Tags = n.CreateList(LoadTag); } },
             { "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); } },
-            { "bindings", (a, n) => { ; } }, // TODO: Do something with Bindings
+            // { "bindings", (a, n) => { ; } }, // TODO: Do something with Bindings
         };
 
         private static PatternFieldMap<AsyncApiMessageTrait> messageTraitPatternFields =
