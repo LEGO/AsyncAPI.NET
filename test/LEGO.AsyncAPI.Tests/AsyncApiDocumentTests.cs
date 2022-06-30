@@ -2,6 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using LEGO.AsyncAPI.Writers;
+
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
@@ -11,8 +13,6 @@ namespace LEGO.AsyncAPI.Tests
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Readers;
-    using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
     public class AsyncApiDocumentTests
