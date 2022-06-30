@@ -380,6 +380,49 @@ components:
         Assert.IsTrue(requirement.Value.Contains("write:pets"));
         Assert.IsTrue(requirement.Value.Contains("read:pets"));
       }
+      
+      [Test]
+      public void Read_WithBasicPlusMessageTraitsDeserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    publish:
+      bindings:
+        http:
+          type: response
+      message:
+        $ref: '#/components/messages/WorkspaceEventPayload'
+components:
+  messages:
+    WorkspaceEventPayload:
+      schemaFormat: application/schema+yaml;version=draft-07
+      externalDocs: 
+        description: Find more info here
+        url: https://example.com
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+  messageTraits: 
+    commonHeaders:
+      description: a common headers for common things
+      headers:
+        type: object
+        properties:
+          my-app-header:
+            type: integer
+            minimum: 0
+            maximum: 100 
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var messageTraits = doc.Channels.First().Value.Publish.Message.Traits;
+        
+        Assert.AreEqual(1, messageTraits.Count);
+        Assert.AreEqual("a common headers for common things", messageTraits.First().Description);
+      }
 
     }
 }
