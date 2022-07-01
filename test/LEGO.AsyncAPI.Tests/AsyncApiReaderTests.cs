@@ -3,7 +3,6 @@
 // </copyright>
 
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Writers;
 
 namespace LEGO.AsyncAPI.Tests
 {
