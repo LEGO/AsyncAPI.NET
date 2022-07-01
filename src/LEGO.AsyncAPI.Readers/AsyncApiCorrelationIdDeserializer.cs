@@ -28,6 +28,11 @@ namespace LEGO.AsyncAPI.Readers
         public static AsyncApiCorrelationId LoadCorrelationId(ParseNode node)
         {
             var mapNode = node.CheckMapNode("correlationId");
+            var pointer = mapNode.GetReferencePointer();
+            if (pointer != null)
+            {
+                return mapNode.GetReferencedObject<AsyncApiCorrelationId>(ReferenceType.CorrelationId, pointer);
+            }
 
             var correlationId = new AsyncApiCorrelationId();
             foreach (var property in mapNode)

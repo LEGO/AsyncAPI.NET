@@ -27,7 +27,11 @@ namespace LEGO.AsyncAPI.Readers
         public static AsyncApiChannel LoadChannel(ParseNode node)
         {
             var mapNode = node.CheckMapNode("channel");
-
+            var pointer = mapNode.GetReferencePointer();
+            if (pointer != null)
+            {
+                return mapNode.GetReferencedObject<AsyncApiChannel>(ReferenceType.Channel, pointer);
+            }
             var pathItem = new AsyncApiChannel();
 
             ParseMap(mapNode, pathItem, channelFixedFields, channelPatternFields);
