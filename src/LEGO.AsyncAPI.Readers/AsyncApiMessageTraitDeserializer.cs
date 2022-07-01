@@ -32,6 +32,11 @@ namespace LEGO.AsyncAPI.Readers
         public static AsyncApiMessageTrait LoadMessageTrait(ParseNode node)
         {
             var mapNode = node.CheckMapNode("traits");
+            var pointer = mapNode.GetReferencePointer();
+            if (pointer != null)
+            {
+                return mapNode.GetReferencedObject<AsyncApiMessageTrait>(ReferenceType.Message, pointer);
+            }
             var operationTrait = new AsyncApiMessageTrait();
 
             ParseMap(mapNode, operationTrait, messageTraitFixedFields, messageTraitPatternFields);

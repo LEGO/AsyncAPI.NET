@@ -50,7 +50,11 @@ namespace LEGO.AsyncAPI.Readers
         public static AsyncApiServer LoadServer(ParseNode node)
         {
             var mapNode = node.CheckMapNode("server");
-
+            var pointer = mapNode.GetReferencePointer();
+            if (pointer != null)
+            {
+                return mapNode.GetReferencedObject<AsyncApiServer>(ReferenceType.Message, pointer);
+            }
             var server = new AsyncApiServer();
 
             ParseMap(mapNode, server, serverFixedFields, serverPatternFields);
