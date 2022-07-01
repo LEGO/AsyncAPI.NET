@@ -16,7 +16,7 @@ jobs:
     name: Publish NuGet packages
     strategy:
       matrix:
-        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers", "LEGO.AsyncAPI.Writers"]
+        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
