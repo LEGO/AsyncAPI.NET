@@ -419,9 +419,10 @@ components:
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
             var messageTraits = doc.Channels.First().Value.Publish.Message.Traits;
+            var messageTrait = doc.ResolveReference(messageTraits.First().Reference);
 
             Assert.AreEqual(1, messageTraits.Count);
-            Assert.AreEqual("a common headers for common things", messageTraits.First().Description);
+            Assert.AreEqual("a common headers for common things", messageTrait.Description);
         }
     }
 }
