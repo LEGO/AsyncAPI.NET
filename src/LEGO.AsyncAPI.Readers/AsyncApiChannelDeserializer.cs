@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiChannel>(ReferenceType.Message, pointer);
+                return mapNode.GetReferencedObject<AsyncApiChannel>(ReferenceType.Channel, pointer);
             }
             var pathItem = new AsyncApiChannel();
 

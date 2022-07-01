@@ -56,7 +56,7 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiSecurityScheme>(ReferenceType.Message, pointer);
+                return mapNode.GetReferencedObject<AsyncApiSecurityScheme>(ReferenceType.SecurityScheme, pointer);
             }
             var securityScheme = new AsyncApiSecurityScheme();
             foreach (var property in mapNode)

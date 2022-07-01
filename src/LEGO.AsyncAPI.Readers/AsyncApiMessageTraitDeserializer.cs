@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiMessageTrait>(ReferenceType.Message, pointer);
+                return mapNode.GetReferencedObject<AsyncApiMessageTrait>(ReferenceType.MessageTrait, pointer);
             }
             var operationTrait = new AsyncApiMessageTrait();
 

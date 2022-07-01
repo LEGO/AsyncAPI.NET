@@ -31,8 +31,9 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiCorrelationId>(ReferenceType.Message, pointer);
+                return mapNode.GetReferencedObject<AsyncApiCorrelationId>(ReferenceType.CorrelationId, pointer);
             }
+
             var correlationId = new AsyncApiCorrelationId();
             foreach (var property in mapNode)
             {
