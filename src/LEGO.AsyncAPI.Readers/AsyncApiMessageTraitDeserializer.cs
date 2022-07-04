@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Readers
             { "description", (a, n) => { a.Description = n.GetScalarValue(); } },
             { "tags", (a, n) => { a.Tags = n.CreateList(LoadTag); } },
             { "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); } },
-            { "bindings", (a, n) => { ; } }, // TODO: Do something with Bindings
+            // { "bindings", (a, n) => { ; } }, // TODO: Do something with Bindings
         };
 
         private static PatternFieldMap<AsyncApiMessageTrait> messageTraitPatternFields =
@@ -33,15 +33,15 @@ namespace LEGO.AsyncAPI.Readers
         {
             var mapNode = node.CheckMapNode("traits");
             var pointer = mapNode.GetReferencePointer();
+
             if (pointer != null)
             {
                 return mapNode.GetReferencedObject<AsyncApiMessageTrait>(ReferenceType.MessageTrait, pointer);
             }
-            var operationTrait = new AsyncApiMessageTrait();
+            var messageTrait = new AsyncApiMessageTrait();
 
-            ParseMap(mapNode, operationTrait, messageTraitFixedFields, messageTraitPatternFields);
-
-            return operationTrait;
+            ParseMap(mapNode, messageTrait, messageTraitFixedFields, messageTraitPatternFields);
+            return messageTrait;
         }
     }
 }
