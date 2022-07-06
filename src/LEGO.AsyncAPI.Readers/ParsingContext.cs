@@ -42,9 +42,21 @@ namespace LEGO.AsyncAPI.Readers
         {
             this.RootNode = new RootNode(this, yamlDocument);
 
-            this.VersionService = new AsyncApiVersionService(this.Diagnostic);
-            var doc = this.VersionService.LoadDocument(this.RootNode);
-            this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_3_0;
+            var inputVersion = GetVersion(this.RootNode);
+
+            AsyncApiDocument doc;
+
+            switch (inputVersion)
+            {
+                case string version when version.StartsWith("2"):
+                    this.VersionService = new AsyncApiVersionService(this.Diagnostic);
+                    doc = this.VersionService.LoadDocument(this.RootNode);
+                    this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_3_0;
+                    break;
+
+                default:
+                    throw new AsyncApiUnsupportedSpecVersionException(inputVersion);
+            }
 
             return doc;
         }
