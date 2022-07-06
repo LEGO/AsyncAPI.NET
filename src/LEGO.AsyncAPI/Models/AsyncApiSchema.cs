@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -18,13 +19,12 @@ namespace LEGO.AsyncAPI.Models
         public string Title { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
-        /// Value MUST be a string. Multiple types via an array are not supported.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// </summary>
-        public string Type { get; set; }
+        public IList<SchemaType> Type { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public string Format { get; set; }
 
@@ -35,43 +35,43 @@ namespace LEGO.AsyncAPI.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public decimal? Maximum { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public bool? ExclusiveMaximum { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public decimal? Minimum { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public bool? ExclusiveMinimum { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public int? MaxLength { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public int? MinLength { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// This string SHOULD be a valid regular expression, according to the ECMA 262 regular expression dialect.
         /// </summary>
         public string Pattern { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public decimal? MultipleOf { get; set; }
 
@@ -104,101 +104,101 @@ namespace LEGO.AsyncAPI.Models
         public bool WriteOnly { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
         public IList<AsyncApiSchema> AllOf { get; set; } = new List<AsyncApiSchema>();
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
         public IList<AsyncApiSchema> OneOf { get; set; } = new List<AsyncApiSchema>();
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
         public IList<AsyncApiSchema> AnyOf { get; set; } = new List<AsyncApiSchema>();
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
         public AsyncApiSchema Not { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public AsyncApiSchema Contains { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public AsyncApiSchema If { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public AsyncApiSchema Then { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public AsyncApiSchema Else { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public ISet<string> Required { get; set; } = new HashSet<string>();
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Value MUST be an object and not an array. Inline or referenced schema MUST be of a Schema Object
         /// and not a standard JSON Schema. items MUST be present if the type is array.
         /// </summary>
         public AsyncApiSchema Items { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public int? MaxItems { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public int? MinItems { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public bool? UniqueItems { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Property definitions MUST be a Schema Object and not a standard JSON Schema (inline or referenced).
         /// </summary>
         public IDictionary<string, AsyncApiSchema> Properties { get; set; } = new Dictionary<string, AsyncApiSchema>();
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public int? MaxProperties { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public int? MinProperties { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Value can be boolean or object. Inline or referenced schema
         /// MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
         public AsyncApiSchema AdditionalProperties { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public AsyncApiSchema PropertyNames { get; set; }
 
@@ -209,17 +209,17 @@ namespace LEGO.AsyncAPI.Models
         public string Discriminator { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public IList<IAsyncApiAny> Enum { get; set; } = new List<IAsyncApiAny>();
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public IList<IAsyncApiAny> Examples { get; set; } = new List<IAsyncApiAny>();
 
         /// <summary>
-        /// follow JSON Schema definition: https://tools.ietf.org/html/draft-handrews-json-schema-validation-01.
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public IAsyncApiAny Const { get; set; }
 
@@ -302,7 +302,17 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject(AsyncApiConstants.Const, this.Const, (w, s) => w.WriteAny(s));
 
             // type
-            writer.WriteProperty(AsyncApiConstants.Type, this.Type);
+            if (this.Type != null)
+            {
+                if (this.Type.Count == 1)
+                {
+                    writer.WriteProperty(AsyncApiConstants.Type, this.Type.First().GetDisplayName());
+                }
+                else
+                {
+                    writer.WriteOptionalCollection(AsyncApiConstants.Type, this.Type.Select(t => t.GetDisplayName()), (w, s) => w.WriteValue(s));
+                }
+            }
 
             // allOf
             writer.WriteOptionalCollection(AsyncApiConstants.AllOf, this.AllOf, (w, s) => s.SerializeV2(w));

@@ -1,9 +1,9 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Attributes;
-
 namespace LEGO.AsyncAPI.Models
 {
+    using LEGO.AsyncAPI.Attributes;
+
     /// <summary>
     /// The type of the security scheme.
     /// </summary>
