@@ -7,6 +7,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
+    using LEGO.AsyncAPI.Writers;
 
     internal static partial class AsyncApiDeserializer
     {
@@ -16,7 +17,17 @@ namespace LEGO.AsyncAPI.Readers
                 "title", (a, n) => { a.Title = n.GetScalarValue(); }
             },
             {
-                "type", (a, n) => { a.Type = n.GetScalarValue(); }
+                "type", (a, n) => 
+                {
+                    if (n.GetType() == typeof(ValueNode))
+                    {
+                        a.Type = new List<SchemaType> { n.GetScalarValue().GetEnumFromDisplayName<SchemaType>() };
+                    }
+                    else
+                    {
+                        a.Type = new List<SchemaType>(n.CreateSimpleList(n2 => n2.GetScalarValue().GetEnumFromDisplayName<SchemaType>()));
+                    }
+                }
             },
             {
                 "required",

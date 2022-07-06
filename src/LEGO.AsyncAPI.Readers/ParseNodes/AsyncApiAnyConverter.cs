@@ -62,7 +62,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                         return new AsyncApiDateTime(dateTimeValue);
                     }
                 }
-                else if (type == "string")
+                else if (type.Contains(SchemaType.String))
                 {
                     if (format == "byte")
                     {
@@ -143,7 +143,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             }
             else
             {
-                if (type == "integer" && format == "int32")
+                if (type.Contains(SchemaType.Integer) && format == "int32")
                 {
                     if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var intValue))
                     {
@@ -151,7 +151,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     }
                 }
 
-                if (type == "integer" && format == "int64")
+                if (type.Contains(SchemaType.Integer) && format == "int64")
                 {
                     if (long.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var longValue))
                     {
@@ -159,7 +159,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     }
                 }
 
-                if (type == "integer")
+                if (type.Contains(SchemaType.Integer))
                 {
                     if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var intValue))
                     {
@@ -167,7 +167,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     }
                 }
 
-                if (type == "number" && format == "float")
+                if (type.Contains(SchemaType.Number) && format == "float")
                 {
                     if (float.TryParse(value, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var floatValue))
                     {
@@ -175,7 +175,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     }
                 }
 
-                if (type == "number" && format == "double")
+                if (type.Contains(SchemaType.Number) && format == "double")
                 {
                     if (double.TryParse(value, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var doubleValue))
                     {
@@ -183,7 +183,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     }
                 }
 
-                if (type == "number")
+                if (type.Contains(SchemaType.Number))
                 {
                     if (double.TryParse(value, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var doubleValue))
                     {
@@ -191,7 +191,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     }
                 }
 
-                if (type == "string" && format == "byte")
+                if (type.Contains(SchemaType.String) && format == "byte")
                 {
                     try
                     {
@@ -202,7 +202,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 }
 
                 // binary
-                if (type == "string" && format == "binary")
+                if (type.Contains(SchemaType.String) && format == "binary")
                 {
                     try
                     {
@@ -212,7 +212,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     { }
                 }
 
-                if (type == "string" && format == "date")
+                if (type.Contains(SchemaType.String) && format == "date")
                 {
                     if (DateTimeOffset.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateValue))
                     {
@@ -220,7 +220,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     }
                 }
 
-                if (type == "string" && format == "date-time")
+                if (type.Contains(SchemaType.String) && format == "date-time")
                 {
                     if (DateTimeOffset.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateTimeValue))
                     {
@@ -228,12 +228,12 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                     }
                 }
 
-                if (type == "string")
+                if (type.Contains(SchemaType.String))
                 {
                     return asyncApiAny;
                 }
 
-                if (type == "boolean")
+                if (type.Contains(SchemaType.Boolean))
                 {
                     if (bool.TryParse(value, out var booleanValue))
                     {
