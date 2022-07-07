@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Tests.Attributes
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void Constructor_WithNullOrWhitespace_Throw(string name)
+        public void Constructor_WithNullOrWhitespace_Throws(string name)
         {
             // Arrange
             // Act
