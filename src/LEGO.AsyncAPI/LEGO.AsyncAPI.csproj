@@ -42,5 +42,9 @@
   <ItemGroup>
     <Folder Include="Validation\Rules" />
   </ItemGroup>
+    
+  <ItemGroup>
+    <InternalsVisibleTo Include="LEGO.AsyncAPI.Tests" />
+  </ItemGroup>
 
 </Project>
