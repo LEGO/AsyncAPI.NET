@@ -10,11 +10,11 @@ namespace LEGO.AsyncAPI.Tests.Models
         public void SerializeV2_WithNullWriter_Throws()
         {
             // Arrange
-            var asyncApiInfo = new AsyncApiOAuthFlow();
+            var asyncApiOAuthFlow = new AsyncApiOAuthFlow();
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => { asyncApiInfo.SerializeV2(null); });
+            Assert.Throws<ArgumentNullException>(() => { asyncApiOAuthFlow.SerializeV2(null); });
         }
     }
 }
