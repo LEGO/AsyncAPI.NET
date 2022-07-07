@@ -48,7 +48,7 @@ namespace LEGO.AsyncAPI.Readers
 
             switch (inputVersion)
             {
-                case string version when version.StartsWith("2.3"):
+                case string version when version.StartsWith("2"):
                     this.VersionService = new AsyncApiVersionService(this.Diagnostic);
                     doc = this.VersionService.LoadDocument(this.RootNode);
                     this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_3_0;
