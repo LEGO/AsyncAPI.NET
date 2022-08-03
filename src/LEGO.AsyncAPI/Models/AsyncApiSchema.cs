@@ -326,16 +326,17 @@ namespace LEGO.AsyncAPI.Models
             // not
             writer.WriteOptionalObject(AsyncApiConstants.Not, this.Not, (w, s) => s.SerializeV2(w));
 
-            writer.WriteOptionalCollection(AsyncApiConstants.Contains, this.AllOf, (w, s) => s.SerializeV2(w));
+            // contains
+            writer.WriteOptionalObject(AsyncApiConstants.Contains, this.Contains, (w, s) => s.SerializeV2(w));
 
             // anyOf
-            writer.WriteOptionalCollection(AsyncApiConstants.If, this.AnyOf, (w, s) => s.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.If, this.If, (w, s) => s.SerializeV2(w));
 
-            // oneOf
-            writer.WriteOptionalCollection(AsyncApiConstants.Then, this.OneOf, (w, s) => s.SerializeV2(w));
+            // then
+            writer.WriteOptionalObject(AsyncApiConstants.Then, this.Then, (w, s) => s.SerializeV2(w));
 
-            // not
-            writer.WriteOptionalObject(AsyncApiConstants.Else, this.Not, (w, s) => s.SerializeV2(w));
+            // else
+            writer.WriteOptionalObject(AsyncApiConstants.Else, this.Else, (w, s) => s.SerializeV2(w));
 
             // items
             writer.WriteOptionalObject(AsyncApiConstants.Items, this.Items, (w, s) => s.SerializeV2(w));

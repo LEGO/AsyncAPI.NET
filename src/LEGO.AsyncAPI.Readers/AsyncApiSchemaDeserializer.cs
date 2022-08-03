@@ -17,7 +17,7 @@ namespace LEGO.AsyncAPI.Readers
                 "title", (a, n) => { a.Title = n.GetScalarValue(); }
             },
             {
-                "type", (a, n) => 
+                "type", (a, n) =>
                 {
                     if (n.GetType() == typeof(ValueNode))
                     {
