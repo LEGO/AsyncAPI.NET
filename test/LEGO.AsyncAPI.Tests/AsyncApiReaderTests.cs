@@ -424,5 +424,58 @@ components:
             Assert.AreEqual(1, messageTraits.Count);
             Assert.AreEqual("a common headers for common things", messageTrait.Description);
         }
+
+        /// <summary>
+        /// Regression test.
+        /// Bug: Serializing properties multiple times - specifically Schema.OneOf was serialized into OneOf and Then.
+        /// </summary>
+        [Test]
+        public void Serialize_withOneOfSchema_DoesNotWriteThen()
+        {
+            var yaml = @"asyncapi: 2.3.0
+info:
+  title: test
+  version: 1.0.0
+defaultContentType: application/json
+channels:
+  channel1:
+    publish:
+      operationId: channel1
+      summary: tthe first channel
+      description: a channel of great importance 
+      message:
+        $ref: '#/components/messages/item1'
+components:
+  schemas:
+    item2:
+      type: object
+      properties:
+        icon:
+          description: Theme icon
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/item3'
+    item3:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title.
+          format: string
+  messages:
+    item1:
+      payload:
+        $ref: '#/components/schemas/item2'
+      name: item1
+      title: item 1
+      summary: the first item
+      description: a first item for firsting the items";
+
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+
+            var yamlAgain = doc.Serialize(AsyncApiFormat.Yaml);
+            Assert.True(!yamlAgain.Contains("then:"));
+        }
     }
 }
