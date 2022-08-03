@@ -106,5 +106,7 @@ namespace LEGO.AsyncAPI.Models
         public const string CorrelationId = "correlationId";
         public const string SchemaFormat = "schemaFormat";
         public const string ContentType = "contentType";
+        public const string BindingVersion = "bindingVersion";
+        public const string  Key = "key";
     }
 }

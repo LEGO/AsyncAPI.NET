@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -73,7 +74,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
         /// </summary>
-        public IDictionary<string, IMessageBinding> Bindings { get; set; } = new Dictionary<string, IMessageBinding>();
+        public AsyncApiMessageBindings Bindings { get; set; } = new AsyncApiMessageBindings();
 
         /// <summary>
         /// list of examples.
@@ -131,6 +132,8 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
 
             // TODO: figure out bindings
+
+            writer.WriteOptionalObject(AsyncApiConstants.Bindings, this.Bindings, (w, t) => t.SerializeV2(w));
             writer.WriteOptionalCollection(AsyncApiConstants.Examples, this.Examples, (w, e) => e.SerializeV2(w));
 
             writer.WriteOptionalCollection(AsyncApiConstants.Traits, this.Traits, (w, t) => t.SerializeV2(w));

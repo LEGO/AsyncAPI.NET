@@ -1,16 +1,25 @@
-// Copyright (c) The LEGO Group. All rights reserved.
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
 {
     using System;
     using System.Collections.Generic;
+    using LEGO.AsyncAPI.Attributes;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    /// <summary>
-    /// Binding class for http messaging channels.
-    /// </summary>
-    public class HttpMessageBinding : IMessageBinding
+
+    public enum MessageBindingType
+    {
+        [Display("kafka")]
+        Kafka,
+        [Display("http")]
+        Http,
+        [Display("amqp")]
+        Ampq
+            
+    }
+    public class KafkaMessageBinding : IMessageBinding
     {
         /// <summary>
         /// Indicates if object is populated with data or is just a reference to the data
@@ -22,9 +31,6 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
         /// </summary>
         public AsyncApiReference Reference { get; set; }
 
-        /// <summary>
-        /// Serialize to AsyncAPI V2 document without using reference.
-        /// </summary>
         public void SerializeV2WithoutReference(IAsyncApiWriter writer)
         {
             if (writer is null)
@@ -34,7 +40,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
 
             writer.WriteStartObject();
 
-            writer.WriteRequiredObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
+            writer.WriteRequiredObject(AsyncApiConstants.Key, this.Key, (w, h) => h.SerializeV2(w));
             writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
@@ -56,19 +62,12 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
             this.SerializeV2WithoutReference(writer);
         }
 
-        /// <summary>
-        /// Gets or sets property containing http headers.
-        /// </summary>
-        public AsyncApiSchema Headers { get; set; }
+        public AsyncApiSchema Key { get; set; }
 
-        /// <summary>
-        /// Gets or sets property containing version of a binding.
-        /// </summary>
         public string BindingVersion { get; set; }
 
-        /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        public MessageBindingType Type => MessageBindingType.Http;
+        public MessageBindingType Type => MessageBindingType.Kafka;
     }
 }

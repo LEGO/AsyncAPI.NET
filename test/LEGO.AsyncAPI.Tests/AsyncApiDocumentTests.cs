@@ -12,6 +12,7 @@ namespace LEGO.AsyncAPI.Tests
     using System.IO;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using NUnit.Framework;
 
@@ -427,5 +428,65 @@ components:
             // Assert
             Assert.AreEqual(actual, expected);
         }
+
+        [Test]
+        public void Serialize_WithBindings_Serializes()
+        {
+            var expected = @"asyncapi: '2.3.0'
+info: { }
+channels:
+  testChannel:
+    publish:
+      message:
+        bindings:
+          http:
+            headers:
+              description: this mah binding
+          kafka:
+            key:
+              description: this mah other binding";
+            var doc = new AsyncApiDocument();
+            doc.Channels.Add("testChannel",
+                new AsyncApiChannel
+                {
+                    Publish = new AsyncApiOperation
+                    {
+                        Message = new AsyncApiMessage
+                        {
+                            Bindings = new AsyncApiMessageBindings
+                            {
+                                {
+                                    new HttpMessageBinding
+                                    {
+                                        Headers = new AsyncApiSchema
+                                        {
+                                            Description = "this mah binding",
+                                        }
+                                    }
+                                },
+                                { 
+                                    new KafkaMessageBinding
+                                    {
+                                        Key = new AsyncApiSchema
+                                        {
+                                            Description = "this mah other binding"
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                });
+            var actual = doc.Serialize(AsyncApiFormat.Yaml);
+
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+
+            // Assert
+            Assert.AreEqual(actual, expected);
+        }
+
+
     }
 }

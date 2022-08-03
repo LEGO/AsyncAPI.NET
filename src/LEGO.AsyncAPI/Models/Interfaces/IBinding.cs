@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Models.Interfaces
     /// <summary>
     /// Describes a protocol-specific binding.
     /// </summary>
-    public interface IBinding : IAsyncApiExtensible
+    public interface IBinding : IAsyncApiReferenceable
     {
     }
 }

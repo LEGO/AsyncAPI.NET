@@ -10,6 +10,7 @@ namespace LEGO.AsyncAPI.Tests
     using LEGO.AsyncAPI.Models;
     using NUnit.Framework;
     using LEGO.AsyncAPI.Readers;
+    using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
 
     public class AsyncApiReaderTests
     {
@@ -424,5 +425,85 @@ components:
             Assert.AreEqual(1, messageTraits.Count);
             Assert.AreEqual("a common headers for common things", messageTrait.Description);
         }
+
+        [Test]
+        public void Test()
+        {
+            var doc = new AsyncApiDocument();
+            doc.Channels.Add("testChannel",
+                new AsyncApiChannel
+                {
+                    Publish = new AsyncApiOperation
+                    {
+                        Message = new AsyncApiMessage
+                        {
+                            Bindings = new AsyncApiMessageBindings
+                            {
+                                {
+                                    new HttpMessageBinding
+                                    {
+                                        Headers = new AsyncApiSchema
+                                        {
+                                            Description = "this mah binding",
+                                        }
+                                    }
+                                },
+                                {
+                                    new KafkaMessageBinding
+                                    {
+                                        Key = new AsyncApiSchema
+                                        {
+                                            Description = "this mah other binding"
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                });
+            var yaml = doc.Serialize(AsyncApiFormat.Yaml);
+
+            var reader = new AsyncApiStringReader();
+            var deserializedDoc = reader.Read(yaml, out var diagnostic);
+        }
+
+        [Test]
+      public void Read_WithBasicPlusSecurityRequirementsDeserializes()
+      {
+        var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+servers:
+  production:
+    url: 'pulsar+ssl://prod.events.managed.io:1234'
+    protocol: pulsar+ssl
+    description: Pulsar broker
+    security:
+      - petstore_auth:
+        - write:pets
+        - read:pets
+channels:
+  workspace:
+    x-something: yes
+components:
+  securitySchemes:
+    petstore_auth: 
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://example.com/api/oauth/dialog
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets      
+";
+        var reader = new AsyncApiStringReader();
+        var doc = reader.Read(yaml, out var diagnostic);
+        var requirement = doc.Servers.First().Value.Security.First().First();
+        Assert.AreEqual(SecuritySchemeType.OAuth2, requirement.Key.Type);
+        Assert.IsTrue(requirement.Value.Contains("write:pets"));
+        Assert.IsTrue(requirement.Value.Contains("read:pets"));
+      }
     }
 }
