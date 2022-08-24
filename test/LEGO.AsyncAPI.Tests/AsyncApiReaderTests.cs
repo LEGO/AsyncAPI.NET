@@ -661,8 +661,39 @@ components:
         Assert.AreEqual("Default Correlation ID", message.First().CorrelationId.Description);
         Assert.AreEqual("$message.header#/correlationId", message.First().CorrelationId.Location);
       }
-      
-      [Test]
+
+        [Test]
+        public void Read_WithOneOfMessage_Reads()
+        {
+            var yaml = @"asyncapi: 2.3.0
+info:
+  title: AMMA
+  version: 1.0.0
+channels:
+  workspace:
+    publish:
+      bindings:
+        http:
+          type: response
+      message:
+        oneOf:
+            - $ref: '#/components/messages/WorkspaceEventPayload'
+components:
+  messages:
+    WorkspaceEventPayload:
+      schemaFormat: application/schema+yaml;version=draft-07
+      correlationId:
+        description: Default Correlation ID
+        location: $message.header#/correlationId          
+";
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+            var message = doc.Channels["workspace"].Publish.Message.First();
+            Assert.AreEqual("Default Correlation ID", message.CorrelationId.Description);
+            Assert.AreEqual("$message.header#/correlationId", message.CorrelationId.Location);
+        }
+
+        [Test]
       public void Read_WithBasicPlusSecuritySchemeDeserializes()
       {
         var yaml = @"asyncapi: 2.3.0
