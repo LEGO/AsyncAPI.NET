@@ -5,6 +5,9 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     internal static partial class AsyncApiDeserializer
     {
@@ -32,9 +35,21 @@ namespace LEGO.AsyncAPI.Readers
                     "traits", (a, n) => { a.Traits = n.CreateList(LoadOperationTrait); }
                 },
                 {
-                    "message", (a, n) => { a.Message = LoadMessage(n); }
-                },
+                    "message", (a, n) => { a.Message = LoadMessages(n);   }
+                }
             };
+
+        private static IList<AsyncApiMessage> LoadMessages(ParseNode n)
+        {
+            var mapNode = n.CheckMapNode("message");
+
+            if (mapNode["oneOf"] != null)
+            {
+                return mapNode["oneOf"].Value.CreateList(LoadMessage);
+            }
+
+            return new List<AsyncApiMessage> { LoadMessage(n) };
+        }
 
         private static readonly PatternFieldMap<AsyncApiOperation> operationPatternFields =
             new()

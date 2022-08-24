@@ -76,7 +76,7 @@ namespace LEGO.AsyncAPI.Services
         /// </summary>
         public override void Visit(AsyncApiOperation operation)
         {
-            this.ResolveObject(operation.Message, r => operation.Message = r);
+            this.ResolveList(operation.Message);
             this.ResolveList(operation.Traits);
 
             // TODO: Figure out bindings

@@ -422,9 +422,8 @@ namespace LEGO.AsyncAPI.Services
                 this.Walk(AsyncApiConstants.Tags, () => this.Walk(operation.Tags));
                 this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(operation.ExternalDocs));
                 this.Walk(AsyncApiConstants.Traits, () => this.Walk(operation.Traits));
-
-                //TODO: Figure out bindings
                 this.Walk(AsyncApiConstants.Message, () => this.Walk(operation.Message));
+                //TODO: Figure out bindings
             }
 
             this.Walk(operation as IAsyncApiExtensible);
@@ -696,6 +695,25 @@ namespace LEGO.AsyncAPI.Services
 
             this.visitor.Visit(securityRequirement);
             this.Walk(securityRequirement as IAsyncApiExtensible);
+        }
+
+        internal void Walk(IList<AsyncApiMessage> messages)
+        {
+            if (messages == null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(messages);
+
+            // Visit traits
+            if (messages != null)
+            {
+                for (int i = 0; i < messages.Count; i++)
+                {
+                    this.Walk(i.ToString(), () => this.Walk(messages[i]));
+                }
+            }
         }
 
         internal void Walk(IDictionary<string, AsyncApiServer> servers)

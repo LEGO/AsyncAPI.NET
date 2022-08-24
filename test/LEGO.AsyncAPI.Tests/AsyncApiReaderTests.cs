@@ -11,6 +11,7 @@ namespace LEGO.AsyncAPI.Tests
     using NUnit.Framework;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
+    using System.Collections.Generic;
 
     public class AsyncApiReaderTests
     {
@@ -112,9 +113,9 @@ components:
             Assert.AreEqual((doc.Channels["workspace"].Extensions["x-datalakesubscription"] as AsyncApiBoolean).Value,
                 true);
             var message = doc.Channels["workspace"].Publish.Message;
-            Assert.AreEqual(message.SchemaFormat, "application/schema+yaml;version=draft-07");
-            Assert.AreEqual(message.Summary, "Metadata about a workspace that has been created, updated or deleted.");
-            var payload = doc.Channels["workspace"].Publish.Message.Payload;
+            Assert.AreEqual( message.First().SchemaFormat, "application/schema+yaml;version=draft-07");
+            Assert.AreEqual( message.First().Summary, "Metadata about a workspace that has been created, updated or deleted.");
+            var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
             Assert.NotNull(payload);
             Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
         }
@@ -167,8 +168,8 @@ components:
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
             var message = doc.Channels["workspace"].Publish.Message;
-            Assert.AreEqual(new Uri("https://example.com"), message.ExternalDocs.Url);
-            Assert.AreEqual("Find more info here", message.ExternalDocs.Description);
+            Assert.AreEqual(new Uri("https://example.com"),  message.First().ExternalDocs.Url);
+            Assert.AreEqual("Find more info here",  message.First().ExternalDocs.Description);
         }
 
         [Test]
@@ -275,8 +276,8 @@ components:
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
             var message = doc.Channels["workspace"].Publish.Message;
-            Assert.AreEqual("Default Correlation ID", message.CorrelationId.Description);
-            Assert.AreEqual("$message.header#/correlationId", message.CorrelationId.Location);
+            Assert.AreEqual("Default Correlation ID", message.First().CorrelationId.Description);
+            Assert.AreEqual("$message.header#/correlationId",  message.First().CorrelationId.Location);
         }
 
         [Test]
@@ -419,7 +420,7 @@ components:
 ";
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
-            var messageTraits = doc.Channels.First().Value.Publish.Message.Traits;
+            var messageTraits = doc.Channels.First().Value.Publish.Message.First().Traits;
             AsyncApiMessageTrait messageTrait = (AsyncApiMessageTrait)doc.ResolveReference(messageTraits.First().Reference);
 
             Assert.AreEqual(1, messageTraits.Count);
@@ -435,7 +436,9 @@ components:
                 {
                     Publish = new AsyncApiOperation
                     {
-                        Message = new AsyncApiMessage
+                        Message = new List<AsyncApiMessage>
+                        {
+                            { new AsyncApiMessage
                         {
                             Bindings = new AsyncApiMessageBindings
                             {
@@ -454,13 +457,15 @@ components:
                                         Key = new AsyncApiSchema
                                         {
                                             Description = "this mah other binding"
-                                        }
+                                        },
                                     }
-                                }
+                                },
 
-                            }
+                            },
                         }
-                    }
+                    },
+                        },
+                    },
                 });
             var yaml = doc.Serialize(AsyncApiFormat.Yaml);
 
@@ -469,7 +474,7 @@ components:
         }
 
         [Test]
-      public void Read_WithBasicPlusSecurityRequirementsDeserializes()
+      public void Read_WithBasicPlusSecurityRequirementsDeserializes2()
       {
         var yaml = @"asyncapi: 2.3.0
 info:
