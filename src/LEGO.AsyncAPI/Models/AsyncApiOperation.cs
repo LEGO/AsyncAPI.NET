@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -53,7 +54,7 @@ namespace LEGO.AsyncAPI.Models
         /// <remarks>
         /// `oneOf` is allowed here to specify multiple messages, however, a message MUST be valid only against one of the referenced message objects.
         /// </remarks>
-        public AsyncApiMessage Message { get; set; }
+        public IList<AsyncApiMessage> Message { get; set; } = new List<AsyncApiMessage>();
 
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
@@ -74,7 +75,17 @@ namespace LEGO.AsyncAPI.Models
 
             // TODO: figure out bindings
             writer.WriteOptionalCollection(AsyncApiConstants.Traits, this.Traits, (w, t) => t.SerializeV2(w));
-            writer.WriteOptionalObject(AsyncApiConstants.Message, this.Message, (w, m) => m.SerializeV2(w));
+            if (this.Message.Count > 1)
+            {
+                writer.WritePropertyName(AsyncApiConstants.Message);
+                writer.WriteStartObject();
+                writer.WriteOptionalCollection(AsyncApiConstants.OneOf, this.Message, (w, t) => t.SerializeV2(w));
+                writer.WriteEndObject();
+            }
+            else
+            {
+                writer.WriteOptionalObject(AsyncApiConstants.Message, this.Message.FirstOrDefault(), (w, m) => m.SerializeV2(w));
+            }
 
             writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
             writer.WriteEndObject();
