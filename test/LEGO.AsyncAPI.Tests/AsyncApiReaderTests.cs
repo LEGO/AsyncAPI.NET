@@ -495,9 +495,9 @@ components:
         Assert.AreEqual((doc.Channels["workspace"].Extensions["x-datalakesubscription"] as AsyncApiBoolean).Value,
           true);
         var message = doc.Channels["workspace"].Publish.Message;
-        Assert.AreEqual(message.SchemaFormat, "application/schema+yaml;version=draft-07");
-        Assert.AreEqual(message.Summary, "Metadata about a workspace that has been created, updated or deleted.");
-        var payload = doc.Channels["workspace"].Publish.Message.Payload;
+        Assert.AreEqual(message.First().SchemaFormat, "application/schema+yaml;version=draft-07");
+        Assert.AreEqual(message.First().Summary, "Metadata about a workspace that has been created, updated or deleted.");
+        var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
         Assert.NotNull(payload);
         Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
       }
@@ -550,8 +550,8 @@ components:
         var reader = new AsyncApiStringReader();
         var doc = reader.Read(yaml, out var diagnostic);
         var message = doc.Channels["workspace"].Publish.Message;
-        Assert.AreEqual(new Uri("https://example.com"), message.ExternalDocs.Url);
-        Assert.AreEqual("Find more info here", message.ExternalDocs.Description);
+        Assert.AreEqual(new Uri("https://example.com"), message.First().ExternalDocs.Url);
+        Assert.AreEqual("Find more info here", message.First().ExternalDocs.Description);
       }
 
       [Test]
@@ -658,8 +658,8 @@ components:
         var reader = new AsyncApiStringReader();
         var doc = reader.Read(yaml, out var diagnostic);
         var message = doc.Channels["workspace"].Publish.Message;
-        Assert.AreEqual("Default Correlation ID", message.CorrelationId.Description);
-        Assert.AreEqual("$message.header#/correlationId", message.CorrelationId.Location);
+        Assert.AreEqual("Default Correlation ID", message.First().CorrelationId.Description);
+        Assert.AreEqual("$message.header#/correlationId", message.First().CorrelationId.Location);
       }
       
       [Test]
@@ -808,7 +808,7 @@ components:
 ";
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
-            Assert.AreEqual("application/schema+yaml;version=draft-07", doc.Channels.First().Value.Publish.Message.SchemaFormat);
+            Assert.AreEqual("application/schema+yaml;version=draft-07", doc.Channels.First().Value.Publish.Message.First().SchemaFormat);
 
         }
 
@@ -850,8 +850,8 @@ components:
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
 
-            Assert.AreEqual(1, doc.Channels.First().Value.Publish.Message.Traits.Count);
-            Assert.AreEqual("a common headers for common things", doc.Channels.First().Value.Publish.Message.Traits.First().Description);
+            Assert.AreEqual(1, doc.Channels.First().Value.Publish.Message.First().Traits.Count);
+            Assert.AreEqual("a common headers for common things", doc.Channels.First().Value.Publish.Message.First().Traits.First().Description);
         }
         /// <summary>
         /// Regression test.
