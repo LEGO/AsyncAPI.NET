@@ -153,6 +153,10 @@ namespace LEGO.AsyncAPI.Services
         {
         }
 
+        public virtual void Visit(IList<AsyncApiMessage> messages)
+        {
+        }
+
         /// <summary>
         /// Visits <see cref="AsyncApiTag"/>
         /// </summary>
