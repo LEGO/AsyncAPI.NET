@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Services
         public CurrentKeys CurrentKeys { get; } = new CurrentKeys();
 
         /// <summary>
-        /// Allow Rule to indicate validation error occured at a deeper context level.  
+        /// Allow Rule to indicate validation error occured at a deeper context level.
         /// </summary>
         /// <param name="segment">Identifier for context</param>
         public void Enter(string segment)

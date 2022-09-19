@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+		<PackageReference Include="FluentAssertions" Version="6.7.0" />
 		<PackageReference Include="LiquidTestReports.Markdown" Version="1.0.9" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
         <PackageReference Include="JsonSchema.Net" Version="2.0.1" />
