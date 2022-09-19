@@ -43,4 +43,7 @@
       <None Remove="readers\samples\AsyncApi\Basic.yaml" />
       <None Remove="readers\samples\AsyncApi\schema-v2.3.0.json" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Attributes\" />
+    </ItemGroup>
 </Project>

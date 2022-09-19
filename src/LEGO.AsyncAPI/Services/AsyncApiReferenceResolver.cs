@@ -57,6 +57,12 @@ namespace LEGO.AsyncAPI.Services
             this.ResolveMap(components.Messages);
         }
 
+        public override void Visit(AsyncApiDocument doc)
+        {
+            this.ResolveMap(doc.Servers);
+            this.ResolveMap(doc.Channels);
+        }
+
         public override void Visit(AsyncApiChannel channel)
         {
             this.ResolveMap(channel.Parameters);
@@ -81,6 +87,15 @@ namespace LEGO.AsyncAPI.Services
 
             // TODO: Figure out bindings
             // ResolveMap(operation.Bindings);
+        }
+
+        public override void Visit(AsyncApiMessage message)
+        {
+            this.ResolveObject(message.Headers, r => message.Headers = r);
+            this.ResolveList(message.Traits);
+            this.ResolveObject(message.CorrelationId, r => message.CorrelationId = r);
+
+            // TODO: Figure out bindings
         }
 
         /// <summary>
