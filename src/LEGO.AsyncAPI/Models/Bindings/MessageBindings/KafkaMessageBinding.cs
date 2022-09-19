@@ -13,12 +13,14 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
     {
         [Display("kafka")]
         Kafka,
+
         [Display("http")]
         Http,
+
         [Display("amqp")]
         Ampq
-            
     }
+
     public class KafkaMessageBinding : IMessageBinding
     {
         /// <summary>
