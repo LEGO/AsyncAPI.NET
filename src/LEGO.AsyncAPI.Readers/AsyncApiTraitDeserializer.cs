@@ -27,7 +27,7 @@ namespace LEGO.AsyncAPI.Readers
         public static AsyncApiOperationTrait LoadOperationTrait(ParseNode node)
         {
             var mapNode = node.CheckMapNode("traits");
-            
+
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {

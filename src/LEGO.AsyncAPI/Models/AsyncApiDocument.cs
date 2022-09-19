@@ -188,7 +188,7 @@ namespace LEGO.AsyncAPI.Models
                     //case ReferenceType.OperationBinding:
                     //    return this.Components.OperationBindings[reference.Id];
                     //case ReferenceType.MessageBinding:
-                    //    return this.Components.MessageBindings[reference.Id]; 
+                    //    return this.Components.MessageBindings[reference.Id];
                     // TODO: Figure out bindings.
                     default:
                         throw new AsyncApiException("Invalid reference type.");

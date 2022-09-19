@@ -162,7 +162,7 @@ namespace LEGO.AsyncAPI.Validations
         }
 
         /// <summary>
-        /// This overload allows applying rules based on actual object type, rather than matched interface.  This is 
+        /// This overload allows applying rules based on actual object type, rather than matched interface.  This is
         /// needed for validating extensions.
         /// </summary>
         private void Validate(object item, Type type)
