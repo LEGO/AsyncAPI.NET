@@ -8,6 +8,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using System.Linq;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Exceptions;
     using SharpYaml.Schemas;
@@ -87,6 +88,53 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 });
 
             return nodes.ToDictionary(k => k.key, v => v.value);
+        }
+
+        public override Dictionary<string, T> CreateBindingMapWithReference<T>(
+            ReferenceType referenceType,
+            Func<ParseNode, T> map)
+        {
+            var yamlMap = this.node;
+            if (yamlMap == null)
+            {
+                throw new AsyncApiReaderException($"Expected map while parsing {typeof(T).Name}", this.Context);
+            }
+
+            var nodes = yamlMap.Select(
+                n =>
+                {
+                    var key = n.Key.GetScalarValue();
+                    (string key, T value) entry;
+                    try
+                    {
+                        this.Context.StartObject(key);
+                        entry = (
+                            key: key,
+                            value: map(new PropertyNode(this.Context, key, n.Value))
+                        );
+                        if (entry.value == null)
+                        {
+                            return default;
+                        }
+
+                        if (entry.value.Reference == null)
+                        {
+                            entry.value.Reference = new AsyncApiReference()
+                            {
+                                Type = referenceType,
+                                Id = entry.key,
+                            };
+                        }
+                    }
+                    finally
+                    {
+                        this.Context.EndObject();
+                    }
+
+                    return entry;
+                }
+                );
+            return nodes.Where(n => n != default).ToDictionary(k => k.key, v => v.value);
         }
 
         public override Dictionary<string, T> CreateMapWithReference<T>(

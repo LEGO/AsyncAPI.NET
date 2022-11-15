@@ -27,16 +27,7 @@ namespace LEGO.AsyncAPI.Readers
 
             foreach (var property in mapNode)
             {
-                var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
-                IChannelBinding channelBinding = null;
-                switch (bindingType)
-                {
-                    case BindingType.Kafka:
-                        channelBinding = LoadBinding("ChannelBinding", property.Value, kafkaChannelBindingFixedFields);
-                        break;
-                    default:
-                        throw new System.Exception("ChannelBinding not found");
-                }
+                var channelBinding = LoadChannelBinding(property);
 
                 if (channelBinding != null)
                 {
@@ -50,6 +41,19 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             return channelBindings;
+        }
+
+        internal static IChannelBinding LoadChannelBinding(ParseNode node)
+        {
+            var property = node as PropertyNode;
+            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
+            switch (bindingType)
+            {
+                case BindingType.Kafka:
+                    return LoadBinding("ChannelBinding", property.Value, kafkaChannelBindingFixedFields);
+                default:
+                    throw new System.Exception("ChannelBinding not found");
+            }
         }
     }
 }

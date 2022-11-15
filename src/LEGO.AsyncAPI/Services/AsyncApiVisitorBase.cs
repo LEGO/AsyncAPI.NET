@@ -172,6 +172,14 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
+        /// Visits <see cref="AsyncApiBindings<TBinding>"/>
+        /// </summary>
+        public virtual void Visit<TBinding>(AsyncApiBindings<TBinding> bindings)
+            where TBinding : class, IBinding
+        {
+        }
+
+        /// <summary>
         /// Visits <see cref="AsyncApiSecurityRequirement"/>
         /// </summary>
         public virtual void Visit(AsyncApiSecurityRequirement securityRequirement)

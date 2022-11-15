@@ -10,6 +10,10 @@ namespace LEGO.AsyncAPI.Readers
 
     internal static partial class AsyncApiDeserializer
     {
+        private static Type messageBindingType = typeof(IMessageBinding);
+        private static Type operationBindingType = typeof(IOperationBinding);
+        private static Type channelBindingType = typeof(IChannelBinding);
+        private static Type serverBindingType = typeof(IServerBinding);
         private static PatternFieldMap<T> BindingPatternExtensionFields<T>()
     where T : IBinding, new()
         {
@@ -26,23 +30,32 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                ReferenceType referenceType;
-                switch (typeof(T))
+                ReferenceType referenceType = ReferenceType.None;
+                var bindingType = typeof(T);
+
+                if (bindingType.IsAssignableTo(messageBindingType))
                 {
-                    case IMessageBinding:
-                        referenceType = ReferenceType.MessageBinding;
-                        break;
-                    case IOperationBinding:
-                        referenceType = ReferenceType.OperationBinding;
-                        break;
-                    case IChannelBinding:
-                        referenceType = ReferenceType.ChannelBinding;
-                        break;
-                    case IServerBinding:
-                        referenceType = ReferenceType.ServerBinding;
-                        break;
-                    default:
-                        throw new ArgumentException($"ReferenceType not found {typeof(T).Name}");
+                    referenceType = ReferenceType.MessageBinding;
+                }
+
+                if (bindingType.IsAssignableTo(operationBindingType))
+                {
+                    referenceType = ReferenceType.OperationBinding;
+                }
+
+                if (bindingType.IsAssignableTo(channelBindingType))
+                {
+                    referenceType = ReferenceType.ChannelBinding;
+                }
+
+                if (bindingType.IsAssignableTo(serverBindingType))
+                {
+                    referenceType = ReferenceType.ServerBinding;
+                }
+
+                if (referenceType == ReferenceType.None)
+                {
+                    throw new ArgumentException($"ReferenceType not found {typeof(T).Name}");
                 }
 
                 return mapNode.GetReferencedObject<T>(referenceType, pointer);

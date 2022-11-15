@@ -13,6 +13,8 @@ namespace LEGO.AsyncAPI.Tests
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
     using System.Collections.Generic;
+    using System.Text.Json.Serialization;
+    using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
 
     public class AsyncApiReaderTests
     {
@@ -400,6 +402,7 @@ namespace LEGO.AsyncAPI.Tests
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(json, out var diagnostic);
         }
+
       [Test]
       public void Read_WithFullSpec_Deserializes()
       {
@@ -427,7 +430,7 @@ channels:
     publish:
       bindings:
         http:
-          type: response
+          $ref: '#/components/operationBindings/http'
       message:
         $ref: '#/components/messages/WorkspaceEventPayload'
   api:
@@ -437,10 +440,13 @@ channels:
     publish:
       bindings:
         http:
-          type: response
+          $ref: '#/components/operationBindings/http'
       message:
         $ref: '#/components/messages/APIEventPayload'
 components:
+  operationBindings:
+    http:
+      type: response
   messages:
     WorkspaceEventPayload:
       schemaFormat: application/schema+yaml;version=draft-07
@@ -502,6 +508,8 @@ components:
         var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
         Assert.NotNull(payload);
         Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
+        var httpBinding = doc.Channels["workspace"].Publish.Bindings.First().Value as HttpOperationBinding;
+        Assert.AreEqual("response", httpBinding.Type);
       }
 
       [Test]

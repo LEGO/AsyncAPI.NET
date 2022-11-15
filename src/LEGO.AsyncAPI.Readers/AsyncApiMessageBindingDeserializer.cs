@@ -35,19 +35,7 @@ namespace LEGO.AsyncAPI.Readers
 
             foreach (var property in mapNode)
             {
-                var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
-                IMessageBinding messageBinding = null;
-                switch (bindingType)
-                {
-                    case BindingType.Kafka:
-                        messageBinding = LoadBinding<KafkaMessageBinding>("MessageBinding", property.Value, kafkaMessageBindingFixedFields);
-                        break;
-                    case BindingType.Http:
-                        messageBinding = LoadBinding<HttpMessageBinding>("MessageBinding", property.Value, httpMessageBindingFixedFields);
-                        break;
-                    default:
-                        throw new System.Exception("MessageBinding not found");
-                }
+                var messageBinding = LoadMessageBinding(property);
 
                 if (messageBinding != null)
                 {
@@ -61,6 +49,21 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             return messageBindings;
+        }
+
+        internal static IMessageBinding LoadMessageBinding(ParseNode node)
+        {
+            var property = node as PropertyNode;
+            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
+            switch (bindingType)
+            {
+                case BindingType.Kafka:
+                    return LoadBinding<KafkaMessageBinding>("MessageBinding", property.Value, kafkaMessageBindingFixedFields);
+                case BindingType.Http:
+                    return LoadBinding<HttpMessageBinding>("MessageBinding", property.Value, httpMessageBindingFixedFields);
+                default:
+                    throw new System.Exception("MessageBinding not found");
+            }
         }
     }
 }

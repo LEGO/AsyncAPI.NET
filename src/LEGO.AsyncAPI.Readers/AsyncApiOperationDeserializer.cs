@@ -27,8 +27,9 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); }
                 },
-
-                // { "bindings", (a, n) => { a.Bindings; } }, //TODO: Figure out bindings LoadBindings(n)
+                {
+                    "bindings", (a, n) => { a.Bindings = LoadOperationBindings(n); }
+                },
                 {
                     "traits", (a, n) => { a.Traits = n.CreateList(LoadOperationTrait); }
                 },

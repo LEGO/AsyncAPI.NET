@@ -34,19 +34,7 @@ namespace LEGO.AsyncAPI.Readers
 
             foreach (var property in mapNode)
             {
-                var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
-                IOperationBinding operationBinding = null;
-                switch (bindingType)
-                {
-                    case BindingType.Kafka:
-                        operationBinding = LoadBinding("OperationBinding", property.Value, kafkaOperationBindingFixedFields);
-                        break;
-                    case BindingType.Http:
-                        operationBinding = LoadBinding("OperationBinding", property.Value, httpOperationBindingFixedFields);
-                        break;
-                    default:
-                        throw new System.Exception("OperationBinding not found");
-                }
+                var operationBinding = LoadOperationBinding(property);
 
                 if (operationBinding != null)
                 {
@@ -60,6 +48,21 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             return operationBindings;
+        }
+
+        internal static IOperationBinding LoadOperationBinding(ParseNode node)
+        {
+            var property = node as PropertyNode;
+            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
+            switch (bindingType)
+            {
+                case BindingType.Kafka:
+                    return LoadBinding("OperationBinding", property.Value, kafkaOperationBindingFixedFields);
+                case BindingType.Http:
+                    return LoadBinding("OperationBinding", property.Value, httpOperationBindingFixedFields);
+                default:
+                    throw new System.Exception("OperationBinding not found");
+            }
         }
     }
 }

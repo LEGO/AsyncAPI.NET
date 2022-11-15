@@ -238,7 +238,7 @@ namespace LEGO.AsyncAPI.Services
                 this.Walk(AsyncApiConstants.Subscribe, () => this.Walk(channel.Subscribe));
                 this.Walk(AsyncApiConstants.Publish, () => this.Walk(channel.Publish));
 
-                // TODO: Figure out bindings
+                this.Walk(AsyncApiConstants.Bindings, () => this.Walk(channel.Bindings));
                 this.Walk(AsyncApiConstants.Parameters, () => this.Walk(channel.Parameters));
             }
 
@@ -423,7 +423,7 @@ namespace LEGO.AsyncAPI.Services
                 this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(operation.ExternalDocs));
                 this.Walk(AsyncApiConstants.Traits, () => this.Walk(operation.Traits));
                 this.Walk(AsyncApiConstants.Message, () => this.Walk(operation.Message));
-                //TODO: Figure out bindings
+                this.Walk(AsyncApiConstants.Bindings, () => this.Walk(operation.Bindings));
             }
 
             this.Walk(operation as IAsyncApiExtensible);
@@ -461,8 +461,7 @@ namespace LEGO.AsyncAPI.Services
             {
                 this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(trait.ExternalDocs));
                 this.Walk(AsyncApiConstants.Tags, () => this.Walk(trait.Tags));
-
-                // Todo: Figure out bindings;
+                this.Walk(AsyncApiConstants.Bindings, () => this.Walk(trait.Bindings));
             }
 
             this.Walk(trait as IAsyncApiExtensible);
@@ -486,8 +485,7 @@ namespace LEGO.AsyncAPI.Services
                 this.Walk(AsyncApiConstants.Examples, () => this.Walk(message.Examples));
                 this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(message.ExternalDocs));
                 this.Walk(AsyncApiConstants.Traits, () => this.Walk(message.Traits));
-
-                // TODO: Figure out bindings.
+                this.Walk(AsyncApiConstants.Bindings, () => this.Walk(message.Bindings));
             }
 
             this.Walk(message as IAsyncApiExtensible);
@@ -528,11 +526,54 @@ namespace LEGO.AsyncAPI.Services
                 this.Walk(AsyncApiConstants.Tags, () => this.Walk(trait.Tags));
                 this.Walk(AsyncApiConstants.Examples, () => this.Walk(trait.Examples));
                 this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(trait.ExternalDocs));
-
-                // Todo: Figure out bindings;
+                this.Walk(AsyncApiConstants.Bindings, () => this.Walk(trait.Bindings));
             }
 
             this.Walk(trait as IAsyncApiExtensible);
+        }
+
+        internal void Walk(AsyncApiBindings<IServerBinding> serverBindings)
+        {
+            if (serverBindings is null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(serverBindings);
+            this.Walk(serverBindings as IAsyncApiExtensible);
+        }
+
+        internal void Walk(AsyncApiBindings<IChannelBinding> channelBindings)
+        {
+            if (channelBindings is null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(channelBindings);
+            this.Walk(channelBindings as IAsyncApiExtensible);
+        }
+
+        internal void Walk(AsyncApiBindings<IOperationBinding> operationBindings)
+        {
+            if (operationBindings is null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(operationBindings);
+            this.Walk(operationBindings as IAsyncApiExtensible);
+        }
+
+        internal void Walk(AsyncApiBindings<IMessageBinding> messageBindings)
+        {
+            if (messageBindings is null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(messageBindings);
+            this.Walk(messageBindings as IAsyncApiExtensible);
         }
 
         internal void Walk(IList<AsyncApiMessageExample> examples)
@@ -663,7 +704,7 @@ namespace LEGO.AsyncAPI.Services
             this.Walk(AsyncApiConstants.Variables, () => this.Walk(server.Variables));
             this.Walk(AsyncApiConstants.Security, () => this.Walk(server.Security));
 
-            // TODO: Figure out bindings
+            this.Walk(AsyncApiConstants.Bindings, () => this.Walk(server.Bindings));
             this.visitor.Visit(server as IAsyncApiExtensible);
         }
 

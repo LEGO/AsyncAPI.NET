@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Exceptions;
     using SharpYaml.Serialization;
@@ -51,6 +52,14 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         public virtual Dictionary<string, T> CreateMap<T>(Func<MapNode, T> map)
         {
             throw new AsyncApiReaderException("Cannot create map from this type of node.", this.Context);
+        }
+
+        public virtual Dictionary<string, T> CreateBindingMapWithReference<T>(
+            ReferenceType referenceType,
+            Func<ParseNode, T> map)
+            where T : class, IBinding
+        {
+            throw new AsyncApiReaderException("Cannot create map from this reference.", this.Context);
         }
 
         public virtual Dictionary<string, T> CreateMapWithReference<T>(

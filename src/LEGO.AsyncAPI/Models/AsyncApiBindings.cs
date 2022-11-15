@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public class AsyncApiBindings<TBinding> : Dictionary<BindingType, TBinding>, IAsyncApiSerializable
+    public class AsyncApiBindings<TBinding> : Dictionary<BindingType, TBinding>, IAsyncApiSerializable, IAsyncApiReferenceable
         where TBinding : IBinding
     {
         public bool UnresolvedReference { get; set; }

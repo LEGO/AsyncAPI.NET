@@ -26,16 +26,7 @@ namespace LEGO.AsyncAPI.Readers
 
             foreach (var property in mapNode)
             {
-                var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
-                IServerBinding serverBinding = null;
-                switch (bindingType)
-                {
-                    case BindingType.Kafka:
-                        serverBinding = LoadBinding("ServerBinding", property.Value, kafkaServerBindingFixedFields);
-                        break;
-                    default:
-                        throw new System.Exception("ServerBinding not found");
-                }
+                var serverBinding = LoadServerBinding(property);
 
                 if (serverBinding != null)
                 {
@@ -49,6 +40,20 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             return serverBindings;
+        }
+
+        internal static IServerBinding LoadServerBinding(ParseNode node)
+        {
+            var property = node as PropertyNode;
+            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
+            switch (bindingType)
+            {
+                case BindingType.Kafka:
+                    return LoadBinding("ServerBinding", property.Value, kafkaServerBindingFixedFields);
+                    break;
+                default:
+                    throw new System.Exception("ServerBinding not found");
+            }
         }
     }
 }
