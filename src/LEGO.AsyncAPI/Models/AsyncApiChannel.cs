@@ -43,7 +43,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the channel.
         /// </summary>
-        public IDictionary<string, IChannelBinding> Bindings { get; set; } = new Dictionary<string, IChannelBinding>();
+        public AsyncApiBindings<IChannelBinding> Bindings { get; set; } = new AsyncApiBindings<IChannelBinding>();
 
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
@@ -103,6 +103,8 @@ namespace LEGO.AsyncAPI.Models
                     component.SerializeV2(writer);
                 }
             });
+
+            writer.WriteOptionalObject(AsyncApiConstants.Bindings, this.Bindings, (w, t) => t.SerializeV2(w));
 
             // extensions
             writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);

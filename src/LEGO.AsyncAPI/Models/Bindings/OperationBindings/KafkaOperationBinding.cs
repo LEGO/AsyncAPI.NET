@@ -2,8 +2,10 @@
 
 namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
 {
+    using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// Binding class for Kafka operations.
@@ -11,21 +13,61 @@ namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
     public class KafkaOperationBinding : IOperationBinding
     {
         /// <summary>
-        /// Gets or sets kafka group id.
+        /// Id of the consumer group.
         /// </summary>
-        public Schema GroupId { get; set; }
+        public AsyncApiSchema GroupId { get; set; }
 
         /// <summary>
-        /// Gets or sets kafka client id.
+        /// Id of the consumer inside a consumer group.
         /// </summary>
-        public Schema ClientId { get; set; }
+        public AsyncApiSchema ClientId { get; set; }
 
         /// <summary>
-        /// Gets or sets property containing version of a binding.
+        /// The version of this binding. If omitted, "latest" MUST be assumed.
         /// </summary>
         public string BindingVersion { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiAny> Extensions { get; set; }
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
+        public bool UnresolvedReference { get; set; }
+
+        public AsyncApiReference Reference { get; set; }
+
+        public BindingType Type => BindingType.Kafka;
+
+        /// <summary>
+        /// Serialize to AsyncAPI V2 document without using reference.
+        /// </summary>
+        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.WriteStartObject();
+            writer.WriteRequiredObject(AsyncApiConstants.GroupId, this.GroupId, (w, h) => h.SerializeV2(w));
+            writer.WriteRequiredObject(AsyncApiConstants.ClientId, this.ClientId, (w, h) => h.SerializeV2(w));
+            writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+
+            writer.WriteEndObject();
+        }
+
+        public void SerializeV2(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
+            {
+                this.Reference.SerializeV2(writer);
+                return;
+            }
+
+            this.SerializeV2WithoutReference(writer);
+        }
     }
 }

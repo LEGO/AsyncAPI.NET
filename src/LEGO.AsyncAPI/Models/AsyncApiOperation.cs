@@ -41,7 +41,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the operation.
         /// </summary>
-        public IDictionary<string, IOperationBinding> Bindings { get; set; }
+        public AsyncApiBindings<IOperationBinding> Bindings { get; set; } = new AsyncApiBindings<IOperationBinding>();
 
         /// <summary>
         /// a list of traits to apply to the operation object.
@@ -73,7 +73,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
 
-            // TODO: figure out bindings
+            writer.WriteOptionalObject(AsyncApiConstants.Bindings, this.Bindings, (w, t) => t.SerializeV2(w));
             writer.WriteOptionalCollection(AsyncApiConstants.Traits, this.Traits, (w, t) => t.SerializeV2(w));
             if (this.Message.Count > 1)
             {

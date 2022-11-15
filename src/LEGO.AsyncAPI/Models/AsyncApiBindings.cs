@@ -4,17 +4,18 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
+    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public class AsyncApiMessageBindings : Dictionary<MessageBindingType, IMessageBinding>, IAsyncApiSerializable
+    public class AsyncApiBindings<TBinding> : Dictionary<BindingType, TBinding>, IAsyncApiSerializable
+        where TBinding : IBinding
     {
         public bool UnresolvedReference { get; set; }
 
         public AsyncApiReference Reference { get; set; }
 
-        public void Add(IMessageBinding binding)
+        public void Add(TBinding binding)
         {
             this[binding.Type] = binding;
         }

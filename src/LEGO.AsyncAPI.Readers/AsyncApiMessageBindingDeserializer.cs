@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -11,43 +12,38 @@ namespace LEGO.AsyncAPI.Readers
 
     internal static partial class AsyncApiDeserializer
     {
-        private static PatternFieldMap<T> BindingPatternExtensionFields<T>() where T : IMessageBinding, new()
-        {
-            return new()
-            {
-                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
-            };
-        }
-
-        private static FixedFieldMap<HttpMessageBinding> httpBindingFixedFields = new()
+        private static FixedFieldMap<HttpMessageBinding> httpMessageBindingFixedFields = new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "headers", (a, n) => { a.Headers = LoadSchema(n); } },
         };
 
-        private static FixedFieldMap<KafkaMessageBinding> kafkaBindingFixedFields = new()
+        private static FixedFieldMap<KafkaMessageBinding> kafkaMessageBindingFixedFields = new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "key", (a, n) => { a.Key = LoadSchema(n); } },
+            { "schemaIdLocation", (a, n) => { a.SchemaIdLocation = n.GetScalarValue(); } },
+            { "schemaIdPayloadEncoding", (a, n) => { a.SchemaIdPayloadEncoding = n.GetScalarValue(); } },
+            { "schemaLookupStrategy", (a, n) => { a.SchemaLookupStrategy = n.GetScalarValue(); } },
         };
 
-        internal static AsyncApiMessageBindings LoadMessageBindings(ParseNode node)
+        internal static AsyncApiBindings<IMessageBinding> LoadMessageBindings(ParseNode node)
         {
             var mapNode = node.CheckMapNode("messageBindings");
 
-            var messageBindings = new AsyncApiMessageBindings();
+            var messageBindings = new AsyncApiBindings<IMessageBinding>();
 
             foreach (var property in mapNode)
             {
-                var bindingType = property.Name.GetEnumFromDisplayName<MessageBindingType>();
+                var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
                 IMessageBinding messageBinding = null;
                 switch (bindingType)
                 {
-                    case MessageBindingType.Kafka:
-                        messageBinding = LoadBinding<KafkaMessageBinding>(property.Value, kafkaBindingFixedFields);
+                    case BindingType.Kafka:
+                        messageBinding = LoadBinding<KafkaMessageBinding>("MessageBinding", property.Value, kafkaMessageBindingFixedFields);
                         break;
-                    case MessageBindingType.Http:
-                        messageBinding = LoadBinding<HttpMessageBinding>(property.Value, httpBindingFixedFields);
+                    case BindingType.Http:
+                        messageBinding = LoadBinding<HttpMessageBinding>("MessageBinding", property.Value, httpMessageBindingFixedFields);
                         break;
                     default:
                         throw new System.Exception("MessageBinding not found");
@@ -65,22 +61,6 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             return messageBindings;
-        }
-
-        internal static T LoadBinding<T>(ParseNode node, FixedFieldMap<T> fieldMap) where T : IMessageBinding, new()
-        {
-            var mapNode = node.CheckMapNode("MessageBinding");
-            var pointer = mapNode.GetReferencePointer();
-            if (pointer != null)
-            {
-                return mapNode.GetReferencedObject<T>(ReferenceType.MessageBinding, pointer);
-            }
-
-            var messageBinding = new T();
-
-            ParseMap(mapNode, messageBinding, fieldMap, BindingPatternExtensionFields<T>());
-
-            return messageBinding;
         }
     }
 }

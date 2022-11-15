@@ -10,10 +10,13 @@ namespace LEGO.AsyncAPI.Tests
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 
     public class AsyncApiDocumentTests
@@ -463,7 +466,7 @@ channels:
                             {
                                 new AsyncApiMessage
                                 {
-                                    Bindings = new AsyncApiMessageBindings
+                                    Bindings = new AsyncApiBindings<IMessageBinding>
                                     {
                                         {
                                             new HttpMessageBinding
@@ -492,11 +495,21 @@ channels:
                 });
             var actual = doc.Serialize(AsyncApiFormat.Yaml);
 
+            var reader = new AsyncApiStringReader();
+            var deserialized = reader.Read(actual, out var diagnostic);
+
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
             Assert.AreEqual(actual, expected);
+            Assert.AreEqual(2, deserialized.Channels.First().Value.Publish.Message.First().Bindings.Count);
+
+            var binding = deserialized.Channels.First().Value.Publish.Message.First().Bindings.First();
+            Assert.AreEqual(BindingType.Http, binding.Key);
+            var httpBinding = binding.Value as HttpMessageBinding;
+
+            Assert.AreEqual("this mah binding", httpBinding.Headers.Description);
         }
     }
 }

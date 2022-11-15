@@ -12,6 +12,17 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
     /// </summary>
     public class HttpMessageBinding : IMessageBinding
     {
+
+        /// <summary>
+        /// A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type object and have a properties key.
+        /// </summary>
+        public AsyncApiSchema Headers { get; set; }
+
+        /// <summary>
+        /// The version of this binding. If omitted, "latest" MUST be assumed.
+        /// </summary>
+        public string BindingVersion { get; set; }
+
         /// <summary>
         /// Indicates if object is populated with data or is just a reference to the data
         /// </summary>
@@ -56,19 +67,9 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
             this.SerializeV2WithoutReference(writer);
         }
 
-        /// <summary>
-        /// Gets or sets property containing http headers.
-        /// </summary>
-        public AsyncApiSchema Headers { get; set; }
-
-        /// <summary>
-        /// Gets or sets property containing version of a binding.
-        /// </summary>
-        public string BindingVersion { get; set; }
-
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        public MessageBindingType Type => MessageBindingType.Http;
+        public BindingType Type => BindingType.Http;
     }
 }
