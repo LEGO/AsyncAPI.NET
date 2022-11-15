@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Validations
         void AddWarning(AsyncApiValidatorWarning warning);
 
         /// <summary>
-        /// Allow Rule to indicate validation error occured at a deeper context level.  
+        /// Allow Rule to indicate validation error occured at a deeper context level.
         /// </summary>
         /// <param name="segment">Identifier for context</param>
         void Enter(string segment);

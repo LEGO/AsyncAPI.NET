@@ -12,10 +12,11 @@ namespace LEGO.AsyncAPI.Readers
         /// <summary>
         /// The parsed AsyncApiDocument.  Null will be returned if the document could not be parsed.
         /// </summary>
-        public AsyncApiDocument AsyncApiDocument { set; get; }
+        public AsyncApiDocument AsyncApiDocument { get; set; }
+
         /// <summary>
-        /// AsyncApiDiagnostic contains the Errors reported while parsing
+        /// AsyncApiDiagnostic contains the Errors reported while parsing.
         /// </summary>
-        public AsyncApiDiagnostic AsyncApiDiagnostic { set; get; }
+        public AsyncApiDiagnostic AsyncApiDiagnostic { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Writers
 
     public static class SpecialCharacterStringExtensions
     {
-        // Plain style strings cannot start with indicators. 
+        // Plain style strings cannot start with indicators.
         // http://www.yaml.org/spec/1.2/spec.html#indicator//
         private static readonly char[] yamlIndicators =
         {
@@ -166,9 +166,9 @@ namespace LEGO.AsyncAPI.Writers
                 return $"\"{input}\"";
             }
 
-            // If string 
+            // If string
             // 1) includes a character forbidden in plain string,
-            // 2) starts with an indicator, OR 
+            // 2) starts with an indicator, OR
             // 3) has trailing/leading white spaces,
             // wrap the string in single quote.
             // http://www.yaml.org/spec/1.2/spec.html#style/flow/plain

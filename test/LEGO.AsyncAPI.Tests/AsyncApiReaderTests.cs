@@ -609,7 +609,7 @@ servers:
         Assert.AreEqual("pulsar+ssl", server.Value.Protocol);
         Assert.AreEqual("Pulsar broker", server.Value.Description);
       }
-      
+
       [Test]
       public void Read_WithBasicPlusServerVariablesDeserializes()
       {
@@ -641,7 +641,7 @@ servers:
         Assert.AreEqual("port", variable.Key);
         Assert.AreEqual("Secure connection (TLS) is available through port 8883.", variable.Value.Description);
       }
-      
+
       [Test]
       public void Read_WithBasicPlusCorrelationIDDeserializes()
       {
@@ -734,7 +734,7 @@ components:
         Assert.AreEqual(SecuritySchemeType.ScramSha256, scheme.Value.Type);
         Assert.AreEqual("Provide your username and password for SASL/SCRAM authentication", scheme.Value.Description);
       }
-      
+
       [Test]
       public void Read_WithBasicPlusOAuthFlowDeserializes()
       {
@@ -803,7 +803,6 @@ components:
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
             Assert.AreEqual("pulsar+ssl://prod.events.managed.io:1234", doc.Servers.First().Value.Url);
-
         }
 
         [Test]
@@ -850,7 +849,6 @@ components:
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
             Assert.AreEqual("application/schema+yaml;version=draft-07", doc.Channels.First().Value.Publish.Message.First().SchemaFormat);
-
         }
 
         [Test]
@@ -946,7 +944,7 @@ components:
             var yamlAgain = doc.Serialize(AsyncApiFormat.Yaml);
             Assert.True(!yamlAgain.Contains("then:"));
         }
-        
+
       [Test]
       public void Read_WithBasicPlusSecurityRequirementsDeserializes()
       {
