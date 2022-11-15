@@ -1,6 +1,6 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
+namespace LEGO.AsyncAPI.Models.Bindings.Kafka
 {
     using System;
     using System.Collections.Generic;
@@ -8,33 +8,32 @@ namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Binding class for Kafka operations.
+    /// Binding class for Kafka server settings.
     /// </summary>
-    public class KafkaOperationBinding : IOperationBinding
+    public class KafkaServerBinding : IServerBinding
     {
         /// <summary>
-        /// Id of the consumer group.
+        /// API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used)
         /// </summary>
-        public AsyncApiSchema GroupId { get; set; }
+        public string SchemaRegistryUrl { get; set; }
 
         /// <summary>
-        /// Id of the consumer inside a consumer group.
+        /// The vendor of Schema Registry and Kafka serdes library that should be used (e.g. apicurio, confluent, ibm, or karapace)
         /// </summary>
-        public AsyncApiSchema ClientId { get; set; }
+        public string SchemaRegistryVendor { get; set; }
 
         /// <summary>
-        /// The version of this binding. If omitted, "latest" MUST be assumed.
+        /// The version of this binding.
         /// </summary>
         public string BindingVersion { get; set; }
 
-        /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+        public BindingType Type => BindingType.Kafka;
 
         public bool UnresolvedReference { get; set; }
 
         public AsyncApiReference Reference { get; set; }
 
-        public BindingType Type => BindingType.Kafka;
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.
@@ -47,9 +46,9 @@ namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
             }
 
             writer.WriteStartObject();
-            writer.WriteRequiredObject(AsyncApiConstants.GroupId, this.GroupId, (w, h) => h.SerializeV2(w));
-            writer.WriteRequiredObject(AsyncApiConstants.ClientId, this.ClientId, (w, h) => h.SerializeV2(w));
-            writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteProperty(AsyncApiConstants.SchemaRegistryUrl, SchemaRegistryUrl);
+            writer.WriteProperty(AsyncApiConstants.SchemaRegistryVendor, SchemaRegistryVendor);
+            writer.WriteProperty(AsyncApiConstants.BindingVersion, BindingVersion);
 
             writer.WriteEndObject();
         }
@@ -61,13 +60,13 @@ namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
+            if (Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
             {
-                this.Reference.SerializeV2(writer);
+                Reference.SerializeV2(writer);
                 return;
             }
 
-            this.SerializeV2WithoutReference(writer);
+            SerializeV2WithoutReference(writer);
         }
     }
 }

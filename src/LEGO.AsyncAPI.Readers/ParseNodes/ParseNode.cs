@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -91,6 +92,21 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         }
 
         public virtual string GetScalarValue()
+        {
+            throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
+        }
+
+        public virtual bool GetBooleanValue()
+        {
+            throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
+        }
+
+        public virtual int GetIntegerValue()
+        {
+            throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
+        }
+
+        public virtual long GetLongValue()
         {
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }

@@ -1,5 +1,6 @@
 ﻿using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
+using LEGO.AsyncAPI.Models.Bindings.Http;
+using LEGO.AsyncAPI.Models.Bindings.Kafka;
 using LEGO.AsyncAPI.Models.Interfaces;
 using NUnit.Framework;
 

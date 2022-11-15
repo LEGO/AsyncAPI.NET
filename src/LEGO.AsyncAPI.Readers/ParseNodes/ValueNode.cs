@@ -29,6 +29,36 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             return this.node.Value;
         }
 
+        public override int GetIntegerValue()
+        {
+            if (int.TryParse(this.node.Value, out int value))
+            {
+                return value;
+            }
+
+            throw new AsyncApiReaderException("Value could not parse to integer", node);
+        }
+
+        public override long GetLongValue()
+        {
+            if (long.TryParse(this.node.Value, out long value))
+            {
+                return value;
+            }
+
+            throw new AsyncApiReaderException("Value could not parse to long", node);
+        }
+
+        public override bool GetBooleanValue()
+        {
+            if (bool.TryParse(this.node.Value, out bool value))
+            {
+                return value;
+            }
+
+            throw new AsyncApiReaderException("Value could not parse to bool", node);
+        }
+
         public override IAsyncApiAny CreateAny()
         {
             var value = this.GetScalarValue();

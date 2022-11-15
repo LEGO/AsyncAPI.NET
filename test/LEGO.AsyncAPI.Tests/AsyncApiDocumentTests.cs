@@ -14,7 +14,9 @@ namespace LEGO.AsyncAPI.Tests
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Bindings;
-    using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
+    using LEGO.AsyncAPI.Models.Bindings.Http;
+    using LEGO.AsyncAPI.Models.Bindings.Kafka;
+    using LEGO.AsyncAPI.Models.Bindings.Pulsar;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
@@ -443,7 +445,19 @@ components:
         public void Serialize_WithBindings_Serializes()
         {
             var expected = @"asyncapi: '2.3.0'
-info: { }
+info:
+  description: test description
+servers:
+  production:
+    url: example.com
+    protocol: pulsar+ssl
+    description: test description
+    bindings:
+      pulsar:
+        retention:
+          time: 4
+          size: 1
+        deduplication: true
 channels:
   testChannel:
     publish:
@@ -454,11 +468,69 @@ channels:
               description: this mah binding
           kafka:
             key:
-              description: this mah other binding";
+              description: this mah other binding
+    bindings:
+      kafka:
+        partitions: 2
+        replicas: 1
+      pulsar:
+        persistence: persistent
+        compaction: 9223372036854775807
+        retention:
+          time: 4
+          size: 1
+        deduplication: true";
             var doc = new AsyncApiDocument();
+            doc.Info = new AsyncApiInfo()
+            {
+                Description = "test description"
+            };
+            doc.Servers.Add("production", new AsyncApiServer
+            {
+                Description = "test description",
+                Protocol = "pulsar+ssl",
+                Url = "example.com",
+                Bindings = new AsyncApiBindings<IServerBinding>
+                {
+                    {
+                        new PulsarServerBinding
+                        {
+                            Deduplication = true,
+                            Retention = new RetentionDefinition()
+                            {
+                                Time = 4,
+                                Size = 1
+                            },
+                        }
+                    },
+                }
+            });
             doc.Channels.Add("testChannel",
                 new AsyncApiChannel
                 {
+                    Bindings = new AsyncApiBindings<IChannelBinding>
+                    {
+                        {
+                            new KafkaChannelBinding
+                            {
+                                Partitions = 2,
+                                Replicas = 1,
+                            }
+                        },
+                        {
+                        new PulsarChannelBinding
+                            {
+                                Compaction = long.MaxValue,
+                                Deduplication = true,
+                                Persistence = "persistent",
+                                Retention = new RetentionDefinition()
+                                {
+                                    Time = 4,
+                                    Size = 1,
+                                },
+                            }
+                        },
+                    },
                     Publish = new AsyncApiOperation
                     {
                         Message = new List<AsyncApiMessage>

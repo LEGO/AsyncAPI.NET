@@ -1,6 +1,6 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
+namespace LEGO.AsyncAPI.Models.Bindings.Kafka
 {
     using System;
     using System.Collections.Generic;
@@ -59,11 +59,11 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
 
             writer.WriteStartObject();
 
-            writer.WriteRequiredObject(AsyncApiConstants.Key, this.Key, (w, h) => h.SerializeV2(w));
-            writer.WriteProperty(AsyncApiConstants.SchemaIdLocation, this.SchemaIdLocation);
-            writer.WriteProperty(AsyncApiConstants.SchemaIdPayloadEncoding, this.SchemaIdPayloadEncoding);
-            writer.WriteProperty(AsyncApiConstants.SchemaLookupStrategy, this.SchemaLookupStrategy);
-            writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteRequiredObject(AsyncApiConstants.Key, Key, (w, h) => h.SerializeV2(w));
+            writer.WriteProperty(AsyncApiConstants.SchemaIdLocation, SchemaIdLocation);
+            writer.WriteProperty(AsyncApiConstants.SchemaIdPayloadEncoding, SchemaIdPayloadEncoding);
+            writer.WriteProperty(AsyncApiConstants.SchemaLookupStrategy, SchemaLookupStrategy);
+            writer.WriteProperty(AsyncApiConstants.BindingVersion, BindingVersion);
 
             writer.WriteEndObject();
         }
@@ -72,7 +72,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
         /// Serializes the v2.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        /// <exception cref="System.ArgumentNullException">writer</exception>
+        /// <exception cref="ArgumentNullException">writer</exception>
         public void SerializeV2(IAsyncApiWriter writer)
         {
             if (writer is null)
@@ -80,13 +80,13 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
+            if (Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
             {
-                this.Reference.SerializeV2(writer);
+                Reference.SerializeV2(writer);
                 return;
             }
 
-            this.SerializeV2WithoutReference(writer);
+            SerializeV2WithoutReference(writer);
         }
 
         /// <summary>

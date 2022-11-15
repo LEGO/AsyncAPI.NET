@@ -120,5 +120,11 @@ namespace LEGO.AsyncAPI.Models
         public const string Topic = "topic";
         public const string Partitions = "partitions";
         public const string Replicas = "replicas";
+        public const string Retention = "retention";
+        public const string Deduplication = "deduplication";
+        public const string Time = "time";
+        public const string Size = "size";
+        public const string Persistence = "persistence";
+        public const string Compaction = "compaction";
     }
 }

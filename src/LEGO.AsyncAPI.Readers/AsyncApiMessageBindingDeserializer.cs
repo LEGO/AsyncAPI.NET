@@ -5,28 +5,14 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings;
-    using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
+    using LEGO.AsyncAPI.Models.Bindings.Http;
+    using LEGO.AsyncAPI.Models.Bindings.Kafka;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
     internal static partial class AsyncApiDeserializer
     {
-        private static FixedFieldMap<HttpMessageBinding> httpMessageBindingFixedFields = new()
-        {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
-            { "headers", (a, n) => { a.Headers = LoadSchema(n); } },
-        };
-
-        private static FixedFieldMap<KafkaMessageBinding> kafkaMessageBindingFixedFields = new()
-        {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
-            { "key", (a, n) => { a.Key = LoadSchema(n); } },
-            { "schemaIdLocation", (a, n) => { a.SchemaIdLocation = n.GetScalarValue(); } },
-            { "schemaIdPayloadEncoding", (a, n) => { a.SchemaIdPayloadEncoding = n.GetScalarValue(); } },
-            { "schemaLookupStrategy", (a, n) => { a.SchemaLookupStrategy = n.GetScalarValue(); } },
-        };
-
         internal static AsyncApiBindings<IMessageBinding> LoadMessageBindings(ParseNode node)
         {
             var mapNode = node.CheckMapNode("messageBindings");

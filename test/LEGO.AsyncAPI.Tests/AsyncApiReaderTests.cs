@@ -11,10 +11,7 @@ namespace LEGO.AsyncAPI.Tests
     using LEGO.AsyncAPI.Models.Any;
     using NUnit.Framework;
     using LEGO.AsyncAPI.Readers;
-    using LEGO.AsyncAPI.Models.Bindings.MessageBindings;
-    using System.Collections.Generic;
-    using System.Text.Json.Serialization;
-    using LEGO.AsyncAPI.Models.Bindings.OperationBindings;
+    using LEGO.AsyncAPI.Models.Bindings.Http;
 
     public class AsyncApiReaderTests
     {

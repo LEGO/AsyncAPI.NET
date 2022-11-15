@@ -1,6 +1,6 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
+namespace LEGO.AsyncAPI.Models.Bindings.Http
 {
     using System;
     using System.Collections.Generic;
@@ -44,10 +44,10 @@ namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
 
             writer.WriteStartObject();
 
-            writer.WriteRequiredProperty(AsyncApiConstants.Type, this.Type);
-            writer.WriteRequiredProperty(AsyncApiConstants.Method, this.Method);
-            writer.WriteRequiredObject(AsyncApiConstants.Query, this.Query, (w, h) => h.SerializeV2(w));
-            writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteRequiredProperty(AsyncApiConstants.Type, Type);
+            writer.WriteRequiredProperty(AsyncApiConstants.Method, Method);
+            writer.WriteRequiredObject(AsyncApiConstants.Query, Query, (w, h) => h.SerializeV2(w));
+            writer.WriteProperty(AsyncApiConstants.BindingVersion, BindingVersion);
 
             writer.WriteEndObject();
         }
@@ -59,13 +59,13 @@ namespace LEGO.AsyncAPI.Models.Bindings.OperationBindings
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
+            if (Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
             {
-                this.Reference.SerializeV2(writer);
+                Reference.SerializeV2(writer);
                 return;
             }
 
-            this.SerializeV2WithoutReference(writer);
+            SerializeV2WithoutReference(writer);
         }
 
         /// <inheritdoc/>

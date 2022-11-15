@@ -1,6 +1,6 @@
-// Copyright (c) The LEGO Group. All rights reserved.
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.ChannelBindings
+namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
 {
     using System;
     using System.Collections.Generic;
@@ -8,31 +8,34 @@ namespace LEGO.AsyncAPI.Models.Bindings.ChannelBindings
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Binding class for Kafka channel settings.
+    /// Binding class for Pulsar server settings.
     /// </summary>
-    public class KafkaChannelBinding : IChannelBinding
+    public class PulsarChannelBinding : IChannelBinding
     {
         /// <summary>
-        /// Kafka topic name if different from channel name.
+        /// persistence of the topic in Pulsar persistent or non-persistent.
         /// </summary>
-        public string Topic { get; set; }
+        public string Persistence { get; set; }
 
         /// <summary>
-        /// Number of partitions configured on this topic (useful to know how many parallel consumers you may run).
+        /// Topic compaction threshold given in bytes.
         /// </summary>
-        public int Partitions { get; set; }
+        public long Compaction { get; set; }
+        /// <summary>
+        /// Topic retention policy.
+        /// </summary>
+        public RetentionDefinition Retention { get; set; }
 
         /// <summary>
-        /// Number of replicas configured on this topic.
+        /// When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once.
         /// </summary>
-        public int Replicas { get; set; }
+        public bool Deduplication { get; set; }
 
         /// <summary>
-        /// The version of this binding. If omitted, "latest" MUST be assumed.
-        /// </summary>
+        /// The version of this binding.
         public string BindingVersion { get; set; }
 
-        public BindingType Type => BindingType.Kafka;
+        public BindingType Type => BindingType.Pulsar;
 
         public bool UnresolvedReference { get; set; }
 
@@ -51,9 +54,10 @@ namespace LEGO.AsyncAPI.Models.Bindings.ChannelBindings
             }
 
             writer.WriteStartObject();
-            writer.WriteProperty(AsyncApiConstants.Topic, this.Topic);
-            writer.WriteProperty(AsyncApiConstants.Partitions, this.Partitions);
-            writer.WriteProperty(AsyncApiConstants.Replicas, this.Replicas);
+            writer.WriteProperty(AsyncApiConstants.Persistence, this.Persistence);
+            writer.WriteProperty(AsyncApiConstants.Compaction, this.Compaction);
+            writer.WriteOptionalObject(AsyncApiConstants.Retention, this.Retention, (w, r) => r.Serialize(w));
+            writer.WriteProperty(AsyncApiConstants.Deduplication, this.Deduplication);
             writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();

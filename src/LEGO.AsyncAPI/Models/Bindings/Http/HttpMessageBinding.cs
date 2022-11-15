@@ -1,6 +1,6 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
+namespace LEGO.AsyncAPI.Models.Bindings.Http
 {
     using System;
     using System.Collections.Generic;
@@ -45,8 +45,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
 
             writer.WriteStartObject();
 
-            writer.WriteRequiredObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
-            writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteRequiredObject(AsyncApiConstants.Headers, Headers, (w, h) => h.SerializeV2(w));
+            writer.WriteProperty(AsyncApiConstants.BindingVersion, BindingVersion);
 
             writer.WriteEndObject();
         }
@@ -58,13 +58,13 @@ namespace LEGO.AsyncAPI.Models.Bindings.MessageBindings
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
+            if (Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
             {
-                this.Reference.SerializeV2(writer);
+                Reference.SerializeV2(writer);
                 return;
             }
 
-            this.SerializeV2WithoutReference(writer);
+            SerializeV2WithoutReference(writer);
         }
 
         /// <inheritdoc/>

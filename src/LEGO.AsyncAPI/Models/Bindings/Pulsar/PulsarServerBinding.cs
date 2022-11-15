@@ -1,6 +1,6 @@
-// Copyright (c) The LEGO Group. All rights reserved.
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.ServerBindings
+namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
 {
     using System;
     using System.Collections.Generic;
@@ -8,26 +8,25 @@ namespace LEGO.AsyncAPI.Models.Bindings.ServerBindings
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Binding class for Kafka server settings.
+    /// Binding class for Pulsar server settings.
     /// </summary>
-    public class KafkaServerBinding : IServerBinding
+    public class PulsarServerBinding : IServerBinding
     {
         /// <summary>
-        /// API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used)
+        /// Topic retention policy.
         /// </summary>
-        public string SchemaRegistryUrl { get; set; }
+        public RetentionDefinition Retention { get; set; }
 
         /// <summary>
-        /// The vendor of Schema Registry and Kafka serdes library that should be used (e.g. apicurio, confluent, ibm, or karapace)
+        /// When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once.
         /// </summary>
-        public string SchemaRegistryVendor { get; set; }
+        public bool Deduplication { get; set; }
 
         /// <summary>
         /// The version of this binding.
-        /// </summary>
         public string BindingVersion { get; set; }
 
-        public BindingType Type => BindingType.Kafka;
+        public BindingType Type => BindingType.Pulsar;
 
         public bool UnresolvedReference { get; set; }
 
@@ -46,8 +45,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.ServerBindings
             }
 
             writer.WriteStartObject();
-            writer.WriteProperty(AsyncApiConstants.SchemaRegistryUrl, this.SchemaRegistryUrl);
-            writer.WriteProperty(AsyncApiConstants.SchemaRegistryVendor, this.SchemaRegistryVendor);
+            writer.WriteOptionalObject(AsyncApiConstants.Retention, this.Retention, (w, r) => r.Serialize(w));
+            writer.WriteProperty(AsyncApiConstants.Deduplication, this.Deduplication);
             writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
