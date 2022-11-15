@@ -95,7 +95,7 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
-        /// Resolve all references to SecuritySchemes.
+        /// Resolve all references to bindings.
         /// </summary>
         public override void Visit<TBinding>(AsyncApiBindings<TBinding> bindings)
         {
