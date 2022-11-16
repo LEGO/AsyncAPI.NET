@@ -21,6 +21,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         /// Topic compaction threshold given in bytes.
         /// </summary>
         public long Compaction { get; set; }
+
         /// <summary>
         /// Topic retention policy.
         /// </summary>
