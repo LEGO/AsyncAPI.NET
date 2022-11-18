@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Writers
+﻿namespace LEGO.AsyncAPI.Writers
 {
     using LEGO.AsyncAPI.Models;
 

@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models.Bindings
+﻿namespace LEGO.AsyncAPI.Models.Bindings
 {
     using LEGO.AsyncAPI.Attributes;
 

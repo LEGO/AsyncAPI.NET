@@ -1,5 +1,3 @@
-// Copyright (c) The LEGO Group. All rights reserved.
-
 namespace LEGO.AsyncAPI.Models.Bindings.Http
 {
     using System;

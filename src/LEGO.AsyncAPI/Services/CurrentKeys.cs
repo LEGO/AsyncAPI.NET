@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Services
+﻿namespace LEGO.AsyncAPI.Services
 {
     public class CurrentKeys
     {

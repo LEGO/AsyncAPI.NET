@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models.Any
+﻿namespace LEGO.AsyncAPI.Models.Any
 {
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;

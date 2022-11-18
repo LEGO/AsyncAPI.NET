@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Models.Interfaces
+﻿namespace LEGO.AsyncAPI.Models.Interfaces
 {
     /// <summary>
     /// Primitive type.

@@ -1,5 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-namespace LEGO.AsyncAPI.Models
+﻿namespace LEGO.AsyncAPI.Models
 {
     public static class AsyncApiConstants
     {

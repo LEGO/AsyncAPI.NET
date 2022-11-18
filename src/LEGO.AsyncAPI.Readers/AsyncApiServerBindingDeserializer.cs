@@ -1,6 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-namespace LEGO.AsyncAPI.Readers
+﻿namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings;

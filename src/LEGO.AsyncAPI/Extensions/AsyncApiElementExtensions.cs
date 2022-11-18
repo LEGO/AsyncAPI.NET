@@ -1,5 +1,3 @@
-// Copyright (c) The LEGO Group. All rights reserved.
-
 namespace LEGO.AsyncAPI.Extensions
 {
     using System.Collections.Generic;
