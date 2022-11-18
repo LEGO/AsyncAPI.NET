@@ -112,6 +112,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                             key: key,
                             value: map(new PropertyNode(this.Context, key, n.Value))
                         );
+
                         if (entry.value == null)
                         {
                             return default;
