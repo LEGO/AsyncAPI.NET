@@ -4,7 +4,9 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Exceptions;
     using SharpYaml.Serialization;
@@ -53,6 +55,14 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             throw new AsyncApiReaderException("Cannot create map from this type of node.", this.Context);
         }
 
+        public virtual Dictionary<string, T> CreateBindingMapWithReference<T>(
+            ReferenceType referenceType,
+            Func<ParseNode, T> map)
+            where T : class, IBinding
+        {
+            throw new AsyncApiReaderException("Cannot create map from this reference.", this.Context);
+        }
+
         public virtual Dictionary<string, T> CreateMapWithReference<T>(
             ReferenceType referenceType,
             Func<MapNode, T> map)
@@ -82,6 +92,21 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         }
 
         public virtual string GetScalarValue()
+        {
+            throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
+        }
+
+        public virtual bool GetBooleanValue()
+        {
+            throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
+        }
+
+        public virtual int GetIntegerValue()
+        {
+            throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
+        }
+
+        public virtual long GetLongValue()
         {
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }

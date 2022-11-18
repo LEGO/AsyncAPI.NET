@@ -181,15 +181,14 @@ namespace LEGO.AsyncAPI.Models
                     case ReferenceType.MessageTrait:
                         return this.Components.MessageTraits[reference.Id];
 
-                    //case ReferenceType.ServerBinding:
-                    //    return this.Components.ServerBindings[reference.Id];
-                    //case ReferenceType.ChannelBinding:
-                    //    return this.Components.ChannelBindings[reference.Id];
-                    //case ReferenceType.OperationBinding:
-                    //    return this.Components.OperationBindings[reference.Id];
-                    //case ReferenceType.MessageBinding:
-                    //    return this.Components.MessageBindings[reference.Id];
-                    // TODO: Figure out bindings.
+                    case ReferenceType.ServerBinding:
+                        return this.Components.ServerBindings[reference.Id];
+                    case ReferenceType.ChannelBinding:
+                        return this.Components.ChannelBindings[reference.Id];
+                    case ReferenceType.OperationBinding:
+                        return this.Components.OperationBindings[reference.Id];
+                    case ReferenceType.MessageBinding:
+                        return this.Components.MessageBindings[reference.Id];
                     default:
                         throw new AsyncApiException("Invalid reference type.");
                 }

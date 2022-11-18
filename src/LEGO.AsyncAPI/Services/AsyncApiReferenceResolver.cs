@@ -48,12 +48,10 @@ namespace LEGO.AsyncAPI.Services
             this.ResolveMap(components.MessageTraits);
             this.ResolveMap(components.OperationTraits);
             this.ResolveMap(components.SecuritySchemes);
-
-            // TODO: figure out bindings
-            // ResolveMap(components.ChannelBindings);
-            // ResolveMap(components.MessageBindings);
-            // ResolveMap(components.OperationBindings);
-            // ResolveMap(components.ServerBindings);
+            this.ResolveMap(components.ChannelBindings);
+            this.ResolveMap(components.MessageBindings);
+            this.ResolveMap(components.OperationBindings);
+            this.ResolveMap(components.ServerBindings);
             this.ResolveMap(components.Messages);
         }
 
@@ -66,9 +64,8 @@ namespace LEGO.AsyncAPI.Services
         public override void Visit(AsyncApiChannel channel)
         {
             this.ResolveMap(channel.Parameters);
-
-            // TODO: figure out bindings
-            //ResolveMap(channel.Bindings);
+            var bindingDictionary = channel.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type.GetDisplayName());
+            this.ResolveMap(bindingDictionary);
         }
 
         public override void Visit(AsyncApiMessageTrait trait)
@@ -78,15 +75,14 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
-        /// Resolve all references used in an operation
+        /// Resolve all references used in an operation.
         /// </summary>
         public override void Visit(AsyncApiOperation operation)
         {
             this.ResolveList(operation.Message);
             this.ResolveList(operation.Traits);
-
-            // TODO: Figure out bindings
-            // ResolveMap(operation.Bindings);
+            var bindingDictionary = operation.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type.GetDisplayName());
+            this.ResolveMap(bindingDictionary);
         }
 
         public override void Visit(AsyncApiMessage message)
@@ -94,12 +90,23 @@ namespace LEGO.AsyncAPI.Services
             this.ResolveObject(message.Headers, r => message.Headers = r);
             this.ResolveList(message.Traits);
             this.ResolveObject(message.CorrelationId, r => message.CorrelationId = r);
-
-            // TODO: Figure out bindings
+            var bindingDictionary = message.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type.GetDisplayName());
+            this.ResolveMap(bindingDictionary);
         }
 
         /// <summary>
-        /// Resolve all references to SecuritySchemes
+        /// Resolve all references to bindings.
+        /// </summary>
+        public override void Visit<TBinding>(AsyncApiBindings<TBinding> bindings)
+        {
+            foreach (var binding in bindings.Values.ToList())
+            {
+                this.ResolveObject(binding, resolvedBinding => bindings[binding.Type] = resolvedBinding);
+            }
+        }
+
+        /// <summary>
+        /// Resolve all references to SecuritySchemes.
         /// </summary>
         public override void Visit(AsyncApiSecurityRequirement securityRequirement)
         {
@@ -155,7 +162,7 @@ namespace LEGO.AsyncAPI.Services
             this.ResolveMap(schema.Properties);
         }
 
-        private void ResolveObject<T>(T entity, Action<T> assign) where T : class, IAsyncApiReferenceable, new()
+        private void ResolveObject<T>(T entity, Action<T> assign) where T : class, IAsyncApiReferenceable
         {
             if (entity == null)
             {
@@ -185,7 +192,7 @@ namespace LEGO.AsyncAPI.Services
             }
         }
 
-        private void ResolveMap<T>(IDictionary<string, T> map) where T : class, IAsyncApiReferenceable, new()
+        private void ResolveMap<T>(IDictionary<string, T> map) where T : class, IAsyncApiReferenceable
         {
             if (map == null)
             {
@@ -202,7 +209,7 @@ namespace LEGO.AsyncAPI.Services
             }
         }
 
-        private T ResolveReference<T>(AsyncApiReference reference) where T : class, IAsyncApiReferenceable, new()
+        private T ResolveReference<T>(AsyncApiReference reference) where T : class, IAsyncApiReferenceable
         {
             try
             {

@@ -1,18 +1,19 @@
-﻿// <copyright file="AsyncApiDocumentTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-using LEGO.AsyncAPI.Writers;
-
-namespace LEGO.AsyncAPI.Tests
+﻿namespace LEGO.AsyncAPI.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Bindings;
+    using LEGO.AsyncAPI.Models.Bindings.Http;
+    using LEGO.AsyncAPI.Models.Bindings.Kafka;
+    using LEGO.AsyncAPI.Models.Bindings.Pulsar;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers;
+    using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
     public class AsyncApiDocumentTests
@@ -295,6 +296,17 @@ components:
                                 Message = new List<AsyncApiMessage>
                                 {
                                     {
+                                    new AsyncApiMessage
+                                        {
+                                            Description = messageDescription,
+                                            Title = messageTitle,
+                                            Summary = messageSummary,
+                                            Name = messageName,
+                                            ContentType = contentType,
+                                        }
+                                    },
+                                    {
+                                        
                                         new AsyncApiMessage
                                         {
                                             Description = messageDescription,
@@ -433,6 +445,141 @@ components:
 
             // Assert
             Assert.AreEqual(actual, expected);
+        }
+
+        [Test]
+        public void Serialize_WithBindings_Serializes()
+        {
+            var expected = @"asyncapi: '2.3.0'
+info:
+  description: test description
+servers:
+  production:
+    url: example.com
+    protocol: pulsar+ssl
+    description: test description
+    bindings:
+      pulsar:
+        tenant: contoso
+channels:
+  testChannel:
+    publish:
+      message:
+        bindings:
+          http:
+            headers:
+              description: this mah binding
+          kafka:
+            key:
+              description: this mah other binding
+    bindings:
+      kafka:
+        partitions: 2
+        replicas: 1
+      pulsar:
+        persistence: persistent
+        compaction: 9223372036854775807
+        retention:
+          time: 4
+          size: 1
+        deduplication: true";
+            var doc = new AsyncApiDocument();
+            doc.Info = new AsyncApiInfo()
+            {
+                Description = "test description"
+            };
+            doc.Servers.Add("production", new AsyncApiServer
+            {
+                Description = "test description",
+                Protocol = "pulsar+ssl",
+                Url = "example.com",
+                Bindings = new AsyncApiBindings<IServerBinding>
+                {
+                    {
+                        new PulsarServerBinding
+                        {
+                            Tenant = "contoso",
+                        }
+                    },
+                }
+            });
+            doc.Channels.Add("testChannel",
+                new AsyncApiChannel
+                {
+                    Bindings = new AsyncApiBindings<IChannelBinding>
+                    {
+                        {
+                            new KafkaChannelBinding
+                            {
+                                Partitions = 2,
+                                Replicas = 1,
+                            }
+                        },
+                        {
+                        new PulsarChannelBinding
+                            {
+                                Compaction = long.MaxValue,
+                                Deduplication = true,
+                                Persistence = "persistent",
+                                Retention = new RetentionDefinition()
+                                {
+                                    Time = 4,
+                                    Size = 1,
+                                },
+                            }
+                        },
+                    },
+                    Publish = new AsyncApiOperation
+                    {
+                        Message = new List<AsyncApiMessage>
+                        {
+                            {
+                                new AsyncApiMessage
+                                {
+                                    Bindings = new AsyncApiBindings<IMessageBinding>
+                                    {
+                                        {
+                                            new HttpMessageBinding
+                                            {
+                                                Headers = new AsyncApiSchema
+                                                {
+                                                    Description = "this mah binding",
+                                                },
+                                            }
+                                        },
+                                        {
+                                            new KafkaMessageBinding
+                                            {
+                                                Key = new AsyncApiSchema
+                                                {
+                                                    Description = "this mah other binding",
+                                                },
+                                            }
+                                        },
+
+                                    },
+                                }
+                            },
+                        },
+                    },
+                });
+            var actual = doc.Serialize(AsyncApiFormat.Yaml);
+
+            var reader = new AsyncApiStringReader();
+            var deserialized = reader.Read(actual, out var diagnostic);
+
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+
+            // Assert
+            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(2, deserialized.Channels.First().Value.Publish.Message.First().Bindings.Count);
+
+            var binding = deserialized.Channels.First().Value.Publish.Message.First().Bindings.First();
+            Assert.AreEqual(BindingType.Http, binding.Key);
+            var httpBinding = binding.Value as HttpMessageBinding;
+
+            Assert.AreEqual("this mah binding", httpBinding.Headers.Description);
         }
     }
 }

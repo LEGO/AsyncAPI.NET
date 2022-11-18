@@ -106,5 +106,27 @@ namespace LEGO.AsyncAPI.Models
         public const string CorrelationId = "correlationId";
         public const string SchemaFormat = "schemaFormat";
         public const string ContentType = "contentType";
+        public const string BindingVersion = "bindingVersion";
+        public const string Key = "key";
+        public const string Method = "method";
+        public const string SchemaIdPayloadEncoding = "schemaIdPayloadEncoding";
+        public const string SchemaLookupStrategy = "schemaLookupStrategy";
+        public const string SchemaIdLocation = "SchemaIdLocation";
+        public const string Query = "query";
+        public const string GroupId = "groupId";
+        public const string ClientId = "clientId";
+        public const string SchemaRegistryUrl = "schemaRegistryUrl";
+        public const string SchemaRegistryVendor = "schemaRegistryVendor";
+        public const string Topic = "topic";
+        public const string Partitions = "partitions";
+        public const string Replicas = "replicas";
+        public const string Retention = "retention";
+        public const string Deduplication = "deduplication";
+        public const string Time = "time";
+        public const string Size = "size";
+        public const string Persistence = "persistence";
+        public const string Compaction = "compaction";
+        public const string Tenant = "tenant";
+        public const string Namespace = "namespace";
     }
 }

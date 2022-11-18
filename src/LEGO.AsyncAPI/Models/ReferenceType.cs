@@ -6,6 +6,8 @@ namespace LEGO.AsyncAPI.Models
 
     public enum ReferenceType
     {
+        None,
+
         /// <summary>
         /// Schema item.
         /// </summary>

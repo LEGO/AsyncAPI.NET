@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Readers
             { "subscribe", (a, n) => { a.Subscribe = LoadOperation(n); } },
             { "publish", (a, n) => { a.Publish = LoadOperation(n); } },
             { "parameters", (a, n) => { a.Parameters = n.CreateMapWithReference(ReferenceType.Parameter, LoadParameter); } },
-            { "bindings", (a, n) => { ; } }, //TODO: Figure out bindings
+            { "bindings", (a, n) => { a.Bindings = LoadChannelBindings(n); } },
         };
 
         private static readonly PatternFieldMap<AsyncApiChannel> channelPatternFields =

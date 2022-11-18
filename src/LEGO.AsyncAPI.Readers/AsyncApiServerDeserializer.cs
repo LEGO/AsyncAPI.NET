@@ -26,13 +26,9 @@ namespace LEGO.AsyncAPI.Readers
             {
                 "security", (a, n) => { a.Security = n.CreateList(LoadSecurityRequirement); }
             },
-
-            // { TODO, figure out bindings
-            //     "bindings", (o, n) =>
-            //     {
-            //         o.Bindings = n.
-            //     }
-            // },
+            {
+                "bindings", (o, n) => { o.Bindings = LoadServerBindings(n); }
+            },
             {
                 "protocolVersion", (a, n) => { a.ProtocolVersion = n.GetScalarValue(); }
             },
@@ -49,12 +45,13 @@ namespace LEGO.AsyncAPI.Readers
 
         public static AsyncApiServer LoadServer(ParseNode node)
         {
-            var mapNode = node.CheckMapNode("server");
+            var mapNode = node.CheckMapNode("servers");
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
                 return mapNode.GetReferencedObject<AsyncApiServer>(ReferenceType.Server, pointer);
             }
+
             var server = new AsyncApiServer();
 
             ParseMap(mapNode, server, serverFixedFields, serverPatternFields);

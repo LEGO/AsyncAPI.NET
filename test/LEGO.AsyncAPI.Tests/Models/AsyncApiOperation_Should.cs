@@ -2,6 +2,9 @@ using System;
 using System.Globalization;
 using System.IO;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Bindings.Http;
+using LEGO.AsyncAPI.Models.Bindings.Kafka;
+using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Writers;
 using NUnit.Framework;
 
@@ -66,6 +69,62 @@ namespace LEGO.AsyncAPI.Tests.Models
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
+            Assert.AreEqual(actual, expected);
+        }
+
+        [Test]
+        public void AsyncApiOperation_WithBindings_Serializes()
+        {
+            var expected =
+@"bindings:
+  http:
+    type: type
+    method: PUT
+    query:
+      description: some query
+  kafka:
+    groupId:
+      description: some Id
+    clientId:
+      description: some Id";
+
+            var operation = new AsyncApiOperation
+            {
+                Bindings = new AsyncApiBindings<IOperationBinding>
+                {
+                    {
+                        new HttpOperationBinding
+                        {
+                            Type = "type",
+                            Method = "PUT",
+                            Query = new AsyncApiSchema
+                            {
+                                Description = "some query",
+                            },
+                        }
+                    },
+                    {
+                        new KafkaOperationBinding
+                        {
+                            GroupId = new AsyncApiSchema
+                            {
+                                Description = "some Id",
+                            },
+                            ClientId = new AsyncApiSchema
+                            {
+                                Description = "some Id",
+                            },
+                        }
+                    },
+                },
+            };
+
+            var actual = operation.SerializeAsYaml();
+
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+
+            // Assert
             Assert.AreEqual(actual, expected);
         }
     }

@@ -5,7 +5,6 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
@@ -47,13 +46,9 @@ namespace LEGO.AsyncAPI.Readers
             {
                 "externalDocs", (a, n) => { a.ExternalDocs = LoadExternalDocs(n); }
             },
-
-            // { TODO
-            //     "bindings", (a, n) =>
-            //     {
-            //         a.Url = n.GetScalarValue();
-            //     }
-            // },
+            {
+                "bindings", (a, n) => { a.Bindings = LoadMessageBindings(n); }
+            },
             {
                 "examples", (a, n) => a.Examples = n.CreateList(LoadExample)
             },
