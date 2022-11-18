@@ -1,10 +1,4 @@
-﻿// <copyright file="AsyncApiDocumentTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-using LEGO.AsyncAPI.Writers;
-
-namespace LEGO.AsyncAPI.Tests
+﻿namespace LEGO.AsyncAPI.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -19,6 +13,7 @@ namespace LEGO.AsyncAPI.Tests
     using LEGO.AsyncAPI.Models.Bindings.Pulsar;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
+    using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
     public class AsyncApiDocumentTests
@@ -301,6 +296,17 @@ components:
                                 Message = new List<AsyncApiMessage>
                                 {
                                     {
+                                    new AsyncApiMessage
+                                        {
+                                            Description = messageDescription,
+                                            Title = messageTitle,
+                                            Summary = messageSummary,
+                                            Name = messageName,
+                                            ContentType = contentType,
+                                        }
+                                    },
+                                    {
+                                        
                                         new AsyncApiMessage
                                         {
                                             Description = messageDescription,
@@ -454,10 +460,7 @@ servers:
     description: test description
     bindings:
       pulsar:
-        retention:
-          time: 4
-          size: 1
-        deduplication: true
+        tenant: contoso
 channels:
   testChannel:
     publish:
@@ -495,12 +498,7 @@ channels:
                     {
                         new PulsarServerBinding
                         {
-                            Deduplication = true,
-                            Retention = new RetentionDefinition()
-                            {
-                                Time = 4,
-                                Size = 1
-                            },
+                            Tenant = "contoso",
                         }
                     },
                 }

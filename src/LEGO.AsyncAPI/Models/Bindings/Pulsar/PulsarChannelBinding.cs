@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -12,6 +13,11 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
     /// </summary>
     public class PulsarChannelBinding : IChannelBinding
     {
+        /// <summary>
+        /// The namespace associated with the topic.
+        /// </summary>
+        public string Namespace { get; set; }
+
         /// <summary>
         /// persistence of the topic in Pulsar persistent or non-persistent.
         /// </summary>
@@ -54,6 +60,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
             }
 
             writer.WriteStartObject();
+            writer.WriteProperty(AsyncApiConstants.Namespace, this.Namespace);
             writer.WriteProperty(AsyncApiConstants.Persistence, this.Persistence);
             writer.WriteProperty(AsyncApiConstants.Compaction, this.Compaction);
             writer.WriteOptionalObject(AsyncApiConstants.Retention, this.Retention, (w, r) => r.Serialize(w));

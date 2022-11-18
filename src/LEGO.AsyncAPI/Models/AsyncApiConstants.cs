@@ -126,5 +126,7 @@ namespace LEGO.AsyncAPI.Models
         public const string Size = "size";
         public const string Persistence = "persistence";
         public const string Compaction = "compaction";
+        public const string Tenant = "tenant";
+        public const string Namespace = "namespace";
     }
 }

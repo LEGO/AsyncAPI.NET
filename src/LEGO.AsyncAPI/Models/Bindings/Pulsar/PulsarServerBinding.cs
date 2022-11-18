@@ -13,14 +13,9 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
     public class PulsarServerBinding : IServerBinding
     {
         /// <summary>
-        /// Topic retention policy.
+        /// The tenant.
         /// </summary>
-        public RetentionDefinition Retention { get; set; }
-
-        /// <summary>
-        /// When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once.
-        /// </summary>
-        public bool Deduplication { get; set; }
+        public string Tenant { get; set; }
 
         /// <summary>
         /// The version of this binding.
@@ -45,8 +40,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
             }
 
             writer.WriteStartObject();
-            writer.WriteOptionalObject(AsyncApiConstants.Retention, this.Retention, (w, r) => r.Serialize(w));
-            writer.WriteProperty(AsyncApiConstants.Deduplication, this.Deduplication);
+
+            writer.WriteProperty(AsyncApiConstants.Tenant, this.Tenant);
             writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
