@@ -34,8 +34,10 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}    
 
       - name: Build ${{ matrix.package-name }} project and pack NuGet package
+        if: steps.semantic.outputs.new_release_published == 'true'
         run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ steps.semantic.outputs.new_release_version }}-prerelease
 
       - name: Push generated package to GitHub Packages registry
+        if: steps.semantic.outputs.new_release_published == 'true'
         run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}      
              
