@@ -1,0 +1,10 @@
+Documentation:
+- '**/*.md'
+CI/CD:
+- .github/**/*
+AsyncAPI.Readers:
+- src/LEGO.AsyncAPI.Readers/**/*
+AsyncAPI.Models:
+- src/LEGO.AsyncAPI/**/*
+AsyncAPI.Tests:
+- test/**/*
