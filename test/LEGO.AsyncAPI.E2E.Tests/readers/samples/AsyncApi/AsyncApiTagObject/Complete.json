@@ -1,8 +1,0 @@
-{
-  "$id": "1",
-  "name": "foo",
-  "description": "bar",
-  "externalDocs": {
-    "$id": "2"
-  }
-}

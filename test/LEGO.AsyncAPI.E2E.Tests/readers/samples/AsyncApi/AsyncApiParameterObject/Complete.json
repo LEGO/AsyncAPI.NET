@@ -1,8 +1,0 @@
-{
-  "$id": "1",
-  "description": "bar",
-  "schema": {
-    "$id": "2"
-  },
-  "location": "$message.payload#/user/id"
-}
