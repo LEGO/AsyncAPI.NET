@@ -1,6 +1,0 @@
-{
-  "$id": "1",
-  "authorizationUrl": "https://lego.com/auth",
-  "tokenUrl": "https://lego.com/token",
-  "refreshUrl": "https://lego.com/refresh"
-}
