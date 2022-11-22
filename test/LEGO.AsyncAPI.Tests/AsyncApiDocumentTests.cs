@@ -74,42 +74,48 @@ channels:
             url: https://example.com/externalDocs
           x-extension: value
       message:
-        correlationId:
-          description: correlationDescription
-          location: correlationLocation
-        schemaFormat: schemaFormat
-        contentType: contentType
-        name: messageName
-        title: messageTitle
-        summary: messageSummary
-        description: messageDescription
-        traits:
-          - headers:
-              title: schemaTitle
-              description: schemaDescription
-              writeOnly: true
-              examples:
-                - key: value
-                  otherKey: 9223372036854775807
-            name: traitName
-            title: traitTitle
-            summary: traitSummary
-            description: traitDescription
-            tags:
-              - name: tagName
-                description: tagDescription
-            externalDocs:
-              description: externalDocsDescription
-              url: https://example.com/externalDocs
-            examples:
-              - name: exampleName
-                summary: exampleSummary
-                payload:
-                  key: value
-                  otherKey: 9223372036854775807
+        oneOf:
+          - contentType: contentType
+            name: messageName
+            title: messageTitle
+            summary: messageSummary
+            description: messageDescription
+          - correlationId:
+              description: correlationDescription
+              location: correlationLocation
+            schemaFormat: schemaFormat
+            contentType: contentType
+            name: messageName
+            title: messageTitle
+            summary: messageSummary
+            description: messageDescription
+            traits:
+              - headers:
+                  title: schemaTitle
+                  description: schemaDescription
+                  writeOnly: true
+                  examples:
+                    - key: value
+                      otherKey: 9223372036854775807
+                name: traitName
+                title: traitTitle
+                summary: traitSummary
+                description: traitDescription
+                tags:
+                  - name: tagName
+                    description: tagDescription
+                externalDocs:
+                  description: externalDocsDescription
+                  url: https://example.com/externalDocs
+                examples:
+                  - name: exampleName
+                    summary: exampleSummary
+                    payload:
+                      key: value
+                      otherKey: 9223372036854775807
+                    x-extension: value
                 x-extension: value
             x-extension: value
-        x-extension: value
       x-extension: value
 components:
   securitySchemes:
@@ -306,7 +312,6 @@ components:
                                         }
                                     },
                                     {
-                                        
                                         new AsyncApiMessage
                                         {
                                             Description = messageDescription,
