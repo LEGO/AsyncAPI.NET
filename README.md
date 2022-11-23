@@ -78,5 +78,4 @@ This project welcomes contributions and suggestions.
 Do you want to contribute to the project? Find out how [here](CONTRIBUTION.md).
 
 ## License
-
-AsyncAPI.Net is copyright LEGO Group.
+[Modified Apache 2.0 (Section 6)](https://github.com/LEGO/AsyncAPI.NET/blob/main/LICENSE)
