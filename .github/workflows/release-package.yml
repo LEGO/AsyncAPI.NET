@@ -39,5 +39,12 @@ jobs:
 
       - name: Push generated package to GitHub Packages registry
         if: steps.semantic.outputs.new_release_published == 'true'
-        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}      
-             
+        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}
+        
+      - name: Create Pull Request
+        if: steps.semantic.outputs.new_release_published == 'true'
+        id: pr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          add-paths: |
+            CHANGELOG.md
