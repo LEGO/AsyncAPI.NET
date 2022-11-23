@@ -66,6 +66,5 @@ var asyncApiDocument = new AsyncApiStreamReader().Read(stream, out var diagnosti
 This project welcomes contributions and suggestions.
 Do you want to contribute to the project? Find out how [here](CONTRIBUTION.md).
 
-
 ## License
 AsyncAPI.Net is copyright LEGO Group.
