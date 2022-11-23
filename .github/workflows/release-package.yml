@@ -47,7 +47,7 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'chore: update Changelog'
+          title: 'chore: update Changelog'
           base: main
           add-paths: |
             CHANGELOG.md
