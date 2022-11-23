@@ -2,14 +2,17 @@ name: Block if 'do not merge'
 
 on:
   pull_request:
-    types: [opened, labeled, unlabeled, synchronize]
+    types: [opened, reopened, labeled, unlabeled, synchronize, edited, ready_for_review]
 
 jobs:
   block:
-    - uses: mheap/github-action-required-labels@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        mode: exactly
-        count: 0
-        labels: "do not merge"
+    name: Block is do not merge
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mheap/github-action-required-labels@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          mode: exactly
+          count: 0
+          labels: "do not merge"
