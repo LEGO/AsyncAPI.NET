@@ -1,4 +1,4 @@
-name: Block if 'do not merge'
+name: label check
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   block:
-    name: Block is do not merge
+    name: Block if do not merge
     runs-on: ubuntu-latest
     steps:
       - uses: mheap/github-action-required-labels@v2
