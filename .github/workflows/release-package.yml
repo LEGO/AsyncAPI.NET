@@ -5,7 +5,6 @@ on:
     paths:
       - 'src/LEGO.AsyncAPI/**'
       - 'src/LEGO.AsyncAPI.Readers/**'
-      - 'src/LEGO.AsyncAPI.Writers/**'
       - ".github/workflows/release-package.yml"
       - '!**/*.md' 
   workflow_dispatch:
@@ -21,6 +20,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
         
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v3
+        id: semantic   # Need an `id` for output variables
+        with:
+          extra_plugins: |
+            conventional-changelog-conventionalcommits
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
       - name: Setup .NET Core @ Latest
         uses: actions/setup-dotnet@v1
         with:
@@ -29,8 +37,20 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}    
 
       - name: Build ${{ matrix.package-name }} project and pack NuGet package
-        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=0.2.$GITHUB_RUN_NUMBER.0-prerelease
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ steps.semantic.outputs.new_release_version }}-prerelease
 
       - name: Push generated package to GitHub Packages registry
-        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}      
-             
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}
+        
+      - name: Create Pull Request
+        if: steps.semantic.outputs.new_release_published == 'true'
+        id: pr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'chore: update Changelog'
+          base: main
+          add-paths: |
+            CHANGELOG.md

@@ -21,7 +21,6 @@ Serialization and Deserialization of json/yaml AsyncAPI specifications into dotn
 
 Do you want to contribute to the project? Find out how [here](CONTRIBUTION.md).
 
-
 ## License
 
 AsyncAPI.Net is copyright LEGO Group.
