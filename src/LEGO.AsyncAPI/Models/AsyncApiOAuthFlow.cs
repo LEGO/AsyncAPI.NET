@@ -49,13 +49,13 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // authorizationUrl
-            writer.WriteProperty(AsyncApiConstants.AuthorizationUrl, this.AuthorizationUrl?.ToString());
+            writer.WriteOptionalProperty(AsyncApiConstants.AuthorizationUrl, this.AuthorizationUrl?.ToString());
 
             // tokenUrl
-            writer.WriteProperty(AsyncApiConstants.TokenUrl, this.TokenUrl?.ToString());
+            writer.WriteOptionalProperty(AsyncApiConstants.TokenUrl, this.TokenUrl?.ToString());
 
             // refreshUrl
-            writer.WriteProperty(AsyncApiConstants.RefreshUrl, this.RefreshUrl?.ToString());
+            writer.WriteOptionalProperty(AsyncApiConstants.RefreshUrl, this.RefreshUrl?.ToString());
 
             // scopes
             writer.WriteRequiredMap(AsyncApiConstants.Scopes, this.Scopes, (w, s) => w.WriteValue(s));

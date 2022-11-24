@@ -62,7 +62,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // $ref
-            writer.WriteProperty(AsyncApiConstants.DollarRef, this.Reference);
+            writer.WriteOptionalProperty(AsyncApiConstants.DollarRef, this.Reference);
 
             writer.WriteEndObject();
         }

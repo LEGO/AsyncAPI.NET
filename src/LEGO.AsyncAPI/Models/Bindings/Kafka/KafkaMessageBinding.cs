@@ -60,10 +60,10 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             writer.WriteStartObject();
 
             writer.WriteRequiredObject(AsyncApiConstants.Key, Key, (w, h) => h.SerializeV2(w));
-            writer.WriteProperty(AsyncApiConstants.SchemaIdLocation, SchemaIdLocation);
-            writer.WriteProperty(AsyncApiConstants.SchemaIdPayloadEncoding, SchemaIdPayloadEncoding);
-            writer.WriteProperty(AsyncApiConstants.SchemaLookupStrategy, SchemaLookupStrategy);
-            writer.WriteProperty(AsyncApiConstants.BindingVersion, BindingVersion);
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaIdLocation, SchemaIdLocation);
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaIdPayloadEncoding, SchemaIdPayloadEncoding);
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaLookupStrategy, SchemaLookupStrategy);
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
 
             writer.WriteEndObject();
         }

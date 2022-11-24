@@ -76,13 +76,13 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // asyncApi
-            writer.WriteProperty(AsyncApiConstants.AsyncApi, "2.3.0");
+            writer.WriteOptionalProperty(AsyncApiConstants.AsyncApi, "2.3.0");
 
             // info
             writer.WriteRequiredObject(AsyncApiConstants.Info, this.Info, (w, i) => i.SerializeV2(w));
 
             // id
-            writer.WriteProperty(AsyncApiConstants.Id, this.Id);
+            writer.WriteOptionalProperty(AsyncApiConstants.Id, this.Id);
 
             // servers
             writer.WriteOptionalMap(AsyncApiConstants.Servers, this.Servers, (writer, key, component) =>
@@ -100,7 +100,7 @@ namespace LEGO.AsyncAPI.Models
             });
 
             // content type
-            writer.WriteProperty(AsyncApiConstants.DefaultContentType, this.DefaultContentType);
+            writer.WriteOptionalProperty(AsyncApiConstants.DefaultContentType, this.DefaultContentType);
 
             // channels
             writer.WriteRequiredMap(AsyncApiConstants.Channels, this.Channels, (writer, key, component) =>

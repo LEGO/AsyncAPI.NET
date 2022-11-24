@@ -79,9 +79,9 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteStartObject();
 
-            writer.WriteProperty(AsyncApiConstants.OperationId, this.OperationId);
-            writer.WriteProperty(AsyncApiConstants.Summary, this.Summary);
-            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalProperty(AsyncApiConstants.OperationId, this.OperationId);
+            writer.WriteOptionalProperty(AsyncApiConstants.Summary, this.Summary);
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
             writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.Bindings, this.Bindings, (w, t) => t.SerializeV2(w));

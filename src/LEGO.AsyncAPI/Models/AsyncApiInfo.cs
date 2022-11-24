@@ -55,13 +55,13 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // title
-            writer.WriteProperty(AsyncApiConstants.Title, this.Title);
+            writer.WriteOptionalProperty(AsyncApiConstants.Title, this.Title);
 
             // description
-            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
 
             // termsOfService
-            writer.WriteProperty(AsyncApiConstants.TermsOfService, this.TermsOfService?.OriginalString);
+            writer.WriteOptionalProperty(AsyncApiConstants.TermsOfService, this.TermsOfService?.OriginalString);
 
             // contact object
             writer.WriteOptionalObject(AsyncApiConstants.Contact, this.Contact, (w, c) => c.SerializeV2(w));
@@ -70,7 +70,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject(AsyncApiConstants.License, this.License, (w, l) => l.SerializeV2(w));
 
             // version
-            writer.WriteProperty(AsyncApiConstants.Version, this.Version);
+            writer.WriteOptionalProperty(AsyncApiConstants.Version, this.Version);
 
             // specification extensions
             writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);

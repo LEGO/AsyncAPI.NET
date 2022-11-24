@@ -41,8 +41,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
 
             writer.WriteStartObject();
 
-            writer.WriteProperty(AsyncApiConstants.Tenant, this.Tenant);
-            writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteOptionalProperty(AsyncApiConstants.Tenant, this.Tenant);
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
         }
