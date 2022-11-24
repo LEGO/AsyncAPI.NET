@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Models.Bindings.WebSockets
 {
     using System;
@@ -57,13 +59,13 @@ namespace LEGO.AsyncAPI.Models.Bindings.WebSockets
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
+            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
             {
-                Reference.SerializeV2(writer);
+                this.Reference.SerializeV2(writer);
                 return;
             }
 
-            SerializeV2WithoutReference(writer);
+            this.SerializeV2WithoutReference(writer);
         }
     }
 }
