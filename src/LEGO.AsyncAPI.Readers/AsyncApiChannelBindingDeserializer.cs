@@ -42,6 +42,8 @@ namespace LEGO.AsyncAPI.Readers
             {
                 case BindingType.Kafka:
                     return LoadBinding("ChannelBinding", property.Value, kafkaChannelBindingFixedFields);
+                case BindingType.Websockets:
+                    return LoadBinding("ChannelBinding", property.Value, webSocketsChannelBindingFixedFields);
                 default:
                     throw new System.Exception("ChannelBinding not found");
             }
