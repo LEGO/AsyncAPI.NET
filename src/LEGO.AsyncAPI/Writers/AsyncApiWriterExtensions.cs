@@ -55,7 +55,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
         /// <param name="defaultValue">The default boolean value.</param>
-        public static void WriteRequiredProperty(this IAsyncApiWriter writer, string name, bool value, bool defaultValue = false)
+        public static void WriteOptionalProperty(this IAsyncApiWriter writer, string name, bool value, bool defaultValue = false)
         {
             if (value == defaultValue)
             {

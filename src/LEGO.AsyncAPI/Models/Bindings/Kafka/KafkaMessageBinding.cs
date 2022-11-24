@@ -59,7 +59,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
 
             writer.WriteStartObject();
 
-            writer.WriteRequiredObject(AsyncApiConstants.Key, Key, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.Key, Key, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalProperty(AsyncApiConstants.SchemaIdLocation, SchemaIdLocation);
             writer.WriteOptionalProperty(AsyncApiConstants.SchemaIdPayloadEncoding, SchemaIdPayloadEncoding);
             writer.WriteOptionalProperty(AsyncApiConstants.SchemaLookupStrategy, SchemaLookupStrategy);
