@@ -10,7 +10,6 @@
     using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Models.Bindings.Kafka;
-    using LEGO.AsyncAPI.Models.Bindings.Pulsar;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Writers;
@@ -463,9 +462,6 @@ servers:
     url: example.com
     protocol: pulsar+ssl
     description: test description
-    bindings:
-      pulsar:
-        tenant: contoso
 channels:
   testChannel:
     publish:
@@ -480,14 +476,8 @@ channels:
     bindings:
       kafka:
         partitions: 2
-        replicas: 1
-      pulsar:
-        persistence: persistent
-        compaction: 9223372036854775807
-        retention:
-          time: 4
-          size: 1
-        deduplication: true";
+        replicas: 1";
+
             var doc = new AsyncApiDocument();
             doc.Info = new AsyncApiInfo()
             {
@@ -498,15 +488,6 @@ channels:
                 Description = "test description",
                 Protocol = "pulsar+ssl",
                 Url = "example.com",
-                Bindings = new AsyncApiBindings<IServerBinding>
-                {
-                    {
-                        new PulsarServerBinding
-                        {
-                            Tenant = "contoso",
-                        }
-                    },
-                }
             });
             doc.Channels.Add("testChannel",
                 new AsyncApiChannel
@@ -518,19 +499,6 @@ channels:
                             {
                                 Partitions = 2,
                                 Replicas = 1,
-                            }
-                        },
-                        {
-                        new PulsarChannelBinding
-                            {
-                                Compaction = long.MaxValue,
-                                Deduplication = true,
-                                Persistence = "persistent",
-                                Retention = new RetentionDefinition()
-                                {
-                                    Time = 4,
-                                    Size = 1,
-                                },
                             }
                         },
                     },
