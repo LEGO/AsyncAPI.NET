@@ -42,6 +42,8 @@ namespace LEGO.AsyncAPI.Readers
             {
                 case BindingType.Kafka:
                     return LoadBinding("ServerBinding", property.Value, kafkaServerBindingFixedFields);
+                case BindingType.Pulsar:
+                    return LoadBinding("ServerBinding", property.Value, pulsarServerBindingFixedFields);
                 default:
                     throw new System.Exception("ServerBinding not found");
             }
