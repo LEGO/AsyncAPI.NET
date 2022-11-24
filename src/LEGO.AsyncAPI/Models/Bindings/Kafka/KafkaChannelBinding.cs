@@ -51,10 +51,10 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             }
 
             writer.WriteStartObject();
-            writer.WriteProperty(AsyncApiConstants.Topic, Topic);
+            writer.WriteOptionalProperty(AsyncApiConstants.Topic, Topic);
             writer.WriteProperty(AsyncApiConstants.Partitions, Partitions);
             writer.WriteProperty(AsyncApiConstants.Replicas, Replicas);
-            writer.WriteProperty(AsyncApiConstants.BindingVersion, BindingVersion);
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
 
             writer.WriteEndObject();
         }

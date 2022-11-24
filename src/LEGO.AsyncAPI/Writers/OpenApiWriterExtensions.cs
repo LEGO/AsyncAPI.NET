@@ -16,7 +16,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="writer">The writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
-        public static void WriteProperty(this IAsyncApiWriter writer, string name, string value)
+        public static void WriteOptionalProperty(this IAsyncApiWriter writer, string name, string value)
         {
             if (value == null)
             {

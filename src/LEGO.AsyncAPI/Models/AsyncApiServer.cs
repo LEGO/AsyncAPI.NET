@@ -81,9 +81,9 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteRequiredProperty(AsyncApiConstants.Protocol, this.Protocol);
 
-            writer.WriteProperty(AsyncApiConstants.ProtocolVersion, this.ProtocolVersion);
+            writer.WriteOptionalProperty(AsyncApiConstants.ProtocolVersion, this.ProtocolVersion);
 
-            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
 
             writer.WriteOptionalMap(AsyncApiConstants.Variables, this.Variables, (w, v) => v.SerializeV2(w));
 

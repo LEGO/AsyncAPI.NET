@@ -40,7 +40,7 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteRequiredProperty(AsyncApiConstants.Name, this.Name);
 
-            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
 
             writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
 
