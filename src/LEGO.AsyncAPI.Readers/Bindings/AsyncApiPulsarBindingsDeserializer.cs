@@ -18,11 +18,12 @@ namespace LEGO.AsyncAPI.Readers
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "namespace", (a, n) => { a.Namespace = n.GetScalarValue(); } },
             { "persistence", (a, n) => { a.Persistence = n.GetScalarValue(); } },
-            { "compaction", (a, n) => { a.Compaction = n.GetLongValue(); } },
+            { "compaction", (a, n) => { a.Compaction = n.GetIntegerValue(); } },
             { "retention", (a, n) => { a.Retention = LoadRetention(n); } },
+            { "ttl", (a, n) => { a.TTL = n.GetIntegerValue(); } },
             { "deduplication", (a, n) => { a.Deduplication = n.GetBooleanValue(); } },
         };
-
+ 
         private static FixedFieldMap<RetentionDefinition> pulsarServerBindingRetentionFixedFields = new()
         {
             { "time", (a, n) => { a.Time = n.GetIntegerValue(); } },

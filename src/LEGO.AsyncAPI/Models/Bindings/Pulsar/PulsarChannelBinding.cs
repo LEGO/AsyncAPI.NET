@@ -26,12 +26,17 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         /// <summary>
         /// Topic compaction threshold given in bytes.
         /// </summary>
-        public long Compaction { get; set; }
+        public int Compaction { get; set; }
 
         /// <summary>
         /// Topic retention policy.
         /// </summary>
         public RetentionDefinition Retention { get; set; }
+
+        /// <summary>
+        /// Message Time-to-live in seconds. 
+        /// </summary>
+        public int TTL { get; set; }
 
         /// <summary>
         /// When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once.
@@ -65,7 +70,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
             writer.WriteOptionalProperty(AsyncApiConstants.Persistence, this.Persistence);
             writer.WriteProperty(AsyncApiConstants.Compaction, this.Compaction);
             writer.WriteOptionalObject(AsyncApiConstants.Retention, this.Retention, (w, r) => r.Serialize(w));
-            writer.WriteProperty(AsyncApiConstants.Deduplication, this.Deduplication);
+            writer.WriteProperty(AsyncApiConstants.TTL, this.TTL);
+            writer.WriteProperty(AsyncApiConstants.Deduplication, this.Deduplication); 
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
