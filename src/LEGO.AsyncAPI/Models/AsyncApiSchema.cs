@@ -255,43 +255,43 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalProperty(AsyncApiConstants.Title, this.Title);
 
             // multipleOf
-            writer.WriteProperty(AsyncApiConstants.MultipleOf, this.MultipleOf);
+            writer.WriteOptionalProperty(AsyncApiConstants.MultipleOf, this.MultipleOf);
 
             // maximum
-            writer.WriteProperty(AsyncApiConstants.Maximum, this.Maximum);
+            writer.WriteOptionalProperty(AsyncApiConstants.Maximum, this.Maximum);
 
             // exclusiveMaximum
-            writer.WriteProperty(AsyncApiConstants.ExclusiveMaximum, this.ExclusiveMaximum);
+            writer.WriteOptionalProperty(AsyncApiConstants.ExclusiveMaximum, this.ExclusiveMaximum);
 
             // minimum
-            writer.WriteProperty(AsyncApiConstants.Minimum, this.Minimum);
+            writer.WriteOptionalProperty(AsyncApiConstants.Minimum, this.Minimum);
 
             // exclusiveMinimum
-            writer.WriteProperty(AsyncApiConstants.ExclusiveMinimum, this.ExclusiveMinimum);
+            writer.WriteOptionalProperty(AsyncApiConstants.ExclusiveMinimum, this.ExclusiveMinimum);
 
             // maxLength
-            writer.WriteProperty(AsyncApiConstants.MaxLength, this.MaxLength);
+            writer.WriteOptionalProperty(AsyncApiConstants.MaxLength, this.MaxLength);
 
             // minLength
-            writer.WriteProperty(AsyncApiConstants.MinLength, this.MinLength);
+            writer.WriteOptionalProperty(AsyncApiConstants.MinLength, this.MinLength);
 
             // pattern
             writer.WriteOptionalProperty(AsyncApiConstants.Pattern, this.Pattern);
 
             // maxItems
-            writer.WriteProperty(AsyncApiConstants.MaxItems, this.MaxItems);
+            writer.WriteOptionalProperty(AsyncApiConstants.MaxItems, this.MaxItems);
 
             // minItems
-            writer.WriteProperty(AsyncApiConstants.MinItems, this.MinItems);
+            writer.WriteOptionalProperty(AsyncApiConstants.MinItems, this.MinItems);
 
             // uniqueItems
-            writer.WriteProperty(AsyncApiConstants.UniqueItems, this.UniqueItems);
+            writer.WriteOptionalProperty(AsyncApiConstants.UniqueItems, this.UniqueItems);
 
             // maxProperties
-            writer.WriteProperty(AsyncApiConstants.MaxProperties, this.MaxProperties);
+            writer.WriteOptionalProperty(AsyncApiConstants.MaxProperties, this.MaxProperties);
 
             // minProperties
-            writer.WriteProperty(AsyncApiConstants.MinProperties, this.MinProperties);
+            writer.WriteOptionalProperty(AsyncApiConstants.MinProperties, this.MinProperties);
 
             // required
             writer.WriteOptionalCollection(AsyncApiConstants.Required, this.Required, (w, s) => w.WriteValue(s));
@@ -357,16 +357,16 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject(AsyncApiConstants.Default, this.Default, (w, d) => w.WriteAny(d));
 
             // nullable
-            writer.WriteProperty(AsyncApiConstants.Nullable, this.Nullable, false);
+            writer.WriteOptionalProperty(AsyncApiConstants.Nullable, this.Nullable, false);
 
             // discriminator
             writer.WriteOptionalProperty(AsyncApiConstants.Discriminator, this.Discriminator);
 
             // readOnly
-            writer.WriteProperty(AsyncApiConstants.ReadOnly, this.ReadOnly, false);
+            writer.WriteOptionalProperty(AsyncApiConstants.ReadOnly, this.ReadOnly, false);
 
             // writeOnly
-            writer.WriteProperty(AsyncApiConstants.WriteOnly, this.WriteOnly, false);
+            writer.WriteOptionalProperty(AsyncApiConstants.WriteOnly, this.WriteOnly, false);
 
             // externalDocs
             writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, s) => s.SerializeV2(w));
@@ -375,7 +375,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalCollection(AsyncApiConstants.Examples, this.Examples, (w, e) => w.WriteAny(e));
 
             // deprecated
-            writer.WriteProperty(AsyncApiConstants.Deprecated, this.Deprecated, false);
+            writer.WriteOptionalProperty(AsyncApiConstants.Deprecated, this.Deprecated, false);
 
             // extensions
             writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);

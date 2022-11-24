@@ -45,8 +45,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
             writer.WriteStartObject();
 
             writer.WriteRequiredProperty(AsyncApiConstants.Type, Type);
-            writer.WriteRequiredProperty(AsyncApiConstants.Method, Method);
-            writer.WriteRequiredObject(AsyncApiConstants.Query, Query, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalProperty(AsyncApiConstants.Method, Method);
+            writer.WriteOptionalObject(AsyncApiConstants.Query, Query, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
 
             writer.WriteEndObject();

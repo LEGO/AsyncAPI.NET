@@ -47,8 +47,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             }
 
             writer.WriteStartObject();
-            writer.WriteRequiredObject(AsyncApiConstants.GroupId, GroupId, (w, h) => h.SerializeV2(w));
-            writer.WriteRequiredObject(AsyncApiConstants.ClientId, ClientId, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.GroupId, GroupId, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.ClientId, ClientId, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
 
             writer.WriteEndObject();
