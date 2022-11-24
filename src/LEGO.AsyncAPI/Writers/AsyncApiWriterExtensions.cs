@@ -55,7 +55,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
         /// <param name="defaultValue">The default boolean value.</param>
-        public static void WriteProperty(this IAsyncApiWriter writer, string name, bool value, bool defaultValue = false)
+        public static void WriteRequiredProperty(this IAsyncApiWriter writer, string name, bool value, bool defaultValue = false)
         {
             if (value == defaultValue)
             {
@@ -74,7 +74,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
         /// <param name="defaultValue">The default boolean value.</param>
-        public static void WriteProperty(
+        public static void WriteOptionalProperty(
             this IAsyncApiWriter writer,
             string name,
             bool? value,
@@ -96,7 +96,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="writer">The writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
-        public static void WriteProperty<T>(this IAsyncApiWriter writer, string name, T? value)
+        public static void WriteOptionalProperty<T>(this IAsyncApiWriter writer, string name, T? value)
             where T : struct
         {
             if (value == null)
@@ -104,7 +104,7 @@ namespace LEGO.AsyncAPI.Writers
                 return;
             }
 
-            writer.WriteProperty(name, value.Value);
+            writer.WriteRequiredProperty(name, value.Value);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="writer">The writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
-        public static void WriteProperty<T>(this IAsyncApiWriter writer, string name, T value)
+        public static void WriteRequiredProperty<T>(this IAsyncApiWriter writer, string name, T value)
             where T : struct
         {
             CheckArguments(writer, name);
