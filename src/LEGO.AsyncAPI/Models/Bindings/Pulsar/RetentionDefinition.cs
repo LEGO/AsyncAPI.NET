@@ -20,8 +20,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         public void Serialize(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
-            writer.WriteProperty(AsyncApiConstants.Time, this.Time);
-            writer.WriteProperty(AsyncApiConstants.Size, this.Size);
+            writer.WriteRequiredProperty(AsyncApiConstants.Time, this.Time);
+            writer.WriteRequiredProperty(AsyncApiConstants.Size, this.Size);
             writer.WriteEndObject();
         }
     }

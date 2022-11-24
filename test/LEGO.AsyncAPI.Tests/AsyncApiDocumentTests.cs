@@ -482,11 +482,16 @@ channels:
         partitions: 2
         replicas: 1
       pulsar:
+        namespace: staging
         persistence: persistent
-        compaction: 9223372036854775807
+        compaction: 1000
         retention:
           time: 4
           size: 1
+        geo-replication:
+          - east
+          - west
+        ttl: 42
         deduplication: true";
             var doc = new AsyncApiDocument();
             doc.Info = new AsyncApiInfo()
@@ -506,7 +511,7 @@ channels:
                             Tenant = "contoso",
                         }
                     },
-                }
+                },
             });
             doc.Channels.Add("testChannel",
                 new AsyncApiChannel
@@ -523,14 +528,17 @@ channels:
                         {
                         new PulsarChannelBinding
                             {
-                                Compaction = long.MaxValue,
-                                Deduplication = true,
+                                Namespace = "staging",
                                 Persistence = "persistent",
+                                Compaction = 1000,
+                                GeoReplication = new List<string>{"east", "west"},
                                 Retention = new RetentionDefinition()
                                 {
                                     Time = 4,
                                     Size = 1,
                                 },
+                                TTL = 42,
+                                Deduplication = true,
                             }
                         },
                     },
