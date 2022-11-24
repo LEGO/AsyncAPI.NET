@@ -14,6 +14,7 @@ namespace LEGO.AsyncAPI.Readers
         private static Type operationBindingType = typeof(IOperationBinding);
         private static Type channelBindingType = typeof(IChannelBinding);
         private static Type serverBindingType = typeof(IServerBinding);
+
         private static PatternFieldMap<T> BindingPatternExtensionFields<T>()
     where T : IBinding, new()
         {
