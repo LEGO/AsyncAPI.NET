@@ -61,12 +61,12 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
             }
 
             writer.WriteStartObject();
-            writer.WriteProperty(AsyncApiConstants.Namespace, this.Namespace);
-            writer.WriteProperty(AsyncApiConstants.Persistence, this.Persistence);
+            writer.WriteOptionalProperty(AsyncApiConstants.Namespace, this.Namespace);
+            writer.WriteOptionalProperty(AsyncApiConstants.Persistence, this.Persistence);
             writer.WriteProperty(AsyncApiConstants.Compaction, this.Compaction);
             writer.WriteOptionalObject(AsyncApiConstants.Retention, this.Retention, (w, r) => r.Serialize(w));
             writer.WriteProperty(AsyncApiConstants.Deduplication, this.Deduplication);
-            writer.WriteProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
         }

@@ -40,13 +40,13 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // name
-            writer.WriteProperty(AsyncApiConstants.Name, this.Name);
+            writer.WriteOptionalProperty(AsyncApiConstants.Name, this.Name);
 
             // url
-            writer.WriteProperty(AsyncApiConstants.Url, this.Url?.OriginalString);
+            writer.WriteOptionalProperty(AsyncApiConstants.Url, this.Url?.OriginalString);
 
             // email
-            writer.WriteProperty(AsyncApiConstants.Email, this.Email);
+            writer.WriteOptionalProperty(AsyncApiConstants.Email, this.Email);
 
             // extensions
             writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);

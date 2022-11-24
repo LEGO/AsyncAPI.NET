@@ -78,7 +78,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // description
-            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
 
             // servers
             writer.WriteOptionalCollection(AsyncApiConstants.Servers, this.Servers, (w, s) => w.WriteValue(s));

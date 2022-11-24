@@ -46,9 +46,9 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             }
 
             writer.WriteStartObject();
-            writer.WriteProperty(AsyncApiConstants.SchemaRegistryUrl, SchemaRegistryUrl);
-            writer.WriteProperty(AsyncApiConstants.SchemaRegistryVendor, SchemaRegistryVendor);
-            writer.WriteProperty(AsyncApiConstants.BindingVersion, BindingVersion);
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaRegistryUrl, SchemaRegistryUrl);
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaRegistryVendor, SchemaRegistryVendor);
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
 
             writer.WriteEndObject();
         }

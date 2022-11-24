@@ -252,7 +252,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // title
-            writer.WriteProperty(AsyncApiConstants.Title, this.Title);
+            writer.WriteOptionalProperty(AsyncApiConstants.Title, this.Title);
 
             // multipleOf
             writer.WriteProperty(AsyncApiConstants.MultipleOf, this.MultipleOf);
@@ -276,7 +276,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteProperty(AsyncApiConstants.MinLength, this.MinLength);
 
             // pattern
-            writer.WriteProperty(AsyncApiConstants.Pattern, this.Pattern);
+            writer.WriteOptionalProperty(AsyncApiConstants.Pattern, this.Pattern);
 
             // maxItems
             writer.WriteProperty(AsyncApiConstants.MaxItems, this.MaxItems);
@@ -306,7 +306,7 @@ namespace LEGO.AsyncAPI.Models
             {
                 if (this.Type.Count == 1)
                 {
-                    writer.WriteProperty(AsyncApiConstants.Type, this.Type.First().GetDisplayName());
+                    writer.WriteOptionalProperty(AsyncApiConstants.Type, this.Type.First().GetDisplayName());
                 }
                 else
                 {
@@ -348,10 +348,10 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject(AsyncApiConstants.AdditionalProperties, this.AdditionalProperties, (w, s) => s.SerializeV2(w));
 
             // description
-            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
 
             // format
-            writer.WriteProperty(AsyncApiConstants.Format, this.Format);
+            writer.WriteOptionalProperty(AsyncApiConstants.Format, this.Format);
 
             // default
             writer.WriteOptionalObject(AsyncApiConstants.Default, this.Default, (w, d) => w.WriteAny(d));
@@ -360,7 +360,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteProperty(AsyncApiConstants.Nullable, this.Nullable, false);
 
             // discriminator
-            writer.WriteProperty(AsyncApiConstants.Discriminator, this.Discriminator);
+            writer.WriteOptionalProperty(AsyncApiConstants.Discriminator, this.Discriminator);
 
             // readOnly
             writer.WriteProperty(AsyncApiConstants.ReadOnly, this.ReadOnly, false);
