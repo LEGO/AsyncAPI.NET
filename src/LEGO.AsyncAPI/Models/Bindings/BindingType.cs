@@ -14,8 +14,5 @@ namespace LEGO.AsyncAPI.Models.Bindings
 
         [Display("websockets")]
         Websockets,
-
-        [Display("pulsar")]
-        Pulsar,
     }
 }
