@@ -121,12 +121,12 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.Payload, this.Payload, (w, p) => w.WriteAny(p));
             writer.WriteOptionalObject(AsyncApiConstants.CorrelationId, this.CorrelationId, (w, c) => c.SerializeV2(w));
-            writer.WriteProperty(AsyncApiConstants.SchemaFormat, this.SchemaFormat);
-            writer.WriteProperty(AsyncApiConstants.ContentType, this.ContentType);
-            writer.WriteProperty(AsyncApiConstants.Name, this.Name);
-            writer.WriteProperty(AsyncApiConstants.Title, this.Title);
-            writer.WriteProperty(AsyncApiConstants.Summary, this.Summary);
-            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaFormat, this.SchemaFormat);
+            writer.WriteOptionalProperty(AsyncApiConstants.ContentType, this.ContentType);
+            writer.WriteOptionalProperty(AsyncApiConstants.Name, this.Name);
+            writer.WriteOptionalProperty(AsyncApiConstants.Title, this.Title);
+            writer.WriteOptionalProperty(AsyncApiConstants.Summary, this.Summary);
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
             writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
 

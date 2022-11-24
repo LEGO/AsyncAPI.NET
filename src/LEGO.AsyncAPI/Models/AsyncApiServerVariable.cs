@@ -48,10 +48,10 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalCollection(AsyncApiConstants.Enum, this.Enum, (w, s) => w.WriteValue(s));
 
             // default
-            writer.WriteProperty(AsyncApiConstants.Default, this.Default);
+            writer.WriteOptionalProperty(AsyncApiConstants.Default, this.Default);
 
             // description
-            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
 
             // examples
             writer.WriteOptionalCollection(AsyncApiConstants.Examples, this.Examples, (w, e) => w.WriteValue(e));

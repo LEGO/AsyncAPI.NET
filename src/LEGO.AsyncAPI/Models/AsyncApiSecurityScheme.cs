@@ -94,10 +94,10 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // type
-            writer.WriteProperty(AsyncApiConstants.Type, this.Type.GetDisplayName());
+            writer.WriteOptionalProperty(AsyncApiConstants.Type, this.Type.GetDisplayName());
 
             // description
-            writer.WriteProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
 
             switch (this.Type)
             {
@@ -106,7 +106,7 @@ namespace LEGO.AsyncAPI.Models
                 case SecuritySchemeType.UserPassword:
                     break;
                 case SecuritySchemeType.ApiKey:
-                    writer.WriteProperty(AsyncApiConstants.In, this.In.GetDisplayName());
+                    writer.WriteOptionalProperty(AsyncApiConstants.In, this.In.GetDisplayName());
                     break;
                 case SecuritySchemeType.X509:
                     break;
@@ -115,18 +115,18 @@ namespace LEGO.AsyncAPI.Models
                 case SecuritySchemeType.AsymmetricEncryption:
                     break;
                 case SecuritySchemeType.HttpApiKey:
-                    writer.WriteProperty(AsyncApiConstants.Name, this.Name);
-                    writer.WriteProperty(AsyncApiConstants.In, this.In.GetDisplayName());
+                    writer.WriteOptionalProperty(AsyncApiConstants.Name, this.Name);
+                    writer.WriteOptionalProperty(AsyncApiConstants.In, this.In.GetDisplayName());
                     break;
                 case SecuritySchemeType.Http:
-                    writer.WriteProperty(AsyncApiConstants.Scheme, this.Scheme);
-                    writer.WriteProperty(AsyncApiConstants.BearerFormat, this.BearerFormat);
+                    writer.WriteOptionalProperty(AsyncApiConstants.Scheme, this.Scheme);
+                    writer.WriteOptionalProperty(AsyncApiConstants.BearerFormat, this.BearerFormat);
                     break;
                 case SecuritySchemeType.OAuth2:
                     writer.WriteOptionalObject(AsyncApiConstants.Flows, this.Flows, (w, o) => o.SerializeV2(w));
                     break;
                 case SecuritySchemeType.OpenIdConnect:
-                    writer.WriteProperty(AsyncApiConstants.OpenIdConnectUrl, this.OpenIdConnectUrl?.ToString());
+                    writer.WriteOptionalProperty(AsyncApiConstants.OpenIdConnectUrl, this.OpenIdConnectUrl?.ToString());
                     break;
                 case SecuritySchemeType.Plain:
                     break;
@@ -176,13 +176,13 @@ namespace LEGO.AsyncAPI.Models
         private static void WriteOAuthFlowForV2(IAsyncApiWriter writer, string flowValue, AsyncApiOAuthFlow flow)
         {
             // flow
-            writer.WriteProperty(AsyncApiConstants.Flow, flowValue);
+            writer.WriteOptionalProperty(AsyncApiConstants.Flow, flowValue);
 
             // authorizationUrl
-            writer.WriteProperty(AsyncApiConstants.AuthorizationUrl, flow.AuthorizationUrl?.ToString());
+            writer.WriteOptionalProperty(AsyncApiConstants.AuthorizationUrl, flow.AuthorizationUrl?.ToString());
 
             // tokenUrl
-            writer.WriteProperty(AsyncApiConstants.TokenUrl, flow.TokenUrl?.ToString());
+            writer.WriteOptionalProperty(AsyncApiConstants.TokenUrl, flow.TokenUrl?.ToString());
 
             // scopes
             writer.WriteOptionalMap(AsyncApiConstants.Scopes, flow.Scopes, (w, s) => w.WriteValue(s));
