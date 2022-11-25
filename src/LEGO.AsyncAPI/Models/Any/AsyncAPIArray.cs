@@ -12,15 +12,15 @@ namespace LEGO.AsyncAPI.Models.Any
     public class AsyncApiArray : List<IAsyncApiAny>, IAsyncApiAny
     {
         /// <summary>
-        /// The type of <see cref="IAsyncApiAny"/>
+        /// The type of <see cref="IAsyncApiAny"/>.
         /// </summary>
         public AnyType AnyType { get; } = AnyType.Array;
 
         /// <summary>
-        /// Write out contents of AsyncApiArray to passed writer
+        /// Write out contents of AsyncApiArray to passed writer.
         /// </summary>
         /// <param name="writer">Instance of JSON or YAML writer.</param>
-        public void Write(IAsyncApiWriter writer, AsyncApiVersion asyncApiVersion)
+        public void Write(IAsyncApiWriter writer)
         {
             writer.WriteStartArray();
 

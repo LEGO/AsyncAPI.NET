@@ -11,15 +11,15 @@ namespace LEGO.AsyncAPI.Models.Any
     public class AsyncApiNull : IAsyncApiAny
     {
         /// <summary>
-        /// The type of <see cref="IAsyncApiAny"/>
+        /// The type of <see cref="IAsyncApiAny"/>.
         /// </summary>
         public AnyType AnyType { get; } = AnyType.Null;
 
         /// <summary>
-        /// Write out null representation
+        /// Write out null representation.
         /// </summary>
         /// <param name="writer"></param>
-        public void Write(IAsyncApiWriter writer, AsyncApiVersion asyncApiVersion)
+        public void Write(IAsyncApiWriter writer)
         {
             writer.WriteAny(this);
         }

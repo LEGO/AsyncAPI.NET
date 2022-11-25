@@ -47,4 +47,7 @@
     <ItemGroup>
       <Folder Include="Attributes\" />
     </ItemGroup>
+    <ItemGroup>
+      <None Include="..\..\.editorconfig" Link=".editorconfig" />
+    </ItemGroup>
 </Project>

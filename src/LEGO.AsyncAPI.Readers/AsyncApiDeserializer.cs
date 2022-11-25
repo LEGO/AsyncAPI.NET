@@ -168,8 +168,7 @@ namespace LEGO.AsyncAPI.Readers
             if (node.Context.ExtensionParsers.TryGetValue(name, out var parser))
             {
                 return parser(
-                    AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny()),
-                    AsyncApiVersion.AsyncApi2_3_0);
+                    AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny()));
             }
             else
             {

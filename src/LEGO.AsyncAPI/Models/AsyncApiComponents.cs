@@ -1,4 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Models
 {
@@ -347,7 +347,7 @@ namespace LEGO.AsyncAPI.Models
                 });
 
             // extensions
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteExtensions(this.Extensions);
 
             writer.WriteEndObject();
         }
