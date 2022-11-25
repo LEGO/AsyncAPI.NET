@@ -6,6 +6,7 @@ namespace LEGO.AsyncAPI.Readers.V2
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -41,6 +42,7 @@ namespace LEGO.AsyncAPI.Readers.V2
             [typeof(AsyncApiServer)] = AsyncApiV2Deserializer.LoadServer,
             [typeof(AsyncApiServerVariable)] = AsyncApiV2Deserializer.LoadServerVariable,
             [typeof(AsyncApiTag)] = AsyncApiV2Deserializer.LoadTag,
+            [typeof(AsyncApiMessage)] = AsyncApiV2Deserializer.LoadMessage,
         };
 
         /// <summary>
