@@ -5,11 +5,61 @@
     using LEGO.AsyncAPI.Models.Bindings.Kafka;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
+    using System.Collections.Generic;
 
     internal class KafkaBindings_Should
     {
         [Test]
-        public void KafkaServerBinding_FilledObject_SerializesAndDeserializes()
+        public void KafkaChannelBinding_WithFilledObject_SerializesAndDeserializes()
+        {
+            // Arrange
+            var expected =
+@"bindings:
+  kafka:
+    topic: myTopic
+    partitions: 5
+    replicas: 4
+    topicConfiguration:
+      cleanup.policy:
+        - delete
+        - compact
+      retention.ms: 1
+      retention.bytes: 2
+      delete.retention.ms: 3
+      max.message.bytes: 4";
+
+            var channel = new AsyncApiChannel();
+            channel.Bindings.Add(new KafkaChannelBinding
+            {
+                Topic = "myTopic",
+                Partitions = 5,
+                Replicas = 4,
+                TopicConfiguration = new TopicConfigurationObject()
+                {
+                    CleanupPolicy = new List<string> { "delete", "compact" },
+                    RetentionMiliseconds = 1,
+                    RetentionBytes = 2,
+                    DeleteRetentionMiliseconds = 3,
+                    MaxMessageBytes = 4,
+                },
+            });
+
+            // Act
+            var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+
+            // Assert
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+
+            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+
+            // Assert
+            Assert.AreEqual(actual, expected);
+            binding.Should().BeEquivalentTo(channel);
+        }
+
+        [Test]
+        public void KafkaServerBinding_WithFilledObject_SerializesAndDeserializes()
         {
             // Arrange
             var expected =
@@ -45,7 +95,7 @@ bindings:
         }
 
         [Test]
-        public void KafkaMessageBinding_FilledObject_SerializesAndDeserializes()
+        public void KafkaMessageBinding_WithFilledObject_SerializesAndDeserializes()
         {
             // Arrange
             var expected =
@@ -83,7 +133,7 @@ bindings:
         }
 
         [Test]
-        public void KafkaOperationBinding_FilledObject_SerializesAndDeserializes()
+        public void KafkaOperationBinding_WithFilledObject_SerializesAndDeserializes()
         {
             // Arrange
             var expected =
