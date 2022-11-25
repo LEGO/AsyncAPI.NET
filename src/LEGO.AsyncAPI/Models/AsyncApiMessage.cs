@@ -139,7 +139,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalCollection(AsyncApiConstants.Examples, this.Examples, (w, e) => e.SerializeV2(w));
 
             writer.WriteOptionalCollection(AsyncApiConstants.Traits, this.Traits, (w, t) => t.SerializeV2(w));
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

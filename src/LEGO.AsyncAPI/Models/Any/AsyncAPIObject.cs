@@ -17,11 +17,9 @@ namespace LEGO.AsyncAPI.Models.Any
         public AnyType AnyType { get; } = AnyType.Object;
 
         /// <summary>
-        /// Serialize AsyncApiObject to writer
+        /// Serialize AsyncApiObject to writer.
         /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="specVersion">Version of the AsyncApi specification that that will be output.</param>
-        public void Write(IAsyncApiWriter writer, AsyncApiVersion asyncApiVersion)
+        public void Write(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
 

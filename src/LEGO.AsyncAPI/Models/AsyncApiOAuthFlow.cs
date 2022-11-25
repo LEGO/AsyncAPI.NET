@@ -61,7 +61,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteRequiredMap(AsyncApiConstants.Scopes, this.Scopes, (w, s) => w.WriteValue(s));
 
             // extensions
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteExtensions(this.Extensions);
 
             writer.WriteEndObject();
         }

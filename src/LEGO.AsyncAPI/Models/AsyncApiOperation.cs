@@ -93,7 +93,7 @@ namespace LEGO.AsyncAPI.Models
                 writer.WriteOptionalObject(AsyncApiConstants.Message, this.Message.FirstOrDefault(), (w, m) => m.SerializeV2(w));
             }
 
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

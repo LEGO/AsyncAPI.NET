@@ -15,22 +15,22 @@ namespace LEGO.AsyncAPI.Readers
 
     public class ParsingContext
     {
-        private readonly Stack<string> _currentLocation = new();
-        private readonly Dictionary<string, object> tempStorage = new();
-        private readonly Dictionary<object, Dictionary<string, object>> scopedTempStorage = new();
-        private readonly Dictionary<string, Stack<string>> loopStacks = new();
+        private readonly Stack<string> currentLocation = new ();
+        private readonly Dictionary<string, object> tempStorage = new ();
+        private readonly Dictionary<object, Dictionary<string, object>> scopedTempStorage = new ();
+        private readonly Dictionary<string, Stack<string>> loopStacks = new ();
 
-        internal Dictionary<string, Func<IAsyncApiAny, AsyncApiVersion, IAsyncApiExtension>> ExtensionParsers
+        internal Dictionary<string, Func<IAsyncApiAny, IAsyncApiExtension>> ExtensionParsers
         {
             get;
             set;
         }
 
-        = new();
+        = new ();
 
         internal RootNode RootNode { get; set; }
 
-        internal List<AsyncApiTag> Tags { get; private set; } = new();
+        internal List<AsyncApiTag> Tags { get; private set; } = new ();
 
         public AsyncApiDiagnostic Diagnostic { get; }
 
@@ -95,13 +95,13 @@ namespace LEGO.AsyncAPI.Readers
 
         public void EndObject()
         {
-            this._currentLocation.Pop();
+            this.currentLocation.Pop();
         }
 
         public string GetLocation()
         {
             return "#/" + string.Join("/",
-                this._currentLocation.Reverse().Select(s => s.Replace("~", "~0").Replace("/", "~1")).ToArray());
+                this.currentLocation.Reverse().Select(s => s.Replace("~", "~0").Replace("/", "~1")).ToArray());
         }
 
         public T GetFromTempStorage<T>(string key, object scope = null)
@@ -145,7 +145,7 @@ namespace LEGO.AsyncAPI.Readers
 
         public void StartObject(string objectName)
         {
-            this._currentLocation.Push(objectName);
+            this.currentLocation.Push(objectName);
         }
 
         public bool PushLoop(string loopId, string key)
