@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Readers
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
     /// </summary>
-    internal static partial class AsyncApiDeserializer
+    internal static partial class AsyncApiV2Deserializer
     {
         public static AsyncApiSecurityRequirement LoadSecurityRequirement(ParseNode node)
         {

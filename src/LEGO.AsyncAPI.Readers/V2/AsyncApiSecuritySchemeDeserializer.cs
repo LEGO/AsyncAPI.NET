@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Readers
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
     /// </summary>
-    internal static partial class AsyncApiDeserializer
+    internal static partial class AsyncApiV2Deserializer
     {
         private static readonly FixedFieldMap<AsyncApiSecurityScheme> securitySchemeFixedFields =
             new()
@@ -36,16 +36,16 @@ namespace LEGO.AsyncAPI.Readers
                     "bearerFormat", (o, n) => { o.BearerFormat = n.GetScalarValue(); }
                 },
                 {
-                    "openIdConnectUrl",
-                    (o, n) => { o.OpenIdConnectUrl = new Uri(n.GetScalarValue(), UriKind.RelativeOrAbsolute); }
+                    "flows", (o, n) => { o.Flows = LoadOAuthFlows(n); }
                 },
                 {
-                    "flows", (o, n) => { o.Flows = LoadOAuthFlows(n); }
+                    "openIdConnectUrl",
+                    (o, n) => { o.OpenIdConnectUrl = new Uri(n.GetScalarValue(), UriKind.RelativeOrAbsolute); }
                 },
             };
 
         private static readonly PatternFieldMap<AsyncApiSecurityScheme> securitySchemePatternFields =
-            new()
+            new ()
             {
                 { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) },
             };
@@ -58,6 +58,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 return mapNode.GetReferencedObject<AsyncApiSecurityScheme>(ReferenceType.SecurityScheme, pointer);
             }
+
             var securityScheme = new AsyncApiSecurityScheme();
             foreach (var property in mapNode)
             {

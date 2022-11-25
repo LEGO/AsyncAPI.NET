@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Readers
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
     /// </summary>
-    internal static partial class AsyncApiDeserializer
+    internal static partial class AsyncApiV2Deserializer
     {
         private static readonly FixedFieldMap<AsyncApiServer> serverFixedFields = new()
         {
@@ -25,6 +25,9 @@ namespace LEGO.AsyncAPI.Readers
             },
             {
                 "security", (a, n) => { a.Security = n.CreateList(LoadSecurityRequirement); }
+            },
+            {
+                "tags", (a, n) => { a.Tags = n.CreateList(LoadTag); }
             },
             {
                 "bindings", (o, n) => { o.Bindings = LoadServerBindings(n); }

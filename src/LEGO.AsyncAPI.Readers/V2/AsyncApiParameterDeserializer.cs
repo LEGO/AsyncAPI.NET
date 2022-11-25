@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
-    internal static partial class AsyncApiDeserializer
+    internal static partial class AsyncApiV2Deserializer
     {
         private static FixedFieldMap<AsyncApiParameter> parameterFixedFields = new()
         {

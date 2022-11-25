@@ -1,6 +1,6 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI
+namespace LEGO.AsyncAPI.Readers.V2
 {
     using System;
     using System.IO;

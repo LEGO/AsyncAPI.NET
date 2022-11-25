@@ -13,6 +13,11 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiMessageTrait : IAsyncApiExtensible, IAsyncApiReferenceable, IAsyncApiSerializable
     {
         /// <summary>
+        /// Unique string used to identify the message. The id MUST be unique among all messages described in the API.
+        /// </summary>
+        public string MessageId { get; set; }
+
+        /// <summary>
         /// schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
         public AsyncApiSchema Headers { get; set; }
@@ -108,6 +113,7 @@ namespace LEGO.AsyncAPI.Models
             }
 
             writer.WriteStartObject();
+            writer.WriteOptionalProperty(AsyncApiConstants.MessageId, this.MessageId);
             writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.CorrelationId, this.CorrelationId, (w, c) => c.SerializeV2(w));
             writer.WriteOptionalProperty(AsyncApiConstants.SchemaFormat, this.SchemaFormat);

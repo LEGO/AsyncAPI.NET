@@ -536,7 +536,7 @@ channels:
                         },
                     },
                 });
-            var actual = doc.Serialize(AsyncApiFormat.Yaml);
+            var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
             var reader = new AsyncApiStringReader();
             var deserialized = reader.Read(actual, out var diagnostic);

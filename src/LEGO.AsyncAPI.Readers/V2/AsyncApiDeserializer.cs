@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
-    internal static partial class AsyncApiDeserializer
+    internal static partial class AsyncApiV2Deserializer
     {
         private static void ParseMap<T>(
             MapNode mapNode,

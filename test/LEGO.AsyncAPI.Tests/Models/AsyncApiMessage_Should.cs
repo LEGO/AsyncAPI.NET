@@ -52,7 +52,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                 },
             };
 
-            var actual = message.SerializeAsYaml();
+            var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();

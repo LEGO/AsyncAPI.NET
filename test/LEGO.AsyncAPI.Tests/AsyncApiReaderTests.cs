@@ -938,7 +938,7 @@ components:
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
 
-            var yamlAgain = doc.Serialize(AsyncApiFormat.Yaml);
+            var yamlAgain = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
             Assert.True(!yamlAgain.Contains("then:"));
         }
 

@@ -1,5 +1,7 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Readers.V2;
+
 namespace LEGO.AsyncAPI.Readers
 {
     using System.IO;
@@ -49,7 +51,7 @@ namespace LEGO.AsyncAPI.Readers
                 return new AsyncApiDocument();
             }
 
-            return new AsyncApiYamlDocumentReader(this.settings).Read(yamlDocument, out diagnostic);
+            return new AsyncApiYamlDocumentReader(settings).Read(yamlDocument, out diagnostic);
         }
 
         /// <summary>
@@ -77,9 +79,8 @@ namespace LEGO.AsyncAPI.Readers
                 };
             }
 
-            return await new AsyncApiYamlDocumentReader(this.settings).ReadAsync(yamlDocument);
+            return await new AsyncApiYamlDocumentReader(settings).ReadAsync(yamlDocument);
         }
-
 
         /// <summary>
         /// Reads the stream input and parses the fragment of an AsyncApi description into an AsyncApi Element.
@@ -102,10 +103,10 @@ namespace LEGO.AsyncAPI.Readers
             {
                 diagnostic = new AsyncApiDiagnostic();
                 diagnostic.Errors.Add(new AsyncApiError($"#line={ex.Start.Line}", ex.Message));
-                return default(T);
+                return default;
             }
 
-            return new AsyncApiYamlDocumentReader(this.settings).ReadFragment<T>(yamlDocument, version,
+            return new AsyncApiYamlDocumentReader(settings).ReadFragment<T>(yamlDocument, version,
                 out diagnostic);
         }
 

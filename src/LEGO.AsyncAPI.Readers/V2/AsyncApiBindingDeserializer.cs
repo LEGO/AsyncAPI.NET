@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using System;
 
-    internal static partial class AsyncApiDeserializer
+    internal static partial class AsyncApiV2Deserializer
     {
         private static Type messageBindingType = typeof(IMessageBinding);
         private static Type operationBindingType = typeof(IOperationBinding);

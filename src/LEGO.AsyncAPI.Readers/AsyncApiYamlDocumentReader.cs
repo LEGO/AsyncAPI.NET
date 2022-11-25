@@ -1,5 +1,7 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Readers.V2;
+
 namespace LEGO.AsyncAPI.Readers
 {
     using System.Collections.Generic;
@@ -40,7 +42,7 @@ namespace LEGO.AsyncAPI.Readers
             diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
             {
-                ExtensionParsers = this.settings.ExtensionParsers,
+                ExtensionParsers = settings.ExtensionParsers,
             };
 
             AsyncApiDocument document = null;
@@ -49,7 +51,7 @@ namespace LEGO.AsyncAPI.Readers
                 // Parse the AsyncApi Document
                 document = context.Parse(input);
 
-                this.ResolveReferences(diagnostic, document);
+                ResolveReferences(diagnostic, document);
             }
             catch (AsyncApiException ex)
             {
@@ -57,9 +59,9 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             // Validate the document
-            if (this.settings.RuleSet != null && this.settings.RuleSet.Rules.Count > 0)
+            if (settings.RuleSet != null && settings.RuleSet.Rules.Count > 0)
             {
-                var asyncApiErrors = document.Validate(this.settings.RuleSet);
+                var asyncApiErrors = document.Validate(settings.RuleSet);
                 foreach (var item in asyncApiErrors.Where(e => e is AsyncApiValidatorError))
                 {
                     diagnostic.Errors.Add(item);
@@ -79,7 +81,7 @@ namespace LEGO.AsyncAPI.Readers
             var diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
             {
-                ExtensionParsers = this.settings.ExtensionParsers,
+                ExtensionParsers = settings.ExtensionParsers,
             };
 
             AsyncApiDocument document = null;
@@ -87,7 +89,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 // Parse the AsyncApi Document
                 document = context.Parse(input);
-                this.ResolveReferences(diagnostic, document);
+                ResolveReferences(diagnostic, document);
             }
             catch (AsyncApiException ex)
             {
@@ -95,9 +97,9 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             // Validate the document
-            if (this.settings.RuleSet != null && this.settings.RuleSet.Rules.Count > 0)
+            if (settings.RuleSet != null && settings.RuleSet.Rules.Count > 0)
             {
-                var errors = document.Validate(this.settings.RuleSet);
+                var errors = document.Validate(settings.RuleSet);
                 foreach (var item in errors)
                 {
                     diagnostic.Errors.Add(item);
@@ -116,7 +118,7 @@ namespace LEGO.AsyncAPI.Readers
             var errors = new List<AsyncApiError>();
 
             // Resolve References if requested
-            switch (this.settings.ReferenceResolution)
+            switch (settings.ReferenceResolution)
             {
                 case ReferenceResolutionSetting.ResolveReferences:
                     errors.AddRange(document.ResolveReferences());
@@ -145,7 +147,7 @@ namespace LEGO.AsyncAPI.Readers
             diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
             {
-                ExtensionParsers = this.settings.ExtensionParsers,
+                ExtensionParsers = settings.ExtensionParsers,
             };
 
             IAsyncApiElement element = null;
@@ -160,9 +162,9 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             // Validate the element
-            if (this.settings.RuleSet != null && this.settings.RuleSet.Rules.Count > 0)
+            if (settings.RuleSet != null && settings.RuleSet.Rules.Count > 0)
             {
-                var errors = element.Validate(this.settings.RuleSet);
+                var errors = element.Validate(settings.RuleSet);
                 foreach (var item in errors)
                 {
                     diagnostic.Errors.Add(item);

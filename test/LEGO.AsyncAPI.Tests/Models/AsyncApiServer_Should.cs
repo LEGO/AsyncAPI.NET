@@ -31,7 +31,7 @@ bindings:
                 },
             };
 
-            var actual = server.SerializeAsYaml();
+            var actual = server.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();

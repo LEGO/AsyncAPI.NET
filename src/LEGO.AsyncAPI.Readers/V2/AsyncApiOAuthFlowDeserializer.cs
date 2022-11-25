@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers
     /// Class containing logic to deserialize AsyncAPI document into
     /// runtime AsyncAPI object model.
     /// </summary>
-    internal static partial class AsyncApiDeserializer
+    internal static partial class AsyncApiV2Deserializer
     {
         private static readonly FixedFieldMap<AsyncApiOAuthFlow> oAuthFlowFixedFields =
             new()
