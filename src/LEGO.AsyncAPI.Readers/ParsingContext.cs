@@ -10,6 +10,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Readers.Exceptions;
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Readers.ParseNodes;
+    using LEGO.AsyncAPI.Readers.V2;
     using SharpYaml.Serialization;
 
     public class ParsingContext
@@ -49,9 +50,9 @@ namespace LEGO.AsyncAPI.Readers
             switch (inputVersion)
             {
                 case string version when version.StartsWith("2"):
-                    this.VersionService = new AsyncApiVersionService(this.Diagnostic);
+                    this.VersionService = new AsyncApiV2VersionService(this.Diagnostic);
                     doc = this.VersionService.LoadDocument(this.RootNode);
-                    this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_3_0;
+                    this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_0;
                     break;
 
                 default:
@@ -69,8 +70,8 @@ namespace LEGO.AsyncAPI.Readers
 
             switch (version)
             {
-                case AsyncApiVersion.AsyncApi2_3_0:
-                    this.VersionService = new AsyncApiVersionService(this.Diagnostic);
+                case AsyncApiVersion.AsyncApi2_0:
+                    this.VersionService = new AsyncApiV2VersionService(this.Diagnostic);
                     element = this.VersionService.LoadElement<T>(node);
                     break;
             }

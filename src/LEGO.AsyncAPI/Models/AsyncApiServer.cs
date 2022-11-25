@@ -46,6 +46,11 @@ namespace LEGO.AsyncAPI.Models
         public IList<AsyncApiSecurityRequirement> Security { get; set; } = new List<AsyncApiSecurityRequirement>();
 
         /// <summary>
+        /// A list of tags for logical grouping and categorization of servers.
+        /// </summary>
+        public IList<AsyncApiTag> Tags { get; set; } = new List<AsyncApiTag>();
+
+        /// <summary>
         /// a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the server.
         /// </summary>
         public AsyncApiBindings<IServerBinding> Bindings { get; set; } = new AsyncApiBindings<IServerBinding>();
@@ -88,6 +93,8 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalMap(AsyncApiConstants.Variables, this.Variables, (w, v) => v.SerializeV2(w));
 
             writer.WriteOptionalCollection(AsyncApiConstants.Security, this.Security, (w, s) => s.SerializeV2(w));
+
+            writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, s) => s.SerializeV2(w));
 
             writer.WriteOptionalObject(AsyncApiConstants.Bindings, this.Bindings, (w, t) => t.SerializeV2(w));
             writer.WriteExtensions(this.Extensions);

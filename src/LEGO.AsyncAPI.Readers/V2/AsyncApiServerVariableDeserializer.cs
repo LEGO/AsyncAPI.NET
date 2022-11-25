@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Readers
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
     /// </summary>
-    internal static partial class AsyncApiDeserializer
+    internal static partial class AsyncApiV2Deserializer
     {
         private static readonly FixedFieldMap<AsyncApiServerVariable> serverVariableFixedFields =
             new()
@@ -24,6 +24,9 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     "description", (a, n) => { a.Description = n.GetScalarValue(); }
                 },
+                {
+                    "examples", (a, n) => { a.Examples = n.CreateSimpleList(s => s.GetScalarValue()); }
+                },
             };
 
         private static readonly PatternFieldMap<AsyncApiServerVariable> serverVariablePatternFields =
@@ -35,6 +38,11 @@ namespace LEGO.AsyncAPI.Readers
         public static AsyncApiServerVariable LoadServerVariable(ParseNode node)
         {
             var mapNode = node.CheckMapNode("serverVariable");
+            var pointer = mapNode.GetReferencePointer();
+            if (pointer != null)
+            {
+                return mapNode.GetReferencedObject<AsyncApiServerVariable>(ReferenceType.ServerVariable, pointer);
+            }
 
             var serverVariable = new AsyncApiServerVariable();
 

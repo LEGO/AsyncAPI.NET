@@ -889,6 +889,7 @@ components:
             Assert.AreEqual(1, doc.Channels.First().Value.Publish.Message.First().Traits.Count);
             Assert.AreEqual("a common headers for common things", doc.Channels.First().Value.Publish.Message.First().Traits.First().Description);
         }
+
         /// <summary>
         /// Regression test.
         /// Bug: Serializing properties multiple times - specifically Schema.OneOf was serialized into OneOf and Then.
@@ -938,14 +939,14 @@ components:
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
 
-            var yamlAgain = doc.Serialize(AsyncApiFormat.Yaml);
+            var yamlAgain = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
             Assert.True(!yamlAgain.Contains("then:"));
         }
 
-      [Test]
-      public void Read_WithBasicPlusSecurityRequirementsDeserializes()
-      {
-        var yaml = @"asyncapi: 2.3.0
+        [Test]
+        public void Read_WithBasicPlusSecurityRequirementsDeserializes()
+        {
+            var yaml = @"asyncapi: 2.3.0
 info:
   title: AMMA
   version: 1.0.0
@@ -972,12 +973,12 @@ components:
             write:pets: modify pets in your account
             read:pets: read your pets      
 ";
-        var reader = new AsyncApiStringReader();
-        var doc = reader.Read(yaml, out var diagnostic);
-        var requirement = doc.Servers.First().Value.Security.First().First();
-        Assert.AreEqual(SecuritySchemeType.OAuth2, requirement.Key.Type);
-        Assert.IsTrue(requirement.Value.Contains("write:pets"));
-        Assert.IsTrue(requirement.Value.Contains("read:pets"));
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+            var requirement = doc.Servers.First().Value.Security.First().First();
+            Assert.AreEqual(SecuritySchemeType.OAuth2, requirement.Key.Type);
+            Assert.IsTrue(requirement.Value.Contains("write:pets"));
+            Assert.IsTrue(requirement.Value.Contains("read:pets"));
       }
     }
 }

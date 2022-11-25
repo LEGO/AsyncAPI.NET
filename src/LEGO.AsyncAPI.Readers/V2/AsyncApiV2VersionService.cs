@@ -1,6 +1,6 @@
-// Copyright (c) The LEGO Group. All rights reserved.
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Readers
+namespace LEGO.AsyncAPI.Readers.V2
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
-    internal class AsyncApiVersionService : IAsyncApiVersionService
+    internal class AsyncApiV2VersionService : IAsyncApiVersionService
     {
         public AsyncApiDiagnostic Diagnostic { get; }
 
@@ -19,28 +19,28 @@ namespace LEGO.AsyncAPI.Readers
         /// Create Parsing Context
         /// </summary>
         /// <param name="diagnostic">Provide instance for diagnostic object for collecting and accessing information about the parsing.</param>
-        public AsyncApiVersionService(AsyncApiDiagnostic diagnostic)
+        public AsyncApiV2VersionService(AsyncApiDiagnostic diagnostic)
         {
-            this.Diagnostic = diagnostic;
+            Diagnostic = diagnostic;
         }
 
         private IDictionary<Type, Func<ParseNode, object>> loaders = new Dictionary<Type, Func<ParseNode, object>>
         {
-            [typeof(IAsyncApiAny)] = AsyncApiDeserializer.LoadAny,
-            [typeof(AsyncApiComponents)] = AsyncApiDeserializer.LoadComponents,
-            [typeof(AsyncApiExternalDocumentation)] = AsyncApiDeserializer.LoadExternalDocs,
-            [typeof(AsyncApiInfo)] = AsyncApiDeserializer.LoadInfo,
-            [typeof(AsyncApiLicense)] = AsyncApiDeserializer.LoadLicense,
-            [typeof(AsyncApiOAuthFlow)] = AsyncApiDeserializer.LoadOAuthFlow,
-            [typeof(AsyncApiOAuthFlows)] = AsyncApiDeserializer.LoadOAuthFlows,
-            [typeof(AsyncApiOperation)] = AsyncApiDeserializer.LoadOperation,
-            [typeof(AsyncApiParameter)] = AsyncApiDeserializer.LoadParameter,
-            [typeof(AsyncApiSchema)] = AsyncApiDeserializer.LoadSchema,
-            [typeof(AsyncApiSecurityRequirement)] = AsyncApiDeserializer.LoadSecurityRequirement,
-            [typeof(AsyncApiSecurityScheme)] = AsyncApiDeserializer.LoadSecurityScheme,
-            [typeof(AsyncApiServer)] = AsyncApiDeserializer.LoadServer,
-            [typeof(AsyncApiServerVariable)] = AsyncApiDeserializer.LoadServerVariable,
-            [typeof(AsyncApiTag)] = AsyncApiDeserializer.LoadTag,
+            [typeof(IAsyncApiAny)] = AsyncApiV2Deserializer.LoadAny,
+            [typeof(AsyncApiComponents)] = AsyncApiV2Deserializer.LoadComponents,
+            [typeof(AsyncApiExternalDocumentation)] = AsyncApiV2Deserializer.LoadExternalDocs,
+            [typeof(AsyncApiInfo)] = AsyncApiV2Deserializer.LoadInfo,
+            [typeof(AsyncApiLicense)] = AsyncApiV2Deserializer.LoadLicense,
+            [typeof(AsyncApiOAuthFlow)] = AsyncApiV2Deserializer.LoadOAuthFlow,
+            [typeof(AsyncApiOAuthFlows)] = AsyncApiV2Deserializer.LoadOAuthFlows,
+            [typeof(AsyncApiOperation)] = AsyncApiV2Deserializer.LoadOperation,
+            [typeof(AsyncApiParameter)] = AsyncApiV2Deserializer.LoadParameter,
+            [typeof(AsyncApiSchema)] = AsyncApiV2Deserializer.LoadSchema,
+            [typeof(AsyncApiSecurityRequirement)] = AsyncApiV2Deserializer.LoadSecurityRequirement,
+            [typeof(AsyncApiSecurityScheme)] = AsyncApiV2Deserializer.LoadSecurityScheme,
+            [typeof(AsyncApiServer)] = AsyncApiV2Deserializer.LoadServer,
+            [typeof(AsyncApiServerVariable)] = AsyncApiV2Deserializer.LoadServerVariable,
+            [typeof(AsyncApiTag)] = AsyncApiV2Deserializer.LoadTag,
         };
 
         /// <summary>
@@ -70,22 +70,19 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     if (reference.StartsWith("#"))
                     {
-                        // "$ref": "#/components/schemas/Pet"
                         try
                         {
-                            return this.ParseReference(segments[1]);
+                            return ParseReference(segments[1]);
                         }
                         catch (AsyncApiException ex)
                         {
-                            this.Diagnostic.Errors.Add(new AsyncApiError(ex));
+                            Diagnostic.Errors.Add(new AsyncApiError(ex));
                             return null;
                         }
                     }
 
-                    // Where fragments point into a non-AsyncApi document, the id will be the complete fragment identifier
                     var id = segments[1];
 
-                    // $ref: externalSource.yaml#/Pet
                     if (id.StartsWith("/components/"))
                     {
                         var localSegments = segments[1].Split('/');
@@ -118,12 +115,12 @@ namespace LEGO.AsyncAPI.Readers
 
         public AsyncApiDocument LoadDocument(RootNode rootNode)
         {
-            return AsyncApiDeserializer.LoadAsyncApi(rootNode);
+            return AsyncApiV2Deserializer.LoadAsyncApi(rootNode);
         }
 
         public T LoadElement<T>(ParseNode node) where T : IAsyncApiElement
         {
-            return (T)this.loaders[typeof(T)](node);
+            return (T)loaders[typeof(T)](node);
         }
 
         private AsyncApiReference ParseReference(string localReference)
@@ -136,7 +133,7 @@ namespace LEGO.AsyncAPI.Readers
 
             var segments = localReference.Split('/');
 
-            if (segments.Length == 4) // /components/{type}/mything
+            if (segments.Length == 4)
             {
                 if (segments[1] == "components")
                 {

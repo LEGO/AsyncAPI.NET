@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             subSchema.Properties.Add("title", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String } });
             mainSchema.OneOf = new List<AsyncApiSchema>() { subSchema };
 
-            var yaml = mainSchema.Serialize(AsyncApiFormat.Yaml);
+            var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
             Assert.True(!yaml.Contains("then:"), "then");
             Assert.True(yaml.Contains("oneOf:"), "oneOf");
@@ -49,7 +49,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             subSchema.Properties.Add("title", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String } });
             mainSchema.AnyOf = new List<AsyncApiSchema>() { subSchema };
 
-            var yaml = mainSchema.Serialize(AsyncApiFormat.Yaml);
+            var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
             Assert.True(!yaml.Contains("if:"));
         }
@@ -66,7 +66,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             subSchema.Properties.Add("title", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String } });
             mainSchema.Not = subSchema;
 
-            var yaml = mainSchema.Serialize(AsyncApiFormat.Yaml);
+            var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
             Assert.True(!yaml.Contains("else:"));
         }

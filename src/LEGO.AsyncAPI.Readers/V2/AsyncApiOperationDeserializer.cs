@@ -7,10 +7,10 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
-    internal static partial class AsyncApiDeserializer
+    internal static partial class AsyncApiV2Deserializer
     {
         private static readonly FixedFieldMap<AsyncApiOperation> operationFixedFields =
-            new()
+            new ()
             {
                 {
                     "operationId", (a, n) => { a.OperationId = n.GetScalarValue(); }
@@ -20,6 +20,9 @@ namespace LEGO.AsyncAPI.Readers
                 },
                 {
                     "description", (a, n) => { a.Description = n.GetScalarValue(); }
+                },
+                {
+                    "security", (a, n) => { a.Security = n.CreateList(LoadSecurityRequirement); }
                 },
                 {
                     "tags", (a, n) => a.Tags = n.CreateList(LoadTag)
@@ -51,7 +54,7 @@ namespace LEGO.AsyncAPI.Readers
         }
 
         private static readonly PatternFieldMap<AsyncApiOperation> operationPatternFields =
-            new()
+            new ()
             {
                 { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) },
             };

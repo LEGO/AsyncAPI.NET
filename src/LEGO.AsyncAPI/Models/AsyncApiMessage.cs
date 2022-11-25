@@ -13,6 +13,11 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiMessage : IAsyncApiExtensible, IAsyncApiReferenceable, IAsyncApiSerializable
     {
         /// <summary>
+        /// Unique string used to identify the message. The id MUST be unique among all messages described in the API.
+        /// </summary>
+        public string MessageId { get; set; }
+
+        /// <summary>
         /// schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
         public AsyncApiSchema Headers { get; set; }

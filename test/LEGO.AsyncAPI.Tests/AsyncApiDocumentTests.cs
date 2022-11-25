@@ -17,13 +17,11 @@
 
     public class AsyncApiDocumentTests
     {
-
-
         [Test]
         public void SerializeV2_WithFullSpec_Serializes()
         {
             var expected =
-                @"asyncapi: '2.3.0'
+                @"asyncapi: '2.5.0'
 info:
   title: apiTitle
   description: description
@@ -452,9 +450,9 @@ components:
         }
 
         [Test]
-        public void Serialize_WithBindings_Serializes()
+        public void Serializev2_WithBindings_Serializes()
         {
-            var expected = @"asyncapi: '2.3.0'
+            var expected = @"asyncapi: '2.5.0'
 info:
   description: test description
 servers:
@@ -536,7 +534,7 @@ channels:
                         },
                     },
                 });
-            var actual = doc.Serialize(AsyncApiFormat.Yaml);
+            var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
             var reader = new AsyncApiStringReader();
             var deserialized = reader.Read(actual, out var diagnostic);
