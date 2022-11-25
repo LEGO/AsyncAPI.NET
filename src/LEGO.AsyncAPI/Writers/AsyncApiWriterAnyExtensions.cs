@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="extensions">The specification extensions.</param>
         /// <param name="specVersion">Version of the AsyncApi specification that that will be output.</param>
-        public static void WriteExtensions(this IAsyncApiWriter writer, IDictionary<string, IAsyncApiExtension> extensions, AsyncApiVersion specVersion)
+        public static void WriteExtensions(this IAsyncApiWriter writer, IDictionary<string, IAsyncApiExtension> extensions)
         {
             if (writer is null)
             {
@@ -27,7 +27,7 @@ namespace LEGO.AsyncAPI.Writers
                 foreach (var item in extensions)
                 {
                     writer.WritePropertyName(item.Key);
-                    item.Value.Write(writer, specVersion);
+                    item.Value.Write(writer);
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace LEGO.AsyncAPI.Writers
                 throw new ArgumentNullException(nameof(primitive));
             }
 
-            primitive.Write(writer, AsyncApiVersion.AsyncApi2_3_0);
+            primitive.Write(writer);
         }
     }
 }
