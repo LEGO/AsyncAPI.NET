@@ -46,7 +46,6 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Attributes\" />
-      <Folder Include="Bindings\WebSockets\" />
     </ItemGroup>
     <ItemGroup>
       <None Include="..\..\.editorconfig" Link=".editorconfig" />
