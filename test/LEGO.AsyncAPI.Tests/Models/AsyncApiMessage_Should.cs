@@ -1,5 +1,7 @@
 ﻿namespace LEGO.AsyncAPI.Tests.Models
 {
+    using System;
+    using System.Collections.Generic;
     using FluentAssertions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
@@ -8,8 +10,6 @@
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
-    using System;
-    using System.Collections.Generic;
 
     internal class AsyncApiMessage_Should
     {
