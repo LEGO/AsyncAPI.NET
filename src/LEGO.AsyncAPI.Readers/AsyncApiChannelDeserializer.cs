@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Readers
 
     internal static partial class AsyncApiDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiChannel> channelFixedFields = new()
+        private static readonly FixedFieldMap<AsyncApiChannel> ChannelFixedFields = new ()
         {
             { "description", (a, n) => { a.Description = n.GetScalarValue(); } },
             { "servers", (a, n) => { a.Servers = n.CreateSimpleList(s => s.GetScalarValue()); } },
@@ -18,8 +18,8 @@ namespace LEGO.AsyncAPI.Readers
             { "bindings", (a, n) => { a.Bindings = LoadChannelBindings(n); } },
         };
 
-        private static readonly PatternFieldMap<AsyncApiChannel> channelPatternFields =
-            new()
+        private static readonly PatternFieldMap<AsyncApiChannel> ChannelPatternFields =
+            new ()
             {
                 { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
             };
@@ -32,9 +32,10 @@ namespace LEGO.AsyncAPI.Readers
             {
                 return mapNode.GetReferencedObject<AsyncApiChannel>(ReferenceType.Channel, pointer);
             }
+
             var pathItem = new AsyncApiChannel();
 
-            ParseMap(mapNode, pathItem, channelFixedFields, channelPatternFields);
+            ParseMap(mapNode, pathItem, ChannelFixedFields, ChannelPatternFields);
 
             return pathItem;
         }

@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
     public class PulsarServerBinding : IServerBinding
     {
         /// <summary>
-        /// The pulsar tenant. If omitted, "public" must be assumed. 
+        /// The pulsar tenant. If omitted, "public" must be assumed.
         /// </summary>
         public string Tenant { get; set; }
 

@@ -72,7 +72,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
 
             writer.WriteStartObject();
             writer.WriteOptionalProperty(AsyncApiConstants.Namespace, this.Namespace);
-            writer.WriteOptionalProperty(AsyncApiConstants.Persistence, this.Persistence);
+            writer.WriteRequiredProperty(AsyncApiConstants.Persistence, this.Persistence);
             writer.WriteOptionalProperty<int>(AsyncApiConstants.Compaction, this.Compaction);
             writer.WriteOptionalObject(AsyncApiConstants.Retention, this.Retention, (w, r) => r.Serialize(w));
             writer.WriteOptionalCollection(AsyncApiConstants.GeoReplication, this.GeoReplication, (v, s) => v.WriteValue(s));
