@@ -43,6 +43,7 @@ namespace LEGO.AsyncAPI.Readers.V2
             [typeof(AsyncApiServerVariable)] = AsyncApiV2Deserializer.LoadServerVariable,
             [typeof(AsyncApiTag)] = AsyncApiV2Deserializer.LoadTag,
             [typeof(AsyncApiMessage)] = AsyncApiV2Deserializer.LoadMessage,
+            [typeof(AsyncApiChannel)] = AsyncApiV2Deserializer.LoadChannel,
         };
 
         /// <summary>
