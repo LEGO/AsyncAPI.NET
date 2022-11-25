@@ -48,7 +48,6 @@ namespace LEGO.AsyncAPI.Readers
             AsyncApiDocument document = null;
             try
             {
-                // Parse the AsyncApi Document
                 document = context.Parse(input);
 
                 ResolveReferences(diagnostic, document);
@@ -58,7 +57,6 @@ namespace LEGO.AsyncAPI.Readers
                 diagnostic.Errors.Add(new AsyncApiError(ex));
             }
 
-            // Validate the document
             if (settings.RuleSet != null && settings.RuleSet.Rules.Count > 0)
             {
                 var asyncApiErrors = document.Validate(settings.RuleSet);

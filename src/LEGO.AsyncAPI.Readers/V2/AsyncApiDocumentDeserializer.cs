@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Readers
     {
         private static FixedFieldMap<AsyncApiDocument> asyncApiFixedFields = new()
         {
-            { "asyncapi", (a, n) => a.Asyncapi = n.GetScalarValue() },
+            { "asyncapi", (a, n) => { } },
             { "id", (a, n) => a.Id = n.GetScalarValue() },
             { "info", (a, n) => a.Info = LoadInfo(n) },
             { "servers", (a, n) => a.Servers = n.CreateMap(LoadServer) },

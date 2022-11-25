@@ -76,7 +76,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // asyncApi
-            writer.WriteOptionalProperty(AsyncApiConstants.AsyncApi, "2.3.0");
+            writer.WriteOptionalProperty(AsyncApiConstants.AsyncApi, "2.5.0");
 
             // info
             writer.WriteRequiredObject(AsyncApiConstants.Info, this.Info, (w, i) => i.SerializeV2(w));
