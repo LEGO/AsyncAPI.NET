@@ -1,17 +1,12 @@
-// <copyright file="AsyncApiReaderTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-using LEGO.AsyncAPI.Models;
-
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
     using System.Linq;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
-    using NUnit.Framework;
-    using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Models.Bindings.Http;
+    using LEGO.AsyncAPI.Readers;
+    using NUnit.Framework;
 
     public class AsyncApiReaderTests
     {
