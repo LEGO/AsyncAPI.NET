@@ -45,7 +45,7 @@ var myFirstAsyncApi = new AsyncApiDocument
   }
 };
 var yaml = myFirstAsyncApi.SerializeAsYaml();
-//asyncapi: '2.3.0'
+//asyncapi: '2.5.0'
 //  info:
 //    title: my first asyncapi
 //  channels:
