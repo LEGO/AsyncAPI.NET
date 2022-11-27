@@ -504,7 +504,7 @@ components:
         Assert.AreEqual(message.First().Summary, "Metadata about a workspace that has been created, updated or deleted.");
         var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
         Assert.NotNull(payload);
-        Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
+        Assert.AreEqual(typeof(AsyncApiSchema), payload.GetType());
         var httpBinding = doc.Channels["workspace"].Publish.Bindings.First().Value as HttpOperationBinding;
         Assert.AreEqual("response", httpBinding.Type);
       }

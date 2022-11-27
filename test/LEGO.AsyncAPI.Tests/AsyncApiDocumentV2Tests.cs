@@ -722,7 +722,7 @@ servers:
     protocolVersion: protocolVersion
     description: serverDescription
     security:
-      - 'securitySchemeName':
+      - securitySchemeName:
           - requirementItem
 channels:
   channel1:
