@@ -19,7 +19,17 @@ namespace LEGO.AsyncAPI.Readers
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "topic", (a, n) => { a.Topic = n.GetScalarValue(); } },
             { "partitions", (a, n) => { a.Partitions = n.GetIntegerValue(); } },
+            { "topicConfiguration", (a, n) => { a.TopicConfiguration = LoadTopicConfiguration(n); } },
             { "replicas", (a, n) => { a.Replicas = n.GetIntegerValue(); } },
+        };
+
+        private static FixedFieldMap<TopicConfigurationObject> kafkaChannelTopicConfigurationObjectFixedFields = new()
+        {
+            { "cleanup.policy", (a, n) => { a.CleanupPolicy = n.CreateSimpleList(s => s.GetScalarValue()); } },
+            { "retention.ms", (a, n) => { a.RetentionMiliseconds = n.GetIntegerValue(); } },
+            { "retention.bytes", (a, n) => { a.RetentionBytes = n.GetIntegerValue(); } },
+            { "delete.retention.ms", (a, n) => { a.DeleteRetentionMiliseconds = n.GetIntegerValue(); } },
+            { "max.message.bytes", (a, n) => { a.MaxMessageBytes = n.GetIntegerValue(); } },
         };
 
         private static FixedFieldMap<KafkaOperationBinding> kafkaOperationBindingFixedFields = new()
@@ -37,5 +47,13 @@ namespace LEGO.AsyncAPI.Readers
             { "schemaIdPayloadEncoding", (a, n) => { a.SchemaIdPayloadEncoding = n.GetScalarValue(); } },
             { "schemaLookupStrategy", (a, n) => { a.SchemaLookupStrategy = n.GetScalarValue(); } },
         };
+
+        private static TopicConfigurationObject LoadTopicConfiguration(ParseNode node)
+        {
+            var mapNode = node.CheckMapNode("topicConfiguration");
+            var retention = new TopicConfigurationObject();
+            ParseMap(mapNode, retention, kafkaChannelTopicConfigurationObjectFixedFields, null);
+            return retention;
+        }
     }
 }

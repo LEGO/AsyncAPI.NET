@@ -1,7 +1,5 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Readers.V2;
-
 namespace LEGO.AsyncAPI.Readers
 {
     using System.IO;
@@ -51,7 +49,7 @@ namespace LEGO.AsyncAPI.Readers
                 return new AsyncApiDocument();
             }
 
-            return new AsyncApiYamlDocumentReader(settings).Read(yamlDocument, out diagnostic);
+            return new AsyncApiYamlDocumentReader(this.settings).Read(yamlDocument, out diagnostic);
         }
 
         /// <summary>
@@ -79,7 +77,7 @@ namespace LEGO.AsyncAPI.Readers
                 };
             }
 
-            return await new AsyncApiYamlDocumentReader(settings).ReadAsync(yamlDocument);
+            return await new AsyncApiYamlDocumentReader(this.settings).ReadAsync(yamlDocument);
         }
 
         /// <summary>
@@ -106,7 +104,7 @@ namespace LEGO.AsyncAPI.Readers
                 return default;
             }
 
-            return new AsyncApiYamlDocumentReader(settings).ReadFragment<T>(yamlDocument, version,
+            return new AsyncApiYamlDocumentReader(this.settings).ReadFragment<T>(yamlDocument, version,
                 out diagnostic);
         }
 

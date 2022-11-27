@@ -94,7 +94,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // type
-            writer.WriteOptionalProperty(AsyncApiConstants.Type, this.Type.GetDisplayName());
+            writer.WriteRequiredProperty(AsyncApiConstants.Type, this.Type.GetDisplayName());
 
             // description
             writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);

@@ -1,17 +1,12 @@
-// <copyright file="AsyncApiReaderTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-using LEGO.AsyncAPI.Models;
-
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
     using System.Linq;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
-    using NUnit.Framework;
-    using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Models.Bindings.Http;
+    using LEGO.AsyncAPI.Readers;
+    using NUnit.Framework;
 
     public class AsyncApiReaderTests
     {
@@ -504,7 +499,7 @@ components:
         Assert.AreEqual(message.First().Summary, "Metadata about a workspace that has been created, updated or deleted.");
         var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
         Assert.NotNull(payload);
-        Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
+        Assert.AreEqual(typeof(AsyncApiSchema), payload.GetType());
         var httpBinding = doc.Channels["workspace"].Publish.Bindings.First().Value as HttpOperationBinding;
         Assert.AreEqual("response", httpBinding.Type);
       }

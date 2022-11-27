@@ -6,6 +6,7 @@ namespace LEGO.AsyncAPI.Readers.V2
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -21,7 +22,7 @@ namespace LEGO.AsyncAPI.Readers.V2
         /// <param name="diagnostic">Provide instance for diagnostic object for collecting and accessing information about the parsing.</param>
         public AsyncApiV2VersionService(AsyncApiDiagnostic diagnostic)
         {
-            Diagnostic = diagnostic;
+            this.Diagnostic = diagnostic;
         }
 
         private IDictionary<Type, Func<ParseNode, object>> loaders = new Dictionary<Type, Func<ParseNode, object>>
@@ -41,6 +42,8 @@ namespace LEGO.AsyncAPI.Readers.V2
             [typeof(AsyncApiServer)] = AsyncApiV2Deserializer.LoadServer,
             [typeof(AsyncApiServerVariable)] = AsyncApiV2Deserializer.LoadServerVariable,
             [typeof(AsyncApiTag)] = AsyncApiV2Deserializer.LoadTag,
+            [typeof(AsyncApiMessage)] = AsyncApiV2Deserializer.LoadMessage,
+            [typeof(AsyncApiChannel)] = AsyncApiV2Deserializer.LoadChannel,
         };
 
         /// <summary>
@@ -72,11 +75,11 @@ namespace LEGO.AsyncAPI.Readers.V2
                     {
                         try
                         {
-                            return ParseReference(segments[1]);
+                            return this.ParseReference(segments[1]);
                         }
                         catch (AsyncApiException ex)
                         {
-                            Diagnostic.Errors.Add(new AsyncApiError(ex));
+                            this.Diagnostic.Errors.Add(new AsyncApiError(ex));
                             return null;
                         }
                     }
@@ -120,7 +123,7 @@ namespace LEGO.AsyncAPI.Readers.V2
 
         public T LoadElement<T>(ParseNode node) where T : IAsyncApiElement
         {
-            return (T)loaders[typeof(T)](node);
+            return (T)this.loaders[typeof(T)](node);
         }
 
         private AsyncApiReference ParseReference(string localReference)

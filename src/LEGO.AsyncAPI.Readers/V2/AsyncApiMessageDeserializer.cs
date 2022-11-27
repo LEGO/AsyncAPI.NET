@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Readers
                 "headers", (a, n) => { a.Headers = LoadSchema(n); }
             },
             {
-                "payload", (a, n) => { a.Payload = n.CreateAny(); }
+                "payload", (a, n) => { a.Payload = LoadSchema(n); }
             },
             {
                 "correlationId", (a, n) => { a.CorrelationId = LoadCorrelationId(n); }

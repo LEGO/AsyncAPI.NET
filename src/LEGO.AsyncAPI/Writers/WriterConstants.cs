@@ -112,9 +112,9 @@ namespace LEGO.AsyncAPI.Writers
         internal const string EmptyObject = "{ }";
 
         /// <summary>
-        /// Empty array
+        /// Empty array.
         /// </summary>
         /// <remarks>To indicate empty array in YAML.</remarks>
-        internal const string EmptyArray = "[ ]";
+        internal const string EmptyArray = "[]";
     }
 }

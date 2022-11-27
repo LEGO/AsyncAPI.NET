@@ -1,7 +1,5 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Readers.V2;
-
 namespace LEGO.AsyncAPI.Readers
 {
     using System.IO;
@@ -32,7 +30,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             using (var reader = new StringReader(input))
             {
-                return new AsyncApiTextReaderReader(settings).Read(reader, out diagnostic);
+                return new AsyncApiTextReaderReader(this.settings).Read(reader, out diagnostic);
             }
         }
 
@@ -44,7 +42,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             using (var reader = new StringReader(input))
             {
-                return new AsyncApiTextReaderReader(settings).ReadFragment<T>(reader, version, out diagnostic);
+                return new AsyncApiTextReaderReader(this.settings).ReadFragment<T>(reader, version, out diagnostic);
             }
         }
     }

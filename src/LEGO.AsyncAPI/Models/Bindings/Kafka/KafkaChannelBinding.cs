@@ -28,6 +28,11 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         public int Replicas { get; set; }
 
         /// <summary>
+        /// Topic configuration properties that are relevant for the API.
+        /// </summary>
+        public TopicConfigurationObject TopicConfiguration { get; set; }
+
+        /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.
         /// </summary>
         public string BindingVersion { get; set; }
@@ -51,10 +56,11 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             }
 
             writer.WriteStartObject();
-            writer.WriteOptionalProperty(AsyncApiConstants.Topic, Topic);
-            writer.WriteOptionalProperty<int>(AsyncApiConstants.Partitions, Partitions);
-            writer.WriteOptionalProperty<int>(AsyncApiConstants.Replicas, Replicas);
-            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
+            writer.WriteOptionalProperty(AsyncApiConstants.Topic, this.Topic);
+            writer.WriteOptionalProperty<int>(AsyncApiConstants.Partitions, this.Partitions);
+            writer.WriteOptionalProperty<int>(AsyncApiConstants.Replicas, this.Replicas);
+            writer.WriteOptionalObject(AsyncApiConstants.TopicConfiguration, this.TopicConfiguration, (w, t) => t.Serialize(w));
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
         }
@@ -66,13 +72,13 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
+            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
             {
-                Reference.SerializeV2(writer);
+                this.Reference.SerializeV2(writer);
                 return;
             }
 
-            SerializeV2WithoutReference(writer);
+            this.SerializeV2WithoutReference(writer);
         }
     }
 }

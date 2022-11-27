@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Writers
 {
     using System;
     using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
 
@@ -68,7 +69,6 @@ namespace LEGO.AsyncAPI.Writers
                 case AnyType.Null: // null
                     writer.WriteNull();
                     break;
-
                 default:
                     break;
             }

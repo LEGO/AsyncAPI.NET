@@ -21,7 +21,7 @@ variables:
   channelkey:
     description: some description
 security:
-  - '#/components/securitySchemes/schem1':
+  - schem1:
       - requirement
 tags:
   - name: mytag1

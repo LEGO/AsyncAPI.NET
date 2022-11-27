@@ -16,9 +16,6 @@ namespace LEGO.AsyncAPI.Readers
     public class ParsingContext
     {
         private readonly Stack<string> currentLocation = new ();
-        private readonly Dictionary<string, object> tempStorage = new ();
-        private readonly Dictionary<object, Dictionary<string, object>> scopedTempStorage = new ();
-        private readonly Dictionary<string, Stack<string>> loopStacks = new ();
 
         internal Dictionary<string, Func<IAsyncApiAny, IAsyncApiExtension>> ExtensionParsers
         {
@@ -104,79 +101,9 @@ namespace LEGO.AsyncAPI.Readers
                 this.currentLocation.Reverse().Select(s => s.Replace("~", "~0").Replace("/", "~1")).ToArray());
         }
 
-        public T GetFromTempStorage<T>(string key, object scope = null)
-        {
-            Dictionary<string, object> storage;
-
-            if (scope == null)
-            {
-                storage = this.tempStorage;
-            }
-            else if (!this.scopedTempStorage.TryGetValue(scope, out storage))
-            {
-                return default(T);
-            }
-
-            return storage.TryGetValue(key, out var value) ? (T)value : default(T);
-        }
-
-        public void SetTempStorage(string key, object value, object scope = null)
-        {
-            Dictionary<string, object> storage;
-
-            if (scope == null)
-            {
-                storage = this.tempStorage;
-            }
-            else if (!this.scopedTempStorage.TryGetValue(scope, out storage))
-            {
-                storage = this.scopedTempStorage[scope] = new Dictionary<string, object>();
-            }
-
-            if (value == null)
-            {
-                storage.Remove(key);
-            }
-            else
-            {
-                storage[key] = value;
-            }
-        }
-
         public void StartObject(string objectName)
         {
             this.currentLocation.Push(objectName);
-        }
-
-        public bool PushLoop(string loopId, string key)
-        {
-            Stack<string> stack;
-            if (!this.loopStacks.TryGetValue(loopId, out stack))
-            {
-                stack = new Stack<string>();
-                this.loopStacks.Add(loopId, stack);
-            }
-
-            if (!stack.Contains(key))
-            {
-                stack.Push(key);
-                return true;
-            }
-
-            return false; // Loop detected
-        }
-
-        internal void ClearLoop(string loopid)
-        {
-            this.loopStacks[loopid].Clear();
-        }
-
-        public void PopLoop(string loopid)
-        {
-            if (this.loopStacks[loopid].Count > 0)
-            {
-                this.loopStacks[loopid].Pop();
-            }
         }
     }
 }

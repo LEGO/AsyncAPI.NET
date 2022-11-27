@@ -49,11 +49,11 @@ namespace LEGO.AsyncAPI.Models
             foreach (var binding in this)
             {
                 var bindingType = binding.Key;
-                var messageBinding = binding.Value;
+                var bindingValue = binding.Value;
 
                 writer.WritePropertyName(bindingType.GetDisplayName());
 
-                messageBinding.SerializeV2(writer);
+                bindingValue.SerializeV2(writer);
             }
 
             writer.WriteEndObject();
