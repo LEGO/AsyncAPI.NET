@@ -24,8 +24,11 @@
   examples:
     - x-correlation-id: nil
 payload:
-  propA: a
-  propB: 1
+  properties:
+    propA:
+      type: string
+    propB:
+      type: string
 correlationId:
   description: CorrelationDescription
   location: Header
@@ -97,10 +100,29 @@ traits:
                         },
                     },
                 },
-                Payload = new AsyncApiObject()
+                Payload = new AsyncApiSchema()
                 {
-                    { "propA", new AsyncApiString("a") },
-                    { "propB", new AsyncApiInteger(1) },
+                    Properties = new Dictionary<string, AsyncApiSchema>
+                    {
+                        {
+                            "propA", new AsyncApiSchema()
+                            {
+                                Type = new List<SchemaType>()
+                                {
+                                    SchemaType.String,
+                                },
+                            }
+                        },
+                        {
+                            "propB", new AsyncApiSchema()
+                            {
+                                Type = new List<SchemaType>()
+                                {
+                                    SchemaType.String,
+                                },
+                            }
+                        },
+                    },
                 },
                 CorrelationId = new AsyncApiCorrelationId
                 {

@@ -1,12 +1,11 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Readers.V2
+namespace LEGO.AsyncAPI.Readers
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Validations;
 
     public enum ReferenceResolutionSetting

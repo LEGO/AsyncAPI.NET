@@ -1,7 +1,5 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Readers.V2;
-
 namespace LEGO.AsyncAPI.Readers
 {
     using System.IO;
@@ -35,8 +33,8 @@ namespace LEGO.AsyncAPI.Readers
         public AsyncApiDocument Read(Stream input, out AsyncApiDiagnostic diagnostic)
         {
             var reader = new StreamReader(input);
-            var result = new AsyncApiTextReaderReader(settings).Read(reader, out diagnostic);
-            if (!settings.LeaveStreamOpen)
+            var result = new AsyncApiTextReaderReader(this.settings).Read(reader, out diagnostic);
+            if (!this.settings.LeaveStreamOpen)
             {
                 reader.Dispose();
             }
@@ -67,7 +65,7 @@ namespace LEGO.AsyncAPI.Readers
 
             var reader = new StreamReader(bufferedStream);
 
-            return await new AsyncApiTextReaderReader(settings).ReadAsync(reader);
+            return await new AsyncApiTextReaderReader(this.settings).ReadAsync(reader);
         }
 
         /// <summary>
@@ -82,7 +80,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             using (var reader = new StreamReader(input))
             {
-                return new AsyncApiTextReaderReader(settings).ReadFragment<T>(reader, version, out diagnostic);
+                return new AsyncApiTextReaderReader(this.settings).ReadFragment<T>(reader, version, out diagnostic);
             }
         }
     }

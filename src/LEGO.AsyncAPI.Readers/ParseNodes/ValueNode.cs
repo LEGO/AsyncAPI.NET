@@ -36,7 +36,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 return value;
             }
 
-            throw new AsyncApiReaderException("Value could not parse to integer", node);
+            throw new AsyncApiReaderException("Value could not parse to integer", this.node);
         }
 
         public override long GetLongValue()
@@ -46,7 +46,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 return value;
             }
 
-            throw new AsyncApiReaderException("Value could not parse to long", node);
+            throw new AsyncApiReaderException("Value could not parse to long", this.node);
         }
 
         public override bool GetBooleanValue()
@@ -56,7 +56,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 return value;
             }
 
-            throw new AsyncApiReaderException("Value could not parse to bool", node);
+            throw new AsyncApiReaderException("Value could not parse to bool", this.node);
         }
 
         public override IAsyncApiAny CreateAny()
