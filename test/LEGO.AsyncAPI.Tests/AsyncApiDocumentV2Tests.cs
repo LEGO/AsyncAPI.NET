@@ -831,7 +831,6 @@ components:
             string messageSummary = "messageSummary";
             string messageName = "messageName";
             string contentType = "contentType";
-            string schemaFormat = "schemaFormat";
             string correlationLocation = "correlationLocation";
             string correlationDescription = "correlationDescription";
             string traitName = "traitName";
@@ -993,7 +992,6 @@ components:
                                             Summary = messageSummary,
                                             Name = messageName,
                                             ContentType = contentType,
-                                            SchemaFormat = schemaFormat,
                                             CorrelationId = new AsyncApiCorrelationId
                                             {
                                                 Location = correlationLocation,

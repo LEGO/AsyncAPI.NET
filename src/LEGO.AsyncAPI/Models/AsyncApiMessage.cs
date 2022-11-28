@@ -38,7 +38,7 @@ namespace LEGO.AsyncAPI.Models
         /// <remarks>
         /// If omitted, implementations should parse the payload as a Schema object.
         /// </remarks>
-        public string SchemaFormat { get; set; }
+        public SchemaFormat SchemaFormat { get; set; } = SchemaFormat.AsyncApi;
 
         /// <summary>
         /// the content type to use when encoding/decoding a message's payload.
@@ -126,7 +126,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.Payload, this.Payload, (w, p) => p.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.CorrelationId, this.CorrelationId, (w, c) => c.SerializeV2(w));
-            writer.WriteOptionalProperty(AsyncApiConstants.SchemaFormat, this.SchemaFormat);
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaFormat, this.SchemaFormat.GetDisplayName());
             writer.WriteOptionalProperty(AsyncApiConstants.ContentType, this.ContentType);
             writer.WriteOptionalProperty(AsyncApiConstants.Name, this.Name);
             writer.WriteOptionalProperty(AsyncApiConstants.Title, this.Title);

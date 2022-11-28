@@ -2,9 +2,13 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
+    using LEGO.AsyncAPI.Writers;
+    using System;
+
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
@@ -26,7 +30,7 @@ namespace LEGO.AsyncAPI.Readers
                 "correlationId", (a, n) => { a.CorrelationId = LoadCorrelationId(n); }
             },
             {
-                "schemaFormat", (a, n) => { a.SchemaFormat = n.GetScalarValue(); }
+                "schemaFormat", (a, n) => { a.SchemaFormat = LoadSchemaFormat(n.GetScalarValue()); }
             },
             {
                 "contentType", (a, n) => { a.ContentType = n.GetScalarValue(); }
@@ -59,6 +63,22 @@ namespace LEGO.AsyncAPI.Readers
                 "traits", (a, n) => a.Traits = n.CreateList(LoadMessageTrait)
             },
         };
+
+        private static SchemaFormat LoadSchemaFormat(string format)
+        {
+            if (format == string.Empty)
+            {
+                return SchemaFormat.AsyncApi;
+            }
+
+            var schemaFormat = format.GetEnumFromDisplayName<SchemaFormat>();
+            if (schemaFormat == SchemaFormat.Unsupported)
+            {
+                throw new AsyncApiException($"SchemaFormat '{format}' is not supported");
+            }
+
+            return schemaFormat;
+        }
 
         private static readonly PatternFieldMap<AsyncApiMessage> messagePatternFields = new()
         {
