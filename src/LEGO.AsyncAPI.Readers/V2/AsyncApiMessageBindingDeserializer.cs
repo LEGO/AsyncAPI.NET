@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings;
@@ -48,7 +49,7 @@ namespace LEGO.AsyncAPI.Readers
                 case BindingType.Http:
                     return LoadBinding<HttpMessageBinding>("MessageBinding", property.Value, httpMessageBindingFixedFields);
                 default:
-                    throw new System.Exception("MessageBinding not found");
+                    throw new AsyncApiException($"MessageBinding {property.Name} is not supported");
             }
         }
     }
