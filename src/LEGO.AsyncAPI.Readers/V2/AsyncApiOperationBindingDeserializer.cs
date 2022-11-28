@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -45,7 +46,7 @@ namespace LEGO.AsyncAPI.Readers
                 case BindingType.Http:
                     return LoadBinding("OperationBinding", property.Value, httpOperationBindingFixedFields);
                 default:
-                    throw new System.Exception("OperationBinding not found");
+                    throw new AsyncApiException($"OperationBinding {property.Name} is not supported");
             }
         }
     }

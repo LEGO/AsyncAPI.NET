@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -45,7 +46,7 @@ namespace LEGO.AsyncAPI.Readers
                 case BindingType.Websockets:
                     return LoadBinding("ChannelBinding", property.Value, webSocketsChannelBindingFixedFields);
                 default:
-                    throw new System.Exception("ChannelBinding not found");
+                    throw new AsyncApiException($"ChannelBinding {property.Name} is not supported");
             }
         }
     }

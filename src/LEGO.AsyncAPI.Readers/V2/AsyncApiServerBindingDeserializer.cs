@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -43,7 +44,7 @@ namespace LEGO.AsyncAPI.Readers
                 case BindingType.Kafka:
                     return LoadBinding("ServerBinding", property.Value, kafkaServerBindingFixedFields);
                 default:
-                    throw new System.Exception("ServerBinding not found");
+                    throw new AsyncApiException($"ServerBinding {property.Name} is not supported");
             }
         }
     }
