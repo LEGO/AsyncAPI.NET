@@ -71,7 +71,7 @@ namespace LEGO.AsyncAPI.Readers
                 return SchemaFormat.AsyncApi;
             }
 
-            var schemaFormat = format.GetEnumFromDisplayName<SchemaFormat>();
+            var schemaFormat = format.GetEnumFromDisplayNameOrDefault<SchemaFormat>(SchemaFormat.Unsupported);
             if (schemaFormat == SchemaFormat.Unsupported)
             {
                 throw new AsyncApiException($"SchemaFormat '{format}' is not supported");

@@ -759,7 +759,6 @@ channels:
               description: correlationDescription
               location: correlationLocation
               x-extension: value
-            schemaFormat: schemaFormat
             contentType: contentType
             name: messageName
             title: messageTitle

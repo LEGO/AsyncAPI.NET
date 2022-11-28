@@ -31,7 +31,7 @@
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            message.SchemaFormat.Should().Be(SchemaFormat.AsyncApi);
+            message.SchemaFormat.Should().BeNull();
         }
 
         [Test]
@@ -56,7 +56,7 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
         }
 
         [Test]
-        public void AsyncApiMessage_WithNoSchemaFormat_SerializesDefault()
+        public void AsyncApiMessage_WithNoSchemaFormat_DoesNotSerializeSchemaFormat()
         {
             // Arrange
             var expected =
@@ -65,8 +65,7 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
     propertyA:
       type:
         - string
-        - 'null'
-schemaFormat: application/vnd.aai.asyncapi;version=2.5.0";
+        - 'null'";
 
             var message = new AsyncApiMessage();
             message.Payload = new AsyncApiSchema()
@@ -117,7 +116,7 @@ schemaFormat: application/vnd.aai.asyncapi+json;version=2.5.0";
                     {
                         "propertyA", new AsyncApiSchema()
                         {
-                            Type = new List<SchemaType> { SchemaType.String,SchemaType.Null },
+                            Type = new List<SchemaType> { SchemaType.String, SchemaType.Null },
                         }
                     },
                 },
@@ -223,6 +222,7 @@ traits:
                         },
                     },
                 },
+                SchemaFormat = SchemaFormat.AsyncApi,
                 Payload = new AsyncApiSchema()
                 {
                     Properties = new Dictionary<string, AsyncApiSchema>

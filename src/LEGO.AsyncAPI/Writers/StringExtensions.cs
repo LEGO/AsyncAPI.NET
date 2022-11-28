@@ -33,5 +33,27 @@ namespace LEGO.AsyncAPI.Writers
 
             return default;
         }
+
+        public static T GetEnumFromDisplayNameOrDefault<T>(this string displayName, T defaultValue)
+        {
+            var type = typeof(T);
+            if (!type.IsEnum)
+            {
+                return default;
+            }
+
+            foreach (var value in Enum.GetValues(type))
+            {
+                var field = type.GetField(value.ToString());
+
+                var displayAttribute = (DisplayAttribute)field.GetCustomAttribute(typeof(DisplayAttribute));
+                if (displayAttribute != null && displayAttribute.Name == displayName)
+                {
+                    return (T)value;
+                }
+            }
+
+            return defaultValue;
+        }
     }
 }

@@ -10,121 +10,13 @@ namespace LEGO.AsyncAPI.Tests
 
     public class AsyncApiReaderTests
     {
-      [Test]
-      public void Read_WithFullSpec_Deserializes()
-      {
-        var yaml = @"asyncapi: 2.3.0
-info:
-  title: AMMA
-  version: 1.0.0
-  x-audience: component-internal
-  x-application-id: APP-12345
-  description: |
-    Sending AMMA metadata events to the topic.
-  license:
-    name: Apache 2.0
-    url: 'https://www.apache.org/licenses/LICENSE-2.0'
-servers:
-  production:
-    url: 'pulsar+ssl://prod.events.managed.async.api.legogroup.io:6651'
-    protocol: pulsar+ssl
-    description: Pulsar broker
-channels:
-  workspace:
-    x-eventarchetype: objectchanged
-    x-classification: green
-    x-datalakesubscription: true
-    publish:
-      bindings:
-        http:
-          $ref: '#/components/operationBindings/http'
-      message:
-        $ref: '#/components/messages/WorkspaceEventPayload'
-  api:
-    x-eventarchetype: objectchanged
-    x-classification: green
-    x-datalakesubscription: true
-    publish:
-      bindings:
-        http:
-          $ref: '#/components/operationBindings/http'
-      message:
-        $ref: '#/components/messages/APIEventPayload'
-components:
-  operationBindings:
-    http:
-      type: response
-  messages:
-    WorkspaceEventPayload:
-      schemaFormat: application/vnd.apache.avro;version=1.9.0,
-      summary: Metadata about a workspace that has been created, updated or deleted.
-      payload:
-        type: object
-        properties:
-          key:
-            type: string
-            description: Key of the message.
-          event:
-            type: string
-            description: Event type.
-          payload:
-            type: object
-            properties:
-              workspace:
-                type: string
-                description: Name of the workspace.
-              href:
-                type: string
-                description: Send an API request to this url for detailed data on the referenced workspace.
-                
-    APIEventPayload:
-      schemaFormat: application/schema+yaml;version=draft-07
-      summary: Metadata about an API that has been created, updated or deleted.
-      payload:
-        type: object
-        properties:
-          key:
-            type: string
-            description: Key of the message.
-          event:
-            type: string
-            description: Event type.
-          payload:
-            type: object
-            properties:
-              workspace:
-                type: string
-                description: Name of the workspace.
-              api:
-                type: string
-                description: Name of the API.
-              href:
-                type: string
-                description: Send an API request to this url for detailed data on the referenced API.
-";
-        var reader = new AsyncApiStringReader();
-        var doc = reader.Read(yaml, out var diagnostic);
-        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-eventarchetype"] as AsyncApiString).Value,
-          "objectchanged");
-        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-classification"] as AsyncApiString).Value, "green");
-        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-datalakesubscription"] as AsyncApiBoolean).Value,
-          true);
-        var message = doc.Channels["workspace"].Publish.Message;
-        Assert.AreEqual(message.First().SchemaFormat, "application/schema+yaml;version=draft-07");
-        Assert.AreEqual(message.First().Summary, "Metadata about a workspace that has been created, updated or deleted.");
-        var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
-        Assert.NotNull(payload);
-        Assert.AreEqual(typeof(AsyncApiSchema), payload.GetType());
-        var httpBinding = doc.Channels["workspace"].Publish.Bindings.First().Value as HttpOperationBinding;
-        Assert.AreEqual("response", httpBinding.Type);
-      }
 
       [Test]
       public void Read_WithBasicPlusContact_Deserializes()
       {
         var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
   contact:  
     name: API Support
@@ -146,7 +38,7 @@ channels:
       {
         var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 channels:
   workspace:
@@ -155,10 +47,10 @@ channels:
         http:
           type: response
       message:
-        $ref: '#/components/messages/WorkspaceEventPayload'
+        $ref: '#/components/messages/testPayLoad'
 components:
   messages:
-    WorkspaceEventPayload:
+    testPayLoad:
       schemaFormat: application/schema+yaml;version=draft-07
       externalDocs: 
         description: Find more info here
@@ -455,7 +347,7 @@ components:
 ";
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
-            Assert.AreEqual("application/schema+yaml;version=draft-07", doc.Channels.First().Value.Publish.Message.First().SchemaFormat);
+            Assert.AreEqual("application/schema+yaml;version=draft-07", doc.Channels.First().Value.Publish.Message.First().SchemaFormat.GetDisplayName());
         }
 
         [Test]

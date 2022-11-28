@@ -6,8 +6,6 @@ namespace LEGO.AsyncAPI.Models
 
     public enum SchemaFormat
     {
-        Unsupported,
-
         [Display("application/vnd.aai.asyncapi;version=2.5.0")]
         AsyncApi,
 
@@ -17,10 +15,12 @@ namespace LEGO.AsyncAPI.Models
         [Display("application/vnd.aai.asyncapi+yaml;version=2.5.0")]
         AsyncApiYaml,
 
-        [Display("application/vnd.aai.asyncapi+json;version=2.5.0")]
+        [Display("application/schema+json;version=draft-07")]
         JsonSchemaJson,
 
-        [Display("application/vnd.aai.asyncapi+yaml;version=2.5.0")]
+        [Display("application/schema+yaml;version=draft-07")]
         JsonSchemaYaml,
+
+        Unsupported = 99999999,
     }
 }
