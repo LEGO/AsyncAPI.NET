@@ -10,506 +10,12 @@ namespace LEGO.AsyncAPI.Tests
 
     public class AsyncApiReaderTests
     {
-        [Test]
-        public void Read()
-        {
-            var json = @"{
-  'asyncapi': '2.3.0',
-  'info': {
-    'x-application-id': 'APP-00881',
-    'x-audience': 'company-internal',
-    'x-skip-infrastructure': false,
-    'title': 'CatalogEventAPI',
-    'version': '1.0.0',
-    'description': 'API for subscribing to changes in the Catalog. The Catalog is a variaty of editorial content.',
-    'contact': {
-      'name': 'Content Publishing Platform',
-      'url': 'https://teams.microsoft.com/l/channel/19%3a2dd4ddc220714cb09df23ff8fca99229%40thread.tacv2/General?groupId=6ea24e60-1f97-4b85-acac-6408ac51248f&tenantId=1d063515-6cad-4195-9486-ea65df456faa',
-      'email': '49ad63d3.o365.corp.LEGO.com@emea.teams.ms'
-    }
-  },
-  'defaultContentType': 'application/json',
-  'channels': {
-    'ThemeChangedV1': {
-      'x-eventdeduplication': true,
-      'x-eventarchetype': 'objectchanged',
-      'x-classification': 'green',
-      'x-eventdurability': 'persistent',
-      'x-datalakesubscription': true,
-      'publish': {
-        'operationId': 'ThemeChanged',
-        'summary': 'Theme changes',
-        'description': 'Themes published, unpublished or deleted.',
-        'message': { '$ref': '#/components/messages/ThemeV1' }
-      }
-    },
-    'CharacterChangedV1': {
-      'x-eventdeduplication': true,
-      'x-eventarchetype': 'objectchanged',
-      'x-classification': 'green',
-      'x-eventdurability': 'persistent',
-      'x-datalakesubscription': true,
-      'publish': {
-        'operationId': 'CharacterChanged',
-        'summary': 'Character changes',
-        'description': 'Characters published, unpublished or deleted.',
-        'message': { '$ref': '#/components/messages/CharacterV1' }
-      }
-    }
-  },
-  'components': {
-    'schemas': {
-      'themeDto': {
-        'type': 'object',
-        'properties': {
-          'id': {
-            'type': 'string',
-            'description': 'Unique id for the specific translations'
-          },
-          'title': {
-            'type': 'string',
-            'description': 'Display title of the theme'
-          },
-          'description': {
-            'type': 'string',
-            'description': 'Richtext description. Can be null.'
-          },
-          'colors': {
-            'description': 'Theme colors',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/themeColorsDto' }
-            ]
-          },
-          'icon': {
-            'description': 'Theme icon',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/themeIconDto' }
-            ]
-          },
-          'logo': {
-            'description': 'Theme Logo',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'bannerStandard': {
-            'description': 'Banner standard',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'bannerWide': {
-            'description': 'Benner wide',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'parentThemeId': {
-            'type': 'string',
-            'description': 'For sub-themes this property will contain the Id of the parent theme. Can be null.'
-          },
-          'parentImages': {
-            'description': 'Images only available on parent themes',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/parentImagesDto' }
-            ]
-          },
-          'invariantId': {
-            'type': 'string',
-            'description': 'Unique id across translations',
-            'format': 'guid'
-          },
-          'contentLocale': {
-            'type': 'string',
-            'description': 'Localized language'
-          },
-          'marketLocale': {
-            'type': 'string',
-            'description': 'Published market'
-          },
-          'version': {
-            'type': 'integer',
-            'description': 'Published version',
-            'format': 'int32'
-          },
-          'publishedAt': {
-            'type': 'string',
-            'description': 'Published at',
-            'format': 'date-time'
-          }
-        }
-      },
-      'themeColorsDto': {
-        'type': 'object',
-        'properties': {
-          'primary': {
-            'description': 'Primary theme color',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/colorDto' }
-            ]
-          },
-          'secondary': {
-            'description': 'Secondary theme color',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/colorDto' }
-            ]
-          },
-          'accentLight': {
-            'description': 'Accent light color',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/colorDto' }
-            ]
-          },
-          'accentDark': {
-            'description': 'Accent dark color',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/colorDto' }
-            ]
-          }
-        }
-      },
-      'colorDto': {
-        'type': 'object',
-        'properties': {
-          'red': {
-            'type': 'integer',
-            'format': 'int32'
-          },
-          'green': {
-            'type': 'integer',
-            'format': 'int32'
-          },
-          'blue': {
-            'type': 'integer',
-            'format': 'int32'
-          }
-        }
-      },
-      'themeIconDto': {
-        'type': 'object',
-        'properties': {
-          'themeLogoUrl': {
-            'type': 'string',
-            'description': 'Theme logo. Can be null.',
-            'format': 'uri'
-          },
-          'signatureCharacterUrl': {
-            'type': 'string',
-            'description': 'Signature character. Can be null.',
-            'format': 'uri'
-          },
-          'altText': {
-            'type': 'string',
-            'description': 'Alternate text for the icon. Can be null.'
-          }
-        }
-      },
-      'imageDto': {
-        'type': 'object',
-        'properties': {
-          'url': {
-            'type': 'string',
-            'description': 'Absolute url to image',
-            'format': 'uri'
-          },
-          'altText': {
-            'type': 'string',
-            'description': 'Image alternate text'
-          }
-        }
-      },
-      'parentImagesDto': {
-        'type': 'object',
-        'properties': {
-          'logoPortrait': {
-            'description': 'Logo portrait image',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'background': {
-            'description': 'Background image',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'border': {
-            'description': 'Border image',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'banner': {
-            'description': 'Banner image',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'button': {
-            'description': 'Button image',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'playlist': {
-            'description': 'Playlist image',
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          }
-        }
-      },
-      'characterDto': {
-        'type': 'object',
-        'description': 'A person in a product or movie. Typically related to a mini-fig.',
-        'properties': {
-          'name': { 'type': 'string' },
-          'descriptionKids': { 'type': 'string' },
-          'descriptionGrownups': { 'type': 'string' },
-          'mugshot': {
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'landscapePose': {
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'squareFullBody': {
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'threeDSpin': {
-            'oneOf': [
-              { 'type': 'null' },
-              { '$ref': '#/components/schemas/imageDto' }
-            ]
-          },
-          'themes': {
-            'type': 'array',
-            'description': 'List of themes IDs',
-            'items': { 'type': 'string' }
-          },
-          'channels': {
-            'type': 'array',
-            'description': 'List of target channels names',
-            'items': { '$ref': '#/components/schemas/channelDto' }
-          },
-          'audiences': {
-            'type': 'array',
-            'description': 'List of target audiences names',
-            'items': { '$ref': '#/components/schemas/audienceDto' }
-          },
-          'animationVideoId': {
-            'type': 'string',
-            'description': 'Id of the video animations of this character'
-          },
-          'id': {
-            'type': 'string',
-            'description': 'Unique id for the specific translations'
-          },
-          'invariantId': {
-            'type': 'string',
-            'description': 'Unique id across translations',
-            'format': 'guid'
-          },
-          'contentLocale': {
-            'type': 'string',
-            'description': 'Localized language'
-          },
-          'marketLocale': {
-            'type': 'string',
-            'description': 'Published market'
-          },
-          'version': {
-            'type': 'integer',
-            'description': 'Published version',
-            'format': 'int32'
-          },
-          'publishedAt': {
-            'type': 'string',
-            'description': 'Published at',
-            'format': 'date-time'
-          }
-        }
-      },
-      'channelDto': {
-        'type': 'object',
-        'properties': {
-          'id': { 'type': 'string' },
-          'title': { 'type': 'string' }
-        }
-      },
-      'audienceDto': {
-        'type': 'object',
-        'properties': {
-          'id': { 'type': 'string' },
-          'title': { 'type': 'string' }
-        }
-      }
-    },
-    'messages': {
-      'ThemeV1': {
-        'payload': { '$ref': '#/components/schemas/themeDto' },
-        'name': 'ThemeV1',
-        'title': 'Theme V1',
-        'summary': 'Marked specific theme',
-        'description': 'A theme data object containing title, description, colors and images. A theme is translated to a variaty of languages.'
-      },
-      'CharacterV1': {
-        'payload': { '$ref': '#/components/schemas/characterDto' },
-        'name': 'CharacterV1',
-        'title': 'Character V1',
-        'summary': 'Marked specific character',
-        'description': 'A character data object containing title, description and images. The character is translated to a variaty of languages.'
-      }
-    }
-  },
-  'externalDocs': {
-    'description': 'Product handbook',
-    'url': 'https://platform.pages.git42.corp.lego.com/handbook/docs/products/catalog/'
-  }
-}";
-            var reader = new AsyncApiStringReader();
-            var doc = reader.Read(json, out var diagnostic);
-        }
-
-      [Test]
-      public void Read_WithFullSpec_Deserializes()
-      {
-        var yaml = @"asyncapi: 2.3.0
-info:
-  title: AMMA
-  version: 1.0.0
-  x-audience: component-internal
-  x-application-id: APP-12345
-  description: |
-    Sending AMMA metadata events to the topic.
-  license:
-    name: Apache 2.0
-    url: 'https://www.apache.org/licenses/LICENSE-2.0'
-servers:
-  production:
-    url: 'pulsar+ssl://prod.events.managed.async.api.legogroup.io:6651'
-    protocol: pulsar+ssl
-    description: Pulsar broker
-channels:
-  workspace:
-    x-eventarchetype: objectchanged
-    x-classification: green
-    x-datalakesubscription: true
-    publish:
-      bindings:
-        http:
-          $ref: '#/components/operationBindings/http'
-      message:
-        $ref: '#/components/messages/WorkspaceEventPayload'
-  api:
-    x-eventarchetype: objectchanged
-    x-classification: green
-    x-datalakesubscription: true
-    publish:
-      bindings:
-        http:
-          $ref: '#/components/operationBindings/http'
-      message:
-        $ref: '#/components/messages/APIEventPayload'
-components:
-  operationBindings:
-    http:
-      type: response
-  messages:
-    WorkspaceEventPayload:
-      schemaFormat: application/schema+yaml;version=draft-07
-      summary: Metadata about a workspace that has been created, updated or deleted.
-      payload:
-        type: object
-        properties:
-          key:
-            type: string
-            description: Key of the message.
-          event:
-            type: string
-            description: Event type.
-          payload:
-            type: object
-            properties:
-              workspace:
-                type: string
-                description: Name of the workspace.
-              href:
-                type: string
-                description: Send an API request to this url for detailed data on the referenced workspace.
-                
-    APIEventPayload:
-      schemaFormat: application/schema+yaml;version=draft-07
-      summary: Metadata about an API that has been created, updated or deleted.
-      payload:
-        type: object
-        properties:
-          key:
-            type: string
-            description: Key of the message.
-          event:
-            type: string
-            description: Event type.
-          payload:
-            type: object
-            properties:
-              workspace:
-                type: string
-                description: Name of the workspace.
-              api:
-                type: string
-                description: Name of the API.
-              href:
-                type: string
-                description: Send an API request to this url for detailed data on the referenced API.
-";
-        var reader = new AsyncApiStringReader();
-        var doc = reader.Read(yaml, out var diagnostic);
-        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-eventarchetype"] as AsyncApiString).Value,
-          "objectchanged");
-        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-classification"] as AsyncApiString).Value, "green");
-        Assert.AreEqual((doc.Channels["workspace"].Extensions["x-datalakesubscription"] as AsyncApiBoolean).Value,
-          true);
-        var message = doc.Channels["workspace"].Publish.Message;
-        Assert.AreEqual(message.First().SchemaFormat, "application/schema+yaml;version=draft-07");
-        Assert.AreEqual(message.First().Summary, "Metadata about a workspace that has been created, updated or deleted.");
-        var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
-        Assert.NotNull(payload);
-        Assert.AreEqual(typeof(AsyncApiSchema), payload.GetType());
-        var httpBinding = doc.Channels["workspace"].Publish.Bindings.First().Value as HttpOperationBinding;
-        Assert.AreEqual("response", httpBinding.Type);
-      }
-
       [Test]
       public void Read_WithBasicPlusContact_Deserializes()
       {
         var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
   contact:  
     name: API Support
@@ -531,7 +37,7 @@ channels:
       {
         var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 channels:
   workspace:
@@ -561,7 +67,7 @@ components:
       {
         var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 channels:
   workspace:
@@ -582,7 +88,7 @@ tags:
       {
         var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 channels:
   workspace:
@@ -607,7 +113,7 @@ servers:
       {
         var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 channels:
   workspace:
@@ -639,7 +145,7 @@ servers:
       {
         var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 channels:
   workspace:
@@ -669,7 +175,7 @@ components:
         {
             var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 channels:
   workspace:
@@ -700,7 +206,7 @@ components:
       {
         var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 channels:
   workspace:
@@ -732,7 +238,7 @@ components:
       {
         var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 channels:
   workspace:
@@ -764,7 +270,7 @@ components:
         {
             var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 servers:
   production:
@@ -802,7 +308,7 @@ components:
         {
             var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 servers:
   production:
@@ -848,7 +354,7 @@ components:
         {
             var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 channels:
   workspace:
@@ -943,7 +449,7 @@ components:
         {
             var yaml = @"asyncapi: 2.3.0
 info:
-  title: AMMA
+  title: test
   version: 1.0.0
 servers:
   production:
