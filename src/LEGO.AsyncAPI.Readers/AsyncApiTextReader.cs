@@ -80,7 +80,6 @@ namespace LEGO.AsyncAPI.Readers
             return await new AsyncApiYamlDocumentReader(this.settings).ReadAsync(yamlDocument);
         }
 
-
         /// <summary>
         /// Reads the stream input and parses the fragment of an AsyncApi description into an AsyncApi Element.
         /// </summary>
@@ -102,7 +101,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 diagnostic = new AsyncApiDiagnostic();
                 diagnostic.Errors.Add(new AsyncApiError($"#line={ex.Start.Line}", ex.Message));
-                return default(T);
+                return default;
             }
 
             return new AsyncApiYamlDocumentReader(this.settings).ReadFragment<T>(yamlDocument, version,

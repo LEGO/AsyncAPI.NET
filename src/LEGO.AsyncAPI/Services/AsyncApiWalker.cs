@@ -797,6 +797,17 @@ namespace LEGO.AsyncAPI.Services
             }
         }
 
+        internal void Walk(AsyncApiServerVariable serverVariable)
+        {
+            if (serverVariable == null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(serverVariable);
+            this.Walk(serverVariable as IAsyncApiExtensible);
+        }
+
         internal void Walk(AsyncApiLicense license)
         {
             if (license == null)

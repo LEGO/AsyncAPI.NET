@@ -66,5 +66,10 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteEndObject();
         }
+
+        public void Write(IAsyncApiWriter writer)
+        {
+            this.SerializeV2(writer);
+        }
     }
 }

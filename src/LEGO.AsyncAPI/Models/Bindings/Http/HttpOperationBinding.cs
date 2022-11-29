@@ -44,10 +44,10 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
 
             writer.WriteStartObject();
 
-            writer.WriteRequiredProperty(AsyncApiConstants.Type, Type);
-            writer.WriteOptionalProperty(AsyncApiConstants.Method, Method);
-            writer.WriteOptionalObject(AsyncApiConstants.Query, Query, (w, h) => h.SerializeV2(w));
-            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
+            writer.WriteRequiredProperty(AsyncApiConstants.Type, this.Type);
+            writer.WriteOptionalProperty(AsyncApiConstants.Method, this.Method);
+            writer.WriteOptionalObject(AsyncApiConstants.Query, this.Query, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
         }
@@ -59,13 +59,13 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
+            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
             {
-                Reference.SerializeV2(writer);
+                this.Reference.SerializeV2(writer);
                 return;
             }
 
-            SerializeV2WithoutReference(writer);
+            this.SerializeV2WithoutReference(writer);
         }
 
         /// <inheritdoc/>

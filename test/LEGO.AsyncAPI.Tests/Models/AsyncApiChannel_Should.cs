@@ -63,7 +63,7 @@
                 },
             };
 
-            var actual = channel.SerializeAsYaml();
+            var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
@@ -98,7 +98,7 @@
                 },
             };
 
-            var actual = channel.SerializeAsYaml();
+            var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();

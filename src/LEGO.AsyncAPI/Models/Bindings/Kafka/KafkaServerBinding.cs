@@ -46,9 +46,9 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             }
 
             writer.WriteStartObject();
-            writer.WriteOptionalProperty(AsyncApiConstants.SchemaRegistryUrl, SchemaRegistryUrl);
-            writer.WriteOptionalProperty(AsyncApiConstants.SchemaRegistryVendor, SchemaRegistryVendor);
-            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaRegistryUrl, this.SchemaRegistryUrl);
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaRegistryVendor, this.SchemaRegistryVendor);
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
         }
@@ -60,13 +60,13 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
+            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
             {
-                Reference.SerializeV2(writer);
+                this.Reference.SerializeV2(writer);
                 return;
             }
 
-            SerializeV2WithoutReference(writer);
+            this.SerializeV2WithoutReference(writer);
         }
     }
 }

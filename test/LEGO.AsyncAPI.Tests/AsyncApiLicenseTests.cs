@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Tests
                 },
             };
 
-            var actual = license.SerializeAsJson();
+            var actual = license.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
             actual = actual.MakeLineBreaksEnvironmentNeutral();
@@ -76,7 +76,7 @@ namespace LEGO.AsyncAPI.Tests
                 var node = new MapNode(context, (YamlMappingNode)yamlNode);
 
                 // Act
-                var actual = AsyncApiDeserializer.LoadLicense(node);
+                var actual = AsyncApiV2Deserializer.LoadLicense(node);
 
                 // Assert
                 var expected = new AsyncApiLicense()

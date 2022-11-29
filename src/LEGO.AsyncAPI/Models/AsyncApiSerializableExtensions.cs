@@ -17,11 +17,11 @@ namespace LEGO.AsyncAPI.Models
         /// <typeparam name="T">the <see cref="IAsyncApiSerializable"/></typeparam>
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="stream">The output stream.</param>
-        /// <param name="specVersion">The AsyncApi specification version.</param>
-        public static void SerializeAsJson<T>(this T element, Stream stream)
+        /// <param name="specificationVersion">The AsyncApi specification version.</param>
+        public static void SerializeAsJson<T>(this T element, Stream stream, AsyncApiVersion specificationVersion)
             where T : IAsyncApiSerializable
         {
-            element.Serialize(stream, AsyncApiFormat.Json);
+            element.Serialize(stream, specificationVersion, AsyncApiFormat.Json);
         }
 
         /// <summary>
@@ -30,11 +30,11 @@ namespace LEGO.AsyncAPI.Models
         /// <typeparam name="T">the <see cref="IAsyncApiSerializable"/></typeparam>
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="stream">The output stream.</param>
-        /// <param name="specVersion">The AsyncApi specification version.</param>
-        public static void SerializeAsYaml<T>(this T element, Stream stream)
+        /// <param name="specificationVersion">The AsyncApi specification version.</param>
+        public static void SerializeAsYaml<T>(this T element, Stream stream, AsyncApiVersion specificationVersion)
             where T : IAsyncApiSerializable
         {
-            element.Serialize(stream, AsyncApiFormat.Yaml);
+            element.Serialize(stream, specificationVersion, AsyncApiFormat.Yaml);
         }
 
         /// <summary>
@@ -49,10 +49,11 @@ namespace LEGO.AsyncAPI.Models
         public static void Serialize<T>(
             this T element,
             Stream stream,
+            AsyncApiVersion specificationVersion,
             AsyncApiFormat format)
             where T : IAsyncApiSerializable
         {
-            element.Serialize(stream, format, null);
+            element.Serialize(stream, specificationVersion, format, null);
         }
 
         /// <summary>
@@ -62,12 +63,13 @@ namespace LEGO.AsyncAPI.Models
         /// <typeparam name="T">the <see cref="IAsyncApiSerializable"/></typeparam>
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="stream">The given stream.</param>
-        /// <param name="specVersion">The AsyncApi specification version.</param>
+        /// <param name="specificationVersion">The AsyncApi specification version.</param>
         /// <param name="format">The output format (JSON or YAML).</param>
         /// <param name="settings">Provide configuration settings for controlling writing output</param>
         public static void Serialize<T>(
             this T element,
             Stream stream,
+            AsyncApiVersion specificationVersion,
             AsyncApiFormat format,
             AsyncApiWriterSettings settings)
             where T : IAsyncApiSerializable
@@ -85,16 +87,23 @@ namespace LEGO.AsyncAPI.Models
                 AsyncApiFormat.Yaml => new AsyncApiYamlWriter(streamWriter, settings),
                 _ => throw new AsyncApiException(string.Format("The given AsyncApi format '{0}' is not supported.", format)),
             };
-            element.Serialize(writer);
+            element.Serialize(writer, specificationVersion);
         }
 
         /// <summary>
-        /// Serializes the <see cref="IAsyncApiSerializable"/> to AsyncApi document using the given specification version and writer.
+        /// Serializes the <see cref="IAsyncApiSerializable" /> to AsyncApi document using the given specification version and writer.
         /// </summary>
-        /// <typeparam name="T">the <see cref="IAsyncApiSerializable"/></typeparam>
+        /// <typeparam name="T">the <see cref="IAsyncApiSerializable" /></typeparam>
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="writer">The output writer.</param>
-        public static void Serialize<T>(this T element, IAsyncApiWriter writer)
+        /// <param name="specificationVersion">The specification version.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// element
+        /// or
+        /// writer
+        /// </exception>
+        /// <exception cref="LEGO.AsyncAPI.Exceptions.AsyncApiException">specification version '{specificationVersion}' is not supported.</exception>
+        public static void Serialize<T>(this T element, IAsyncApiWriter writer, AsyncApiVersion specificationVersion)
             where T : IAsyncApiSerializable
         {
             if (element == null)
@@ -107,8 +116,14 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            element.SerializeV2(writer);
-
+            switch (specificationVersion)
+            {
+                case AsyncApiVersion.AsyncApi2_0:
+                     element.SerializeV2(writer);
+                     break;
+                default:
+                     throw new AsyncApiException($"specification version '{specificationVersion}' is not supported.");
+            }
             writer.Flush();
         }
 
@@ -119,10 +134,11 @@ namespace LEGO.AsyncAPI.Models
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="specVersion">The AsyncApi specification version.</param>
         public static string SerializeAsJson<T>(
-            this T element)
+            this T element,
+            AsyncApiVersion specificationVersion)
             where T : IAsyncApiSerializable
         {
-            return element.Serialize(AsyncApiFormat.Json);
+            return element.Serialize(specificationVersion, AsyncApiFormat.Json);
         }
 
         /// <summary>
@@ -132,10 +148,11 @@ namespace LEGO.AsyncAPI.Models
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="specVersion">The AsyncApi specification version.</param>
         public static string SerializeAsYaml<T>(
-            this T element)
+            this T element,
+            AsyncApiVersion specificationVersion)
             where T : IAsyncApiSerializable
         {
-            return element.Serialize(AsyncApiFormat.Yaml);
+            return element.Serialize(specificationVersion, AsyncApiFormat.Yaml);
         }
 
         /// <summary>
@@ -147,6 +164,7 @@ namespace LEGO.AsyncAPI.Models
         /// <param name="format">AsyncApi document format.</param>
         public static string Serialize<T>(
             this T element,
+            AsyncApiVersion specificationVersion,
             AsyncApiFormat format)
             where T : IAsyncApiSerializable
         {
@@ -157,7 +175,7 @@ namespace LEGO.AsyncAPI.Models
 
             using (var stream = new MemoryStream())
             {
-                element.Serialize(stream, format);
+                element.Serialize(stream, specificationVersion, format);
                 stream.Position = 0;
 
                 using (var streamReader = new StreamReader(stream))

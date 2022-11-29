@@ -1,4 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Models
 {
@@ -17,60 +17,72 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiComponents : IAsyncApiExtensible, IAsyncApiSerializable
     {
         /// <summary>
-        /// Gets or sets an object to hold reusable Schema Objects.
+        /// An object to hold reusable Schema Objects.
         /// </summary>
         public IDictionary<string, AsyncApiSchema> Schemas { get; set; } = new Dictionary<string, AsyncApiSchema>();
 
         /// <summary>
-        /// Gets or sets an object to hold reusable Message Objects.
+        /// An object to hold reusable Server Objects.
         /// </summary>
         public IDictionary<string, AsyncApiServer> Servers { get; set; } = new Dictionary<string, AsyncApiServer>();
 
+        /// <summary>
+        /// An object to hold reusable Server Variable Objects.
+        /// </summary>
+        public IDictionary<string, AsyncApiServerVariable> ServerVariables { get; set; } = new Dictionary<string, AsyncApiServerVariable>();
+
+        /// <summary>
+        /// An object to hold reusable Channel Item Objects.
+        /// </summary>
         public IDictionary<string, AsyncApiChannel> Channels { get; set; } = new Dictionary<string, AsyncApiChannel>();
 
-        public IDictionary<string, AsyncApiMessage> Messages { get; set; } = new Dictionary<string, AsyncApiMessage>();
         /// <summary>
-        /// Gets or sets an object to hold reusable Security Scheme Objects.
+        /// An object to hold reusable Message Objects.
+        /// </summary>
+        public IDictionary<string, AsyncApiMessage> Messages { get; set; } = new Dictionary<string, AsyncApiMessage>();
+
+        /// <summary>
+        /// An object to hold reusable Security Scheme Objects.
         /// </summary>
         public IDictionary<string, AsyncApiSecurityScheme> SecuritySchemes { get; set; } = new Dictionary<string, AsyncApiSecurityScheme>();
 
         /// <summary>
-        /// Gets or sets an object to hold reusable Parameter Objects.
+        /// An object to hold reusable Parameter Objects.
         /// </summary>
         public IDictionary<string, AsyncApiParameter> Parameters { get; set; } = new Dictionary<string, AsyncApiParameter>();
 
         /// <summary>
-        /// Gets or sets an object to hold reusable Correlation ID Objects.
+        /// An object to hold reusable Correlation ID Objects.
         /// </summary>
         public IDictionary<string, AsyncApiCorrelationId> CorrelationIds { get; set; } = new Dictionary<string, AsyncApiCorrelationId>();
 
         /// <summary>
-        /// Gets or sets an object to hold reusable Operation Trait Objects.
+        /// An object to hold reusable Operation Trait Objects.
         /// </summary>
         public IDictionary<string, AsyncApiOperationTrait> OperationTraits { get; set; } = new Dictionary<string, AsyncApiOperationTrait>();
 
         /// <summary>
-        /// Gets or sets an object to hold reusable Message Trait Objects.
+        /// An object to hold reusable Message Trait Objects.
         /// </summary>
         public IDictionary<string, AsyncApiMessageTrait> MessageTraits { get; set; } = new Dictionary<string, AsyncApiMessageTrait>();
 
         /// <summary>
-        /// Gets or sets an object to hold reusable Server Bindings Objects.
+        /// An object to hold reusable Server Bindings Objects.
         /// </summary>
         public IDictionary<string, IServerBinding> ServerBindings { get; set; } = new Dictionary<string, IServerBinding>();
 
         /// <summary>
-        /// Gets or sets an object to hold reusable Channel Bindings Objects.
+        /// An object to hold reusable Channel Bindings Objects.
         /// </summary>
         public IDictionary<string, IChannelBinding> ChannelBindings { get; set; } = new Dictionary<string, IChannelBinding>();
 
         /// <summary>
-        /// Gets or sets an object to hold reusable Operation Bindings Objects.
+        /// An object to hold reusable Operation Bindings Objects.
         /// </summary>
         public IDictionary<string, IOperationBinding> OperationBindings { get; set; } = new Dictionary<string, IOperationBinding>();
 
         /// <summary>
-        /// Gets or sets an object to hold reusable Message Bindings Objects.
+        /// An object to hold reusable Message Bindings Objects.
         /// </summary>
         public IDictionary<string, IMessageBinding> MessageBindings { get; set; } = new Dictionary<string, IMessageBinding>();
 
@@ -138,6 +150,24 @@ namespace LEGO.AsyncAPI.Models
                 {
                     if (component.Reference != null &&
                         component.Reference.Type == ReferenceType.Server &&
+                        component.Reference.Id == key)
+                    {
+                        component.SerializeV2WithoutReference(w);
+                    }
+                    else
+                    {
+                        component.SerializeV2(w);
+                    }
+                });
+
+            // servers
+            writer.WriteOptionalMap(
+                AsyncApiConstants.ServerVariables,
+                this.ServerVariables,
+                (w, key, component) =>
+                {
+                    if (component.Reference != null &&
+                        component.Reference.Type == ReferenceType.ServerVariable &&
                         component.Reference.Id == key)
                     {
                         component.SerializeV2WithoutReference(w);
@@ -347,7 +377,7 @@ namespace LEGO.AsyncAPI.Models
                 });
 
             // extensions
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteExtensions(this.Extensions);
 
             writer.WriteEndObject();
         }

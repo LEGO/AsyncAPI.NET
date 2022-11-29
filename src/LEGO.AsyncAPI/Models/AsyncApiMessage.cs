@@ -13,6 +13,11 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiMessage : IAsyncApiExtensible, IAsyncApiReferenceable, IAsyncApiSerializable
     {
         /// <summary>
+        /// Unique string used to identify the message. The id MUST be unique among all messages described in the API.
+        /// </summary>
+        public string MessageId { get; set; }
+
+        /// <summary>
         /// schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
         public AsyncApiSchema Headers { get; set; }
@@ -20,7 +25,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// definition of the message payload. It can be of any type but defaults to Schema object. It must match the schema format, including encoding type - e.g Avro should be inlined as either a YAML or JSON object NOT a string to be parsed as YAML or JSON.
         /// </summary>
-        public IAsyncApiAny Payload { get; set; }
+        public AsyncApiSchema Payload { get; set; }
 
         /// <summary>
         /// definition of the correlation ID used for message tracing or matching.
@@ -119,7 +124,7 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteStartObject();
             writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
-            writer.WriteOptionalObject(AsyncApiConstants.Payload, this.Payload, (w, p) => w.WriteAny(p));
+            writer.WriteOptionalObject(AsyncApiConstants.Payload, this.Payload, (w, p) => p.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.CorrelationId, this.CorrelationId, (w, c) => c.SerializeV2(w));
             writer.WriteOptionalProperty(AsyncApiConstants.SchemaFormat, this.SchemaFormat);
             writer.WriteOptionalProperty(AsyncApiConstants.ContentType, this.ContentType);
@@ -134,7 +139,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalCollection(AsyncApiConstants.Examples, this.Examples, (w, e) => e.SerializeV2(w));
 
             writer.WriteOptionalCollection(AsyncApiConstants.Traits, this.Traits, (w, t) => t.SerializeV2(w));
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

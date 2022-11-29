@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Serialize <see cref="AsyncApiSecurityRequirement"/> to Async Api v2
+        /// Serialize <see cref="AsyncApiSecurityRequirement"/> to Async Api v2.
         /// </summary>
         public void SerializeV2(IAsyncApiWriter writer)
         {
@@ -44,8 +44,8 @@ namespace LEGO.AsyncAPI.Models
                     continue;
                 }
 
-                securityScheme.SerializeV2(writer);
-
+                //securityScheme.SerializeV2(writer);
+                writer.WritePropertyName(securityScheme.Reference.Id);
                 writer.WriteStartArray();
 
                 foreach (var scope in scopes)

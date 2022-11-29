@@ -29,6 +29,11 @@ namespace LEGO.AsyncAPI.Models
         public string Description { get; set; }
 
         /// <summary>
+        /// A declaration of which security mechanisms can be used with this server. The list of values includes alternative security requirement objects that can be used. Only one of the security requirement objects need to be satisfied to authorize a connection or operation
+        /// </summary>
+        public IList<AsyncApiSecurityRequirement> Security { get; set; } = new List<AsyncApiSecurityRequirement>();
+
+        /// <summary>
         /// a list of tags for API documentation control. Tags can be used for logical grouping of operations.
         /// </summary>
         public IList<AsyncApiTag> Tags { get; set; } = new List<AsyncApiTag>();
@@ -70,6 +75,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalProperty(AsyncApiConstants.OperationId, this.OperationId);
             writer.WriteOptionalProperty(AsyncApiConstants.Summary, this.Summary);
             writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
+            writer.WriteOptionalCollection(AsyncApiConstants.Security, this.Security, (w, t) => t.SerializeV2(w));
             writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
 
@@ -87,7 +93,7 @@ namespace LEGO.AsyncAPI.Models
                 writer.WriteOptionalObject(AsyncApiConstants.Message, this.Message.FirstOrDefault(), (w, m) => m.SerializeV2(w));
             }
 
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

@@ -1,17 +1,12 @@
-// <copyright file="AsyncApiReaderTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-using LEGO.AsyncAPI.Models;
-
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
     using System.Linq;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
-    using NUnit.Framework;
-    using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Models.Bindings.Http;
+    using LEGO.AsyncAPI.Readers;
+    using NUnit.Framework;
 
     public class AsyncApiReaderTests
     {
@@ -504,7 +499,7 @@ components:
         Assert.AreEqual(message.First().Summary, "Metadata about a workspace that has been created, updated or deleted.");
         var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
         Assert.NotNull(payload);
-        Assert.AreEqual(typeof(AsyncApiObject), payload.GetType());
+        Assert.AreEqual(typeof(AsyncApiSchema), payload.GetType());
         var httpBinding = doc.Channels["workspace"].Publish.Bindings.First().Value as HttpOperationBinding;
         Assert.AreEqual("response", httpBinding.Type);
       }
@@ -889,6 +884,7 @@ components:
             Assert.AreEqual(1, doc.Channels.First().Value.Publish.Message.First().Traits.Count);
             Assert.AreEqual("a common headers for common things", doc.Channels.First().Value.Publish.Message.First().Traits.First().Description);
         }
+
         /// <summary>
         /// Regression test.
         /// Bug: Serializing properties multiple times - specifically Schema.OneOf was serialized into OneOf and Then.
@@ -938,14 +934,14 @@ components:
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
 
-            var yamlAgain = doc.Serialize(AsyncApiFormat.Yaml);
+            var yamlAgain = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
             Assert.True(!yamlAgain.Contains("then:"));
         }
 
-      [Test]
-      public void Read_WithBasicPlusSecurityRequirementsDeserializes()
-      {
-        var yaml = @"asyncapi: 2.3.0
+        [Test]
+        public void Read_WithBasicPlusSecurityRequirementsDeserializes()
+        {
+            var yaml = @"asyncapi: 2.3.0
 info:
   title: AMMA
   version: 1.0.0
@@ -972,12 +968,12 @@ components:
             write:pets: modify pets in your account
             read:pets: read your pets      
 ";
-        var reader = new AsyncApiStringReader();
-        var doc = reader.Read(yaml, out var diagnostic);
-        var requirement = doc.Servers.First().Value.Security.First().First();
-        Assert.AreEqual(SecuritySchemeType.OAuth2, requirement.Key.Type);
-        Assert.IsTrue(requirement.Value.Contains("write:pets"));
-        Assert.IsTrue(requirement.Value.Contains("read:pets"));
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+            var requirement = doc.Servers.First().Value.Security.First().First();
+            Assert.AreEqual(SecuritySchemeType.OAuth2, requirement.Key.Type);
+            Assert.IsTrue(requirement.Value.Contains("write:pets"));
+            Assert.IsTrue(requirement.Value.Contains("read:pets"));
       }
     }
 }

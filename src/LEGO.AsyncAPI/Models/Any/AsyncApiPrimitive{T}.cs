@@ -33,16 +33,15 @@ namespace LEGO.AsyncAPI.Models.Any
         public abstract PrimitiveType PrimitiveType { get; }
 
         /// <summary>
-        /// Value of this <see cref="IAsyncApiPrimitive"/>
+        /// Value of this <see cref="IAsyncApiPrimitive"/>.
         /// </summary>
         public T Value { get; }
 
         /// <summary>
-        /// Write out content of primitive element
+        /// Write out content of primitive element.
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="specVersion"></param>
-        public void Write(IAsyncApiWriter writer, AsyncApiVersion specVersion)
+        public void Write(IAsyncApiWriter writer)
         {
             switch (this.PrimitiveType)
             {

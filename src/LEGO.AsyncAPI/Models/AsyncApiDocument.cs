@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models
         public string Asyncapi { get; set; }
 
         /// <summary>
-        ///identifier of the application the AsyncAPI document is defining.
+        /// Identifier of the application the AsyncAPI document is defining.
         /// </summary>
         public string Id { get; set; }
 
@@ -76,7 +76,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // asyncApi
-            writer.WriteOptionalProperty(AsyncApiConstants.AsyncApi, "2.3.0");
+            writer.WriteRequiredProperty(AsyncApiConstants.AsyncApi, "2.5.0");
 
             // info
             writer.WriteRequiredObject(AsyncApiConstants.Info, this.Info, (w, i) => i.SerializeV2(w));
@@ -127,7 +127,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
 
             // extensions
-            writer.WriteExtensions(this.Extensions, AsyncApiVersion.AsyncApi2_3_0);
+            writer.WriteExtensions(this.Extensions);
 
             writer.WriteEndObject();
         }
