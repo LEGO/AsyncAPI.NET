@@ -1,4 +1,4 @@
-name: Publish a NuGet package
+name: Publish internal NuGet package
 on:
   push:
     branches: [ main ]
