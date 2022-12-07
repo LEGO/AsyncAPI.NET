@@ -126,6 +126,7 @@ namespace LEGO.AsyncAPI.Models
         public const string Size = "size";
         public const string Persistence = "persistence";
         public const string Compaction = "compaction";
+        public const string TTL = "ttl";
         public const string Tenant = "tenant";
         public const string Namespace = "namespace";
         public const string ServerVariables = "serverVariables";
@@ -136,5 +137,6 @@ namespace LEGO.AsyncAPI.Models
         public const string DeleteRetentionMiliseconds = "delete.retention.ms";
         public const string MaxMessageBytes = "max.message.bytes";
         public const string TopicConfiguration = "topicConfiguration";
+        public const string GeoReplication = "geo-replication";
     }
 }
