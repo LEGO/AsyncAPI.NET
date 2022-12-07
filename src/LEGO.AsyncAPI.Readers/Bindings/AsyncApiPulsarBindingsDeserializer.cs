@@ -4,8 +4,9 @@ namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Models.Bindings.Pulsar;
     using LEGO.AsyncAPI.Readers.ParseNodes;
+    using LEGO.AsyncAPI.Writers;
 
-    internal static partial class AsyncApiDeserializer
+    internal static partial class AsyncApiV2Deserializer
     {
         private static FixedFieldMap<PulsarServerBinding> pulsarServerBindingFixedFields = new ()
         {
@@ -17,7 +18,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "namespace", (a, n) => { a.Namespace = n.GetScalarValue(); } },
-            { "persistence", (a, n) => { a.Persistence = n.GetScalarValue(); } },
+            { "persistence", (a, n) => { a.Persistence = n.GetScalarValue().GetEnumFromDisplayName<Persistence>(); } },
             { "compaction", (a, n) => { a.Compaction = n.GetIntegerValue(); } },
             { "retention", (a, n) => { a.Retention = LoadRetention(n); } },
             { "geo-replication", (a, n) => { a.GeoReplication = n.CreateSimpleList(s => s.GetScalarValue()); } },

@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -21,13 +20,13 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         /// <summary>
         /// persistence of the topic in Pulsar persistent or non-persistent.
         /// </summary>
-        public string Persistence { get; set; }
+        public Persistence Persistence { get; set; }
 
         /// <summary>
         /// Topic compaction threshold given in bytes.
         /// </summary>
         public int Compaction { get; set; }
-        
+
         /// <summary>
         /// A list of clusters the topic is replicated to.
         /// </summary>
@@ -71,13 +70,13 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
             }
 
             writer.WriteStartObject();
-            writer.WriteOptionalProperty(AsyncApiConstants.Namespace, this.Namespace);
-            writer.WriteRequiredProperty(AsyncApiConstants.Persistence, this.Persistence);
+            writer.WriteRequiredProperty(AsyncApiConstants.Namespace, this.Namespace);
+            writer.WriteRequiredProperty(AsyncApiConstants.Persistence, this.Persistence.GetDisplayName());
             writer.WriteOptionalProperty<int>(AsyncApiConstants.Compaction, this.Compaction);
-            writer.WriteOptionalObject(AsyncApiConstants.Retention, this.Retention, (w, r) => r.Serialize(w));
             writer.WriteOptionalCollection(AsyncApiConstants.GeoReplication, this.GeoReplication, (v, s) => v.WriteValue(s));
+            writer.WriteOptionalObject(AsyncApiConstants.Retention, this.Retention, (w, r) => r.Serialize(w));
             writer.WriteOptionalProperty<int>(AsyncApiConstants.TTL, this.TTL);
-            writer.WriteOptionalProperty(AsyncApiConstants.Deduplication, this.Deduplication); 
+            writer.WriteOptionalProperty(AsyncApiConstants.Deduplication, this.Deduplication);
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
