@@ -1,0 +1,35 @@
+name: Publish a NuGet package
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/LEGO.AsyncAPI/**'
+      - 'src/LEGO.AsyncAPI.Readers/**'
+      - 'src/LEGO.AsyncAPI.Writers/**'
+      - ".github/workflows/release-package.yml"
+      - '!**/*.md' 
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: Publish NuGet packages
+    strategy:
+      matrix:
+        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+        
+      - name: Setup .NET Core @ Latest
+        uses: actions/setup-dotnet@v1
+        with:
+          source-url: https://nuget.pkg.github.com/LEGO/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}    
+
+      - name: Build ${{ matrix.package-name }} project and pack NuGet package
+        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=0.2.$GITHUB_RUN_NUMBER.0-prerelease
+
+      - name: Push generated package to GitHub Packages registry
+        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}      
