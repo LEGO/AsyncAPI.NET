@@ -56,4 +56,4 @@ jobs:
 
       - name: Push generated package to GitHub Packages registry
         if: steps.semantic.outputs.new_release_published == 'true'
-        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.NugetKey}}
+        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.NUGET}}
