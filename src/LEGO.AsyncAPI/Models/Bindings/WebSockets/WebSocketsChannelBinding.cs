@@ -12,23 +12,23 @@ namespace LEGO.AsyncAPI.Models.Bindings.WebSockets
         /// <summary>
         /// The HTTP method t use when establishing the connection. Its value MUST be either 'GET' or 'POST'.
         /// </summary>
-        public string Method { get; set; }
+        public string? Method { get; set; }
 
         /// <summary>
         /// A Schema object containing the definitions for each query parameter. This schema MUST be of type 'object' and have a 'properties' key.
         /// </summary>
-        public AsyncApiSchema Query { get; set; }
+        public AsyncApiSchema? Query { get; set; }
 
         /// <summary>
         /// A Schema object containing the definitions of the HTTP headers to use when establishing the connection. This schma MUST be of type 'object' and have a 'properties' key.
         /// </summary>
-        public AsyncApiSchema Headers { get; set; }
+        public AsyncApiSchema? Headers { get; set; }
 
-        public string BindingVersion { get; set; }
+        public string? BindingVersion { get; set; }
 
         public bool UnresolvedReference { get; set; }
 
-        public AsyncApiReference Reference { get; set; }
+        public AsyncApiReference? Reference { get; set; }
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } =
             new Dictionary<string, IAsyncApiExtension>();
