@@ -15,11 +15,11 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         /// <summary>
         /// The pulsar tenant. If omitted, "public" must be assumed.
         /// </summary>
-        public string Tenant { get; set; }
+        public string? Tenant { get; set; }
 
         /// <summary>
         /// The version of this binding.
-        public string BindingVersion { get; set; }
+        public string? BindingVersion { get; set; }
 
         public BindingType Type => BindingType.Pulsar;
 
