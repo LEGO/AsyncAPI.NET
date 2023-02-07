@@ -16,12 +16,12 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
         /// <summary>
         /// A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type object and have a properties key.
         /// </summary>
-        public AsyncApiSchema Headers { get; set; }
+        public AsyncApiSchema? Headers { get; set; }
 
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.
         /// </summary>
-        public string BindingVersion { get; set; }
+        public string? BindingVersion { get; set; }
 
         /// <summary>
         /// Indicates if object is populated with data or is just a reference to the data
@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
         /// <summary>
         /// Reference object.
         /// </summary>
-        public AsyncApiReference Reference { get; set; }
+        public AsyncApiReference? Reference { get; set; }
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.
