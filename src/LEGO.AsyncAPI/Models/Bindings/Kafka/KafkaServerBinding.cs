@@ -15,17 +15,17 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used)
         /// </summary>
-        public string SchemaRegistryUrl { get; set; }
+        public string? SchemaRegistryUrl { get; set; }
 
         /// <summary>
         /// The vendor of Schema Registry and Kafka serdes library that should be used (e.g. apicurio, confluent, ibm, or karapace)
         /// </summary>
-        public string SchemaRegistryVendor { get; set; }
+        public string? SchemaRegistryVendor { get; set; }
 
         /// <summary>
         /// The version of this binding.
         /// </summary>
-        public string BindingVersion { get; set; }
+        public string? BindingVersion { get; set; }
 
         public BindingType Type => BindingType.Kafka;
 

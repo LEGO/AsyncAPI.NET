@@ -15,27 +15,27 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// Kafka topic name if different from channel name.
         /// </summary>
-        public string Topic { get; set; }
+        public string? Topic { get; set; }
 
         /// <summary>
         /// Number of partitions configured on this topic (useful to know how many parallel consumers you may run).
         /// </summary>
-        public int Partitions { get; set; }
+        public int? Partitions { get; set; }
 
         /// <summary>
         /// Number of replicas configured on this topic.
         /// </summary>
-        public int Replicas { get; set; }
+        public int? Replicas { get; set; }
 
         /// <summary>
         /// Topic configuration properties that are relevant for the API.
         /// </summary>
-        public TopicConfigurationObject TopicConfiguration { get; set; }
+        public TopicConfigurationObject? TopicConfiguration { get; set; }
 
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.
         /// </summary>
-        public string BindingVersion { get; set; }
+        public string? BindingVersion { get; set; }
 
         public BindingType Type => BindingType.Kafka;
 
