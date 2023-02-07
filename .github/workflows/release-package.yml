@@ -1,56 +1,74 @@
-name: Publish a NuGet package
+name: Publish NuGet package
 on:
-#  push:
-#    branches: [ main ]
-#    paths:
-#      - 'src/LEGO.AsyncAPI/**'
-#      - 'src/LEGO.AsyncAPI.Readers/**'
-#      - ".github/workflows/release-package.yml"
-#      - '!**/*.md' 
   workflow_dispatch:
 
 jobs:
+  prereleaseCheck:
+    runs-on: ubuntu-latest
+    environment: AsyncAPI 
+    name: Check release
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v1
+
+    - name: Semantic Release
+      uses: cycjimmy/semantic-release-action@v3
+      id: semantic
+      with:
+        extra_plugins: |
+          conventional-changelog-conventionalcommits
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get token
+      if: steps.semantic.outputs.new_release_published == 'true'
+      id: get_token
+      uses: peter-murray/workflow-application-token-action@v2.1.0
+      with:
+        application_id: ${{ secrets.APPLICATION_ID }}
+        application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+    - name: Commit changes
+      if: steps.semantic.outputs.new_release_published == 'true'
+      env:
+        GITHUB_TOKEN: ${{ steps.get_token.outputs.token }}
+        FILE_TO_COMMIT: CHANGELOG.md
+        DESTINATION_BRANCH: ${{ github.ref }}
+      run: |
+        export MESSAGE="chore: update $FILE_TO_COMMIT"
+        export SHA=$( git rev-parse $DESTINATION_BRANCH:$FILE_TO_COMMIT )
+        export CONTENT=$( base64 -i $FILE_TO_COMMIT )
+        gh api --method PUT /repos/:owner/:repo/contents/$FILE_TO_COMMIT \
+          --field message="$MESSAGE" \
+          --field content="$CONTENT" \
+          --field encoding="base64" \
+          --field branch="$DESTINATION_BRANCH" \
+          --field sha="$SHA"
+
+    outputs:
+      trigger_release: ${{ steps.semantic.outputs.new_release_published }}
+      version: ${{ steps.semantic.outputs.new_release_published == 'true' && steps.semantic.outputs.new_release_version }}
+
   release:
     runs-on: ubuntu-latest
     name: Publish NuGet packages
+    needs: prereleaseCheck
+    environment: AsyncAPI 
     strategy:
       matrix:
-        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers"]
+        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
         
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v3
-        id: semantic   # Need an `id` for output variables
-        with:
-          extra_plugins: |
-            conventional-changelog-conventionalcommits
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
       - name: Setup .NET Core @ Latest
+        if: needs.prereleaseCheck.outputs.trigger_release == 'true'
         uses: actions/setup-dotnet@v1
-        with:
-          source-url: https://nuget.pkg.github.com/LEGO/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}    
 
       - name: Build ${{ matrix.package-name }} project and pack NuGet package
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ steps.semantic.outputs.new_release_version }}-prerelease
+        if: needs.prereleaseCheck.outputs.trigger_release == 'true'
+        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ needs.prereleaseCheck.outputs.version }}
 
       - name: Push generated package to GitHub Packages registry
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}
-        
-      - name: Create Pull Request
-        if: steps.semantic.outputs.new_release_published == 'true'
-        id: pr
-        uses: peter-evans/create-pull-request@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: 'chore: update Changelog'
-          base: main
-          add-paths: |
-            CHANGELOG.md
+        if: needs.prereleaseCheck.outputs.trigger_release == 'true'
+        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg -s https://api.nuget.org/v3/index.json --skip-duplicate -n --api-key ${{secrets.NUGET}}

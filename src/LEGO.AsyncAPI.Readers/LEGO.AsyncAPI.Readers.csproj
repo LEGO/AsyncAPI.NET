@@ -4,11 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
+	<Company>The LEGO Group</Company>
 	<PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
 	<Description>AsyncAPI.NET Readers for JSON and YAML documents</Description>
 	<PackageTags>AsyncAPI .NET</PackageTags>
 	<PackageId>LEGO.AsyncAPI.Readers</PackageId>
-	<Version>1.0.0</Version>
 	<AssemblyName>LEGO.AsyncAPI.Readers</AssemblyName>
 	<RootNamespace>LEGO.AsyncAPI.Readers</RootNamespace>
 	<RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>

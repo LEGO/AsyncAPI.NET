@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
+	<Company>The LEGO Group</Company>
 	<PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
 	<Description>AsyncAPI.NET models</Description>
 	<PackageTags>AsyncAPI .NET</PackageTags>
 	<PackageId>LEGO.AsyncAPI</PackageId>
-	<Version>1.0.0</Version>
 	<AssemblyName>LEGO.AsyncAPI</AssemblyName>
 	<RootNamespace>LEGO.AsyncAPI</RootNamespace>
 	<RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
