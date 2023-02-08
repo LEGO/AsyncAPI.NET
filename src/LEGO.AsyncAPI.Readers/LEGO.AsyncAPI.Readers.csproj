@@ -7,8 +7,8 @@
 	<Company>The LEGO Group</Company>
 	<PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
 	<Description>AsyncAPI.NET Readers for JSON and YAML documents</Description>
-	<PackageTags>AsyncAPI .NET</PackageTags>
-	<PackageId>LEGO.AsyncAPI.Readers</PackageId>
+	<PackageTags>asyncapi .net openapi documentation</PackageTags>
+	<PackageId>AsyncAPI.NET.Readers</PackageId>
 	<AssemblyName>LEGO.AsyncAPI.Readers</AssemblyName>
 	<RootNamespace>LEGO.AsyncAPI.Readers</RootNamespace>
 	<RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
