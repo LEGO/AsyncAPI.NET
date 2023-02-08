@@ -10,8 +10,8 @@ The AsyncAPI.NET SDK contains a useful object model for the AsyncAPI specificati
 
 Install the NuGet packages:
 
-* [Document](link missing)
-* [Readers](link missing)
+* [Document](https://www.nuget.org/packages/AsyncAPI.NET/)
+* [Readers](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)
 
 ## Example Usage
 
