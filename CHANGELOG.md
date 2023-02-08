@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/LEGO/AsyncAPI.NET/compare/v2.0.0...v2.0.1) (2023-02-08)
+
+
+### Bug Fixes
+
+* main project package id ([37ba867](https://github.com/LEGO/AsyncAPI.NET/commit/37ba8676eab24c35d2cdf8315381e96c60770221))
+
 # [2.0.0](https://github.com/LEGO/AsyncAPI.NET/compare/v1.0.0...v2.0.0) (2023-02-08)
 
 
