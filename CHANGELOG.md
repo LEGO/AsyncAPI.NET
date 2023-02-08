@@ -1,3 +1,25 @@
+# [2.0.0](https://github.com/LEGO/AsyncAPI.NET/compare/v1.0.0...v2.0.0) (2023-02-08)
+
+
+* fix!: rename to AsyncAPI.NET ([96cb30b](https://github.com/LEGO/AsyncAPI.NET/commit/96cb30b746f69600d8a21cdd263acb5a1251761d))
+
+
+### Features
+
+* upgrade to 2.6.0 ([#88](https://github.com/LEGO/AsyncAPI.NET/issues/88)) ([91a6184](https://github.com/LEGO/AsyncAPI.NET/commit/91a6184e314beb9a593d2bb7d397120722677348))
+
+
+### BREAKING CHANGES
+
+* as the LEGO prefix has been taken by others, the package has been renamed.
+
+
+chore: update CHANGELOG.md
+Update CHANGELOG.md
+
+chore: update CHANGELOG.md
+Update CHANGELOG.md
+
 # 1.0.0 (2023-02-07)
 
 
