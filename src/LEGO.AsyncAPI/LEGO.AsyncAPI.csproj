@@ -7,7 +7,7 @@
 	<PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
 	<Description>AsyncAPI.NET models</Description>
 	<PackageTags>asyncapi .net openapi documentation</PackageTags>
-	<PackageId>AsyncAPI.Net</PackageId>
+	<PackageId>AsyncAPI.NET</PackageId>
 	<AssemblyName>LEGO.AsyncAPI</AssemblyName>
 	<RootNamespace>LEGO.AsyncAPI</RootNamespace>
 	<RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
