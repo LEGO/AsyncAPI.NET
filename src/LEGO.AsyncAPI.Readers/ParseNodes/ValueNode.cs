@@ -28,6 +28,16 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         {
             return this.node.Value;
         }
+        
+        public override string GetScalarValueOrDefault(string defaultValue)
+        {
+            if (this.node.Value is not null)
+            {
+                return this.node.Value;
+            }
+
+            return defaultValue;
+        }
 
         public override int GetIntegerValue()
         {

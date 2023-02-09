@@ -96,6 +96,11 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }
 
+        public virtual string GetScalarValueOrDefault(string defaultValue)
+        {
+            throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
+        }
+
         public virtual bool GetBooleanValue()
         {
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
