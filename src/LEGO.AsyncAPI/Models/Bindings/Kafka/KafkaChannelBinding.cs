@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// Topic configuration properties that are relevant for the API.
         /// </summary>
-        public TopicConfigurationObject? TopicConfiguration { get; set; }
+        public TopicConfigurationObject TopicConfiguration { get; set; }
 
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.
