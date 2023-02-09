@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         /// <summary>
         /// Topic retention policy.
         /// </summary>
-        public RetentionDefinition? Retention { get; set; }
+        public RetentionDefinition Retention { get; set; }
 
         /// <summary>
         /// Message Time-to-live in seconds. 
