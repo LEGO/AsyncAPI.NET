@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         /// <summary>
         /// A list of clusters the topic is replicated to.
         /// </summary>
-        public IEnumerable<string>? GeoReplication { get; set; }
+        public IEnumerable<string> GeoReplication { get; set; }
 
         /// <summary>
         /// Topic retention policy.
