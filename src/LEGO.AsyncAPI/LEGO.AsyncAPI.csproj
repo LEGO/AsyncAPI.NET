@@ -11,6 +11,7 @@
 	<AssemblyName>LEGO.AsyncAPI</AssemblyName>
 	<RootNamespace>LEGO.AsyncAPI</RootNamespace>
 	<RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

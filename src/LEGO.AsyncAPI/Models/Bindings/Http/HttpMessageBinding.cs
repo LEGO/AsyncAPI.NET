@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
         /// <summary>
         /// Reference object.
         /// </summary>
-        public AsyncApiReference? Reference { get; set; }
+        public AsyncApiReference Reference { get; set; }
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.

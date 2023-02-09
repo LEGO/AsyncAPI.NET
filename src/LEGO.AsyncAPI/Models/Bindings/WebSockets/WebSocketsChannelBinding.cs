@@ -28,7 +28,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.WebSockets
 
         public bool UnresolvedReference { get; set; }
 
-        public AsyncApiReference? Reference { get; set; }
+        public AsyncApiReference Reference { get; set; }
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } =
             new Dictionary<string, IAsyncApiExtension>();
