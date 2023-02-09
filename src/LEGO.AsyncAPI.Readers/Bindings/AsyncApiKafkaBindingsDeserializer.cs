@@ -9,14 +9,14 @@ namespace LEGO.AsyncAPI.Readers
     {
         private static FixedFieldMap<KafkaServerBinding> kafkaServerBindingFixedFields = new()
         {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValueOrDefault("latest"); } },
             { "schemaRegistryUrl", (a, n) => { a.SchemaRegistryUrl = n.GetScalarValue(); } },
             { "schemaRegistryVendor", (a, n) => { a.SchemaRegistryVendor = n.GetScalarValue(); } },
         };
 
         private static FixedFieldMap<KafkaChannelBinding> kafkaChannelBindingFixedFields = new()
         {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValueOrDefault("latest"); } },
             { "topic", (a, n) => { a.Topic = n.GetScalarValue(); } },
             { "partitions", (a, n) => { a.Partitions = n.GetIntegerValue(); } },
             { "topicConfiguration", (a, n) => { a.TopicConfiguration = LoadTopicConfiguration(n); } },
@@ -34,14 +34,14 @@ namespace LEGO.AsyncAPI.Readers
 
         private static FixedFieldMap<KafkaOperationBinding> kafkaOperationBindingFixedFields = new()
         {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValueOrDefault("latest"); } },
             { "groupId", (a, n) => { a.GroupId = LoadSchema(n); } },
             { "clientId", (a, n) => { a.ClientId = LoadSchema(n); } },
         };
 
         private static FixedFieldMap<KafkaMessageBinding> kafkaMessageBindingFixedFields = new()
         {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValueOrDefault("latest"); } },
             { "key", (a, n) => { a.Key = LoadSchema(n); } },
             { "schemaIdLocation", (a, n) => { a.SchemaIdLocation = n.GetScalarValue(); } },
             { "schemaIdPayloadEncoding", (a, n) => { a.SchemaIdPayloadEncoding = n.GetScalarValue(); } },

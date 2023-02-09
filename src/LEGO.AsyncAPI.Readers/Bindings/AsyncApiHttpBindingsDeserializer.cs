@@ -9,13 +9,13 @@ namespace LEGO.AsyncAPI.Readers
     {
         private static FixedFieldMap<HttpMessageBinding> httpMessageBindingFixedFields = new()
         {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValueOrDefault("latest"); } },
             { "headers", (a, n) => { a.Headers = LoadSchema(n); } },
         };
 
         private static FixedFieldMap<HttpOperationBinding> httpOperationBindingFixedFields = new()
         {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValueOrDefault("latest"); } },
             { "type", (a, n) => { a.Type = n.GetScalarValue(); } },
             { "method", (a, n) => { a.Method = n.GetScalarValue(); } },
             { "query", (a, n) => { a.Query = LoadSchema(n); } },
