@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.
         /// </summary>
-        public string? BindingVersion { get; set; }
+        public string BindingVersion { get; set; }
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.

@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.
         /// </summary>
-        public string? BindingVersion { get; set; }
+        public string BindingVersion { get; set; }
 
         public BindingType Type => BindingType.Kafka;
 

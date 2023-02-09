@@ -24,7 +24,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.WebSockets
         /// </summary>
         public AsyncApiSchema? Headers { get; set; }
 
-        public string? BindingVersion { get; set; }
+        public string BindingVersion { get; set; }
 
         public bool UnresolvedReference { get; set; }
 

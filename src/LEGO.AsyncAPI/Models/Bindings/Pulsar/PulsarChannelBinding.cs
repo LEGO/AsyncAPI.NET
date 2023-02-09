@@ -49,7 +49,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
 
         /// <summary>
         /// The version of this binding.
-        public string? BindingVersion { get; set; }
+        public string BindingVersion { get; set; }
 
         public BindingType Type => BindingType.Pulsar;
 
