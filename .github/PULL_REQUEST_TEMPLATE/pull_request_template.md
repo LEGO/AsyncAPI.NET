@@ -1,11 +1,10 @@
 ## About the PR
-**Description**
 
-**Screenshots**
-
-**Changelog**
+### Changelog
 - Add: Added amazing features!
 - Remove: Removed tedious bugs!
+
+### Related Issues
 - Closes #<issue-number>
 
 <!-- 
