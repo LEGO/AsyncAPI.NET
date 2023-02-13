@@ -75,7 +75,7 @@ var asyncApiDocument = new AsyncApiStreamReader().Read(stream, out var diagnosti
 ## Contribution
 
 This project welcomes contributions and suggestions.
-Do you want to contribute to the project? Find out how [here](CONTRIBUTION.md).
+Do you want to contribute to the project? Find out how [here](CONTRIBUTING.md).
 
 ## License
 [Modified Apache 2.0 (Section 6)](https://github.com/LEGO/AsyncAPI.NET/blob/main/LICENSE)
