@@ -1,5 +1,5 @@
 ## About the PR
-** Description
+**Description**
 
 **Screenshots**
 
