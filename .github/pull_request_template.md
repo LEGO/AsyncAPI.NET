@@ -1,4 +1,5 @@
 ## About the PR
+<!-- Description of the PR should go here  -->
 
 ### Changelog
 - Add: Added amazing features!
@@ -6,7 +7,3 @@
 
 ### Related Issues
 - Closes #<issue-number>
-
-<!-- 
-Ensure to write a good, detailed description.
--->
