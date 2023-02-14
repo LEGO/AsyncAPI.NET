@@ -10,13 +10,13 @@ namespace LEGO.AsyncAPI.Readers
     {
         private static FixedFieldMap<PulsarServerBinding> pulsarServerBindingFixedFields = new ()
         {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValueOrDefault("latest"); } },
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "tenant", (a, n) => { a.Tenant = n.GetScalarValue(); } },
         };
 
         private static FixedFieldMap<PulsarChannelBinding> pulsarChannelBindingFixedFields = new ()
         {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValueOrDefault("latest"); } },
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "namespace", (a, n) => { a.Namespace = n.GetScalarValue(); } },
             { "persistence", (a, n) => { a.Persistence = n.GetScalarValue().GetEnumFromDisplayName<Persistence>(); } },
             { "compaction", (a, n) => { a.Compaction = n.GetIntegerValue(); } },

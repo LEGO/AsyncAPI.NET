@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Readers
     {
         private static FixedFieldMap<WebSocketsChannelBinding> webSocketsChannelBindingFixedFields = new()
         {
-            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValueOrDefault("latest"); } },
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "method", (a, n) => { a.Method = n.GetScalarValue(); } },
             { "query", (a, n) => { a.Query = LoadSchema(n); } },
             { "headers", (a, n) => { a.Headers = LoadSchema(n); } },
