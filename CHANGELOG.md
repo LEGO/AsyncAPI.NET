@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/LEGO/AsyncAPI.NET/compare/v2.0.1...v2.0.2) (2023-02-22)
+
+
+### Bug Fixes
+
+* payload schema reference resolution ([#94](https://github.com/LEGO/AsyncAPI.NET/issues/94)) ([70d4c23](https://github.com/LEGO/AsyncAPI.NET/commit/70d4c23634ae588da265fe79f5ae934d0bfe8c6a))
+
 ## [2.0.1](https://github.com/LEGO/AsyncAPI.NET/compare/v2.0.0...v2.0.1) (2023-02-08)
 
 
