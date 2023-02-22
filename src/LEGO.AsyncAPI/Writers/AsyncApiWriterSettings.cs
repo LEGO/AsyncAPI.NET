@@ -14,7 +14,6 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Gets or sets indicates how references in the source document should be handled.
         /// </summary>
-        [Obsolete]
         public ReferenceInlineSetting ReferenceInline
         {
             get
