@@ -97,5 +97,75 @@ bindings:
             Assert.AreEqual(actual, expected);
             binding.Should().BeEquivalentTo(server);
         }
+
+        [Test]
+        public void ServerBindingVersionDefaultsToNull()
+        {
+            // Arrange
+            var expected =
+                @"url: https://example.com
+protocol: pulsar
+bindings:
+  pulsar:
+    tenant: contoso";
+
+            var server = new AsyncApiServer()
+            {
+                Url = "https://example.com",
+                Protocol = "pulsar",
+            };
+
+            server.Bindings.Add(new PulsarServerBinding
+            {
+                Tenant = "contoso",
+                BindingVersion = null,
+            });
+
+            // Act
+            var actual = server.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+
+            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+
+            // Assert
+            Assert.AreEqual(actual, expected);
+            binding.Should().BeEquivalentTo(server);
+        }
+
+        [Test]
+        public void ServerTenantDefaultsToNull()
+        {
+            // Arrange
+            var expected =
+                @"url: https://example.com
+protocol: pulsar
+bindings:
+  pulsar:
+    bindingVersion: latest";
+
+            var server = new AsyncApiServer()
+            {
+                Url = "https://example.com",
+                Protocol = "pulsar",
+            };
+
+            server.Bindings.Add(new PulsarServerBinding
+            {
+                Tenant = null,
+                BindingVersion = "latest",
+            });
+
+            // Act
+            var actual = server.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+
+            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+
+            // Assert
+            Assert.AreEqual(actual, expected);
+            binding.Should().BeEquivalentTo(server);
+        }
     }
 }
