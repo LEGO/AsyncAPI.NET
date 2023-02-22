@@ -73,7 +73,7 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (writer.GetSettings().ReferenceInline == ReferenceInlineSetting.InlineReferences)
+            if (writer.GetSettings().InlineReferences)
             {
                 this.ResolveReferences();
             }

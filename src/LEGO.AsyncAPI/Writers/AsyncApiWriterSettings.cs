@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.Writers
 {
     using LEGO.AsyncAPI.Models;
+    using System;
 
     public class AsyncApiWriterSettings
     {
@@ -13,6 +14,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Gets or sets indicates how references in the source document should be handled.
         /// </summary>
+        [Obsolete]
         public ReferenceInlineSetting ReferenceInline
         {
             get
@@ -26,23 +28,23 @@ namespace LEGO.AsyncAPI.Writers
                 switch (this.referenceInline)
                 {
                     case ReferenceInlineSetting.DoNotInlineReferences:
-                        this.InLineReferences = false;
+                        this.InlineReferences = false;
                         break;
                     case ReferenceInlineSetting.InlineReferences:
-                        this.InLineReferences = true;
+                        this.InlineReferences = true;
                         break;
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether indicates if local references should be rendered as an inline object
+        /// Gets or sets a value indicating whether indicates if local references should be rendered as an inline object.
         /// </summary>
-        public bool InLineReferences { get; set; } = false;
+        public bool InlineReferences { get; set; } = false;
 
         internal bool ShouldInlineReference(AsyncApiReference reference)
         {
-            return this.InLineReferences;
+            return this.InlineReferences;
         }
     }
 }

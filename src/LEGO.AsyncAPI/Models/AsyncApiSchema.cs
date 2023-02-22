@@ -396,7 +396,7 @@ namespace LEGO.AsyncAPI.Models
 
             if (this.Reference != null)
             {
-                if (settings.ReferenceInline != ReferenceInlineSetting.InlineReferences)
+                if (!settings.ShouldInlineReference(this.Reference))
                 {
                     this.Reference.SerializeV2(writer);
                     return;
