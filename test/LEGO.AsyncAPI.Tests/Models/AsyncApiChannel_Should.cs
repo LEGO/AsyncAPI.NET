@@ -23,7 +23,7 @@
       properties:
         x-correlation-id:
           description: the correlationid
-    bindingVersion: 0.1.0";
+    bindingVersion: '0.1.0'";
 
             var channel = new AsyncApiChannel
             {
