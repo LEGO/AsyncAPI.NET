@@ -3,8 +3,7 @@
 # AsyncAPI.NET
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/LEGO/AsyncAPI.NET/ci.yml?label=Build%20%26%20Test&style=for-the-badge)  
-![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET.Readers?label=AsyncAPI.NET.Readers&style=for-the-badge)  
-![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET?label=AsyncAPI.NET&style=for-the-badge)
+
 
 The AsyncAPI.NET SDK contains a useful object model for the AsyncAPI specification in .NET along with common serializers to extract raw AsyncAPI JSON and YAML documents from the model as well.
 
@@ -14,8 +13,8 @@ The AsyncAPI.NET SDK contains a useful object model for the AsyncAPI specificati
 
 Install the NuGet packages:
 
-* [Document](https://www.nuget.org/packages/AsyncAPI.NET/)
-* [Readers](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)
+[![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET.Readers?label=AsyncAPI.NET.Readers&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)  
+[![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET?label=AsyncAPI.NET&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET/)
 
 ## Example Usage
 
