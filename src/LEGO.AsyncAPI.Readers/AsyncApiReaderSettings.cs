@@ -16,7 +16,7 @@ namespace LEGO.AsyncAPI.Readers
         DoNotResolveReferences,
 
         /// <summary>
-        /// ResolveAllReferences effectively means load external references. Will be removed in v2. External references are never "resolved".
+        /// ResolveAllReferences, effectively inlining them.
         /// </summary>
         ResolveReferences,
     }
@@ -29,7 +29,6 @@ namespace LEGO.AsyncAPI.Readers
         /// <summary>
         /// Indicates how references in the source document should be handled.
         /// </summary>
-        /// <remarks>This setting will be going away in the next major version of this library.  Use GetEffective on model objects to get resolved references.</remarks>
         public ReferenceResolutionSetting ReferenceResolution { get; set; } =
             ReferenceResolutionSetting.ResolveReferences;
 
