@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
+﻿using LEGO.AsyncAPI.Models.Bindings;
+
+namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
 {
     using FluentAssertions;
     using LEGO.AsyncAPI.Models;
@@ -62,6 +64,46 @@
             // Assert
             Assert.AreEqual(actual, expected);
             binding.Should().BeEquivalentTo(channel);
+        }
+
+        [Test]
+        public void PulsarChannelBindingNamespaceDefaultToNull()
+        {
+            // Arrange
+            var actual =
+                @"bindings:
+  pulsar:
+    persistence: persistent";
+
+            // Act
+            // Assert
+            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+
+            // Assert
+            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Namespace);
+        }
+
+        [Test]
+        public void PulsarChannelBindingPropertiesExceptNamespaceDefaultToNull()
+        {
+            // Arrange
+            var actual =
+                @"bindings:
+  pulsar:
+    namespace: staging"
+                ;
+
+            // Act
+            // Assert
+            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+
+            // Assert
+            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Persistence);
+            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Compaction);
+            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).GeoReplication);
+            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Retention);
+            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).TTL);
+            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Deduplication);
         }
 
         [Test]
@@ -130,6 +172,7 @@ bindings:
 
             // Assert
             Assert.AreEqual(actual, expected);
+            Assert.AreEqual(null, ((PulsarServerBinding)binding.Bindings[BindingType.Pulsar]).BindingVersion);
             binding.Should().BeEquivalentTo(server);
         }
 
@@ -165,6 +208,7 @@ bindings:
 
             // Assert
             Assert.AreEqual(actual, expected);
+            Assert.AreEqual(null, ((PulsarServerBinding)binding.Bindings[BindingType.Pulsar]).Tenant);
             binding.Should().BeEquivalentTo(server);
         }
     }
