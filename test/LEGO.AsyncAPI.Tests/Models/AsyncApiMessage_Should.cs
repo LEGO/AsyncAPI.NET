@@ -105,10 +105,10 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
       type:
         - string
         - 'null'
-schemaFormat: application/vnd.aai.asyncapi+json;version=2.5.0";
+schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
 
                 var message = new AsyncApiMessage();
-                message.SchemaFormat = "application/vnd.aai.asyncapi+json;version=2.5.0";
+                message.SchemaFormat = "application/vnd.aai.asyncapi+json;version=2.6.0";
                 message.Payload = new AsyncApiSchema()
                 {
                     Properties = new Dictionary<string, AsyncApiSchema>()
