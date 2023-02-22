@@ -5,6 +5,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
 	<Company>The LEGO Group</Company>
 	<PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<Description>AsyncAPI.NET models</Description>
 	<PackageTags>asyncapi .net openapi documentation</PackageTags>
 	<PackageId>AsyncAPI.NET</PackageId>
@@ -35,6 +36,13 @@
 
   <ItemGroup>
     <EmbeddedResource Include="schema-v2.3.0.json" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <None Include="..\..\readme.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

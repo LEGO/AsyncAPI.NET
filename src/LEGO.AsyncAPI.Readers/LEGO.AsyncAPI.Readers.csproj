@@ -6,6 +6,7 @@
     <Nullable>disable</Nullable>
 	<Company>The LEGO Group</Company>
 	<PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<Description>AsyncAPI.NET Readers for JSON and YAML documents</Description>
 	<PackageTags>asyncapi .net openapi documentation</PackageTags>
 	<PackageId>AsyncAPI.NET.Readers</PackageId>
@@ -32,6 +33,13 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="LEGO.AsyncAPI.Tests" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <None Include="..\..\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
