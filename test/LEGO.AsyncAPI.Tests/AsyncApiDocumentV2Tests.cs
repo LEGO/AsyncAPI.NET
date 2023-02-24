@@ -5,8 +5,6 @@
     using System.Globalization;
     using System.IO;
     using System.Linq;
-
-    using FluentAssertions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Bindings;

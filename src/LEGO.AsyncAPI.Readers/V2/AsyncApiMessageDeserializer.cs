@@ -6,8 +6,6 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
