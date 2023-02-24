@@ -10,6 +10,14 @@ namespace LEGO.AsyncAPI.Tests
 
     public class AsyncApiReaderTests
     {
+        [Test]
+        public void Read_WithMissingEverything_DeserializesWithErrors()
+        {
+            var yaml = @"asyncapi: 2.6.0";
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+        }
+
       [Test]
       public void Read_WithBasicPlusContact_Deserializes()
       {

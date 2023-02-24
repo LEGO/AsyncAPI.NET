@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Validation.Rules
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Validation.Rules
 {
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;

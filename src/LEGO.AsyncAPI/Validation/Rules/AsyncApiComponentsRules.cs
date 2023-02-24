@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Validation.Rules
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Validation.Rules
 {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;

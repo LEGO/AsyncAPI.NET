@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Validation.Rules
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Validation.Rules
 {
     using System.Net.Mail;
     using LEGO.AsyncAPI.Models;
