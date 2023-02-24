@@ -6,7 +6,7 @@ on:
       - 'src/LEGO.AsyncAPI/**'
       - 'src/LEGO.AsyncAPI.Readers/**'
       - 'src/LEGO.AsyncAPI.Writers/**'
-      - ".github/workflows/release-package.yml"
+      - ".github/workflows/release-internal.yml"
       - '!**/*.md' 
   workflow_dispatch:
 
