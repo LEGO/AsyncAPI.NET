@@ -101,8 +101,6 @@ namespace LEGO.AsyncAPI.Models
 
             switch (this.Type)
             {
-                case SecuritySchemeType.None:
-                    break;
                 case SecuritySchemeType.UserPassword:
                     break;
                 case SecuritySchemeType.ApiKey:
