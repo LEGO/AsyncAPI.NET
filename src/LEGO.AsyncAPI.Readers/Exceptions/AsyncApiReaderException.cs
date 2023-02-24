@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.Readers.Exceptions
 {
     using System;
     using LEGO.AsyncAPI.Exceptions;
-    using SharpYaml.Serialization;
+    using YamlDotNet.RepresentationModel;
 
     [Serializable]
     public class AsyncApiReaderException : AsyncApiException

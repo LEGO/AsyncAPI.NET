@@ -3,7 +3,7 @@
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     using System;
-    using SharpYaml.Serialization;
+    using YamlDotNet.RepresentationModel;
 
     public static class JsonPointerExtensions
     {

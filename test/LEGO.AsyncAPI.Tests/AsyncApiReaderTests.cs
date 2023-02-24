@@ -3,8 +3,6 @@ namespace LEGO.AsyncAPI.Tests
     using System;
     using System.Linq;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 

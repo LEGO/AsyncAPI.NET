@@ -1,5 +1,4 @@
 ﻿using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Readers;
 using LEGO.AsyncAPI.Writers;
 using NUnit.Framework;
 using System;

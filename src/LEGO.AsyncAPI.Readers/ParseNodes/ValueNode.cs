@@ -5,8 +5,8 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Exceptions;
-    using SharpYaml;
-    using SharpYaml.Serialization;
+    using YamlDotNet.Core;
+    using YamlDotNet.RepresentationModel;
 
     internal class ValueNode : ParseNode
     {

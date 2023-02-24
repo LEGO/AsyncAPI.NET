@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Readers.V2;
-    using SharpYaml.Serialization;
+    using YamlDotNet.RepresentationModel;
 
     public class ParsingContext
     {

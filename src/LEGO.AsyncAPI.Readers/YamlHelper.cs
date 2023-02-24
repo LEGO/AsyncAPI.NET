@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Readers
     using System.IO;
     using System.Linq;
     using LEGO.AsyncAPI.Exceptions;
-    using SharpYaml.Serialization;
+    using YamlDotNet.RepresentationModel;
 
     internal static class YamlHelper
     {
