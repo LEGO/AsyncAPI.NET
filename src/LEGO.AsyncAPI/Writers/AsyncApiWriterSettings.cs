@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Writers
 {
     using LEGO.AsyncAPI.Models;
-    using System;
 
     public class AsyncApiWriterSettings
     {
