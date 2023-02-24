@@ -1,6 +1,7 @@
 ﻿namespace LEGO.AsyncAPI.Validation.Rules
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text.RegularExpressions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Validations;
@@ -13,27 +14,25 @@
         /// </summary>
         public static Regex KeyRegex = new Regex(@"^[a-zA-Z0-9\.\-_]+$");
 
-        public static ValidationRule<AsyncApiDocument> AsyncApiDocumentRequiredFields =>
+        public static ValidationRule<AsyncApiDocument> DocumentRequiredFields =>
             new ValidationRule<AsyncApiDocument>(
                 (context, document) =>
                 {
-                    // info
                     context.Enter("info");
                     if (document.Info == null)
                     {
                         context.CreateError(
-                            nameof(AsyncApiDocumentRequiredFields),
+                            nameof(DocumentRequiredFields),
                             string.Format(Resource.Validation_FieldRequired, "info", "document"));
                     }
 
                     context.Exit();
 
-                    // channels
                     context.Enter("channels");
-                    if (document.Channels == null)
+                    if (document.Channels == null || !document.Channels.Keys.Any())
                     {
                         context.CreateError(
-                            nameof(AsyncApiDocumentRequiredFields),
+                            nameof(DocumentRequiredFields),
                             string.Format(Resource.Validation_FieldRequired, "channels", "document"));
                     }
 
