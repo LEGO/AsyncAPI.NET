@@ -6,7 +6,9 @@
 
 ### BREAKING CHANGES
 
-* Adds validation and starts spitting out errors in diagnostics, that haven't been there before, therefor i declare this change as breaking.
+* Adds validation and starts spitting out errors in diagnostics, that haven't been there before.
+* Also changes SharpYaml to YamlDotNet, which does come with potental for breakage.
+Therefor i declare this change as breaking.
 
 ## [2.0.2](https://github.com/LEGO/AsyncAPI.NET/compare/v2.0.1...v2.0.2) (2023-02-22)
 
