@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/LEGO/AsyncAPI.NET/compare/v2.0.2...v3.0.0) (2023-02-27)
+
+
+* feat!: add basic [REQUIRED] validation rules (#96) ([4e6fa07](https://github.com/LEGO/AsyncAPI.NET/commit/4e6fa070663e7c173ae7c731d327b9102fa67ba0)), closes [#96](https://github.com/LEGO/AsyncAPI.NET/issues/96)
+
+
+### BREAKING CHANGES
+
+* Adds validation and starts spitting out errors in diagnostics, that haven't been there before, therefor i declare this change as breaking.
+
 ## [2.0.2](https://github.com/LEGO/AsyncAPI.NET/compare/v2.0.1...v2.0.2) (2023-02-22)
 
 
