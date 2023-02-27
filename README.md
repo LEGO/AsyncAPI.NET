@@ -74,7 +74,7 @@ var asyncApiDocument = new AsyncApiStreamReader().Read(stream, out var diagnosti
 ## Attribution
 
 * [OpenAPI.Net](https://github.com/microsoft/OpenAPI.NET) - [MIT License](https://github.com/microsoft/OpenAPI.NET/blob/vnext/LICENSE)
-* [SharpYaml](https://github.com/xoofx/SharpYaml) - [MIT License](https://github.com/xoofx/SharpYaml/blob/master/LICENSE.txt)
+* [YamlDotNet]((https://github.com/aaubry/YamlDotNet)) - [MIT License](https://github.com/aaubry/YamlDotNet/blob/master/LICENSE.txt)
 
 ## Contribution
 
