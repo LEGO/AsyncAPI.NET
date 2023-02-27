@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// The cleanup.policy configuration option.
         /// </summary>
-        public List<string>? CleanupPolicy { get; set; }
+        public List<string> CleanupPolicy { get; set; }
 
         /// <summary>
         /// The retention.ms configuration option.

@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// Kafka topic name if different from channel name.
         /// </summary>
-        public string? Topic { get; set; }
+        public string Topic { get; set; }
 
         /// <summary>
         /// Number of partitions configured on this topic (useful to know how many parallel consumers you may run).

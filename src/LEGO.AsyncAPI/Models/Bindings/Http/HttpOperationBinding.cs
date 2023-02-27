@@ -20,12 +20,12 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
         /// <summary>
         /// When type is request, this is the HTTP method, otherwise it MUST be ignored. Its value MUST be one of GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS, CONNECT, and TRACE.
         /// </summary>
-        public string? Method { get; set; }
+        public string Method { get; set; }
 
         /// <summary>
         /// A Schema object containing the definitions for each query parameter. This schema MUST be of type object and have a properties key.
         /// </summary>
-        public AsyncApiSchema? Query { get; set; }
+        public AsyncApiSchema Query { get; set; }
 
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.

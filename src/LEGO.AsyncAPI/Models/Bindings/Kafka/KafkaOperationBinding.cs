@@ -15,12 +15,12 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// Id of the consumer group.
         /// </summary>
-        public AsyncApiSchema? GroupId { get; set; }
+        public AsyncApiSchema GroupId { get; set; }
 
         /// <summary>
         /// Id of the consumer inside a consumer group.
         /// </summary>
-        public AsyncApiSchema? ClientId { get; set; }
+        public AsyncApiSchema ClientId { get; set; }
 
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.

@@ -16,7 +16,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
         /// <summary>
         /// A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type object and have a properties key.
         /// </summary>
-        public AsyncApiSchema? Headers { get; set; }
+        public AsyncApiSchema Headers { get; set; }
 
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.
