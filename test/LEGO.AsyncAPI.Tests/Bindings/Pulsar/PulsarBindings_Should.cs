@@ -29,7 +29,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
       size: 1000
     ttl: 360
     deduplication: true
-    bindingVersion: '0.1.0'";
+    bindingVersion: 0.1.0";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new PulsarChannelBinding

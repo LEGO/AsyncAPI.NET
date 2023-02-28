@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             var expected =
 @"url: 'https://example.com/{channelkey}'
 protocol: test
-protocolVersion: '0.1.0'
+protocolVersion: 0.1.0
 description: some description
 variables:
   channelkey:
