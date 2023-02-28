@@ -79,7 +79,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
             // Assert
             var binding = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
-            // Assert
             Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Namespace);
         }
 
@@ -90,20 +89,19 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
             var actual =
                 @"bindings:
   pulsar:
-    namespace: staging"
-                ;
+    namespace: staging";
 
             // Act
             // Assert
             var binding = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var pulsarBinding = ((PulsarChannelBinding) binding.Bindings[BindingType.Pulsar]);
 
-            // Assert
-            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Persistence);
-            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Compaction);
-            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).GeoReplication);
-            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Retention);
-            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).TTL);
-            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Deduplication);
+            Assert.AreEqual(null, pulsarBinding.Persistence);
+            Assert.AreEqual(null, pulsarBinding.Compaction);
+            Assert.AreEqual(null, pulsarBinding.GeoReplication);
+            Assert.AreEqual(null, pulsarBinding.Retention);
+            Assert.AreEqual(null, pulsarBinding.TTL);
+            Assert.AreEqual(null, pulsarBinding.Deduplication);
         }
 
         [Test]
