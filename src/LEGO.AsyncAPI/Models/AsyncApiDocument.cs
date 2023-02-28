@@ -73,6 +73,11 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
+            if (writer.GetSettings().InlineReferences)
+            {
+                this.ResolveReferences();
+            }
+
             writer.WriteStartObject();
 
             // asyncApi
@@ -140,6 +145,11 @@ namespace LEGO.AsyncAPI.Models
             return resolver.Errors;
         }
 
+        internal T ResolveReference<T>(AsyncApiReference reference) where T : class, IAsyncApiReferenceable
+        {
+            return this.ResolveReference(reference) as T;
+        }
+
         public IAsyncApiReferenceable ResolveReference(AsyncApiReference reference)
         {
             if (reference == null)
@@ -151,7 +161,6 @@ namespace LEGO.AsyncAPI.Models
             {
                 throw new ArgumentException("Reference must have a type.");
             }
-
 
             if (this.Components == null)
             {
@@ -180,7 +189,6 @@ namespace LEGO.AsyncAPI.Models
                         return this.Components.OperationTraits[reference.Id];
                     case ReferenceType.MessageTrait:
                         return this.Components.MessageTraits[reference.Id];
-
                     case ReferenceType.ServerBinding:
                         return this.Components.ServerBindings[reference.Id];
                     case ReferenceType.ChannelBinding:

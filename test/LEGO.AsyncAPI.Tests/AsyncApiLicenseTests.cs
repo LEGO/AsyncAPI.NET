@@ -5,13 +5,11 @@ using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 using NUnit.Framework;
-using SharpYaml.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using YamlDotNet.RepresentationModel;
 
 namespace LEGO.AsyncAPI.Tests
 {

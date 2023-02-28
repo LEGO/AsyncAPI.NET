@@ -1,13 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
 	<Company>The LEGO Group</Company>
 	<PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<Description>AsyncAPI.NET models</Description>
-	<PackageTags>AsyncAPI .NET</PackageTags>
-	<PackageId>LEGO.AsyncAPI</PackageId>
+	<PackageTags>asyncapi .net openapi documentation</PackageTags>
+	<PackageId>AsyncAPI.NET</PackageId>
 	<AssemblyName>LEGO.AsyncAPI</AssemblyName>
 	<RootNamespace>LEGO.AsyncAPI</RootNamespace>
 	<RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
@@ -22,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SharpYaml" Version="1.9.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -32,17 +32,31 @@
 		  <_Parameter1>$(MSBuildProjectName).Tests</_Parameter1>
 	  </AssemblyAttribute>
   </ItemGroup>
-
+	
   <ItemGroup>
-    <EmbeddedResource Include="schema-v2.3.0.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Validation\Rules" />
+    <None Include="..\..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
     
   <ItemGroup>
     <InternalsVisibleTo Include="LEGO.AsyncAPI.Tests" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Compile Update="Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+    
+  <ItemGroup>
+    <EmbeddedResource Update="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

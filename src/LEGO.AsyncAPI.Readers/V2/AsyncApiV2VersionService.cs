@@ -6,7 +6,6 @@ namespace LEGO.AsyncAPI.Readers.V2
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Readers.ParseNodes;

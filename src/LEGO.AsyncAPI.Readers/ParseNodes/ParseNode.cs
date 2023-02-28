@@ -4,12 +4,10 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Exceptions;
-    using SharpYaml.Serialization;
+    using YamlDotNet.RepresentationModel;
 
     internal abstract class ParseNode
     {

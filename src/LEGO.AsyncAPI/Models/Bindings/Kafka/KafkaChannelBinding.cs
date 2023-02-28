@@ -72,7 +72,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (this.Reference != null && writer.GetSettings().ReferenceInline != ReferenceInlineSetting.InlineReferences)
+            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
             {
                 this.Reference.SerializeV2(writer);
                 return;

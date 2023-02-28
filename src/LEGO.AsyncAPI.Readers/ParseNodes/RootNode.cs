@@ -2,7 +2,7 @@
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
-    using SharpYaml.Serialization;
+    using YamlDotNet.RepresentationModel;
 
     internal class RootNode : ParseNode
     {
