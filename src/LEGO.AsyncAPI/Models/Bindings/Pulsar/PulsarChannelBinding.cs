@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         /// <summary>
         /// persistence of the topic in Pulsar persistent or non-persistent.
         /// </summary>
-        public Persistence Persistence { get; set; }
+        public Persistence? Persistence { get; set; }
 
         /// <summary>
         /// Topic compaction threshold given in bytes.
