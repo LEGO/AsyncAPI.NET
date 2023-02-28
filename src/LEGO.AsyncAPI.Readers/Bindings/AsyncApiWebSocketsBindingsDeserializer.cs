@@ -2,7 +2,6 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using Models.Bindings.WebSockets;
 

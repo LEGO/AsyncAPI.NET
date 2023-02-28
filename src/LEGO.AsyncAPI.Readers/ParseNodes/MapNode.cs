@@ -8,11 +8,10 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using System.Linq;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Exceptions;
-    using SharpYaml.Schemas;
-    using SharpYaml.Serialization;
+    using YamlDotNet.RepresentationModel;
+    using YamlDotNet.Serialization;
 
     internal class MapNode : ParseNode, IEnumerable<PropertyNode>
     {
@@ -228,7 +227,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public override string GetRaw()
         {
-            var x = new Serializer(new SerializerSettings(new JsonSchema()) { EmitJsonComptible = true });
+            var x = new SerializerBuilder().JsonCompatible().Build();
             return x.Serialize(this.node);
         }
 

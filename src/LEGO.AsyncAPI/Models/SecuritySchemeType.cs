@@ -10,11 +10,6 @@ namespace LEGO.AsyncAPI.Models
     public enum SecuritySchemeType
     {
         /// <summary>
-        /// None.
-        /// </summary>
-        [Display("None")]None = 0,
-
-        /// <summary>
         /// Username & Password.
         /// </summary>
         [Display("userPassword")] UserPassword,

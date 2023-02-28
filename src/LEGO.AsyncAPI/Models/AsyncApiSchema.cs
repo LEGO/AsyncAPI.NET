@@ -390,11 +390,13 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
+            var target = this;
+
             var settings = writer.GetSettings();
 
             if (this.Reference != null)
             {
-                if (settings.ReferenceInline != ReferenceInlineSetting.InlineReferences)
+                if (!settings.ShouldInlineReference(this.Reference))
                 {
                     this.Reference.SerializeV2(writer);
                     return;
@@ -407,13 +409,27 @@ namespace LEGO.AsyncAPI.Models
                     this.Reference.SerializeV2(writer);
                     return;
                 }
+
+                target = this.GetReferenced(this.Reference.HostDocument);
             }
 
-            this.SerializeV2WithoutReference(writer);
+            target.SerializeV2WithoutReference(writer);
 
             if (this.Reference != null)
             {
                 settings.LoopDetector.PopLoop<AsyncApiSchema>();
+            }
+        }
+
+        public AsyncApiSchema GetReferenced(AsyncApiDocument document)
+        {
+            if (this.Reference != null && document != null)
+            {
+                return document.ResolveReference<AsyncApiSchema>(this.Reference);
+            }
+            else
+            {
+                return this;
             }
         }
     }

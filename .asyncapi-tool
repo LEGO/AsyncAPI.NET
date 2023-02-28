@@ -1,0 +1,21 @@
+{
+  "title": "AsyncAPI.Net",
+  "description": "The AsyncAPI.NET SDK contains a useful object model for AsyncAPI documents in .NET along with common serializers to extract raw OpenAPI JSON and YAML documents from the model.",
+  "links": {
+    "websiteUrl": "https://github.com/LEGO/AsyncAPI.NET/",
+    "repoUrl": "https://github.com/LEGO/AsyncAPI.NET"
+  },
+  "filters": {
+    "language": "C#",
+    "technology": [
+      ".NET",
+      "ASP.NET"
+    ],
+    "categories": [
+      "converters",
+      "code-first",
+      "validator",
+    ],
+    "hasCommercial": false
+  }
+}

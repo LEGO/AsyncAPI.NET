@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Validations;
-    using SharpYaml.Serialization;
+    using YamlDotNet.RepresentationModel;
 
     /// <summary>
     /// Service class for converting contents of TextReader into AsyncApiDocument instances

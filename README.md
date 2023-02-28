@@ -2,16 +2,20 @@
 
 # AsyncAPI.NET
 
-[![Build & Test](https://github.com/LEGO/AsyncAPI.NET/actions/workflows/ci.yml/badge.svg)](https://github.com/LEGO/AsyncAPI.NET/actions/workflows/ci.yml)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/LEGO/AsyncAPI.NET/ci.yml?label=Build%20%26%20Test&style=for-the-badge)  
+
 
 The AsyncAPI.NET SDK contains a useful object model for the AsyncAPI specification in .NET along with common serializers to extract raw AsyncAPI JSON and YAML documents from the model as well.
+
+[CHANGELOG](https://github.com/LEGO/AsyncAPI.NET/blob/main/CHANGELOG.md)  
+[Wiki and getting started guide](https://github.com/LEGO/AsyncAPI.NET/wiki)
 
 ## Installation
 
 Install the NuGet packages:
 
-* [Document](link missing)
-* [Readers](link missing)
+[![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET.Readers?label=AsyncAPI.NET.Readers&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)  
+[![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET?label=AsyncAPI.NET&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET/)
 
 ## Example Usage
 
@@ -70,12 +74,12 @@ var asyncApiDocument = new AsyncApiStreamReader().Read(stream, out var diagnosti
 ## Attribution
 
 * [OpenAPI.Net](https://github.com/microsoft/OpenAPI.NET) - [MIT License](https://github.com/microsoft/OpenAPI.NET/blob/vnext/LICENSE)
-* [SharpYaml](https://github.com/xoofx/SharpYaml) - [MIT License](https://github.com/xoofx/SharpYaml/blob/master/LICENSE.txt)
+* [YamlDotNet](https://github.com/aaubry/YamlDotNet) - [MIT License](https://github.com/aaubry/YamlDotNet/blob/master/LICENSE.txt)
 
 ## Contribution
 
 This project welcomes contributions and suggestions.
-Do you want to contribute to the project? Find out how [here](CONTRIBUTION.md).
+Do you want to contribute to the project? Find out how [here](CONTRIBUTING.md).
 
 ## License
 [Modified Apache 2.0 (Section 6)](https://github.com/LEGO/AsyncAPI.NET/blob/main/LICENSE)

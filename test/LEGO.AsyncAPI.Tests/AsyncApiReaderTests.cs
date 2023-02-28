@@ -3,13 +3,19 @@ namespace LEGO.AsyncAPI.Tests
     using System;
     using System.Linq;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 
     public class AsyncApiReaderTests
     {
+        [Test]
+        public void Read_WithMissingEverything_DeserializesWithErrors()
+        {
+            var yaml = @"asyncapi: 2.6.0";
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+        }
+
       [Test]
       public void Read_WithBasicPlusContact_Deserializes()
       {
