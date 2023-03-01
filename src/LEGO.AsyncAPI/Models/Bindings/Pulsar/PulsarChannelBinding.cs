@@ -20,12 +20,12 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         /// <summary>
         /// persistence of the topic in Pulsar persistent or non-persistent.
         /// </summary>
-        public Persistence Persistence { get; set; }
+        public Persistence? Persistence { get; set; }
 
         /// <summary>
         /// Topic compaction threshold given in bytes.
         /// </summary>
-        public int Compaction { get; set; }
+        public int? Compaction { get; set; }
 
         /// <summary>
         /// A list of clusters the topic is replicated to.
@@ -40,12 +40,12 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         /// <summary>
         /// Message Time-to-live in seconds. 
         /// </summary>
-        public int TTL { get; set; }
+        public int? TTL { get; set; }
 
         /// <summary>
         /// When Message deduplication is enabled, it ensures that each message produced on Pulsar topics is persisted to disk only once.
         /// </summary>
-        public bool Deduplication { get; set; }
+        public bool? Deduplication { get; set; }
 
         /// <summary>
         /// The version of this binding.

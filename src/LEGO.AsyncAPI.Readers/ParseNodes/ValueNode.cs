@@ -29,6 +29,16 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             return this.node.Value;
         }
 
+        public override string GetScalarValueOrDefault(string defaultValue)
+        {
+            if (this.node.Value is not null)
+            {
+                return this.node.Value;
+            }
+
+            return defaultValue;
+        }
+
         public override int GetIntegerValue()
         {
             if (int.TryParse(this.node.Value, out int value))
@@ -37,6 +47,16 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             }
 
             throw new AsyncApiReaderException("Value could not parse to integer", this.node);
+        }
+
+        public override int? GetIntegerValueOrDefault(int? defaultValue)
+        {
+            if (int.TryParse(this.node.Value, out int value))
+            {
+                return value;
+            }
+
+            return defaultValue;
         }
 
         public override long GetLongValue()
@@ -49,6 +69,16 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             throw new AsyncApiReaderException("Value could not parse to long", this.node);
         }
 
+        public override long? GetLongValueOrDefault(long? defaultValue)
+        {
+            if (long.TryParse(this.node.Value, out long value))
+            {
+                return value;
+            }
+
+            return defaultValue;
+        }
+
         public override bool GetBooleanValue()
         {
             if (bool.TryParse(this.node.Value, out bool value))
@@ -57,6 +87,16 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             }
 
             throw new AsyncApiReaderException("Value could not parse to bool", this.node);
+        }
+
+        public override bool? GetBooleanValueOrDefault(bool? defaultValue)
+        {
+            if (bool.TryParse(this.node.Value, out bool value))
+            {
+                return value;
+            }
+
+            return defaultValue;
         }
 
         public override IAsyncApiAny CreateAny()

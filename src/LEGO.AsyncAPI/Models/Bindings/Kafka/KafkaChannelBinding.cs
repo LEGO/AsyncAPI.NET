@@ -20,12 +20,12 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// Number of partitions configured on this topic (useful to know how many parallel consumers you may run).
         /// </summary>
-        public int Partitions { get; set; }
+        public int? Partitions { get; set; }
 
         /// <summary>
         /// Number of replicas configured on this topic.
         /// </summary>
-        public int Replicas { get; set; }
+        public int? Replicas { get; set; }
 
         /// <summary>
         /// Topic configuration properties that are relevant for the API.
