@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/LEGO/AsyncAPI.NET/compare/v3.0.0...v3.0.1) (2023-03-13)
+
+
+### Bug Fixes
+
+* make optional properties of bindings nullable ([#89](https://github.com/LEGO/AsyncAPI.NET/issues/89)) ([499cf64](https://github.com/LEGO/AsyncAPI.NET/commit/499cf64a54fda10a7fc6f870d406e11b142faff4))
+
 # [3.0.0](https://github.com/LEGO/AsyncAPI.NET/compare/v2.0.2...v3.0.0) (2023-02-27)
 
 
