@@ -78,7 +78,7 @@ namespace LEGO.AsyncAPI.Models
         public const string Else = "else";
         public const string Items = "items";
         public const string Properties = "properties";
-        public const string AdditionalProperties = "additionalPropertie";
+        public const string AdditionalProperties = "additionalProperties";
         public const string Format = "format";
         public const string Nullable = "nullable";
         public const string Discriminator = "descriminator";
