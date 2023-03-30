@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/LEGO/AsyncAPI.NET/compare/v3.0.1...v3.0.2) (2023-03-30)
+
+
+### Bug Fixes
+
+* fixed typo in AsyncApiConstants.cs ([#101](https://github.com/LEGO/AsyncAPI.NET/issues/101)) ([146ee71](https://github.com/LEGO/AsyncAPI.NET/commit/146ee71082fb0eab4fc4231f3564bc8f7b73d779))
+
 ## [3.0.1](https://github.com/LEGO/AsyncAPI.NET/compare/v3.0.0...v3.0.1) (2023-03-13)
 
 
