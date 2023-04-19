@@ -72,7 +72,7 @@ namespace LEGO.AsyncAPI.Readers
             return document;
         }
 
-        public async Task<ReadResult> ReadAsync(YamlDocument input)
+        public Task<ReadResult> ReadAsync(YamlDocument input)
         {
             var diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
@@ -102,11 +102,11 @@ namespace LEGO.AsyncAPI.Readers
                 }
             }
 
-            return new ReadResult
+            return Task.FromResult(new ReadResult
             {
                 AsyncApiDocument = document,
                 AsyncApiDiagnostic = diagnostic,
-            };
+            });
         }
 
         private void ResolveReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)

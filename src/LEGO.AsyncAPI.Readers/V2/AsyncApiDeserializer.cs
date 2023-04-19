@@ -165,15 +165,21 @@ namespace LEGO.AsyncAPI.Readers
 
         private static IAsyncApiExtension LoadExtension(string name, ParseNode node)
         {
-            if (node.Context.ExtensionParsers.TryGetValue(name, out var parser))
+            try
             {
-                return parser(
-                    AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny()));
+                if (node.Context.ExtensionParsers.TryGetValue(name, out var parser))
+                {
+                    return parser(
+                        AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny()));
+                }
             }
-            else
+            catch (AsyncApiException ex)
             {
-                return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
+                ex.Pointer = node.Context.GetLocation();
+                node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
             }
+
+            return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
         }
 
         private static string LoadString(ParseNode node)
