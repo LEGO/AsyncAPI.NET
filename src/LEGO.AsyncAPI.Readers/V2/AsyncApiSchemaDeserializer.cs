@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers
 
     internal static partial class AsyncApiV2Deserializer
     {
-        private static readonly FixedFieldMap<AsyncApiSchema> schemaFixedFields = new()
+        private static readonly FixedFieldMap<AsyncApiSchema> schemaFixedFields = new ()
         {
             {
                 "title", (a, n) => { a.Title = n.GetScalarValue(); }
