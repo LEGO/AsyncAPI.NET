@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using LEGO.AsyncAPI.Exceptions;
@@ -162,7 +163,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
         }
-
+        
         private static IAsyncApiExtension LoadExtension(string name, ParseNode node)
         {
             try

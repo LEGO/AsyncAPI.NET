@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using YamlDotNet.Core;
     using YamlDotNet.RepresentationModel;
 
-    internal class ValueNode : ParseNode
+    public class ValueNode : ParseNode
     {
         private readonly YamlScalarNode node;
 

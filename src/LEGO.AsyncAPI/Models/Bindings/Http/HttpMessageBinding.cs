@@ -12,7 +12,6 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
     /// </summary>
     public class HttpMessageBinding : IMessageBinding
     {
-
         /// <summary>
         /// A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type object and have a properties key.
         /// </summary>

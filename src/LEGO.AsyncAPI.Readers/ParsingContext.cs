@@ -13,6 +13,11 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Readers.V2;
     using YamlDotNet.RepresentationModel;
 
+    public interface IChannelBindingReader
+    {
+        IChannelBinding Read(ParseNode node);
+    }
+    
     public class ParsingContext
     {
         private readonly Stack<string> currentLocation = new ();
@@ -23,7 +28,9 @@ namespace LEGO.AsyncAPI.Readers
             set;
         }
 
-        = new ();
+            = new ();
+
+        internal Dictionary<string, IChannelBindingReader> ChannelBindingParsers { get; set; } = new ();
 
         internal RootNode RootNode { get; set; }
 

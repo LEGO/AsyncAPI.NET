@@ -27,7 +27,7 @@ namespace LEGO.AsyncAPI.Readers
                 }
                 else
                 {
-                    mapNode.Context.Diagnostic.Errors.Add(
+                    mapNode.Context.Diagnostic.Warnings.Add(
                         new AsyncApiError(node.Context.GetLocation(), $"ChannelBinding {property.Name} is not found"));
                 }
             }
@@ -50,6 +50,15 @@ namespace LEGO.AsyncAPI.Readers
                 default:
                     throw new AsyncApiException($"ChannelBinding {property.Name} is not supported");
             }
+
+            var propertyNode = node as PropertyNode;
+            if (node.Context.ChannelBindingParsers.TryGetValue(propertyNode.Name, out var parser))
+            {
+                return parser.Read(propertyNode.Value);
+            }
+
+            node.Context.Diagnostic.Warnings.Add(new AsyncApiError(node.Context.GetLocation(), $"No parser found for binding: {propertyNode.Name}"));
+            return null;
         }
     }
 }
