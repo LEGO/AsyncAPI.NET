@@ -38,16 +38,20 @@ namespace LEGO.AsyncAPI.Readers
         internal static IServerBinding LoadServerBinding(ParseNode node)
         {
             var property = node as PropertyNode;
-            var bindingType = property.Name;
-            switch (bindingType)
+            try
             {
-                case "kafka":
-                    return LoadBinding("ServerBinding", property.Value, kafkaServerBindingFixedFields);
-                // TODO: case BindingType.Pulsar:
-                //    return LoadBinding("ServerBinding", property.Value, pulsarServerBindingFixedFields); 
-                default:
-                    throw new AsyncApiException($"ServerBinding {property.Name} is not supported");
+                if (node.Context.ServerBindingParsers.TryGetValue(property.Name, out var parser))
+                {
+                    return parser.LoadBinding(property);
+                }
             }
+            catch (AsyncApiException ex)
+            {
+                ex.Pointer = node.Context.GetLocation();
+                node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+            }
+
+            return null;
         }
     }
 }
