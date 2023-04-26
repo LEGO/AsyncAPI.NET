@@ -1,13 +1,12 @@
-﻿using LEGO.AsyncAPI.Models.Bindings;
-
-namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
+﻿namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
 {
+    using System.Collections.Generic;
     using FluentAssertions;
+    using LEGO.AsyncAPI.Bindings.Pulsar;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings.Pulsar;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
-    using System.Collections.Generic;
 
     internal class PulsarBindings_Should
     {
@@ -59,7 +58,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.BindingParsers.Add(new PulsarChannelBinding());
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
             Assert.AreEqual(actual, expected);
@@ -76,10 +77,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
     persistence: persistent";
 
             // Act
+            var settings = new AsyncApiReaderSettings();
+            settings.BindingParsers.Add(new PulsarChannelBinding());
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
             // Assert
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
-            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings[BindingType.Pulsar]).Namespace);
+            Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings["pulsar"]).Namespace);
         }
 
         [Test]
@@ -93,9 +96,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
 
             // Act
             // Assert
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
-            var pulsarBinding = ((PulsarChannelBinding) binding.Bindings[BindingType.Pulsar]);
+            var settings = new AsyncApiReaderSettings();
+            settings.BindingParsers.Add(new PulsarChannelBinding());
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var pulsarBinding = ((PulsarChannelBinding) binding.Bindings["pulsar"]);
 
+            Assert.AreEqual("staging", pulsarBinding.Namespace);
             Assert.AreEqual(null, pulsarBinding.Persistence);
             Assert.AreEqual(null, pulsarBinding.Compaction);
             Assert.AreEqual(null, pulsarBinding.GeoReplication);
@@ -170,7 +176,7 @@ bindings:
 
             // Assert
             Assert.AreEqual(actual, expected);
-            Assert.AreEqual(null, ((PulsarServerBinding)binding.Bindings[BindingType.Pulsar]).BindingVersion);
+            Assert.AreEqual(null, ((PulsarServerBinding)binding.Bindings["pulsar"]).BindingVersion);
             binding.Should().BeEquivalentTo(server);
         }
 
@@ -206,7 +212,7 @@ bindings:
 
             // Assert
             Assert.AreEqual(actual, expected);
-            Assert.AreEqual(null, ((PulsarServerBinding)binding.Bindings[BindingType.Pulsar]).Tenant);
+            Assert.AreEqual(null, ((PulsarServerBinding)binding.Bindings["pulsar"]).Tenant);
             binding.Should().BeEquivalentTo(server);
         }
     }

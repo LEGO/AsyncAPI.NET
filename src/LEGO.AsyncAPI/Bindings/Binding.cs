@@ -10,13 +10,13 @@
     {
         public abstract string Type { get; }
 
-        public string BindingVersion { get; set; }
-
         public bool UnresolvedReference { get; set; }
 
         public AsyncApiReference Reference { get; set; }
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
+        public abstract string BindingVersion { get; set; }
 
         public void SerializeV2(IAsyncApiWriter writer)
         {

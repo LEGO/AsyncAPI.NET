@@ -6,7 +6,6 @@
     using FluentAssertions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
@@ -275,7 +274,7 @@ traits:
                 Bindings = new AsyncApiBindings<IMessageBinding>()
                 {
                     {
-                        BindingType.Http, new HttpMessageBinding
+                        "http", new HttpMessageBinding
                         {
                             Headers = new AsyncApiSchema
                             {

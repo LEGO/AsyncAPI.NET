@@ -42,6 +42,8 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
         /// </summary>
         public bool? Deduplication { get; set; }
 
+        public override string BindingVersion { get; set; }
+
         public override string Type => "pulsar";
 
         protected override FixedFieldMap<PulsarChannelBinding> FixedFieldMap => new()
@@ -66,7 +68,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
         {
             var mapNode = node.CheckMapNode("retention");
             var retention = new RetentionDefinition();
-            ParseMap(mapNode, retention, pulsarServerBindingRetentionFixedFields, null);
+            ParseMap(mapNode, retention, pulsarServerBindingRetentionFixedFields);
             return retention;
         }
 
@@ -86,7 +88,6 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
             writer.WriteOptionalProperty<int>(AsyncApiConstants.TTL, this.TTL);
             writer.WriteOptionalProperty(AsyncApiConstants.Deduplication, this.Deduplication);
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
-
             writer.WriteEndObject();
         }
     }

@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
 
         /// <summary>
         /// The version of this binding.
-        public string BindingVersion { get; set; }
+        public override string BindingVersion { get; set; }
 
         public override string Type => "pulsar";
 

@@ -748,7 +748,7 @@ components:
                 Bindings = new AsyncApiBindings<IOperationBinding>()
                 {
                     {
-                        BindingType.Kafka, new KafkaOperationBinding()
+                        "kafka", new KafkaOperationBinding()
                         {
                             ClientId = new AsyncApiSchema()
                             {
@@ -2230,7 +2230,7 @@ channels:
             Assert.AreEqual(2, deserialized.Channels.First().Value.Publish.Message.First().Bindings.Count);
 
             var binding = deserialized.Channels.First().Value.Publish.Message.First().Bindings.First();
-            Assert.AreEqual(BindingType.Http, binding.Key);
+            Assert.AreEqual("http", binding.Key);
             var httpBinding = binding.Value as HttpMessageBinding;
 
             Assert.AreEqual("this mah binding", httpBinding.Headers.Description);
