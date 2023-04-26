@@ -1,6 +1,7 @@
 ﻿namespace LEGO.AsyncAPI.Tests.Bindings
 {
     using System;
+    using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
@@ -31,27 +32,39 @@
         }
     }
 
-    internal class CustomBinding_Should
+    public class CustomBinding_Should
     {
         [Test]
         public void CustomBinding_SerializesDeserializes()
         {
             // Arrange
-            var actual =
-                @"bindings:
+            var expected =
+@"bindings:
   my:
-    bindingVersion: 0.1.0
-    custom: someValue";
+    custom: someValue
+    bindingVersion: 0.1.0";
+
+            var channel = new AsyncApiChannel();
+            channel.Bindings.Add(new MyBinding
+            {
+                Custom = "someValue",
+                BindingVersion = "0.1.0",
+            });
 
             // Act
+            var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+
             // Assert
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+
             var settings = new AsyncApiReaderSettings();
             settings.BindingParsers.Add(new MyBinding());
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
-            var myBinding = ((MyBinding)binding.Bindings["my"]);
 
-            Assert.AreEqual("someValue", myBinding.Custom);
-            Assert.AreEqual("0.1.0", myBinding.BindingVersion);
+            // Assert
+            Assert.AreEqual(actual, expected);
+            binding.Should().BeEquivalentTo(channel);
         }
     }
 }
