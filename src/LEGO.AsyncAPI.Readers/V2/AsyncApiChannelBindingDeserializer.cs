@@ -2,12 +2,9 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-    using LEGO.AsyncAPI.Writers;
 
     internal static partial class AsyncApiV2Deserializer
     {
@@ -33,23 +30,6 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             return channelBindings;
-        }
-
-        internal static IChannelBinding LoadChannelBinding(ParseNode node)
-        {
-            var property = node as PropertyNode;
-            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
-            switch (bindingType)
-            {
-                case BindingType.Kafka:
-                    return LoadBinding("ChannelBinding", property.Value, kafkaChannelBindingFixedFields);
-                case BindingType.Pulsar:
-                    return LoadBinding("ChannelBinding", property.Value, pulsarChannelBindingFixedFields);
-                case BindingType.Websockets:
-                    return LoadBinding("ChannelBinding", property.Value, webSocketsChannelBindingFixedFields);
-                default:
-                    throw new AsyncApiException($"ChannelBinding {property.Name} is not supported");
-            }
         }
     }
 }

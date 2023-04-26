@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using LEGO.AsyncAPI.Readers.Exceptions;
     using YamlDotNet.RepresentationModel;
 
-    internal abstract class ParseNode
+    public abstract class ParseNode
     {
         protected ParseNode(ParsingContext parsingContext)
         {

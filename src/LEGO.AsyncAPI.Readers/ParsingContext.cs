@@ -25,6 +25,8 @@ namespace LEGO.AsyncAPI.Readers
 
         = new ();
 
+        internal Dictionary<string, IBindingParser<IChannelBinding>> ChannelBindingParsers { get; set; } = new();
+
         internal RootNode RootNode { get; set; }
 
         internal List<AsyncApiTag> Tags { get; private set; } = new ();

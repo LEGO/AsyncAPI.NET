@@ -64,7 +64,7 @@ namespace LEGO.AsyncAPI.Services
         public override void Visit(AsyncApiChannel channel)
         {
             this.ResolveMap(channel.Parameters);
-            var bindingDictionary = channel.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type.GetDisplayName());
+            var bindingDictionary = channel.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type);
             this.ResolveMap(bindingDictionary);
         }
 
@@ -81,7 +81,7 @@ namespace LEGO.AsyncAPI.Services
         {
             this.ResolveList(operation.Message);
             this.ResolveList(operation.Traits);
-            var bindingDictionary = operation.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type.GetDisplayName());
+            var bindingDictionary = operation.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type);
             this.ResolveMap(bindingDictionary);
         }
 
@@ -91,7 +91,7 @@ namespace LEGO.AsyncAPI.Services
             this.ResolveObject(message.Payload, r => message.Payload = r);
             this.ResolveList(message.Traits);
             this.ResolveObject(message.CorrelationId, r => message.CorrelationId = r);
-            var bindingDictionary = message.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type.GetDisplayName());
+            var bindingDictionary = message.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type);
             this.ResolveMap(bindingDictionary);
         }
 

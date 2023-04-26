@@ -41,6 +41,7 @@ namespace LEGO.AsyncAPI.Readers
             var context = new ParsingContext(diagnostic)
             {
                 ExtensionParsers = this.settings.ExtensionParsers,
+                ChannelBindingParsers = this.settings.BindingParsers.OfType<IBindingParser<IChannelBinding>>().ToDictionary(b => b.Type, b => b),
             };
 
             AsyncApiDocument document = null;
@@ -144,6 +145,7 @@ namespace LEGO.AsyncAPI.Readers
             var context = new ParsingContext(diagnostic)
             {
                 ExtensionParsers = this.settings.ExtensionParsers,
+                ChannelBindingParsers = this.settings.BindingParsers.OfType<IBindingParser<IChannelBinding>>().ToDictionary(b => b.Type, b => b),
             };
 
             IAsyncApiElement element = null;

@@ -40,12 +40,12 @@ namespace LEGO.AsyncAPI.Readers
         internal static IMessageBinding LoadMessageBinding(ParseNode node)
         {
             var property = node as PropertyNode;
-            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
+            var bindingType = property.Name;
             switch (bindingType)
             {
-                case BindingType.Kafka:
+                case "kafka":
                     return LoadBinding<KafkaMessageBinding>("MessageBinding", property.Value, kafkaMessageBindingFixedFields);
-                case BindingType.Http:
+                case "http":
                     return LoadBinding<HttpMessageBinding>("MessageBinding", property.Value, httpMessageBindingFixedFields);
                 default:
                     throw new AsyncApiException($"MessageBinding {property.Name} is not supported");

@@ -37,7 +37,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// </summary>
         public string BindingVersion { get; set; }
 
-        public BindingType Type => BindingType.Kafka;
+       public string Type => "kafka";
 
         public bool UnresolvedReference { get; set; }
 

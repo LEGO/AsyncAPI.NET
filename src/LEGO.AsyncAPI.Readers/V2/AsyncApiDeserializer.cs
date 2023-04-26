@@ -6,13 +6,14 @@ namespace LEGO.AsyncAPI.Readers
     using System.Linq;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Expressions;
+    using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
     internal static partial class AsyncApiV2Deserializer
     {
-        private static void ParseMap<T>(
+        internal static void ParseMap<T>(
             MapNode mapNode,
             T domainObject,
             FixedFieldMap<T> fixedFieldMap,
@@ -163,7 +164,7 @@ namespace LEGO.AsyncAPI.Readers
             return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
         }
 
-        private static IAsyncApiExtension LoadExtension(string name, ParseNode node)
+        internal static IAsyncApiExtension LoadExtension(string name, ParseNode node)
         {
             try
             {
@@ -180,6 +181,25 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
+        }
+
+        private static IChannelBinding LoadChannelBinding(ParseNode node)
+        {
+            var property = node as PropertyNode;
+            try
+            {
+                if (node.Context.ChannelBindingParsers.TryGetValue(property.Name, out var parser))
+                {
+                    return parser.Parse(property);
+                }
+            }
+            catch (AsyncApiException ex)
+            {
+                ex.Pointer = node.Context.GetLocation();
+                node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+            }
+
+            return null;
         }
 
         private static string LoadString(ParseNode node)

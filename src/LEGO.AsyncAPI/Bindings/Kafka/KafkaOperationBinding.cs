@@ -1,6 +1,6 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.Http
+namespace LEGO.AsyncAPI.Models.Bindings.Kafka
 {
     using System;
     using System.Collections.Generic;
@@ -8,29 +8,33 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Binding class for http operations.
+    /// Binding class for Kafka operations.
     /// </summary>
-    public class HttpOperationBinding : IOperationBinding
+    public class KafkaOperationBinding : IOperationBinding
     {
         /// <summary>
-        /// REQUIRED. Type of operation. Its value MUST be either request or response.
+        /// Id of the consumer group.
         /// </summary>
-        public string Type { get; set; }
+        public AsyncApiSchema GroupId { get; set; }
 
         /// <summary>
-        /// When type is request, this is the HTTP method, otherwise it MUST be ignored. Its value MUST be one of GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS, CONNECT, and TRACE.
+        /// Id of the consumer inside a consumer group.
         /// </summary>
-        public string Method { get; set; }
-
-        /// <summary>
-        /// A Schema object containing the definitions for each query parameter. This schema MUST be of type object and have a properties key.
-        /// </summary>
-        public AsyncApiSchema Query { get; set; }
+        public AsyncApiSchema ClientId { get; set; }
 
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.
         /// </summary>
         public string BindingVersion { get; set; }
+
+        /// <inheritdoc/>
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
+        public bool UnresolvedReference { get; set; }
+
+        public AsyncApiReference Reference { get; set; }
+
+       public string Type => "kafka";
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.
@@ -43,10 +47,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
             }
 
             writer.WriteStartObject();
-
-            writer.WriteRequiredProperty(AsyncApiConstants.Type, this.Type);
-            writer.WriteOptionalProperty(AsyncApiConstants.Method, this.Method);
-            writer.WriteOptionalObject(AsyncApiConstants.Query, this.Query, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.GroupId, this.GroupId, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.ClientId, this.ClientId, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
@@ -67,14 +69,5 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
 
             this.SerializeV2WithoutReference(writer);
         }
-
-        /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
-
-        public bool UnresolvedReference { get; set; }
-
-        public AsyncApiReference Reference { get; set; }
-
-        BindingType IBinding.Type => BindingType.Http;
     }
 }

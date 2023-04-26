@@ -95,6 +95,6 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// </summary>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        public BindingType Type => BindingType.Kafka;
+       public string Type => "kafka";
     }
 }

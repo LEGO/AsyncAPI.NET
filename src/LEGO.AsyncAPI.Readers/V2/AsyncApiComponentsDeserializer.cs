@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
     internal static partial class AsyncApiV2Deserializer
@@ -20,7 +21,7 @@ namespace LEGO.AsyncAPI.Readers
             { "operationTraits", (a, n) => a.OperationTraits = n.CreateMapWithReference(ReferenceType.OperationTrait, LoadOperationTrait) },
             { "messageTraits", (a, n) => a.MessageTraits = n.CreateMapWithReference(ReferenceType.MessageTrait, LoadMessageTrait) },
             { "serverBindings", (a, n) => a.ServerBindings = n.CreateMapWithReference(ReferenceType.ServerBinding, LoadServerBinding) },
-            { "channelBindings", (a, n) => a.ChannelBindings = n.CreateMapWithReference(ReferenceType.ChannelBinding, LoadChannelBinding) },
+            { "channelBindings", (a, n) => a.ChannelBindings = n.CreateMapWithReference<IChannelBinding>(ReferenceType.ChannelBinding, LoadChannelBinding) },
             { "operationBindings", (a, n) => a.OperationBindings = n.CreateBindingMapWithReference(ReferenceType.OperationBinding, LoadOperationBinding) },
             { "messageBindings", (a, n) => a.MessageBindings = n.CreateMapWithReference(ReferenceType.MessageBinding, LoadMessageBinding) },
         };

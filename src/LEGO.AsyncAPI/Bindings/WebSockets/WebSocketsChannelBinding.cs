@@ -1,43 +1,40 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.Kafka
+namespace LEGO.AsyncAPI.Models.Bindings.WebSockets
 {
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    /// <summary>
-    /// Binding class for Kafka server settings.
-    /// </summary>
-    public class KafkaServerBinding : IServerBinding
+    public class WebSocketsChannelBinding : IChannelBinding
     {
         /// <summary>
-        /// API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used)
+        /// The HTTP method t use when establishing the connection. Its value MUST be either 'GET' or 'POST'.
         /// </summary>
-        public string SchemaRegistryUrl { get; set; }
+        public string Method { get; set; }
 
         /// <summary>
-        /// The vendor of Schema Registry and Kafka serdes library that should be used (e.g. apicurio, confluent, ibm, or karapace)
+        /// A Schema object containing the definitions for each query parameter. This schema MUST be of type 'object' and have a 'properties' key.
         /// </summary>
-        public string SchemaRegistryVendor { get; set; }
+        public AsyncApiSchema Query { get; set; }
 
         /// <summary>
-        /// The version of this binding.
+        /// A Schema object containing the definitions of the HTTP headers to use when establishing the connection. This schma MUST be of type 'object' and have a 'properties' key.
         /// </summary>
+        public AsyncApiSchema Headers { get; set; }
+
         public string BindingVersion { get; set; }
-
-        public BindingType Type => BindingType.Kafka;
 
         public bool UnresolvedReference { get; set; }
 
         public AsyncApiReference Reference { get; set; }
 
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } =
+            new Dictionary<string, IAsyncApiExtension>();
 
-        /// <summary>
-        /// Serialize to AsyncAPI V2 document without using reference.
-        /// </summary>
+       public string Type => "websockets";
+
         public void SerializeV2WithoutReference(IAsyncApiWriter writer)
         {
             if (writer is null)
@@ -46,8 +43,10 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             }
 
             writer.WriteStartObject();
-            writer.WriteOptionalProperty(AsyncApiConstants.SchemaRegistryUrl, this.SchemaRegistryUrl);
-            writer.WriteOptionalProperty(AsyncApiConstants.SchemaRegistryVendor, this.SchemaRegistryVendor);
+
+            writer.WriteOptionalProperty(AsyncApiConstants.Method, this.Method);
+            writer.WriteOptionalObject(AsyncApiConstants.Query, this.Query, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();

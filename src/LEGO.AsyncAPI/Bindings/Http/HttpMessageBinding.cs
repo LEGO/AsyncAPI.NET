@@ -1,6 +1,6 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
+// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
+namespace LEGO.AsyncAPI.Models.Bindings.Http
 {
     using System;
     using System.Collections.Generic;
@@ -8,26 +8,30 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Binding class for Pulsar server settings.
+    /// Binding class for http messaging channels.
     /// </summary>
-    public class PulsarServerBinding : IServerBinding
+    public class HttpMessageBinding : IMessageBinding
     {
-        /// <summary>
-        /// The pulsar tenant. If omitted, "public" must be assumed.
-        /// </summary>
-        public string Tenant { get; set; }
 
         /// <summary>
-        /// The version of this binding.
+        /// A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type object and have a properties key.
+        /// </summary>
+        public AsyncApiSchema Headers { get; set; }
+
+        /// <summary>
+        /// The version of this binding. If omitted, "latest" MUST be assumed.
+        /// </summary>
         public string BindingVersion { get; set; }
 
-        public BindingType Type => BindingType.Pulsar;
-
+        /// <summary>
+        /// Indicates if object is populated with data or is just a reference to the data
+        /// </summary>
         public bool UnresolvedReference { get; set; }
 
+        /// <summary>
+        /// Reference object.
+        /// </summary>
         public AsyncApiReference Reference { get; set; }
-
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.
@@ -41,7 +45,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
 
             writer.WriteStartObject();
 
-            writer.WriteOptionalProperty(AsyncApiConstants.Tenant, this.Tenant);
+            writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();
@@ -62,5 +66,10 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
 
             this.SerializeV2WithoutReference(writer);
         }
+
+        /// <inheritdoc/>
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
+       public string Type => "http";
     }
 }

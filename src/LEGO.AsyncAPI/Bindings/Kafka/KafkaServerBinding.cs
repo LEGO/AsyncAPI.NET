@@ -8,33 +8,32 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// Binding class for Kafka operations.
+    /// Binding class for Kafka server settings.
     /// </summary>
-    public class KafkaOperationBinding : IOperationBinding
+    public class KafkaServerBinding : IServerBinding
     {
         /// <summary>
-        /// Id of the consumer group.
+        /// API URL for the Schema Registry used when producing Kafka messages (if a Schema Registry was used)
         /// </summary>
-        public AsyncApiSchema GroupId { get; set; }
+        public string SchemaRegistryUrl { get; set; }
 
         /// <summary>
-        /// Id of the consumer inside a consumer group.
+        /// The vendor of Schema Registry and Kafka serdes library that should be used (e.g. apicurio, confluent, ibm, or karapace)
         /// </summary>
-        public AsyncApiSchema ClientId { get; set; }
+        public string SchemaRegistryVendor { get; set; }
 
         /// <summary>
-        /// The version of this binding. If omitted, "latest" MUST be assumed.
+        /// The version of this binding.
         /// </summary>
         public string BindingVersion { get; set; }
 
-        /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+       public string Type => "kafka";
 
         public bool UnresolvedReference { get; set; }
 
         public AsyncApiReference Reference { get; set; }
 
-        public BindingType Type => BindingType.Kafka;
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.
@@ -47,8 +46,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             }
 
             writer.WriteStartObject();
-            writer.WriteOptionalObject(AsyncApiConstants.GroupId, this.GroupId, (w, h) => h.SerializeV2(w));
-            writer.WriteOptionalObject(AsyncApiConstants.ClientId, this.ClientId, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaRegistryUrl, this.SchemaRegistryUrl);
+            writer.WriteOptionalProperty(AsyncApiConstants.SchemaRegistryVendor, this.SchemaRegistryVendor);
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
 
             writer.WriteEndObject();

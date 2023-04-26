@@ -38,12 +38,12 @@ namespace LEGO.AsyncAPI.Readers
         internal static IOperationBinding LoadOperationBinding(ParseNode node)
         {
             var property = node as PropertyNode;
-            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
+            var bindingType = property.Name;
             switch (bindingType)
             {
-                case BindingType.Kafka:
+                case "kafka":
                     return LoadBinding("OperationBinding", property.Value, kafkaOperationBindingFixedFields);
-                case BindingType.Http:
+                case "http":
                     return LoadBinding("OperationBinding", property.Value, httpOperationBindingFixedFields);
                 default:
                     throw new AsyncApiException($"OperationBinding {property.Name} is not supported");

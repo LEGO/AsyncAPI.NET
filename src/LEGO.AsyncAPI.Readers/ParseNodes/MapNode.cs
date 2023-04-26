@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using YamlDotNet.RepresentationModel;
     using YamlDotNet.Serialization;
 
-    internal class MapNode : ParseNode, IEnumerable<PropertyNode>
+    public class MapNode : ParseNode, IEnumerable<PropertyNode>
     {
         private readonly YamlMappingNode node;
         private readonly List<PropertyNode> nodes;
