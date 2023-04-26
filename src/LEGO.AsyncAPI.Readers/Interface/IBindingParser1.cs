@@ -8,6 +8,6 @@ namespace LEGO.AsyncAPI.Readers.Interface
     public interface IBindingParser<T> : IBinding
         where T : IBinding
     {
-        T Parse(PropertyNode node);
+        T LoadBinding(PropertyNode node);
     }
 }

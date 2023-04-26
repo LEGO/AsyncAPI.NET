@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -30,6 +31,25 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             return channelBindings;
+        }
+
+        private static IChannelBinding LoadChannelBinding(ParseNode node)
+        {
+            var property = node as PropertyNode;
+            try
+            {
+                if (node.Context.ChannelBindingParsers.TryGetValue(property.Name, out var parser))
+                {
+                    return parser.LoadBinding(property);
+                }
+            }
+            catch (AsyncApiException ex)
+            {
+                ex.Pointer = node.Context.GetLocation();
+                node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+            }
+
+            return null;
         }
     }
 }

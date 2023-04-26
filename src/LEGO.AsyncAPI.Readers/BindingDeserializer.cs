@@ -90,6 +90,6 @@ namespace LEGO.AsyncAPI.Readers
             return binding;
         }
 
-        public abstract IBinding Parse(PropertyNode node);
+        public abstract IBinding LoadBinding(PropertyNode node);
     }
 }

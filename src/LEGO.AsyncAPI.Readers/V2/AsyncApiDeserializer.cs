@@ -183,25 +183,6 @@ namespace LEGO.AsyncAPI.Readers
             return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
         }
 
-        private static IChannelBinding LoadChannelBinding(ParseNode node)
-        {
-            var property = node as PropertyNode;
-            try
-            {
-                if (node.Context.ChannelBindingParsers.TryGetValue(property.Name, out var parser))
-                {
-                    return parser.Parse(property);
-                }
-            }
-            catch (AsyncApiException ex)
-            {
-                ex.Pointer = node.Context.GetLocation();
-                node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
-            }
-
-            return null;
-        }
-
         private static string LoadString(ParseNode node)
         {
             return node.GetScalarValue();
