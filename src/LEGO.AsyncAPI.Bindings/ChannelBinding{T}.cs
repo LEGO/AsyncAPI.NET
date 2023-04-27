@@ -2,17 +2,13 @@
 {
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
-    using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
-    public abstract class ChannelBinding<T> : BindingDeserializer, IBindingParser<IChannelBinding>
+    public abstract class ChannelBinding<T> : Binding<T>
         where T : IChannelBinding, new()
     {
         protected abstract FixedFieldMap<T> FixedFieldMap { get; }
 
-        public override IChannelBinding LoadBinding(PropertyNode node)
-        {
-            return this.LoadBinding("ChannelBinding", node.Value, this.FixedFieldMap);
-        }
+        public override T LoadBinding(PropertyNode node) => BindingDeserializer.LoadBinding("ChannelBinding", node.Value, this.FixedFieldMap);
     }
 }

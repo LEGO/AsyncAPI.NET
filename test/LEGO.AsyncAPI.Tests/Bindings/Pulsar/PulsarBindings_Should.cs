@@ -28,7 +28,7 @@
       size: 1000
     ttl: 360
     deduplication: true
-    bindingVersion: 0.1.0";
+    bindingVersion: '0.1.0'";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new PulsarChannelBinding
@@ -63,7 +63,7 @@
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(channel);
         }
 

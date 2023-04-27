@@ -6,11 +6,11 @@ using LEGO.AsyncAPI.Readers.ParseNodes;
 
 namespace LEGO.AsyncAPI.Bindings
 {
-    public abstract class MessageBinding<T> : BindingDeserializer, IBindingParser<IMessageBinding>
+    public abstract class MessageBinding<T> : Binding<T>
         where T : IMessageBinding, new()
     {
         protected abstract FixedFieldMap<T> FixedFieldMap { get; }
 
-        public override IMessageBinding LoadBinding(PropertyNode parseNode) => LoadBinding("MessageBinding", parseNode, FixedFieldMap);
+        public override T LoadBinding(PropertyNode parseNode) => BindingDeserializer.LoadBinding("MessageBinding", parseNode, FixedFieldMap);
     }
 }

@@ -44,7 +44,7 @@ namespace LEGO.AsyncAPI.Readers
 
         public List<IBindingParser<IBinding>>
            BindingParsers
-        { get; set; } =
+        { get; } =
            new List<IBindingParser<IBinding>>();
 
         /// <summary>
