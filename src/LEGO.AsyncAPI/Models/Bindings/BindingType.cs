@@ -17,5 +17,8 @@ namespace LEGO.AsyncAPI.Models.Bindings
 
         [Display("pulsar")]
         Pulsar,
+
+        [Display("sns")]
+        Sns,
     }
 }

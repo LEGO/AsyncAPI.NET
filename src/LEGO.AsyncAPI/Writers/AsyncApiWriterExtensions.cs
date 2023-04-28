@@ -234,6 +234,8 @@ namespace LEGO.AsyncAPI.Writers
         {
             writer.WriteCollectionInternal(name, elements, action);
         }
+        
+        // public static void WriteOptionalObjectCollection<T>(this )
 
         /// <summary>
         /// Write the optional AsyncApi element map (string to string mapping).
