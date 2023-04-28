@@ -4,7 +4,7 @@
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
-    public abstract class ChannelBinding<T> : Binding<T>
+    public abstract class ChannelBinding<T> : Binding<T>, IChannelBinding
         where T : IChannelBinding, new()
     {
         protected abstract FixedFieldMap<T> FixedFieldMap { get; }

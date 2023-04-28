@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.Bindings
     using Readers.Interface;
     using Readers.ParseNodes;
 
-    public abstract class Binding<T> : Binding, IBindingParser<T>
+    public abstract class Binding<T> : AsyncApiBinding, IBindingParser<T>
         where T : IBinding, new()
     {
         protected void ParseMap<T>(

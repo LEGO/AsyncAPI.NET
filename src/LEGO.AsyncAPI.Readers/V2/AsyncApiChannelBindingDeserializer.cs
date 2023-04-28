@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers
     {
         internal static AsyncApiBindings<IChannelBinding> LoadChannelBindings(ParseNode node)
         {
-            var mapNode = node.CheckMapNode("channelBinding");
+            var mapNode = node.CheckMapNode("channelBindings");
 
             var channelBindings = new AsyncApiBindings<IChannelBinding>();
 

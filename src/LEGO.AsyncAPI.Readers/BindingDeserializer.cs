@@ -3,11 +3,9 @@
 namespace LEGO.AsyncAPI.Readers
 {
     using System;
-    using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
     public class BindingDeserializer

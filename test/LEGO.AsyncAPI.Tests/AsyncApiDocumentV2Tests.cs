@@ -5,6 +5,7 @@
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using AsyncAPI.Bindings.Pulsar;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Bindings;
@@ -2132,6 +2133,35 @@ components:
             var deserialized = reader.Read(spec, out var diagnostic);
         }
 
+        [Test]
+        public void Serialize_WithBindingReferences_SerializesDeserializes()
+        {
+            var doc = new AsyncApiDocument();
+            doc.Info = new AsyncApiInfo()
+            {
+                Description = "test description"
+            };
+            doc.Servers.Add("production", new AsyncApiServer
+            {
+                Description = "test description",
+                Protocol = "pulsar+ssl",
+                Url = "example.com",
+                Bindings = new AsyncApiBindings<IServerBinding>()
+                {
+                    new PulsarChannelBinding()
+                }
+            });
+            doc.Channels.Add("testChannel",
+                new AsyncApiChannel
+                {
+                    Publish = new AsyncApiOperation(),
+                });
+            var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
+
+            var reader = new AsyncApiStringReader();
+            var deserialized = reader.Read(actual, out var diagnostic);
+
+        }
         [Test]
         public void Serializev2_WithBindings_Serializes()
         {

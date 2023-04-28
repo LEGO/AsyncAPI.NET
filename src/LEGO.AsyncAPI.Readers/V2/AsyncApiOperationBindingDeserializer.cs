@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Readers
     {
         internal static AsyncApiBindings<IOperationBinding> LoadOperationBindings(ParseNode node)
         {
-            var mapNode = node.CheckMapNode("operationBinding");
+            var mapNode = node.CheckMapNode("operationBindings");
 
             var operationBindings = new AsyncApiBindings<IOperationBinding>();
 

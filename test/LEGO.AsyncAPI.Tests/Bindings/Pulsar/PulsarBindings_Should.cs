@@ -1,6 +1,8 @@
 ﻿namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
 {
     using System.Collections.Generic;
+    using AsyncAPI.Models.Any;
+    using AsyncAPI.Models.Interfaces;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings.Pulsar;
     using LEGO.AsyncAPI.Models;
@@ -49,6 +51,7 @@
                 TTL = 360,
                 Deduplication = true,
                 BindingVersion = "0.1.0",
+               
             });
 
             // Act
@@ -59,7 +62,7 @@
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             var settings = new AsyncApiReaderSettings();
-            settings.BindingParsers.Add(new PulsarChannelBinding());
+            settings.Bindings.Add(new PulsarChannelBinding());
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -78,10 +81,10 @@
 
             // Act
             var settings = new AsyncApiReaderSettings();
-            settings.BindingParsers.Add(new PulsarChannelBinding());
+            settings.Bindings.Add(new PulsarChannelBinding());
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
-            // Assert
 
+            // Assert
             Assert.AreEqual(null, ((PulsarChannelBinding)binding.Bindings["pulsar"]).Namespace);
         }
 
@@ -97,7 +100,7 @@
             // Act
             // Assert
             var settings = new AsyncApiReaderSettings();
-            settings.BindingParsers.Add(new PulsarChannelBinding());
+            settings.Bindings.Add(new PulsarChannelBinding());
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
             var pulsarBinding = ((PulsarChannelBinding) binding.Bindings["pulsar"]);
 

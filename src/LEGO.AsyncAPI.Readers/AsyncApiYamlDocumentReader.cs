@@ -41,7 +41,10 @@ namespace LEGO.AsyncAPI.Readers
             var context = new ParsingContext(diagnostic)
             {
                 ExtensionParsers = this.settings.ExtensionParsers,
-                ChannelBindingParsers = this.settings.BindingParsers.OfType<IBindingParser<IChannelBinding>>().ToDictionary(b => b.Type, b => b),
+                ServerBindingParsers = this.settings.Bindings.OfType<IBindingParser<IServerBinding>>().ToDictionary(b => b.Type, b => b),
+                ChannelBindingParsers = this.settings.Bindings.OfType<IBindingParser<IChannelBinding>>().ToDictionary(b => b.Type, b => b),
+                OperationBindingParsers = this.settings.Bindings.OfType<IBindingParser<IOperationBinding>>().ToDictionary(b => b.Type, b => b),
+                MessageBindingParsers = this.settings.Bindings.OfType<IBindingParser<IMessageBinding>>().ToDictionary(b => b.Type, b => b),
             };
 
             AsyncApiDocument document = null;
@@ -144,8 +147,10 @@ namespace LEGO.AsyncAPI.Readers
             diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
             {
-                ExtensionParsers = this.settings.ExtensionParsers,
-                ChannelBindingParsers = this.settings.BindingParsers.OfType<IBindingParser<IChannelBinding>>().ToDictionary(b => b.Type, b => b),
+                ExtensionParsers = this.settings.ExtensionParsers,ServerBindingParsers = this.settings.Bindings.OfType<IBindingParser<IServerBinding>>().ToDictionary(b => b.Type, b => b),
+                ChannelBindingParsers = this.settings.Bindings.OfType<IBindingParser<IChannelBinding>>().ToDictionary(b => b.Type, b => b),
+                OperationBindingParsers = this.settings.Bindings.OfType<IBindingParser<IOperationBinding>>().ToDictionary(b => b.Type, b => b),
+                MessageBindingParsers = this.settings.Bindings.OfType<IBindingParser<IMessageBinding>>().ToDictionary(b => b.Type, b => b),
             };
 
             IAsyncApiElement element = null;

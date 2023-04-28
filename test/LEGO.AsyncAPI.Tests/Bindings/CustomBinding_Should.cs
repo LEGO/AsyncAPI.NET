@@ -1,6 +1,9 @@
 ﻿namespace LEGO.AsyncAPI.Tests.Bindings
 {
     using System;
+    using System.Collections.Generic;
+    using AsyncAPI.Models.Any;
+    using AsyncAPI.Models.Interfaces;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Models;
@@ -28,6 +31,7 @@
             writer.WriteStartObject();
             writer.WriteRequiredProperty("custom", this.Custom);
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }
@@ -42,13 +46,18 @@
 @"bindings:
   my:
     custom: someValue
-    bindingVersion: 0.1.0";
+    bindingVersion: '0.1.0'
+    x-myextension: someValue";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new MyBinding
             {
                 Custom = "someValue",
                 BindingVersion = "0.1.0",
+                Extensions = new Dictionary<string, IAsyncApiExtension>()
+                {
+                    { "x-myextension", new AsyncApiString("someValue") },
+                },
             });
 
             // Act
@@ -59,11 +68,11 @@
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             var settings = new AsyncApiReaderSettings();
-            settings.BindingParsers.Add(new MyBinding());
+            settings.Bindings.Add(new MyBinding());
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(channel);
         }
     }

@@ -4,10 +4,11 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
+    using AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public class AsyncApiBindings<TBinding> : Dictionary<string, TBinding>, IAsyncApiSerializable, IAsyncApiReferenceable
+    public class AsyncApiBindings<TBinding> : Dictionary<string, TBinding>, IAsyncApiReferenceable
         where TBinding : IBinding
     {
         public bool UnresolvedReference { get; set; }
