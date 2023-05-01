@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -17,7 +16,7 @@ namespace LEGO.AsyncAPI.Models
 
         public void Add(TBinding binding)
         {
-            this[binding.Type] = binding;
+            this[binding.BindingKey] = binding;
         }
 
         public void SerializeV2(IAsyncApiWriter writer)

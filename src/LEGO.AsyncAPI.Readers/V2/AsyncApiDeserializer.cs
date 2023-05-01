@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Readers
             }
         }
 
-        private static void ProcessAnyFields<T>(
+        internal static void ProcessAnyFields<T>(
             MapNode mapNode,
             T domainObject,
             AnyFieldMap<T> anyFieldMap)
@@ -59,7 +59,7 @@ namespace LEGO.AsyncAPI.Readers
             }
         }
 
-        private static void ProcessAnyListFields<T>(
+        internal static void ProcessAnyListFields<T>(
             MapNode mapNode,
             T domainObject,
             AnyListFieldMap<T> anyListFieldMap)

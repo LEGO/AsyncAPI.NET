@@ -1,13 +1,14 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.WebSockets
+namespace LEGO.AsyncAPI.Bindings.WebSockets
 {
     using System;
-    using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
-    public class WebSocketsChannelBinding : IChannelBinding
+    public class WebSocketsChannelBinding : ChannelBinding<WebSocketsChannelBinding>
     {
         /// <summary>
         /// The HTTP method t use when establishing the connection. Its value MUST be either 'GET' or 'POST'.
@@ -24,18 +25,17 @@ namespace LEGO.AsyncAPI.Models.Bindings.WebSockets
         /// </summary>
         public AsyncApiSchema Headers { get; set; }
 
-        public string BindingVersion { get; set; }
+       public override  string BindingKey => "websockets";
 
-        public bool UnresolvedReference { get; set; }
+        protected override FixedFieldMap<WebSocketsChannelBinding> FixedFieldMap => new()
+        {
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "method", (a, n) => { a.Method = n.GetScalarValue(); } },
+            { "query", (a, n) => { a.Query = JsonSchemaDeserializer.LoadSchema(n); } },
+            { "headers", (a, n) => { a.Headers = JsonSchemaDeserializer.LoadSchema(n); } },
+        };
 
-        public AsyncApiReference Reference { get; set; }
-
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } =
-            new Dictionary<string, IAsyncApiExtension>();
-
-       public string Type => "websockets";
-
-        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeProperties(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -48,24 +48,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.WebSockets
             writer.WriteOptionalObject(AsyncApiConstants.Query, this.Query, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
-
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
-        }
-
-        public void SerializeV2(IAsyncApiWriter writer)
-        {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
-            {
-                this.Reference.SerializeV2(writer);
-                return;
-            }
-
-            this.SerializeV2WithoutReference(writer);
         }
     }
 }

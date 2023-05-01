@@ -150,7 +150,7 @@ components: { }";
 
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

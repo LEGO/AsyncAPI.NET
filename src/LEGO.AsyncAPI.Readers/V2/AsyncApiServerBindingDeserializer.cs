@@ -4,10 +4,8 @@ namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-    using LEGO.AsyncAPI.Writers;
 
     internal static partial class AsyncApiV2Deserializer
     {
@@ -17,7 +15,7 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiBindings<IServerBinding>>(ReferenceType.ServerBinding, pointer);
+                return mapNode.GetReferencedObject<AsyncApiBindings<IServerBinding>>(ReferenceType.ServerBindings, pointer);
             }
 
             var serverBindings = new AsyncApiBindings<IServerBinding>();

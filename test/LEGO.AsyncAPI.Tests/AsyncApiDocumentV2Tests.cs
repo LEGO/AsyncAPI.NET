@@ -6,10 +6,12 @@
     using System.IO;
     using System.Linq;
     using AsyncAPI.Bindings.Pulsar;
+    using LEGO.AsyncAPI.Bindings;
+    using LEGO.AsyncAPI.Bindings.Http;
+    using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Bindings;
-    using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Models.Bindings.Kafka;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
@@ -771,7 +773,7 @@ components:
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -1202,7 +1204,7 @@ components:
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -2150,13 +2152,32 @@ components:
                 {
                     Reference = new AsyncApiReference()
                     {
-                        Type = ReferenceType.ServerBinding,
+                        Type = ReferenceType.ServerBindings,
                         Id = "bindings",
                     },
                 },
             });
             doc.Components = new AsyncApiComponents()
             {
+                Channels = new Dictionary<string, AsyncApiChannel>()
+                {
+                    { "otherchannel", new AsyncApiChannel()
+                        {
+                            Publish = new AsyncApiOperation()
+                            {
+                                Description = "test",
+                            },
+                            Bindings = new AsyncApiBindings<IChannelBinding>()
+                            {
+                                Reference = new AsyncApiReference()
+                                {
+                                    Type = ReferenceType.ChannelBindings,
+                                    Id = "bindings",
+                                },
+                            },
+                        } 
+                    }
+                },
                 ServerBindings = new Dictionary<string, AsyncApiBindings<IServerBinding>>()
                 {
                     {
@@ -2168,20 +2189,36 @@ components:
                             },
                         }
                     }
-                }
+                },
+                ChannelBindings = new Dictionary<string, AsyncApiBindings<IChannelBinding>>()
+                {
+                    {
+                        "bindings", new AsyncApiBindings<IChannelBinding>()
+                        {
+                            new PulsarChannelBinding()
+                            {
+                                Namespace = "users", 
+                                Persistence = AsyncAPI.Models.Bindings.Pulsar.Persistence.Persistent,
+                            }
+                        }
+                    }
+                },
             };
             doc.Channels.Add("testChannel",
                 new AsyncApiChannel
                 {
-                    Publish = new AsyncApiOperation(),
+                    Reference = new AsyncApiReference()
+                    {
+                        Type = ReferenceType.Channel,
+                        Id = "otherchannel"
+                    }
                 });
             var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(new PulsarServerBinding());
+            settings.Bindings.AddRange(BindingsCollection.Pulsar);
             var reader = new AsyncApiStringReader(settings);
             var deserialized = reader.Read(actual, out var diagnostic);
-
         }
         [Test]
         public void Serializev2_WithBindings_Serializes()
@@ -2270,14 +2307,16 @@ channels:
                 });
             var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
-            var reader = new AsyncApiStringReader();
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.AddRange(BindingsCollection.All);
+            var reader = new AsyncApiStringReader(settings);
             var deserialized = reader.Read(actual, out var diagnostic);
 
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             Assert.AreEqual(2, deserialized.Channels.First().Value.Publish.Message.First().Bindings.Count);
 
             var binding = deserialized.Channels.First().Value.Publish.Message.First().Bindings.First();

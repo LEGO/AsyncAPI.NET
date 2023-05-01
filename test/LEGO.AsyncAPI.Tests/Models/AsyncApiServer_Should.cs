@@ -1,4 +1,5 @@
-﻿using LEGO.AsyncAPI.Models;
+﻿using LEGO.AsyncAPI.Bindings.Kafka;
+using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Bindings.Kafka;
 using LEGO.AsyncAPI.Models.Interfaces;
 using NUnit.Framework;
@@ -71,7 +72,7 @@ bindings:
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -104,7 +105,7 @@ bindings:
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

@@ -1,16 +1,19 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.Kafka
+namespace LEGO.AsyncAPI.Bindings.Kafka
 {
     using System;
     using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// Binding class for kafka messages.
     /// </summary>
-    public class KafkaMessageBinding : IMessageBinding
+    public class KafkaMessageBinding : MessageBinding<KafkaMessageBinding>
     {
         /// <summary>
         /// The message key. NOTE: You can also use the <a href="https://www.asyncapi.com/docs/reference/specification/v2.4.0#referenceObject">reference object</a> way.
@@ -35,22 +38,8 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.
         /// </summary>
-        public string BindingVersion { get; set; }
-
-        /// <summary>
-        /// Indicates if object is populated with data or is just a reference to the data.
-        /// </summary>
-        public bool UnresolvedReference { get; set; }
-
-        /// <summary>
-        /// Reference object.
-        /// </summary>
-        public AsyncApiReference Reference { get; set; }
-
-        /// <summary>
-        /// Serialize to AsyncAPI V2 document without using reference.
-        /// </summary>
-        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        
+        public override void SerializeProperties(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -64,6 +53,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             writer.WriteOptionalProperty(AsyncApiConstants.SchemaIdPayloadEncoding, this.SchemaIdPayloadEncoding);
             writer.WriteOptionalProperty(AsyncApiConstants.SchemaLookupStrategy, this.SchemaLookupStrategy);
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteExtensions(this.Extensions);
 
             writer.WriteEndObject();
         }
@@ -73,28 +63,17 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <exception cref="ArgumentNullException">writer</exception>
-        public void SerializeV2(IAsyncApiWriter writer)
+
+
+       public override string BindingKey => "kafka";
+
+        protected override FixedFieldMap<KafkaMessageBinding> FixedFieldMap => new()
         {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
-            {
-                this.Reference.SerializeV2(writer);
-                return;
-            }
-
-            this.SerializeV2WithoutReference(writer);
-        }
-
-        /// <summary>
-        /// Gets or sets this object MAY be extended with Specification Extensions.
-        /// To protect the API from leaking the underlying JSON library, the extension data extraction is handled by a customer resolver.
-        /// </summary>
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
-
-       public string Type => "kafka";
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "key", (a, n) => { a.Key = JsonSchemaDeserializer.LoadSchema(n); } },
+            { "schemaIdLocation", (a, n) => { a.SchemaIdLocation = n.GetScalarValue(); } },
+            { "schemaIdPayloadEncoding", (a, n) => { a.SchemaIdPayloadEncoding = n.GetScalarValue(); } },
+            { "schemaLookupStrategy", (a, n) => { a.SchemaLookupStrategy = n.GetScalarValue(); } },
+        };
     }
 }

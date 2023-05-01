@@ -1,7 +1,6 @@
 ﻿using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers;
-using LEGO.AsyncAPI.Readers.Interface;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 
 namespace LEGO.AsyncAPI.Bindings

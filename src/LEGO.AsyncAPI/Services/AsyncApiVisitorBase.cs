@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Services
         private readonly Stack<string> path = new Stack<string>();
 
         /// <summary>
-        /// Properties available to identify context of where an object is within AsyncApi Document
+        /// Properties available to identify context of where an object is within AsyncApi Document.
         /// </summary>
         public CurrentKeys CurrentKeys { get; } = new CurrentKeys();
 
@@ -168,14 +168,6 @@ namespace LEGO.AsyncAPI.Services
         /// Visits <see cref="AsyncApiOAuthFlow"/>
         /// </summary>
         public virtual void Visit(AsyncApiOAuthFlow asyncApiOAuthFlow)
-        {
-        }
-
-        /// <summary>
-        /// Visits <see cref="AsyncApiBindings<TBinding>"/>
-        /// </summary>
-        public virtual void Visit<TBinding>(AsyncApiBindings<TBinding> bindings)
-            where TBinding : class, IBinding
         {
         }
 

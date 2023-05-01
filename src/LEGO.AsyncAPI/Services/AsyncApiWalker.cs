@@ -235,16 +235,6 @@ namespace LEGO.AsyncAPI.Services
             this.Walk(externalDocs as IAsyncApiExtensible);
         }
 
-        internal void Walk(AsyncApiBindings<IServerBinding> serverBindings, bool isComponent = false)
-        {
-            if (serverBindings == null || this.ProcessAsReference(serverBindings, isComponent))
-            {
-                return;
-            }
-
-            this.visitor.Visit(serverBindings);
-        }
-        
         internal void Walk(AsyncApiChannel channel, bool isComponent = false)
         {
             if (channel == null || this.ProcessAsReference(channel, isComponent))
@@ -553,37 +543,44 @@ namespace LEGO.AsyncAPI.Services
             this.Walk(trait as IAsyncApiExtensible);
         }
 
-        internal void Walk(AsyncApiBindings<IChannelBinding> channelBindings)
+        internal void Walk(AsyncApiBindings<IServerBinding> serverBindings, bool isComponent = false)
         {
-            if (channelBindings is null)
+            if (serverBindings == null || this.ProcessAsReference(serverBindings, isComponent))
+            {
+                return;
+            }
+
+            this.visitor.Visit(serverBindings);
+        }
+
+        internal void Walk(AsyncApiBindings<IChannelBinding> channelBindings, bool isComponent = false)
+        {
+            if (channelBindings == null || this.ProcessAsReference(channelBindings, isComponent))
             {
                 return;
             }
 
             this.visitor.Visit(channelBindings);
-            this.Walk(channelBindings as IAsyncApiExtensible);
         }
 
-        internal void Walk(AsyncApiBindings<IOperationBinding> operationBindings)
+        internal void Walk(AsyncApiBindings<IOperationBinding> operationBindings, bool isComponent = false)
         {
-            if (operationBindings is null)
+            if (operationBindings == null || this.ProcessAsReference(operationBindings, isComponent))
             {
                 return;
             }
 
             this.visitor.Visit(operationBindings);
-            this.Walk(operationBindings as IAsyncApiExtensible);
         }
 
-        internal void Walk(AsyncApiBindings<IMessageBinding> messageBindings)
+        internal void Walk(AsyncApiBindings<IMessageBinding> messageBindings, bool isComponent = false)
         {
-            if (messageBindings is null)
+            if (messageBindings == null || this.ProcessAsReference(messageBindings, isComponent))
             {
                 return;
             }
 
             this.visitor.Visit(messageBindings);
-            this.Walk(messageBindings as IAsyncApiExtensible);
         }
 
         internal void Walk(IList<AsyncApiMessageExample> examples)
@@ -713,7 +710,6 @@ namespace LEGO.AsyncAPI.Services
             this.visitor.Visit(server);
             this.Walk(AsyncApiConstants.Variables, () => this.Walk(server.Variables));
             this.Walk(AsyncApiConstants.Security, () => this.Walk(server.Security));
-
             this.Walk(AsyncApiConstants.Bindings, () => this.Walk(server.Bindings));
             this.visitor.Visit(server as IAsyncApiExtensible);
         }

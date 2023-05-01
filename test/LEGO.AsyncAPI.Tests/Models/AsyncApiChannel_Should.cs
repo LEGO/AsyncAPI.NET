@@ -1,9 +1,10 @@
 ﻿namespace LEGO.AsyncAPI.Tests.Models
 {
     using System.Collections.Generic;
+    using LEGO.AsyncAPI.Bindings.Kafka;
+    using LEGO.AsyncAPI.Bindings.WebSockets;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings.Kafka;
-    using LEGO.AsyncAPI.Models.Bindings.WebSockets;
     using LEGO.AsyncAPI.Models.Interfaces;
     using NUnit.Framework;
 
@@ -69,7 +70,7 @@
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -104,7 +105,7 @@
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

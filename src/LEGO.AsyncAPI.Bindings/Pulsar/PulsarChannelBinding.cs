@@ -42,9 +42,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
         /// </summary>
         public bool? Deduplication { get; set; }
 
-        public override string BindingVersion { get; set; }
-
-        public override string Type => "pulsar";
+        public override string BindingKey => "pulsar";
 
         protected override FixedFieldMap<PulsarChannelBinding> FixedFieldMap => new()
         {
@@ -72,7 +70,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
             return retention;
         }
 
-        public override void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeProperties(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -88,6 +86,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
             writer.WriteOptionalProperty<int>(AsyncApiConstants.TTL, this.TTL);
             writer.WriteOptionalProperty(AsyncApiConstants.Deduplication, this.Deduplication);
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

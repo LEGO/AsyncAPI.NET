@@ -1,6 +1,8 @@
 ﻿namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
 {
     using FluentAssertions;
+    using LEGO.AsyncAPI.Bindings;
+    using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings.Kafka;
     using LEGO.AsyncAPI.Readers;
@@ -50,11 +52,12 @@
             // Assert
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Kafka);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(channel);
         }
 
@@ -86,11 +89,12 @@ bindings:
             var actual = server.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Kafka);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(server);
         }
 
@@ -124,11 +128,12 @@ bindings:
             var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Kafka);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiMessage>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(message);
         }
 
@@ -163,10 +168,12 @@ bindings:
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Kafka);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(operation);
         }
     }

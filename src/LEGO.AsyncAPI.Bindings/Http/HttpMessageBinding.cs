@@ -1,16 +1,18 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.Http
+using LEGO.AsyncAPI.Models;
+
+namespace LEGO.AsyncAPI.Bindings.Http
 {
     using System;
-    using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// Binding class for http messaging channels.
     /// </summary>
-    public class HttpMessageBinding : IMessageBinding
+    public class HttpMessageBinding : MessageBinding<HttpMessageBinding>
     {
 
         /// <summary>
@@ -36,7 +38,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.
         /// </summary>
-        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeProperties(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -45,31 +47,20 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
 
             writer.WriteStartObject();
 
-            writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
-            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteOptionalObject(AsyncApiConstants.Headers, Headers, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
+            writer.WriteExtensions(Extensions);
 
             writer.WriteEndObject();
         }
 
-        public void SerializeV2(IAsyncApiWriter writer)
+        public override string BindingKey => "http";
+
+        protected override FixedFieldMap<HttpMessageBinding> FixedFieldMap => new()
         {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "headers", (a, n) => { a.Headers = JsonSchemaDeserializer.LoadSchema(n); } },
+        };
 
-            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
-            {
-                this.Reference.SerializeV2(writer);
-                return;
-            }
-
-            this.SerializeV2WithoutReference(writer);
-        }
-
-        /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
-
-       public string Type => "http";
     }
 }

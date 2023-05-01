@@ -16,9 +16,7 @@
     {
         public string Custom { get; set; }
 
-        public override string Type => "my";
-
-        public override string BindingVersion { get; set; }
+        public override string BindingKey => "my";
 
         protected override FixedFieldMap<MyBinding> FixedFieldMap => new FixedFieldMap<MyBinding>()
         {
@@ -26,7 +24,7 @@
             { "custom", (a, n) => { a.Custom = n.GetScalarValue(); } },
         };
 
-        public override void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeProperties(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteRequiredProperty("custom", this.Custom);
@@ -46,7 +44,7 @@
 @"bindings:
   my:
     custom: someValue
-    bindingVersion: '0.1.0'
+    bindingVersion: 0.1.0
     x-myextension: someValue";
 
             var channel = new AsyncApiChannel();

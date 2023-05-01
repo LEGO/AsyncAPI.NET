@@ -4,6 +4,7 @@
     using AsyncAPI.Models.Any;
     using AsyncAPI.Models.Interfaces;
     using FluentAssertions;
+    using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Pulsar;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Bindings.Pulsar;
@@ -30,7 +31,7 @@
       size: 1000
     ttl: 360
     deduplication: true
-    bindingVersion: '0.1.0'";
+    bindingVersion: 0.1.0";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new PulsarChannelBinding
@@ -62,7 +63,7 @@
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(new PulsarChannelBinding());
+            settings.Bindings.Add(BindingsCollection.Pulsar);
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -81,7 +82,7 @@
 
             // Act
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(new PulsarChannelBinding());
+            settings.Bindings.Add(BindingsCollection.Pulsar);
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -100,7 +101,7 @@
             // Act
             // Assert
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(new PulsarChannelBinding());
+            settings.Bindings.Add(BindingsCollection.Pulsar);
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
             var pulsarBinding = ((PulsarChannelBinding) binding.Bindings["pulsar"]);
 
@@ -139,11 +140,12 @@ bindings:
             var actual = server.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Pulsar);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(server);
         }
 
@@ -174,11 +176,12 @@ bindings:
             var actual = server.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Pulsar);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             Assert.AreEqual(null, ((PulsarServerBinding)binding.Bindings["pulsar"]).BindingVersion);
             binding.Should().BeEquivalentTo(server);
         }
@@ -210,11 +213,12 @@ bindings:
             var actual = server.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Pulsar);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             Assert.AreEqual(null, ((PulsarServerBinding)binding.Bindings["pulsar"]).Tenant);
             binding.Should().BeEquivalentTo(server);
         }

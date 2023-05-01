@@ -5,10 +5,10 @@
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
-    
+
     public abstract class AsyncApiBinding : IBinding
     {
-        public abstract string Type { get; }
+        public abstract string BindingKey { get; }
 
         public bool UnresolvedReference { get; set; }
 
@@ -16,7 +16,7 @@
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        public abstract string BindingVersion { get; set; }
+        public string BindingVersion { get; set; }
 
         public void SerializeV2(IAsyncApiWriter writer)
         {
@@ -31,9 +31,9 @@
                 return;
             }
 
-            this.SerializeV2WithoutReference(writer);
+            this.SerializeProperties(writer);
         }
 
-        public abstract void SerializeV2WithoutReference(IAsyncApiWriter writer);
+        public abstract void SerializeProperties(IAsyncApiWriter writer);
     }
 }

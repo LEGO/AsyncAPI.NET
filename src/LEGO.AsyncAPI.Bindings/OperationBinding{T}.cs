@@ -6,7 +6,7 @@ using LEGO.AsyncAPI.Readers.ParseNodes;
 
 namespace LEGO.AsyncAPI.Bindings
 {
-    public abstract class OperationBinding<T> : Binding<T> , IMessageBinding
+    public abstract class OperationBinding<T> : Binding<T> , IOperationBinding
         where T : IOperationBinding, new()
     {
         protected abstract FixedFieldMap<T> FixedFieldMap { get; }

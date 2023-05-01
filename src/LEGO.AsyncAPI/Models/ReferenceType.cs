@@ -56,22 +56,22 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// ServerBindings item.
         /// </summary>
-        [Display("serverBindings")] ServerBinding,
+        [Display("serverBindings")] ServerBindings,
 
         /// <summary>
         /// ChannelBindings item.
         /// </summary>
-        [Display("channelBindings")] ChannelBinding,
+        [Display("channelBindings")] ChannelBindings,
 
         /// <summary>
         /// OperationBindings item.
         /// </summary>
-        [Display("operationBindings")] OperationBinding,
+        [Display("operationBindings")] OperationBindings,
 
         /// <summary>
         /// MessageBindings item.
         /// </summary>
-        [Display("messageBindings")] MessageBinding,
+        [Display("messageBindings")] MessageBindings,
 
         /// <summary>
         /// Examples item.
@@ -82,6 +82,10 @@ namespace LEGO.AsyncAPI.Models
         /// Headers item.
         /// </summary>
         [Display("headers")] Header,
-        ServerVariable,
+
+        /// <summary>
+        /// The server variable
+        /// </summary>
+        [Display("serverVariable")] ServerVariable,
     }
 }

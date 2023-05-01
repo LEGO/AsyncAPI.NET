@@ -17,11 +17,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
         /// </summary>
         public string Tenant { get; set; }
 
-        /// <summary>
-        /// The version of this binding.
-        public override string BindingVersion { get; set; }
-
-        public override string Type => "pulsar";
+        public override string BindingKey => "pulsar";
 
         protected override FixedFieldMap<PulsarServerBinding> FixedFieldMap => new()
         {
@@ -29,7 +25,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
             { "tenant", (a, n) => { a.Tenant = n.GetScalarValue(); } },
         };
 
-        public override void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeProperties(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -37,10 +33,9 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
             }
 
             writer.WriteStartObject();
-
             writer.WriteOptionalProperty(AsyncApiConstants.Tenant, this.Tenant);
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
-
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

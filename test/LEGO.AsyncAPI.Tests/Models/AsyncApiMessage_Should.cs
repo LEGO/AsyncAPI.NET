@@ -4,9 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
+    using LEGO.AsyncAPI.Bindings;
+    using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
@@ -89,7 +90,7 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
                 var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
                 // Assert
-                Assert.AreEqual(actual, expected);
+                Assert.AreEqual(expected, actual);
                 message.Should().BeEquivalentTo(deserializedMessage);
             }
 
@@ -130,7 +131,7 @@ schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
                 var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
                 // Assert
-                Assert.AreEqual(actual, expected);
+                Assert.AreEqual(expected, actual);
                 message.Should().BeEquivalentTo(deserializedMessage);
             }
 
@@ -369,10 +370,12 @@ traits:
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.All);
+            var deserializedMessage = new AsyncApiStringReader(settings).ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             message.Should().BeEquivalentTo(deserializedMessage);
         }
     }

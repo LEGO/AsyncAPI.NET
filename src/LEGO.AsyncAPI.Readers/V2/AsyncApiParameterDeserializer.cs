@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers
         private static FixedFieldMap<AsyncApiParameter> parameterFixedFields = new()
         {
             { "description", (a, n) => { a.Description = n.GetScalarValue(); } },
-            { "schema", (a, n) => { a.Schema = LoadSchema(n); } },
+            { "schema", (a, n) => { a.Schema = JsonSchemaDeserializer.LoadSchema(n); } },
             { "location", (a, n) => { a.Location = n.GetScalarValue(); } },
         };
 

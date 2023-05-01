@@ -21,10 +21,10 @@ namespace LEGO.AsyncAPI.Readers
                 "messageId", (a, n) => { a.MessageId = n.GetScalarValue(); }
             },
             {
-                "headers", (a, n) => { a.Headers = LoadSchema(n); }
+                "headers", (a, n) => { a.Headers = JsonSchemaDeserializer.LoadSchema(n); }
             },
             {
-                "payload", (a, n) => { a.Payload = LoadSchema(n); }
+                "payload", (a, n) => { a.Payload = JsonSchemaDeserializer.LoadSchema(n); }
             },
             {
                 "correlationId", (a, n) => { a.CorrelationId = LoadCorrelationId(n); }

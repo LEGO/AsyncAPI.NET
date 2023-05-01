@@ -311,7 +311,7 @@ namespace LEGO.AsyncAPI.Models
                 (w, key, component) =>
                 {
                     if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ServerBinding &&
+                        component.Reference.Type == ReferenceType.ServerBindings &&
                         component.Reference.Id == key)
                     {
                         component.SerializeV2WithoutReference(w);
@@ -329,7 +329,7 @@ namespace LEGO.AsyncAPI.Models
                 (w, key, component) =>
                 {
                     if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ChannelBinding &&
+                        component.Reference.Type == ReferenceType.ChannelBindings &&
                         component.Reference.Id == key)
                     {
                         component.SerializeV2WithoutReference(w);
@@ -347,7 +347,7 @@ namespace LEGO.AsyncAPI.Models
                 (w, key, component) =>
                 {
                     if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.OperationBinding &&
+                        component.Reference.Type == ReferenceType.OperationBindings &&
                         component.Reference.Id == key)
                     {
                         component.SerializeV2WithoutReference(w);
@@ -365,7 +365,7 @@ namespace LEGO.AsyncAPI.Models
                 (w, key, component) =>
                 {
                     if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.MessageBinding &&
+                        component.Reference.Type == ReferenceType.MessageBindings &&
                         component.Reference.Id == key)
                     {
                         component.SerializeV2WithoutReference(w);
