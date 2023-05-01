@@ -6,7 +6,7 @@
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
     
-    public abstract class AsyncApiBinding : IServerBinding, IChannelBinding, IOperationBinding, IMessageBinding
+    public abstract class AsyncApiBinding : IBinding
     {
         public abstract string Type { get; }
 

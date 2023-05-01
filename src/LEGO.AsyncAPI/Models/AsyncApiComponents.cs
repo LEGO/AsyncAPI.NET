@@ -69,22 +69,22 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// An object to hold reusable Server Bindings Objects.
         /// </summary>
-        public IDictionary<string, IServerBinding> ServerBindings { get; set; } = new Dictionary<string, IServerBinding>();
+        public IDictionary<string, AsyncApiBindings<IServerBinding>> ServerBindings { get; set; } = new Dictionary<string, AsyncApiBindings<IServerBinding>>();
 
         /// <summary>
         /// An object to hold reusable Channel Bindings Objects.
         /// </summary>
-        public IDictionary<string, IChannelBinding> ChannelBindings { get; set; } = new Dictionary<string, IChannelBinding>();
+        public IDictionary<string, AsyncApiBindings<IChannelBinding>> ChannelBindings { get; set; } = new Dictionary<string, AsyncApiBindings<IChannelBinding>>();
 
         /// <summary>
         /// An object to hold reusable Operation Bindings Objects.
         /// </summary>
-        public IDictionary<string, IOperationBinding> OperationBindings { get; set; } = new Dictionary<string, IOperationBinding>();
+        public IDictionary<string, AsyncApiBindings<IOperationBinding>> OperationBindings { get; set; } = new Dictionary<string, AsyncApiBindings<IOperationBinding>>();
 
         /// <summary>
         /// An object to hold reusable Message Bindings Objects.
         /// </summary>
-        public IDictionary<string, IMessageBinding> MessageBindings { get; set; } = new Dictionary<string, IMessageBinding>();
+        public IDictionary<string, AsyncApiBindings<IMessageBinding>> MessageBindings { get; set; } = new Dictionary<string, AsyncApiBindings<IMessageBinding>>();
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 

@@ -154,14 +154,14 @@
             return this;
         }
 
-        public AsyncApiDocumentBuilder WithComponent(string key, IServerBinding serverBinding)
+        public AsyncApiDocumentBuilder WithComponent(string key, AsyncApiBindings<IServerBinding> serverBindings)
         {
             if (this.document.Components == null)
             {
                 this.document.Components = new AsyncApiComponents();
             }
 
-            this.document.Components.ServerBindings.Add(key, serverBinding);
+            this.document.Components.ServerBindings.Add(key, serverBindings);
             return this;
         }
 

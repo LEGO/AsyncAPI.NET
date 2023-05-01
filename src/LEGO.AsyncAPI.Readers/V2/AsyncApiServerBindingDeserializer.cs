@@ -14,9 +14,13 @@ namespace LEGO.AsyncAPI.Readers
         internal static AsyncApiBindings<IServerBinding> LoadServerBindings(ParseNode node)
         {
             var mapNode = node.CheckMapNode("serverBindings");
+            var pointer = mapNode.GetReferencePointer();
+            if (pointer != null)
+            {
+                return mapNode.GetReferencedObject<AsyncApiBindings<IServerBinding>>(ReferenceType.ServerBinding, pointer);
+            }
 
             var serverBindings = new AsyncApiBindings<IServerBinding>();
-
             foreach (var property in mapNode)
             {
                 var serverBinding = LoadServerBinding(property);
