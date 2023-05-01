@@ -48,7 +48,12 @@ namespace LEGO.AsyncAPI.Services
             this.ResolveMap(components.MessageTraits);
             this.ResolveMap(components.OperationTraits);
             this.ResolveMap(components.SecuritySchemes);
-            this.ResolveMap(components.ChannelBindings);
+            foreach (var bindings in components.ChannelBindings)
+            {
+                this.ResolveMap(bindings.Value);
+            }
+            // TODO:
+            //this.ResolveMap(components.ChannelBindings);
             this.ResolveMap(components.MessageBindings);
             this.ResolveMap(components.OperationBindings);
             this.ResolveMap(components.ServerBindings);
@@ -64,8 +69,9 @@ namespace LEGO.AsyncAPI.Services
         public override void Visit(AsyncApiChannel channel)
         {
             this.ResolveMap(channel.Parameters);
-            var bindingDictionary = channel.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type);
-            this.ResolveMap(bindingDictionary);
+            // TODO:
+            //var bindingDictionary = channel.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type);
+            this.ResolveMap(channel.Bindings);
         }
 
         public override void Visit(AsyncApiMessageTrait trait)
@@ -100,10 +106,12 @@ namespace LEGO.AsyncAPI.Services
         /// </summary>
         public override void Visit<TBinding>(AsyncApiBindings<TBinding> bindings)
         {
-            foreach (var binding in bindings.Values.ToList())
-            {
-                this.ResolveObject(binding, resolvedBinding => bindings[binding.Type] = resolvedBinding);
-            }
+            this.ResolveMap(bindings);
+            // TODO:
+            // foreach (var binding in bindings.Values.ToList())
+            // {
+            //     this.ResolveObject(binding, resolvedBinding => bindings[binding.Type] = resolvedBinding);
+            // }
         }
 
         /// <summary>

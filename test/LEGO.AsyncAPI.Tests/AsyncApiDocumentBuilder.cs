@@ -165,36 +165,36 @@
             return this;
         }
 
-        public AsyncApiDocumentBuilder WithComponent(string key, IChannelBinding channelBinding)
+        public AsyncApiDocumentBuilder WithComponent(string key, AsyncApiBindings<IChannelBinding> channelBindings)
         {
             if (this.document.Components == null)
             {
                 this.document.Components = new AsyncApiComponents();
             }
 
-            this.document.Components.ChannelBindings.Add(key, channelBinding);
+            this.document.Components.ChannelBindings.Add(key, channelBindings);
             return this;
         }
 
-        public AsyncApiDocumentBuilder WithComponent(string key, IOperationBinding operationBinding)
+        public AsyncApiDocumentBuilder WithComponent(string key, AsyncApiBindings<IOperationBinding> operationBindings)
         {
             if (this.document.Components == null)
             {
                 this.document.Components = new AsyncApiComponents();
             }
 
-            this.document.Components.OperationBindings.Add(key, operationBinding);
+            this.document.Components.OperationBindings.Add(key, operationBindings);
             return this;
         }
 
-        public AsyncApiDocumentBuilder WithComponent(string key, IMessageBinding messageBinding)
+        public AsyncApiDocumentBuilder WithComponent(string key, AsyncApiBindings<IMessageBinding> messageBindings)
         {
             if (this.document.Components == null)
             {
                 this.document.Components = new AsyncApiComponents();
             }
 
-            this.document.Components.MessageBindings.Add(key, messageBinding);
+            this.document.Components.MessageBindings.Add(key, messageBindings);
             return this;
         }
 

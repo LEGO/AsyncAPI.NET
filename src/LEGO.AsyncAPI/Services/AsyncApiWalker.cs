@@ -73,6 +73,17 @@ namespace LEGO.AsyncAPI.Services
                 }
             });
 
+            this.Walk(AsyncApiConstants.ServerBindings, () =>
+             {
+                 if (components.ServerBindings != null)
+                 {
+                     foreach (var item in components.ServerBindings)
+                     {
+                         this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
+                     }
+                 }
+             });
+
             this.Walk(AsyncApiConstants.Parameters, () =>
             {
                 if (components.Parameters != null)
@@ -224,6 +235,16 @@ namespace LEGO.AsyncAPI.Services
             this.Walk(externalDocs as IAsyncApiExtensible);
         }
 
+        internal void Walk(AsyncApiBindings<IServerBinding> serverBindings, bool isComponent = false)
+        {
+            if (serverBindings == null || this.ProcessAsReference(serverBindings, isComponent))
+            {
+                return;
+            }
+
+            this.visitor.Visit(serverBindings);
+        }
+        
         internal void Walk(AsyncApiChannel channel, bool isComponent = false)
         {
             if (channel == null || this.ProcessAsReference(channel, isComponent))
@@ -530,17 +551,6 @@ namespace LEGO.AsyncAPI.Services
             }
 
             this.Walk(trait as IAsyncApiExtensible);
-        }
-
-        internal void Walk(AsyncApiBindings<IServerBinding> serverBindings)
-        {
-            if (serverBindings is null)
-            {
-                return;
-            }
-
-            this.visitor.Visit(serverBindings);
-            this.Walk(serverBindings as IAsyncApiExtensible);
         }
 
         internal void Walk(AsyncApiBindings<IChannelBinding> channelBindings)

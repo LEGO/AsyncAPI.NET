@@ -2148,9 +2148,28 @@ components:
                 Url = "example.com",
                 Bindings = new AsyncApiBindings<IServerBinding>()
                 {
-                    new PulsarChannelBinding()
-                }
+                    Reference = new AsyncApiReference()
+                    {
+                        Type = ReferenceType.ServerBinding,
+                        Id = "bindings",
+                    },
+                },
             });
+            doc.Components = new AsyncApiComponents()
+            {
+                ServerBindings = new Dictionary<string, AsyncApiBindings<IServerBinding>>()
+                {
+                    {
+                        "bindings", new AsyncApiBindings<IServerBinding>()
+                        {
+                            new PulsarServerBinding()
+                            {
+                                Tenant = "staging"
+                            },
+                        }
+                    }
+                }
+            };
             doc.Channels.Add("testChannel",
                 new AsyncApiChannel
                 {
@@ -2158,7 +2177,9 @@ components:
                 });
             var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
-            var reader = new AsyncApiStringReader();
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(new PulsarServerBinding());
+            var reader = new AsyncApiStringReader(settings);
             var deserialized = reader.Read(actual, out var diagnostic);
 
         }
