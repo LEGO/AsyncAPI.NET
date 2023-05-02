@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
 {
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;

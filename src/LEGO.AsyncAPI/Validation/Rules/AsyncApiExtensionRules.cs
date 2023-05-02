@@ -2,7 +2,6 @@
 
 namespace LEGO.AsyncAPI.Validation.Rules
 {
-    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Validations;
 

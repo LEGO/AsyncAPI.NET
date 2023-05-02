@@ -6,7 +6,6 @@ namespace LEGO.AsyncAPI.Readers
     using System.Linq;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Expressions;
-    using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;

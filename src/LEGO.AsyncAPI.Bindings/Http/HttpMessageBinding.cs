@@ -21,21 +21,6 @@ namespace LEGO.AsyncAPI.Bindings.Http
         public AsyncApiSchema Headers { get; set; }
 
         /// <summary>
-        /// The version of this binding. If omitted, "latest" MUST be assumed.
-        /// </summary>
-        public string BindingVersion { get; set; }
-
-        /// <summary>
-        /// Indicates if object is populated with data or is just a reference to the data
-        /// </summary>
-        public bool UnresolvedReference { get; set; }
-
-        /// <summary>
-        /// Reference object.
-        /// </summary>
-        public AsyncApiReference Reference { get; set; }
-
-        /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.
         /// </summary>
         public override void SerializeProperties(IAsyncApiWriter writer)
@@ -47,9 +32,9 @@ namespace LEGO.AsyncAPI.Bindings.Http
 
             writer.WriteStartObject();
 
-            writer.WriteOptionalObject(AsyncApiConstants.Headers, Headers, (w, h) => h.SerializeV2(w));
-            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
-            writer.WriteExtensions(Extensions);
+            writer.WriteOptionalObject(AsyncApiConstants.Headers, this.Headers, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteExtensions(this.Extensions);
 
             writer.WriteEndObject();
         }

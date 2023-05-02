@@ -16,12 +16,5 @@ namespace LEGO.AsyncAPI.Expressions
         /// Gets the expression string.
         /// </summary>
         public override string Expression { get; } = Method;
-
-        /// <summary>
-        /// Private constructor.
-        /// </summary>
-        public MethodExpression()
-        {
-        }
     }
 }

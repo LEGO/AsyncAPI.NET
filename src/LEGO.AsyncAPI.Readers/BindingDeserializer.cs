@@ -2,23 +2,12 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using System;
     using LEGO.AsyncAPI.Extensions;
-    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
     public class BindingDeserializer
     {
-        private static PatternFieldMap<T> BindingPatternExtensionFields<T>()
-    where T : IBinding, new()
-        {
-            return new()
-            {
-                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, AsyncApiV2Deserializer.LoadExtension(p, n)) },
-            };
-        }
-
         public static T LoadBinding<T>(string nodeName, ParseNode node, FixedFieldMap<T> fieldMap)
    where T : IBinding, new()
         {
@@ -28,6 +17,15 @@ namespace LEGO.AsyncAPI.Readers
             AsyncApiV2Deserializer.ParseMap(mapNode, binding, fieldMap, BindingPatternExtensionFields<T>());
 
             return binding;
+        }
+
+        private static PatternFieldMap<T> BindingPatternExtensionFields<T>()
+    where T : IBinding, new()
+        {
+            return new()
+            {
+                { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, AsyncApiV2Deserializer.LoadExtension(p, n)) },
+            };
         }
     }
 }

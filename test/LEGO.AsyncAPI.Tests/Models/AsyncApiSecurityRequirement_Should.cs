@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using LEGO.AsyncAPI.Models;

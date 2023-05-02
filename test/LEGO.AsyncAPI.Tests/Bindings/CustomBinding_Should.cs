@@ -1,6 +1,7 @@
-﻿namespace LEGO.AsyncAPI.Tests.Bindings
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Tests.Bindings
 {
-    using System;
     using System.Collections.Generic;
     using AsyncAPI.Models.Any;
     using AsyncAPI.Models.Interfaces;

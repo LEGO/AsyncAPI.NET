@@ -1,4 +1,6 @@
-﻿using LEGO.AsyncAPI.Models;
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Writers;
 using NUnit.Framework;
 using System;

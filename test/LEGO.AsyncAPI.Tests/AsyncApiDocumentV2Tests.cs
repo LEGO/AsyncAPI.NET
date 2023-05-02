@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Tests
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -11,8 +13,6 @@
     using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Bindings;
-    using LEGO.AsyncAPI.Models.Bindings.Kafka;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Writers;

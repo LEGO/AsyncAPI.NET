@@ -1,10 +1,11 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 using System;
 using System.Globalization;
 using System.IO;
 using LEGO.AsyncAPI.Bindings.Http;
 using LEGO.AsyncAPI.Bindings.Kafka;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.Kafka;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Writers;
 using NUnit.Framework;

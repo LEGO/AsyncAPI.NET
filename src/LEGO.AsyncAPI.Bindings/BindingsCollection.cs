@@ -1,12 +1,15 @@
-﻿using LEGO.AsyncAPI.Bindings.Http;
-using LEGO.AsyncAPI.Bindings.Kafka;
-using LEGO.AsyncAPI.Bindings.Pulsar;
-using LEGO.AsyncAPI.Bindings.WebSockets;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.Interface;
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Bindings
 {
+    using System;
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Bindings.Http;
+    using LEGO.AsyncAPI.Bindings.Kafka;
+    using LEGO.AsyncAPI.Bindings.Pulsar;
+    using LEGO.AsyncAPI.Bindings.WebSockets;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Interface;
 
     public static class BindingsCollection
     {

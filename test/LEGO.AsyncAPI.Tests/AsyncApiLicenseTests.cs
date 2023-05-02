@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+using FluentAssertions;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.Models.Interfaces;

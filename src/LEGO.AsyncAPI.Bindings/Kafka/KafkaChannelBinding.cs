@@ -40,7 +40,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "topic", (a, n) => { a.Topic = n.GetScalarValue(); } },
             { "partitions", (a, n) => { a.Partitions = n.GetIntegerValue(); } },
-            { "topicConfiguration", (a, n) => { a.TopicConfiguration = LoadTopicConfiguration(n); } },
+            { "topicConfiguration", (a, n) => { a.TopicConfiguration = this.LoadTopicConfiguration(n); } },
             { "replicas", (a, n) => { a.Replicas = n.GetIntegerValue(); } },
         };
 

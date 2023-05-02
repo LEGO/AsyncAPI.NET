@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Tests.Models
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Tests.Models
 {
     using System;
     using System.Collections.Generic;

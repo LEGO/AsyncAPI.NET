@@ -2,7 +2,6 @@
 
 namespace LEGO.AsyncAPI.Validation.Rules
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
     using LEGO.AsyncAPI.Models;

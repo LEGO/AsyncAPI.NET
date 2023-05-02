@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 using System;
 using LEGO.AsyncAPI.Models;
 using NUnit.Framework;

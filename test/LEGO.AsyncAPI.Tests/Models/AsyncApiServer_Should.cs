@@ -1,6 +1,7 @@
-﻿using LEGO.AsyncAPI.Bindings.Kafka;
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+using LEGO.AsyncAPI.Bindings.Kafka;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.Kafka;
 using LEGO.AsyncAPI.Models.Interfaces;
 using NUnit.Framework;
 using System.Collections.Generic;

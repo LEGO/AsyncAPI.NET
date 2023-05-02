@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Bindings
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Bindings
 {
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;

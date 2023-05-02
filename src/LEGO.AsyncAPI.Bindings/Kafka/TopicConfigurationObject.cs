@@ -1,12 +1,12 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Writers;
-using System;
-using System.Collections.Generic;
-
 namespace LEGO.AsyncAPI.Models.Bindings.Kafka
 {
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
+    using System;
+    using System.Collections.Generic;
+
     public class TopicConfigurationObject : IAsyncApiElement
     {
         /// <summary>

@@ -6,7 +6,6 @@ namespace LEGO.AsyncAPI.Bindings.Http
 {
     using System;
     using LEGO.AsyncAPI.Attributes;
-    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
@@ -52,19 +51,12 @@ namespace LEGO.AsyncAPI.Bindings.Http
             writer.WriteStartObject();
 
             writer.WriteRequiredProperty(AsyncApiConstants.Type, this.Type.GetDisplayName());
-            writer.WriteOptionalProperty(AsyncApiConstants.Method, Method);
-            writer.WriteOptionalObject(AsyncApiConstants.Query, Query, (w, h) => h.SerializeV2(w));
-            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, BindingVersion);
+            writer.WriteOptionalProperty(AsyncApiConstants.Method, this.Method);
+            writer.WriteOptionalObject(AsyncApiConstants.Query, this.Query, (w, h) => h.SerializeV2(w));
+            writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
             writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
-
-        /// <inheritdoc/>
-        
-
-        public bool UnresolvedReference { get; set; }
-
-        public AsyncApiReference Reference { get; set; }
 
         protected override FixedFieldMap<HttpOperationBinding> FixedFieldMap => new()
         {

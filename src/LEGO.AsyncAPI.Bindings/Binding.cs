@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Bindings
 {
     using Models.Interfaces;
@@ -7,7 +9,7 @@ namespace LEGO.AsyncAPI.Bindings
     public abstract class Binding<T> : AsyncApiBinding, IBindingParser<T>
         where T : IBinding, new()
     {
-        protected void ParseMap<T>(
+        protected static void ParseMap<T>(
             MapNode mapNode,
             T domainObject,
             FixedFieldMap<T> fixedFieldMap)
