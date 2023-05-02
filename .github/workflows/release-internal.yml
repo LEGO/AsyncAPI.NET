@@ -5,7 +5,7 @@ on:
     paths:
       - 'src/LEGO.AsyncAPI/**'
       - 'src/LEGO.AsyncAPI.Readers/**'
-      - 'src/LEGO.AsyncAPI.Writers/**'
+      - 'src/LEGO.AsyncAPI.Bindings/**'
       - ".github/workflows/release-package.yml"
       - '!**/*.md' 
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
     name: Publish NuGet packages
     strategy:
       matrix:
-        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers"]
+        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers", "LEGO.AsyncAPI.Bindings"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
