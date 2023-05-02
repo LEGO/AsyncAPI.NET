@@ -2,9 +2,9 @@
 
 namespace LEGO.AsyncAPI.Bindings
 {
-    using Models.Interfaces;
-    using Readers.Interface;
-    using Readers.ParseNodes;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Interface;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
 
     public abstract class Binding<T> : AsyncApiBinding, IBindingParser<T>
         where T : IBinding, new()
@@ -24,7 +24,7 @@ namespace LEGO.AsyncAPI.Bindings
                 propertyNode.ParseField(domainObject, fixedFieldMap, null);
             }
         }
-        
+
         public abstract T LoadBinding(PropertyNode node);
     }
 }

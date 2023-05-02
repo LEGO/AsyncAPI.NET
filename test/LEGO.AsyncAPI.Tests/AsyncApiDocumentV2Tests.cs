@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Tests
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using AsyncAPI.Bindings.Pulsar;
+    using LEGO.AsyncAPI.Bindings.Pulsar;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Bindings.Kafka;

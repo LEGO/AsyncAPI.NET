@@ -3,8 +3,8 @@
 namespace LEGO.AsyncAPI.Tests.Bindings
 {
     using System.Collections.Generic;
-    using AsyncAPI.Models.Any;
-    using AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Models;
