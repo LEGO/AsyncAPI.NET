@@ -1,8 +1,10 @@
-﻿using LEGO.AsyncAPI.Validations;
-using NUnit.Framework;
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Tests.Validation
 {
+    using LEGO.AsyncAPI.Validations;
+    using NUnit.Framework;
+
     public class ValidationRuleSetTests
     {
         [Test]

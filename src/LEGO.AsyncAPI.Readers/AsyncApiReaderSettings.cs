@@ -6,6 +6,7 @@ namespace LEGO.AsyncAPI.Readers
     using System.Collections.Generic;
     using System.IO;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Validations;
 
     public enum ReferenceResolutionSetting
@@ -39,6 +40,11 @@ namespace LEGO.AsyncAPI.Readers
             ExtensionParsers
         { get; set; } =
             new Dictionary<string, Func<IAsyncApiAny, IAsyncApiExtension>>();
+
+        public List<IBindingParser<IBinding>>
+           Bindings
+        { get; } =
+           new List<IBindingParser<IBinding>>();
 
         /// <summary>
         /// Rules to use for validating AsyncApi specification.  If none are provided a default set of rules are applied.

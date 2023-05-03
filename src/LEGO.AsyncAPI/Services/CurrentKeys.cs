@@ -4,6 +4,8 @@ namespace LEGO.AsyncAPI.Services
 {
     public class CurrentKeys
     {
+        public string ServerBindings { get; internal set; }
+
         public string Channel { get; internal set; }
 
         public string Extension { get; internal set; }

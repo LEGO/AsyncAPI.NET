@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Readers.V2
             [typeof(AsyncApiOAuthFlows)] = AsyncApiV2Deserializer.LoadOAuthFlows,
             [typeof(AsyncApiOperation)] = AsyncApiV2Deserializer.LoadOperation,
             [typeof(AsyncApiParameter)] = AsyncApiV2Deserializer.LoadParameter,
-            [typeof(AsyncApiSchema)] = AsyncApiV2Deserializer.LoadSchema,
+            [typeof(AsyncApiSchema)] = JsonSchemaDeserializer.LoadSchema,
             [typeof(AsyncApiSecurityRequirement)] = AsyncApiV2Deserializer.LoadSecurityRequirement,
             [typeof(AsyncApiSecurityScheme)] = AsyncApiV2Deserializer.LoadSecurityScheme,
             [typeof(AsyncApiServer)] = AsyncApiV2Deserializer.LoadServer,

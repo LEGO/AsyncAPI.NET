@@ -5,31 +5,51 @@ on:
     paths:
       - 'src/LEGO.AsyncAPI/**'
       - 'src/LEGO.AsyncAPI.Readers/**'
-      - 'src/LEGO.AsyncAPI.Writers/**'
-      - ".github/workflows/release-package.yml"
+      - 'src/LEGO.AsyncAPI.Bindings/**'
+      - ".github/workflows/release-internal.yml"
       - '!**/*.md' 
   workflow_dispatch:
 
 jobs:
-  release:
+  check:
+    runs-on: ubuntu-latest
+    name: Check release
+    environment: AsyncAPI 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v1
+
+    - name: Semantic Release
+      uses: cycjimmy/semantic-release-action@v3
+      with:
+        dry_run: true
+        ci: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      trigger_release: ${{ steps.semantic.outputs.new_release_published }}
+      version: ${{ steps.semantic.outputs.new_release_published == 'true' && steps.semantic.outputs.new_release_version }}
+
+  pre-release:
     runs-on: ubuntu-latest
     name: Publish NuGet packages
+    needs: check
+    environment: AsyncAPI 
     strategy:
       matrix:
-        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers"]
+        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers", "LEGO.AsyncAPI.Bindings" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
         
       - name: Setup .NET Core @ Latest
+        if: needs.check.outputs.trigger_release == 'true'
         uses: actions/setup-dotnet@v1
-        with:
-          source-url: https://nuget.pkg.github.com/LEGO/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}    
 
       - name: Build ${{ matrix.package-name }} project and pack NuGet package
-        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=0.2.$GITHUB_RUN_NUMBER.0-prerelease
+        if: needs.check.outputs.trigger_release == 'true'
+        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ needs.check.outputs.version }}-beta
 
       - name: Push generated package to GitHub Packages registry
-        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg --skip-duplicate -n --api-key ${{secrets.GITHUB_TOKEN}}      
+        if: needs.check.outputs.trigger_release == 'true'
+        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg -s https://api.nuget.org/v3/index.json --skip-duplicate -n --api-key ${{secrets.NUGET}}

@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.Readers
     /// <summary>
     /// Service class for converting contents of TextReader into AsyncApiDocument instances
     /// </summary>
-    public class AsyncApiTextReaderReader : IAsyncApiReader<TextReader, AsyncApiDiagnostic>
+    public class AsyncApiTextReader : IAsyncApiReader<TextReader, AsyncApiDiagnostic>
     {
         private readonly AsyncApiReaderSettings settings;
 
@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.Readers
         /// Create stream reader with custom settings if desired.
         /// </summary>
         /// <param name="settings"></param>
-        public AsyncApiTextReaderReader(AsyncApiReaderSettings settings = null)
+        public AsyncApiTextReader(AsyncApiReaderSettings settings = null)
         {
             this.settings = settings ?? new AsyncApiReaderSettings();
         }
