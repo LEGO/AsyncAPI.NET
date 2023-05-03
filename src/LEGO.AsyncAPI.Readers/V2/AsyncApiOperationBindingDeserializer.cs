@@ -4,16 +4,14 @@ namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-    using LEGO.AsyncAPI.Writers;
 
     internal static partial class AsyncApiV2Deserializer
     {
         internal static AsyncApiBindings<IOperationBinding> LoadOperationBindings(ParseNode node)
         {
-            var mapNode = node.CheckMapNode("operationBinding");
+            var mapNode = node.CheckMapNode("operationBindings");
 
             var operationBindings = new AsyncApiBindings<IOperationBinding>();
 
@@ -38,16 +36,20 @@ namespace LEGO.AsyncAPI.Readers
         internal static IOperationBinding LoadOperationBinding(ParseNode node)
         {
             var property = node as PropertyNode;
-            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
-            switch (bindingType)
+            try
             {
-                case BindingType.Kafka:
-                    return LoadBinding("OperationBinding", property.Value, kafkaOperationBindingFixedFields);
-                case BindingType.Http:
-                    return LoadBinding("OperationBinding", property.Value, httpOperationBindingFixedFields);
-                default:
-                    throw new AsyncApiException($"OperationBinding {property.Name} is not supported");
+                if (node.Context.OperationBindingParsers.TryGetValue(property.Name, out var parser))
+                {
+                    return parser.LoadBinding(property);
+                }
             }
+            catch (AsyncApiException ex)
+            {
+                ex.Pointer = node.Context.GetLocation();
+                node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+            }
+
+            return null;
         }
     }
 }

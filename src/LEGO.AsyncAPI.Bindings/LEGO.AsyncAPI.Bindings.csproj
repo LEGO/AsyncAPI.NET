@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+	<Company>The LEGO Group</Company>
+	<PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<Description>AsyncAPI.NET Bindings</Description>
+	<PackageTags>asyncapi .net openapi documentation</PackageTags>
+	<PackageId>AsyncAPI.NET.Bindings</PackageId>
+	<AssemblyName>LEGO.AsyncAPI.Bindings</AssemblyName>
+	<RootNamespace>LEGO.AsyncAPI.Bindings</RootNamespace>
+	<RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
+  </PropertyGroup>
+
+	
+  <ItemGroup>
+    <None Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj" />
+    <ProjectReference Include="..\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
+  </ItemGroup>
+
+</Project>

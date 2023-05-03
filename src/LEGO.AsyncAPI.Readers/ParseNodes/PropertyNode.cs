@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using LEGO.AsyncAPI.Readers.Exceptions;
     using YamlDotNet.RepresentationModel;
 
-    internal class PropertyNode : ParseNode
+    public class PropertyNode : ParseNode
     {
         public PropertyNode(ParsingContext context, string name, YamlNode node)
             : base(
@@ -83,11 +83,6 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                         new AsyncApiError("", $"{this.Name} is not a valid property at {this.Context.GetLocation()}"));
                 }
             }
-        }
-
-        public override IAsyncApiAny CreateAny()
-        {
-            throw new NotImplementedException();
         }
     }
 }

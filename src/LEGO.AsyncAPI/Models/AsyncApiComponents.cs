@@ -69,22 +69,22 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// An object to hold reusable Server Bindings Objects.
         /// </summary>
-        public IDictionary<string, IServerBinding> ServerBindings { get; set; } = new Dictionary<string, IServerBinding>();
+        public IDictionary<string, AsyncApiBindings<IServerBinding>> ServerBindings { get; set; } = new Dictionary<string, AsyncApiBindings<IServerBinding>>();
 
         /// <summary>
         /// An object to hold reusable Channel Bindings Objects.
         /// </summary>
-        public IDictionary<string, IChannelBinding> ChannelBindings { get; set; } = new Dictionary<string, IChannelBinding>();
+        public IDictionary<string, AsyncApiBindings<IChannelBinding>> ChannelBindings { get; set; } = new Dictionary<string, AsyncApiBindings<IChannelBinding>>();
 
         /// <summary>
         /// An object to hold reusable Operation Bindings Objects.
         /// </summary>
-        public IDictionary<string, IOperationBinding> OperationBindings { get; set; } = new Dictionary<string, IOperationBinding>();
+        public IDictionary<string, AsyncApiBindings<IOperationBinding>> OperationBindings { get; set; } = new Dictionary<string, AsyncApiBindings<IOperationBinding>>();
 
         /// <summary>
         /// An object to hold reusable Message Bindings Objects.
         /// </summary>
-        public IDictionary<string, IMessageBinding> MessageBindings { get; set; } = new Dictionary<string, IMessageBinding>();
+        public IDictionary<string, AsyncApiBindings<IMessageBinding>> MessageBindings { get; set; } = new Dictionary<string, AsyncApiBindings<IMessageBinding>>();
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
@@ -311,7 +311,7 @@ namespace LEGO.AsyncAPI.Models
                 (w, key, component) =>
                 {
                     if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ServerBinding &&
+                        component.Reference.Type == ReferenceType.ServerBindings &&
                         component.Reference.Id == key)
                     {
                         component.SerializeV2WithoutReference(w);
@@ -329,7 +329,7 @@ namespace LEGO.AsyncAPI.Models
                 (w, key, component) =>
                 {
                     if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ChannelBinding &&
+                        component.Reference.Type == ReferenceType.ChannelBindings &&
                         component.Reference.Id == key)
                     {
                         component.SerializeV2WithoutReference(w);
@@ -347,7 +347,7 @@ namespace LEGO.AsyncAPI.Models
                 (w, key, component) =>
                 {
                     if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.OperationBinding &&
+                        component.Reference.Type == ReferenceType.OperationBindings &&
                         component.Reference.Id == key)
                     {
                         component.SerializeV2WithoutReference(w);
@@ -365,7 +365,7 @@ namespace LEGO.AsyncAPI.Models
                 (w, key, component) =>
                 {
                     if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.MessageBinding &&
+                        component.Reference.Type == ReferenceType.MessageBindings &&
                         component.Reference.Id == key)
                     {
                         component.SerializeV2WithoutReference(w);

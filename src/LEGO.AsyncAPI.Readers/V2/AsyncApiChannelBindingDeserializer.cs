@@ -4,19 +4,21 @@ namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-    using LEGO.AsyncAPI.Writers;
 
     internal static partial class AsyncApiV2Deserializer
     {
         internal static AsyncApiBindings<IChannelBinding> LoadChannelBindings(ParseNode node)
         {
-            var mapNode = node.CheckMapNode("channelBinding");
+            var mapNode = node.CheckMapNode("channelBindings");
+            var pointer = mapNode.GetReferencePointer();
+            if (pointer != null)
+            {
+                return mapNode.GetReferencedObject<AsyncApiBindings<IChannelBinding>>(ReferenceType.ChannelBindings, pointer);
+            }
 
             var channelBindings = new AsyncApiBindings<IChannelBinding>();
-
             foreach (var property in mapNode)
             {
                 var channelBinding = LoadChannelBinding(property);
@@ -35,21 +37,23 @@ namespace LEGO.AsyncAPI.Readers
             return channelBindings;
         }
 
-        internal static IChannelBinding LoadChannelBinding(ParseNode node)
+        private static IChannelBinding LoadChannelBinding(ParseNode node)
         {
             var property = node as PropertyNode;
-            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
-            switch (bindingType)
+            try
             {
-                case BindingType.Kafka:
-                    return LoadBinding("ChannelBinding", property.Value, kafkaChannelBindingFixedFields);
-                case BindingType.Pulsar:
-                    return LoadBinding("ChannelBinding", property.Value, pulsarChannelBindingFixedFields);
-                case BindingType.Websockets:
-                    return LoadBinding("ChannelBinding", property.Value, webSocketsChannelBindingFixedFields);
-                default:
-                    throw new AsyncApiException($"ChannelBinding {property.Name} is not supported");
+                if (node.Context.ChannelBindingParsers.TryGetValue(property.Name, out var parser))
+                {
+                    return parser.LoadBinding(property);
+                }
             }
+            catch (AsyncApiException ex)
+            {
+                ex.Pointer = node.Context.GetLocation();
+                node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+            }
+
+            return null;
         }
     }
 }

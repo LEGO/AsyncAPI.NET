@@ -1,13 +1,15 @@
-﻿using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Writers;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Tests.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Writers;
+    using NUnit.Framework;
+
     public class AsyncApiSchema_Should
     {
         private string NoInlinedReferences =>
@@ -150,7 +152,7 @@ components: { }";
 
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

@@ -2,8 +2,8 @@
 
 namespace LEGO.AsyncAPI.Writers
 {
-    using LEGO.AsyncAPI.Exceptions;
     using System;
+    using LEGO.AsyncAPI.Exceptions;
 
     public class AsyncApiWriterException : AsyncApiException
     {

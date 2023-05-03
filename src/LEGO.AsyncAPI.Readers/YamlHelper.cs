@@ -6,7 +6,6 @@ namespace LEGO.AsyncAPI.Readers
     using System.Linq;
     using LEGO.AsyncAPI.Exceptions;
     using YamlDotNet.RepresentationModel;
-
     internal static class YamlHelper
     {
         public static string GetScalarValue(this YamlNode node)

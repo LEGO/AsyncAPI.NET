@@ -1,16 +1,17 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.Kafka
+namespace LEGO.AsyncAPI.Bindings.Kafka
 {
     using System;
-    using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings.Kafka;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// Binding class for Kafka channel settings.
     /// </summary>
-    public class KafkaChannelBinding : IChannelBinding
+    public class KafkaChannelBinding : ChannelBinding<KafkaChannelBinding>
     {
         /// <summary>
         /// Kafka topic name if different from channel name.
@@ -32,23 +33,30 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// </summary>
         public TopicConfigurationObject TopicConfiguration { get; set; }
 
-        /// <summary>
-        /// The version of this binding. If omitted, "latest" MUST be assumed.
-        /// </summary>
-        public string BindingVersion { get; set; }
+        public override string BindingKey => "kafka";
 
-        public BindingType Type => BindingType.Kafka;
+        protected override FixedFieldMap<KafkaChannelBinding> FixedFieldMap => new()
+        {
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "topic", (a, n) => { a.Topic = n.GetScalarValue(); } },
+            { "partitions", (a, n) => { a.Partitions = n.GetIntegerValue(); } },
+            { "topicConfiguration", (a, n) => { a.TopicConfiguration = n.ParseMap(kafkaChannelTopicConfigurationObjectFixedFields); } },
+            { "replicas", (a, n) => { a.Replicas = n.GetIntegerValue(); } },
+        };
 
-        public bool UnresolvedReference { get; set; }
-
-        public AsyncApiReference Reference { get; set; }
-
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+        private static FixedFieldMap<TopicConfigurationObject> kafkaChannelTopicConfigurationObjectFixedFields = new()
+        {
+            { "cleanup.policy", (a, n) => { a.CleanupPolicy = n.CreateSimpleList(s => s.GetScalarValue()); } },
+            { "retention.ms", (a, n) => { a.RetentionMiliseconds = n.GetIntegerValue(); } },
+            { "retention.bytes", (a, n) => { a.RetentionBytes = n.GetIntegerValue(); } },
+            { "delete.retention.ms", (a, n) => { a.DeleteRetentionMiliseconds = n.GetIntegerValue(); } },
+            { "max.message.bytes", (a, n) => { a.MaxMessageBytes = n.GetIntegerValue(); } },
+        };
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.
         /// </summary>
-        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeProperties(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -61,24 +69,9 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             writer.WriteOptionalProperty<int>(AsyncApiConstants.Replicas, this.Replicas);
             writer.WriteOptionalObject(AsyncApiConstants.TopicConfiguration, this.TopicConfiguration, (w, t) => t.Serialize(w));
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteExtensions(this.Extensions);
 
             writer.WriteEndObject();
-        }
-
-        public void SerializeV2(IAsyncApiWriter writer)
-        {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
-            {
-                this.Reference.SerializeV2(writer);
-                return;
-            }
-
-            this.SerializeV2WithoutReference(writer);
         }
     }
 }

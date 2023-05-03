@@ -2,12 +2,12 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-    using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
@@ -21,10 +21,10 @@ namespace LEGO.AsyncAPI.Readers
                 "messageId", (a, n) => { a.MessageId = n.GetScalarValue(); }
             },
             {
-                "headers", (a, n) => { a.Headers = LoadSchema(n); }
+                "headers", (a, n) => { a.Headers = JsonSchemaDeserializer.LoadSchema(n); }
             },
             {
-                "payload", (a, n) => { a.Payload = LoadSchema(n); }
+                "payload", (a, n) => { a.Payload = JsonSchemaDeserializer.LoadSchema(n); }
             },
             {
                 "correlationId", (a, n) => { a.CorrelationId = LoadCorrelationId(n); }
