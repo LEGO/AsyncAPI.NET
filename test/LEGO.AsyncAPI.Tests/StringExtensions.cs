@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Tests
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Tests
 {
     using System;
 

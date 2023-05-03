@@ -40,7 +40,7 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public bool InlineReferences { get; set; } = false;
 
-        internal bool ShouldInlineReference(AsyncApiReference reference)
+        public bool ShouldInlineReference(AsyncApiReference reference)
         {
             return this.InlineReferences;
         }

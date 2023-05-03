@@ -1,8 +1,11 @@
-﻿namespace LEGO.AsyncAPI.Tests.Bindings.Http
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Tests.Bindings.Http
 {
     using FluentAssertions;
+    using LEGO.AsyncAPI.Bindings;
+    using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings.Http;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 
@@ -32,11 +35,12 @@
             var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Http);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiMessage>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(message);
         }
 
@@ -56,7 +60,7 @@
 
             operation.Bindings.Add(new HttpOperationBinding
             {
-                Type = "request",
+                Type = HttpOperationBinding.HttpOperationType.Request,
                 Method = "POST",
                 Query = new AsyncApiSchema
                 {
@@ -68,11 +72,12 @@
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            var binding = new AsyncApiStringReader().ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Http);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(operation);
         }
     }

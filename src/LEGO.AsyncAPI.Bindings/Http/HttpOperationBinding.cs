@@ -1,21 +1,32 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.Http
+using LEGO.AsyncAPI.Models;
+
+namespace LEGO.AsyncAPI.Bindings.Http
 {
     using System;
-    using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Attributes;
+    using LEGO.AsyncAPI.Readers;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// Binding class for http operations.
     /// </summary>
-    public class HttpOperationBinding : IOperationBinding
+    public class HttpOperationBinding : OperationBinding<HttpOperationBinding>
     {
+        public enum HttpOperationType
+        {
+            [Display("request")]
+            Request,
+
+            [Display("response")]
+            Response,
+        }
         /// <summary>
         /// REQUIRED. Type of operation. Its value MUST be either request or response.
         /// </summary>
-        public string Type { get; set; }
+        public HttpOperationType? Type { get; set; }
 
         /// <summary>
         /// When type is request, this is the HTTP method, otherwise it MUST be ignored. Its value MUST be one of GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS, CONNECT, and TRACE.
@@ -28,14 +39,9 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
         public AsyncApiSchema Query { get; set; }
 
         /// <summary>
-        /// The version of this binding. If omitted, "latest" MUST be assumed.
-        /// </summary>
-        public string BindingVersion { get; set; }
-
-        /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.
         /// </summary>
-        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeProperties(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -44,37 +50,22 @@ namespace LEGO.AsyncAPI.Models.Bindings.Http
 
             writer.WriteStartObject();
 
-            writer.WriteRequiredProperty(AsyncApiConstants.Type, this.Type);
+            writer.WriteRequiredProperty(AsyncApiConstants.Type, this.Type.GetDisplayName());
             writer.WriteOptionalProperty(AsyncApiConstants.Method, this.Method);
             writer.WriteOptionalObject(AsyncApiConstants.Query, this.Query, (w, h) => h.SerializeV2(w));
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
-
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
 
-        public void SerializeV2(IAsyncApiWriter writer)
+        protected override FixedFieldMap<HttpOperationBinding> FixedFieldMap => new()
         {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "type", (a, n) => { a.Type = n.GetScalarValue().GetEnumFromDisplayName<HttpOperationType>(); } },
+            { "method", (a, n) => { a.Method = n.GetScalarValue(); } },
+            { "query", (a, n) => { a.Query = JsonSchemaDeserializer.LoadSchema(n); } },
+        };
 
-            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
-            {
-                this.Reference.SerializeV2(writer);
-                return;
-            }
-
-            this.SerializeV2WithoutReference(writer);
-        }
-
-        /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
-
-        public bool UnresolvedReference { get; set; }
-
-        public AsyncApiReference Reference { get; set; }
-
-        BindingType IBinding.Type => BindingType.Http;
+        public override string BindingKey => "http";
     }
 }

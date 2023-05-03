@@ -5,9 +5,9 @@ namespace LEGO.AsyncAPI.Services
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Exceptions;
-    using Models;
-    using Models.Interfaces;
+    using LEGO.AsyncAPI.Exceptions;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
     /// This class is used to walk an AsyncApiDocument and convert unresolved references to references to populated objects
@@ -64,8 +64,7 @@ namespace LEGO.AsyncAPI.Services
         public override void Visit(AsyncApiChannel channel)
         {
             this.ResolveMap(channel.Parameters);
-            var bindingDictionary = channel.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type.GetDisplayName());
-            this.ResolveMap(bindingDictionary);
+            this.ResolveObject(channel.Bindings, r => channel.Bindings = r);
         }
 
         public override void Visit(AsyncApiMessageTrait trait)
@@ -81,8 +80,7 @@ namespace LEGO.AsyncAPI.Services
         {
             this.ResolveList(operation.Message);
             this.ResolveList(operation.Traits);
-            var bindingDictionary = operation.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type.GetDisplayName());
-            this.ResolveMap(bindingDictionary);
+            this.ResolveObject(operation.Bindings, r => operation.Bindings = r);
         }
 
         public override void Visit(AsyncApiMessage message)
@@ -91,19 +89,12 @@ namespace LEGO.AsyncAPI.Services
             this.ResolveObject(message.Payload, r => message.Payload = r);
             this.ResolveList(message.Traits);
             this.ResolveObject(message.CorrelationId, r => message.CorrelationId = r);
-            var bindingDictionary = message.Bindings.Select(binding => binding.Value).ToDictionary(x => x.Type.GetDisplayName());
-            this.ResolveMap(bindingDictionary);
+            this.ResolveObject(message.Bindings, r => message.Bindings = r);
         }
 
-        /// <summary>
-        /// Resolve all references to bindings.
-        /// </summary>
-        public override void Visit<TBinding>(AsyncApiBindings<TBinding> bindings)
+        public override void Visit(AsyncApiServer server)
         {
-            foreach (var binding in bindings.Values.ToList())
-            {
-                this.ResolveObject(binding, resolvedBinding => bindings[binding.Type] = resolvedBinding);
-            }
+            this.ResolveObject(server.Bindings, r => server.Bindings = r);
         }
 
         /// <summary>

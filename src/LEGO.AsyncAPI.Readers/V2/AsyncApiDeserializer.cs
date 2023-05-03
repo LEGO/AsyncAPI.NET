@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Readers
 
     internal static partial class AsyncApiV2Deserializer
     {
-        private static void ParseMap<T>(
+        internal static void ParseMap<T>(
             MapNode mapNode,
             T domainObject,
             FixedFieldMap<T> fixedFieldMap,
@@ -29,7 +29,7 @@ namespace LEGO.AsyncAPI.Readers
             }
         }
 
-        private static void ProcessAnyFields<T>(
+        internal static void ProcessAnyFields<T>(
             MapNode mapNode,
             T domainObject,
             AnyFieldMap<T> anyFieldMap)
@@ -58,7 +58,7 @@ namespace LEGO.AsyncAPI.Readers
             }
         }
 
-        private static void ProcessAnyListFields<T>(
+        internal static void ProcessAnyListFields<T>(
             MapNode mapNode,
             T domainObject,
             AnyListFieldMap<T> anyListFieldMap)
@@ -163,7 +163,7 @@ namespace LEGO.AsyncAPI.Readers
             return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
         }
 
-        private static IAsyncApiExtension LoadExtension(string name, ParseNode node)
+        internal static IAsyncApiExtension LoadExtension(string name, ParseNode node)
         {
             try
             {

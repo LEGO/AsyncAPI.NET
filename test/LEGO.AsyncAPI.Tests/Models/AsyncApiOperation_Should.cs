@@ -1,9 +1,11 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 using System;
 using System.Globalization;
 using System.IO;
+using LEGO.AsyncAPI.Bindings.Http;
+using LEGO.AsyncAPI.Bindings.Kafka;
 using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.Http;
-using LEGO.AsyncAPI.Models.Bindings.Kafka;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Writers;
 using NUnit.Framework;
@@ -46,7 +48,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -69,7 +71,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -78,7 +80,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             var expected =
 @"bindings:
   http:
-    type: type
+    type: request
     method: PUT
     query:
       description: some query
@@ -95,7 +97,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         new HttpOperationBinding
                         {
-                            Type = "type",
+                            Type = HttpOperationBinding.HttpOperationType.Request,
                             Method = "PUT",
                             Query = new AsyncApiSchema
                             {
@@ -125,7 +127,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

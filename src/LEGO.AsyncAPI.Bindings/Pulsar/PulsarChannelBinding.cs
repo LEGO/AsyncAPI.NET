@@ -1,16 +1,15 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
+namespace LEGO.AsyncAPI.Bindings.Pulsar
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Bindings.Pulsar;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
-    /// <summary>
-    /// Binding class for Pulsar server settings.
-    /// </summary>
-    public class PulsarChannelBinding : IChannelBinding
+    public class PulsarChannelBinding : ChannelBinding<PulsarChannelBinding>
     {
         /// <summary>
         /// The namespace associated with the topic.
@@ -38,7 +37,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         public RetentionDefinition Retention { get; set; }
 
         /// <summary>
-        /// Message Time-to-live in seconds. 
+        /// Message Time-to-live in seconds.
         /// </summary>
         public int? TTL { get; set; }
 
@@ -47,22 +46,9 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
         /// </summary>
         public bool? Deduplication { get; set; }
 
-        /// <summary>
-        /// The version of this binding.
-        public string BindingVersion { get; set; }
+        public override string BindingKey => "pulsar";
 
-        public BindingType Type => BindingType.Pulsar;
-
-        public bool UnresolvedReference { get; set; }
-
-        public AsyncApiReference Reference { get; set; }
-
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
-
-        /// <summary>
-        /// Serialize to AsyncAPI V2 document without using reference.
-        /// </summary>
-        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeProperties(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -78,24 +64,34 @@ namespace LEGO.AsyncAPI.Models.Bindings.Pulsar
             writer.WriteOptionalProperty<int>(AsyncApiConstants.TTL, this.TTL);
             writer.WriteOptionalProperty(AsyncApiConstants.Deduplication, this.Deduplication);
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
-
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
 
-        public void SerializeV2(IAsyncApiWriter writer)
+        protected override FixedFieldMap<PulsarChannelBinding> FixedFieldMap => new()
         {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
+            { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
+            { "namespace", (a, n) => { a.Namespace = n.GetScalarValue(); } },
+            { "persistence", (a, n) => { a.Persistence = n.GetScalarValue().GetEnumFromDisplayName<Persistence>(); } },
+            { "compaction", (a, n) => { a.Compaction = n.GetIntegerValue(); } },
+            { "retention", (a, n) => { a.Retention = this.LoadRetention(n); } },
+            { "geo-replication", (a, n) => { a.GeoReplication = n.CreateSimpleList(s => s.GetScalarValue()); } },
+            { "ttl", (a, n) => { a.TTL = n.GetIntegerValue(); } },
+            { "deduplication", (a, n) => { a.Deduplication = n.GetBooleanValue(); } },
+        };
 
-            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
-            {
-                this.Reference.SerializeV2(writer);
-                return;
-            }
+        private FixedFieldMap<RetentionDefinition> pulsarServerBindingRetentionFixedFields = new()
+        {
+            { "time", (a, n) => { a.Time = n.GetIntegerValue(); } },
+            { "size", (a, n) => { a.Size = n.GetIntegerValue(); } },
+        };
 
-            this.SerializeV2WithoutReference(writer);
+        private RetentionDefinition LoadRetention(ParseNode node)
+        {
+            var mapNode = node.CheckMapNode("retention");
+            var retention = new RetentionDefinition();
+            ParseMap(mapNode, retention, this.pulsarServerBindingRetentionFixedFields);
+            return retention;
         }
     }
 }

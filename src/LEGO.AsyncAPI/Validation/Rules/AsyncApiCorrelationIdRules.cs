@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Validation.Rules
 {
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Validations;
-    using System.Linq;
 
     [AsyncApiRule]
     public static class AsyncApiCorrelationIdRules

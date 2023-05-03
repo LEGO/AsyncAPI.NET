@@ -1,15 +1,18 @@
-﻿namespace LEGO.AsyncAPI.Tests
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using LEGO.AsyncAPI.Bindings.Pulsar;
+    using LEGO.AsyncAPI.Bindings;
+    using LEGO.AsyncAPI.Bindings.Http;
+    using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Bindings;
-    using LEGO.AsyncAPI.Models.Bindings.Http;
-    using LEGO.AsyncAPI.Models.Bindings.Kafka;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Writers;
@@ -748,7 +751,7 @@ components:
                 Bindings = new AsyncApiBindings<IOperationBinding>()
                 {
                     {
-                        BindingType.Kafka, new KafkaOperationBinding()
+                        "kafka", new KafkaOperationBinding()
                         {
                             ClientId = new AsyncApiSchema()
                             {
@@ -770,7 +773,7 @@ components:
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -1201,7 +1204,7 @@ components:
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -2133,6 +2136,91 @@ components:
         }
 
         [Test]
+        public void Serialize_WithBindingReferences_SerializesDeserializes()
+        {
+            var doc = new AsyncApiDocument();
+            doc.Info = new AsyncApiInfo()
+            {
+                Description = "test description"
+            };
+            doc.Servers.Add("production", new AsyncApiServer
+            {
+                Description = "test description",
+                Protocol = "pulsar+ssl",
+                Url = "example.com",
+                Bindings = new AsyncApiBindings<IServerBinding>()
+                {
+                    Reference = new AsyncApiReference()
+                    {
+                        Type = ReferenceType.ServerBindings,
+                        Id = "bindings",
+                    },
+                },
+            });
+            doc.Components = new AsyncApiComponents()
+            {
+                Channels = new Dictionary<string, AsyncApiChannel>()
+                {
+                    { "otherchannel", new AsyncApiChannel()
+                        {
+                            Publish = new AsyncApiOperation()
+                            {
+                                Description = "test",
+                            },
+                            Bindings = new AsyncApiBindings<IChannelBinding>()
+                            {
+                                Reference = new AsyncApiReference()
+                                {
+                                    Type = ReferenceType.ChannelBindings,
+                                    Id = "bindings",
+                                },
+                            },
+                        } 
+                    }
+                },
+                ServerBindings = new Dictionary<string, AsyncApiBindings<IServerBinding>>()
+                {
+                    {
+                        "bindings", new AsyncApiBindings<IServerBinding>()
+                        {
+                            new PulsarServerBinding()
+                            {
+                                Tenant = "staging"
+                            },
+                        }
+                    }
+                },
+                ChannelBindings = new Dictionary<string, AsyncApiBindings<IChannelBinding>>()
+                {
+                    {
+                        "bindings", new AsyncApiBindings<IChannelBinding>()
+                        {
+                            new PulsarChannelBinding()
+                            {
+                                Namespace = "users", 
+                                Persistence = AsyncAPI.Models.Bindings.Pulsar.Persistence.Persistent,
+                            }
+                        }
+                    }
+                },
+            };
+            doc.Channels.Add("testChannel",
+                new AsyncApiChannel
+                {
+                    Reference = new AsyncApiReference()
+                    {
+                        Type = ReferenceType.Channel,
+                        Id = "otherchannel"
+                    }
+                });
+            var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
+
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.AddRange(BindingsCollection.Pulsar);
+            var reader = new AsyncApiStringReader(settings);
+            var deserialized = reader.Read(actual, out var diagnostic);
+        }
+        [Test]
         public void Serializev2_WithBindings_Serializes()
         {
             var expected = @"asyncapi: '2.6.0'
@@ -2219,18 +2307,20 @@ channels:
                 });
             var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
-            var reader = new AsyncApiStringReader();
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.AddRange(BindingsCollection.All);
+            var reader = new AsyncApiStringReader(settings);
             var deserialized = reader.Read(actual, out var diagnostic);
 
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
             Assert.AreEqual(2, deserialized.Channels.First().Value.Publish.Message.First().Bindings.Count);
 
             var binding = deserialized.Channels.First().Value.Publish.Message.First().Bindings.First();
-            Assert.AreEqual(BindingType.Http, binding.Key);
+            Assert.AreEqual("http", binding.Key);
             var httpBinding = binding.Value as HttpMessageBinding;
 
             Assert.AreEqual("this mah binding", httpBinding.Headers.Description);

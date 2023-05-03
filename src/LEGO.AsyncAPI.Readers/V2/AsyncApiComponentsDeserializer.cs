@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Readers
     {
         private static FixedFieldMap<AsyncApiComponents> componentsFixedFields = new()
         {
-            { "schemas", (a, n) => a.Schemas = n.CreateMapWithReference(ReferenceType.Schema, LoadSchema) },
+            { "schemas", (a, n) => a.Schemas = n.CreateMapWithReference(ReferenceType.Schema, JsonSchemaDeserializer.LoadSchema) },
             { "servers", (a, n) => a.Servers = n.CreateMapWithReference(ReferenceType.Server, LoadServer) },
             { "channels", (a, n) => a.Channels = n.CreateMapWithReference(ReferenceType.Channel, LoadChannel) },
             { "messages", (a, n) => a.Messages = n.CreateMapWithReference(ReferenceType.Message, LoadMessage) },
@@ -19,10 +19,10 @@ namespace LEGO.AsyncAPI.Readers
             { "correlationIds", (a, n) => a.CorrelationIds = n.CreateMapWithReference(ReferenceType.CorrelationId, LoadCorrelationId) },
             { "operationTraits", (a, n) => a.OperationTraits = n.CreateMapWithReference(ReferenceType.OperationTrait, LoadOperationTrait) },
             { "messageTraits", (a, n) => a.MessageTraits = n.CreateMapWithReference(ReferenceType.MessageTrait, LoadMessageTrait) },
-            { "serverBindings", (a, n) => a.ServerBindings = n.CreateMapWithReference(ReferenceType.ServerBinding, LoadServerBinding) },
-            { "channelBindings", (a, n) => a.ChannelBindings = n.CreateMapWithReference(ReferenceType.ChannelBinding, LoadChannelBinding) },
-            { "operationBindings", (a, n) => a.OperationBindings = n.CreateBindingMapWithReference(ReferenceType.OperationBinding, LoadOperationBinding) },
-            { "messageBindings", (a, n) => a.MessageBindings = n.CreateMapWithReference(ReferenceType.MessageBinding, LoadMessageBinding) },
+            { "serverBindings", (a, n) => a.ServerBindings = n.CreateMapWithReference(ReferenceType.ServerBindings, LoadServerBindings) },
+            { "channelBindings", (a, n) => a.ChannelBindings = n.CreateMapWithReference(ReferenceType.ChannelBindings, LoadChannelBindings) },
+            { "operationBindings", (a, n) => a.OperationBindings = n.CreateMapWithReference(ReferenceType.OperationBindings, LoadOperationBindings) },
+            { "messageBindings", (a, n) => a.MessageBindings = n.CreateMapWithReference(ReferenceType.MessageBindings, LoadMessageBindings) },
         };
 
         private static PatternFieldMap<AsyncApiComponents> componentsPatternFields =
