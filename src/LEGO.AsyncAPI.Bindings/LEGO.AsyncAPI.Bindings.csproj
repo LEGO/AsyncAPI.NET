@@ -29,7 +29,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj" />
     <ProjectReference Include="..\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
