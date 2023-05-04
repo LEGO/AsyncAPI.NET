@@ -1,8 +1,9 @@
 using System;
+using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Writers;
 
-namespace LEGO.AsyncAPI.Models.Bindings.Sns;
+namespace LEGO.AsyncAPI.Bindings.Sns;
 
 using System.Collections.Generic;
 

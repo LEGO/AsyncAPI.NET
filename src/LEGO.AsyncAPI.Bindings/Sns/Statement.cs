@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Writers;
 
-namespace LEGO.AsyncAPI.Models.Bindings.Sns;
+namespace LEGO.AsyncAPI.Bindings.Sns;
 
 public class Statement : IAsyncApiElement
 {

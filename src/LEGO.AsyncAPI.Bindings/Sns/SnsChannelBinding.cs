@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LEGO.AsyncAPI.Bindings;
+using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 using LEGO.AsyncAPI.Writers;
+using YamlDotNet.Core.Tokens;
 
-namespace LEGO.AsyncAPI.Models.Bindings.Sns;
+namespace LEGO.AsyncAPI.Bindings.Sns;
 
 using LEGO.AsyncAPI.Models.Interfaces;
 
@@ -48,7 +51,7 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
 
     private static FixedFieldMap<Policy> policyFixedFields = new()
     {
-        { "statements", (a, n) => { a.Statements = n.CreateSimpleList(s => LoadStatement(s)); } },
+        { "statements", (a, n) => { a.Statements = n.CreateList(s => LoadStatement(s)); } },
     };
 
     private static FixedFieldMap<Statement> statementFixedFields = new()
@@ -82,23 +85,15 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
 
     public static StringOrStringList LoadStringOrStringList(ParseNode node, string nodeName)
     {
-        var mapNode = node.CheckMapNode(nodeName);
-        var stringValue = mapNode.GetScalarValue();
         var stringOrStringList = new StringOrStringList();
-        if (stringValue != null)
+        if (node is ValueNode v)
         {
-            stringOrStringList.StringValue = stringValue;
+            stringOrStringList.StringValue = v.GetScalarValue();
         }
-        else
-        {
-            var stringListValue = mapNode.GetEnumerator();
-            while (stringListValue.Current != null)
-            {
-                stringOrStringList.StringList.Add(stringListValue.Current.GetScalarValue());
-                stringListValue.MoveNext();
-            }
 
-            stringListValue.Dispose();
+        if (node is ListNode m)
+        {
+            stringOrStringList.StringList = m.CreateList(s => s.GetScalarValue());
         }
 
         return stringOrStringList;

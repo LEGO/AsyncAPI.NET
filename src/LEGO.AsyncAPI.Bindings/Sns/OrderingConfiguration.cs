@@ -1,4 +1,4 @@
-namespace LEGO.AsyncAPI.Models.Bindings.Sns;
+namespace LEGO.AsyncAPI.Bindings.Sns;
 
 public class OrderingConfiguration
 {

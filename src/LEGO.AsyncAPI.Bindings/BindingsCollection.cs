@@ -7,6 +7,7 @@ namespace LEGO.AsyncAPI.Bindings
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Bindings.Pulsar;
+    using LEGO.AsyncAPI.Bindings.Sns;
     using LEGO.AsyncAPI.Bindings.WebSockets;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
@@ -40,12 +41,13 @@ namespace LEGO.AsyncAPI.Bindings
             Pulsar,
             Kafka,
             Http,
+            Sns,
         };
 
         public static IEnumerable<IBindingParser<IBinding>> Http => new List<IBindingParser<IBinding>>
         {
             new HttpOperationBinding(),
-            new HttpMessageBinding()
+            new HttpMessageBinding(),
         };
 
         public static IEnumerable<IBindingParser<IBinding>> Websockets => new List<IBindingParser<IBinding>>
@@ -66,6 +68,11 @@ namespace LEGO.AsyncAPI.Bindings
             // Pulsar
             new PulsarServerBinding(),
             new PulsarChannelBinding(),
+        };
+
+        public static IEnumerable<IBindingParser<IBinding>> Sns => new List<IBindingParser<IBinding>>
+        {
+            new SnsChannelBinding(),
         };
     }
 }
