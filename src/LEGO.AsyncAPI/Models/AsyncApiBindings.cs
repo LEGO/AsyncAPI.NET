@@ -4,11 +4,10 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public class AsyncApiBindings<TBinding> : Dictionary<BindingType, TBinding>, IAsyncApiSerializable, IAsyncApiReferenceable
+    public class AsyncApiBindings<TBinding> : Dictionary<string, TBinding>, IAsyncApiReferenceable
         where TBinding : IBinding
     {
         public bool UnresolvedReference { get; set; }
@@ -17,7 +16,7 @@ namespace LEGO.AsyncAPI.Models
 
         public void Add(TBinding binding)
         {
-            this[binding.Type] = binding;
+            this[binding.BindingKey] = binding;
         }
 
         public void SerializeV2(IAsyncApiWriter writer)
@@ -51,7 +50,7 @@ namespace LEGO.AsyncAPI.Models
                 var bindingType = binding.Key;
                 var bindingValue = binding.Value;
 
-                writer.WritePropertyName(bindingType.GetDisplayName());
+                writer.WritePropertyName(bindingType);
 
                 bindingValue.SerializeV2(writer);
             }

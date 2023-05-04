@@ -1,5 +1,7 @@
-﻿using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Bindings.Kafka;
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+using LEGO.AsyncAPI.Bindings.Kafka;
+using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -71,7 +73,7 @@ bindings:
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -104,7 +106,7 @@ bindings:
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

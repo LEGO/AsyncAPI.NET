@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.Writers
 {
     using System;
     using System.Reflection;
-    using Attributes;
+    using LEGO.AsyncAPI.Attributes;
 
     public static class StringExtensions
     {

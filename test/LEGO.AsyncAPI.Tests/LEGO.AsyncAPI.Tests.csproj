@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Bindings\LEGO.AsyncAPI.Bindings.csproj" />
       <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj" />
       <ProjectReference Include="..\..\src\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
     </ItemGroup>
@@ -41,6 +42,10 @@
       <None Remove="readers\samples\AsyncApi\AsyncApiInfoObject\Basic.yaml" />
       <None Remove="readers\samples\AsyncApi\Basic.yaml" />
       <None Remove="readers\samples\AsyncApi\schema-v2.3.0.json" />
+      <None Remove="stylecop.json" />
+    </ItemGroup>
+    <ItemGroup>
+      <AdditionalFiles Include="stylecop.json" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Attributes\" />

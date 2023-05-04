@@ -138,6 +138,12 @@ namespace LEGO.AsyncAPI.Writers
         {
             if (value != null)
             {
+                if (value is IAsyncApiReferenceable refer && refer.Reference != null)
+                {
+                    writer.WriteRequiredObject(name, value, action);
+                    return;
+                }
+
                 var values = value as IEnumerable;
                 if (values != null && !values.GetEnumerator().MoveNext())
                 {

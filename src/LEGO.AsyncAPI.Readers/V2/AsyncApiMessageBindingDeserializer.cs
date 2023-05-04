@@ -4,12 +4,8 @@ namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings;
-    using LEGO.AsyncAPI.Models.Bindings.Http;
-    using LEGO.AsyncAPI.Models.Bindings.Kafka;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-    using LEGO.AsyncAPI.Writers;
 
     internal static partial class AsyncApiV2Deserializer
     {
@@ -40,16 +36,20 @@ namespace LEGO.AsyncAPI.Readers
         internal static IMessageBinding LoadMessageBinding(ParseNode node)
         {
             var property = node as PropertyNode;
-            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
-            switch (bindingType)
+            try
             {
-                case BindingType.Kafka:
-                    return LoadBinding<KafkaMessageBinding>("MessageBinding", property.Value, kafkaMessageBindingFixedFields);
-                case BindingType.Http:
-                    return LoadBinding<HttpMessageBinding>("MessageBinding", property.Value, httpMessageBindingFixedFields);
-                default:
-                    throw new AsyncApiException($"MessageBinding {property.Name} is not supported");
+                if (node.Context.MessageBindingParsers.TryGetValue(property.Name, out var parser))
+                {
+                    return parser.LoadBinding(property);
+                }
             }
+            catch (AsyncApiException ex)
+            {
+                ex.Pointer = node.Context.GetLocation();
+                node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+            }
+
+            return null;
         }
     }
 }

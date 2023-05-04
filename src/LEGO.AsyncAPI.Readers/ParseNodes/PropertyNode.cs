@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using LEGO.AsyncAPI.Readers.Exceptions;
     using YamlDotNet.RepresentationModel;
 
-    internal class PropertyNode : ParseNode
+    public class PropertyNode : ParseNode
     {
         public PropertyNode(ParsingContext context, string name, YamlNode node)
             : base(

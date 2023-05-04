@@ -4,19 +4,21 @@ namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-    using LEGO.AsyncAPI.Writers;
 
     internal static partial class AsyncApiV2Deserializer
     {
         internal static AsyncApiBindings<IServerBinding> LoadServerBindings(ParseNode node)
         {
-            var mapNode = node.CheckMapNode("serverBinding");
+            var mapNode = node.CheckMapNode("serverBindings");
+            var pointer = mapNode.GetReferencePointer();
+            if (pointer != null)
+            {
+                return mapNode.GetReferencedObject<AsyncApiBindings<IServerBinding>>(ReferenceType.ServerBindings, pointer);
+            }
 
             var serverBindings = new AsyncApiBindings<IServerBinding>();
-
             foreach (var property in mapNode)
             {
                 var serverBinding = LoadServerBinding(property);
@@ -38,16 +40,20 @@ namespace LEGO.AsyncAPI.Readers
         internal static IServerBinding LoadServerBinding(ParseNode node)
         {
             var property = node as PropertyNode;
-            var bindingType = property.Name.GetEnumFromDisplayName<BindingType>();
-            switch (bindingType)
+            try
             {
-                case BindingType.Kafka:
-                    return LoadBinding("ServerBinding", property.Value, kafkaServerBindingFixedFields);
-                case BindingType.Pulsar:
-                    return LoadBinding("ServerBinding", property.Value, pulsarServerBindingFixedFields);
-                default:
-                    throw new AsyncApiException($"ServerBinding {property.Name} is not supported");
+                if (node.Context.ServerBindingParsers.TryGetValue(property.Name, out var parser))
+                {
+                    return parser.LoadBinding(property);
+                }
             }
+            catch (AsyncApiException ex)
+            {
+                ex.Pointer = node.Context.GetLocation();
+                node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
+            }
+
+            return null;
         }
     }
 }

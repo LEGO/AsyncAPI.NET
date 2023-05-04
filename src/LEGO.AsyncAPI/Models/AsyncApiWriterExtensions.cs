@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Writers;
 
-    internal static class AsyncApiWriterExtensions
+    public static class AsyncApiWriterExtensions
     {
         internal static AsyncApiWriterSettings GetSettings(this IAsyncApiWriter asyncApiWriter)
         {
