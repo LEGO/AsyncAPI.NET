@@ -39,23 +39,25 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
     /// The version of this binding.
     /// </summary>
     public string BindingVersion { get; set; }
-    
+
     protected override FixedFieldMap<SnsChannelBinding> FixedFieldMap => new()
     {
         { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
         { "policy", (a, n) => { a.Policy = LoadPolicy(n); } },
     };
-    
+
     private static FixedFieldMap<Policy> policyFixedFields = new()
     {
         { "statements", (a, n) => { a.Statements = n.CreateSimpleList(s => LoadStatement(s)); } },
     };
-    
+
     private static FixedFieldMap<Statement> statementFixedFields = new()
     {
-        { "principal", (a, n) => { a.Principal = n.GetScalarValue(); } },
+        { "effect", (a, n) => { a.Effect = LoadEffectEnum(n); } },
+        { "principal", (a, n) => { a.Principal = LoadStringOrStringList(n, "principal"); } },
+        { "action", (a, n) => { a.Action = LoadStringOrStringList(n, "action"); } },
     };
-    
+
     private static Policy LoadPolicy(ParseNode node)
     {
         var mapNode = node.CheckMapNode("policy");
@@ -71,7 +73,37 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
         ParseMap(mapNode, statement, statementFixedFields);
         return statement;
     }
-    
+
+    public static Effect LoadEffectEnum(ParseNode node)
+    {
+        Enum.TryParse(node.GetScalarValue(), out Effect effect);
+        return effect;
+    }
+
+    public static StringOrStringList LoadStringOrStringList(ParseNode node, string nodeName)
+    {
+        var mapNode = node.CheckMapNode(nodeName);
+        var stringValue = mapNode.GetScalarValue();
+        var stringOrStringList = new StringOrStringList();
+        if (stringValue != null)
+        {
+            stringOrStringList.StringValue = stringValue;
+        }
+        else
+        {
+            var stringListValue = mapNode.GetEnumerator();
+            while (stringListValue.Current != null)
+            {
+                stringOrStringList.StringList.Add(stringListValue.Current.GetScalarValue());
+                stringListValue.MoveNext();
+            }
+
+            stringListValue.Dispose();
+        }
+
+        return stringOrStringList;
+    }
+
     /// <inheritdoc/>
     public override void SerializeProperties(IAsyncApiWriter writer)
     {
@@ -81,6 +113,8 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
         }
 
         writer.WriteStartObject();
+        writer.WriteOptionalProperty(AsyncApiConstants.Name, this.Name);
+        writer.WriteOptionalObject(AsyncApiConstants.Policy, this.Policy, (w, t) => t.Serialize(w));
         writer.WriteEndObject();
     }
 }

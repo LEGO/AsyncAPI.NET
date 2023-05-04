@@ -33,21 +33,35 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                     {
                         new Statement()
                         {
-                            Principal = "hello",
+                            Effect = Effect.Allow,
+                            Principal = new StringOrStringList()
+                            {
+                                StringValue = "someARN",
+                            },
+                            Action = new StringOrStringList()
+                            {
+                                StringList = new List<string>()
+                                {
+                                    "sns:Publish",
+                                    "sns:Delete",
+                                },
+                            },
                         },
                     },
                 },
             });
-            
+
             // Act
             var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             
+            Console.WriteLine(actual);
+
             // Assert
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
-            
+
             var binding = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
-            
+
             // Assert
             Assert.AreEqual(actual, expected);
             binding.Should().BeEquivalentTo(channel);

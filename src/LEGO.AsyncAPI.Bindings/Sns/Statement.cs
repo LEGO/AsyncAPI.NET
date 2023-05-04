@@ -13,12 +13,12 @@ public class Statement : IAsyncApiElement
     /// The AWS account or resource ARN that this statement applies to.
     /// </summary>
     // public StringOrStringList Principal { get; set; }
-    public string Principal { get; set; }
+    public StringOrStringList Principal { get; set; }
 
     /// <summary>
     /// The SNS permission being allowed or denied e.g. sns:Publish
     /// </summary>
-    // public StringOrStringList Action { get; set; }
+    public StringOrStringList Action { get; set; }
 
     public void Serialize(IAsyncApiWriter writer)
     {
@@ -28,8 +28,9 @@ public class Statement : IAsyncApiElement
         }
 
         writer.WriteStartObject();
-        // writer.WriteOptionalObject(AsyncApiConstants.Principal, this.Principal, (w, t) => t.Serialize(w));
-        writer.WriteOptionalProperty(AsyncApiConstants.Principal, this.Principal);
+        writer.WriteOptionalProperty(AsyncApiConstants.Effect, this.Effect.ToString());
+        writer.WriteOptionalObject(AsyncApiConstants.Principal, this.Principal, (w, t) => t.Serialize(w));
+        writer.WriteOptionalObject(AsyncApiConstants.Action, this.Action, (w, t) => t.Serialize(w));
         writer.WriteEndObject();
     }
 }
@@ -45,4 +46,30 @@ public class StringOrStringList : IAsyncApiElement
     public string StringValue { get; set; }
 
     public List<string> StringList { get; set; }
+
+    public void Serialize(IAsyncApiWriter writer)
+    {
+        if (writer is null)
+        {
+            throw new ArgumentNullException(nameof(writer));
+        }
+
+        writer.WriteStartObject();
+        if (this.StringValue != null)
+        {
+            writer.WriteValue(this.StringValue);
+        }
+        else
+        {
+            writer.WriteStartArray();
+            foreach (var v in this.StringList)
+            {
+                writer.WriteValue(v);
+            }
+
+            writer.WriteEndObject();
+        }
+
+        writer.WriteEndObject();
+    }
 }
