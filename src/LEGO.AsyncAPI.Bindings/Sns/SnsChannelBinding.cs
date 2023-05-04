@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using LEGO.AsyncAPI.Bindings;
+using LEGO.AsyncAPI.Readers.ParseNodes;
 using LEGO.AsyncAPI.Writers;
 
 namespace LEGO.AsyncAPI.Models.Bindings.Sns;
@@ -9,7 +11,7 @@ using LEGO.AsyncAPI.Models.Interfaces;
 /// <summary>
 /// Binding class for SNS channel settings.
 /// </summary>
-public class SnsChannelBinding : IChannelBinding
+public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
 {
     /// <summary>
     /// The name of the topic. Can be different from the channel name to allow flexibility around AWS resource naming limitations.
@@ -31,47 +33,54 @@ public class SnsChannelBinding : IChannelBinding
     /// </summary>
     public Dictionary<string, string> Tags { get; set; }
 
+    public override string BindingKey => "sns";
+
     /// <summary>
     /// The version of this binding.
     /// </summary>
     public string BindingVersion { get; set; }
-
-    public BindingType Type => BindingType.Sns;
-
-    public bool UnresolvedReference { get; set; }
-
-    public AsyncApiReference Reference { get; set; }
-
-    public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
-
-    public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+    
+    protected override FixedFieldMap<SnsChannelBinding> FixedFieldMap => new()
     {
-        if (writer is null)
-        {
-            throw new ArgumentNullException(nameof(writer));
-        }
-        
-        writer.WriteStartObject();
-        writer.WriteOptionalProperty(AsyncApiConstants.Name, this.Name);
-        writer.WriteOptionalObject(AsyncApiConstants.Policy, this.Policy, (w, t) => t.Serialize(w));
-
-        writer.WriteEndObject();
+        { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
+        { "policy", (a, n) => { a.Policy = LoadPolicy(n); } },
+    };
+    
+    private static FixedFieldMap<Policy> policyFixedFields = new()
+    {
+        { "statements", (a, n) => { a.Statements = n.CreateSimpleList(s => LoadStatement(s)); } },
+    };
+    
+    private static FixedFieldMap<Statement> statementFixedFields = new()
+    {
+        { "principal", (a, n) => { a.Principal = n.GetScalarValue(); } },
+    };
+    
+    private static Policy LoadPolicy(ParseNode node)
+    {
+        var mapNode = node.CheckMapNode("policy");
+        var policy = new Policy();
+        ParseMap(mapNode, policy, policyFixedFields);
+        return policy;
     }
-
-    public void SerializeV2(IAsyncApiWriter writer)
+    
+    private static Statement LoadStatement(ParseNode node)
+    {
+        var mapNode = node.CheckMapNode("statement");
+        var statement = new Statement();
+        ParseMap(mapNode, statement, statementFixedFields);
+        return statement;
+    }
+    
+    /// <inheritdoc/>
+    public override void SerializeProperties(IAsyncApiWriter writer)
     {
         if (writer is null)
         {
             throw new ArgumentNullException(nameof(writer));
         }
-        
-        if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
-        {
-            this.Reference.SerializeV2(writer);
-            return;
-        }
 
-        this.SerializeV2WithoutReference(writer);
-        
+        writer.WriteStartObject();
+        writer.WriteEndObject();
     }
 }
