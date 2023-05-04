@@ -67,7 +67,7 @@ public class StringOrStringList : IAsyncApiElement
                 writer.WriteValue(v);
             }
 
-            writer.WriteEndObject();
+            writer.WriteEndArray();
         }
 
         writer.WriteEndObject();
