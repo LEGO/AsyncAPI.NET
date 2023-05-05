@@ -77,12 +77,6 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
         return statement;
     }
 
-    public static Effect LoadEffectEnum(ParseNode node)
-    {
-        Enum.TryParse(node.GetScalarValue(), out Effect effect);
-        return effect;
-    }
-
     public static StringOrStringList LoadStringOrStringList(ParseNode node, string nodeName)
     {
         var stringOrStringList = new StringOrStringList();
@@ -90,11 +84,15 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
         {
             stringOrStringList.StringValue = v.GetScalarValue();
         }
-
-        if (node is ListNode m)
+        else
         {
-            stringOrStringList.StringList = m.CreateList(s => s.GetScalarValue());
+            stringOrStringList.StringList = node.CreateSimpleList(s => s.GetScalarValue());
         }
+
+        // if (node is ListNode m)
+        // {
+        //     stringOrStringList.StringList = m.CreateList(s => s.GetScalarValue());
+        // }
 
         return stringOrStringList;
     }

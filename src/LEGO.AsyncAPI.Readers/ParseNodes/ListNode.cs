@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using LEGO.AsyncAPI.Readers.Exceptions;
     using YamlDotNet.RepresentationModel;
 
-    public class ListNode : ParseNode, IEnumerable<ParseNode>
+    internal class ListNode : ParseNode, IEnumerable<ParseNode>
     {
         private readonly YamlSequenceNode nodeList;
 
