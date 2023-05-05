@@ -56,7 +56,7 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
 
     private static FixedFieldMap<Statement> statementFixedFields = new()
     {
-        { "effect", (a, n) => { a.Effect = LoadEffectEnum(n); } },
+        { "effect", (a, n) => { a.Effect = n.GetScalarValue().GetEnumFromDisplayName<Effect>(); } },
         { "principal", (a, n) => { a.Principal = LoadStringOrStringList(n, "principal"); } },
         { "action", (a, n) => { a.Action = LoadStringOrStringList(n, "action"); } },
     };

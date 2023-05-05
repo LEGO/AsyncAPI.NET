@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LEGO.AsyncAPI.Attributes;
 using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Writers;
@@ -29,7 +30,7 @@ public class Statement : IAsyncApiElement
         }
 
         writer.WriteStartObject();
-        writer.WriteOptionalProperty(AsyncApiConstants.Effect, this.Effect.ToString());
+        writer.WriteOptionalProperty(AsyncApiConstants.Effect, this.Effect.GetDisplayName());
         writer.WriteOptionalObject(AsyncApiConstants.Principal, this.Principal, (w, t) => t.Serialize(w));
         writer.WriteOptionalObject(AsyncApiConstants.Action, this.Action, (w, t) => t.Serialize(w));
         writer.WriteEndObject();
@@ -38,8 +39,10 @@ public class Statement : IAsyncApiElement
 
 public enum Effect
 {
+    [Display("allow")]
     Allow,
-    Deny
+    [Display("deny")]
+    Deny,
 }
 
 public class StringOrStringList : IAsyncApiElement
