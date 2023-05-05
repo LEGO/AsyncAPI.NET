@@ -1,6 +1,12 @@
+
+using System;
+using LEGO.AsyncAPI.Attributes;
+using LEGO.AsyncAPI.Models.Interfaces;
+using LEGO.AsyncAPI.Writers;
+
 namespace LEGO.AsyncAPI.Bindings.Sns;
 
-public class OrderingConfiguration
+public class OrderingConfiguration : IAsyncApiElement
 {
     /// <summary>
     /// What type of SNS Topic is this?
@@ -11,10 +17,25 @@ public class OrderingConfiguration
     /// True to turn on de-duplication of messages for a channel.
     /// </summary>
     public bool ContentBasedDeduplication { get; set; }
+    
+    public void Serialize(IAsyncApiWriter writer)
+    {
+        if (writer is null)
+        {
+            throw new ArgumentNullException(nameof(writer));
+        }
+
+        writer.WriteStartObject();
+        writer.WriteOptionalProperty("type", this.Type.GetDisplayName());
+        writer.WriteOptionalProperty("contentBasedDeduplication", this.ContentBasedDeduplication);
+        writer.WriteEndObject();
+    }
 }
 
 public enum Ordering
 {
+    [Display("standard")]
     Standard,
-    Fifo
+    [Display("FIFO")]
+    Fifo,
 }

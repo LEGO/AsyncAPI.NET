@@ -21,14 +21,26 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                 @"bindings:
   sns:
     name: myTopic
+    type:
+      type: FIFO
+      contentBasedDeduplication: true
     policy:
       statements:
-        - principal: hello";
+        - effect: deny
+          principal: someARN
+          action:
+            - sns:Publish
+            - sns:Delete";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new SnsChannelBinding()
             {
                 Name = "myTopic",
+                Type = new OrderingConfiguration()
+                {
+                    Type = Ordering.Fifo,
+                    ContentBasedDeduplication = true,
+                },
                 Policy = new Policy()
                 {
                     Statements = new List<Statement>()

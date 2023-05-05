@@ -24,7 +24,7 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
     /// <summary>
     /// By default, we assume an unordered SNS topic. This field allows configuration of a FIFO SNS Topic.
     /// </summary>
-    public OrderingConfiguration Ordering { get; set; }
+    public OrderingConfiguration Type { get; set; }
 
     /// <summary>
     /// The security policy for the SNS Topic.
@@ -46,7 +46,14 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
     protected override FixedFieldMap<SnsChannelBinding> FixedFieldMap => new()
     {
         { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
+        { "type", (a, n) => { a.Type = LoadType(n); } },
         { "policy", (a, n) => { a.Policy = LoadPolicy(n); } },
+    };
+
+    private static FixedFieldMap<OrderingConfiguration> orderingFixedFields = new()
+    {
+        { "type", (a, n) => { a.Type = n.GetScalarValue().GetEnumFromDisplayName<Ordering>(); } },
+        { "contentBasedDeduplication", (a, n) => { a.ContentBasedDeduplication = n.GetBooleanValue(); } },
     };
 
     private static FixedFieldMap<Policy> policyFixedFields = new()
@@ -60,6 +67,14 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
         { "principal", (a, n) => { a.Principal = LoadStringOrStringList(n, "principal"); } },
         { "action", (a, n) => { a.Action = LoadStringOrStringList(n, "action"); } },
     };
+
+    private static OrderingConfiguration LoadType(ParseNode node)
+    {
+        var mapNode = node.CheckMapNode("type");
+        var ordering = new OrderingConfiguration();
+        ParseMap(mapNode, ordering, orderingFixedFields);
+        return ordering;
+    }
 
     private static Policy LoadPolicy(ParseNode node)
     {
@@ -102,6 +117,7 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
 
         writer.WriteStartObject();
         writer.WriteOptionalProperty(AsyncApiConstants.Name, this.Name);
+        writer.WriteOptionalObject("type", this.Type, (w, t) => t.Serialize(w));
         writer.WriteOptionalObject(AsyncApiConstants.Policy, this.Policy, (w, t) => t.Serialize(w));
         writer.WriteEndObject();
     }
