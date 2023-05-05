@@ -80,19 +80,14 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
     public static StringOrStringList LoadStringOrStringList(ParseNode node, string nodeName)
     {
         var stringOrStringList = new StringOrStringList();
-        if (node is ValueNode v)
+        if (node is ValueNode)
         {
-            stringOrStringList.StringValue = v.GetScalarValue();
+            stringOrStringList.StringValue = node.GetScalarValue();
         }
         else
         {
             stringOrStringList.StringList = node.CreateSimpleList(s => s.GetScalarValue());
         }
-
-        // if (node is ListNode m)
-        // {
-        //     stringOrStringList.StringList = m.CreateList(s => s.GetScalarValue());
-        // }
 
         return stringOrStringList;
     }

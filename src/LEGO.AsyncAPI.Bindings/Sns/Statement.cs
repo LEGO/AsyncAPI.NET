@@ -58,7 +58,6 @@ public class StringOrStringList : IAsyncApiElement
             throw new ArgumentNullException(nameof(writer));
         }
 
-        writer.WriteStartObject();
         if (this.StringValue != null)
         {
             writer.WriteValue(this.StringValue);
@@ -73,7 +72,5 @@ public class StringOrStringList : IAsyncApiElement
 
             writer.WriteEndArray();
         }
-
-        writer.WriteEndObject();
     }
 }
