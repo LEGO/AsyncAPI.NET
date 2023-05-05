@@ -30,7 +30,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
           principal: someARN
           action:
             - sns:Publish
-            - sns:Delete";
+            - sns:Delete
+    tags:
+      owner: AsyncAPI.NET
+      platform: AsyncAPIOrg";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new SnsChannelBinding()
@@ -62,6 +65,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             },
                         },
                     },
+                },
+                Tags = new Dictionary<string, string>()
+                {
+                    { "owner", "AsyncAPI.NET" },
+                    { "platform", "AsyncAPIOrg" },
                 },
             });
 

@@ -38,16 +38,12 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
 
     public override string BindingKey => "sns";
 
-    /// <summary>
-    /// The version of this binding.
-    /// </summary>
-    public string BindingVersion { get; set; }
-
     protected override FixedFieldMap<SnsChannelBinding> FixedFieldMap => new()
     {
         { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
         { "type", (a, n) => { a.Type = LoadType(n); } },
         { "policy", (a, n) => { a.Policy = LoadPolicy(n); } },
+        { "tags", (a, n) => { a.Tags = n.CreateSimpleMap(s => s.GetScalarValue()); } },
     };
 
     private static FixedFieldMap<OrderingConfiguration> orderingFixedFields = new()
@@ -119,6 +115,7 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
         writer.WriteOptionalProperty(AsyncApiConstants.Name, this.Name);
         writer.WriteOptionalObject("type", this.Type, (w, t) => t.Serialize(w));
         writer.WriteOptionalObject(AsyncApiConstants.Policy, this.Policy, (w, t) => t.Serialize(w));
+        writer.WriteOptionalMap("tags", this.Tags, (w, t) => w.WriteValue(t));
         writer.WriteEndObject();
     }
 }
