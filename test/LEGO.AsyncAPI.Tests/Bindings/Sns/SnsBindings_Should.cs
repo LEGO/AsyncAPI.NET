@@ -1,4 +1,5 @@
 using System;
+using LEGO.AsyncAPI.Models.Any;
 using BindingsCollection = LEGO.AsyncAPI.Bindings.BindingsCollection;
 
 namespace LEGO.AsyncAPI.Tests.Bindings.Sns
@@ -87,6 +88,146 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             // Assert
             Assert.AreEqual(actual, expected);
             binding.Should().BeEquivalentTo(channel);
+
+        }
+        
+        [Test]
+        public void SnsOperationBinding_WithFilledObject_SerializesAndDeserializes()
+        {
+            // Arrange
+            var expected =
+                @"bindings:
+  sns:
+    topic:
+      name: someTopic
+    consumers:
+      - protocol: sqs
+        endpoint:
+          name: someQueue
+        filterPolicy:
+          attributes:
+            store: 
+              - asyncapi_corp
+            contact: dec.kolakowski
+            event:
+              - anything-but: order_cancelled
+            order_key:
+              transient: by_area
+            customer_interests:
+              - rugby
+              - football
+              - baseball
+        rawMessageDelivery: false
+        redrivePolicy:
+          deadLetterQueue:
+            arn: arn:aws:SQS:eu-west-1:0000000:123456789
+          maxReceiveCount: 25
+        deliveryPolicy:
+          minDelayTarget: 10
+          maxDelayTarget: 100
+          numRetries: 5
+          numNoDelayRetries: 2
+          numMinDelayRetries: 3
+          numMaxDelayRetries: 5
+          backoffFunction: linear
+          maxReceivesPerSecond: 2";
+
+            var operation = new AsyncApiOperation();
+            operation.Bindings.Add(new SnsOperationBinding()
+            {
+                Topic = new Identifier()
+                {
+                    Name = "someTopic",
+                },
+                Consumers = new List<Consumer>()
+                {
+                    new Consumer()
+                    {
+                        Protocol = Protocol.Sqs,
+                        Endpoint = new Identifier()
+                        {
+                            Name = "someQueue",
+                        },
+                        FilterPolicy = new FilterPolicy()
+                        {
+                            Attributes = new AsyncApiObject()
+                            {
+                                { "store", new AsyncApiArray() { new AsyncApiString("asyncapi_corp") } },
+                                { "contact", new AsyncApiString("dec.kolakowski") },
+                                {
+                                    "event", new AsyncApiArray()
+                                    {
+                                        new AsyncApiObject()
+                                        {
+                                            { "anything-but", new AsyncApiString("order_cancelled") },
+                                        },
+                                    }
+                                },
+                                {
+                                    "order_key", new AsyncApiObject()
+                                    {
+                                        { "transient", new AsyncApiString("by_area") },
+                                    }
+                                },
+                                {
+                                    "customer_interests", new AsyncApiArray()
+                                    {
+                                        new AsyncApiString("rugby"),
+                                        new AsyncApiString("football"),
+                                        new AsyncApiString("baseball"),
+                                    }
+                                },
+                            },
+                        },
+                        RawMessageDelivery = true,
+                        RedrivePolicy = new RedrivePolicy()
+                        {
+                            DeadLetterQueue = new Identifier()
+                            {
+                                Arn = "arn:aws:SQS:eu-west-1:0000000:123456789"
+                            },
+                            MaxReceiveCount = 25,
+                        },
+                        DeliveryPolicy = new DeliveryPolicy()
+                        {
+                            MinDelayTarget = 10,
+                            MaxDelayTarget = 100,
+                            NumRetries = 5,
+                            NumNoDelayRetries = 2,
+                            NumMinDelayRetries = 3,
+                            NumMaxDelayRetries = 5,
+                            BackoffFunction = BackOffFunction.Linear,
+                            MaxReceivesPerSecond = 2,
+                        },
+                    },
+                },
+                DeliveryPolicy = new DeliveryPolicy()
+                {
+                    MinDelayTarget = 10,
+                    MaxDelayTarget = 100,
+                    NumRetries = 5,
+                    NumNoDelayRetries = 2,
+                    NumMinDelayRetries = 3,
+                    NumMaxDelayRetries = 5,
+                    BackoffFunction = BackOffFunction.Linear,
+                    MaxReceivesPerSecond = 2,
+                },
+            });
+
+            // Act
+            var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+
+            // Assert
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Sns);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+
+
+            // Assert
+            Assert.AreEqual(actual, expected);
+            binding.Should().BeEquivalentTo(operation);
 
         }
     }

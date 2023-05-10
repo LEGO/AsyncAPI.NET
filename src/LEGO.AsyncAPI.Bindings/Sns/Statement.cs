@@ -16,7 +16,7 @@ public class Statement : IAsyncApiElement
     /// </summary>
     // public StringOrStringList Principal { get; set; }
     public StringOrStringList Principal { get; set; }
-
+    
     /// <summary>
     /// The SNS permission being allowed or denied e.g. sns:Publish
     /// </summary>
