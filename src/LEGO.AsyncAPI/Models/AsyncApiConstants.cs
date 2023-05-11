@@ -138,10 +138,5 @@ namespace LEGO.AsyncAPI.Models
         public const string MaxMessageBytes = "max.message.bytes";
         public const string TopicConfiguration = "topicConfiguration";
         public const string GeoReplication = "geo-replication";
-        public const string Policy = "policy";
-        public const string Statements = "statements";
-        public const string Effect = "effect";
-        public const string Principal = "principal";
-        public const string Action = "action";
     }
 }

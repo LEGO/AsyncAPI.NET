@@ -88,9 +88,9 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
         }
 
         writer.WriteStartObject();
-        writer.WriteRequiredProperty(AsyncApiConstants.Name, this.Name);
+        writer.WriteRequiredProperty("name", this.Name);
         writer.WriteOptionalObject("type", this.Type, (w, t) => t.Serialize(w));
-        writer.WriteOptionalObject(AsyncApiConstants.Policy, this.Policy, (w, t) => t.Serialize(w));
+        writer.WriteOptionalObject("policy", this.Policy, (w, t) => t.Serialize(w));
         writer.WriteOptionalMap("tags", this.Tags, (w, t) => w.WriteValue(t));
         writer.WriteEndObject();
     }

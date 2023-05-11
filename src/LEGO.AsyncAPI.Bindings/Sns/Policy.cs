@@ -22,7 +22,7 @@ public class Policy : IAsyncApiElement
         }
 
         writer.WriteStartObject();
-        writer.WriteOptionalCollection(AsyncApiConstants.Statements, this.Statements, (w, t) => t.Serialize(w));
+        writer.WriteOptionalCollection("statements", this.Statements, (w, t) => t.Serialize(w));
         writer.WriteEndObject();
     }
 }
