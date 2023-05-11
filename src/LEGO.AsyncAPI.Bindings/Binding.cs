@@ -9,22 +9,6 @@ namespace LEGO.AsyncAPI.Bindings
     public abstract class Binding<T> : AsyncApiBinding, IBindingParser<T>
         where T : IBinding, new()
     {
-        protected static void ParseMap<T>(
-            MapNode mapNode,
-            T domainObject,
-            FixedFieldMap<T> fixedFieldMap)
-        {
-            if (mapNode == null)
-            {
-                return;
-            }
-
-            foreach (var propertyNode in mapNode)
-            {
-                propertyNode.ParseField(domainObject, fixedFieldMap, null);
-            }
-        }
-
         public abstract T LoadBinding(PropertyNode node);
     }
 }
