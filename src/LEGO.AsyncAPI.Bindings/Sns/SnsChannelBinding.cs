@@ -41,20 +41,20 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
     protected override FixedFieldMap<SnsChannelBinding> FixedFieldMap => new()
     {
         { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
-        { "type", (a, n) => { a.Type = LoadType(n); } },
-        { "policy", (a, n) => { a.Policy = LoadPolicy(n); } },
+        { "type", (a, n) => { a.Type = n.ParseMap(this.orderingFixedFields); } },
+        { "policy", (a, n) => { a.Policy = n.ParseMap(this.policyFixedFields); } },
         { "tags", (a, n) => { a.Tags = n.CreateSimpleMap(s => s.GetScalarValue()); } },
     };
 
-    private static FixedFieldMap<OrderingConfiguration> orderingFixedFields = new()
+    private FixedFieldMap<OrderingConfiguration> orderingFixedFields = new()
     {
         { "type", (a, n) => { a.Type = n.GetScalarValue().GetEnumFromDisplayName<Ordering>(); } },
         { "contentBasedDeduplication", (a, n) => { a.ContentBasedDeduplication = n.GetBooleanValue(); } },
     };
 
-    private static FixedFieldMap<Policy> policyFixedFields = new()
+    private FixedFieldMap<Policy> policyFixedFields = new()
     {
-        { "statements", (a, n) => { a.Statements = n.CreateList(s => LoadStatement(s)); } },
+        { "statements", (a, n) => { a.Statements = n.CreateList(s => s.ParseMap(statementFixedFields)); } },
     };
 
     private static FixedFieldMap<Statement> statementFixedFields = new()
@@ -63,31 +63,7 @@ public class SnsChannelBinding : ChannelBinding<SnsChannelBinding>
         { "principal", (a, n) => { a.Principal = LoadStringOrStringList(n, "principal"); } },
         { "action", (a, n) => { a.Action = LoadStringOrStringList(n, "action"); } },
     };
-
-    private static OrderingConfiguration LoadType(ParseNode node)
-    {
-        var mapNode = node.CheckMapNode("type");
-        var ordering = new OrderingConfiguration();
-        ParseMap(mapNode, ordering, orderingFixedFields);
-        return ordering;
-    }
-
-    private static Policy LoadPolicy(ParseNode node)
-    {
-        var mapNode = node.CheckMapNode("policy");
-        var policy = new Policy();
-        ParseMap(mapNode, policy, policyFixedFields);
-        return policy;
-    }
     
-    private static Statement LoadStatement(ParseNode node)
-    {
-        var mapNode = node.CheckMapNode("statement");
-        var statement = new Statement();
-        ParseMap(mapNode, statement, statementFixedFields);
-        return statement;
-    }
-
     public static StringOrStringList LoadStringOrStringList(ParseNode node, string nodeName)
     {
         var stringOrStringList = new StringOrStringList();

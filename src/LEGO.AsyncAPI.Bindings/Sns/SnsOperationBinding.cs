@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 using LEGO.AsyncAPI.Writers;
 
@@ -24,8 +25,56 @@ public class SnsOperationBinding : OperationBinding<SnsOperationBinding>
     
     public override string BindingKey => "sns";
 
-    protected override FixedFieldMap<SnsOperationBinding> FixedFieldMap { get; }
-    
+    protected override FixedFieldMap<SnsOperationBinding> FixedFieldMap => new()
+    {
+        { "topic", (a, n) => { a.Topic = n.ParseMap(this.identifierFixFields); } },
+        { "consumers", (a, n) => { a.Consumers = n.CreateList(s => s.ParseMap(this.consumerFixedFields)); } },
+        { "deliveryPolicy", (a, n) => { a.DeliveryPolicy = n.ParseMap(this.deliveryPolicyFixedFields); } },
+    };
+
+    private FixedFieldMap<Identifier> identifierFixFields => new()
+    {
+        { "url", (a, n) => { a.Url = n.GetScalarValue(); } },
+        { "email", (a, n) => { a.Url = n.GetScalarValue(); } },
+        { "phone", (a, n) => { a.Url = n.GetScalarValue(); } },
+        { "arn", (a, n) => { a.Url = n.GetScalarValue(); } },
+        { "name", (a, n) => { a.Url = n.GetScalarValue(); } },
+    };
+
+    private FixedFieldMap<Consumer> consumerFixedFields => new ()
+    {
+        { "protocol", (a, n) => { a.Protocol = n.GetScalarValue().GetEnumFromDisplayName<Protocol>(); } },
+        { "endpoint", (a, n) => { a.Endpoint = n.ParseMap(this.identifierFixFields); } },
+        { "filterPolicy", (a, n) => { a.FilterPolicy = n.ParseMap(this.filterPolicyFixedFields); } },
+        { "rawMessageDelivery", (a, n) => { a.RawMessageDelivery = n.GetBooleanValue(); } },
+        { "redrivePolicy", (a, n) => { a.RedrivePolicy = n.ParseMap(this.redrivePolicyFixedFields); } },
+        { "deliveryPolicy", (a, n) => { a.DeliveryPolicy = n.ParseMap(this.deliveryPolicyFixedFields); } },
+        { "displayName", (a, n) => { a.DisplayName = n.GetScalarValue(); } },
+    };
+
+    private FixedFieldMap<FilterPolicy> filterPolicyFixedFields => new()
+    {
+        { "attributes", (a, n) => { a.Attributes = new AsyncApiObject(); }}
+    };
+
+    private FixedFieldMap<RedrivePolicy> redrivePolicyFixedFields => new()
+    {
+        { "deadLetterQueue", (a, n) => { a.DeadLetterQueue = n.ParseMap(identifierFixFields); } },
+        { "maxReceiveCount", (a, n) => { a.MaxReceiveCount = n.GetIntegerValue(); } },
+    };
+
+    private FixedFieldMap<DeliveryPolicy> deliveryPolicyFixedFields => new()
+    {
+        { "minDelayTarget", (a, n) => { a.MinDelayTarget = n.GetIntegerValue(); } },
+        { "maxDelayTarget", (a, n) => { a.MaxDelayTarget = n.GetIntegerValue(); } },
+        { "numRetries", (a, n) => { a.NumRetries = n.GetIntegerValue(); } },
+        { "numNoDelayRetries", (a, n) => { a.NumNoDelayRetries = n.GetIntegerValue(); } },
+        { "numMinDelayRetries", (a, n) => { a.NumMinDelayRetries = n.GetIntegerValue(); } },
+        { "numMaxDelayRetries", (a, n) => { a.NumMaxDelayRetries = n.GetIntegerValue(); } },
+        { "backOffFunction", (a, n) => { a.BackoffFunction = n.GetScalarValue().GetEnumFromDisplayName<BackOffFunction>(); } },
+        { "maxReceivesPerSecond", (a, n) => { a.MaxReceivesPerSecond = n.GetIntegerValue(); } },
+    };
+
     public override void SerializeProperties(IAsyncApiWriter writer)
     {
         if (writer is null)

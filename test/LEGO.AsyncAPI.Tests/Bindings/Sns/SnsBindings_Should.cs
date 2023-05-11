@@ -28,10 +28,15 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
     policy:
       statements:
         - effect: deny
-          principal: someARN
+          principal: arn:aws:iam::123456789012:user/alex.wichmann
           action:
             - sns:Publish
             - sns:Delete
+        - effect: allow
+          principal:
+            - arn:aws:iam::123456789012:user/alex.wichmann
+            - arn:aws:iam::123456789012:user/dec.kolakowski
+          action: sns:Create
     tags:
       owner: AsyncAPI.NET
       platform: AsyncAPIOrg";
@@ -54,7 +59,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             Effect = Effect.Deny,
                             Principal = new StringOrStringList()
                             {
-                                StringValue = "someARN",
+                                StringValue = "arn:aws:iam::123456789012:user/alex.wichmann",
                             },
                             Action = new StringOrStringList()
                             {
@@ -63,6 +68,22 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                     "sns:Publish",
                                     "sns:Delete",
                                 },
+                            },
+                        },
+                        new Statement()
+                        {
+                            Effect = Effect.Allow,
+                            Principal = new StringOrStringList()
+                            {
+                                StringList = new List<string>()
+                                {
+                                    "arn:aws:iam::123456789012:user/alex.wichmann",
+                                    "arn:aws:iam::123456789012:user/dec.kolakowski",
+                                },
+                            },
+                            Action = new StringOrStringList()
+                            {
+                                StringValue = "sns:Create",
                             },
                         },
                     },
