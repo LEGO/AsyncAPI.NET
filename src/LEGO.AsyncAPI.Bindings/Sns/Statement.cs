@@ -30,9 +30,9 @@ public class Statement : IAsyncApiElement
         }
 
         writer.WriteStartObject();
-        writer.WriteOptionalProperty(AsyncApiConstants.Effect, this.Effect.GetDisplayName());
-        writer.WriteOptionalObject(AsyncApiConstants.Principal, this.Principal, (w, t) => t.Serialize(w));
-        writer.WriteOptionalObject(AsyncApiConstants.Action, this.Action, (w, t) => t.Serialize(w));
+        writer.WriteRequiredProperty(AsyncApiConstants.Effect, this.Effect.GetDisplayName());
+        writer.WriteRequiredObject(AsyncApiConstants.Principal, this.Principal, (w, t) => t.Serialize(w));
+        writer.WriteRequiredObject(AsyncApiConstants.Action, this.Action, (w, t) => t.Serialize(w));
         writer.WriteEndObject();
     }
 }
