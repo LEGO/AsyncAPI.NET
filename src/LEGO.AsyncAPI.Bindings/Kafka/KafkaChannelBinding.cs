@@ -40,7 +40,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "topic", (a, n) => { a.Topic = n.GetScalarValue(); } },
             { "partitions", (a, n) => { a.Partitions = n.GetIntegerValue(); } },
-            { "topicConfiguration", (a, n) => { a.TopicConfiguration = this.LoadTopicConfiguration(n); } },
+            { "topicConfiguration", (a, n) => { a.TopicConfiguration = n.ParseMap(kafkaChannelTopicConfigurationObjectFixedFields); } },
             { "replicas", (a, n) => { a.Replicas = n.GetIntegerValue(); } },
         };
 
@@ -52,14 +52,6 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
             { "delete.retention.ms", (a, n) => { a.DeleteRetentionMiliseconds = n.GetIntegerValue(); } },
             { "max.message.bytes", (a, n) => { a.MaxMessageBytes = n.GetIntegerValue(); } },
         };
-
-        private TopicConfigurationObject LoadTopicConfiguration(ParseNode node)
-        {
-            var mapNode = node.CheckMapNode("topicConfiguration");
-            var retention = new TopicConfigurationObject();
-            ParseMap(mapNode, retention, kafkaChannelTopicConfigurationObjectFixedFields);
-            return retention;
-        }
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.

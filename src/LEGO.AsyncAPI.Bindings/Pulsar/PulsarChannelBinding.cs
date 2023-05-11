@@ -74,7 +74,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
             { "namespace", (a, n) => { a.Namespace = n.GetScalarValue(); } },
             { "persistence", (a, n) => { a.Persistence = n.GetScalarValue().GetEnumFromDisplayName<Persistence>(); } },
             { "compaction", (a, n) => { a.Compaction = n.GetIntegerValue(); } },
-            { "retention", (a, n) => { a.Retention = this.LoadRetention(n); } },
+            { "retention", (a, n) => { a.Retention = n.ParseMap(this.pulsarServerBindingRetentionFixedFields); } },
             { "geo-replication", (a, n) => { a.GeoReplication = n.CreateSimpleList(s => s.GetScalarValue()); } },
             { "ttl", (a, n) => { a.TTL = n.GetIntegerValue(); } },
             { "deduplication", (a, n) => { a.Deduplication = n.GetBooleanValue(); } },
@@ -85,13 +85,5 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
             { "time", (a, n) => { a.Time = n.GetIntegerValue(); } },
             { "size", (a, n) => { a.Size = n.GetIntegerValue(); } },
         };
-
-        private RetentionDefinition LoadRetention(ParseNode node)
-        {
-            var mapNode = node.CheckMapNode("retention");
-            var retention = new RetentionDefinition();
-            ParseMap(mapNode, retention, this.pulsarServerBindingRetentionFixedFields);
-            return retention;
-        }
     }
 }
