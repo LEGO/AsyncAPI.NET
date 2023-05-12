@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             using (var reader = new StringReader(input))
             {
-                return new AsyncApiTextReaderReader(this.settings).Read(reader, out diagnostic);
+                return new AsyncApiTextReader(this.settings).Read(reader, out diagnostic);
             }
         }
 
@@ -42,7 +42,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             using (var reader = new StringReader(input))
             {
-                return new AsyncApiTextReaderReader(this.settings).ReadFragment<T>(reader, version, out diagnostic);
+                return new AsyncApiTextReader(this.settings).ReadFragment<T>(reader, version, out diagnostic);
             }
         }
     }
