@@ -8,5 +8,6 @@ namespace LEGO.AsyncAPI
         /// Represents AsyncAPI V2 spec
         /// </summary>
         AsyncApi2_0,
+        AsyncApi3_0,
     }
 }
