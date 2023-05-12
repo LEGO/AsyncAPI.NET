@@ -1,20 +1,16 @@
 name: Build & Test
 on:
-  push:
+  pull_request_target:
     branches: [ main ]
     paths: 
       - 'src/**'
       - '!**/*.md'
-  pull_request:
-    branches: [ main ]
-    paths: 
-      - 'src/**'
-      - '!**/*.md'
-  workflow_dispatch:
 jobs:
   build:
-
     runs-on: ${{ matrix.os }}
+    if: ${{ github.event.pull_request.head.repo.fork }}
+    environment:
+      name: Fork
     strategy:
       matrix:
         os:  [ windows-latest, macos-latest ]
