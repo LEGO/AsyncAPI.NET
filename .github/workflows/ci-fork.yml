@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     if: ${{ github.event.pull_request.head.repo.fork }}
     environment:
-      name: fork
+      name: Fork
     strategy:
       matrix:
         os:  [ windows-latest, macos-latest ]
