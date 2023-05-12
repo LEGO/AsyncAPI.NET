@@ -10,11 +10,6 @@ on:
     paths: 
       - 'src/**'
       - '!**/*.md'
-  pull_request_target:
-    branches: [ main ]
-    paths: 
-      - 'src/**'
-      - '!**/*.md'
   workflow_dispatch:
 jobs:
   build:
