@@ -49,6 +49,11 @@ public class Queue : IAsyncApiElement
     public RedrivePolicy RedrivePolicy { get; set; }
     
     /// <summary>
+    /// The security policy for the SQS Queue
+    /// </summary>
+    public Policy Policy { get; set; }
+    
+    /// <summary>
     /// Key-value pairs that represent AWS tags on the topic.
     /// </summary>
     public Dictionary<string, string> Tags { get; set; }
@@ -68,6 +73,7 @@ public class Queue : IAsyncApiElement
         writer.WriteOptionalProperty("receiveMessageWaitTime", this.ReceiveMessageWaitTime);
         writer.WriteOptionalProperty("messageRetentionPeriod", this.MessageRetentionPeriod);
         writer.WriteOptionalObject("redrivePolicy", this.RedrivePolicy, (w, p) => p.Serialize(w));
+        writer.WriteOptionalObject("policy", this.Policy, (w, p) => p.Serialize(w));
         writer.WriteOptionalMap("tags", this.Tags, (w, t) => w.WriteValue(t));
         writer.WriteEndObject();
     }
