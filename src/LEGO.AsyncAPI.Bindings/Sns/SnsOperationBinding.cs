@@ -38,10 +38,10 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         private FixedFieldMap<Identifier> identifierFixFields => new()
         {
             { "url", (a, n) => { a.Url = n.GetScalarValue(); } },
-            { "email", (a, n) => { a.Url = n.GetScalarValue(); } },
-            { "phone", (a, n) => { a.Url = n.GetScalarValue(); } },
-            { "arn", (a, n) => { a.Url = n.GetScalarValue(); } },
-            { "name", (a, n) => { a.Url = n.GetScalarValue(); } },
+            { "email", (a, n) => { a.Email = n.GetScalarValue(); } },
+            { "phone", (a, n) => { a.Phone = n.GetScalarValue(); } },
+            { "arn", (a, n) => { a.Arn = n.GetScalarValue(); } },
+            { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
         };
 
         private FixedFieldMap<Consumer> consumerFixedFields => new ()
