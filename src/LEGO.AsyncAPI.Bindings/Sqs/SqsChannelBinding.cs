@@ -78,7 +78,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
 
             return stringOrStringList;
         }
-        
+
         public override void SerializeProperties(IAsyncApiWriter writer)
         {
             if (writer is null)
@@ -89,6 +89,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
             writer.WriteStartObject();
             writer.WriteRequiredObject("queue", this.Queue, (w, q) => q.Serialize(w));
             writer.WriteOptionalObject("deadLetterQueue", this.DeadLetterQueue, (w, q) => q.Serialize(w));
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

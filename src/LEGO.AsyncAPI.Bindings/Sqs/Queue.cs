@@ -6,7 +6,7 @@ using LEGO.AsyncAPI.Writers;
 
 namespace LEGO.AsyncAPI.Bindings.Sqs;
 
-public class Queue : IAsyncApiElement
+public class Queue : IAsyncApiElement, IAsyncApiExtensible
 {
     /// <summary>
     /// Allows for an external definition of a queue. The referenced structure MUST be in the format of a Queue. If there are conflicts between the referenced definition and this Queue's definition, the behavior is undefined.
@@ -57,6 +57,9 @@ public class Queue : IAsyncApiElement
     /// Key-value pairs that represent AWS tags on the topic.
     /// </summary>
     public Dictionary<string, string> Tags { get; set; }
+
+    /// <inheritdoc/>
+    public IDictionary<string, IAsyncApiExtension> Extensions { get; set; }
     public void Serialize(IAsyncApiWriter writer)
     {
         if (writer is null)
@@ -75,6 +78,7 @@ public class Queue : IAsyncApiElement
         writer.WriteOptionalObject("redrivePolicy", this.RedrivePolicy, (w, p) => p.Serialize(w));
         writer.WriteOptionalObject("policy", this.Policy, (w, p) => p.Serialize(w));
         writer.WriteOptionalMap("tags", this.Tags, (w, t) => w.WriteValue(t));
+        writer.WriteExtensions(this.Extensions);
         writer.WriteEndObject();
     }
 }

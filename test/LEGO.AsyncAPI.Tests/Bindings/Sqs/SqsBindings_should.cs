@@ -3,6 +3,8 @@ using FluentAssertions;
 using LEGO.AsyncAPI.Bindings;
 using LEGO.AsyncAPI.Bindings.Sqs;
 using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Any;
+using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers;
 using NUnit.Framework;
 using BindingsCollection = LEGO.AsyncAPI.Bindings.BindingsCollection;
@@ -44,6 +46,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
       tags:
         owner: AsyncAPI.NET
         platform: AsyncAPIOrg
+      x-internalObject: 
+        myExtensionPropertyName: myExtensionPropertyValue
     deadLetterQueue:
       name: myQueue_error
       deliveryDelay: 0
@@ -118,6 +122,15 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                     {
                         { "owner", "AsyncAPI.NET" },
                         { "platform", "AsyncAPIOrg" },
+                    },
+                    Extensions = new Dictionary<string, IAsyncApiExtension>()
+                    {
+                        {
+                            "x-internalProperty", new AsyncApiObject()
+                            {
+                                { "myExtensionPropertyName", new AsyncApiString("myExtensionPropertyValue") },
+                            }
+                        },
                     },
                 },
                 DeadLetterQueue = new Queue()
