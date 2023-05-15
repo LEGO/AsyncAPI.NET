@@ -6,7 +6,7 @@ using LEGO.AsyncAPI.Writers;
 
 namespace LEGO.AsyncAPI.Bindings.Sqs;
 
-public class Queue : IAsyncApiElement, IAsyncApiExtensible
+public class Queue : IAsyncApiExtensible
 {
     /// <summary>
     /// Allows for an external definition of a queue. The referenced structure MUST be in the format of a Queue. If there are conflicts between the referenced definition and this Queue's definition, the behavior is undefined.
