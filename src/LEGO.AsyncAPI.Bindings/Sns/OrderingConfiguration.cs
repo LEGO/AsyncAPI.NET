@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             }
 
             writer.WriteStartObject();
-            writer.WriteOptionalProperty("type", this.Type.GetDisplayName());
+            writer.WriteRequiredProperty("type", this.Type.GetDisplayName());
             writer.WriteOptionalProperty("contentBasedDeduplication", this.ContentBasedDeduplication);
             writer.WriteEndObject();
         }
