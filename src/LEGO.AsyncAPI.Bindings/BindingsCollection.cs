@@ -73,6 +73,7 @@ namespace LEGO.AsyncAPI.Bindings
         public static IEnumerable<IBindingParser<IBinding>> Sqs => new List<IBindingParser<IBinding>>
         {
             new SqsChannelBinding(),
+            new SqsOperationBinding(),
         };
     }
 }

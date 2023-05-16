@@ -60,24 +60,9 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
         private static FixedFieldMap<Statement> statementFixedFields = new()
         {
             { "effect", (a, n) => { a.Effect = n.GetScalarValue().GetEnumFromDisplayName<Effect>(); } },
-            { "principal", (a, n) => { a.Principal = LoadStringOrStringList(n, "principal"); } },
-            { "action", (a, n) => { a.Action = LoadStringOrStringList(n, "action"); } },
+            { "principal", (a, n) => { a.Principal = StringOrStringList.Parse(n); } },
+            { "action", (a, n) => { a.Action = StringOrStringList.Parse(n); } },
         };
-
-        public static StringOrStringList LoadStringOrStringList(ParseNode node, string nodeName)
-        {
-            var stringOrStringList = new StringOrStringList();
-            if (node is ValueNode)
-            {
-                stringOrStringList.StringValue = node.GetScalarValue();
-            }
-            else
-            {
-                stringOrStringList.StringList = node.CreateSimpleList(s => s.GetScalarValue());
-            }
-
-            return stringOrStringList;
-        }
 
         public override void SerializeProperties(IAsyncApiWriter writer)
         {

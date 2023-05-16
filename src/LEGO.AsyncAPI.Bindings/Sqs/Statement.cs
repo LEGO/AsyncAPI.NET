@@ -44,34 +44,4 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
         [Display("deny")]
         Deny,
     }
-
-    public class StringOrStringList : IAsyncApiElement
-    {
-        public string StringValue { get; set; }
-
-        public List<string> StringList { get; set; }
-
-        public void Serialize(IAsyncApiWriter writer)
-        {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            if (this.StringValue != null)
-            {
-                writer.WriteValue(this.StringValue);
-            }
-            else
-            {
-                writer.WriteStartArray();
-                foreach (var v in this.StringList)
-                {
-                    writer.WriteValue(v);
-                }
-
-                writer.WriteEndArray();
-            }
-        }
-    }
 }

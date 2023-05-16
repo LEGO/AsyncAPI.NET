@@ -173,11 +173,182 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
             expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
             settings.Bindings.Add(BindingsCollection.Sqs);
-            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var binding =
+                new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0,
+                    out _);
 
             // Assert
             Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(channel);
+        }
+
+        [Test]
+        public void SqsOperationBinding_WithFilledObject_SerializesAndDeserializes()
+        {
+            // Arrange
+            var expected =
+                @"bindings:
+  sqs:
+    queues:
+      - name: myQueue
+        fifoQueue: true
+        deliveryDelay: 30
+        visibilityTimeout: 60
+        receiveMessageWaitTime: 0
+        messageRetentionPeriod: 86400
+        redrivePolicy:
+          deadLetterQueue:
+            arn: arn:aws:SQS:eu-west-1:0000000:123456789
+          maxReceiveCount: 15
+        policy:
+          statements:
+            - effect: deny
+              principal: arn:aws:iam::123456789012:user/alex.wichmann
+              action:
+                - sqs:SendMessage
+                - sqs:ReceiveMessage
+            - effect: allow
+              principal:
+                - arn:aws:iam::123456789012:user/alex.wichmann
+                - arn:aws:iam::123456789012:user/dec.kolakowski
+              action: sqs:CreateQueue
+        tags:
+          owner: AsyncAPI.NET
+          platform: AsyncAPIOrg
+      - name: myQueue_error
+        deliveryDelay: 0
+        visibilityTimeout: 0
+        receiveMessageWaitTime: 0
+        messageRetentionPeriod: 604800
+        policy:
+          statements:
+            - effect: allow
+              principal: arn:aws:iam::123456789012:user/alex.wichmann
+              action:
+                - sqs:*
+    x-internalObject:
+      myExtensionPropertyName: myExtensionPropertyValue";
+
+            var operation = new AsyncApiOperation();
+            operation.Bindings.Add(new SqsOperationBinding()
+            {
+                Queues = new List<Queue>()
+                {
+                    new Queue()
+                    {
+                        Name = "myQueue",
+                        FifoQueue = true,
+                        DeliveryDelay = 30,
+                        VisibilityTimeout = 60,
+                        ReceiveMessageWaitTime = 0,
+                        MessageRetentionPeriod = 86400,
+                        RedrivePolicy = new RedrivePolicy()
+                        {
+                            DeadLetterQueue = new Identifier()
+                            {
+                                Arn = "arn:aws:SQS:eu-west-1:0000000:123456789",
+                            },
+                            MaxReceiveCount = 15,
+                        },
+                        Policy = new Policy()
+                        {
+                            Statements = new List<Statement>()
+                            {
+                                new Statement()
+                                {
+                                    Effect = Effect.Deny,
+                                    Principal = new StringOrStringList()
+                                    {
+                                        StringValue = "arn:aws:iam::123456789012:user/alex.wichmann",
+                                    },
+                                    Action = new StringOrStringList()
+                                    {
+                                        StringList = new List<string>()
+                                        {
+                                            "sqs:SendMessage",
+                                            "sqs:ReceiveMessage",
+                                        },
+                                    },
+                                },
+                                new Statement()
+                                {
+                                    Effect = Effect.Allow,
+                                    Principal = new StringOrStringList()
+                                    {
+                                        StringList = new List<string>()
+                                        {
+                                            "arn:aws:iam::123456789012:user/alex.wichmann",
+                                            "arn:aws:iam::123456789012:user/dec.kolakowski",
+                                        },
+                                    },
+                                    Action = new StringOrStringList()
+                                    {
+                                        StringValue = "sqs:CreateQueue",
+                                    },
+                                },
+                            },
+                        },
+                        Tags = new Dictionary<string, string>()
+                        {
+                            { "owner", "AsyncAPI.NET" },
+                            { "platform", "AsyncAPIOrg" },
+                        },
+                    },
+                    new Queue()
+                    {
+                        Name = "myQueue_error",
+                        FifoQueue = false,
+                        DeliveryDelay = 0,
+                        VisibilityTimeout = 0,
+                        ReceiveMessageWaitTime = 0,
+                        MessageRetentionPeriod = 604800,
+                        Policy = new Policy()
+                        {
+                            Statements = new List<Statement>()
+                            {
+                                new Statement()
+                                {
+                                    Effect = Effect.Allow,
+                                    Principal = new StringOrStringList()
+                                    {
+                                        StringValue = "arn:aws:iam::123456789012:user/alex.wichmann",
+                                    },
+                                    Action = new StringOrStringList()
+                                    {
+                                        StringList = new List<string>()
+                                        {
+                                            "sqs:*",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                Extensions = new Dictionary<string, IAsyncApiExtension>()
+                {
+                    {
+                        "x-internalObject", new AsyncApiObject()
+                        {
+                            { "myExtensionPropertyName", new AsyncApiString("myExtensionPropertyValue") },
+                        }
+                    },
+                },
+            });
+
+            // Act
+            var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+
+            // Assert
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(BindingsCollection.Sqs);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+            binding.Should().BeEquivalentTo(operation);
         }
     }
 }
