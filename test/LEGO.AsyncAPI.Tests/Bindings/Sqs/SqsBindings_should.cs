@@ -46,8 +46,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
       tags:
         owner: AsyncAPI.NET
         platform: AsyncAPIOrg
-      x-internalObject: 
-        myExtensionPropertyName: myExtensionPropertyValue
     deadLetterQueue:
       name: myQueue_error
       deliveryDelay: 0
@@ -59,7 +57,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
           - effect: allow
             principal: arn:aws:iam::123456789012:user/alex.wichmann
             action:
-              - sqs:*";
+              - sqs:*
+    x-internalObject:
+      myExtensionPropertyName: myExtensionPropertyValue";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new SqsChannelBinding()
@@ -123,15 +123,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                         { "owner", "AsyncAPI.NET" },
                         { "platform", "AsyncAPIOrg" },
                     },
-                    Extensions = new Dictionary<string, IAsyncApiExtension>()
-                    {
-                        {
-                            "x-internalProperty", new AsyncApiObject()
-                            {
-                                { "myExtensionPropertyName", new AsyncApiString("myExtensionPropertyValue") },
-                            }
-                        },
-                    },
                 },
                 DeadLetterQueue = new Queue()
                 {
@@ -161,6 +152,15 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 },
                             },
                         },
+                    },
+                },
+                Extensions = new Dictionary<string, IAsyncApiExtension>()
+                {
+                    {
+                        "x-internalObject", new AsyncApiObject()
+                        {
+                            { "myExtensionPropertyName", new AsyncApiString("myExtensionPropertyValue") },
+                        }
                     },
                 },
             });
