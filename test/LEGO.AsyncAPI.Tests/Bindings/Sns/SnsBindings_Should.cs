@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                 @"bindings:
   sns:
     name: myTopic
-    type:
+    ordering:
       type: FIFO
       contentBasedDeduplication: true
     policy:
@@ -45,9 +45,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             channel.Bindings.Add(new SnsChannelBinding()
             {
                 Name = "myTopic",
-                Type = new OrderingConfiguration()
+                Ordering = new Ordering()
                 {
-                    Type = Ordering.Fifo,
+                    Type = OrderingType.Fifo,
                     ContentBasedDeduplication = true,
                 },
                 Policy = new Policy()

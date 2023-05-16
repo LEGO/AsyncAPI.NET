@@ -23,7 +23,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// <summary>
         /// By default, we assume an unordered SNS topic. This field allows configuration of a FIFO SNS Topic.
         /// </summary>
-        public OrderingConfiguration Type { get; set; }
+        public Ordering Ordering { get; set; }
 
         /// <summary>
         /// The security policy for the SNS Topic.
@@ -40,14 +40,14 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         protected override FixedFieldMap<SnsChannelBinding> FixedFieldMap => new()
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
-            { "type", (a, n) => { a.Type = n.ParseMap(this.orderingFixedFields); } },
+            { "type", (a, n) => { a.Ordering = n.ParseMap(this.orderingFixedFields); } },
             { "policy", (a, n) => { a.Policy = n.ParseMap(this.policyFixedFields); } },
             { "tags", (a, n) => { a.Tags = n.CreateSimpleMap(s => s.GetScalarValue()); } },
         };
 
-        private FixedFieldMap<OrderingConfiguration> orderingFixedFields = new()
+        private FixedFieldMap<Ordering> orderingFixedFields = new()
         {
-            { "type", (a, n) => { a.Type = n.GetScalarValue().GetEnumFromDisplayName<Ordering>(); } },
+            { "type", (a, n) => { a.Type = n.GetScalarValue().GetEnumFromDisplayName<OrderingType>(); } },
             { "contentBasedDeduplication", (a, n) => { a.ContentBasedDeduplication = n.GetBooleanValue(); } },
         };
 
@@ -88,7 +88,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
 
             writer.WriteStartObject();
             writer.WriteRequiredProperty("name", this.Name);
-            writer.WriteOptionalObject("type", this.Type, (w, t) => t.Serialize(w));
+            writer.WriteOptionalObject("ordering", this.Ordering, (w, t) => t.Serialize(w));
             writer.WriteOptionalObject("policy", this.Policy, (w, t) => t.Serialize(w));
             writer.WriteOptionalMap("tags", this.Tags, (w, t) => w.WriteValue(t));
             writer.WriteEndObject();

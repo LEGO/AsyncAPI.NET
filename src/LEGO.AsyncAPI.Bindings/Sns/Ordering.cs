@@ -5,12 +5,12 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public class OrderingConfiguration : IAsyncApiElement
+    public class Ordering : IAsyncApiElement
     {
         /// <summary>
         /// What type of SNS Topic is this?
         /// </summary>
-        public Ordering Type { get; set; }
+        public OrderingType Type { get; set; }
     
         /// <summary>
         /// True to turn on de-duplication of messages for a channel.
@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         }
     }
 
-    public enum Ordering
+    public enum OrderingType
     {
         [Display("standard")]
         Standard,
