@@ -1,9 +1,9 @@
-using System;
-using LEGO.AsyncAPI.Readers.ParseNodes;
-using LEGO.AsyncAPI.Writers;
-
 namespace LEGO.AsyncAPI.Bindings.Sqs
 {
+    using System;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+    using LEGO.AsyncAPI.Writers;
+
     /// <summary>
     /// This object contains information about the channel representation in SQS.
     /// </summary>

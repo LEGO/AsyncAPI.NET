@@ -1,16 +1,16 @@
-using System.Collections.Generic;
-using FluentAssertions;
-using LEGO.AsyncAPI.Bindings;
-using LEGO.AsyncAPI.Bindings.Sqs;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers;
-using NUnit.Framework;
-using BindingsCollection = LEGO.AsyncAPI.Bindings.BindingsCollection;
-
 namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
 {
+    using System.Collections.Generic;
+    using FluentAssertions;
+    using LEGO.AsyncAPI.Bindings;
+    using LEGO.AsyncAPI.Bindings.Sqs;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers;
+    using NUnit.Framework;
+    using BindingsCollection = LEGO.AsyncAPI.Bindings.BindingsCollection;
+
     internal class SqsBindings_should
     {
         [Test]

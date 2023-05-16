@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Writers;
-
 namespace LEGO.AsyncAPI.Bindings.Sqs
 {
+    using System;
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
+
     public class Policy : IAsyncApiElement
     {
         /// <summary>

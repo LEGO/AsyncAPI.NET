@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Readers.ParseNodes;
-using LEGO.AsyncAPI.Writers;
-
 namespace LEGO.AsyncAPI.Bindings.Sqs
 {
+    using System;
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+    using LEGO.AsyncAPI.Writers;
+
     public class SqsOperationBinding : OperationBinding<SqsOperationBinding>
     {
         public List<Queue> Queues { get; set; }
