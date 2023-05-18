@@ -108,7 +108,7 @@ components:
 @"asyncapi: '2.6.0'
 info:
   title: Streetlights Kafka API
-  version: 1.0.0
+  version: '1.0.0'
   description: The Smartylighting Streetlights API allows you to remotely manage the city lights.
   license:
     name: Apache 2.0
@@ -2220,6 +2220,7 @@ components:
             var reader = new AsyncApiStringReader(settings);
             var deserialized = reader.Read(actual, out var diagnostic);
         }
+        
         [Test]
         public void Serializev2_WithBindings_Serializes()
         {

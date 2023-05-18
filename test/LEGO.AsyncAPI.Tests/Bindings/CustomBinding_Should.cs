@@ -19,10 +19,13 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
         public override string BindingKey => "my";
 
+        public IAsyncApiAny Any { get; set; }
+
         protected override FixedFieldMap<MyBinding> FixedFieldMap => new FixedFieldMap<MyBinding>()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "custom", (a, n) => { a.Custom = n.GetScalarValue(); } },
+            { "any", (a, n) => { a.Any = n.CreateAny(); } },
         };
 
         public override void SerializeProperties(IAsyncApiWriter writer)
@@ -30,6 +33,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             writer.WriteStartObject();
             writer.WriteRequiredProperty("custom", this.Custom);
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteOptionalObject("any", this.Any, (w, p) => w.WriteAny(p));
             writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
@@ -45,13 +49,19 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 @"bindings:
   my:
     custom: someValue
-    bindingVersion: 0.1.0
+    bindingVersion: '0.1.0'
+    any:
+      anyKeyName: anyValue
     x-myextension: someValue";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new MyBinding
             {
                 Custom = "someValue",
+                Any = new AsyncApiObject()
+                {
+                    { "anyKeyName", new AsyncApiString("anyValue") },
+                },
                 BindingVersion = "0.1.0",
                 Extensions = new Dictionary<string, IAsyncApiExtension>()
                 {
