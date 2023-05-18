@@ -4,6 +4,8 @@ ci/cd:
 - .github/**/*
 asyncapi.readers:
 - src/LEGO.AsyncAPI.Readers/**/*
+asyncapi.bindings:
+- src/LEGO.AsyncAPI.Bindings/**/*
 asyncapi.models:
 - src/LEGO.AsyncAPI/**/*
 asyncapi.tests:
