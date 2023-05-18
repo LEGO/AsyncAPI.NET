@@ -57,7 +57,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
 
         private FixedFieldMap<FilterPolicy> filterPolicyFixedFields => new()
         {
-            { "attributes", (a, n) => { a.Attributes = new AsyncApiObject(); }}
+            { "attributes", (a, n) => { a.Attributes = n.CreateAny(); } },
         };
 
         private FixedFieldMap<RedrivePolicy> redrivePolicyFixedFields => new()
@@ -74,7 +74,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             { "numNoDelayRetries", (a, n) => { a.NumNoDelayRetries = n.GetIntegerValue(); } },
             { "numMinDelayRetries", (a, n) => { a.NumMinDelayRetries = n.GetIntegerValue(); } },
             { "numMaxDelayRetries", (a, n) => { a.NumMaxDelayRetries = n.GetIntegerValue(); } },
-            { "backOffFunction", (a, n) => { a.BackoffFunction = n.GetScalarValue().GetEnumFromDisplayName<BackOffFunction>(); } },
+            { "backoffFunction", (a, n) => { a.BackoffFunction = n.GetScalarValue().GetEnumFromDisplayName<BackoffFunction>(); } },
             { "maxReceivesPerSecond", (a, n) => { a.MaxReceivesPerSecond = n.GetIntegerValue(); } },
         };
 

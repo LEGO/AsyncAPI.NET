@@ -40,7 +40,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// <summary>
         /// The algorithm for backoff between retries.
         /// </summary>
-        public BackOffFunction BackoffFunction { get; set; }
+        public BackoffFunction BackoffFunction { get; set; }
 
         /// <summary>
         /// The maximum number of deliveries per second, per subscription.
@@ -61,13 +61,13 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             writer.WriteOptionalProperty("numNoDelayRetries", this.NumNoDelayRetries);
             writer.WriteOptionalProperty("numMinDelayRetries", this.NumMinDelayRetries);
             writer.WriteOptionalProperty("numMaxDelayRetries", this.NumMaxDelayRetries);
-            writer.WriteOptionalProperty("backOffFunction", this.BackoffFunction.GetDisplayName());
+            writer.WriteOptionalProperty("backoffFunction", this.BackoffFunction.GetDisplayName());
             writer.WriteOptionalProperty("maxReceivesPerSecond", this.MaxReceivesPerSecond);
             writer.WriteEndObject();
         }
     }
 
-    public enum BackOffFunction
+    public enum BackoffFunction
     {
         [Display("arithmetic")] Arithmetic,
         [Display("exponential")] Exponential,

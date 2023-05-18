@@ -73,6 +73,7 @@ namespace LEGO.AsyncAPI.Bindings
         public static IEnumerable<IBindingParser<IBinding>> Sns => new List<IBindingParser<IBinding>>
         {
             new SnsChannelBinding(),
+            new SnsOperationBinding(),
         };
     }
 }

@@ -127,7 +127,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
           name: someQueue
         filterPolicy:
           attributes:
-            store: 
+            store:
               - asyncapi_corp
             contact: dec.kolakowski
             event:
@@ -151,7 +151,16 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
           numMinDelayRetries: 3
           numMaxDelayRetries: 5
           backoffFunction: linear
-          maxReceivesPerSecond: 2";
+          maxReceivesPerSecond: 2
+    deliveryPolicy:
+      minDelayTarget: 10
+      maxDelayTarget: 100
+      numRetries: 5
+      numNoDelayRetries: 2
+      numMinDelayRetries: 3
+      numMaxDelayRetries: 5
+      backoffFunction: geometric
+      maxReceivesPerSecond: 10";
 
             var operation = new AsyncApiOperation();
             operation.Bindings.Add(new SnsOperationBinding()
@@ -200,7 +209,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                 },
                             },
                         },
-                        RawMessageDelivery = true,
+                        RawMessageDelivery = false,
                         RedrivePolicy = new RedrivePolicy()
                         {
                             DeadLetterQueue = new Identifier()
@@ -217,7 +226,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             NumNoDelayRetries = 2,
                             NumMinDelayRetries = 3,
                             NumMaxDelayRetries = 5,
-                            BackoffFunction = BackOffFunction.Linear,
+                            BackoffFunction = BackoffFunction.Linear,
                             MaxReceivesPerSecond = 2,
                         },
                     },
@@ -230,8 +239,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                     NumNoDelayRetries = 2,
                     NumMinDelayRetries = 3,
                     NumMaxDelayRetries = 5,
-                    BackoffFunction = BackOffFunction.Linear,
-                    MaxReceivesPerSecond = 2,
+                    BackoffFunction = BackoffFunction.Geometric,
+                    MaxReceivesPerSecond = 10,
                 },
             });
 
@@ -243,7 +252,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
             settings.Bindings.Add(BindingsCollection.Sns);
-            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
+            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
 
             // Assert
