@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             }
 
             writer.WriteStartObject();
-            writer.WriteRequiredObject("attributes", this.Attributes, (w, a) => a.Write(w));
+            writer.WriteRequiredObject("attributes", this.Attributes, (w, a) => w.WriteAny(a));
             writer.WriteEndObject();
         }
     }
