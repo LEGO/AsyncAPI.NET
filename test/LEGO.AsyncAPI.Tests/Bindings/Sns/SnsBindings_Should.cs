@@ -27,12 +27,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
       contentBasedDeduplication: true
     policy:
       statements:
-        - effect: deny
+        - effect: Deny
           principal: arn:aws:iam::123456789012:user/alex.wichmann
           action:
             - sns:Publish
             - sns:Delete
-        - effect: allow
+        - effect: Allow
           principal:
             - arn:aws:iam::123456789012:user/alex.wichmann
             - arn:aws:iam::123456789012:user/dec.kolakowski

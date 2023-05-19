@@ -40,9 +40,9 @@ namespace LEGO.AsyncAPI.Bindings.Sns
 
     public enum Effect
     {
-        [Display("allow")]
+        [Display("Allow")]
         Allow,
-        [Display("deny")]
+        [Display("Deny")]
         Deny,
     }
 
