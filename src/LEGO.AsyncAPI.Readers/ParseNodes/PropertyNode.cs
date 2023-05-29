@@ -84,10 +84,5 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 }
             }
         }
-
-        public override IAsyncApiAny CreateAny()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

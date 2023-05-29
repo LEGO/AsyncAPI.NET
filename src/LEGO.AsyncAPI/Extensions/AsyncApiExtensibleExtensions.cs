@@ -7,12 +7,12 @@ namespace LEGO.AsyncAPI.Extensions
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// Extension methods to verify validatity and add an extension to Extensions property.
+    /// Extension methods to verify validity and add an extension to Extensions property.
     /// </summary>
     public static class AsyncApiExtensibleExtensions
     {
         /// <summary>
-        /// Add extension into the Extensions
+        /// Add extension into the Extensions.
         /// </summary>
         /// <typeparam name="T"><see cref="IAsyncApiExtensible"/>.</typeparam>
         /// <param name="element">The extensible AsyncApi element. </param>
