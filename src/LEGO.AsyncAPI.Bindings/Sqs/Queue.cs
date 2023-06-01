@@ -1,3 +1,6 @@
+using LEGO.AsyncAPI.Readers;
+using LEGO.AsyncAPI.Readers.ParseNodes;
+
 namespace LEGO.AsyncAPI.Bindings.Sqs
 {
     using System;
@@ -5,8 +8,9 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+    using Extensions;
 
-    public class Queue : IAsyncApiElement
+    public class Queue : IAsyncApiExtensible
     {
         /// <summary>
         /// Allows for an external definition of a queue. The referenced structure MUST be in the format of a Queue. If there are conflicts between the referenced definition and this Queue's definition, the behavior is undefined.
@@ -58,6 +62,22 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
         /// </summary>
         public Dictionary<string, string> Tags { get; set; }
 
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
+        public static FixedFieldMap<Queue> fixedFieldMap => new()
+        {
+            { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
+            { "fifoQueue", (a, n) => { a.FifoQueue = n.GetBooleanValue(); } },
+            { "deliveryDelay", (a, n) => { a.DeliveryDelay = n.GetIntegerValue(); } },
+            { "visibilityTimeout", (a, n) => { a.VisibilityTimeout = n.GetIntegerValue(); } },
+            { "receiveMessageWaitTime", (a, n) => { a.ReceiveMessageWaitTime = n.GetIntegerValue(); } },
+            { "messageRetentionPeriod", (a, n) => { a.MessageRetentionPeriod = n.GetIntegerValue(); } },
+            // temporarily removed for testing extensibility
+            // { "redrivePolicy", (a, n) => { a.RedrivePolicy = n.ParseMap(this.redrivePolicyFixedFields); } },
+            // { "policy", (a, n) => { a.Policy = n.ParseMap(this.policyFixedFields); } },
+            { "tags", (a, n) => { a.Tags = n.CreateSimpleMap(s => s.GetScalarValue()); } },
+        };
+        
         public void Serialize(IAsyncApiWriter writer)
         {
             if (writer is null)
@@ -76,7 +96,21 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
             writer.WriteOptionalObject("redrivePolicy", this.RedrivePolicy, (w, p) => p.Serialize(w));
             writer.WriteOptionalObject("policy", this.Policy, (w, p) => p.Serialize(w));
             writer.WriteOptionalMap("tags", this.Tags, (w, t) => w.WriteValue(t));
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
+        }
+
+        public static Queue LoadQueue(ParseNode node)
+        {
+            var mapNode = node.CheckMapNode("queue");
+
+            var queue = new Queue();
+            foreach (var property in mapNode)
+            {
+                property.ParseField(queue, fixedFieldMap, ExtensionHelpers.GetExtensionsFieldMap<Queue>());
+            }
+
+            return queue;
         }
     }
 }

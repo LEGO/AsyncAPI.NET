@@ -23,7 +23,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
 
         protected override FixedFieldMap<SqsChannelBinding> FixedFieldMap => new()
         {
-            { "queue", (a, n) => { a.Queue = n.ParseMap(this.queueFixedFields); } },
+            { "queue", (a, n) => { a.Queue = Queue.LoadQueue(n); } },
             { "deadLetterQueue", (a, n) => { a.DeadLetterQueue = n.ParseMap(this.queueFixedFields); } },
         };
 
