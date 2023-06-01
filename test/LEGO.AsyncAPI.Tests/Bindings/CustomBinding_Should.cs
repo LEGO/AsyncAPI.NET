@@ -3,15 +3,49 @@
 namespace LEGO.AsyncAPI.Tests.Bindings
 {
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Interfaces;
+    using Extensions;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
+
+    public class NestedConfiguration : IAsyncApiExtensible
+    {
+        public string Name { get; set; }
+
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
+        private static FixedFieldMap<NestedConfiguration> fixedFieldMap = new()
+        {
+            { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
+        };
+
+        public void SerializeProperties(IAsyncApiWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteOptionalProperty("name", this.Name);
+            writer.WriteExtensions(this.Extensions);
+            writer.WriteEndObject();
+        }
+
+        public static NestedConfiguration LoadNestedConfiguration(ParseNode node)
+        {
+            var mapNode = node.CheckMapNode("nestedConfiguration");
+
+            var nestedConfiguration = new NestedConfiguration();
+            foreach (var property in mapNode)
+            {
+                property.ParseField(nestedConfiguration, fixedFieldMap, ExtensionHelpers.GetExtensionsFieldMap<NestedConfiguration>());
+            }
+
+            return nestedConfiguration;
+        }
+    }
 
     public class MyBinding : ChannelBinding<MyBinding>
     {
@@ -19,10 +53,16 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
         public override string BindingKey => "my";
 
+        public NestedConfiguration NestedConfiguration { get; set; }
+
+        public IAsyncApiAny Any { get; set; }
+
         protected override FixedFieldMap<MyBinding> FixedFieldMap => new FixedFieldMap<MyBinding>()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "custom", (a, n) => { a.Custom = n.GetScalarValue(); } },
+            { "any", (a, n) => { a.Any = n.CreateAny(); } },
+            { "nestedConfiguration", (a, n) => { a.NestedConfiguration = NestedConfiguration.LoadNestedConfiguration(n); } },
         };
 
         public override void SerializeProperties(IAsyncApiWriter writer)
@@ -30,6 +70,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             writer.WriteStartObject();
             writer.WriteRequiredProperty("custom", this.Custom);
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
+            writer.WriteRequiredObject("any", this.Any, (w, p) => w.WriteAny(p));
+            writer.WriteOptionalObject("nestedConfiguration", this.NestedConfiguration, (w, r) => r.SerializeProperties(w));
             writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
@@ -45,14 +87,31 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 @"bindings:
   my:
     custom: someValue
-    bindingVersion: 0.1.0
+    bindingVersion: '0.1.0'
+    any:
+      anyKeyName: anyValue
+    nestedConfiguration:
+      name: nested
+      x-myNestedExtension: nestedValue
     x-myextension: someValue";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new MyBinding
             {
                 Custom = "someValue",
+                Any = new AsyncApiObject()
+                {
+                    { "anyKeyName", new AsyncApiString("anyValue") },
+                },
                 BindingVersion = "0.1.0",
+                NestedConfiguration = new NestedConfiguration()
+                {
+                    Name = "nested",
+                    Extensions = new Dictionary<string, IAsyncApiExtension>()
+                    {
+                        { "x-myNestedExtension", new AsyncApiString("nestedValue") },
+                    },
+                },
                 Extensions = new Dictionary<string, IAsyncApiExtension>()
                 {
                     { "x-myextension", new AsyncApiString("someValue") },
