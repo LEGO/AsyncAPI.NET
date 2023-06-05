@@ -20,6 +20,7 @@ jobs:
       uses: actions/checkout@v1
 
     - name: Semantic Release
+      id: semantic
       uses: cycjimmy/semantic-release-action@v3
       with:
         dry_run: true
@@ -27,8 +28,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
-      trigger_release: ${{ steps.semantic.outputs.new_release_published }}
-      version: ${{ steps.semantic.outputs.new_release_published == 'true' && steps.semantic.outputs.new_release_version }}
+      version: ${{ steps.semantic.outputs.new_release_version }}
 
   pre-release:
     runs-on: ubuntu-latest
@@ -43,13 +43,10 @@ jobs:
         uses: actions/checkout@v1
         
       - name: Setup .NET Core @ Latest
-        if: needs.check.outputs.trigger_release == 'true'
         uses: actions/setup-dotnet@v1
 
       - name: Build ${{ matrix.package-name }} project and pack NuGet package
-        if: needs.check.outputs.trigger_release == 'true'
         run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ needs.check.outputs.version }}-beta
 
       - name: Push generated package to GitHub Packages registry
-        if: needs.check.outputs.trigger_release == 'true'
         run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg -s https://api.nuget.org/v3/index.json --skip-duplicate -n --api-key ${{secrets.NUGET}}
