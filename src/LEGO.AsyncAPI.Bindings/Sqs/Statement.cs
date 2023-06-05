@@ -33,8 +33,8 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
 
             writer.WriteStartObject();
             writer.WriteRequiredProperty("effect", this.Effect.GetDisplayName());
-            writer.WriteRequiredObject("principal", this.Principal, (w, t) => t.Serialize(w));
-            writer.WriteRequiredObject("action", this.Action, (w, t) => t.Serialize(w));
+            writer.WriteRequiredObject("principal", this.Principal, (w, t) => t.Value.Write(w));
+            writer.WriteRequiredObject("action", this.Action, (w, t) => t.Value.Write(w));
             writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
