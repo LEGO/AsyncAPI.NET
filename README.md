@@ -13,9 +13,16 @@ The AsyncAPI.NET SDK contains a useful object model for the AsyncAPI specificati
 ## Installation
 
 Install the NuGet packages:
+### AsyncAPI.NET
+[![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET?label=AsyncAPI.NET&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET/)  
+[![Nuget](https://img.shields.io/nuget/vpre/AsyncAPI.NET?label=AsyncAPI.NET&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET/)  
 
+### AsyncAPI.NET.Readers
 [![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET.Readers?label=AsyncAPI.NET.Readers&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)  
-[![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET?label=AsyncAPI.NET&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET/)
+[![Nuget](https://img.shields.io/nuget/vpre/AsyncAPI.NET.Readers?label=AsyncAPI.NET.Readers&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)  
+
+### AsyncAPI.NET.Bindings
+[![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET.Bindings?label=AsyncAPI.NET.Bindings&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Bindings/)  
 
 ## Example Usage
 
