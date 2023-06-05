@@ -30,7 +30,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
       redrivePolicy:
         deadLetterQueue:
           arn: arn:aws:SQS:eu-west-1:0000000:123456789
+          x-identifierExtension:
+            identifierXPropertyName: identifierXPropertyValue
         maxReceiveCount: 15
+        x-redrivePolicyExtension:
+          redrivePolicyXPropertyName: redrivePolicyXPropertyValue
       policy:
         statements:
           - effect: deny
@@ -38,14 +42,20 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
             action:
               - sqs:SendMessage
               - sqs:ReceiveMessage
+            x-statementExtension:
+              statementXPropertyName: statementXPropertyValue
           - effect: allow
             principal:
               - arn:aws:iam::123456789012:user/alex.wichmann
               - arn:aws:iam::123456789012:user/dec.kolakowski
             action: sqs:CreateQueue
+        x-policyExtension:
+          policyXPropertyName: policyXPropertyValue
       tags:
         owner: AsyncAPI.NET
         platform: AsyncAPIOrg
+      x-queueExtension:
+        queueXPropertyName: queueXPropertyValue
     deadLetterQueue:
       name: myQueue_error
       deliveryDelay: 0
@@ -77,8 +87,28 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                         DeadLetterQueue = new Identifier()
                         {
                             Arn = "arn:aws:SQS:eu-west-1:0000000:123456789",
+                            Extensions = new Dictionary<string, IAsyncApiExtension>()
+                            {
+                                {
+                                    "x-identifierExtension",
+                                    new AsyncApiObject()
+                                    {
+                                        { "identifierXPropertyName", new AsyncApiString("identifierXPropertyValue") },
+                                    }
+                                },
+                            },
                         },
                         MaxReceiveCount = 15,
+                        Extensions = new Dictionary<string, IAsyncApiExtension>()
+                        {
+                            {
+                                "x-redrivePolicyExtension",
+                                new AsyncApiObject()
+                                {
+                                    { "redrivePolicyXPropertyName", new AsyncApiString("redrivePolicyXPropertyValue") },
+                                }
+                            },
+                        },
                     },
                     Policy = new Policy()
                     {
@@ -99,6 +129,16 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                         "sqs:ReceiveMessage",
                                     },
                                 },
+                                Extensions = new Dictionary<string, IAsyncApiExtension>()
+                                {
+                                    {
+                                        "x-statementExtension",
+                                        new AsyncApiObject()
+                                        {
+                                            { "statementXPropertyName", new AsyncApiString("statementXPropertyValue") },
+                                        }
+                                    },
+                                },
                             },
                             new Statement()
                             {
@@ -117,11 +157,31 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 },
                             },
                         },
+                        Extensions = new Dictionary<string, IAsyncApiExtension>()
+                        {
+                            {
+                                "x-policyExtension",
+                                new AsyncApiObject()
+                                {
+                                    { "policyXPropertyName", new AsyncApiString("policyXPropertyValue") },
+                                }
+                            },
+                        },
                     },
                     Tags = new Dictionary<string, string>()
                     {
                         { "owner", "AsyncAPI.NET" },
                         { "platform", "AsyncAPIOrg" },
+                    },
+                    Extensions = new Dictionary<string, IAsyncApiExtension>()
+                    {
+                        {
+                            "x-queueExtension",
+                            new AsyncApiObject()
+                            {
+                                { "queueXPropertyName", new AsyncApiString("queueXPropertyValue") },
+                            }
+                        },
                     },
                 },
                 DeadLetterQueue = new Queue()
@@ -199,7 +259,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
         redrivePolicy:
           deadLetterQueue:
             arn: arn:aws:SQS:eu-west-1:0000000:123456789
+            x-identifierExtension:
+              identifierXPropertyName: identifierXPropertyValue
           maxReceiveCount: 15
+          x-redrivePolicyExtension:
+            redrivePolicyXPropertyName: redrivePolicyXPropertyValue
         policy:
           statements:
             - effect: deny
@@ -207,14 +271,20 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
               action:
                 - sqs:SendMessage
                 - sqs:ReceiveMessage
+              x-statementExtension:
+                statementXPropertyName: statementXPropertyValue
             - effect: allow
               principal:
                 - arn:aws:iam::123456789012:user/alex.wichmann
                 - arn:aws:iam::123456789012:user/dec.kolakowski
               action: sqs:CreateQueue
+          x-policyExtension:
+            policyXPropertyName: policyXPropertyValue
         tags:
           owner: AsyncAPI.NET
           platform: AsyncAPIOrg
+        x-queueExtension:
+          queueXPropertyName: queueXPropertyValue
       - name: myQueue_error
         deliveryDelay: 0
         visibilityTimeout: 0
@@ -226,6 +296,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
               principal: arn:aws:iam::123456789012:user/alex.wichmann
               action:
                 - sqs:*
+        x-queueExtension:
+          queueXPropertyName: queueXPropertyValue
     x-internalObject:
       myExtensionPropertyName: myExtensionPropertyValue";
 
@@ -247,8 +319,28 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             DeadLetterQueue = new Identifier()
                             {
                                 Arn = "arn:aws:SQS:eu-west-1:0000000:123456789",
+                                Extensions = new Dictionary<string, IAsyncApiExtension>()
+                                {
+                                    {
+                                        "x-identifierExtension",
+                                        new AsyncApiObject()
+                                        {
+                                            { "identifierXPropertyName", new AsyncApiString("identifierXPropertyValue") },
+                                        }
+                                    },
+                                },
                             },
                             MaxReceiveCount = 15,
+                            Extensions = new Dictionary<string, IAsyncApiExtension>()
+                            {
+                                {
+                                    "x-redrivePolicyExtension",
+                                    new AsyncApiObject()
+                                    {
+                                        { "redrivePolicyXPropertyName", new AsyncApiString("redrivePolicyXPropertyValue") },
+                                    }
+                                },
+                            },
                         },
                         Policy = new Policy()
                         {
@@ -269,6 +361,16 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                             "sqs:ReceiveMessage",
                                         },
                                     },
+                                    Extensions = new Dictionary<string, IAsyncApiExtension>()
+                                    {
+                                        {
+                                            "x-statementExtension",
+                                            new AsyncApiObject()
+                                            {
+                                                { "statementXPropertyName", new AsyncApiString("statementXPropertyValue") },
+                                            }
+                                        },
+                                    },
                                 },
                                 new Statement()
                                 {
@@ -287,11 +389,31 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                     },
                                 },
                             },
+                            Extensions = new Dictionary<string, IAsyncApiExtension>()
+                            {
+                                {
+                                    "x-policyExtension",
+                                    new AsyncApiObject()
+                                    {
+                                        { "policyXPropertyName", new AsyncApiString("policyXPropertyValue") },
+                                    }
+                                },
+                            },
                         },
                         Tags = new Dictionary<string, string>()
                         {
                             { "owner", "AsyncAPI.NET" },
                             { "platform", "AsyncAPIOrg" },
+                        },
+                        Extensions = new Dictionary<string, IAsyncApiExtension>()
+                        {
+                            {
+                                "x-queueExtension",
+                                new AsyncApiObject()
+                                {
+                                    { "queueXPropertyName", new AsyncApiString("queueXPropertyValue") },
+                                }
+                            },
                         },
                     },
                     new Queue()
@@ -321,6 +443,16 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                         },
                                     },
                                 },
+                            },
+                        },
+                        Extensions = new Dictionary<string, IAsyncApiExtension>()
+                        {
+                            {
+                                "x-queueExtension",
+                                new AsyncApiObject()
+                                {
+                                    { "queueXPropertyName", new AsyncApiString("queueXPropertyValue") },
+                                }
                             },
                         },
                     },

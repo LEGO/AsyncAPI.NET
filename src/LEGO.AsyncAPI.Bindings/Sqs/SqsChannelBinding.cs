@@ -23,8 +23,8 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
 
         protected override FixedFieldMap<SqsChannelBinding> FixedFieldMap => new()
         {
-            { "queue", (a, n) => { a.Queue = Queue.LoadQueue(n); } },
-            { "deadLetterQueue", (a, n) => { a.DeadLetterQueue = n.ParseMap(this.queueFixedFields); } },
+            { "queue", (a, n) => { a.Queue = n.ParseMapWithExtensions(this.queueFixedFields); } },
+            { "deadLetterQueue", (a, n) => { a.DeadLetterQueue = n.ParseMapWithExtensions(this.queueFixedFields); } },
         };
 
         private FixedFieldMap<Queue> queueFixedFields => new()
@@ -35,14 +35,14 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
             { "visibilityTimeout", (a, n) => { a.VisibilityTimeout = n.GetIntegerValue(); } },
             { "receiveMessageWaitTime", (a, n) => { a.ReceiveMessageWaitTime = n.GetIntegerValue(); } },
             { "messageRetentionPeriod", (a, n) => { a.MessageRetentionPeriod = n.GetIntegerValue(); } },
-            { "redrivePolicy", (a, n) => { a.RedrivePolicy = n.ParseMap(this.redrivePolicyFixedFields); } },
-            { "policy", (a, n) => { a.Policy = n.ParseMap(this.policyFixedFields); } },
+            { "redrivePolicy", (a, n) => { a.RedrivePolicy = n.ParseMapWithExtensions(this.redrivePolicyFixedFields); } },
+            { "policy", (a, n) => { a.Policy = n.ParseMapWithExtensions(this.policyFixedFields); } },
             { "tags", (a, n) => { a.Tags = n.CreateSimpleMap(s => s.GetScalarValue()); } },
         };
 
         private FixedFieldMap<RedrivePolicy> redrivePolicyFixedFields => new()
         {
-            { "deadLetterQueue", (a, n) => { a.DeadLetterQueue = n.ParseMap(identifierFixFields); } },
+            { "deadLetterQueue", (a, n) => { a.DeadLetterQueue = n.ParseMapWithExtensions(identifierFixFields); } },
             { "maxReceiveCount", (a, n) => { a.MaxReceiveCount = n.GetIntegerValue(); } },
         };
 
@@ -54,7 +54,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
 
         private FixedFieldMap<Policy> policyFixedFields = new()
         {
-            { "statements", (a, n) => { a.Statements = n.CreateList(s => s.ParseMap(statementFixedFields)); } },
+            { "statements", (a, n) => { a.Statements = n.CreateList(s => s.ParseMapWithExtensions(statementFixedFields)); } },
         };
 
         private static FixedFieldMap<Statement> statementFixedFields = new()
