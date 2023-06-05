@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        private static FixedFieldMap<NestedConfiguration> fixedFieldMap = new()
+        public static FixedFieldMap<NestedConfiguration> fixedFieldMap = new()
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
         };
@@ -31,19 +31,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             writer.WriteOptionalProperty("name", this.Name);
             writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
-        }
-
-        public static NestedConfiguration LoadNestedConfiguration(ParseNode node)
-        {
-            var mapNode = node.CheckMapNode("nestedConfiguration");
-
-            var nestedConfiguration = new NestedConfiguration();
-            foreach (var property in mapNode)
-            {
-                property.ParseField(nestedConfiguration, fixedFieldMap, ExtensionHelpers.GetExtensionsFieldMap<NestedConfiguration>());
-            }
-
-            return nestedConfiguration;
         }
     }
 
@@ -62,7 +49,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "custom", (a, n) => { a.Custom = n.GetScalarValue(); } },
             { "any", (a, n) => { a.Any = n.CreateAny(); } },
-            { "nestedConfiguration", (a, n) => { a.NestedConfiguration = NestedConfiguration.LoadNestedConfiguration(n); } },
+            { "nestedConfiguration", (a, n) => { a.NestedConfiguration = n.ParseMapWithExtensions(NestedConfiguration.fixedFieldMap); } },
         };
 
         public override void SerializeProperties(IAsyncApiWriter writer)
@@ -87,7 +74,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 @"bindings:
   my:
     custom: someValue
-    bindingVersion: '0.1.0'
+    bindingVersion: 0.1.0
     any:
       anyKeyName: anyValue
     nestedConfiguration:

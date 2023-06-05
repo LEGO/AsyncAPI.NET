@@ -1,15 +1,15 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Writers;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-
 namespace LEGO.AsyncAPI.Tests.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Writers;
+    using NUnit.Framework;
+
     public class AsyncApiSchema_Should
     {
         private string NoInlinedReferences =>

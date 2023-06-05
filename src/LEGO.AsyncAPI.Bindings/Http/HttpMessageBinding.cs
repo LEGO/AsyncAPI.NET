@@ -1,10 +1,9 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Models;
-
 namespace LEGO.AsyncAPI.Bindings.Http
 {
     using System;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;

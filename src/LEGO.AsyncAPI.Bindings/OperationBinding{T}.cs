@@ -1,11 +1,11 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers;
-using LEGO.AsyncAPI.Readers.ParseNodes;
-
 namespace LEGO.AsyncAPI.Bindings
 {
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     public abstract class OperationBinding<T> : Binding<T> , IOperationBinding
         where T : IOperationBinding, new()
     {
