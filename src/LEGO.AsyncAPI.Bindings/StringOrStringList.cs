@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Bindings
         {
             this.Value = value switch
             {
-                AsyncApiArray array => IsValidStringList(array) ? array : throw new ArgumentException($"{nameof(StringOrStringList)} value should contain string items."),
+                AsyncApiArray array => IsValidStringList(array) ? array : throw new ArgumentException($"{nameof(StringOrStringList)} value should only contain string items."),
                 AsyncApiPrimitive<string> => value,
                 _ => throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list.")
             };
