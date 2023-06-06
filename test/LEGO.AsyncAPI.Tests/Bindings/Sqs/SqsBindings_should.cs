@@ -117,18 +117,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Deny,
-                                Principal = new StringOrStringList()
+                                Principal = new StringOrStringList(new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                Action = new StringOrStringList(new AsyncApiArray()
                                 {
-                                    StringValue = "arn:aws:iam::123456789012:user/alex.wichmann",
-                                },
-                                Action = new StringOrStringList()
-                                {
-                                    StringList = new List<string>()
-                                    {
-                                        "sqs:SendMessage",
-                                        "sqs:ReceiveMessage",
-                                    },
-                                },
+                                    new AsyncApiString("sqs:SendMessage"),
+                                    new AsyncApiString("sqs:ReceiveMessage")
+                                }),
                                 Extensions = new Dictionary<string, IAsyncApiExtension>()
                                 {
                                     {
@@ -143,18 +137,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Allow,
-                                Principal = new StringOrStringList()
+                                Principal = new StringOrStringList(new AsyncApiArray
                                 {
-                                    StringList = new List<string>()
-                                    {
-                                        "arn:aws:iam::123456789012:user/alex.wichmann",
-                                        "arn:aws:iam::123456789012:user/dec.kolakowski",
-                                    },
-                                },
-                                Action = new StringOrStringList()
-                                {
-                                    StringValue = "sqs:CreateQueue",
-                                },
+                                        new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann"),
+                                        new AsyncApiString("arn:aws:iam::123456789012:user/dec.kolakowski")
+                                }),
+                                Action = new StringOrStringList(new AsyncApiString("sqs:CreateQueue")),
                             },
                         },
                         Extensions = new Dictionary<string, IAsyncApiExtension>()
@@ -199,17 +187,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Allow,
-                                Principal = new StringOrStringList()
+                                Principal = new StringOrStringList(new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                Action = new StringOrStringList(new AsyncApiArray()
                                 {
-                                    StringValue = "arn:aws:iam::123456789012:user/alex.wichmann",
-                                },
-                                Action = new StringOrStringList()
-                                {
-                                    StringList = new List<string>()
-                                    {
-                                        "sqs:*",
-                                    },
-                                },
+                                    new AsyncApiString("sqs:*")
+                                })
                             },
                         },
                     },
@@ -349,18 +331,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Deny,
-                                    Principal = new StringOrStringList()
+                                    Principal = new StringOrStringList(new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                    Action = new StringOrStringList(new AsyncApiArray()
                                     {
-                                        StringValue = "arn:aws:iam::123456789012:user/alex.wichmann",
-                                    },
-                                    Action = new StringOrStringList()
-                                    {
-                                        StringList = new List<string>()
-                                        {
-                                            "sqs:SendMessage",
-                                            "sqs:ReceiveMessage",
-                                        },
-                                    },
+                                        new AsyncApiString("sqs:SendMessage"),
+                                        new AsyncApiString("sqs:ReceiveMessage")
+                                    }),
                                     Extensions = new Dictionary<string, IAsyncApiExtension>()
                                     {
                                         {
@@ -375,18 +351,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Allow,
-                                    Principal = new StringOrStringList()
+                                    Principal = new StringOrStringList(new AsyncApiArray
                                     {
-                                        StringList = new List<string>()
-                                        {
-                                            "arn:aws:iam::123456789012:user/alex.wichmann",
-                                            "arn:aws:iam::123456789012:user/dec.kolakowski",
-                                        },
-                                    },
-                                    Action = new StringOrStringList()
-                                    {
-                                        StringValue = "sqs:CreateQueue",
-                                    },
+                                        new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann"),
+                                        new AsyncApiString("arn:aws:iam::123456789012:user/dec.kolakowski"),
+                                    }),
+                                    Action = new StringOrStringList(new AsyncApiString("sqs:CreateQueue"))
                                 },
                             },
                             Extensions = new Dictionary<string, IAsyncApiExtension>()
@@ -431,17 +401,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Allow,
-                                    Principal = new StringOrStringList()
+                                    Principal = new StringOrStringList(new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                    Action = new StringOrStringList(new AsyncApiArray
                                     {
-                                        StringValue = "arn:aws:iam::123456789012:user/alex.wichmann",
-                                    },
-                                    Action = new StringOrStringList()
-                                    {
-                                        StringList = new List<string>()
-                                        {
-                                            "sqs:*",
-                                        },
-                                    },
+                                        new AsyncApiString("sqs:*")
+                                    })
                                 },
                             },
                         },
