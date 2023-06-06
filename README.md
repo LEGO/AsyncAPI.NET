@@ -14,8 +14,17 @@ The AsyncAPI.NET SDK contains a useful object model for the AsyncAPI specificati
 
 Install the NuGet packages:
 
+### AsyncAPI.Net
 [![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET.Readers?label=AsyncAPI.NET.Readers&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)  
-[![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET?label=AsyncAPI.NET&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET/)
+[![Nuget](https://img.shields.io/nuget/vpre/AsyncAPI.NET?label=AsyncAPI.NET&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET/)
+
+### AsyncAPI.Readers
+[![Nuget](https://img.shields.io/nuget/v/AsyncAPI.Readers?label=AsyncAPI.Readers&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)  
+[![Nuget](https://img.shields.io/nuget/vpre/AsyncAPI.Readers?label=AsyncAPI.Readers&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)  
+
+### AsyncAPI.Bindings
+[![Nuget](https://img.shields.io/nuget/v/AsyncAPI.Bindings?label=AsyncAPI.Bindings&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Bindings/)  
+
 
 ## Example Usage
 
@@ -69,6 +78,16 @@ var httpClient = new HttpClient
 
 var stream = await httpClient.GetStreamAsync("master/examples/streetlights-kafka.yml");
 var asyncApiDocument = new AsyncApiStreamReader().Read(stream, out var diagnostic);
+```
+
+### Bindings
+To add support for reading bindings, simply add the bindings you wish to support, to the `Bindings` collection of `AsyncApiReaderSettings`.
+There is a nifty helper to add different types of bindings, or like in the example `All` of them.
+
+```csharp
+var settings = new AsyncApiReaderSettings();
+settings.Bindings.Add(BindingsCollection.All);
+var asyncApiDocument = new AsyncApiStringReader(settings).Read(stream, out var diagnostic);
 ```
 
 ## Attribution
