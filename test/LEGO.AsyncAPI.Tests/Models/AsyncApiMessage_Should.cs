@@ -25,8 +25,8 @@ namespace LEGO.AsyncAPI.Tests.Models
   properties:
     propertyA:
       type:
-        - string
-        - 'null'";
+        - 'null'
+        - string";
 
                 // Act
                 var message = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
@@ -45,8 +45,8 @@ namespace LEGO.AsyncAPI.Tests.Models
   properties:
     propertyA:
       type:
-        - string
         - 'null'
+        - string
 schemaFormat: application/vnd.apache.avro;version=1.9.0";
 
                 // Act
@@ -66,8 +66,8 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
   properties:
     propertyA:
       type:
-        - string
-        - 'null'";
+        - 'null'
+        - string";
 
                 var message = new AsyncApiMessage();
                 message.Payload = new AsyncApiSchema()
@@ -77,7 +77,7 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
                     {
                         "propertyA", new AsyncApiSchema()
                         {
-                            Type = new List<SchemaType> { SchemaType.String, SchemaType.Null },
+                            Type = SchemaType.String | SchemaType.Null,
                         }
                     },
                 },
@@ -105,8 +105,8 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
   properties:
     propertyA:
       type:
-        - string
         - 'null'
+        - string
 schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
 
                 var message = new AsyncApiMessage();
@@ -118,7 +118,7 @@ schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
                     {
                         "propertyA", new AsyncApiSchema()
                         {
-                            Type = new List<SchemaType> { SchemaType.String, SchemaType.Null },
+                            Type = SchemaType.String | SchemaType.Null,
                         }
                     },
                 },
@@ -137,7 +137,7 @@ schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
                 message.Should().BeEquivalentTo(deserializedMessage);
             }
 
-            [Test]
+        [Test]
         public void AsyncApiMessage_WithFilledObject_Serializes()
         {
             var expected =
@@ -230,19 +230,13 @@ traits:
                         {
                             "propA", new AsyncApiSchema()
                             {
-                                Type = new List<SchemaType>()
-                                {
-                                    SchemaType.String,
-                                },
+                                Type = SchemaType.String,
                             }
                         },
                         {
                             "propB", new AsyncApiSchema()
                             {
-                                Type = new List<SchemaType>()
-                                {
-                                    SchemaType.String,
-                                },
+                                Type =SchemaType.String,
                             }
                         },
                     },

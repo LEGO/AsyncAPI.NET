@@ -19,9 +19,9 @@ namespace LEGO.AsyncAPI.Models
         public string Title { get; set; }
 
         /// <summary>
-        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public IList<SchemaType> Type { get; set; }
+        public SchemaType? Type { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
@@ -257,13 +257,14 @@ namespace LEGO.AsyncAPI.Models
             // type
             if (this.Type != null)
             {
-                if (this.Type.Count == 1)
+                var types = EnumExtensions.GetFlags<SchemaType>(this.Type.Value);
+                if (types.Count() == 1)
                 {
-                    writer.WriteOptionalProperty(AsyncApiConstants.Type, this.Type.First().GetDisplayName());
+                    writer.WriteOptionalProperty(AsyncApiConstants.Type, types.First().GetDisplayName());
                 }
                 else
                 {
-                    writer.WriteOptionalCollection(AsyncApiConstants.Type, this.Type.Select(t => t.GetDisplayName()), (w, s) => w.WriteValue(s));
+                    writer.WriteOptionalCollection(AsyncApiConstants.Type, types.Select(t => t.GetDisplayName()), (w, s) => w.WriteValue(s));
                 }
             }
 
