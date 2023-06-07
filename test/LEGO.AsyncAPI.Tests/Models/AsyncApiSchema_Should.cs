@@ -24,7 +24,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             ExclusiveMinimum = true,
             Minimum = 10,
             Default = new AsyncApiInteger(15),
-            Type = new List<SchemaType> { SchemaType.Integer },
+            Type = SchemaType.Integer,
             Nullable = true,
             ExternalDocs = new AsyncApiExternalDocumentation
             {
@@ -40,7 +40,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             ExclusiveMinimum = true,
             Minimum = double.MinValue,
             Default = new AsyncApiInteger(15),
-            Type = new List<SchemaType> { SchemaType.Integer },
+            Type = SchemaType.Integer,
             Nullable = true,
             ExternalDocs = new AsyncApiExternalDocumentation
             {
@@ -59,11 +59,11 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         ["property2"] = new AsyncApiSchema
                         {
-                            Type = new List<SchemaType> { SchemaType.Integer },
+                            Type = SchemaType.Integer,
                         },
                         ["property3"] = new AsyncApiSchema
                         {
-                            Type = new List<SchemaType> { SchemaType.String },
+                            Type = SchemaType.String,
                             MaxLength = 15,
                         },
                     },
@@ -78,13 +78,13 @@ namespace LEGO.AsyncAPI.Tests.Models
                             {
                                 ["property6"] = new AsyncApiSchema
                                 {
-                                    Type = new List<SchemaType> { SchemaType.Boolean },
+                                    Type = SchemaType.Boolean ,
                                 },
                             },
                         },
                         ["property7"] = new AsyncApiSchema
                         {
-                            Type = new List<SchemaType> { SchemaType.String },
+                            Type = SchemaType.String,
                             MinLength = 2,
                         },
                     },
@@ -109,11 +109,11 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         ["property1"] = new AsyncApiSchema
                         {
-                            Type = new List<SchemaType> { SchemaType.Integer },
+                            Type = SchemaType.Integer,
                         },
                         ["property2"] = new AsyncApiSchema
                         {
-                            Type = new List<SchemaType> { SchemaType.String },
+                            Type = SchemaType.String,
                             MaxLength = 15,
                         },
                     },
@@ -129,13 +129,13 @@ namespace LEGO.AsyncAPI.Tests.Models
                             {
                                 ["property4"] = new AsyncApiSchema
                                 {
-                                    Type = new List<SchemaType> { SchemaType.Boolean },
+                                    Type = SchemaType.Boolean ,
                                 },
                             },
                         },
                         ["property5"] = new AsyncApiSchema
                         {
-                            Type = new List<SchemaType> { SchemaType.String },
+                            Type = SchemaType.String,
                             MinLength = 2,
                         },
                     },
@@ -157,7 +157,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             ExclusiveMinimum = true,
             Minimum = 10,
             Default = new AsyncApiInteger(15),
-            Type = new List<SchemaType> { SchemaType.Integer },
+            Type = SchemaType.Integer,
 
             Nullable = true,
             ExternalDocs = new AsyncApiExternalDocumentation
@@ -185,11 +185,11 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         ["property2"] = new AsyncApiSchema
                         {
-                            Type = new List<SchemaType> { SchemaType.Integer },
+                            Type = SchemaType.Integer,
                         },
                         ["property3"] = new AsyncApiSchema
                         {
-                            Type = new List<SchemaType> { SchemaType.String },
+                            Type = SchemaType.String,
                             MaxLength = 15,
                             ReadOnly = true,
                         },
@@ -206,13 +206,13 @@ namespace LEGO.AsyncAPI.Tests.Models
                             {
                                 ["property6"] = new AsyncApiSchema
                                 {
-                                    Type = new List<SchemaType> { SchemaType.Boolean },
+                                    Type = SchemaType.Boolean ,
                                 },
                             },
                         },
                         ["property7"] = new AsyncApiSchema
                         {
-                            Type = new List<SchemaType> { SchemaType.String },
+                            Type = SchemaType.String,
                             MinLength = 2,
                         },
                     },
@@ -489,7 +489,7 @@ components: { }";
                         {
                             Payload = new AsyncApiSchema
                             {
-                                Type = new List<SchemaType> { SchemaType.Object },
+                                Type = SchemaType.Object,
                                 Required = new HashSet<string> { "testB" },
                                 Properties = new Dictionary<string, AsyncApiSchema>
                                 {
@@ -501,16 +501,16 @@ components: { }";
                     },
                 },
             })
-            .WithComponent("testD", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String }, Format = "uuid" })
+            .WithComponent("testD", new AsyncApiSchema() { Type = SchemaType.String, Format = "uuid" })
             .WithComponent("testC", new AsyncApiSchema()
             {
-                Type = new List<SchemaType> { SchemaType.Object },
+                Type = SchemaType.Object,
                 Properties = new Dictionary<string, AsyncApiSchema>
                 {
                     { "testD", new AsyncApiSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testD" } } },
                 },
             })
-            .WithComponent("testB", new AsyncApiSchema() { Description = "test", Type = new List<SchemaType> { SchemaType.Boolean } })
+            .WithComponent("testB", new AsyncApiSchema() { Description = "test", Type = SchemaType.Boolean  })
             .Build();
 
             var outputString = new StringWriter(CultureInfo.InvariantCulture);
@@ -559,7 +559,7 @@ components: { }";
         {
             var mainSchema = new AsyncApiSchema();
             var subSchema = new AsyncApiSchema();
-            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String } });
+            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = SchemaType.String });
             mainSchema.OneOf = new List<AsyncApiSchema>() { subSchema };
 
             var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
@@ -577,7 +577,7 @@ components: { }";
         {
             var mainSchema = new AsyncApiSchema();
             var subSchema = new AsyncApiSchema();
-            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String } });
+            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = SchemaType.String });
             mainSchema.AnyOf = new List<AsyncApiSchema>() { subSchema };
 
             var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
@@ -594,7 +594,7 @@ components: { }";
         {
             var mainSchema = new AsyncApiSchema();
             var subSchema = new AsyncApiSchema();
-            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String } });
+            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = SchemaType.String });
             mainSchema.Not = subSchema;
 
             var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);

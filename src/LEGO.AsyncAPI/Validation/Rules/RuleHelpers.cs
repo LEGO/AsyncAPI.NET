@@ -42,7 +42,7 @@ namespace LEGO.AsyncAPI.Validation.Rules
                 return;
             }
 
-            var types = schema.Type;
+            var types = EnumExtensions.GetFlags<SchemaType>(schema.Type);
             var format = schema.Format;
             var nullable = schema.Nullable;
 
