@@ -7,6 +7,9 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
 
     public class SqsOperationBinding : OperationBinding<SqsOperationBinding>
     {
+        /// <summary>
+        /// Queue objects that are either the endpoint for an SNS Operation Binding Object, or the deadLetterQueue of the SQS Operation Binding Object
+        /// </summary>
         public List<Queue> Queues { get; set; }
 
         public override string BindingKey => "sqs";
