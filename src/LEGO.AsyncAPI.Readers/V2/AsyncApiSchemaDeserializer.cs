@@ -37,14 +37,14 @@ namespace LEGO.AsyncAPI.Readers
                 "multipleOf",
                 (a, n) =>
                 {
-                    a.MultipleOf = decimal.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
+                    a.MultipleOf = double.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
                 }
             },
             {
                 "maximum",
                 (a, n) =>
                 {
-                    a.Maximum = decimal.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
+                    a.Maximum = double.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
                 }
             },
             {
@@ -54,7 +54,7 @@ namespace LEGO.AsyncAPI.Readers
                 "minimum",
                 (a, n) =>
                 {
-                    a.Minimum = decimal.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
+                    a.Minimum = double.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
                 }
             },
             {
