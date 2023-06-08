@@ -2,8 +2,10 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Runtime.CompilerServices;
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -21,11 +23,23 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     if (n.GetType() == typeof(ValueNode))
                     {
-                        a.Type = new List<SchemaType> { n.GetScalarValue().GetEnumFromDisplayName<SchemaType>() };
+                        a.Type = n.GetScalarValue().GetEnumFromDisplayName<SchemaType>();
                     }
-                    else
+                    if (n.GetType() == typeof(ListNode))
                     {
-                        a.Type = new List<SchemaType>(n.CreateSimpleList(n2 => n2.GetScalarValue().GetEnumFromDisplayName<SchemaType>()));
+                        SchemaType? initialValue = null;
+                        foreach (var node in n as ListNode)
+                        {
+                            if (initialValue == null)
+                            {
+                                initialValue = node.GetScalarValue().GetEnumFromDisplayName<SchemaType>();
+                                continue;
+                            }
+
+                            initialValue |= node.GetScalarValue().GetEnumFromDisplayName<SchemaType>();
+                        }
+
+                        a.Type = initialValue;
                     }
                 }
             },
@@ -37,14 +51,14 @@ namespace LEGO.AsyncAPI.Readers
                 "multipleOf",
                 (a, n) =>
                 {
-                    a.MultipleOf = decimal.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
+                    a.MultipleOf = double.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
                 }
             },
             {
                 "maximum",
                 (a, n) =>
                 {
-                    a.Maximum = decimal.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
+                    a.Maximum = double.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
                 }
             },
             {
@@ -54,7 +68,7 @@ namespace LEGO.AsyncAPI.Readers
                 "minimum",
                 (a, n) =>
                 {
-                    a.Minimum = decimal.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
+                    a.Minimum = double.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
                 }
             },
             {

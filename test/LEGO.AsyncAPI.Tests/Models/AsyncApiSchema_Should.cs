@@ -6,12 +6,226 @@ namespace LEGO.AsyncAPI.Tests.Models
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using FluentAssertions;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
     public class AsyncApiSchema_Should
     {
+        public static AsyncApiSchema BasicSchema = new AsyncApiSchema();
+
+        public static AsyncApiSchema AdvancedSchemaNumber = new AsyncApiSchema
+        {
+            Title = "title1",
+            MultipleOf = 3,
+            Maximum = 42,
+            ExclusiveMinimum = true,
+            Minimum = 10,
+            Default = new AsyncApiInteger(15),
+            Type = SchemaType.Integer,
+            Nullable = true,
+            ExternalDocs = new AsyncApiExternalDocumentation
+            {
+                Url = new Uri("http://example.com/externalDocs"),
+            },
+        };
+
+        public static AsyncApiSchema AdvancedSchemaBigNumbers = new AsyncApiSchema
+        {
+            Title = "title1",
+            MultipleOf = 3,
+            Maximum = double.MaxValue,
+            ExclusiveMinimum = true,
+            Minimum = double.MinValue,
+            Default = new AsyncApiInteger(15),
+            Type = SchemaType.Integer,
+            Nullable = true,
+            ExternalDocs = new AsyncApiExternalDocumentation
+            {
+                Url = new Uri("http://example.com/externalDocs"),
+            },
+        };
+
+        public static AsyncApiSchema AdvancedSchemaObject = new AsyncApiSchema
+        {
+            Title = "title1",
+            Properties = new Dictionary<string, AsyncApiSchema>
+            {
+                ["property1"] = new AsyncApiSchema
+                {
+                    Properties = new Dictionary<string, AsyncApiSchema>
+                    {
+                        ["property2"] = new AsyncApiSchema
+                        {
+                            Type = SchemaType.Integer,
+                        },
+                        ["property3"] = new AsyncApiSchema
+                        {
+                            Type = SchemaType.String,
+                            MaxLength = 15,
+                        },
+                    },
+                },
+                ["property4"] = new AsyncApiSchema
+                {
+                    Properties = new Dictionary<string, AsyncApiSchema>
+                    {
+                        ["property5"] = new AsyncApiSchema
+                        {
+                            Properties = new Dictionary<string, AsyncApiSchema>
+                            {
+                                ["property6"] = new AsyncApiSchema
+                                {
+                                    Type = SchemaType.Boolean ,
+                                },
+                            },
+                        },
+                        ["property7"] = new AsyncApiSchema
+                        {
+                            Type = SchemaType.String,
+                            MinLength = 2,
+                        },
+                    },
+                },
+            },
+            Nullable = true,
+            ExternalDocs = new AsyncApiExternalDocumentation
+            {
+                Url = new Uri("http://example.com/externalDocs"),
+            },
+        };
+
+        public static AsyncApiSchema AdvancedSchemaWithAllOf = new AsyncApiSchema
+        {
+            Title = "title1",
+            AllOf = new List<AsyncApiSchema>
+            {
+                new AsyncApiSchema
+                {
+                    Title = "title2",
+                    Properties = new Dictionary<string, AsyncApiSchema>
+                    {
+                        ["property1"] = new AsyncApiSchema
+                        {
+                            Type = SchemaType.Integer,
+                        },
+                        ["property2"] = new AsyncApiSchema
+                        {
+                            Type = SchemaType.String,
+                            MaxLength = 15,
+                        },
+                    },
+                },
+                new AsyncApiSchema
+                {
+                    Title = "title3",
+                    Properties = new Dictionary<string, AsyncApiSchema>
+                    {
+                        ["property3"] = new AsyncApiSchema
+                        {
+                            Properties = new Dictionary<string, AsyncApiSchema>
+                            {
+                                ["property4"] = new AsyncApiSchema
+                                {
+                                    Type = SchemaType.Boolean ,
+                                },
+                            },
+                        },
+                        ["property5"] = new AsyncApiSchema
+                        {
+                            Type = SchemaType.String,
+                            MinLength = 2,
+                        },
+                    },
+                    Nullable = true,
+                },
+            },
+            Nullable = true,
+            ExternalDocs = new AsyncApiExternalDocumentation
+            {
+                Url = new Uri("http://example.com/externalDocs"),
+            },
+        };
+
+        public static AsyncApiSchema ReferencedSchema = new AsyncApiSchema
+        {
+            Title = "title1",
+            MultipleOf = 3,
+            Maximum = 42,
+            ExclusiveMinimum = true,
+            Minimum = 10,
+            Default = new AsyncApiInteger(15),
+            Type = SchemaType.Integer,
+
+            Nullable = true,
+            ExternalDocs = new AsyncApiExternalDocumentation
+            {
+                Url = new Uri("http://example.com/externalDocs"),
+            },
+
+            Reference = new AsyncApiReference
+            {
+                Type = ReferenceType.Schema,
+                Id = "schemaObject1",
+            },
+        };
+
+        public static AsyncApiSchema AdvancedSchemaWithRequiredPropertiesObject = new AsyncApiSchema
+        {
+            Title = "title1",
+            Required = new HashSet<string>() { "property1" },
+            Properties = new Dictionary<string, AsyncApiSchema>
+            {
+                ["property1"] = new AsyncApiSchema
+                {
+                    Required = new HashSet<string>() { "property3" },
+                    Properties = new Dictionary<string, AsyncApiSchema>
+                    {
+                        ["property2"] = new AsyncApiSchema
+                        {
+                            Type = SchemaType.Integer,
+                        },
+                        ["property3"] = new AsyncApiSchema
+                        {
+                            Type = SchemaType.String,
+                            MaxLength = 15,
+                            ReadOnly = true,
+                        },
+                    },
+                    ReadOnly = true,
+                },
+                ["property4"] = new AsyncApiSchema
+                {
+                    Properties = new Dictionary<string, AsyncApiSchema>
+                    {
+                        ["property5"] = new AsyncApiSchema
+                        {
+                            Properties = new Dictionary<string, AsyncApiSchema>
+                            {
+                                ["property6"] = new AsyncApiSchema
+                                {
+                                    Type = SchemaType.Boolean ,
+                                },
+                            },
+                        },
+                        ["property7"] = new AsyncApiSchema
+                        {
+                            Type = SchemaType.String,
+                            MinLength = 2,
+                        },
+                    },
+                    ReadOnly = true,
+                },
+            },
+            Nullable = true,
+            ExternalDocs = new AsyncApiExternalDocumentation
+            {
+                Url = new Uri("http://example.com/externalDocs"),
+            },
+        };
+
         private string NoInlinedReferences =>
             @"asyncapi: '2.6.0'
 info:
@@ -77,6 +291,176 @@ channels:
               description: test
 components: { }";
 
+        [Test]
+        public void SerializeAsJson_WithBasicSchema_V2Works()
+        {
+            // Arrange
+            var expected = @"{ }";
+
+            // Act
+            var actual = BasicSchema.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
+
+            // Assert
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void SerializeAsJson_WithAdvancedSchemaNumber_V2Works()
+        {
+            // Arrange
+            var expected = @"{
+  ""title"": ""title1"",
+  ""type"": ""integer"",
+  ""maximum"": 42,
+  ""minimum"": 10,
+  ""exclusiveMinimum"": true,
+  ""multipleOf"": 3,
+  ""default"": 15,
+  ""nullable"": true,
+  ""externalDocs"": {
+    ""url"": ""http://example.com/externalDocs""
+  }
+}";
+
+            // Act
+            var actual = AdvancedSchemaNumber.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
+
+            // Assert
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void SerializeAsJson_WithAdvancedSchemaBigNumbers_V2Works()
+        {
+            // Arrange
+            var expected = @"{
+  ""title"": ""title1"",
+  ""type"": ""integer"",
+  ""maximum"": 1.7976931348623157E+308,
+  ""minimum"": -1.7976931348623157E+308,
+  ""exclusiveMinimum"": true,
+  ""multipleOf"": 3,
+  ""default"": 15,
+  ""nullable"": true,
+  ""externalDocs"": {
+    ""url"": ""http://example.com/externalDocs""
+  }
+}";
+
+            // Act
+            var actual = AdvancedSchemaBigNumbers.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
+
+            // Assert
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void SerializeAsJson_WithAdvancedSchemaObject_V2Works()
+        {
+            // Arrange
+            var expected = @"{
+  ""title"": ""title1"",
+  ""properties"": {
+    ""property1"": {
+      ""properties"": {
+        ""property2"": {
+          ""type"": ""integer""
+        },
+        ""property3"": {
+          ""type"": ""string"",
+          ""maxLength"": 15
+        }
+      }
+    },
+    ""property4"": {
+      ""properties"": {
+        ""property5"": {
+          ""properties"": {
+            ""property6"": {
+              ""type"": ""boolean""
+            }
+          }
+        },
+        ""property7"": {
+          ""type"": ""string"",
+          ""minLength"": 2
+        }
+      }
+    }
+  },
+  ""nullable"": true,
+  ""externalDocs"": {
+    ""url"": ""http://example.com/externalDocs""
+  }
+}";
+
+            // Act
+            var actual = AdvancedSchemaObject.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
+
+            // Assert
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void SerializeAsJson_WithAdvancedSchemaWithAllOf_V2Works()
+        {
+            // Arrange
+            var expected = @"{
+  ""title"": ""title1"",
+  ""allOf"": [
+    {
+      ""title"": ""title2"",
+      ""properties"": {
+        ""property1"": {
+          ""type"": ""integer""
+        },
+        ""property2"": {
+          ""type"": ""string"",
+          ""maxLength"": 15
+        }
+      }
+    },
+    {
+      ""title"": ""title3"",
+      ""properties"": {
+        ""property3"": {
+          ""properties"": {
+            ""property4"": {
+              ""type"": ""boolean""
+            }
+          }
+        },
+        ""property5"": {
+          ""type"": ""string"",
+          ""minLength"": 2
+        }
+      },
+      ""nullable"": true
+    }
+  ],
+  ""nullable"": true,
+  ""externalDocs"": {
+    ""url"": ""http://example.com/externalDocs""
+  }
+}";
+
+            // Act
+            var actual = AdvancedSchemaWithAllOf.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
+
+            // Assert
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
+            actual.Should().Be(expected);
+        }
+
         [Theory]
         [TestCase(true)]
         [TestCase(false)]
@@ -105,7 +489,7 @@ components: { }";
                         {
                             Payload = new AsyncApiSchema
                             {
-                                Type = new List<SchemaType> { SchemaType.Object },
+                                Type = SchemaType.Object,
                                 Required = new HashSet<string> { "testB" },
                                 Properties = new Dictionary<string, AsyncApiSchema>
                                 {
@@ -117,16 +501,16 @@ components: { }";
                     },
                 },
             })
-            .WithComponent("testD", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String }, Format = "uuid" })
+            .WithComponent("testD", new AsyncApiSchema() { Type = SchemaType.String, Format = "uuid" })
             .WithComponent("testC", new AsyncApiSchema()
             {
-                Type = new List<SchemaType> { SchemaType.Object },
+                Type = SchemaType.Object,
                 Properties = new Dictionary<string, AsyncApiSchema>
                 {
                     { "testD", new AsyncApiSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testD" } } },
                 },
             })
-            .WithComponent("testB", new AsyncApiSchema() { Description = "test", Type = new List<SchemaType> { SchemaType.Boolean } })
+            .WithComponent("testB", new AsyncApiSchema() { Description = "test", Type = SchemaType.Boolean  })
             .Build();
 
             var outputString = new StringWriter(CultureInfo.InvariantCulture);
@@ -175,7 +559,7 @@ components: { }";
         {
             var mainSchema = new AsyncApiSchema();
             var subSchema = new AsyncApiSchema();
-            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String } });
+            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = SchemaType.String });
             mainSchema.OneOf = new List<AsyncApiSchema>() { subSchema };
 
             var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
@@ -193,7 +577,7 @@ components: { }";
         {
             var mainSchema = new AsyncApiSchema();
             var subSchema = new AsyncApiSchema();
-            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String } });
+            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = SchemaType.String });
             mainSchema.AnyOf = new List<AsyncApiSchema>() { subSchema };
 
             var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
@@ -210,7 +594,7 @@ components: { }";
         {
             var mainSchema = new AsyncApiSchema();
             var subSchema = new AsyncApiSchema();
-            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = new List<SchemaType> { SchemaType.String } });
+            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = SchemaType.String });
             mainSchema.Not = subSchema;
 
             var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
