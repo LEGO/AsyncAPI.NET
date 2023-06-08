@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.Bindings
         }
 
         public IAsyncApiAny Value { get; }
-        
+
         public static StringOrStringList Parse(ParseNode node)
         {
             switch (node)
@@ -33,13 +33,13 @@ namespace LEGO.AsyncAPI.Bindings
 
                     return new StringOrStringList(asyncApiArray);
                 }
-                
+
                 default:
                     throw new ArgumentException($"An error occured while parsing a {nameof(StringOrStringList)} node. " +
                                                 $"Node should contain a string value or a list of strings.");
             }
         }
-        
+
         private static bool IsValidStringList(AsyncApiArray array)
         {
             return array.All(x => x is AsyncApiPrimitive<string>);
