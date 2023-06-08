@@ -545,13 +545,13 @@ components:
             })
             .WithComponent("lightMeasuredPayload", new AsyncApiSchema()
             {
-                Type = new List<SchemaType> { SchemaType.Object },
+                Type = SchemaType.Object,
                 Properties = new Dictionary<string, AsyncApiSchema>()
                 {
                     {
                         "lumens", new AsyncApiSchema()
                         {
-                            Type = new List<SchemaType> { SchemaType.Integer },
+                            Type = SchemaType.Integer,
                             Minimum = 0,
                             Description = "Light intensity measured in lumens.",
                         }
@@ -570,13 +570,13 @@ components:
             })
             .WithComponent("turnOnOffPayload", new AsyncApiSchema()
             {
-                Type = new List<SchemaType> { SchemaType.Object },
+                Type = SchemaType.Object,
                 Properties = new Dictionary<string, AsyncApiSchema>()
                 {
                     {
                         "command", new AsyncApiSchema()
                         {
-                            Type = new List<SchemaType> { SchemaType.String },
+                            Type = SchemaType.String,
                             Enum = new List<IAsyncApiAny>
                             {
                                 new AsyncApiString("on"),
@@ -599,13 +599,13 @@ components:
             })
             .WithComponent("dimLightPayload", new AsyncApiSchema()
             {
-                Type = new List<SchemaType> { SchemaType.Object },
+                Type = SchemaType.Object,
                 Properties = new Dictionary<string, AsyncApiSchema>()
                 {
                     {
                         "percentage", new AsyncApiSchema()
                         {
-                            Type = new List<SchemaType> { SchemaType.Integer },
+                            Type = SchemaType.Integer,
                             Description = "Percentage to which the light should be dimmed to.",
                             Minimum = 0,
                             Maximum = 100,
@@ -625,7 +625,7 @@ components:
             })
             .WithComponent("sentAt", new AsyncApiSchema()
             {
-                Type = new List<SchemaType> { SchemaType.String },
+                Type = SchemaType.String,
                 Format = "date-time",
                 Description = "Date and time when the message was sent.",
 
@@ -645,20 +645,20 @@ components:
                 Description = "The ID of the streetlight.",
                 Schema = new AsyncApiSchema()
                 {
-                    Type = new List<SchemaType> { SchemaType.String },
+                    Type = SchemaType.String,
                 },
             })
             .WithComponent("commonHeaders", new AsyncApiMessageTrait()
             {
                 Headers = new AsyncApiSchema()
                 {
-                    Type = new List<SchemaType> { SchemaType.Object },
+                    Type = SchemaType.Object,
                     Properties = new Dictionary<string, AsyncApiSchema>()
                     {
                         {
                             "my-app-header", new AsyncApiSchema()
                             {
-                                Type = new List<SchemaType> { SchemaType.Integer },
+                                Type = SchemaType.Integer,
                                 Minimum = 0,
                                 Maximum = 100,
                             }
@@ -675,7 +675,7 @@ components:
                         {
                             ClientId = new AsyncApiSchema()
                             {
-                                Type = new List<SchemaType> { SchemaType.String },
+                                Type = SchemaType.String,
                                 Enum = new List<IAsyncApiAny>
                                 {
                                     new AsyncApiString("my-app-id"),
