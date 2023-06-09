@@ -1,14 +1,10 @@
 namespace LEGO.AsyncAPI.Bindings.Sns
 {
-    using LEGO.AsyncAPI.Models.Interfaces;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using LEGO.AsyncAPI.Bindings;
-    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
-    using YamlDotNet.Core.Tokens;
 
     /// <summary>
     /// Binding class for SNS channel settings.

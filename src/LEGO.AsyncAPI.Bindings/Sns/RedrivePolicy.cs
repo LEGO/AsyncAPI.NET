@@ -1,10 +1,9 @@
 namespace LEGO.AsyncAPI.Bindings.Sns
 {
     using System;
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
-    using System.Collections.Generic;
-
 
     public class RedrivePolicy : IAsyncApiExtensible
     {
@@ -17,7 +16,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// The number of times a message is delivered to the source queue before being moved to the dead-letter queue.
         /// </summary>
         public int? MaxReceiveCount { get; set; }
-        
+
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public void Serialize(IAsyncApiWriter writer)

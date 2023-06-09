@@ -1,10 +1,10 @@
 namespace LEGO.AsyncAPI.Bindings.Sns
 {
     using System;
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Attributes;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
-    using System.Collections.Generic;
 
     public class Consumer : IAsyncApiExtensible
     {
@@ -42,7 +42,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// The display name to use with an SNS subscription
         /// </summary>
         public string DisplayName { get; set; }
-        
+
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public void Serialize(IAsyncApiWriter writer)

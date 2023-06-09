@@ -1,10 +1,9 @@
 namespace LEGO.AsyncAPI.Bindings.Sns
 {
     using System;
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
-    using System.Collections.Generic;
-
 
     public class Identifier : IAsyncApiExtensible
     {
@@ -17,7 +16,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         public string Arn { get; set; }
 
         public string Name { get; set; }
-        
+
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public void Serialize(IAsyncApiWriter writer)

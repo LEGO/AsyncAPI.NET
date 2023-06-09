@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// The SNS permission being allowed or denied e.g. sns:Publish
         /// </summary>
         public StringOrStringList Action { get; set; }
-        
+
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public void Serialize(IAsyncApiWriter writer)
