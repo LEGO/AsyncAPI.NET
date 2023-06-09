@@ -3,8 +3,10 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     using System;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+    using System.Collections.Generic;
 
-    public class RedrivePolicy : IAsyncApiElement
+
+    public class RedrivePolicy : IAsyncApiExtensible
     {
         /// <summary>
         /// Prevent poison pill messages by moving un-processable messages to an SQS dead letter queue.
@@ -15,7 +17,9 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// The number of times a message is delivered to the source queue before being moved to the dead-letter queue.
         /// </summary>
         public int? MaxReceiveCount { get; set; }
-    
+        
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+
         public void Serialize(IAsyncApiWriter writer)
         {
             if (writer is null)
@@ -26,6 +30,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             writer.WriteStartObject();
             writer.WriteRequiredObject("deadLetterQueue", this.DeadLetterQueue, (w, q) => q.Serialize(w));
             writer.WriteOptionalProperty("maxReceiveCount", this.MaxReceiveCount);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

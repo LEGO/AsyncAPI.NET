@@ -4,8 +4,9 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     using LEGO.AsyncAPI.Attributes;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+    using System.Collections.Generic;
 
-    public class Consumer : IAsyncApiElement
+    public class Consumer : IAsyncApiExtensible
     {
         /// <summary>
         /// What protocol will this endpoint receive messages by?
@@ -41,6 +42,8 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// The display name to use with an SNS subscription
         /// </summary>
         public string DisplayName { get; set; }
+        
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public void Serialize(IAsyncApiWriter writer)
         {
@@ -57,6 +60,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             writer.WriteOptionalObject("redrivePolicy", this.RedrivePolicy, (w, p) => p.Serialize(w));
             writer.WriteOptionalObject("deliveryPolicy", this.DeliveryPolicy, (w, p) => p.Serialize(w));
             writer.WriteOptionalProperty("displayName", this.DisplayName);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

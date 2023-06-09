@@ -4,8 +4,9 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     using LEGO.AsyncAPI.Attributes;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+    using System.Collections.Generic;
 
-    public class Ordering : IAsyncApiElement
+    public class Ordering : IAsyncApiExtensible
     {
         /// <summary>
         /// What type of SNS Topic is this?
@@ -16,6 +17,8 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// True to turn on de-duplication of messages for a channel.
         /// </summary>
         public bool ContentBasedDeduplication { get; set; }
+
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
     
         public void Serialize(IAsyncApiWriter writer)
         {
@@ -27,6 +30,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             writer.WriteStartObject();
             writer.WriteRequiredProperty("type", this.Type.GetDisplayName());
             writer.WriteOptionalProperty("contentBasedDeduplication", this.ContentBasedDeduplication);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

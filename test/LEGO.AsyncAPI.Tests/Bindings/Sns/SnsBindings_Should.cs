@@ -1,5 +1,6 @@
 using System;
 using LEGO.AsyncAPI.Models.Any;
+using LEGO.AsyncAPI.Models.Interfaces;
 using BindingsCollection = LEGO.AsyncAPI.Bindings.BindingsCollection;
 
 namespace LEGO.AsyncAPI.Tests.Bindings.Sns
@@ -18,13 +19,15 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
         public void SnsChannelBinding_WithFilledObject_SerializesAndDeserializes()
         {
             // Arrange
-            var expected = 
+            var expected =
                 @"bindings:
   sns:
     name: myTopic
     ordering:
       type: FIFO
       contentBasedDeduplication: true
+      x-orderingExtension:
+        orderingXPropertyName: orderingXPropertyValue
     policy:
       statements:
         - effect: Deny
@@ -37,9 +40,15 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             - arn:aws:iam::123456789012:user/alex.wichmann
             - arn:aws:iam::123456789012:user/dec.kolakowski
           action: sns:Create
+          x-statementExtension:
+            statementXPropertyName: statementXPropertyValue
+      x-policyExtension:
+        policyXPropertyName: policyXPropertyValue
     tags:
       owner: AsyncAPI.NET
-      platform: AsyncAPIOrg";
+      platform: AsyncAPIOrg
+    x-bindingExtension:
+      bindingXPropertyName: bindingXPropertyValue";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new SnsChannelBinding()
@@ -49,6 +58,16 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                 {
                     Type = OrderingType.Fifo,
                     ContentBasedDeduplication = true,
+                    Extensions = new Dictionary<string, IAsyncApiExtension>()
+                    {
+                        {
+                            "x-orderingExtension",
+                            new AsyncApiObject()
+                            {
+                                { "orderingXPropertyName", new AsyncApiString("orderingXPropertyValue") },
+                            }
+                        },
+                    },
                 },
                 Policy = new Policy()
                 {
@@ -85,6 +104,26 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             {
                                 StringValue = "sns:Create",
                             },
+                            Extensions = new Dictionary<string, IAsyncApiExtension>()
+                            {
+                                {
+                                    "x-statementExtension",
+                                    new AsyncApiObject()
+                                    {
+                                        { "statementXPropertyName", new AsyncApiString("statementXPropertyValue") },
+                                    }
+                                },
+                            },
+                        },
+                    },
+                    Extensions = new Dictionary<string, IAsyncApiExtension>()
+                    {
+                        {
+                            "x-policyExtension",
+                            new AsyncApiObject()
+                            {
+                                { "policyXPropertyName", new AsyncApiString("policyXPropertyValue") },
+                            }
                         },
                     },
                 },
@@ -92,6 +131,16 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                 {
                     { "owner", "AsyncAPI.NET" },
                     { "platform", "AsyncAPIOrg" },
+                },
+                Extensions = new Dictionary<string, IAsyncApiExtension>()
+                {
+                    {
+                        "x-bindingExtension",
+                        new AsyncApiObject()
+                        {
+                            { "bindingXPropertyName", new AsyncApiString("bindingXPropertyValue") },
+                        }
+                    },
                 },
             });
 
@@ -121,10 +170,14 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
   sns:
     topic:
       name: someTopic
+      x-identifierExtension:
+        identifierXPropertyName: identifierXPropertyValue
     consumers:
       - protocol: sqs
         endpoint:
           name: someQueue
+          x-identifierExtension:
+            identifierXPropertyName: identifierXPropertyValue
         filterPolicy:
           attributes:
             store:
@@ -138,11 +191,17 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
               - rugby
               - football
               - baseball
+          x-filterPolicyExtension:
+            filterPolicyXPropertyName: filterPolicyXPropertyValue
         rawMessageDelivery: false
         redrivePolicy:
           deadLetterQueue:
             arn: arn:aws:SQS:eu-west-1:0000000:123456789
+            x-identifierExtension:
+              identifierXPropertyName: identifierXPropertyValue
           maxReceiveCount: 25
+          x-redrivePolicyExtension:
+            redrivePolicyXPropertyName: redrivePolicyXPropertyValue
         deliveryPolicy:
           minDelayTarget: 10
           maxDelayTarget: 100
@@ -152,6 +211,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
           numMaxDelayRetries: 5
           backoffFunction: linear
           maxReceivesPerSecond: 2
+          x-deliveryPolicyExtension:
+            deliveryPolicyXPropertyName: deliveryPolicyXPropertyValue
+        x-consumerExtension:
+          consumerXPropertyName: consumerXPropertyValue
     deliveryPolicy:
       minDelayTarget: 10
       maxDelayTarget: 100
@@ -160,7 +223,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
       numMinDelayRetries: 3
       numMaxDelayRetries: 5
       backoffFunction: geometric
-      maxReceivesPerSecond: 10";
+      maxReceivesPerSecond: 10
+      x-deliveryPolicyExtension:
+        deliveryPolicyXPropertyName: deliveryPolicyXPropertyValue
+    x-bindingExtension:
+      bindingXPropertyName: bindingXPropertyValue";
 
             var operation = new AsyncApiOperation();
             operation.Bindings.Add(new SnsOperationBinding()
@@ -168,6 +235,16 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                 Topic = new Identifier()
                 {
                     Name = "someTopic",
+                    Extensions = new Dictionary<string, IAsyncApiExtension>()
+                    {
+                        {
+                            "x-identifierExtension",
+                            new AsyncApiObject()
+                            {
+                                { "identifierXPropertyName", new AsyncApiString("identifierXPropertyValue") },
+                            }
+                        },
+                    },
                 },
                 Consumers = new List<Consumer>()
                 {
@@ -177,6 +254,16 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         Endpoint = new Identifier()
                         {
                             Name = "someQueue",
+                            Extensions = new Dictionary<string, IAsyncApiExtension>()
+                            {
+                                {
+                                    "x-identifierExtension",
+                                    new AsyncApiObject()
+                                    {
+                                        { "identifierXPropertyName", new AsyncApiString("identifierXPropertyValue") },
+                                    }
+                                },
+                            },
                         },
                         FilterPolicy = new FilterPolicy()
                         {
@@ -208,15 +295,45 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                     }
                                 },
                             },
+                            Extensions = new Dictionary<string, IAsyncApiExtension>()
+                            {
+                                {
+                                    "x-filterPolicyExtension",
+                                    new AsyncApiObject()
+                                    {
+                                        { "filterPolicyXPropertyName", new AsyncApiString("filterPolicyXPropertyValue") },
+                                    }
+                                },
+                            },
                         },
                         RawMessageDelivery = false,
                         RedrivePolicy = new RedrivePolicy()
                         {
                             DeadLetterQueue = new Identifier()
                             {
-                                Arn = "arn:aws:SQS:eu-west-1:0000000:123456789"
+                                Arn = "arn:aws:SQS:eu-west-1:0000000:123456789",
+                                Extensions = new Dictionary<string, IAsyncApiExtension>()
+                                {
+                                    {
+                                        "x-identifierExtension",
+                                        new AsyncApiObject()
+                                        {
+                                            { "identifierXPropertyName", new AsyncApiString("identifierXPropertyValue") },
+                                        }
+                                    },
+                                },
                             },
                             MaxReceiveCount = 25,
+                            Extensions = new Dictionary<string, IAsyncApiExtension>()
+                            {
+                                {
+                                    "x-redrivePolicyExtension",
+                                    new AsyncApiObject()
+                                    {
+                                        { "redrivePolicyXPropertyName", new AsyncApiString("redrivePolicyXPropertyValue") },
+                                    }
+                                },
+                            },
                         },
                         DeliveryPolicy = new DeliveryPolicy()
                         {
@@ -228,6 +345,26 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             NumMaxDelayRetries = 5,
                             BackoffFunction = BackoffFunction.Linear,
                             MaxReceivesPerSecond = 2,
+                            Extensions = new Dictionary<string, IAsyncApiExtension>()
+                            {
+                                {
+                                    "x-deliveryPolicyExtension",
+                                    new AsyncApiObject()
+                                    {
+                                        { "deliveryPolicyXPropertyName", new AsyncApiString("deliveryPolicyXPropertyValue") },
+                                    }
+                                },
+                            },
+                        },
+                        Extensions = new Dictionary<string, IAsyncApiExtension>()
+                        {
+                            {
+                                "x-consumerExtension",
+                                new AsyncApiObject()
+                                {
+                                    { "consumerXPropertyName", new AsyncApiString("consumerXPropertyValue") },
+                                }
+                            },
                         },
                     },
                 },
@@ -241,6 +378,26 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                     NumMaxDelayRetries = 5,
                     BackoffFunction = BackoffFunction.Geometric,
                     MaxReceivesPerSecond = 10,
+                    Extensions = new Dictionary<string, IAsyncApiExtension>()
+                    {
+                        {
+                            "x-deliveryPolicyExtension",
+                            new AsyncApiObject()
+                            {
+                                { "deliveryPolicyXPropertyName", new AsyncApiString("deliveryPolicyXPropertyValue") },
+                            }
+                        },
+                    },
+                },
+                Extensions = new Dictionary<string, IAsyncApiExtension>()
+                {
+                    {
+                        "x-bindingExtension",
+                        new AsyncApiObject()
+                        {
+                            { "bindingXPropertyName", new AsyncApiString("bindingXPropertyValue") },
+                        }
+                    },
                 },
             });
 

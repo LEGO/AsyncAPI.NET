@@ -40,8 +40,8 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         protected override FixedFieldMap<SnsChannelBinding> FixedFieldMap => new()
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
-            { "type", (a, n) => { a.Ordering = n.ParseMap(this.orderingFixedFields); } },
-            { "policy", (a, n) => { a.Policy = n.ParseMap(this.policyFixedFields); } },
+            { "type", (a, n) => { a.Ordering = n.ParseMapWithExtensions(this.orderingFixedFields); } },
+            { "policy", (a, n) => { a.Policy = n.ParseMapWithExtensions(this.policyFixedFields); } },
             { "tags", (a, n) => { a.Tags = n.CreateSimpleMap(s => s.GetScalarValue()); } },
         };
 
@@ -53,7 +53,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
 
         private FixedFieldMap<Policy> policyFixedFields = new()
         {
-            { "statements", (a, n) => { a.Statements = n.CreateList(s => s.ParseMap(statementFixedFields)); } },
+            { "statements", (a, n) => { a.Statements = n.CreateList(s => s.ParseMapWithExtensions(statementFixedFields)); } },
         };
 
         private static FixedFieldMap<Statement> statementFixedFields = new()
@@ -91,6 +91,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             writer.WriteOptionalObject("ordering", this.Ordering, (w, t) => t.Serialize(w));
             writer.WriteOptionalObject("policy", this.Policy, (w, t) => t.Serialize(w));
             writer.WriteOptionalMap("tags", this.Tags, (w, t) => w.WriteValue(t));
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

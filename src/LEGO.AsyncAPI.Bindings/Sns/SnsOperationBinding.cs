@@ -30,9 +30,9 @@ namespace LEGO.AsyncAPI.Bindings.Sns
 
         protected override FixedFieldMap<SnsOperationBinding> FixedFieldMap => new()
         {
-            { "topic", (a, n) => { a.Topic = n.ParseMap(this.identifierFixFields); } },
-            { "consumers", (a, n) => { a.Consumers = n.CreateList(s => s.ParseMap(this.consumerFixedFields)); } },
-            { "deliveryPolicy", (a, n) => { a.DeliveryPolicy = n.ParseMap(this.deliveryPolicyFixedFields); } },
+            { "topic", (a, n) => { a.Topic = n.ParseMapWithExtensions(this.identifierFixFields); } },
+            { "consumers", (a, n) => { a.Consumers = n.CreateList(s => s.ParseMapWithExtensions(this.consumerFixedFields)); } },
+            { "deliveryPolicy", (a, n) => { a.DeliveryPolicy = n.ParseMapWithExtensions(this.deliveryPolicyFixedFields); } },
         };
 
         private FixedFieldMap<Identifier> identifierFixFields => new()
@@ -47,11 +47,11 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         private FixedFieldMap<Consumer> consumerFixedFields => new ()
         {
             { "protocol", (a, n) => { a.Protocol = n.GetScalarValue().GetEnumFromDisplayName<Protocol>(); } },
-            { "endpoint", (a, n) => { a.Endpoint = n.ParseMap(this.identifierFixFields); } },
-            { "filterPolicy", (a, n) => { a.FilterPolicy = n.ParseMap(this.filterPolicyFixedFields); } },
+            { "endpoint", (a, n) => { a.Endpoint = n.ParseMapWithExtensions(this.identifierFixFields); } },
+            { "filterPolicy", (a, n) => { a.FilterPolicy = n.ParseMapWithExtensions(this.filterPolicyFixedFields); } },
             { "rawMessageDelivery", (a, n) => { a.RawMessageDelivery = n.GetBooleanValue(); } },
-            { "redrivePolicy", (a, n) => { a.RedrivePolicy = n.ParseMap(this.redrivePolicyFixedFields); } },
-            { "deliveryPolicy", (a, n) => { a.DeliveryPolicy = n.ParseMap(this.deliveryPolicyFixedFields); } },
+            { "redrivePolicy", (a, n) => { a.RedrivePolicy = n.ParseMapWithExtensions(this.redrivePolicyFixedFields); } },
+            { "deliveryPolicy", (a, n) => { a.DeliveryPolicy = n.ParseMapWithExtensions(this.deliveryPolicyFixedFields); } },
             { "displayName", (a, n) => { a.DisplayName = n.GetScalarValue(); } },
         };
 
@@ -62,7 +62,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
 
         private FixedFieldMap<RedrivePolicy> redrivePolicyFixedFields => new()
         {
-            { "deadLetterQueue", (a, n) => { a.DeadLetterQueue = n.ParseMap(identifierFixFields); } },
+            { "deadLetterQueue", (a, n) => { a.DeadLetterQueue = n.ParseMapWithExtensions(identifierFixFields); } },
             { "maxReceiveCount", (a, n) => { a.MaxReceiveCount = n.GetIntegerValue(); } },
         };
 
@@ -89,6 +89,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             writer.WriteOptionalObject("topic", this.Topic, (w, t) => t.Serialize(w));
             writer.WriteOptionalCollection("consumers", this.Consumers, (w, c) => c.Serialize(w));
             writer.WriteOptionalObject("deliveryPolicy", this.DeliveryPolicy, (w, p) => p.Serialize(w));
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

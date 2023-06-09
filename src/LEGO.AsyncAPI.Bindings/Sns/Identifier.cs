@@ -3,8 +3,10 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     using System;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+    using System.Collections.Generic;
 
-    public class Identifier : IAsyncApiElement
+
+    public class Identifier : IAsyncApiExtensible
     {
         public string Url { get; set; }
 
@@ -15,6 +17,8 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         public string Arn { get; set; }
 
         public string Name { get; set; }
+        
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public void Serialize(IAsyncApiWriter writer)
         {
@@ -29,6 +33,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             writer.WriteOptionalProperty("phone", this.Phone);
             writer.WriteOptionalProperty("arn", this.Arn);
             writer.WriteOptionalProperty("name", this.Name);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

@@ -4,8 +4,9 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     using LEGO.AsyncAPI.Attributes;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+    using System.Collections.Generic;
     
-    public class DeliveryPolicy : IAsyncApiElement
+    public class DeliveryPolicy : IAsyncApiExtensible
     {
         /// <summary>
         /// The minimum delay for a retry in seconds.
@@ -46,6 +47,8 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// The maximum number of deliveries per second, per subscription.
         /// </summary>
         public int? MaxReceivesPerSecond { get; set; }
+        
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public void Serialize(IAsyncApiWriter writer)
         {
@@ -63,6 +66,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             writer.WriteOptionalProperty("numMaxDelayRetries", this.NumMaxDelayRetries);
             writer.WriteOptionalProperty("backoffFunction", this.BackoffFunction.GetDisplayName());
             writer.WriteOptionalProperty("maxReceivesPerSecond", this.MaxReceivesPerSecond);
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }

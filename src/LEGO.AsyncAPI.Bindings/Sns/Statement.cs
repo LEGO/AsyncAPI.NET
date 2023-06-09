@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public class Statement : IAsyncApiElement
+    public class Statement : IAsyncApiExtensible
     {
 
         public Effect Effect { get; set; }
@@ -22,6 +22,8 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// The SNS permission being allowed or denied e.g. sns:Publish
         /// </summary>
         public StringOrStringList Action { get; set; }
+        
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public void Serialize(IAsyncApiWriter writer)
         {
@@ -34,6 +36,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             writer.WriteRequiredProperty("effect", this.Effect.GetDisplayName());
             writer.WriteRequiredObject("principal", this.Principal, (w, t) => t.Serialize(w));
             writer.WriteRequiredObject("action", this.Action, (w, t) => t.Serialize(w));
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }
