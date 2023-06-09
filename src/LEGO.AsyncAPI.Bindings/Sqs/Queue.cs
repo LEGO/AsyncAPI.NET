@@ -1,6 +1,3 @@
-using LEGO.AsyncAPI.Readers;
-using LEGO.AsyncAPI.Readers.ParseNodes;
-
 namespace LEGO.AsyncAPI.Bindings.Sqs
 {
     using System;
@@ -9,6 +6,8 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
     using Extensions;
+    using LEGO.AsyncAPI.Readers;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
 
     public class Queue : IAsyncApiExtensible
     {

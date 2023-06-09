@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-
 namespace LEGO.AsyncAPI.Bindings.Sqs
 {
     using System;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+    using System.Collections.Generic;
 
     public class RedrivePolicy : IAsyncApiExtensible
     {

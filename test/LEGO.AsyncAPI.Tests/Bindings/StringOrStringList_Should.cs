@@ -11,10 +11,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
-    
+
     public class StringOrStringList_Should
     {
-    
+
         [Test]
         public void StringOrStringList_IsInitialised_WhenPassedStringOrStringList()
         {
@@ -87,9 +87,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
             // Assert
             Assert.AreEqual(expected, actual);
-            binding.Should().BeEquivalentTo(channel); 
+            binding.Should().BeEquivalentTo(channel);
         }
-    
+
         [Test]
         public void StringOrStringList_WhenValueIsStringList_SerializesDeserializes()
         {
@@ -108,7 +108,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
                 {
                     new AsyncApiString("someValue01"),
                     new AsyncApiString("someValue02"),
-                    new AsyncApiString("someValue03")
+                    new AsyncApiString("someValue03"),
                 }),
             });
 
@@ -125,7 +125,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
             // Assert
             Assert.AreEqual(expected, actual);
-            binding.Should().BeEquivalentTo(channel); 
+            binding.Should().BeEquivalentTo(channel);
         }
     }
 
