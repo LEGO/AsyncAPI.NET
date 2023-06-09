@@ -8,12 +8,12 @@ namespace LEGO.AsyncAPI.Expressions
     public sealed class BodyExpression : SourceExpression
     {
         /// <summary>
-        /// body string
+        /// body string.
         /// </summary>
         public const string Body = "body";
 
         /// <summary>
-        /// Prefix for a pointer
+        /// Prefix for a pointer.
         /// </summary>
         public const string PointerPrefix = "#";
 

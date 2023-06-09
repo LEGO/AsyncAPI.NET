@@ -27,7 +27,7 @@ namespace LEGO.AsyncAPI.Bindings.WebSockets
 
        public override  string BindingKey => "websockets";
 
-        protected override FixedFieldMap<WebSocketsChannelBinding> FixedFieldMap => new()
+        protected override FixedFieldMap<WebSocketsChannelBinding> FixedFieldMap => new ()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "method", (a, n) => { a.Method = n.GetScalarValue(); } },

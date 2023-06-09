@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// The wrapper either for <see cref="IAsyncApiAny"/> or <see cref="RuntimeExpression"/>
+    /// The wrapper either for <see cref="IAsyncApiAny"/> or <see cref="RuntimeExpression"/>.
     /// </summary>
     public class RuntimeExpressionAnyWrapper : IAsyncApiElement
     {
@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Models
         private RuntimeExpression expression;
 
         /// <summary>
-        /// Gets/Sets the <see cref="IAsyncApiAny"/>
+        /// Gets/Sets the <see cref="IAsyncApiAny"/>.
         /// </summary>
         public IAsyncApiAny Any
         {
@@ -32,7 +32,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Gets/Set the <see cref="RuntimeExpression"/>
+        /// Gets/Set the <see cref="RuntimeExpression"/>.
         /// </summary>
         public RuntimeExpression Expression
         {
@@ -49,7 +49,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Write <see cref="RuntimeExpressionAnyWrapper"/>
+        /// Write <see cref="RuntimeExpressionAnyWrapper"/>.
         /// </summary>
         public void WriteValue(IAsyncApiWriter writer)
         {

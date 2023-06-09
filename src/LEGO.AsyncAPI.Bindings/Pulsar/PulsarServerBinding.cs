@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
 
         public override string BindingKey => "pulsar";
 
-        protected override FixedFieldMap<PulsarServerBinding> FixedFieldMap => new()
+        protected override FixedFieldMap<PulsarServerBinding> FixedFieldMap => new ()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "tenant", (a, n) => { a.Tenant = n.GetScalarValue(); } },

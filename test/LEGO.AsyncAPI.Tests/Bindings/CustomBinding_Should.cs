@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Tests.Bindings
 {
     using System.Collections.Generic;
-    using Extensions;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Models;
@@ -20,7 +19,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        public static FixedFieldMap<NestedConfiguration> fixedFieldMap = new()
+        public static FixedFieldMap<NestedConfiguration> FixedFieldMap = new ()
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
         };
@@ -49,7 +48,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "custom", (a, n) => { a.Custom = n.GetScalarValue(); } },
             { "any", (a, n) => { a.Any = n.CreateAny(); } },
-            { "nestedConfiguration", (a, n) => { a.NestedConfiguration = n.ParseMapWithExtensions(NestedConfiguration.fixedFieldMap); } },
+            { "nestedConfiguration", (a, n) => { a.NestedConfiguration = n.ParseMapWithExtensions(NestedConfiguration.FixedFieldMap); } },
         };
 
         public override void SerializeProperties(IAsyncApiWriter writer)

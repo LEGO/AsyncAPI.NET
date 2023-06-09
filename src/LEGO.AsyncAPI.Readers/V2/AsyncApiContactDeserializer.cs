@@ -13,14 +13,14 @@ namespace LEGO.AsyncAPI.Readers
     /// </summary>
     internal static partial class AsyncApiV2Deserializer
     {
-        private static FixedFieldMap<AsyncApiContact> contactFixedFields = new()
+        private static FixedFieldMap<AsyncApiContact> contactFixedFields = new ()
         {
             { "name", (o, n) => { o.Name = n.GetScalarValue(); } },
             { "email", (o, n) => { o.Email = n.GetScalarValue(); } },
             { "url", (o, n) => { o.Url = new Uri(n.GetScalarValue(), UriKind.RelativeOrAbsolute); } },
         };
 
-        private static PatternFieldMap<AsyncApiContact> contactPatternFields = new()
+        private static PatternFieldMap<AsyncApiContact> contactPatternFields = new ()
         {
             { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, LoadExtension(p, n)) },
         };

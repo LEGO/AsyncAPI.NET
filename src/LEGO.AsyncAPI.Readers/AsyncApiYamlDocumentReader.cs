@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.Readers
     using YamlDotNet.RepresentationModel;
 
     /// <summary>
-    /// Service class for converting contents of TextReader into AsyncApiDocument instances
+    /// Service class for converting contents of TextReader into AsyncApiDocument instances.
     /// </summary>
     internal class AsyncApiYamlDocumentReader : IAsyncApiReader<YamlDocument, AsyncApiDiagnostic>
     {
@@ -33,8 +33,8 @@ namespace LEGO.AsyncAPI.Readers
         /// Reads the stream input and parses it into an AsyncApi document.
         /// </summary>
         /// <param name="input">TextReader containing AsyncApi description to parse.</param>
-        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing</param>
-        /// <returns>Instance of newly created AsyncApiDocument</returns>
+        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing.</param>
+        /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public AsyncApiDocument Read(YamlDocument input, out AsyncApiDiagnostic diagnostic)
         {
             diagnostic = new AsyncApiDiagnostic();
@@ -133,14 +133,13 @@ namespace LEGO.AsyncAPI.Readers
             }
         }
 
-
         /// <summary>
         /// Reads the stream input and parses the fragment of an AsyncApi description into an AsyncApi Element.
         /// </summary>
         /// <param name="input">TextReader containing AsyncApi description to parse.</param>
         /// <param name="version">Version of the AsyncApi specification that the fragment conforms to.</param>
-        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing</param>
-        /// <returns>Instance of newly created AsyncApiDocument</returns>
+        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing.</param>
+        /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public T ReadFragment<T>(YamlDocument input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic)
             where T : IAsyncApiElement
         {

@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Models
 {
     using System;
-    using System.Collections.Generic;
     using LEGO.AsyncAPI.Attributes;
 
     [Flags]
@@ -29,19 +28,5 @@ namespace LEGO.AsyncAPI.Models
 
         [Display("integer")]
         Integer = 64,
-    }
-
-    public static class SchemaTypeHelpers
-    {
-        public static IEnumerable<SchemaType> GetFlags(SchemaType input)
-        {
-            foreach (SchemaType value in System.Enum.GetValues(input.GetType()))
-            {
-                if (input.HasFlag(value))
-                {
-                    yield return value;
-                }
-            }
-        }
     }
 }

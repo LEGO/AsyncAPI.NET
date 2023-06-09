@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Services
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// This class is used to walk an AsyncApiDocument and convert unresolved references to references to populated objects
+    /// This class is used to walk an AsyncApiDocument and convert unresolved references to references to populated objects.
     /// </summary>
     internal class AsyncApiReferenceResolver : AsyncApiVisitorBase
     {
@@ -119,7 +119,7 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
-        /// Resolve all references to parameters
+        /// Resolve all references to parameters.
         /// </summary>
         public override void Visit(IList<AsyncApiParameter> parameters)
         {
@@ -127,7 +127,7 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
-        /// Resolve all references used in a parameter
+        /// Resolve all references used in a parameter.
         /// </summary>
         public override void Visit(AsyncApiParameter parameter)
         {
@@ -135,7 +135,7 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
-        /// Resolve all references used in a schema
+        /// Resolve all references used in a schema.
         /// </summary>
         public override void Visit(AsyncApiSchema schema)
         {

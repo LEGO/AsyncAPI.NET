@@ -13,7 +13,6 @@ namespace LEGO.AsyncAPI.Readers.Services
         private readonly Uri baseUrl;
         private HttpClient httpClient = new HttpClient();
 
-
         public DefaultStreamLoader(Uri baseUrl)
         {
             this.baseUrl = baseUrl;

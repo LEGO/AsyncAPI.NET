@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// AsyncApi Float
+    /// AsyncApi Float.
     /// </summary>
     public class AsyncApiFloat : AsyncApiPrimitive<float>
     {
