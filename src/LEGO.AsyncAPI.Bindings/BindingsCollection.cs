@@ -1,6 +1,7 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 using LEGO.AsyncAPI.Bindings.Sns;
+using LEGO.AsyncAPI.Bindings.Sqs;
 
 namespace LEGO.AsyncAPI.Bindings
 {
@@ -68,6 +69,12 @@ namespace LEGO.AsyncAPI.Bindings
         {
             new PulsarServerBinding(),
             new PulsarChannelBinding(),
+        };
+
+        public static IEnumerable<IBindingParser<IBinding>> Sqs => new List<IBindingParser<IBinding>>
+        {
+            new SqsChannelBinding(),
+            new SqsOperationBinding(),
         };
         
         public static IEnumerable<IBindingParser<IBinding>> Sns => new List<IBindingParser<IBinding>>
