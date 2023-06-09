@@ -1,8 +1,4 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-using LEGO.AsyncAPI.Bindings.Sns;
-using LEGO.AsyncAPI.Bindings.Sqs;
-
 namespace LEGO.AsyncAPI.Bindings
 {
     using System;
@@ -10,6 +6,8 @@ namespace LEGO.AsyncAPI.Bindings
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Bindings.Pulsar;
+    using LEGO.AsyncAPI.Bindings.Sns;
+    using LEGO.AsyncAPI.Bindings.Sqs;
     using LEGO.AsyncAPI.Bindings.WebSockets;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
@@ -44,6 +42,8 @@ namespace LEGO.AsyncAPI.Bindings
             Kafka,
             Http,
             Websockets,
+            Sqs,
+            Sns,
         };
 
         public static IEnumerable<IBindingParser<IBinding>> Http => new List<IBindingParser<IBinding>>
@@ -76,7 +76,7 @@ namespace LEGO.AsyncAPI.Bindings
             new SqsChannelBinding(),
             new SqsOperationBinding(),
         };
-        
+
         public static IEnumerable<IBindingParser<IBinding>> Sns => new List<IBindingParser<IBinding>>
         {
             new SnsChannelBinding(),
