@@ -13,11 +13,6 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
     public class Queue : IAsyncApiExtensible
     {
         /// <summary>
-        /// Allows for an external definition of a queue. The referenced structure MUST be in the format of a Queue. If there are conflicts between the referenced definition and this Queue's definition, the behavior is undefined.
-        /// </summary>
-        public string DollarRef { get; set; }
-
-        /// <summary>
         /// The name of the queue. When an SNS Operation Binding Object references an SQS queue by name, the identifier should be the one in this field.
         /// </summary>
         public string Name { get; set; }
@@ -72,7 +67,6 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
             }
 
             writer.WriteStartObject();
-            writer.WriteOptionalProperty(AsyncApiConstants.DollarRef, this.DollarRef);
             writer.WriteRequiredProperty("name", this.Name);
             writer.WriteOptionalProperty("fifoQueue", this.FifoQueue);
             writer.WriteOptionalProperty("deliveryDelay", this.DeliveryDelay);
