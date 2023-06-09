@@ -1,13 +1,13 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Bindings.Kafka;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using NUnit.Framework;
-using System.Collections.Generic;
-
 namespace LEGO.AsyncAPI.Tests.Models
 {
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Bindings.Kafka;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using NUnit.Framework;
+
     internal class AsyncApiServer_Should
     {
         [Test]

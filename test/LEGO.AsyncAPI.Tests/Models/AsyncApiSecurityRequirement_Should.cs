@@ -1,12 +1,12 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using LEGO.AsyncAPI.Models;
-using NUnit.Framework;
-
 namespace LEGO.AsyncAPI.Tests.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models;
+    using NUnit.Framework;
+
     public class AsyncApiSecurityRequirement_Should
     {
         [Test]

@@ -2,10 +2,10 @@
 
 namespace LEGO.AsyncAPI.Models.Bindings.Kafka
 {
-    using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Writers;
     using System;
     using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
 
     public class TopicConfigurationObject : IAsyncApiElement
     {

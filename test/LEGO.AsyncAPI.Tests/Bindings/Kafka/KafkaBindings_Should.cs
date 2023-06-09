@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
 {
+    using System.Collections.Generic;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Kafka;
@@ -9,7 +10,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
     using LEGO.AsyncAPI.Models.Bindings.Kafka;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
-    using System.Collections.Generic;
 
     internal class KafkaBindings_Should
     {

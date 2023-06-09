@@ -2,29 +2,46 @@
 
 namespace LEGO.AsyncAPI.Models
 {
+    using System;
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Attributes;
 
+    [Flags]
     public enum SchemaType
     {
         [Display("null")]
-        Null,
+        Null = 1,
 
         [Display("boolean")]
-        Boolean,
+        Boolean = 2,
 
         [Display("object")]
-        Object,
+        Object = 4,
 
         [Display("array")]
-        Array,
+        Array = 8,
 
         [Display("number")]
-        Number,
+        Number = 16,
 
         [Display("string")]
-        String,
+        String = 32,
 
         [Display("integer")]
-        Integer,
+        Integer = 64,
+    }
+
+    public static class SchemaTypeHelpers
+    {
+        public static IEnumerable<SchemaType> GetFlags(SchemaType input)
+        {
+            foreach (SchemaType value in System.Enum.GetValues(input.GetType()))
+            {
+                if (input.HasFlag(value))
+                {
+                    yield return value;
+                }
+            }
+        }
     }
 }

@@ -163,7 +163,7 @@ namespace LEGO.AsyncAPI.Readers
             return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
         }
 
-        internal static IAsyncApiExtension LoadExtension(string name, ParseNode node)
+        public static IAsyncApiExtension LoadExtension(string name, ParseNode node)
         {
             try
             {

@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using LEGO.AsyncAPI.Attributes;
@@ -37,6 +38,18 @@ namespace LEGO.AsyncAPI
         {
             var attribute = enumValue.GetAttributeOfType<DisplayAttribute>();
             return attribute == null ? enumValue.ToString() : attribute.Name;
+        }
+
+        public static IEnumerable<TEnum> GetFlags<TEnum>(this Enum input)
+            where TEnum : Enum
+        {
+            foreach (TEnum value in System.Enum.GetValues(input.GetType()))
+            {
+                if (input.HasFlag(value))
+                {
+                    yield return value;
+                }
+            }
         }
     }
 }
