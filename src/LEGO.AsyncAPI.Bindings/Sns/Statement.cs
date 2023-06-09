@@ -34,8 +34,8 @@ namespace LEGO.AsyncAPI.Bindings.Sns
 
             writer.WriteStartObject();
             writer.WriteRequiredProperty("effect", this.Effect.GetDisplayName());
-            writer.WriteRequiredObject("principal", this.Principal, (w, t) => t.Serialize(w));
-            writer.WriteRequiredObject("action", this.Action, (w, t) => t.Serialize(w));
+            writer.WriteRequiredObject("principal", this.Principal, (w, t) => t.Value.Write(w));
+            writer.WriteRequiredObject("action", this.Action, (w, t) => t.Value.Write(w));
             writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
@@ -47,35 +47,5 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         Allow,
         [Display("Deny")]
         Deny,
-    }
-
-    public class StringOrStringList : IAsyncApiElement
-    {
-        public string StringValue { get; set; }
-
-        public List<string> StringList { get; set; }
-
-        public void Serialize(IAsyncApiWriter writer)
-        {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            if (this.StringValue != null)
-            {
-                writer.WriteValue(this.StringValue);
-            }
-            else
-            {
-                writer.WriteStartArray();
-                foreach (var v in this.StringList)
-                {
-                    writer.WriteValue(v);
-                }
-
-                writer.WriteEndArray();
-            }
-        }
     }
 }
