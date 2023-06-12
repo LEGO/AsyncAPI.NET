@@ -7,8 +7,9 @@ namespace LEGO.AsyncAPI.Services
     using System.Linq;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
+
     /// <summary>
-    /// AsyncApi visitor base provides common logic for concrete visitors
+    /// AsyncApi visitor base provides common logic for concrete visitors.
     /// </summary>
     public abstract class AsyncApiVisitorBase
     {
@@ -22,7 +23,7 @@ namespace LEGO.AsyncAPI.Services
         /// <summary>
         /// Allow Rule to indicate validation error occured at a deeper context level.
         /// </summary>
-        /// <param name="segment">Identifier for context</param>
+        /// <param name="segment">Identifier for context.</param>
         public void Enter(string segment)
         {
             this.path.Push(segment);
@@ -37,80 +38,82 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
-        /// Pointer to source of validation error in document
+        /// Pointer to source of validation error in document.
         /// </summary>
         public string PathString
         {
             get
             {
-                return "#/" + String.Join("/", this.path.Reverse());
+                return "#/" + string.Join("/", this.path.Reverse());
             }
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiDocument"/>
+        /// Visits <see cref="AsyncApiDocument"/>.
         /// </summary>
         public virtual void Visit(AsyncApiDocument doc)
         {
         }
 
         public virtual void Visit(IDictionary<string, IAsyncApiAny> anys)
-        { }
+        {
+        }
 
         public virtual void Visit(IList<AsyncApiMessageTrait> traits)
-        { }
+        {
+        }
+
         /// <summary>
-        /// Visits <see cref="AsyncApiInfo"/>
+        /// Visits <see cref="AsyncApiInfo"/>.
         /// </summary>
         public virtual void Visit(AsyncApiInfo info)
         {
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiContact"/>
+        /// Visits <see cref="AsyncApiContact"/>.
         /// </summary>
         public virtual void Visit(AsyncApiContact contact)
         {
         }
 
-
         /// <summary>
-        /// Visits <see cref="AsyncApiLicense"/>
+        /// Visits <see cref="AsyncApiLicense"/>.
         /// </summary>
         public virtual void Visit(AsyncApiLicense license)
         {
         }
 
         /// <summary>
-        /// Visits list of <see cref="AsyncApiServer"/>
+        /// Visits list of <see cref="AsyncApiServer"/>.
         /// </summary>
         public virtual void Visit(IList<AsyncApiServer> servers)
         {
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiServer"/>
+        /// Visits <see cref="AsyncApiServer"/>.
         /// </summary>
         public virtual void Visit(AsyncApiServer server)
         {
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiServerVariable"/>
+        /// Visits <see cref="AsyncApiServerVariable"/>.
         /// </summary>
         public virtual void Visit(AsyncApiServerVariable serverVariable)
         {
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiOperation"/>
+        /// Visits <see cref="AsyncApiOperation"/>.
         /// </summary>
         public virtual void Visit(AsyncApiOperation operation)
         {
         }
 
         /// <summary>
-        /// Visits list of <see cref="AsyncApiParameter"/>
+        /// Visits list of <see cref="AsyncApiParameter"/>.
         /// </summary>
         public virtual void Visit(IList<AsyncApiParameter> parameters)
         {
@@ -121,29 +124,28 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiParameter"/>
+        /// Visits <see cref="AsyncApiParameter"/>.
         /// </summary>
         public virtual void Visit(AsyncApiParameter parameter)
         {
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiComponents"/>
+        /// Visits <see cref="AsyncApiComponents"/>.
         /// </summary>
         public virtual void Visit(AsyncApiComponents components)
         {
         }
 
-
         /// <summary>
-        /// Visits <see cref="AsyncApiComponents"/>
+        /// Visits <see cref="AsyncApiComponents"/>.
         /// </summary>
         public virtual void Visit(AsyncApiExternalDocumentation externalDocs)
         {
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiSchema"/>
+        /// Visits <see cref="AsyncApiSchema"/>.
         /// </summary>
         public virtual void Visit(AsyncApiSchema schema)
         {
@@ -158,78 +160,80 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiTag"/>
+        /// Visits <see cref="AsyncApiTag"/>.
         /// </summary>
         public virtual void Visit(AsyncApiTag tag)
         {
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiOAuthFlow"/>
+        /// Visits <see cref="AsyncApiOAuthFlow"/>.
         /// </summary>
         public virtual void Visit(AsyncApiOAuthFlow asyncApiOAuthFlow)
         {
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiSecurityRequirement"/>
+        /// Visits <see cref="AsyncApiSecurityRequirement"/>.
         /// </summary>
         public virtual void Visit(AsyncApiSecurityRequirement securityRequirement)
         {
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiSecurityScheme"/>
+        /// Visits <see cref="AsyncApiSecurityScheme"/>.
         /// </summary>
         public virtual void Visit(AsyncApiSecurityScheme securityScheme)
         {
         }
 
         /// <summary>
-        /// Visits list of <see cref="AsyncApiTag"/>
+        /// Visits list of <see cref="AsyncApiTag"/>.
         /// </summary>
-        public virtual void Visit(IList<AsyncApiTag> AsyncApiTags)
+        public virtual void Visit(IList<AsyncApiTag> asyncApiTags)
         {
         }
 
         /// <summary>
-        /// Visits list of <see cref="AsyncApiSecurityRequirement"/>
+        /// Visits list of <see cref="AsyncApiSecurityRequirement"/>.
         /// </summary>
-        public virtual void Visit(IList<AsyncApiSecurityRequirement> AsyncApiSecurityRequirements)
+        public virtual void Visit(IList<AsyncApiSecurityRequirement> asyncApiSecurityRequirements)
         {
         }
 
         /// <summary>
-        /// Visits <see cref="IAsyncApiExtensible"/>
+        /// Visits <see cref="IAsyncApiExtensible"/>.
         /// </summary>
-        public virtual void Visit(IAsyncApiExtensible AsyncApiExtensible)
+        public virtual void Visit(IAsyncApiExtensible asyncApiExtensible)
         {
         }
 
         public virtual void Visit(AsyncApiCorrelationId correlationId)
-        { }
+        {
+        }
 
         public virtual void Visit(AsyncApiMessageTrait trait)
-        { }
-
-        /// <summary>
-        /// Visits <see cref="IAsyncApiExtension"/>
-        /// </summary>
-        public virtual void Visit(IAsyncApiExtension AsyncApiExtension)
         {
         }
 
         /// <summary>
-        /// Visits a dictionary of server variables
+        /// Visits <see cref="IAsyncApiExtension"/>.
+        /// </summary>
+        public virtual void Visit(IAsyncApiExtension asyncApiExtension)
+        {
+        }
+
+        /// <summary>
+        /// Visits a dictionary of server variables.
         /// </summary>
         public virtual void Visit(IDictionary<string, AsyncApiServerVariable> serverVariables)
         {
         }
 
         /// <summary>
-        /// Visits IAsyncApiReferenceable instances that are references and not in components
+        /// Visits IAsyncApiReferenceable instances that are references and not in components.
         /// </summary>
-        /// <param name="referencable">referenced object</param>
+        /// <param name="referencable">referenced object.</param>
         public virtual void Visit(IAsyncApiReferenceable referencable)
         {
         }

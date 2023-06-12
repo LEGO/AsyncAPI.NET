@@ -1,5 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT license.
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Validations
 {
@@ -22,9 +21,9 @@ namespace LEGO.AsyncAPI.Validations
         private IList<ValidationRule> emptyRules = new List<ValidationRule>();
 
         /// <summary>
-        /// Retrieve the rules that are related to a specific type
+        /// Retrieve the rules that are related to a specific type.
         /// </summary>
-        /// <param name="type">The type that is to be validated</param>
+        /// <param name="type">The type that is to be validated.</param>
         /// <returns>Either the rules related to the type, or an empty list.</returns>
         public IList<ValidationRule> FindRules(Type type)
         {
@@ -55,7 +54,7 @@ namespace LEGO.AsyncAPI.Validations
         }
 
         /// <summary>
-        /// Return Ruleset with no rules
+        /// Return Ruleset with no rules.
         /// </summary>
         public static ValidationRuleSet GetEmptyRuleSet()
         {

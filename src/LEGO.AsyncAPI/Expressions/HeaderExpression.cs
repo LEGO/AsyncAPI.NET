@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Expressions
     public class HeaderExpression : SourceExpression
     {
         /// <summary>
-        /// header. string
+        /// header. string.
         /// </summary>
         public const string Header = "header.";
 

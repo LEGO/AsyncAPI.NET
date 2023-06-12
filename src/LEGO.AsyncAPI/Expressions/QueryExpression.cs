@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Expressions
     public sealed class QueryExpression : SourceExpression
     {
         /// <summary>
-        /// query. string
+        /// query. string.
         /// </summary>
         public const string Query = "query.";
 

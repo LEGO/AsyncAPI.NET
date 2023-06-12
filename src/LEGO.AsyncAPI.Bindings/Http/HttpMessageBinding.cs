@@ -40,7 +40,7 @@ namespace LEGO.AsyncAPI.Bindings.Http
 
         public override string BindingKey => "http";
 
-        protected override FixedFieldMap<HttpMessageBinding> FixedFieldMap => new()
+        protected override FixedFieldMap<HttpMessageBinding> FixedFieldMap => new ()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "headers", (a, n) => { a.Headers = JsonSchemaDeserializer.LoadSchema(n); } },

@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Readers
     using YamlDotNet.RepresentationModel;
 
     /// <summary>
-    /// Service class for converting contents of TextReader into AsyncApiDocument instances
+    /// Service class for converting contents of TextReader into AsyncApiDocument instances.
     /// </summary>
     public class AsyncApiTextReader : IAsyncApiReader<TextReader, AsyncApiDiagnostic>
     {
@@ -31,8 +31,8 @@ namespace LEGO.AsyncAPI.Readers
         /// Reads the stream input and parses it into an AsyncApi document.
         /// </summary>
         /// <param name="input">TextReader containing AsyncApi description to parse.</param>
-        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing</param>
-        /// <returns>Instance of newly created AsyncApiDocument</returns>
+        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing.</param>
+        /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public AsyncApiDocument Read(TextReader input, out AsyncApiDiagnostic diagnostic)
         {
             YamlDocument yamlDocument;
@@ -85,8 +85,8 @@ namespace LEGO.AsyncAPI.Readers
         /// </summary>
         /// <param name="input">TextReader containing AsyncApi description to parse.</param>
         /// <param name="version">Version of the AsyncApi specification that the fragment conforms to.</param>
-        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing</param>
-        /// <returns>Instance of newly created AsyncApiDocument</returns>
+        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing.</param>
+        /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public T ReadFragment<T>(TextReader input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic)
             where T : IAsyncApiElement
         {
@@ -109,10 +109,10 @@ namespace LEGO.AsyncAPI.Readers
         }
 
         /// <summary>
-        /// Helper method to turn streams into YamlDocument
+        /// Helper method to turn streams into YamlDocument.
         /// </summary>
-        /// <param name="input">Stream containing YAML formatted text</param>
-        /// <returns>Instance of a YamlDocument</returns>
+        /// <param name="input">Stream containing YAML formatted text.</param>
+        /// <returns>Instance of a YamlDocument.</returns>
         static YamlDocument LoadYamlDocument(TextReader input)
         {
             var yamlStream = new YamlStream();

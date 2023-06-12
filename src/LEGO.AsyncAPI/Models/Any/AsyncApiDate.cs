@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// AsyncApi Date
+    /// AsyncApi Date.
     /// </summary>
     public class AsyncApiDate : AsyncApiPrimitive<DateTime>
     {

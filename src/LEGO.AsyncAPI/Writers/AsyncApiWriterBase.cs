@@ -384,7 +384,7 @@ namespace LEGO.AsyncAPI.Writers
         /// Verifies whether a property name can be written based on whether
         /// the property name is a valid string and whether the current scope is an object scope.
         /// </summary>
-        /// <param name="name">property name</param>
+        /// <param name="name">property name.</param>
         protected void VerifyCanWritePropertyName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
