@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Expressions
     public sealed class PathExpression : SourceExpression
     {
         /// <summary>
-        /// path. string
+        /// path. string.
         /// </summary>
         public const string Path = "path.";
 

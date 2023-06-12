@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiOAuthFlows : IAsyncApiSerializable, IAsyncApiExtensible
     {
         /// <summary>
-        /// Configuration for the OAuth Implicit flow
+        /// Configuration for the OAuth Implicit flow.
         /// </summary>
         public AsyncApiOAuthFlow Implicit { get; set; }
 
@@ -38,7 +38,7 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <summary>
-        /// Serialize <see cref="AsyncApiOAuthFlows"/> to Async Api v2.4
+        /// Serialize <see cref="AsyncApiOAuthFlows"/> to Async Api v2.4.
         /// </summary>
         public void SerializeV2(IAsyncApiWriter writer)
         {

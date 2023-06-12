@@ -190,8 +190,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 Principal = new StringOrStringList(new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann")),
                                 Action = new StringOrStringList(new AsyncApiArray()
                                 {
-                                    new AsyncApiString("sqs:*")
-                                })
+                                    new AsyncApiString("sqs:*"),
+                                }),
                             },
                         },
                     },

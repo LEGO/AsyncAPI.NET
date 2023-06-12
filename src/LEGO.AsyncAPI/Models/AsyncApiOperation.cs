@@ -29,7 +29,7 @@ namespace LEGO.AsyncAPI.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// A declaration of which security mechanisms can be used with this server. The list of values includes alternative security requirement objects that can be used. Only one of the security requirement objects need to be satisfied to authorize a connection or operation
+        /// A declaration of which security mechanisms can be used with this server. The list of values includes alternative security requirement objects that can be used. Only one of the security requirement objects need to be satisfied to authorize a connection or operation.
         /// </summary>
         public IList<AsyncApiSecurityRequirement> Security { get; set; } = new List<AsyncApiSecurityRequirement>();
 

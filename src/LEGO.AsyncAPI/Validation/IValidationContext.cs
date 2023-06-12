@@ -3,7 +3,7 @@
 namespace LEGO.AsyncAPI.Validations
 {
     /// <summary>
-    /// Constrained interface used to provide context to rule implementation
+    /// Constrained interface used to provide context to rule implementation.
     /// </summary>
     public interface IValidationContext
     {
@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.Validations
         /// <summary>
         /// Allow Rule to indicate validation error occured at a deeper context level.
         /// </summary>
-        /// <param name="segment">Identifier for context</param>
+        /// <param name="segment">Identifier for context.</param>
         void Enter(string segment);
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.Validations
         void Exit();
 
         /// <summary>
-        /// Pointer to source of validation error in document
+        /// Pointer to source of validation error in document.
         /// </summary>
         string PathString { get; }
     }

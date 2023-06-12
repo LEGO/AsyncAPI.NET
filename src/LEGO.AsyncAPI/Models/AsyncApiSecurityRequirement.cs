@@ -44,7 +44,7 @@ namespace LEGO.AsyncAPI.Models
                     continue;
                 }
 
-                //securityScheme.SerializeV2(writer);
+                // securityScheme.SerializeV2(writer);
                 writer.WritePropertyName(securityScheme.Reference.Id);
                 writer.WriteStartArray();
 

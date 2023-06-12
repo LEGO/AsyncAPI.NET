@@ -68,7 +68,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
             writer.WriteEndObject();
         }
 
-        protected override FixedFieldMap<PulsarChannelBinding> FixedFieldMap => new()
+        protected override FixedFieldMap<PulsarChannelBinding> FixedFieldMap => new ()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "namespace", (a, n) => { a.Namespace = n.GetScalarValue(); } },
@@ -80,7 +80,7 @@ namespace LEGO.AsyncAPI.Bindings.Pulsar
             { "deduplication", (a, n) => { a.Deduplication = n.GetBooleanValue(); } },
         };
 
-        private FixedFieldMap<RetentionDefinition> pulsarServerBindingRetentionFixedFields = new()
+        private FixedFieldMap<RetentionDefinition> pulsarServerBindingRetentionFixedFields = new ()
         {
             { "time", (a, n) => { a.Time = n.GetIntegerValue(); } },
             { "size", (a, n) => { a.Size = n.GetIntegerValue(); } },

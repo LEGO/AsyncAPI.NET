@@ -58,7 +58,7 @@ namespace LEGO.AsyncAPI.Models
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         /// <summary>
-        /// Indicates if object is populated with data or is just a reference to the data
+        /// Indicates if object is populated with data or is just a reference to the data.
         /// </summary>
         public bool UnresolvedReference { get; set; }
 

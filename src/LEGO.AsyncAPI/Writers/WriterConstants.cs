@@ -86,27 +86,27 @@ namespace LEGO.AsyncAPI.Writers
         internal const string NameValueSeparatorWhiteSpaceSuffix = " ";
 
         /// <summary>
-        /// The white space for empty object
+        /// The white space for empty object.
         /// </summary>
         internal const string WhiteSpaceForEmptyObject = " ";
 
         /// <summary>
-        /// The white space for empty array
+        /// The white space for empty array.
         /// </summary>
         internal const string WhiteSpaceForEmptyArray = " ";
 
         /// <summary>
-        /// The prefix of array item
+        /// The prefix of array item.
         /// </summary>
         internal const string PrefixOfArrayItem = "- ";
 
         /// <summary>
-        /// The white space for indent
+        /// The white space for indent.
         /// </summary>
         internal const string WhiteSpaceForIndent = "  ";
 
         /// <summary>
-        /// Empty object
+        /// Empty object.
         /// </summary>
         /// <remarks>To indicate empty object in YAML.</remarks>
         internal const string EmptyObject = "{ }";

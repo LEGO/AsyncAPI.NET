@@ -9,10 +9,14 @@ namespace LEGO.AsyncAPI.Readers.Exceptions
     [Serializable]
     public class AsyncApiReaderException : AsyncApiException
     {
-        public AsyncApiReaderException() { }
+        public AsyncApiReaderException()
+        {
+        }
 
         public AsyncApiReaderException(string message)
-            : base(message) { }
+            : base(message)
+        {
+        }
 
         public AsyncApiReaderException(string message, ParsingContext context)
             : base(message)
@@ -29,6 +33,8 @@ namespace LEGO.AsyncAPI.Readers.Exceptions
         }
 
         public AsyncApiReaderException(string message, Exception innerException)
-            : base(message, innerException) { }
+            : base(message, innerException)
+        {
+        }
     }
 }

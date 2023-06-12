@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Expressions
     public sealed class ResponseExpression : RuntimeExpression
     {
         /// <summary>
-        /// $response. string
+        /// $response. string.
         /// </summary>
         public const string Response = "$response.";
 

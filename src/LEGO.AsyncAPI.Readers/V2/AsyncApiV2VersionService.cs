@@ -16,7 +16,7 @@ namespace LEGO.AsyncAPI.Readers.V2
         public AsyncApiDiagnostic Diagnostic { get; }
 
         /// <summary>
-        /// Create Parsing Context
+        /// Create Parsing Context.
         /// </summary>
         /// <param name="diagnostic">Provide instance for diagnostic object for collecting and accessing information about the parsing.</param>
         public AsyncApiV2VersionService(AsyncApiDiagnostic diagnostic)
@@ -48,8 +48,8 @@ namespace LEGO.AsyncAPI.Readers.V2
         /// <summary>
         /// Parse the string to a <see cref="AsyncApiReference"/> object.
         /// </summary>
-        /// <param name="reference">The URL of the reference</param>
-        /// <param name="type">The type of object referenced based on the context of the reference</param>
+        /// <param name="reference">The URL of the reference.</param>
+        /// <param name="type">The type of object referenced based on the context of the reference.</param>
         public AsyncApiReference ConvertToAsyncApiReference(
             string reference,
             ReferenceType? type)
