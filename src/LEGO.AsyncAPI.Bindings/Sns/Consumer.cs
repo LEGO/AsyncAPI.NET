@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     public class Consumer : IAsyncApiExtensible
     {
         /// <summary>
-        /// The protocol this endpoint will receive messages by.
+        /// The protocol that this endpoint will receive messages by.
         /// </summary>
         public Protocol Protocol { get; set; }
 
