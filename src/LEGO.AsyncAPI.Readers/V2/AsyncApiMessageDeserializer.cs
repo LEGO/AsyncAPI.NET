@@ -2,12 +2,12 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
