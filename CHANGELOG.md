@@ -6,21 +6,19 @@
 * add setter to BindingParsers collection ([211646e](https://github.com/LEGO/AsyncAPI.NET/commit/211646e95b82b3e32563fe75c57656cd6882267b))
 
 
-* feat(JsonSchema)!: type as flag rather than list (#115) ([d44efb0](https://github.com/LEGO/AsyncAPI.NET/commit/d44efb048402c70377064b87bd962b0e455e08b3)), closes [#115](https://github.com/LEGO/AsyncAPI.NET/issues/115)
-* feat(JsonSchema)!: changed out decimal for double to allow for bigger numbers ([ab00976](https://github.com/LEGO/AsyncAPI.NET/commit/ab009764a916171c8926c129384ce18b3162e71e))
-* feat(Bindings)!: separate bindings and allow for custom bindings. (#107) ([d38c33f](https://github.com/LEGO/AsyncAPI.NET/commit/d38c33f14d6de73e2563e29534965b06d423edac)), closes [#107](https://github.com/LEGO/AsyncAPI.NET/issues/107)
-
-
 ### Features
 
+* **jsonschema**!: type as flag rather than list (#115) ([d44efb0](https://github.com/LEGO/AsyncAPI.NET/commit/d44efb048402c70377064b87bd962b0e455e08b3)), closes [#115](https://github.com/LEGO/AsyncAPI.NET/issues/115)
+* **jsonschema**!: changed out decimal for double to allow for bigger numbers ([ab00976](https://github.com/LEGO/AsyncAPI.NET/commit/ab009764a916171c8926c129384ce18b3162e71e))
+* **bindings**!: separate bindings and allow for custom bindings. (#107) ([d38c33f](https://github.com/LEGO/AsyncAPI.NET/commit/d38c33f14d6de73e2563e29534965b06d423edac)), closes [#107](https://github.com/LEGO/AsyncAPI.NET/issues/107)
 * **bindings:** add SNS AWS bindings ([#108](https://github.com/LEGO/AsyncAPI.NET/issues/108)) ([d48f166](https://github.com/LEGO/AsyncAPI.NET/commit/d48f1669ebfd9ad3f661b2b5928df1d622a4e7ba))
 * **bindings:** add SQS AWS Bindings ([#113](https://github.com/LEGO/AsyncAPI.NET/issues/113)) ([4a93c7a](https://github.com/LEGO/AsyncAPI.NET/commit/4a93c7a26dbc0dd28914ac96575070deb0a6d2c1))
 
 
 ### BREAKING CHANGES
 
-* this changes the type of Type in JsonSchema to be a Flags enum, rather than a List of enum.
-* this changes the type of 3 properties of JsonSchema from `decimal` to `double`
+* The type of `Type` in JsonSchema is now a Flags enum, rather than a List of enum. This provides an easier to use interface, for adding and checking types.
+* 3 properties, previously of type `decimal` in the JsonSchema type have been changed to `double`.
 * Bindings have been moved to a separate project
 
 ## [3.0.2](https://github.com/LEGO/AsyncAPI.NET/compare/v3.0.1...v3.0.2) (2023-03-30)
