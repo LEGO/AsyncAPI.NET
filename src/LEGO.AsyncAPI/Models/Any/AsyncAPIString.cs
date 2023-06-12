@@ -1,5 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT license.
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Models.Any
 {

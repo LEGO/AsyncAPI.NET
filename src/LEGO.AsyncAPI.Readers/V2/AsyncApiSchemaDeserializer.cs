@@ -2,10 +2,8 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Runtime.CompilerServices;
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -166,12 +164,12 @@ namespace LEGO.AsyncAPI.Readers
         };
 
         private static readonly PatternFieldMap<AsyncApiSchema> schemaPatternFields =
-            new()
+            new ()
             {
                 { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, AsyncApiV2Deserializer.LoadExtension(p, n)) },
             };
 
-        private static readonly AnyFieldMap<AsyncApiSchema> schemaAnyFields = new()
+        private static readonly AnyFieldMap<AsyncApiSchema> schemaAnyFields = new ()
         {
             {
                 AsyncApiConstants.Default,
@@ -182,7 +180,7 @@ namespace LEGO.AsyncAPI.Readers
             },
         };
 
-        private static readonly AnyListFieldMap<AsyncApiSchema> schemaAnyListFields = new()
+        private static readonly AnyListFieldMap<AsyncApiSchema> schemaAnyListFields = new ()
         {
             {
                 AsyncApiConstants.Enum,

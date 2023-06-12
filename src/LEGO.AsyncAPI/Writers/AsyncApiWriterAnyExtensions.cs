@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Writers
     public static class AsyncApiWriterAnyExtensions
     {
         /// <summary>
-        /// Write the specification extensions
+        /// Write the specification extensions.
         /// </summary>
         /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="extensions">The specification extensions.</param>
@@ -37,7 +37,7 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         /// <typeparam name="T">The AsyncApi Any type.</typeparam>
         /// <param name="writer">The AsyncApi writer.</param>
-        /// <param name="any">The Any value</param>
+        /// <param name="any">The Any value.</param>
         public static void WriteAny<T>(this IAsyncApiWriter writer, T any) where T : IAsyncApiAny
         {
             if (writer is null)

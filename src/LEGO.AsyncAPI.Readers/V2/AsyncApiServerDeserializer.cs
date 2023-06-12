@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Readers
     /// </summary>
     internal static partial class AsyncApiV2Deserializer
     {
-        private static readonly FixedFieldMap<AsyncApiServer> serverFixedFields = new()
+        private static readonly FixedFieldMap<AsyncApiServer> serverFixedFields = new ()
         {
             {
                 "url", (a, n) => { a.Url = n.GetScalarValue(); }
@@ -41,7 +41,7 @@ namespace LEGO.AsyncAPI.Readers
         };
 
         private static readonly PatternFieldMap<AsyncApiServer> serverPatternFields =
-            new()
+            new ()
             {
                 { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
             };

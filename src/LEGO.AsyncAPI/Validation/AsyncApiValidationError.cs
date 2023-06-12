@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Validations
     using LEGO.AsyncAPI.Models;
 
     /// <summary>
-    /// Errors detected when validating an AsyncApi Element
+    /// Errors detected when validating an AsyncApi Element.
     /// </summary>
     public class AsyncApiValidatorError : AsyncApiError
     {

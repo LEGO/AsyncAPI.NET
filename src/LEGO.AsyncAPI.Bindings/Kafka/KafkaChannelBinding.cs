@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
 
         public override string BindingKey => "kafka";
 
-        protected override FixedFieldMap<KafkaChannelBinding> FixedFieldMap => new()
+        protected override FixedFieldMap<KafkaChannelBinding> FixedFieldMap => new ()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "topic", (a, n) => { a.Topic = n.GetScalarValue(); } },
@@ -44,7 +44,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
             { "replicas", (a, n) => { a.Replicas = n.GetIntegerValue(); } },
         };
 
-        private static FixedFieldMap<TopicConfigurationObject> kafkaChannelTopicConfigurationObjectFixedFields = new()
+        private static FixedFieldMap<TopicConfigurationObject> kafkaChannelTopicConfigurationObjectFixedFields = new ()
         {
             { "cleanup.policy", (a, n) => { a.CleanupPolicy = n.CreateSimpleList(s => s.GetScalarValue()); } },
             { "retention.ms", (a, n) => { a.RetentionMiliseconds = n.GetIntegerValue(); } },

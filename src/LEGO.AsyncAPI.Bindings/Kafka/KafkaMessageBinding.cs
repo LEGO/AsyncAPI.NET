@@ -60,12 +60,11 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
         /// Serializes the v2.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        /// <exception cref="ArgumentNullException">writer</exception>
-
+        /// <exception cref="ArgumentNullException">writer.</exception>
 
        public override string BindingKey => "kafka";
 
-        protected override FixedFieldMap<KafkaMessageBinding> FixedFieldMap => new()
+        protected override FixedFieldMap<KafkaMessageBinding> FixedFieldMap => new ()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "key", (a, n) => { a.Key = JsonSchemaDeserializer.LoadSchema(n); } },

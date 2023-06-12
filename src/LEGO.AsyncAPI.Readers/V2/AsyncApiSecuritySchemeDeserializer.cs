@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Readers
     internal static partial class AsyncApiV2Deserializer
     {
         private static readonly FixedFieldMap<AsyncApiSecurityScheme> securitySchemeFixedFields =
-            new()
+            new ()
             {
                 {
                     "type", (o, n) => { o.Type = n.GetScalarValue().GetEnumFromDisplayName<SecuritySchemeType>(); }

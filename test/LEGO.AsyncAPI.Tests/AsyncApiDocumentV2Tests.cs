@@ -842,7 +842,7 @@ components:
             string anyKey = "key";
             string anyOtherKey = "otherKey";
             string anyStringValue = "value";
-            long anyLongValue = Int64.MaxValue;
+            long anyLongValue = long.MaxValue;
             string exampleSummary = "exampleSummary";
             string exampleName = "exampleName";
             string traitDescription = "traitDescription";

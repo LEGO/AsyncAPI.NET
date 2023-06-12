@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Expressions
     public sealed class MethodExpression : RuntimeExpression
     {
         /// <summary>
-        /// $method. string
+        /// $method. string.
         /// </summary>
         public const string Method = "$method";
 

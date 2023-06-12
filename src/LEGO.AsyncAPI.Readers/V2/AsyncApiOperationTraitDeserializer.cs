@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Readers
 
     internal static partial class AsyncApiV2Deserializer
     {
-        private static FixedFieldMap<AsyncApiOperationTrait> operationTraitFixedFields = new()
+        private static FixedFieldMap<AsyncApiOperationTrait> operationTraitFixedFields = new ()
         {
             { "operationId", (a, n) => { a.OperationId = n.GetScalarValue(); } },
             { "summary", (a, n) => { a.Summary = n.GetScalarValue(); } },
@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.Readers
         };
 
         private static PatternFieldMap<AsyncApiOperationTrait> operationTraitPatternFields =
-            new()
+            new ()
             {
                 { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
             };

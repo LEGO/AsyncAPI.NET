@@ -18,7 +18,7 @@ namespace LEGO.AsyncAPI.Validations
         private readonly IList<AsyncApiValidatorWarning> warnings = new List<AsyncApiValidatorWarning>();
 
         /// <summary>
-        /// Create a vistor that will validate an AsyncApiDocument
+        /// Create a vistor that will validate an AsyncApiDocument.
         /// </summary>
         /// <param name="ruleSet"></param>
         public AsyncApiValidator(ValidationRuleSet ruleSet)
@@ -77,81 +77,81 @@ namespace LEGO.AsyncAPI.Validations
         }
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiDocument"/>
+        /// Execute validation rules against an <see cref="AsyncApiDocument"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiDocument item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiInfo"/>
+        /// Execute validation rules against an <see cref="AsyncApiInfo"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiInfo item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiContact"/>
+        /// Execute validation rules against an <see cref="AsyncApiContact"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiContact item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiComponents"/>
+        /// Execute validation rules against an <see cref="AsyncApiComponents"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiComponents item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiLicense"/>
+        /// Execute validation rules against an <see cref="AsyncApiLicense"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiLicense item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiOAuthFlow"/>
+        /// Execute validation rules against an <see cref="AsyncApiOAuthFlow"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiOAuthFlow item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiTag"/>
+        /// Execute validation rules against an <see cref="AsyncApiTag"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiTag item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiParameter"/>
+        /// Execute validation rules against an <see cref="AsyncApiParameter"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiParameter item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiSchema"/>
+        /// Execute validation rules against an <see cref="AsyncApiSchema"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiSchema item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiServer"/>
+        /// Execute validation rules against an <see cref="AsyncApiServer"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiServer item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="IAsyncApiExtensible"/>
+        /// Execute validation rules against an <see cref="IAsyncApiExtensible"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(IAsyncApiExtensible item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="IAsyncApiExtension"/>
+        /// Execute validation rules against an <see cref="IAsyncApiExtension"/>.
         /// </summary>
-        /// <param name="item">The object to be validated</param>
+        /// <param name="item">The object to be validated.</param>
         public override void Visit(IAsyncApiExtension item) => this.Validate(item, item.GetType());
 
         /// <summary>
-        /// Execute validation rules against a list of <see cref="AsyncApiExample"/>
+        /// Execute validation rules against a list of <see cref="AsyncApiExample"/>.
         /// </summary>
-        /// <param name="items">The object to be validated</param>
+        /// <param name="items">The object to be validated.</param>
         public override void Visit(IList<AsyncApiMessageExample> items) => this.Validate(items, items.GetType());
 
         private void Validate<T>(T item)

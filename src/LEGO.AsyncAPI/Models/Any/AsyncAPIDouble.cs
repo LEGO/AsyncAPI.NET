@@ -5,7 +5,7 @@ namespace LEGO.AsyncAPI.Models.Any
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>
-    /// AsyncApi Double
+    /// AsyncApi Double.
     /// </summary>
     public class AsyncApiDouble : AsyncApiPrimitive<double>
     {

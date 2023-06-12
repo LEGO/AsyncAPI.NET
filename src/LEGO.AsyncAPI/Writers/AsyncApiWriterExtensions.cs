@@ -124,7 +124,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write the optional AsyncApi object/element.
         /// </summary>
-        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/></typeparam>
+        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/>.</typeparam>
         /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
@@ -157,7 +157,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write the required AsyncApi object/element.
         /// </summary>
-        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/></typeparam>
+        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/>.</typeparam>
         /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
@@ -205,7 +205,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write the optional AsyncApi object/element collection.
         /// </summary>
-        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/></typeparam>
+        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/>.</typeparam>
         /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="elements">The collection values.</param>
@@ -226,7 +226,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write the required AsyncApi object/element collection.
         /// </summary>
-        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/></typeparam>
+        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/>.</typeparam>
         /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="elements">The collection values.</param>
@@ -291,7 +291,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write the optional AsyncApi element map.
         /// </summary>
-        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/></typeparam>
+        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/>.</typeparam>
         /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="elements">The map values.</param>
@@ -312,7 +312,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write the optional AsyncApi element map.
         /// </summary>
-        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/></typeparam>
+        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/>.</typeparam>
         /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="elements">The map values.</param>
@@ -333,7 +333,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write the required AsyncApi element map.
         /// </summary>
-        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/></typeparam>
+        /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/>.</typeparam>
         /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="elements">The map values.</param>

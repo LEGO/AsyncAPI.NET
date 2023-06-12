@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Readers.Interface;
 
     /// <summary>
-    /// Service class for converting streams into AsyncApiDocument instances
+    /// Service class for converting streams into AsyncApiDocument instances.
     /// </summary>
     public class AsyncApiStreamReader : IAsyncApiReader<Stream, AsyncApiDiagnostic>
     {
@@ -46,7 +46,7 @@ namespace LEGO.AsyncAPI.Readers
         /// Reads the stream input and parses it into an AsyncApi document.
         /// </summary>
         /// <param name="input">Stream containing AsyncApi description to parse.</param>
-        /// <returns>Instance result containing newly created AsyncApiDocument and diagnostics object from the process</returns>
+        /// <returns>Instance result containing newly created AsyncApiDocument and diagnostics object from the process.</returns>
         public async Task<ReadResult> ReadAsync(Stream input)
         {
             MemoryStream bufferedStream;
@@ -73,8 +73,8 @@ namespace LEGO.AsyncAPI.Readers
         /// </summary>
         /// <param name="input">Stream containing AsyncApi description to parse.</param>
         /// <param name="version">Version of the AsyncApi specification that the fragment conforms to.</param>
-        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing</param>
-        /// <returns>Instance of newly created AsyncApiDocument</returns>
+        /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing.</param>
+        /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public T ReadFragment<T>(Stream input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic)
             where T : IAsyncApiReferenceable
         {

@@ -8,14 +8,14 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Readers.Interface;
 
     /// <summary>
-    /// Service class for converting strings into AsyncApiDocument instances
+    /// Service class for converting strings into AsyncApiDocument instances.
     /// </summary>
     public class AsyncApiStringReader : IAsyncApiReader<string, AsyncApiDiagnostic>
     {
         private readonly AsyncApiReaderSettings settings;
 
         /// <summary>
-        /// Constructor tha allows reader to use non-default settings
+        /// Constructor tha allows reader to use non-default settings.
         /// </summary>
         /// <param name="settings"></param>
         public AsyncApiStringReader(AsyncApiReaderSettings settings = null)
