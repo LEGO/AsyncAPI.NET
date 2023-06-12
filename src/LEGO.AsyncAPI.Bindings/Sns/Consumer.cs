@@ -9,12 +9,12 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     public class Consumer : IAsyncApiExtensible
     {
         /// <summary>
-        /// What protocol will this endpoint receive messages by?
+        /// The protocol this endpoint will receive messages by.
         /// </summary>
         public Protocol Protocol { get; set; }
 
         /// <summary>
-        /// Where are messages being delivered to?
+        /// The endpoint messages are delivered to.
         /// </summary>
         public Identifier Endpoint { get; set; }
 
@@ -39,7 +39,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         public DeliveryPolicy DeliveryPolicy { get; set; }
 
         /// <summary>
-        /// The display name to use with an SNS subscription
+        /// The display name to use with an SNS subscription.
         /// </summary>
         public string DisplayName { get; set; }
 
