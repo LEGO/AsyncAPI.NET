@@ -54,7 +54,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             { "custom", (a, n) => { a.Custom = n.GetScalarValue(); } },
             { "any", (a, n) => { a.Any = n.CreateAny(); } },
             { "nestedConfiguration", (a, n) => { a.NestedConfiguration = n.ParseMapWithExtensions(NestedConfiguration.FixedFieldMap); } },
-            { "myList", (a, n) => { a.MyList = n.CreateList((x) => x.GetScalarValue()); } }
+            { "myList", (a, n) => { a.MyList = n.CreateSimpleList((x) => x.GetScalarValue()); } }
         };
 
         public override void SerializeProperties(IAsyncApiWriter writer)
@@ -161,14 +161,16 @@ channels:
           - item03
         x-myextension: someValue";
 
+            // Act
             var settings = new AsyncApiReaderSettings();
             settings.Bindings.Add(new MyBinding());
 
             var reader = new AsyncApiStringReader(settings);
 
-            var result = reader.Read(input, out var diagnostic);
+            var asyncApiDocument = reader.Read(input, out var diagnostic);
             
-            Console.WriteLine(JsonSerializer.Serialize(diagnostic.Errors));
+            // Assert
+            Assert.NotNull(asyncApiDocument);
             Assert.False(diagnostic.Errors.Any());
         }
     }
