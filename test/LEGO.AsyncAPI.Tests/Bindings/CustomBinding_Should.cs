@@ -2,7 +2,10 @@
 
 namespace LEGO.AsyncAPI.Tests.Bindings
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.Json;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Models;
@@ -42,6 +45,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings
         public NestedConfiguration NestedConfiguration { get; set; }
 
         public IAsyncApiAny Any { get; set; }
+        
+        public List<string> MyList { get; set; }
 
         protected override FixedFieldMap<MyBinding> FixedFieldMap => new FixedFieldMap<MyBinding>()
         {
@@ -49,6 +54,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             { "custom", (a, n) => { a.Custom = n.GetScalarValue(); } },
             { "any", (a, n) => { a.Any = n.CreateAny(); } },
             { "nestedConfiguration", (a, n) => { a.NestedConfiguration = n.ParseMapWithExtensions(NestedConfiguration.FixedFieldMap); } },
+            { "myList", (a, n) => { a.MyList = n.CreateList((x) => x.GetScalarValue()); } }
         };
 
         public override void SerializeProperties(IAsyncApiWriter writer)
@@ -58,6 +64,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             writer.WriteOptionalProperty(AsyncApiConstants.BindingVersion, this.BindingVersion);
             writer.WriteRequiredObject("any", this.Any, (w, p) => w.WriteAny(p));
             writer.WriteOptionalObject("nestedConfiguration", this.NestedConfiguration, (w, r) => r.SerializeProperties(w));
+            writer.WriteOptionalCollection("myList", this.MyList, (w, e) => w.WriteValue(e));
             writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
@@ -79,6 +86,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings
     nestedConfiguration:
       name: nested
       x-myNestedExtension: nestedValue
+    myList:
+      - item01
+      - item02
+      - item03
     x-myextension: someValue";
 
             var channel = new AsyncApiChannel();
@@ -97,6 +108,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings
                     {
                         { "x-myNestedExtension", new AsyncApiString("nestedValue") },
                     },
+                },
+                MyList = new List<string>
+                {
+                    "item01", "item02", "item03"
                 },
                 Extensions = new Dictionary<string, IAsyncApiExtension>()
                 {
@@ -118,6 +133,43 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             // Assert
             Assert.AreEqual(expected, actual);
             binding.Should().BeEquivalentTo(channel);
+        }
+        
+        [Test]
+        public void CustomBinding_WhenInSpec_SerializesDeserializes()
+        {
+            // Arrange
+            var input =
+                @"asyncapi: 2.0.0
+info:
+  title: test-spec
+  version: 1.0.0
+channels:
+  TestChannel:
+    bindings:
+      my:
+        custom: someValue
+        bindingVersion: 0.1.0
+        any:
+          anyKeyName: anyValue
+        nestedConfiguration:
+          name: nested
+          x-myNestedExtension: nestedValue
+        myList:
+          - item01
+          - item02
+          - item03
+        x-myextension: someValue";
+
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings.Add(new MyBinding());
+
+            var reader = new AsyncApiStringReader(settings);
+
+            var result = reader.Read(input, out var diagnostic);
+            
+            Console.WriteLine(JsonSerializer.Serialize(diagnostic.Errors));
+            Assert.False(diagnostic.Errors.Any());
         }
     }
 }
