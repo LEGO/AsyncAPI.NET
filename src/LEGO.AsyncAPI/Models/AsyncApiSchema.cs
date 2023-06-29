@@ -356,7 +356,14 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalProperty(AsyncApiConstants.MinProperties, this.MinProperties);
 
             // additionalProperties
-            writer.WriteOptionalObject(AsyncApiConstants.AdditionalProperties, this.AdditionalProperties, (w, s) => s.SerializeV2(w));
+            if (this.AdditionalProperties is NoAdditionalProperties)
+            {
+                writer.WriteOptionalProperty<bool>(AsyncApiConstants.AdditionalProperties, false);
+            }
+            else
+            {
+                writer.WriteOptionalObject(AsyncApiConstants.AdditionalProperties, this.AdditionalProperties, (w, s) => s.SerializeV2(w));
+            }
 
             // discriminator
             writer.WriteOptionalProperty(AsyncApiConstants.Discriminator, this.Discriminator);
