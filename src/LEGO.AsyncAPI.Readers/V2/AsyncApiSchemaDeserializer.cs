@@ -123,7 +123,17 @@ namespace LEGO.AsyncAPI.Readers
                 "properties", (a, n) => { a.Properties = n.CreateMap(LoadSchema); }
             },
             {
-                "additionalProperties", (a, n) => { a.AdditionalProperties = LoadSchema(n); }
+                "additionalProperties", (a, n) =>
+                {
+                    if (n.GetBooleanValueOrDefault(null) == false)
+                    {
+                        a.AdditionalProperties = new NoAdditionalProperties();
+                    }
+                    else
+                    {
+                        a.AdditionalProperties = LoadSchema(n);
+                    }
+                }
             },
             {
                 "items", (a, n) => { a.Items = LoadSchema(n); }

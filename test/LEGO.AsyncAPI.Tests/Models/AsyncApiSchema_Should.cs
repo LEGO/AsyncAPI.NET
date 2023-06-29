@@ -67,6 +67,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                             MaxLength = 15,
                         },
                     },
+                    AdditionalProperties = new NoAdditionalProperties(),
                 },
                 ["property4"] = new AsyncApiSchema
                 {
@@ -78,7 +79,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                             {
                                 ["property6"] = new AsyncApiSchema
                                 {
-                                    Type = SchemaType.Boolean ,
+                                    Type = SchemaType.Boolean,
                                 },
                             },
                         },
@@ -376,7 +377,8 @@ components: { }";
           ""type"": ""string"",
           ""maxLength"": 15
         }
-      }
+      },
+      ""additionalProperties"": false
     },
     ""property4"": {
       ""properties"": {
