@@ -125,7 +125,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 "additionalProperties", (a, n) =>
                 {
-                    if (n.GetBooleanValueOrDefault(null) == false)
+                    if (n is ValueNode && n.GetBooleanValueOrDefault(null) == false)
                     {
                         a.AdditionalProperties = new NoAdditionalProperties();
                     }
@@ -170,6 +170,9 @@ namespace LEGO.AsyncAPI.Readers
             },
             {
                 "deprecated", (a, n) => { a.Deprecated = bool.Parse(n.GetScalarValue()); }
+            },
+            {
+                "nullable", (a, n) => { a.Nullable = n.GetBooleanValue(); }
             },
         };
 
