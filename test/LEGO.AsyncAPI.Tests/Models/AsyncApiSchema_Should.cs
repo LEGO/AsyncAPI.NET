@@ -407,15 +407,15 @@ components: { }";
           ""type"": ""string"",
           ""minLength"": 2
         }
-      }
-    },
-    ""additionalProperties"": {
-      ""properties"": {
-        ""Property8"": {
-          ""type"": [
-            ""null"",
-            ""string""
-          ]
+      },
+      ""additionalProperties"": {
+        ""properties"": {
+          ""Property8"": {
+            ""type"": [
+              ""null"",
+              ""string""
+            ]
+          }
         }
       }
     }
