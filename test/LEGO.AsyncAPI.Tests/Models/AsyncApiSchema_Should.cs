@@ -485,10 +485,11 @@ components: { }";
             var expected = AdvancedSchemaObject;
 
             // Act
-            var actual = new AsyncApiStringReader().ReadFragment<AsyncApiSchema>(json, AsyncApiVersion.AsyncApi2_0, out _);
+            var actual = new AsyncApiStringReader().ReadFragment<AsyncApiSchema>(json, AsyncApiVersion.AsyncApi2_0, out var diagnostics);
 
             // Assert
             actual.Should().BeEquivalentTo(expected);
+            diagnostics.Errors.Should().BeEmpty();
         }
 
         [Test]
