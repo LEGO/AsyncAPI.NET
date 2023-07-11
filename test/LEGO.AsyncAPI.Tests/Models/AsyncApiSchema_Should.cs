@@ -1,5 +1,9 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using System.Linq;
+using LEGO.AsyncAPI.Bindings;
+using LEGO.AsyncAPI.Readers;
+
 namespace LEGO.AsyncAPI.Tests.Models
 {
     using System;
@@ -87,6 +91,16 @@ namespace LEGO.AsyncAPI.Tests.Models
                         {
                             Type = SchemaType.String,
                             MinLength = 2,
+                        },
+                    },
+                    AdditionalProperties = new AsyncApiSchema
+                    {
+                        Properties = new Dictionary<string, AsyncApiSchema>
+                        {
+                            ["Property8"] = new AsyncApiSchema
+                            {
+                                Type = SchemaType.String | SchemaType.Null,
+                            },
                         },
                     },
                 },
@@ -393,6 +407,16 @@ components: { }";
           ""type"": ""string"",
           ""minLength"": 2
         }
+      },
+      ""additionalProperties"": {
+        ""properties"": {
+          ""Property8"": {
+            ""type"": [
+              ""null"",
+              ""string""
+            ]
+          }
+        }
       }
     }
   },
@@ -409,6 +433,66 @@ components: { }";
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
             actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void Deserialize_WithAdditionalProperties_Works()
+        {
+            // Arrange
+            var json = @"{
+  ""title"": ""title1"",
+  ""properties"": {
+    ""property1"": {
+      ""properties"": {
+        ""property2"": {
+          ""type"": ""integer""
+        },
+        ""property3"": {
+          ""type"": ""string"",
+          ""maxLength"": 15
+        }
+      },
+      ""additionalProperties"": false
+    },
+    ""property4"": {
+      ""properties"": {
+        ""property5"": {
+          ""properties"": {
+            ""property6"": {
+              ""type"": ""boolean""
+            }
+          }
+        },
+        ""property7"": {
+          ""type"": ""string"",
+          ""minLength"": 2
+        }
+      },
+      ""additionalProperties"": {
+        ""properties"": {
+          ""Property8"": {
+            ""type"": [
+              ""null"",
+              ""string""
+            ]
+          }
+        }
+      }
+    }
+  },
+  ""nullable"": true,
+  ""externalDocs"": {
+    ""url"": ""http://example.com/externalDocs""
+  }
+}";
+            var expected = AdvancedSchemaObject;
+
+            // Act
+            var actual = new AsyncApiStringReader().ReadFragment<AsyncApiSchema>(json, AsyncApiVersion.AsyncApi2_0, out var _diagnostics);
+
+            // Assert
+            actual.Should().BeEquivalentTo(expected);
+            _diagnostics.Errors.Should().BeEmpty();
         }
 
         [Test]
