@@ -1,3 +1,11 @@
+## [4.0.1](https://github.com/LEGO/AsyncAPI.NET/compare/v4.0.0...v4.0.1) (2023-07-11)
+
+
+### Bug Fixes
+
+* add ability to have 'false' as the value for 'additionalproperties' ([#118](https://github.com/LEGO/AsyncAPI.NET/issues/118)) ([9e4867f](https://github.com/LEGO/AsyncAPI.NET/commit/9e4867fbec9377964489e53c71f38a239e359cdf))
+* async schema deserializer "additionalProperties" not deserializing JsonSchema correctly ([#120](https://github.com/LEGO/AsyncAPI.NET/issues/120)) ([3761f52](https://github.com/LEGO/AsyncAPI.NET/commit/3761f521570268febb8b00fde9896379acb7047b))
+
 # [4.0.0](https://github.com/LEGO/AsyncAPI.NET/compare/v3.0.2...v4.0.0) (2023-06-12)
 
 
