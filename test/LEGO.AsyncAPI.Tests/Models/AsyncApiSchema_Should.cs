@@ -104,6 +104,10 @@ namespace LEGO.AsyncAPI.Tests.Models
                         },
                     },
                 },
+                ["property9"] = new AsyncApiSchema
+                {
+                    Const = new AsyncApiString("aSpecialConstant"),
+                },
             },
             Nullable = true,
             ExternalDocs = new AsyncApiExternalDocumentation
@@ -418,6 +422,9 @@ components: { }";
           }
         }
       }
+    },
+    ""property9"": {
+      ""const"": ""aSpecialConstant""
     }
   },
   ""nullable"": true,
@@ -478,6 +485,9 @@ components: { }";
           }
         }
       }
+    },
+    ""property9"": {
+      ""const"": ""aSpecialConstant""
     }
   },
   ""nullable"": true,
@@ -596,7 +606,7 @@ components: { }";
                     { "testD", new AsyncApiSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testD" } } },
                 },
             })
-            .WithComponent("testB", new AsyncApiSchema() { Description = "test", Type = SchemaType.Boolean  })
+            .WithComponent("testB", new AsyncApiSchema() { Description = "test", Type = SchemaType.Boolean })
             .Build();
 
             var outputString = new StringWriter(CultureInfo.InvariantCulture);

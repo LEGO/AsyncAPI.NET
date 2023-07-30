@@ -102,6 +102,9 @@ namespace LEGO.AsyncAPI.Readers
                 "enum", (a, n) => { a.Enum = n.CreateListOfAny(); }
             },
             {
+                "const", (a, n) => { a.Const = n.CreateAny(); }
+            },
+            {
                 "examples", (a, n) => { a.Examples = n.CreateListOfAny(); }
             },
             {
