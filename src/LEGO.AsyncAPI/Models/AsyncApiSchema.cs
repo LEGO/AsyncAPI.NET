@@ -160,6 +160,13 @@ namespace LEGO.AsyncAPI.Models
         public AsyncApiSchema Items { get; set; }
 
         /// <summary>
+        /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
+        /// Value MUST be an object and not an array. Inline or referenced schema MUST be of a Schema Object
+        /// and not a standard JSON Schema. items MUST be present if the type is array.
+        /// </summary>
+        public AsyncApiSchema AdditionalItems { get; set; }
+
+        /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
         public int? MaxItems { get; set; }
@@ -196,6 +203,8 @@ namespace LEGO.AsyncAPI.Models
         /// MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
         public AsyncApiSchema AdditionalProperties { get; set; }
+
+        public IDictionary<string, AsyncApiSchema> PatternProperties { get; set; } = new Dictionary<string, AsyncApiSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
@@ -335,7 +344,24 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalCollection(AsyncApiConstants.Required, this.Required, (w, s) => w.WriteValue(s));
 
             // items
-            writer.WriteOptionalObject(AsyncApiConstants.Items, this.Items, (w, s) => s.SerializeV2(w));
+            if (this.Items is FalseApiSchema)
+            {
+                writer.WriteOptionalProperty<bool>(AsyncApiConstants.Items, false);
+            }
+            else
+            {
+                writer.WriteOptionalObject(AsyncApiConstants.Items, this.Items, (w, s) => s.SerializeV2(w));
+            }
+
+            // additionalItems
+            if (this.AdditionalItems is FalseApiSchema)
+            {
+                writer.WriteOptionalProperty<bool>(AsyncApiConstants.AdditionalItems, false);
+            }
+            else
+            {
+                writer.WriteOptionalObject(AsyncApiConstants.AdditionalItems, this.AdditionalItems, (w, s) => s.SerializeV2(w));
+            }
 
             // maxItems
             writer.WriteOptionalProperty(AsyncApiConstants.MaxItems, this.MaxItems);
@@ -356,7 +382,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalProperty(AsyncApiConstants.MinProperties, this.MinProperties);
 
             // additionalProperties
-            if (this.AdditionalProperties is NoAdditionalProperties)
+            if (this.AdditionalProperties is FalseApiSchema)
             {
                 writer.WriteOptionalProperty<bool>(AsyncApiConstants.AdditionalProperties, false);
             }
@@ -364,6 +390,10 @@ namespace LEGO.AsyncAPI.Models
             {
                 writer.WriteOptionalObject(AsyncApiConstants.AdditionalProperties, this.AdditionalProperties, (w, s) => s.SerializeV2(w));
             }
+
+            writer.WriteOptionalMap(AsyncApiConstants.PatternProperties, this.PatternProperties, (w, s) => s.SerializeV2(w));
+
+            writer.WriteOptionalObject(AsyncApiConstants.PropertyNames, this.PropertyNames, (w, s) => s.SerializeV2(w));
 
             // discriminator
             writer.WriteOptionalProperty(AsyncApiConstants.Discriminator, this.Discriminator);

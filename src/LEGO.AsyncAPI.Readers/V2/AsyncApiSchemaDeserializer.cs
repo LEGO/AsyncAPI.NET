@@ -130,7 +130,7 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     if (n is ValueNode && n.GetBooleanValueOrDefault(null) == false)
                     {
-                        a.AdditionalProperties = new NoAdditionalProperties();
+                        a.AdditionalProperties = new FalseApiSchema();
                     }
                     else
                     {
@@ -139,7 +139,36 @@ namespace LEGO.AsyncAPI.Readers
                 }
             },
             {
-                "items", (a, n) => { a.Items = LoadSchema(n); }
+                "items", (a, n) =>
+                {
+                    if (n is ValueNode && n.GetBooleanValueOrDefault(null) == false)
+                    {
+                        a.Items = new FalseApiSchema();
+                    }
+                    else
+                    {
+                        a.Items = LoadSchema(n);
+                    }
+                }
+            },
+            {
+                "additionalItems", (a, n) =>
+                {
+                    if (n is ValueNode && n.GetBooleanValueOrDefault(null) == false)
+                    {
+                        a.AdditionalItems = new FalseApiSchema();
+                    }
+                    else
+                    {
+                        a.AdditionalItems = LoadSchema(n);
+                    }
+                }
+            },
+            {
+                "patternProperties", (a, n) => { a.PatternProperties = n.CreateMap(LoadSchema); }
+            },
+            {
+                "propertyNames", (a, n) => { a.PropertyNames = LoadSchema(n); }
             },
             {
                 "contains", (a, n) => { a.Contains = LoadSchema(n); }

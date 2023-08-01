@@ -71,7 +71,9 @@ namespace LEGO.AsyncAPI.Tests.Models
                             MaxLength = 15,
                         },
                     },
-                    AdditionalProperties = new NoAdditionalProperties(),
+                    AdditionalProperties = new FalseApiSchema(),
+                    Items = new FalseApiSchema(),
+                    AdditionalItems = new FalseApiSchema(),
                 },
                 ["property4"] = new AsyncApiSchema
                 {
@@ -93,6 +95,26 @@ namespace LEGO.AsyncAPI.Tests.Models
                             MinLength = 2,
                         },
                     },
+                    PatternProperties = new Dictionary<string, AsyncApiSchema>()
+                    {
+                        {
+                            "^S_",
+                            new AsyncApiSchema()
+                            {
+                                Type = SchemaType.String,
+                            }
+                        },
+                        {
+                            "^I_", new AsyncApiSchema()
+                            {
+                                Type = SchemaType.Integer,
+                            }
+                        },
+                    },
+                    PropertyNames = new AsyncApiSchema()
+                    {
+                        Pattern = "^[A-Za-z_][A-Za-z0-9_]*$",
+                    },
                     AdditionalProperties = new AsyncApiSchema
                     {
                         Properties = new Dictionary<string, AsyncApiSchema>
@@ -103,8 +125,28 @@ namespace LEGO.AsyncAPI.Tests.Models
                             },
                         },
                     },
+                    Items = new AsyncApiSchema
+                    {
+                        Properties = new Dictionary<string, AsyncApiSchema>
+                        {
+                            ["Property9"] = new AsyncApiSchema
+                            {
+                                Type = SchemaType.String | SchemaType.Null,
+                            },
+                        },
+                    },
+                    AdditionalItems = new AsyncApiSchema
+                    {
+                        Properties = new Dictionary<string, AsyncApiSchema>
+                        {
+                            ["Property10"] = new AsyncApiSchema
+                            {
+                                Type = SchemaType.String | SchemaType.Null,
+                            },
+                        },
+                    },
                 },
-                ["property9"] = new AsyncApiSchema
+                ["property11"] = new AsyncApiSchema
                 {
                     Const = new AsyncApiString("aSpecialConstant"),
                 },
@@ -387,6 +429,8 @@ components: { }";
   ""title"": ""title1"",
   ""properties"": {
     ""property1"": {
+      ""items"": false,
+      ""additionalItems"": false,
       ""properties"": {
         ""property2"": {
           ""type"": ""integer""
@@ -399,6 +443,26 @@ components: { }";
       ""additionalProperties"": false
     },
     ""property4"": {
+      ""items"": {
+        ""properties"": {
+          ""Property9"": {
+            ""type"": [
+              ""null"",
+              ""string""
+            ]
+          }
+        }
+      },
+      ""additionalItems"": {
+        ""properties"": {
+          ""Property10"": {
+            ""type"": [
+              ""null"",
+              ""string""
+            ]
+          }
+        }
+      },
       ""properties"": {
         ""property5"": {
           ""properties"": {
@@ -421,9 +485,20 @@ components: { }";
             ]
           }
         }
+      },
+      ""patternProperties"": {
+        ""^S_"": {
+          ""type"": ""string""
+        },
+        ""^I_"": {
+          ""type"": ""integer""
+        }
+      },
+      ""propertyNames"": {
+        ""pattern"": ""^[A-Za-z_][A-Za-z0-9_]*$""
       }
     },
-    ""property9"": {
+    ""property11"": {
       ""const"": ""aSpecialConstant""
     }
   },
@@ -443,13 +518,15 @@ components: { }";
         }
 
         [Test]
-        public void Deserialize_WithAdditionalProperties_Works()
+        public void Deserialize_WithAdvancedSchema_Works()
         {
             // Arrange
             var json = @"{
   ""title"": ""title1"",
   ""properties"": {
     ""property1"": {
+      ""items"": false,
+      ""additionalItems"": false,
       ""properties"": {
         ""property2"": {
           ""type"": ""integer""
@@ -462,6 +539,26 @@ components: { }";
       ""additionalProperties"": false
     },
     ""property4"": {
+      ""items"": {
+        ""properties"": {
+          ""Property9"": {
+            ""type"": [
+              ""null"",
+              ""string""
+            ]
+          }
+        }
+      },
+      ""additionalItems"": {
+        ""properties"": {
+          ""Property10"": {
+            ""type"": [
+              ""null"",
+              ""string""
+            ]
+          }
+        }
+      },
       ""properties"": {
         ""property5"": {
           ""properties"": {
@@ -484,9 +581,20 @@ components: { }";
             ]
           }
         }
+      },
+      ""patternProperties"": {
+        ""^S_"": {
+          ""type"": ""string""
+        },
+        ""^I_"": {
+          ""type"": ""integer""
+        }
+      },
+      ""propertyNames"": {
+        ""pattern"": ""^[A-Za-z_][A-Za-z0-9_]*$""
       }
     },
-    ""property9"": {
+    ""property11"": {
       ""const"": ""aSpecialConstant""
     }
   },
