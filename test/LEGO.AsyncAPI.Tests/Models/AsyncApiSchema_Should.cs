@@ -518,13 +518,15 @@ components: { }";
         }
 
         [Test]
-        public void Deserialize_WithAdditionalProperties_Works()
+        public void Deserialize_WithAdvancedSchema_Works()
         {
             // Arrange
             var json = @"{
   ""title"": ""title1"",
   ""properties"": {
     ""property1"": {
+      ""items"": false,
+      ""additionalItems"": false,
       ""properties"": {
         ""property2"": {
           ""type"": ""integer""
@@ -537,6 +539,26 @@ components: { }";
       ""additionalProperties"": false
     },
     ""property4"": {
+      ""items"": {
+        ""properties"": {
+          ""Property9"": {
+            ""type"": [
+              ""null"",
+              ""string""
+            ]
+          }
+        }
+      },
+      ""additionalItems"": {
+        ""properties"": {
+          ""Property10"": {
+            ""type"": [
+              ""null"",
+              ""string""
+            ]
+          }
+        }
+      },
       ""properties"": {
         ""property5"": {
           ""properties"": {
@@ -559,9 +581,20 @@ components: { }";
             ]
           }
         }
+      },
+      ""patternProperties"": {
+        ""^S_"": {
+          ""type"": ""string""
+        },
+        ""^I_"": {
+          ""type"": ""integer""
+        }
+      },
+      ""propertyNames"": {
+        ""pattern"": ""^[A-Za-z_][A-Za-z0-9_]*$""
       }
     },
-    ""property9"": {
+    ""property11"": {
       ""const"": ""aSpecialConstant""
     }
   },
