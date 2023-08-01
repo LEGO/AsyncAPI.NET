@@ -1,3 +1,12 @@
+## [4.0.2](https://github.com/LEGO/AsyncAPI.NET/compare/v4.0.1...v4.0.2) (2023-08-01)
+
+
+### Bug Fixes
+
+* add missing properties to json schema ([#124](https://github.com/LEGO/AsyncAPI.NET/issues/124)) ([adcd017](https://github.com/LEGO/AsyncAPI.NET/commit/adcd017b3ff6875eddac9649c2c95c398e49dec0))
+* nullref if type is not set on jsonschema when using enum. ([#123](https://github.com/LEGO/AsyncAPI.NET/issues/123)) ([e53db72](https://github.com/LEGO/AsyncAPI.NET/commit/e53db729813bd76c17a335baf9bf0d0efc34e0bc))
+* parse const keyword in a schema object ([#121](https://github.com/LEGO/AsyncAPI.NET/issues/121)) ([22b329c](https://github.com/LEGO/AsyncAPI.NET/commit/22b329c6c8068e4ff2090cb6dd11bab2d5a254a5))
+
 ## [4.0.1](https://github.com/LEGO/AsyncAPI.NET/compare/v4.0.0...v4.0.1) (2023-07-11)
 
 
