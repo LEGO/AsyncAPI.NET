@@ -109,7 +109,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 return new AsyncApiNull();
             }
 
-            if (schema?.Type == null)
+            if (type == null)
             {
                 if (value == "true")
                 {
