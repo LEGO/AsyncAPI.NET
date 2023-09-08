@@ -5,19 +5,19 @@ namespace LEGO.AsyncAPI.Readers
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Exceptions;
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Readers.V2;
-    using YamlDotNet.RepresentationModel;
 
     public class ParsingContext
     {
         private readonly Stack<string> currentLocation = new ();
 
-        internal Dictionary<string, Func<IAsyncApiAny, IAsyncApiExtension>> ExtensionParsers
+        internal Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>> ExtensionParsers
         {
             get;
             set;
@@ -44,9 +44,9 @@ namespace LEGO.AsyncAPI.Readers
             this.Diagnostic = diagnostic;
         }
 
-        internal AsyncApiDocument Parse(YamlDocument yamlDocument)
+        internal AsyncApiDocument Parse(JsonNode jsonNode)
         {
-            this.RootNode = new RootNode(this, yamlDocument);
+            this.RootNode = new RootNode(this, jsonNode);
 
             var inputVersion = GetVersion(this.RootNode);
 
@@ -67,9 +67,9 @@ namespace LEGO.AsyncAPI.Readers
             return doc;
         }
 
-        internal T ParseFragment<T>(YamlDocument yamlDocument, AsyncApiVersion version) where T : IAsyncApiElement
+        internal T ParseFragment<T>(JsonNode jsonNode, AsyncApiVersion version) where T : IAsyncApiElement
         {
-            var node = ParseNode.Create(this, yamlDocument.RootNode);
+            var node = ParseNode.Create(this, jsonNode);
 
             T element = default(T);
 
@@ -87,13 +87,7 @@ namespace LEGO.AsyncAPI.Readers
         private static string GetVersion(RootNode rootNode)
         {
             var versionNode = rootNode.Find(new JsonPointer("/asyncapi"));
-
-            if (versionNode != null)
-            {
-                return versionNode.GetScalarValue();
-            }
-
-            return versionNode?.GetScalarValue();
+            return versionNode?.GetScalarValue().Replace("\"", string.Empty);
         }
 
         internal IAsyncApiVersionService VersionService { get; set; }

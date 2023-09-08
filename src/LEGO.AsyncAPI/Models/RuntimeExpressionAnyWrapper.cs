@@ -7,17 +7,17 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// The wrapper either for <see cref="IAsyncApiAny"/> or <see cref="RuntimeExpression"/>.
+    /// The wrapper either for <see cref="AsyncApiAny"/> or <see cref="RuntimeExpression"/>.
     /// </summary>
     public class RuntimeExpressionAnyWrapper : IAsyncApiElement
     {
-        private IAsyncApiAny any;
+        private AsyncApiAny any;
         private RuntimeExpression expression;
 
         /// <summary>
-        /// Gets/Sets the <see cref="IAsyncApiAny"/>.
+        /// Gets/Sets the <see cref="AsyncApiAny"/>.
         /// </summary>
-        public IAsyncApiAny Any
+        public AsyncApiAny Any
         {
             get
             {

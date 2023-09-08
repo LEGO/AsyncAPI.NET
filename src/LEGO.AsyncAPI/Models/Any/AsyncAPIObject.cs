@@ -1,20 +1,28 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Any
+namespace LEGO.AsyncAPI.Models
 {
     using System.Collections.Generic;
+    using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// AsyncApi object.
     /// </summary>
-    public class AsyncApiObject : Dictionary<string, IAsyncApiAny>, IAsyncApiAny
+    public class AsyncApiObject : Dictionary<string, AsyncApiAny>, IAsyncApiExtension, IAsyncApiElement
     {
-        /// <summary>
-        /// Type of <see cref="IAsyncApiAny"/>.
-        /// </summary>
-        public AnyType AnyType { get; } = AnyType.Object;
+
+        public static implicit operator AsyncApiAny(AsyncApiObject obj)
+        {
+            var jObject = new JsonObject();
+            foreach (var item in obj)
+            {
+                jObject.Add(item.Key, item.Value.Node);
+            }
+
+            return new AsyncApiAny(jObject);
+        }
 
         /// <summary>
         /// Serialize AsyncApiObject to writer.

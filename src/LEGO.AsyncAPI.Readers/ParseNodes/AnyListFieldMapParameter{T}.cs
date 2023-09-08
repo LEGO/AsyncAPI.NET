@@ -5,13 +5,12 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Interfaces;
 
     internal class AnyListFieldMapParameter<T>
     {
         public AnyListFieldMapParameter(
-            Func<T, IList<IAsyncApiAny>> propertyGetter,
-            Action<T, IList<IAsyncApiAny>> propertySetter,
+            Func<T, IList<AsyncApiAny>> propertyGetter,
+            Action<T, IList<AsyncApiAny>> propertySetter,
             Func<T, AsyncApiSchema> schemaGetter)
         {
             this.PropertyGetter = propertyGetter;
@@ -19,9 +18,9 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             this.SchemaGetter = schemaGetter;
         }
 
-        public Func<T, IList<IAsyncApiAny>> PropertyGetter { get; }
+        public Func<T, IList<AsyncApiAny>> PropertyGetter { get; }
 
-        public Action<T, IList<IAsyncApiAny>> PropertySetter { get; }
+        public Action<T, IList<AsyncApiAny>> PropertySetter { get; }
 
         public Func<T, AsyncApiSchema> SchemaGetter { get; }
     }

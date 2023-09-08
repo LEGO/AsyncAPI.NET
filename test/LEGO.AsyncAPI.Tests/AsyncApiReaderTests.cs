@@ -5,9 +5,9 @@ namespace LEGO.AsyncAPI.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
@@ -38,22 +38,22 @@ channels:
   workspace:
     {extensionName}: onetwothreefour
 ";
-            Func<IAsyncApiAny, IAsyncApiExtension> valueExtensionParser = (any) =>
+            Func<AsyncApiAny, IAsyncApiExtension> valueExtensionParser = (any) =>
             {
-                if (any.AnyType == AnyType.Primitive && any is AsyncApiString value)
+                if (any.Node is JsonValue value)
                 {
-                    if (value.Value == "onetwothreefour")
+                    if (value.GetScalarValue() == "onetwothreefour")
                     {
-                        return new AsyncApiInteger(1234);
+                        return new AsyncApiAny(1234);
                     }
                 }
 
-                return new AsyncApiString("No value provided");
+                return new AsyncApiAny("No value provided");
             };
 
             var settings = new AsyncApiReaderSettings
             {
-                ExtensionParsers = new Dictionary<string, Func<IAsyncApiAny, IAsyncApiExtension>>
+                ExtensionParsers = new Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>>
                 {
                     { extensionName, valueExtensionParser },
                 },
@@ -61,7 +61,7 @@ channels:
 
             var reader = new AsyncApiStringReader(settings);
             var doc = reader.Read(yaml, out var diagnostic);
-            Assert.AreEqual((doc.Channels["workspace"].Extensions[extensionName] as AsyncApiInteger).Value, 1234);
+            Assert.AreEqual((doc.Channels["workspace"].Extensions[extensionName] as AsyncApiAny).GetValue<int>(), 1234);
         }
 
         [Test]
@@ -80,14 +80,14 @@ channels:
   workspace:
     {extensionName}: onetwothreefour
 ";
-            Func<IAsyncApiAny, IAsyncApiExtension> failingExtensionParser = (any) =>
+            Func<AsyncApiAny, IAsyncApiExtension> failingExtensionParser = (any) =>
             {
                 throw new AsyncApiException("Failed to parse");
             };
 
             var settings = new AsyncApiReaderSettings
             {
-                ExtensionParsers = new Dictionary<string, Func<IAsyncApiAny, IAsyncApiExtension>>
+                ExtensionParsers = new Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>>
                 {
                     { extensionName, failingExtensionParser },
                 },

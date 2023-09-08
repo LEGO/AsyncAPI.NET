@@ -6,7 +6,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -41,7 +40,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
         public NestedConfiguration NestedConfiguration { get; set; }
 
-        public IAsyncApiAny Any { get; set; }
+        public AsyncApiAny Any { get; set; }
 
         protected override FixedFieldMap<MyBinding> FixedFieldMap => new FixedFieldMap<MyBinding>()
         {
@@ -87,7 +86,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
                 Custom = "someValue",
                 Any = new AsyncApiObject()
                 {
-                    { "anyKeyName", new AsyncApiString("anyValue") },
+                    { "anyKeyName", new AsyncApiAny("anyValue") },
                 },
                 BindingVersion = "0.1.0",
                 NestedConfiguration = new NestedConfiguration()
@@ -95,12 +94,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings
                     Name = "nested",
                     Extensions = new Dictionary<string, IAsyncApiExtension>()
                     {
-                        { "x-myNestedExtension", new AsyncApiString("nestedValue") },
+                        { "x-myNestedExtension", new AsyncApiAny("nestedValue") },
                     },
                 },
                 Extensions = new Dictionary<string, IAsyncApiExtension>()
                 {
-                    { "x-myextension", new AsyncApiString("someValue") },
+                    { "x-myextension", new AsyncApiAny("someValue") },
                 },
             });
 

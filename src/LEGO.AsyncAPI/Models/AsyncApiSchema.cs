@@ -81,7 +81,7 @@ namespace LEGO.AsyncAPI.Models
         /// Unlike JSON Schema, the value MUST conform to the defined type for the Schema Object defined at the same level.
         /// For example, if type is string, then default can be "foo" but cannot be 1.
         /// </summary>
-        public IAsyncApiAny Default { get; set; }
+        public AsyncApiAny Default { get; set; }
 
         /// <summary>
         /// a value indicating whether relevant only for Schema "properties" definitions. Declares the property as "read only".
@@ -220,17 +220,17 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public IList<IAsyncApiAny> Enum { get; set; } = new List<IAsyncApiAny>();
+        public IList<AsyncApiAny> Enum { get; set; } = new List<AsyncApiAny>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public IList<IAsyncApiAny> Examples { get; set; } = new List<IAsyncApiAny>();
+        public IList<AsyncApiAny> Examples { get; set; } = new List<AsyncApiAny>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public IAsyncApiAny Const { get; set; }
+        public AsyncApiAny Const { get; set; }
 
         /// <summary>
         /// a value indicating whether allows sending a null value for the defined schema. Default value is false.

@@ -2,12 +2,27 @@
 
 namespace LEGO.AsyncAPI.Validation.Rules
 {
+    using System.Net.Mail;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Validations;
 
     [AsyncApiRule]
     public static class AsyncApiContactRules
     {
+        private static bool IsEmailAddress(this string input)
+        {
+            try
+            {
+                _ = new MailAddress(input);
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static ValidationRule<AsyncApiContact> EmailMustBeEmailFormat =>
             new ValidationRule<AsyncApiContact>(
                 (context, contact) =>

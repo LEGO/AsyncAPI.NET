@@ -55,7 +55,7 @@ namespace LEGO.AsyncAPI.Services
         {
         }
 
-        public virtual void Visit(IDictionary<string, IAsyncApiAny> anys)
+        public virtual void Visit(IDictionary<string, AsyncApiAny> anys)
         {
         }
 

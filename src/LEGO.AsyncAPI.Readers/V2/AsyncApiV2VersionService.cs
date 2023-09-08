@@ -26,7 +26,7 @@ namespace LEGO.AsyncAPI.Readers.V2
 
         private IDictionary<Type, Func<ParseNode, object>> loaders = new Dictionary<Type, Func<ParseNode, object>>
         {
-            [typeof(IAsyncApiAny)] = AsyncApiV2Deserializer.LoadAny,
+            [typeof(AsyncApiAny)] = AsyncApiV2Deserializer.LoadAny,
             [typeof(AsyncApiComponents)] = AsyncApiV2Deserializer.LoadComponents,
             [typeof(AsyncApiExternalDocumentation)] = AsyncApiV2Deserializer.LoadExternalDocs,
             [typeof(AsyncApiInfo)] = AsyncApiV2Deserializer.LoadInfo,

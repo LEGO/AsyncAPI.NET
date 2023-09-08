@@ -1,7 +1,4 @@
-using System;
-using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.Models.Interfaces;
-using BindingsCollection = LEGO.AsyncAPI.Bindings.BindingsCollection;
 
 namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 {
@@ -64,7 +61,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             "x-orderingExtension",
                             new AsyncApiObject()
                             {
-                                { "orderingXPropertyName", new AsyncApiString("orderingXPropertyValue") },
+                                { "orderingXPropertyName", new AsyncApiAny("orderingXPropertyValue") },
                             }
                         },
                     },
@@ -76,11 +73,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         new Statement()
                         {
                             Effect = Effect.Deny,
-                            Principal = new StringOrStringList(new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann")),
+                            Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
                             Action = new StringOrStringList(new AsyncApiArray()
                             {
-                                new AsyncApiString("sns:Publish"),
-                                new AsyncApiString("sns:Delete")
+                                new AsyncApiAny("sns:Publish"),
+                                new AsyncApiAny("sns:Delete")
                             }),
                         },
                         new Statement()
@@ -88,17 +85,17 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             Effect = Effect.Allow,
                             Principal = new StringOrStringList(new AsyncApiArray()
                             {
-                                new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann"),
-                                new AsyncApiString("arn:aws:iam::123456789012:user/dec.kolakowski")
+                                new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann"),
+                                new AsyncApiAny("arn:aws:iam::123456789012:user/dec.kolakowski")
                             }),
-                            Action = new StringOrStringList(new AsyncApiString("sns:Create")),
+                            Action = new StringOrStringList(new AsyncApiAny("sns:Create")),
                             Extensions = new Dictionary<string, IAsyncApiExtension>()
                             {
                                 {
                                     "x-statementExtension",
                                     new AsyncApiObject()
                                     {
-                                        { "statementXPropertyName", new AsyncApiString("statementXPropertyValue") },
+                                        { "statementXPropertyName", new AsyncApiAny("statementXPropertyValue") },
                                     }
                                 },
                             },
@@ -110,7 +107,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             "x-policyExtension",
                             new AsyncApiObject()
                             {
-                                { "policyXPropertyName", new AsyncApiString("policyXPropertyValue") },
+                                { "policyXPropertyName", new AsyncApiAny("policyXPropertyValue") },
                             }
                         },
                     },
@@ -126,7 +123,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         "x-bindingExtension",
                         new AsyncApiObject()
                         {
-                            { "bindingXPropertyName", new AsyncApiString("bindingXPropertyValue") },
+                            { "bindingXPropertyName", new AsyncApiAny("bindingXPropertyValue") },
                         }
                     },
                 },
@@ -229,7 +226,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             "x-identifierExtension",
                             new AsyncApiObject()
                             {
-                                { "identifierXPropertyName", new AsyncApiString("identifierXPropertyValue") },
+                                { "identifierXPropertyName", new AsyncApiAny("identifierXPropertyValue") },
                             }
                         },
                     },
@@ -248,7 +245,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                     "x-identifierExtension",
                                     new AsyncApiObject()
                                     {
-                                        { "identifierXPropertyName", new AsyncApiString("identifierXPropertyValue") },
+                                        { "identifierXPropertyName", new AsyncApiAny("identifierXPropertyValue") },
                                     }
                                 },
                             },
@@ -257,29 +254,29 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         {
                             Attributes = new AsyncApiObject()
                             {
-                                { "store", new AsyncApiArray() { new AsyncApiString("asyncapi_corp") } },
-                                { "contact", new AsyncApiString("dec.kolakowski") },
+                                { "store", new AsyncApiArray() { new AsyncApiAny("asyncapi_corp") } },
+                                { "contact", new AsyncApiAny("dec.kolakowski") },
                                 {
                                     "event", new AsyncApiArray()
                                     {
                                         new AsyncApiObject()
                                         {
-                                            { "anything-but", new AsyncApiString("order_cancelled") },
+                                            { "anything-but", new AsyncApiAny("order_cancelled") },
                                         },
                                     }
                                 },
                                 {
                                     "order_key", new AsyncApiObject()
                                     {
-                                        { "transient", new AsyncApiString("by_area") },
+                                        { "transient", new AsyncApiAny("by_area") },
                                     }
                                 },
                                 {
                                     "customer_interests", new AsyncApiArray()
                                     {
-                                        new AsyncApiString("rugby"),
-                                        new AsyncApiString("football"),
-                                        new AsyncApiString("baseball"),
+                                        new AsyncApiAny("rugby"),
+                                        new AsyncApiAny("football"),
+                                        new AsyncApiAny("baseball"),
                                     }
                                 },
                             },
@@ -289,7 +286,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                     "x-filterPolicyExtension",
                                     new AsyncApiObject()
                                     {
-                                        { "filterPolicyXPropertyName", new AsyncApiString("filterPolicyXPropertyValue") },
+                                        { "filterPolicyXPropertyName", new AsyncApiAny("filterPolicyXPropertyValue") },
                                     }
                                 },
                             },
@@ -306,7 +303,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                         "x-identifierExtension",
                                         new AsyncApiObject()
                                         {
-                                            { "identifierXPropertyName", new AsyncApiString("identifierXPropertyValue") },
+                                            { "identifierXPropertyName", new AsyncApiAny("identifierXPropertyValue") },
                                         }
                                     },
                                 },
@@ -318,7 +315,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                     "x-redrivePolicyExtension",
                                     new AsyncApiObject()
                                     {
-                                        { "redrivePolicyXPropertyName", new AsyncApiString("redrivePolicyXPropertyValue") },
+                                        { "redrivePolicyXPropertyName", new AsyncApiAny("redrivePolicyXPropertyValue") },
                                     }
                                 },
                             },
@@ -339,7 +336,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                     "x-deliveryPolicyExtension",
                                     new AsyncApiObject()
                                     {
-                                        { "deliveryPolicyXPropertyName", new AsyncApiString("deliveryPolicyXPropertyValue") },
+                                        { "deliveryPolicyXPropertyName", new AsyncApiAny("deliveryPolicyXPropertyValue") },
                                     }
                                 },
                             },
@@ -350,7 +347,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                 "x-consumerExtension",
                                 new AsyncApiObject()
                                 {
-                                    { "consumerXPropertyName", new AsyncApiString("consumerXPropertyValue") },
+                                    { "consumerXPropertyName", new AsyncApiAny("consumerXPropertyValue") },
                                 }
                             },
                         },
@@ -372,7 +369,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             "x-deliveryPolicyExtension",
                             new AsyncApiObject()
                             {
-                                { "deliveryPolicyXPropertyName", new AsyncApiString("deliveryPolicyXPropertyValue") },
+                                { "deliveryPolicyXPropertyName", new AsyncApiAny("deliveryPolicyXPropertyValue") },
                             }
                         },
                     },
@@ -383,7 +380,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         "x-bindingExtension",
                         new AsyncApiObject()
                         {
-                            { "bindingXPropertyName", new AsyncApiString("bindingXPropertyValue") },
+                            { "bindingXPropertyName", new AsyncApiAny("bindingXPropertyValue") },
                         }
                     },
                 },

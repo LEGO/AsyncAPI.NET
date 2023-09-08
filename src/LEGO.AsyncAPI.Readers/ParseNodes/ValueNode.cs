@@ -2,23 +2,21 @@
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
-    using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Exceptions;
-    using YamlDotNet.Core;
-    using YamlDotNet.RepresentationModel;
+    using System.Text.Json.Nodes;
 
     public class ValueNode : ParseNode
     {
-        private readonly YamlScalarNode node;
-
-        public ValueNode(ParsingContext context, YamlNode node)
+        private readonly JsonNode node;
+        private string cachedScalarValue;
+        public ValueNode(ParsingContext context, JsonNode node)
             : base(
             context)
         {
-            if (!(node is YamlScalarNode scalarNode))
+            if (!(node is JsonValue scalarNode))
             {
-                throw new AsyncApiReaderException("Expected a value.", node);
+                throw new AsyncApiReaderException("Expected a value.");
             }
 
             this.node = scalarNode;
@@ -26,14 +24,20 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public override string GetScalarValue()
         {
-            return this.node.Value;
+            if (this.cachedScalarValue == null)
+            {
+                this.cachedScalarValue = this.node.GetScalarValue();
+            }
+
+            return this.cachedScalarValue;
         }
 
         public override string GetScalarValueOrDefault(string defaultValue)
         {
-            if (this.node.Value is not null)
+            var value = this.GetScalarValue();
+            if (value is not null)
             {
-                return this.node.Value;
+                return value;
             }
 
             return defaultValue;
@@ -41,17 +45,17 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public override int GetIntegerValue()
         {
-            if (int.TryParse(this.node.Value, out int value))
+            if (int.TryParse(this.GetScalarValue(), out int value))
             {
                 return value;
             }
 
-            throw new AsyncApiReaderException("Value could not parse to integer", this.node);
+            throw new AsyncApiReaderException("Value could not parse to integer.");
         }
 
         public override int? GetIntegerValueOrDefault(int? defaultValue)
         {
-            if (int.TryParse(this.node.Value, out int value))
+            if (int.TryParse(this.GetScalarValue(), out int value))
             {
                 return value;
             }
@@ -61,17 +65,17 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public override long GetLongValue()
         {
-            if (long.TryParse(this.node.Value, out long value))
+            if (long.TryParse(this.GetScalarValue(), out long value))
             {
                 return value;
             }
 
-            throw new AsyncApiReaderException("Value could not parse to long", this.node);
+            throw new AsyncApiReaderException("Value could not parse to long.");
         }
 
         public override long? GetLongValueOrDefault(long? defaultValue)
         {
-            if (long.TryParse(this.node.Value, out long value))
+            if (long.TryParse(this.GetScalarValue(), out long value))
             {
                 return value;
             }
@@ -81,17 +85,17 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public override bool GetBooleanValue()
         {
-            if (bool.TryParse(this.node.Value, out bool value))
+            if (bool.TryParse(this.GetScalarValue(), out bool value))
             {
                 return value;
             }
 
-            throw new AsyncApiReaderException("Value could not parse to bool", this.node);
+            throw new AsyncApiReaderException("Value could not parse to bool.");
         }
 
         public override bool? GetBooleanValueOrDefault(bool? defaultValue)
         {
-            if (bool.TryParse(this.node.Value, out bool value))
+            if (bool.TryParse(this.GetScalarValue(), out bool value))
             {
                 return value;
             }
@@ -99,10 +103,10 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             return defaultValue;
         }
 
-        public override IAsyncApiAny CreateAny()
+        public override AsyncApiAny CreateAny()
         {
             var value = this.GetScalarValue();
-            return new AsyncApiString(value, this.node.Style == ScalarStyle.SingleQuoted || this.node.Style == ScalarStyle.DoubleQuoted || this.node.Style == ScalarStyle.Literal || this.node.Style == ScalarStyle.Folded);
+            return new AsyncApiAny(this.node);
         }
     }
 }

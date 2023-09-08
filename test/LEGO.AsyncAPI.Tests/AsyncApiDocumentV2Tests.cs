@@ -12,7 +12,6 @@ namespace LEGO.AsyncAPI.Tests
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Writers;
@@ -577,10 +576,10 @@ components:
                         "command", new AsyncApiSchema()
                         {
                             Type = SchemaType.String,
-                            Enum = new List<IAsyncApiAny>
+                            Enum = new List<AsyncApiAny>
                             {
-                                new AsyncApiString("on"),
-                                new AsyncApiString("off"),
+                                new AsyncApiAny("on"),
+                                new AsyncApiAny("off"),
                             },
                             Description = "Whether to turn on or off the light."
                         }
@@ -676,9 +675,9 @@ components:
                             ClientId = new AsyncApiSchema()
                             {
                                 Type = SchemaType.String,
-                                Enum = new List<IAsyncApiAny>
+                                Enum = new List<AsyncApiAny>
                                 {
-                                    new AsyncApiString("my-app-id"),
+                                    new AsyncApiAny("my-app-id"),
                                 },
                             },
                         }
@@ -893,7 +892,7 @@ components:
                                         AuthorizationUrl = new Uri(authorizationUrl),
                                         Extensions = new Dictionary<string, IAsyncApiExtension>
                                         {
-                                            { extensionKey, new AsyncApiString(extensionString) },
+                                            { extensionKey, new AsyncApiAny(extensionString) },
                                         },
                                     },
                                 },
@@ -948,14 +947,14 @@ components:
                         Url = new Uri(licenseUri),
                         Extensions = new Dictionary<string, IAsyncApiExtension>
                         {
-                            { extensionKey, new AsyncApiString(extensionString) },
+                            { extensionKey, new AsyncApiAny(extensionString) },
                         },
                     },
                     Version = apiVersion,
                     TermsOfService = new Uri(termsOfServiceUri),
                     Extensions = new Dictionary<string, IAsyncApiExtension>
                     {
-                        { extensionKey, new AsyncApiString(extensionString) },
+                        { extensionKey, new AsyncApiAny(extensionString) },
                     },
                 },
                 Channels = new Dictionary<string, AsyncApiChannel>
@@ -1001,7 +1000,7 @@ components:
                                                 Description = correlationDescription,
                                                 Extensions = new Dictionary<string, IAsyncApiExtension>
                                                 {
-                                                    { extensionKey, new AsyncApiString(extensionString) },
+                                                    { extensionKey, new AsyncApiAny(extensionString) },
                                                 },
                                             },
                                             Traits = new List<AsyncApiMessageTrait>
@@ -1015,12 +1014,12 @@ components:
                                                         Title = schemaTitle,
                                                         WriteOnly = true,
                                                         Description = schemaDescription,
-                                                        Examples = new List<IAsyncApiAny>
+                                                        Examples = new List<AsyncApiAny>
                                                         {
                                                             new AsyncApiObject
                                                             {
-                                                                { anyKey, new AsyncApiString(anyStringValue) },
-                                                                { anyOtherKey, new AsyncApiLong(anyLongValue) },
+                                                                { anyKey, new AsyncApiAny(anyStringValue) },
+                                                                { anyOtherKey, new AsyncApiAny(anyLongValue) },
                                                             },
                                                         },
                                                     },
@@ -1032,12 +1031,12 @@ components:
                                                             Name = exampleName,
                                                             Payload = new AsyncApiObject
                                                             {
-                                                                { anyKey, new AsyncApiString(anyStringValue) },
-                                                                { anyOtherKey, new AsyncApiLong(anyLongValue) },
+                                                                { anyKey, new AsyncApiAny(anyStringValue) },
+                                                                { anyOtherKey, new AsyncApiAny(anyLongValue) },
                                                             },
                                                             Extensions = new Dictionary<string, IAsyncApiExtension>
                                                             {
-                                                                { extensionKey, new AsyncApiString(extensionString) },
+                                                                { extensionKey, new AsyncApiAny(extensionString) },
                                                             },
                                                         },
                                                     },
@@ -1058,20 +1057,20 @@ components:
                                                     },
                                                     Extensions = new Dictionary<string, IAsyncApiExtension>
                                                     {
-                                                        { extensionKey, new AsyncApiString(extensionString) },
+                                                        { extensionKey, new AsyncApiAny(extensionString) },
                                                     },
                                                 },
                                             },
                                             Extensions = new Dictionary<string, IAsyncApiExtension>
                                             {
-                                                { extensionKey, new AsyncApiString(extensionString) },
+                                                { extensionKey, new AsyncApiAny(extensionString) },
                                             },
                                         }
                                     },
                                 },
                                 Extensions = new Dictionary<string, IAsyncApiExtension>
                                 {
-                                    { extensionKey, new AsyncApiString(extensionString) },
+                                    { extensionKey, new AsyncApiAny(extensionString) },
                                 },
                                 Tags = new List<AsyncApiTag>
                                 {
@@ -1103,7 +1102,7 @@ components:
                                         OperationId = operationId,
                                         Extensions = new Dictionary<string, IAsyncApiExtension>
                                         {
-                                            { extensionKey, new AsyncApiString(extensionString) },
+                                            { extensionKey, new AsyncApiAny(extensionString) },
                                         },
                                     },
                                 },

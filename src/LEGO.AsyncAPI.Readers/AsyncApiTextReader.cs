@@ -4,11 +4,12 @@ namespace LEGO.AsyncAPI.Readers
 {
     using System.IO;
     using System.Linq;
+    using System.Text.Json;
+    using System.Text.Json.Nodes;
     using System.Threading.Tasks;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
-    using YamlDotNet.Core;
     using YamlDotNet.RepresentationModel;
 
     /// <summary>
@@ -35,21 +36,21 @@ namespace LEGO.AsyncAPI.Readers
         /// <returns>Instance of newly created AsyncApiDocument.</returns>
         public AsyncApiDocument Read(TextReader input, out AsyncApiDiagnostic diagnostic)
         {
-            YamlDocument yamlDocument;
+            JsonNode jsonNode;
 
             // Parse the YAML/JSON text in the TextReader into the YamlDocument
             try
             {
-                yamlDocument = LoadYamlDocument(input);
+                jsonNode = LoadYamlDocument(input);
             }
-            catch (YamlException ex)
+            catch (JsonException ex)
             {
                 diagnostic = new AsyncApiDiagnostic();
-                diagnostic.Errors.Add(new AsyncApiError($"#line={ex.Start.Line}", ex.Message));
+                diagnostic.Errors.Add(new AsyncApiError($"#line={ex.LineNumber}", ex.Message));
                 return new AsyncApiDocument();
             }
 
-            return new AsyncApiYamlDocumentReader(this.settings).Read(yamlDocument, out diagnostic);
+            return new AsyncApiJsonDocumentReader(this.settings).Read(jsonNode, out diagnostic);
         }
 
         /// <summary>
@@ -59,17 +60,17 @@ namespace LEGO.AsyncAPI.Readers
         /// <returns>A ReadResult instance that contains the resulting AsyncApiDocument and a diagnostics instance.</returns>
         public async Task<ReadResult> ReadAsync(TextReader input)
         {
-            YamlDocument yamlDocument;
+            JsonNode jsonNode;
 
             // Parse the YAML/JSON text in the TextReader into the YamlDocument
             try
             {
-                yamlDocument = LoadYamlDocument(input);
+                jsonNode = LoadYamlDocument(input);
             }
-            catch (YamlException ex)
+            catch (JsonException ex)
             {
                 var diagnostic = new AsyncApiDiagnostic();
-                diagnostic.Errors.Add(new AsyncApiError($"#line={ex.Start.Line}", ex.Message));
+                diagnostic.Errors.Add(new AsyncApiError($"#line={ex.LineNumber}", ex.Message));
                 return new ReadResult
                 {
                     AsyncApiDocument = null,
@@ -77,7 +78,7 @@ namespace LEGO.AsyncAPI.Readers
                 };
             }
 
-            return await new AsyncApiYamlDocumentReader(this.settings).ReadAsync(yamlDocument);
+            return await new AsyncApiJsonDocumentReader(this.settings).ReadAsync(jsonNode);
         }
 
         /// <summary>
@@ -90,21 +91,21 @@ namespace LEGO.AsyncAPI.Readers
         public T ReadFragment<T>(TextReader input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic)
             where T : IAsyncApiElement
         {
-            YamlDocument yamlDocument;
+            JsonNode jsonNode;
 
             // Parse the YAML/JSON
             try
             {
-                yamlDocument = LoadYamlDocument(input);
+                jsonNode = LoadYamlDocument(input);
             }
-            catch (YamlException ex)
+            catch (JsonException ex)
             {
                 diagnostic = new AsyncApiDiagnostic();
-                diagnostic.Errors.Add(new AsyncApiError($"#line={ex.Start.Line}", ex.Message));
+                diagnostic.Errors.Add(new AsyncApiError($"#line={ex.LineNumber}", ex.Message));
                 return default;
             }
 
-            return new AsyncApiYamlDocumentReader(this.settings).ReadFragment<T>(yamlDocument, version,
+            return new AsyncApiJsonDocumentReader(this.settings).ReadFragment<T>(jsonNode, version,
                 out diagnostic);
         }
 
@@ -113,11 +114,11 @@ namespace LEGO.AsyncAPI.Readers
         /// </summary>
         /// <param name="input">Stream containing YAML formatted text.</param>
         /// <returns>Instance of a YamlDocument.</returns>
-        static YamlDocument LoadYamlDocument(TextReader input)
+        static JsonNode LoadYamlDocument(TextReader input)
         {
             var yamlStream = new YamlStream();
             yamlStream.Load(input);
-            return yamlStream.Documents.First();
+            return yamlStream.Documents.First().ToJsonNode();
         }
     }
 }

@@ -5,14 +5,14 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Exceptions;
-    using YamlDotNet.RepresentationModel;
 
     public class PropertyNode : ParseNode
     {
-        public PropertyNode(ParsingContext context, string name, YamlNode node)
+        public PropertyNode(ParsingContext context, string name, JsonNode node)
             : base(
             context)
         {

@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Readers.Exceptions
 {
     using System;
     using LEGO.AsyncAPI.Exceptions;
-    using YamlDotNet.RepresentationModel;
 
     [Serializable]
     public class AsyncApiReaderException : AsyncApiException
@@ -22,14 +21,6 @@ namespace LEGO.AsyncAPI.Readers.Exceptions
             : base(message)
         {
             this.Pointer = context.GetLocation();
-        }
-
-        public AsyncApiReaderException(string message, YamlNode node)
-            : base(message)
-        {
-            // This only includes line because using a char range causes tests to break due to CR/LF & LF differences
-            // See https://tools.ietf.org/html/rfc5147 for syntax
-            this.Pointer = $"#line={node.Start.Line}";
         }
 
         public AsyncApiReaderException(string message, Exception innerException)

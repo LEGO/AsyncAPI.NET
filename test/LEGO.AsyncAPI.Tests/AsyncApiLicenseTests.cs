@@ -5,15 +5,13 @@ namespace LEGO.AsyncAPI.Tests
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
+    using System.Text.Json.Nodes;
     using FluentAssertions;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using NUnit.Framework;
-    using YamlDotNet.RepresentationModel;
 
     public class AsyncApiLicenseTests
     {
@@ -31,7 +29,7 @@ namespace LEGO.AsyncAPI.Tests
                 Url = new Uri("https://example.com/license"),
                 Extensions = new Dictionary<string, IAsyncApiExtension>
                 {
-                    ["x-extension"] = new AsyncApiString("value"),
+                    ["x-extension"] = new AsyncApiAny("value"),
                 },
             };
 
@@ -64,16 +62,12 @@ namespace LEGO.AsyncAPI.Tests
   ""x-extension"": ""value""
 }";
 
-            using (var stream = GenerateStreamFromString(input))
-            {
-                var yamlStream = new YamlStream();
-                yamlStream.Load(new StreamReader(stream));
-                var yamlNode = yamlStream.Documents.First().RootNode;
-
+           using (var stream = GenerateStreamFromString(input))
+           {
                 var diagnostic = new AsyncApiDiagnostic();
                 var context = new ParsingContext(diagnostic);
 
-                var node = new MapNode(context, (YamlMappingNode)yamlNode);
+                var node = new MapNode(context, JsonNode.Parse(stream));
 
                 // Act
                 var actual = AsyncApiV2Deserializer.LoadLicense(node);
@@ -85,7 +79,7 @@ namespace LEGO.AsyncAPI.Tests
                     Url = new Uri("https://example.com/license"),
                     Extensions = new Dictionary<string, IAsyncApiExtension>
                     {
-                        ["x-extension"] = new AsyncApiString("value"),
+                        ["x-extension"] = new AsyncApiAny("value"),
                     },
                 };
                 actual.Should().BeEquivalentTo(

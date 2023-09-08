@@ -619,7 +619,7 @@ namespace LEGO.AsyncAPI.Services
             this.Walk(example as IAsyncApiExtensible);
         }
 
-        internal void Walk(IDictionary<string, IAsyncApiAny> anys)
+        internal void Walk(IDictionary<string, AsyncApiAny> anys)
         {
             if (anys == null)
             {
@@ -834,7 +834,7 @@ namespace LEGO.AsyncAPI.Services
             this.visitor.Visit(contact);
         }
 
-        internal void Walk(IAsyncApiAny any)
+        internal void Walk(AsyncApiAny any)
         {
             if (any == null)
             {
