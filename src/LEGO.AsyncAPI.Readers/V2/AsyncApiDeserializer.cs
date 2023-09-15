@@ -1,20 +1,10 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-using System.Collections.Generic;
-using System.Linq;
-using LEGO.AsyncAPI.Exceptions;
-using LEGO.AsyncAPI.Expressions;
-using LEGO.AsyncAPI.Models;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.ParseNodes;
-
 namespace LEGO.AsyncAPI.Readers
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Extensions;
     using LEGO.AsyncAPI.Exceptions;
-    using LEGO.AsyncAPI.Expressions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -49,11 +39,15 @@ namespace LEGO.AsyncAPI.Readers
                 {
                     mapNode.Context.StartObject(anyFieldName);
 
-                    var convertedAsyncApiAny = AsyncApiAnyConverter.GetSpecificAsyncApiAny(
-                        anyFieldMap[anyFieldName].PropertyGetter(domainObject),
-                        anyFieldMap[anyFieldName].SchemaGetter(domainObject));
-
-                    anyFieldMap[anyFieldName].PropertySetter(domainObject, convertedAsyncApiAny);
+                    var anyFieldValue = anyFieldMap[anyFieldName].PropertyGetter(domainObject);
+                    if (anyFieldValue == null)
+                    {
+                        anyFieldMap[anyFieldName].PropertySetter(domainObject, null);
+                    }
+                    else
+                    {
+                        anyFieldMap[anyFieldName].PropertySetter(domainObject, anyFieldValue);
+                    }
                 }
                 catch (AsyncApiException exception)
                 {
@@ -76,16 +70,13 @@ namespace LEGO.AsyncAPI.Readers
             {
                 try
                 {
-                    var newProperty = new List<IAsyncApiAny>();
+                    var newProperty = new List<AsyncApiAny>();
 
                     mapNode.Context.StartObject(anyListFieldName);
 
                     foreach (var propertyElement in anyListFieldMap[anyListFieldName].PropertyGetter(domainObject))
                     {
-                        newProperty.Add(
-                            AsyncApiAnyConverter.GetSpecificAsyncApiAny(
-                                propertyElement,
-                                anyListFieldMap[anyListFieldName].SchemaGetter(domainObject)));
+                        newProperty.Add(propertyElement);
                     }
 
                     anyListFieldMap[anyListFieldName].PropertySetter(domainObject, newProperty);
@@ -111,7 +102,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 try
                 {
-                    var newProperty = new List<IAsyncApiAny>();
+                    var newProperty = new List<AsyncApiAny>();
 
                     mapNode.Context.StartObject(anyMapFieldName);
 
@@ -123,11 +114,7 @@ namespace LEGO.AsyncAPI.Readers
                         {
                             var any = anyMapFieldMap[anyMapFieldName].PropertyGetter(propertyMapElement.Value);
 
-                            var newAny = AsyncApiAnyConverter.GetSpecificAsyncApiAny(
-                                    any,
-                                    anyMapFieldMap[anyMapFieldName].SchemaGetter(domainObject));
-
-                            anyMapFieldMap[anyMapFieldName].PropertySetter(propertyMapElement.Value, newAny);
+                            anyMapFieldMap[anyMapFieldName].PropertySetter(propertyMapElement.Value, any);
                         }
                     }
                 }
@@ -143,33 +130,9 @@ namespace LEGO.AsyncAPI.Readers
             }
         }
 
-        private static RuntimeExpression LoadRuntimeExpression(ParseNode node)
+        public static AsyncApiAny LoadAny(ParseNode node)
         {
-            var value = node.GetScalarValue();
-            return RuntimeExpression.Build(value);
-        }
-
-        private static RuntimeExpressionAnyWrapper LoadRuntimeExpressionAnyWrapper(ParseNode node)
-        {
-            var value = node.GetScalarValue();
-
-            if (value != null && value.StartsWith("$"))
-            {
-                return new RuntimeExpressionAnyWrapper
-                {
-                    Expression = RuntimeExpression.Build(value),
-                };
-            }
-
-            return new RuntimeExpressionAnyWrapper
-            {
-                Any = AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny()),
-            };
-        }
-
-        public static IAsyncApiAny LoadAny(ParseNode node)
-        {
-            return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
+            return node.CreateAny();
         }
 
         public static IAsyncApiExtension LoadExtension(string name, ParseNode node)
@@ -178,8 +141,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 if (node.Context.ExtensionParsers.TryGetValue(name, out var parser))
                 {
-                    return parser(
-                        AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny()));
+                    return parser(node.CreateAny());
                 }
             }
             catch (AsyncApiException ex)
@@ -188,7 +150,7 @@ namespace LEGO.AsyncAPI.Readers
                 node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
             }
 
-            return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
+            return node.CreateAny();
         }
 
         private static string LoadString(ParseNode node)

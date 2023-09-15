@@ -9,7 +9,6 @@ namespace LEGO.AsyncAPI.Tests.Models
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
@@ -242,11 +241,11 @@ traits:
                     Title = "HeaderTitle",
                     WriteOnly = true,
                     Description = "HeaderDescription",
-                    Examples = new List<IAsyncApiAny>
+                    Examples = new List<AsyncApiAny>
                     {
                         new AsyncApiObject
                         {
-                            { "x-correlation-id", new AsyncApiString("nil") },
+                            { "x-correlation-id", new AsyncApiAny("nil") },
                         },
                     },
                 },
@@ -274,7 +273,7 @@ traits:
                     Description = "CorrelationDescription",
                     Extensions = new Dictionary<string, IAsyncApiExtension>
                     {
-                        { "x-extension-a", new AsyncApiString("a") },
+                        { "x-extension-a", new AsyncApiAny("a") },
                     },
                 },
                 ContentType = "MessageContentType",
@@ -305,12 +304,12 @@ traits:
                                 Title = "SchemaTitle",
                                 WriteOnly = true,
                                 Description = "SchemaDescription",
-                                Examples = new List<IAsyncApiAny>
+                                Examples = new List<AsyncApiAny>
                                 {
                                     new AsyncApiObject
                                     {
-                                        { "cKey", new AsyncApiString("c") },
-                                        { "dKey", new AsyncApiInteger(1) },
+                                        { "cKey", new AsyncApiAny("c") },
+                                        { "dKey", new AsyncApiAny(1) },
                                     },
                                 },
                             },
@@ -323,8 +322,8 @@ traits:
                     {
                         Payload = new AsyncApiObject()
                         {
-                            { "PropA", new AsyncApiString("a") },
-                            { "PropB", new AsyncApiString("b") },
+                            { "PropA", new AsyncApiAny("a") },
+                            { "PropB", new AsyncApiAny("b") },
                         },
                     },
                 },
@@ -339,12 +338,12 @@ traits:
                             Title = "SchemaTitle",
                             WriteOnly = true,
                             Description = "SchemaDescription",
-                            Examples = new List<IAsyncApiAny>
+                            Examples = new List<AsyncApiAny>
                             {
                                 new AsyncApiObject
                                 {
-                                    { "eKey", new AsyncApiString("e") },
-                                    { "fKey", new AsyncApiInteger(1) },
+                                    { "eKey", new AsyncApiAny("e") },
+                                    { "fKey", new AsyncApiAny(1) },
                                 },
                             },
                         },
@@ -356,12 +355,12 @@ traits:
                                 Name = "MessageExampleName",
                                 Payload = new AsyncApiObject
                                 {
-                                    { "gKey", new AsyncApiString("g") },
-                                    { "hKey", new AsyncApiBoolean(true) },
+                                    { "gKey", new AsyncApiAny("g") },
+                                    { "hKey", new AsyncApiAny(true) },
                                 },
                                 Extensions = new Dictionary<string, IAsyncApiExtension>
                                 {
-                                    { "x-extension-b", new AsyncApiString("b") },
+                                    { "x-extension-b", new AsyncApiAny("b") },
                                 },
                             },
                         },
@@ -382,7 +381,7 @@ traits:
                         },
                         Extensions = new Dictionary<string, IAsyncApiExtension>
                         {
-                            { "x-extension-c", new AsyncApiString("c") },
+                            { "x-extension-c", new AsyncApiAny("c") },
                         },
                     },
                 },
@@ -399,7 +398,11 @@ traits:
 
             // Assert
             Assert.AreEqual(expected, actual);
-            message.Should().BeEquivalentTo(deserializedMessage);
+            message.Should().BeEquivalentTo(deserializedMessage, options => options.IgnoringCyclicReferences()
+            .Excluding(message => message.Headers.Examples[0].Node.Parent)
+            .Excluding(message => message.Traits[0].Headers.Examples[0].Node.Parent)
+            .Excluding(message => message.Traits[0].Examples[0].Payload.Node.Parent)
+            .Excluding(message => message.Examples[0].Payload.Node.Parent));
         }
     }
 }

@@ -6,16 +6,15 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using LEGO.AsyncAPI.Models.Any;
-    using LEGO.AsyncAPI.Models.Interfaces;
+    using System.Text.Json.Nodes;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Exceptions;
-    using YamlDotNet.RepresentationModel;
 
     public class ListNode : ParseNode, IEnumerable<ParseNode>
     {
-        private readonly YamlSequenceNode nodeList;
+        private readonly JsonArray nodeList;
 
-        public ListNode(ParsingContext context, YamlSequenceNode sequenceNode)
+        public ListNode(ParsingContext context, JsonArray sequenceNode)
             : base(
             context)
         {
@@ -27,15 +26,15 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             if (this.nodeList == null)
             {
                 throw new AsyncApiReaderException(
-                    $"Expected list at line {this.nodeList.Start.Line} while parsing {typeof(T).Name}", this.nodeList);
+                    $"Expected list while parsing {typeof(T).Name}");
             }
 
-            return this.nodeList.Select(n => map(new MapNode(this.Context, n as YamlMappingNode)))
+            return this.nodeList.Select(n => map(new MapNode(this.Context, n as JsonObject)))
                 .Where(i => i != null)
                 .ToList();
         }
 
-        public override List<IAsyncApiAny> CreateListOfAny()
+        public override List<AsyncApiAny> CreateListOfAny()
         {
             return this.nodeList.Select(n => ParseNode.Create(this.Context, n).CreateAny())
                 .Where(i => i != null)
@@ -47,7 +46,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             if (this.nodeList == null)
             {
                 throw new AsyncApiReaderException(
-                    $"Expected list at line {this.nodeList.Start.Line} while parsing {typeof(T).Name}", this.nodeList);
+                    $"Expected list while parsing {typeof(T).Name}");
             }
 
             return this.nodeList.Select(n => map(new ValueNode(this.Context, n))).ToList();
@@ -63,15 +62,9 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             return this.GetEnumerator();
         }
 
-        public override IAsyncApiAny CreateAny()
+        public override AsyncApiAny CreateAny()
         {
-            var array = new AsyncApiArray();
-            foreach (var node in this)
-            {
-                array.Add(node.CreateAny());
-            }
-
-            return array;
+            return new AsyncApiAny(this.nodeList);
         }
     }
 }

@@ -6,7 +6,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
@@ -19,18 +18,18 @@ namespace LEGO.AsyncAPI.Tests.Bindings
         public void StringOrStringList_IsInitialised_WhenPassedStringOrStringList()
         {
             // Arrange
-            var stringValue = new StringOrStringList(new AsyncApiString("AsyncApi"));
+            var stringValue = new StringOrStringList(new AsyncApiAny("AsyncApi"));
             var listValue = new StringOrStringList(
                 new AsyncApiArray()
                 {
-                    new AsyncApiString("Async"),
-                    new AsyncApiString("Api"),
+                    new AsyncApiAny("Async"),
+                    new AsyncApiAny("Api"),
                 });
 
             // Assert
-            (stringValue.Value as AsyncApiString).Value.Should().Be("AsyncApi");
-            (listValue.Value as AsyncApiArray)
-                .Select(s => (s as AsyncApiString).Value)
+            stringValue.Value.GetValue<string>().Should().Be("AsyncApi");
+            ((AsyncApiArray)listValue.Value)
+                .Select(s => s.GetValue<string>())
                 .Should().BeEquivalentTo(new List<string>() { "Async", "Api" });
         }
 
@@ -38,7 +37,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
         public void StringOrStringList_ThrowsArgumentException_WhenIntialisedWithoutStringOrStringList()
         {
             // Assert
-            var ex = Assert.Throws<ArgumentException>(() => new StringOrStringList(new AsyncApiBoolean(true)));
+            var ex = Assert.Throws<ArgumentException>(() => new StringOrStringList(new AsyncApiAny(true)));
 
             // Assert
             ex.Message.Should().Be("StringOrStringList should be a string value or a string list.");
@@ -51,9 +50,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             var ex = Assert.Throws<ArgumentException>(() => new StringOrStringList(
                 new AsyncApiArray()
                 {
-                    new AsyncApiString("x"),
-                    new AsyncApiInteger(1),
-                    new AsyncApiString("y"),
+                    new AsyncApiAny("x"),
+                    new AsyncApiAny(1),
+                    new AsyncApiAny("y"),
                 }));
 
             // Assert
@@ -71,7 +70,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new StringOrStringListTestBinding
             {
-                TestProperty = new StringOrStringList(new AsyncApiString("someValue")),
+                TestProperty = new StringOrStringList(new AsyncApiAny("someValue")),
             });
 
             // Act
@@ -106,9 +105,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             {
                 TestProperty = new StringOrStringList(new AsyncApiArray
                 {
-                    new AsyncApiString("someValue01"),
-                    new AsyncApiString("someValue02"),
-                    new AsyncApiString("someValue03"),
+                    new AsyncApiAny("someValue01"),
+                    new AsyncApiAny("someValue02"),
+                    new AsyncApiAny("someValue03"),
                 }),
             });
 

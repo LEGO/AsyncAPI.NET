@@ -4,10 +4,10 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     using System;
     using System.Collections.Generic;
+    using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Exceptions;
-    using YamlDotNet.RepresentationModel;
 
     public abstract class ParseNode
     {
@@ -28,19 +28,19 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             return mapNode;
         }
 
-        public static ParseNode Create(ParsingContext context, YamlNode node)
+        public static ParseNode Create(ParsingContext context, JsonNode node)
         {
-            if (node is YamlSequenceNode listNode)
+            if (node is JsonArray listNode)
             {
                 return new ListNode(context, listNode);
             }
 
-            if (node is YamlMappingNode mapNode)
+            if (node is JsonObject mapNode)
             {
                 return new MapNode(context, mapNode);
             }
 
-            return new ValueNode(context, node as YamlScalarNode);
+            return new ValueNode(context, node as JsonValue);
         }
 
         public virtual List<T> CreateList<T>(Func<MapNode, T> map)
@@ -79,7 +79,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             throw new AsyncApiReaderException("Cannot create simple map from this type of node.", this.Context);
         }
 
-        public virtual IAsyncApiAny CreateAny()
+        public virtual AsyncApiAny CreateAny()
         {
             throw new AsyncApiReaderException("Cannot create an Any object this type of node.", this.Context);
         }
@@ -129,7 +129,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }
 
-        public virtual List<IAsyncApiAny> CreateListOfAny()
+        public virtual List<AsyncApiAny> CreateListOfAny()
         {
             throw new AsyncApiReaderException("Cannot create a list from this type of node.", this.Context);
         }

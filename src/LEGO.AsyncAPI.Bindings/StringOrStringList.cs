@@ -1,37 +1,44 @@
-using System;
-using System.Linq;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
-using LEGO.AsyncAPI.Readers.ParseNodes;
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Bindings
 {
+    using System;
+    using System.Linq;
+    using System.Text.Json;
+    using System.Text.Json.Nodes;
+    using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers.ParseNodes;
+
     public class StringOrStringList : IAsyncApiElement
     {
-        public StringOrStringList(IAsyncApiAny value)
+        public StringOrStringList(AsyncApiAny value)
         {
-            this.Value = value switch
+            this.Value = value.Node switch
             {
-                AsyncApiArray array => IsValidStringList(array) ? array : throw new ArgumentException($"{nameof(StringOrStringList)} value should only contain string items."),
-                AsyncApiPrimitive<string> => value,
+                JsonArray array => IsValidStringList(array) ? new AsyncApiAny(array) : throw new ArgumentException($"{nameof(StringOrStringList)} value should only contain string items."),
+                JsonValue jValue => IsString(jValue) ? new AsyncApiAny(jValue) : throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list."),
                 _ => throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list.")
             };
         }
 
-        public IAsyncApiAny Value { get; }
+        public AsyncApiAny Value { get; }
 
         public static StringOrStringList Parse(ParseNode node)
         {
             switch (node)
             {
                 case ValueNode:
-                    return new StringOrStringList(new AsyncApiString(node.GetScalarValue()));
+                    return new StringOrStringList(new AsyncApiAny(node.GetScalarValue()));
                 case ListNode:
                 {
-                    var asyncApiArray = new AsyncApiArray();
-                    asyncApiArray.AddRange(node.CreateSimpleList(s => new AsyncApiString(s.GetScalarValue())));
+                    var jsonArray = new JsonArray();
+                    foreach (var item in node as ListNode)
+                    {
+                        jsonArray.Add(item.GetScalarValue());
+                    }
 
-                    return new StringOrStringList(asyncApiArray);
+                    return new StringOrStringList(new AsyncApiAny(jsonArray));
                 }
 
                 default:
@@ -40,9 +47,15 @@ namespace LEGO.AsyncAPI.Bindings
             }
         }
 
-        private static bool IsValidStringList(AsyncApiArray array)
+        private static bool IsString(JsonNode value)
         {
-            return array.All(x => x is AsyncApiPrimitive<string>);
+            var element = JsonDocument.Parse(value.ToJsonString()).RootElement;
+            return element.ValueKind == JsonValueKind.String;
+        }
+
+        private static bool IsValidStringList(JsonArray array)
+        {
+            return array.All(x => IsString(x));
         }
     }
 }

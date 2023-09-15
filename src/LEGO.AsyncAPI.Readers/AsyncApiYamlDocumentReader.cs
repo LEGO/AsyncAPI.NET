@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Readers
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.Json.Nodes;
     using System.Threading.Tasks;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Extensions;
@@ -11,12 +12,11 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Validations;
-    using YamlDotNet.RepresentationModel;
 
     /// <summary>
     /// Service class for converting contents of TextReader into AsyncApiDocument instances.
     /// </summary>
-    internal class AsyncApiYamlDocumentReader : IAsyncApiReader<YamlDocument, AsyncApiDiagnostic>
+    internal class AsyncApiJsonDocumentReader : IAsyncApiReader<JsonNode, AsyncApiDiagnostic>
     {
         private readonly AsyncApiReaderSettings settings;
 
@@ -24,7 +24,7 @@ namespace LEGO.AsyncAPI.Readers
         /// Create stream reader with custom settings if desired.
         /// </summary>
         /// <param name="settings"></param>
-        public AsyncApiYamlDocumentReader(AsyncApiReaderSettings settings = null)
+        public AsyncApiJsonDocumentReader(AsyncApiReaderSettings settings = null)
         {
             this.settings = settings ?? new AsyncApiReaderSettings();
         }
@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="input">TextReader containing AsyncApi description to parse.</param>
         /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing.</param>
         /// <returns>Instance of newly created AsyncApiDocument.</returns>
-        public AsyncApiDocument Read(YamlDocument input, out AsyncApiDiagnostic diagnostic)
+        public AsyncApiDocument Read(JsonNode input, out AsyncApiDiagnostic diagnostic)
         {
             diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
@@ -76,7 +76,7 @@ namespace LEGO.AsyncAPI.Readers
             return document;
         }
 
-        public Task<ReadResult> ReadAsync(YamlDocument input)
+        public Task<ReadResult> ReadAsync(JsonNode input)
         {
             var diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
@@ -140,7 +140,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <param name="version">Version of the AsyncApi specification that the fragment conforms to.</param>
         /// <param name="diagnostic">Returns diagnostic object containing errors detected during parsing.</param>
         /// <returns>Instance of newly created AsyncApiDocument.</returns>
-        public T ReadFragment<T>(YamlDocument input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic)
+        public T ReadFragment<T>(JsonNode input, AsyncApiVersion version, out AsyncApiDiagnostic diagnostic)
             where T : IAsyncApiElement
         {
             diagnostic = new AsyncApiDiagnostic();

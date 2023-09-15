@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Readers
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Validations;
@@ -36,10 +37,10 @@ namespace LEGO.AsyncAPI.Readers
         /// <summary>
         /// Dictionary of parsers for converting extensions into strongly typed classes.
         /// </summary>
-        public Dictionary<string, Func<IAsyncApiAny, IAsyncApiExtension>>
+        public Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>>
             ExtensionParsers
         { get; set; } =
-            new Dictionary<string, Func<IAsyncApiAny, IAsyncApiExtension>>();
+            new Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>>();
 
         public List<IBindingParser<IBinding>>
            Bindings

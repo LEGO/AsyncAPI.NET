@@ -4,7 +4,9 @@ namespace LEGO.AsyncAPI.Writers
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Any;
+    using System.Text.Json;
+    using System.Text.Json.Nodes;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     public static class AsyncApiWriterAnyExtensions
@@ -27,45 +29,57 @@ namespace LEGO.AsyncAPI.Writers
                 foreach (var item in extensions)
                 {
                     writer.WritePropertyName(item.Key);
-                    item.Value.Write(writer);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNull();
+                    }
+                    else
+                    {
+                        item.Value.Write(writer);
+                    }
                 }
             }
         }
 
         /// <summary>
-        /// Write the <see cref="IAsyncApiAny"/> value.
+        /// Write the <see cref="AsyncApiAny"/> value.
         /// </summary>
         /// <typeparam name="T">The AsyncApi Any type.</typeparam>
         /// <param name="writer">The AsyncApi writer.</param>
         /// <param name="any">The Any value.</param>
-        public static void WriteAny<T>(this IAsyncApiWriter writer, T any) where T : IAsyncApiAny
+        public static void WriteAny(this IAsyncApiWriter writer, AsyncApiAny any)
         {
             if (writer is null)
             {
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (any == null)
+            if (any.Node == null)
             {
                 writer.WriteNull();
                 return;
             }
 
-            switch (any.AnyType)
+            var node = any.Node;
+
+            var element = JsonDocument.Parse(node.ToJsonString()).RootElement;
+            switch (element.ValueKind)
             {
-                case AnyType.Array: // Array
-                    writer.WriteArray(any as AsyncApiArray);
+                case JsonValueKind.Array: // Array
+                    writer.WriteArray(node as JsonArray);
                     break;
 
-                case AnyType.Object: // Object
-                    writer.WriteObject(any as AsyncApiObject);
+                case JsonValueKind.Object: // Object
+                    writer.WriteObject(node as JsonObject);
                     break;
 
-                case AnyType.Primitive: // Primitive
-                    writer.WritePrimitive(any as IAsyncApiPrimitive);
+                case JsonValueKind.String:
+                case JsonValueKind.Number:
+                case JsonValueKind.False or JsonValueKind.True:
+                    writer.WritePrimitive(element);
                     break;
 
-                case AnyType.Null: // null
+                case JsonValueKind.Null: // null
                     writer.WriteNull();
                     break;
                 default:
@@ -73,7 +87,7 @@ namespace LEGO.AsyncAPI.Writers
             }
         }
 
-        private static void WriteArray(this IAsyncApiWriter writer, AsyncApiArray array)
+        private static void WriteArray(this IAsyncApiWriter writer, JsonArray array)
         {
             if (writer is null)
             {
@@ -89,13 +103,13 @@ namespace LEGO.AsyncAPI.Writers
 
             foreach (var item in array)
             {
-                writer.WriteAny(item);
+                writer.WriteAny(new AsyncApiAny(item));
             }
 
             writer.WriteEndArray();
         }
 
-        private static void WriteObject(this IAsyncApiWriter writer, AsyncApiObject entity)
+        private static void WriteObject(this IAsyncApiWriter writer, JsonObject entity)
         {
             if (writer is null)
             {
@@ -112,25 +126,58 @@ namespace LEGO.AsyncAPI.Writers
             foreach (var item in entity)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteAny(item.Value);
+                writer.WriteAny(new AsyncApiAny(item.Value));
             }
 
             writer.WriteEndObject();
         }
 
-        private static void WritePrimitive(this IAsyncApiWriter writer, IAsyncApiPrimitive primitive)
+        private static void WritePrimitive(this IAsyncApiWriter writer, JsonElement primitive)
         {
             if (writer is null)
             {
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (primitive is null)
+            if (primitive.ValueKind == JsonValueKind.String)
             {
-                throw new ArgumentNullException(nameof(primitive));
+                if (primitive.TryGetDateTime(out var dateTime))
+                {
+                    writer.WriteValue(dateTime);
+                }
+                else if (primitive.TryGetDateTimeOffset(out var dateTimeOffset))
+                {
+                    writer.WriteValue(dateTimeOffset);
+                }
+                else
+                {
+                    writer.WriteValue(primitive.GetString());
+                }
             }
 
-            primitive.Write(writer);
+            if (primitive.ValueKind == JsonValueKind.Number)
+            {
+                if (primitive.TryGetDecimal(out var decimalValue))
+                {
+                    writer.WriteValue(decimalValue);
+                }
+                else if (primitive.TryGetDouble(out var doubleValue))
+                {
+                    writer.WriteValue(doubleValue);
+                }
+                else if (primitive.TryGetInt64(out var longValue))
+                {
+                    writer.WriteValue(longValue);
+                }
+                else if (primitive.TryGetInt32(out var intValue))
+                {
+                    writer.WriteValue(intValue);
+                }
+            }
+            if (primitive.ValueKind is JsonValueKind.True or JsonValueKind.False)
+            {
+                writer.WriteValue(primitive.GetBoolean());
+            }
         }
     }
 }

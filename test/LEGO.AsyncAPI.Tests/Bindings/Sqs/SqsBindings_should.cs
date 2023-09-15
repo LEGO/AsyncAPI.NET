@@ -5,7 +5,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Sqs;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
@@ -93,7 +92,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                     "x-identifierExtension",
                                     new AsyncApiObject()
                                     {
-                                        { "identifierXPropertyName", new AsyncApiString("identifierXPropertyValue") },
+                                        { "identifierXPropertyName", new AsyncApiAny("identifierXPropertyValue") },
                                     }
                                 },
                             },
@@ -105,7 +104,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 "x-redrivePolicyExtension",
                                 new AsyncApiObject()
                                 {
-                                    { "redrivePolicyXPropertyName", new AsyncApiString("redrivePolicyXPropertyValue") },
+                                    { "redrivePolicyXPropertyName", new AsyncApiAny("redrivePolicyXPropertyValue") },
                                 }
                             },
                         },
@@ -117,11 +116,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Deny,
-                                Principal = new StringOrStringList(new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
                                 Action = new StringOrStringList(new AsyncApiArray()
                                 {
-                                    new AsyncApiString("sqs:SendMessage"),
-                                    new AsyncApiString("sqs:ReceiveMessage")
+                                    new AsyncApiAny("sqs:SendMessage"),
+                                    new AsyncApiAny("sqs:ReceiveMessage")
                                 }),
                                 Extensions = new Dictionary<string, IAsyncApiExtension>()
                                 {
@@ -129,7 +128,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                         "x-statementExtension",
                                         new AsyncApiObject()
                                         {
-                                            { "statementXPropertyName", new AsyncApiString("statementXPropertyValue") },
+                                            { "statementXPropertyName", new AsyncApiAny("statementXPropertyValue") },
                                         }
                                     },
                                 },
@@ -139,10 +138,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 Effect = Effect.Allow,
                                 Principal = new StringOrStringList(new AsyncApiArray
                                 {
-                                        new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann"),
-                                        new AsyncApiString("arn:aws:iam::123456789012:user/dec.kolakowski")
+                                        new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann"),
+                                        new AsyncApiAny("arn:aws:iam::123456789012:user/dec.kolakowski")
                                 }),
-                                Action = new StringOrStringList(new AsyncApiString("sqs:CreateQueue")),
+                                Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue")),
                             },
                         },
                         Extensions = new Dictionary<string, IAsyncApiExtension>()
@@ -151,7 +150,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 "x-policyExtension",
                                 new AsyncApiObject()
                                 {
-                                    { "policyXPropertyName", new AsyncApiString("policyXPropertyValue") },
+                                    { "policyXPropertyName", new AsyncApiAny("policyXPropertyValue") },
                                 }
                             },
                         },
@@ -167,7 +166,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             "x-queueExtension",
                             new AsyncApiObject()
                             {
-                                { "queueXPropertyName", new AsyncApiString("queueXPropertyValue") },
+                                { "queueXPropertyName", new AsyncApiAny("queueXPropertyValue") },
                             }
                         },
                     },
@@ -187,10 +186,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Allow,
-                                Principal = new StringOrStringList(new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
                                 Action = new StringOrStringList(new AsyncApiArray()
                                 {
-                                    new AsyncApiString("sqs:*"),
+                                    new AsyncApiAny("sqs:*"),
                                 }),
                             },
                         },
@@ -201,7 +200,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                     {
                         "x-internalObject", new AsyncApiObject()
                         {
-                            { "myExtensionPropertyName", new AsyncApiString("myExtensionPropertyValue") },
+                            { "myExtensionPropertyName", new AsyncApiAny("myExtensionPropertyValue") },
                         }
                     },
                 },
@@ -307,7 +306,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                         "x-identifierExtension",
                                         new AsyncApiObject()
                                         {
-                                            { "identifierXPropertyName", new AsyncApiString("identifierXPropertyValue") },
+                                            { "identifierXPropertyName", new AsyncApiAny("identifierXPropertyValue") },
                                         }
                                     },
                                 },
@@ -319,7 +318,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                     "x-redrivePolicyExtension",
                                     new AsyncApiObject()
                                     {
-                                        { "redrivePolicyXPropertyName", new AsyncApiString("redrivePolicyXPropertyValue") },
+                                        { "redrivePolicyXPropertyName", new AsyncApiAny("redrivePolicyXPropertyValue") },
                                     }
                                 },
                             },
@@ -331,11 +330,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Deny,
-                                    Principal = new StringOrStringList(new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                    Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
                                     Action = new StringOrStringList(new AsyncApiArray()
                                     {
-                                        new AsyncApiString("sqs:SendMessage"),
-                                        new AsyncApiString("sqs:ReceiveMessage")
+                                        new AsyncApiAny("sqs:SendMessage"),
+                                        new AsyncApiAny("sqs:ReceiveMessage")
                                     }),
                                     Extensions = new Dictionary<string, IAsyncApiExtension>()
                                     {
@@ -343,7 +342,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                             "x-statementExtension",
                                             new AsyncApiObject()
                                             {
-                                                { "statementXPropertyName", new AsyncApiString("statementXPropertyValue") },
+                                                { "statementXPropertyName", new AsyncApiAny("statementXPropertyValue") },
                                             }
                                         },
                                     },
@@ -353,10 +352,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                     Effect = Effect.Allow,
                                     Principal = new StringOrStringList(new AsyncApiArray
                                     {
-                                        new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann"),
-                                        new AsyncApiString("arn:aws:iam::123456789012:user/dec.kolakowski"),
+                                        new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann"),
+                                        new AsyncApiAny("arn:aws:iam::123456789012:user/dec.kolakowski"),
                                     }),
-                                    Action = new StringOrStringList(new AsyncApiString("sqs:CreateQueue"))
+                                    Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue"))
                                 },
                             },
                             Extensions = new Dictionary<string, IAsyncApiExtension>()
@@ -365,7 +364,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                     "x-policyExtension",
                                     new AsyncApiObject()
                                     {
-                                        { "policyXPropertyName", new AsyncApiString("policyXPropertyValue") },
+                                        { "policyXPropertyName", new AsyncApiAny("policyXPropertyValue") },
                                     }
                                 },
                             },
@@ -381,7 +380,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 "x-queueExtension",
                                 new AsyncApiObject()
                                 {
-                                    { "queueXPropertyName", new AsyncApiString("queueXPropertyValue") },
+                                    { "queueXPropertyName", new AsyncApiAny("queueXPropertyValue") },
                                 }
                             },
                         },
@@ -401,10 +400,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Allow,
-                                    Principal = new StringOrStringList(new AsyncApiString("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                    Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
                                     Action = new StringOrStringList(new AsyncApiArray
                                     {
-                                        new AsyncApiString("sqs:*")
+                                        new AsyncApiAny("sqs:*")
                                     })
                                 },
                             },
@@ -415,7 +414,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 "x-queueExtension",
                                 new AsyncApiObject()
                                 {
-                                    { "queueXPropertyName", new AsyncApiString("queueXPropertyValue") },
+                                    { "queueXPropertyName", new AsyncApiAny("queueXPropertyValue") },
                                 }
                             },
                         },
@@ -426,7 +425,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                     {
                         "x-internalObject", new AsyncApiObject()
                         {
-                            { "myExtensionPropertyName", new AsyncApiString("myExtensionPropertyValue") },
+                            { "myExtensionPropertyName", new AsyncApiAny("myExtensionPropertyValue") },
                         }
                     },
                 },

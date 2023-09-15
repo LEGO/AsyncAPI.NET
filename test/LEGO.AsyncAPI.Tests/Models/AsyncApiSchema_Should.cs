@@ -1,7 +1,5 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using System.Linq;
-using LEGO.AsyncAPI.Bindings;
 using LEGO.AsyncAPI.Readers;
 
 namespace LEGO.AsyncAPI.Tests.Models
@@ -12,7 +10,6 @@ namespace LEGO.AsyncAPI.Tests.Models
     using System.IO;
     using FluentAssertions;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
@@ -27,7 +24,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             Maximum = 42,
             ExclusiveMinimum = true,
             Minimum = 10,
-            Default = new AsyncApiInteger(15),
+            Default = new AsyncApiAny(15),
             Type = SchemaType.Integer,
             Nullable = true,
             ExternalDocs = new AsyncApiExternalDocumentation
@@ -43,7 +40,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             Maximum = double.MaxValue,
             ExclusiveMinimum = true,
             Minimum = double.MinValue,
-            Default = new AsyncApiInteger(15),
+            Default = new AsyncApiAny(15),
             Type = SchemaType.Integer,
             Nullable = true,
             ExternalDocs = new AsyncApiExternalDocumentation
@@ -148,7 +145,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                 },
                 ["property11"] = new AsyncApiSchema
                 {
-                    Const = new AsyncApiString("aSpecialConstant"),
+                    Const = new AsyncApiAny("aSpecialConstant"),
                 },
             },
             Nullable = true,
@@ -217,7 +214,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             Maximum = 42,
             ExclusiveMinimum = true,
             Minimum = 10,
-            Default = new AsyncApiInteger(15),
+            Default = new AsyncApiAny(15),
             Type = SchemaType.Integer,
 
             Nullable = true,
@@ -609,7 +606,9 @@ components: { }";
             var actual = new AsyncApiStringReader().ReadFragment<AsyncApiSchema>(json, AsyncApiVersion.AsyncApi2_0, out var _diagnostics);
 
             // Assert
-            actual.Should().BeEquivalentTo(expected);
+            actual.Should().BeEquivalentTo(expected, options => options.IgnoringCyclicReferences()
+            .Excluding(actual => actual.Properties["property11"].Const.Node.Parent)
+            .Excluding(actual => actual.Properties["property11"].Const.Node.Root));
             _diagnostics.Errors.Should().BeEmpty();
         }
 

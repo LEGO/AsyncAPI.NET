@@ -27,8 +27,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 if (node.Context.ExtensionParsers.TryGetValue(name, out var parser))
                 {
-                    return parser(
-                        AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny()));
+                    return parser(node.CreateAny());
                 }
             }
             catch (AsyncApiException ex)
@@ -37,7 +36,7 @@ namespace LEGO.AsyncAPI.Readers
                 node.Context.Diagnostic.Errors.Add(new AsyncApiError(ex));
             }
 
-            return AsyncApiAnyConverter.GetSpecificAsyncApiAny(node.CreateAny());
+            return node.CreateAny();
         }
     }
 }

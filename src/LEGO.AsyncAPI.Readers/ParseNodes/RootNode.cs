@@ -2,34 +2,33 @@
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
-    using YamlDotNet.RepresentationModel;
+    using System.Text.Json.Nodes;
 
     internal class RootNode : ParseNode
     {
-        private readonly YamlDocument yamlDocument;
+        private readonly JsonNode jsonNode;
 
         public RootNode(
             ParsingContext context,
-            YamlDocument yamlDocument)
+            JsonNode jsonNode)
             : base(context)
         {
-            this.yamlDocument = yamlDocument;
+            this.jsonNode = jsonNode;
         }
 
         public ParseNode Find(JsonPointer referencePointer)
         {
-            var yamlNode = referencePointer.Find(this.yamlDocument.RootNode);
-            if (yamlNode == null)
+            if (referencePointer.Find(this.jsonNode) is not JsonNode jsonNode)
             {
                 return null;
             }
 
-            return Create(this.Context, yamlNode);
+            return Create(this.Context, jsonNode);
         }
 
         public MapNode GetMap()
         {
-            return new MapNode(this.Context, (YamlMappingNode)this.yamlDocument.RootNode);
+            return new MapNode(this.Context, this.jsonNode);
         }
     }
 }

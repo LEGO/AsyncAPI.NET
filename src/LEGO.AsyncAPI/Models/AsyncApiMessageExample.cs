@@ -15,12 +15,12 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets the value of this field MUST validate against the Message Object's headers field.
         /// </summary>
-        public IDictionary<string, IAsyncApiAny> Headers { get; set; } = new Dictionary<string, IAsyncApiAny>();
+        public IDictionary<string, AsyncApiAny> Headers { get; set; } = new Dictionary<string, AsyncApiAny>();
 
         /// <summary>
         /// Gets or sets the value of this field MUST validate against the Message Object's payload field.
         /// </summary>
-        public IAsyncApiAny Payload { get; set; }
+        public AsyncApiAny Payload { get; set; }
 
         /// <summary>
         /// a machine-friendly name.
