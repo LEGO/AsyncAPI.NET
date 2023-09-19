@@ -88,7 +88,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     
     public enum FilterPolicyScope
     {
-        [Display("MessageAttributes")] MessageAttributes,
-        [Display("MessageBody")] MessageBody,
+        [Display("messageAttributes")] MessageAttributes,
+        [Display("messageBody")] MessageBody,
     }
 }
