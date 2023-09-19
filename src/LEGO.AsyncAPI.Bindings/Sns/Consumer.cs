@@ -3,6 +3,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Attributes;
+    using LEGO.AsyncAPI.Models.Any;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -20,8 +21,14 @@ namespace LEGO.AsyncAPI.Bindings.Sns
 
         /// <summary>
         /// Only receive a subset of messages from the channel, determined by this policy.
+        /// Depending on the FilterPolicyScope, a map of either a message attribute or message body to an array of possible matches. The match may be a simple string for an exact match, but it may also be an object that represents a constraint and values for that constraint.
         /// </summary>
-        public FilterPolicy FilterPolicy { get; set; }
+        public IAsyncApiAny FilterPolicy { get; set; }
+        
+        /// <summary>
+        /// Determines whether the FilterPolicy applies to MessageAttributes or MessageBody.
+        /// </summary>
+        public FilterPolicyScope FilterPolicyScope { get; set; }
 
         /// <summary>
         /// If true AWS SNS attributes are removed from the body, and for SQS, SNS message attributes are copied to SQS message attributes. If false the SNS attributes are included in the body.
@@ -55,7 +62,8 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             writer.WriteStartObject();
             writer.WriteRequiredProperty("protocol", this.Protocol.GetDisplayName());
             writer.WriteRequiredObject("endpoint", this.Endpoint, (w, e) => e.Serialize(w));
-            writer.WriteOptionalObject("filterPolicy", this.FilterPolicy, (w, f) => f.Serialize(w));
+            writer.WriteOptionalObject("filterPolicy", this.FilterPolicy, (w, f) => f.Write(w));
+            writer.WriteOptionalProperty("filterPolicyScope", this.FilterPolicyScope.GetDisplayName());
             writer.WriteRequiredProperty("rawMessageDelivery", this.RawMessageDelivery);
             writer.WriteOptionalObject("redrivePolicy", this.RedrivePolicy, (w, p) => p.Serialize(w));
             writer.WriteOptionalObject("deliveryPolicy", this.DeliveryPolicy, (w, p) => p.Serialize(w));
@@ -76,5 +84,11 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         [Display("application")] Application,
         [Display("lambda")] Lambda,
         [Display("firehose")] Firehose,
+    }
+    
+    public enum FilterPolicyScope
+    {
+        [Display("MessageAttributes")] MessageAttributes,
+        [Display("MessageBody")] MessageBody,
     }
 }
