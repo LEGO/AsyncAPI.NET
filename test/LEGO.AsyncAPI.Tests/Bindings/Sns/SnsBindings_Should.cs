@@ -178,7 +178,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             - rugby
             - football
             - baseball
-        filterPolicyScope: messageAttributes
+        filterPolicyScope: MessageAttributes
         rawMessageDelivery: false
         redrivePolicy:
           deadLetterQueue:
