@@ -62,7 +62,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                         return new AsyncApiDateTime(dateTimeValue);
                     }
                 }
-                else if (type.Value.HasFlag(SchemaType.String))
+                else if (type != null && type.Value.HasFlag(SchemaType.String))
                 {
                     if (format == "byte")
                     {
@@ -109,7 +109,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 return new AsyncApiNull();
             }
 
-            if (schema?.Type == null)
+            if (type == null)
             {
                 if (value == "true")
                 {

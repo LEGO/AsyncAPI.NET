@@ -102,6 +102,9 @@ namespace LEGO.AsyncAPI.Readers
                 "enum", (a, n) => { a.Enum = n.CreateListOfAny(); }
             },
             {
+                "const", (a, n) => { a.Const = n.CreateAny(); }
+            },
+            {
                 "examples", (a, n) => { a.Examples = n.CreateListOfAny(); }
             },
             {
@@ -123,10 +126,49 @@ namespace LEGO.AsyncAPI.Readers
                 "properties", (a, n) => { a.Properties = n.CreateMap(LoadSchema); }
             },
             {
-                "additionalProperties", (a, n) => { a.AdditionalProperties = LoadSchema(n); }
+                "additionalProperties", (a, n) =>
+                {
+                    if (n is ValueNode && n.GetBooleanValueOrDefault(null) == false)
+                    {
+                        a.AdditionalProperties = new FalseApiSchema();
+                    }
+                    else
+                    {
+                        a.AdditionalProperties = LoadSchema(n);
+                    }
+                }
             },
             {
-                "items", (a, n) => { a.Items = LoadSchema(n); }
+                "items", (a, n) =>
+                {
+                    if (n is ValueNode && n.GetBooleanValueOrDefault(null) == false)
+                    {
+                        a.Items = new FalseApiSchema();
+                    }
+                    else
+                    {
+                        a.Items = LoadSchema(n);
+                    }
+                }
+            },
+            {
+                "additionalItems", (a, n) =>
+                {
+                    if (n is ValueNode && n.GetBooleanValueOrDefault(null) == false)
+                    {
+                        a.AdditionalItems = new FalseApiSchema();
+                    }
+                    else
+                    {
+                        a.AdditionalItems = LoadSchema(n);
+                    }
+                }
+            },
+            {
+                "patternProperties", (a, n) => { a.PatternProperties = n.CreateMap(LoadSchema); }
+            },
+            {
+                "propertyNames", (a, n) => { a.PropertyNames = LoadSchema(n); }
             },
             {
                 "contains", (a, n) => { a.Contains = LoadSchema(n); }
@@ -160,6 +202,9 @@ namespace LEGO.AsyncAPI.Readers
             },
             {
                 "deprecated", (a, n) => { a.Deprecated = bool.Parse(n.GetScalarValue()); }
+            },
+            {
+                "nullable", (a, n) => { a.Nullable = n.GetBooleanValue(); }
             },
         };
 

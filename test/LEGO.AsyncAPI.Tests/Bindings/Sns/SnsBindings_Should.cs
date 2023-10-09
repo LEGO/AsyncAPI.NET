@@ -167,20 +167,18 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
           x-identifierExtension:
             identifierXPropertyName: identifierXPropertyValue
         filterPolicy:
-          attributes:
-            store:
-              - asyncapi_corp
-            contact: dec.kolakowski
-            event:
-              - anything-but: order_cancelled
-            order_key:
-              transient: by_area
-            customer_interests:
-              - rugby
-              - football
-              - baseball
-          x-filterPolicyExtension:
-            filterPolicyXPropertyName: filterPolicyXPropertyValue
+          store:
+            - asyncapi_corp
+          contact: dec.kolakowski
+          event:
+            - anything-but: order_cancelled
+          order_key:
+            transient: by_area
+          customer_interests:
+            - rugby
+            - football
+            - baseball
+        filterPolicyScope: MessageAttributes
         rawMessageDelivery: false
         redrivePolicy:
           deadLetterQueue:
@@ -253,47 +251,35 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                 },
                             },
                         },
-                        FilterPolicy = new FilterPolicy()
-                        {
-                            Attributes = new AsyncApiObject()
+                        FilterPolicy = new AsyncApiObject()
+                        { 
+                            { "store", new AsyncApiArray() { new AsyncApiString("asyncapi_corp") } },
+                            { "contact", new AsyncApiString("dec.kolakowski") },
                             {
-                                { "store", new AsyncApiArray() { new AsyncApiString("asyncapi_corp") } },
-                                { "contact", new AsyncApiString("dec.kolakowski") },
+                                "event", new AsyncApiArray()
                                 {
-                                    "event", new AsyncApiArray()
-                                    {
-                                        new AsyncApiObject()
-                                        {
-                                            { "anything-but", new AsyncApiString("order_cancelled") },
-                                        },
-                                    }
-                                },
-                                {
-                                    "order_key", new AsyncApiObject()
-                                    {
-                                        { "transient", new AsyncApiString("by_area") },
-                                    }
-                                },
-                                {
-                                    "customer_interests", new AsyncApiArray()
-                                    {
-                                        new AsyncApiString("rugby"),
-                                        new AsyncApiString("football"),
-                                        new AsyncApiString("baseball"),
-                                    }
-                                },
-                            },
-                            Extensions = new Dictionary<string, IAsyncApiExtension>()
-                            {
-                                {
-                                    "x-filterPolicyExtension",
                                     new AsyncApiObject()
                                     {
-                                        { "filterPolicyXPropertyName", new AsyncApiString("filterPolicyXPropertyValue") },
-                                    }
-                                },
+                                        { "anything-but", new AsyncApiString("order_cancelled") },
+                                    },
+                                }
+                            },
+                            {
+                                "order_key", new AsyncApiObject()
+                                {
+                                    { "transient", new AsyncApiString("by_area") },
+                                }
+                            },
+                            {
+                                "customer_interests", new AsyncApiArray()
+                                {
+                                    new AsyncApiString("rugby"),
+                                    new AsyncApiString("football"),
+                                    new AsyncApiString("baseball"),
+                                }
                             },
                         },
+                        FilterPolicyScope = FilterPolicyScope.MessageAttributes,
                         RawMessageDelivery = false,
                         RedrivePolicy = new RedrivePolicy()
                         {

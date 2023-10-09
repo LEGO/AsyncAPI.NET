@@ -17,6 +17,33 @@ namespace LEGO.AsyncAPI.Tests.Models
     internal class AsyncApiMessage_Should
     {
             [Test]
+            public void AsyncApiMessage_WithNoType_DeserializesToDefault()
+            {
+                // Arrange
+                var expected =
+                    @"{
+                      ""payload"": {
+                        ""type"": ""object"",
+                        ""properties"": {
+                          ""someProp"": {
+                            ""enum"": [
+                              ""test"",
+                              ""test2""
+                            ]
+                          }
+                        }
+                      }
+                    }";
+
+                // Act
+                var message = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
+
+                // Assert
+                diagnostic.Errors.Should().BeEmpty();
+                message.Payload.Properties.First().Value.Enum.Should().HaveCount(2);
+            }
+
+            [Test]
             public void AsyncApiMessage_WithNoSchemaFormat_DeserializesToDefault()
             {
                 // Arrange
