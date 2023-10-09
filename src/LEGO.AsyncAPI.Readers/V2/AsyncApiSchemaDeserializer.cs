@@ -1,5 +1,7 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
+using System.IO;
+
 namespace LEGO.AsyncAPI.Readers
 {
     using System.Collections.Generic;
@@ -244,11 +246,17 @@ namespace LEGO.AsyncAPI.Readers
 
             if (pointer != null)
             {
-                return new AsyncApiSchema
+                if (pointer.StartsWith("#"))
                 {
-                    UnresolvedReference = true,
-                    Reference = node.Context.VersionService.ConvertToAsyncApiReference(pointer, ReferenceType.Schema),
-                };
+                    return new AsyncApiSchema
+                    {
+                        UnresolvedReference = true,
+                        Reference = node.Context.VersionService.ConvertToAsyncApiReference(pointer, ReferenceType.Schema),
+                    };
+                }
+
+                var referencedContent = File.ReadAllText(pointer);
+                return new AsyncApiStringReader().ReadFragment<AsyncApiSchema>(referencedContent, AsyncApiVersion.AsyncApi2_0, out _);
             }
 
             var schema = new AsyncApiSchema();

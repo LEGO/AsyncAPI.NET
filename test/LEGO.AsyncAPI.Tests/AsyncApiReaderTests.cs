@@ -538,9 +538,35 @@ components:
         }
 
         [Test]
-        public void Read_WithBasicPlusSecurityRequirementsDeserializes()
+        public void Read_WithExternallyReferencedContent()
         {
             var yaml = @"asyncapi: 2.3.0
+info:
+  title: test
+channels:
+  workspace:
+    publish:
+      message:
+        # nested external schema read under this message
+        $ref: ../../../References/messages/workspace-message.yaml
+    subscribe:
+      message:
+        payload:
+          # reading the schema directly
+          $ref: ../../../References/schemas/workspace-schema.yaml
+";
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+            var channel = doc.Channels.First().Value;
+            Assert.AreEqual(channel.Publish.Message.First().Title, "workspace message");
+            Assert.AreEqual(channel.Publish.Message.First().Payload.Description, "A test schema that is referenced.");
+            Assert.AreEqual(channel.Subscribe.Message.First().Payload.Description, "A test schema that is referenced.");
+      }
+
+        [Test]
+        public void Read_WithBasicPlusSecurityRequirementsDeserializes()
+        {
+          var yaml = @"asyncapi: 2.3.0
 info:
   title: test
   version: 1.0.0
@@ -567,12 +593,12 @@ components:
             write:pets: modify pets in your account
             read:pets: read your pets      
 ";
-            var reader = new AsyncApiStringReader();
-            var doc = reader.Read(yaml, out var diagnostic);
-            var requirement = doc.Servers.First().Value.Security.First().First();
-            Assert.AreEqual(SecuritySchemeType.OAuth2, requirement.Key.Type);
-            Assert.IsTrue(requirement.Value.Contains("write:pets"));
-            Assert.IsTrue(requirement.Value.Contains("read:pets"));
-      }
+          var reader = new AsyncApiStringReader();
+          var doc = reader.Read(yaml, out var diagnostic);
+          var requirement = doc.Servers.First().Value.Security.First().First();
+          Assert.AreEqual(SecuritySchemeType.OAuth2, requirement.Key.Type);
+          Assert.IsTrue(requirement.Value.Contains("write:pets"));
+          Assert.IsTrue(requirement.Value.Contains("read:pets"));
+        } 
     }
 }
