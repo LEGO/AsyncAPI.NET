@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/LEGO/AsyncAPI.NET/compare/v4.0.2...v4.1.0) (2023-09-27)
+
+
+### Features
+
+* **bindings:** update FilterPolicy to match AWS API ([#128](https://github.com/LEGO/AsyncAPI.NET/issues/128)) ([5b64654](https://github.com/LEGO/AsyncAPI.NET/commit/5b6465474ae09d42a27377bf04d58fdbd1dd8a59))
+
 ## [4.0.2](https://github.com/LEGO/AsyncAPI.NET/compare/v4.0.1...v4.0.2) (2023-08-01)
 
 

@@ -47,16 +47,12 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         {
             { "protocol", (a, n) => { a.Protocol = n.GetScalarValue().GetEnumFromDisplayName<Protocol>(); } },
             { "endpoint", (a, n) => { a.Endpoint = n.ParseMapWithExtensions(this.identifierFixFields); } },
-            { "filterPolicy", (a, n) => { a.FilterPolicy = n.ParseMapWithExtensions(this.filterPolicyFixedFields); } },
+            { "filterPolicy", (a, n) => { a.FilterPolicy = n.CreateAny(); } },
+            { "filterPolicyScope", (a, n) => { a.FilterPolicyScope = n.GetScalarValue().GetEnumFromDisplayName<FilterPolicyScope>(); } },
             { "rawMessageDelivery", (a, n) => { a.RawMessageDelivery = n.GetBooleanValue(); } },
             { "redrivePolicy", (a, n) => { a.RedrivePolicy = n.ParseMapWithExtensions(this.redrivePolicyFixedFields); } },
             { "deliveryPolicy", (a, n) => { a.DeliveryPolicy = n.ParseMapWithExtensions(this.deliveryPolicyFixedFields); } },
             { "displayName", (a, n) => { a.DisplayName = n.GetScalarValue(); } },
-        };
-
-        private FixedFieldMap<FilterPolicy> filterPolicyFixedFields => new()
-        {
-            { "attributes", (a, n) => { a.Attributes = n.CreateAny(); } },
         };
 
         private FixedFieldMap<RedrivePolicy> redrivePolicyFixedFields => new()
