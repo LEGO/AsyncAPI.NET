@@ -154,7 +154,7 @@ namespace LEGO.AsyncAPI.Services
             this.ResolveMap(schema.Properties);
         }
 
-        private void ResolveObject<T>(T entity, Action<T> assign) where T : class, IAsyncApiReferenceable
+        private void ResolveObject<T>(T entity, Action<T> assign) where T : class, IAsyncApiReferenceable, new()
         {
             if (entity == null)
             {
@@ -184,7 +184,7 @@ namespace LEGO.AsyncAPI.Services
             }
         }
 
-        private void ResolveMap<T>(IDictionary<string, T> map) where T : class, IAsyncApiReferenceable
+        private void ResolveMap<T>(IDictionary<string, T> map) where T : class, IAsyncApiReferenceable, new()
         {
             if (map == null)
             {
@@ -201,8 +201,17 @@ namespace LEGO.AsyncAPI.Services
             }
         }
 
-        private T ResolveReference<T>(AsyncApiReference reference) where T : class, IAsyncApiReferenceable
+        private T ResolveReference<T>(AsyncApiReference reference) where T : class, IAsyncApiReferenceable, new()
         {
+            if (reference.IsExternal)
+            {
+                return new ()
+                {
+                    UnresolvedReference = true,
+                    Reference = reference,
+                };
+            }
+
             try
             {
                 return this.currentDocument.ResolveReference(reference) as T;

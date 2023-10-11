@@ -12,6 +12,14 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiReference : IAsyncApiSerializable
     {
         /// <summary>
+        /// External resource in the reference.
+        /// It maybe:
+        /// 1. a absolute/relative file path, for example:  ../commons/pet.json
+        /// 2. a Url, for example: http://localhost/pet.json
+        /// </summary>
+        public string ExternalResource { get; set; }
+
+        /// <summary>
         /// Gets or sets the element type referenced.
         /// </summary>
         public ReferenceType? Type { get; set; }
@@ -27,16 +35,36 @@ namespace LEGO.AsyncAPI.Models
         public AsyncApiDocument HostDocument { get; set; } = null;
 
         /// <summary>
-        /// Gets the full reference string for v2.3.
+        /// Gets a flag indicating whether a file is a valid OpenAPI document or a fragment
+        /// </summary>
+        public bool IsFragment { get; set; } = false;
+
+        /// <summary>
+        /// Gets a flag indicating whether this reference is an external reference.
+        /// </summary>
+        public bool IsExternal => this.ExternalResource != null;
+
+        /// <summary>
+        /// Gets the full reference string for v2.
         /// </summary>
         public string Reference
         {
             get
             {
+                if (this.IsExternal)
+                {
+                    return this.GetExternalReferenceV2();
+                }
+
                 if (!this.Type.HasValue)
                 {
                     throw new ArgumentNullException(nameof(this.Type));
                 }
+
+                //if (this.Type == ReferenceType.SecurityScheme)
+                //{
+                //    return this.Id;
+                //}
 
                 return "#/components/" + this.Type.GetDisplayName() + "/" + this.Id;
             }
@@ -65,6 +93,21 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalProperty(AsyncApiConstants.DollarRef, this.Reference);
 
             writer.WriteEndObject();
+        }
+
+        private string GetExternalReferenceV2()
+        {
+            if (this.Id != null)
+            {
+                if (this.IsFragment)
+                {
+                    return this.ExternalResource + "#" + this.Id;
+                }
+
+                return this.ExternalResource + "#/components/" + this.Type.GetDisplayName() + "/" + this.Id;
+            }
+
+            return this.ExternalResource;
         }
 
         public void Write(IAsyncApiWriter writer)
