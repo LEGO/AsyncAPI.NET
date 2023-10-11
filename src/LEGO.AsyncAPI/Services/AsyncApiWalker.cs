@@ -386,6 +386,17 @@ namespace LEGO.AsyncAPI.Services
                 this.Walk("additionalProperties", () => this.Walk(schema.AdditionalProperties));
             }
 
+            if (schema.PatternProperties != null)
+            {
+                this.Walk("patternProperties", () =>
+                {
+                    foreach (var item in schema.PatternProperties)
+                    {
+                        this.Walk(item.Key, () => this.Walk(item.Value));
+                    }
+                });
+            }
+
             if (schema.PropertyNames != null)
             {
                 this.Walk("propertyNames", () => this.Walk(schema.PropertyNames));
