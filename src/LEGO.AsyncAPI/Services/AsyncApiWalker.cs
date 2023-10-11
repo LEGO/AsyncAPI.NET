@@ -386,7 +386,7 @@ namespace LEGO.AsyncAPI.Services
                 this.Walk("additionalProperties", () => this.Walk(schema.AdditionalProperties));
             }
 
-            if (schema.Properties != null)
+            if (schema.PatternProperties != null)
             {
                 this.Walk("patternProperties", () =>
                 {
@@ -895,7 +895,7 @@ namespace LEGO.AsyncAPI.Services
         private bool ProcessAsReference(IAsyncApiReferenceable referenceable, bool isComponent = false)
         {
             var isReference = referenceable.Reference != null && !isComponent;
-            if (isReference && !referenceable.Reference.IsExternal)
+            if (isReference)
             {
                 this.Walk(referenceable);
             }
