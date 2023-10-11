@@ -150,7 +150,7 @@ namespace LEGO.AsyncAPI.Models
             return this.ResolveReference(reference) as T;
         }
 
-        public IAsyncApiReferenceable ResolveReference(AsyncApiReference reference)
+        internal IAsyncApiReferenceable ResolveReference(AsyncApiReference reference)
         {
             if (reference == null)
             {

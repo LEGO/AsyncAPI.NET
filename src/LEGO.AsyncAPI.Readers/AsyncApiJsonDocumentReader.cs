@@ -1,10 +1,11 @@
-// Copyright (c) The LEGO Group. All rights reserved.
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.Json.Nodes;
+    using System.Threading;
     using System.Threading.Tasks;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Extensions;
@@ -76,7 +77,7 @@ namespace LEGO.AsyncAPI.Readers
             return document;
         }
 
-        public Task<ReadResult> ReadAsync(JsonNode input)
+        public async Task<ReadResult> ReadAsync(JsonNode input, CancellationToken cancellationToken = default)
         {
             var diagnostic = new AsyncApiDiagnostic();
             var context = new ParsingContext(diagnostic)
@@ -106,11 +107,11 @@ namespace LEGO.AsyncAPI.Readers
                 }
             }
 
-            return Task.FromResult(new ReadResult
+            return new ReadResult
             {
                 AsyncApiDocument = document,
                 AsyncApiDiagnostic = diagnostic,
-            });
+            };
         }
 
         private void ResolveReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)

@@ -18,7 +18,7 @@ namespace LEGO.AsyncAPI.Readers
         DoNotResolveReferences,
 
         /// <summary>
-        /// ResolveAllReferences, effectively inlining them.
+        /// Resolve internal component references and inline them.
         /// </summary>
         ResolveReferences,
     }
