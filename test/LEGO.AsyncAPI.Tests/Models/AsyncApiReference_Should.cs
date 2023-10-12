@@ -91,6 +91,32 @@ namespace LEGO.AsyncAPI.Tests
         }
 
         [Test]
+        public void AsyncApiReference_WithExternalComponentReference_AllowReference()
+        {
+            // Arrange
+            var actual = @"payload:
+  $ref: someotherdocument.json#/components/schemas/test";
+            var reader = new AsyncApiStringReader();
+
+            // Act
+            var deserialized = reader.ReadFragment<AsyncApiMessage>(actual, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
+
+            // Assert
+            diagnostic.Errors.Should().BeEmpty();
+            var reference = deserialized.Payload.Reference;
+            reference.ExternalResource.Should().Be("someotherdocument.json");
+            reference.Type.Should().Be(ReferenceType.Schema);
+            reference.Id.Should().Be("test");
+            reference.IsFragment.Should().BeFalse();
+            reference.IsExternal.Should().BeTrue();
+
+            var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            var expected = serialized.MakeLineBreaksEnvironmentNeutral();
+            actual.Should().Be(expected);
+        }
+
+        [Test]
         public void AsyncApiDocument_WithInternalComponentReference_ResolvesReference()
         {
             // Arrange
