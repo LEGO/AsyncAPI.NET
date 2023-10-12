@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Tests
     {
 
         [Test]
-        public void AsyncApiReference_WithExternalFragmentReference_AllowReference()
+        public void AsyncApiReference_WithExternalFragmentUriReference_AllowReference()
         {
             // Arrange
             var actual = @"payload:
@@ -91,11 +91,11 @@ namespace LEGO.AsyncAPI.Tests
         }
 
         [Test]
-        public void AsyncApiReference_WithExternalComponentReference_AllowReference()
+        public void AsyncApiReference_WithExternalFragmentReference_AllowReference()
         {
             // Arrange
             var actual = @"payload:
-  $ref: someotherdocument.json#/components/schemas/test";
+  $ref: ./myjsonfile.json#/fragment";
             var reader = new AsyncApiStringReader();
 
             // Act
@@ -104,7 +104,32 @@ namespace LEGO.AsyncAPI.Tests
             // Assert
             diagnostic.Errors.Should().BeEmpty();
             var reference = deserialized.Payload.Reference;
-            reference.ExternalResource.Should().Be("someotherdocument.json");
+            reference.ExternalResource.Should().Be("./myjsonfile.json");
+            reference.Id.Should().Be("/fragment");
+            reference.IsFragment.Should().BeTrue();
+            reference.IsExternal.Should().BeTrue();
+
+            var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            var expected = serialized.MakeLineBreaksEnvironmentNeutral();
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void AsyncApiReference_WithExternalComponentReference_AllowReference()
+        {
+            // Arrange
+            var actual = @"payload:
+  $ref: ./someotherdocument.json#/components/schemas/test";
+            var reader = new AsyncApiStringReader();
+
+            // Act
+            var deserialized = reader.ReadFragment<AsyncApiMessage>(actual, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
+
+            // Assert
+            diagnostic.Errors.Should().BeEmpty();
+            var reference = deserialized.Payload.Reference;
+            reference.ExternalResource.Should().Be("./someotherdocument.json");
             reference.Type.Should().Be(ReferenceType.Schema);
             reference.Id.Should().Be("test");
             reference.IsFragment.Should().BeFalse();
@@ -183,6 +208,7 @@ channels:
             channel.Reference.ExternalResource.Should().Be("http://example.com/channel.json");
             channel.Reference.Id.Should().BeNull();
             channel.Reference.IsExternal.Should().BeTrue();
+            channel.Reference.IsFragment.Should().BeFalse();
             channel.Reference.Type.Should().BeNull();
         }
 
@@ -203,6 +229,7 @@ channels:
             reference.ExternalResource.Should().Be("http://example.com/json.json");
             reference.Id.Should().BeNull();
             reference.IsExternal.Should().BeTrue();
+            reference.IsFragment.Should().BeFalse();
             diagnostic.Errors.Should().BeEmpty();
 
             var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
