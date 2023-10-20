@@ -67,9 +67,21 @@ namespace LEGO.AsyncAPI.Readers.V2
                             Id = reference,
                         };
                     }
+
+                    var asyncApiReference = new AsyncApiReference();
+                    if (reference.StartsWith("/"))
+                    {
+                        asyncApiReference.IsFragment = true;
+                    }
+
+                    asyncApiReference.ExternalResource = segments[0];
+
+                    return asyncApiReference;
+
                 }
                 else if (segments.Length == 2)
                 {
+                    // Local reference
                     if (reference.StartsWith("#"))
                     {
                         try
@@ -84,7 +96,7 @@ namespace LEGO.AsyncAPI.Readers.V2
                     }
 
                     var id = segments[1];
-
+                    var asyncApiReference = new AsyncApiReference();
                     if (id.StartsWith("/components/"))
                     {
                         var localSegments = segments[1].Split('/');
@@ -103,12 +115,16 @@ namespace LEGO.AsyncAPI.Readers.V2
 
                         id = localSegments[3];
                     }
-
-                    return new AsyncApiReference
+                    else
                     {
-                        Type = type,
-                        Id = id,
-                    };
+                        asyncApiReference.IsFragment = true;
+                    }
+
+                    asyncApiReference.ExternalResource = segments[0];
+                    asyncApiReference.Type = type;
+                    asyncApiReference.Id = id;
+
+                    return asyncApiReference;
                 }
             }
 
