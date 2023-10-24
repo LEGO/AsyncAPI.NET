@@ -54,7 +54,7 @@ namespace LEGO.AsyncAPI.Readers
         }
 
         /// <summary>
-        /// Reads the content of the TextReader.  If there are references to external documents then they will be read asynchronously.
+        /// Reads the content of the TextReader.
         /// </summary>
         /// <param name="input">TextReader containing AsyncApi description to parse.</param>
         /// <returns>A ReadResult instance that contains the resulting AsyncApiDocument and a diagnostics instance.</returns>

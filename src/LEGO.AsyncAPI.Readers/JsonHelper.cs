@@ -4,11 +4,8 @@ namespace LEGO.AsyncAPI.Readers
 {
     using System;
     using System.Globalization;
-    using System.IO;
-    using System.Linq;
     using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Exceptions;
-    using YamlDotNet.RepresentationModel;
 
     internal static class JsonHelper
     {
@@ -21,12 +18,6 @@ namespace LEGO.AsyncAPI.Readers
         public static JsonNode ParseJsonString(string jsonString)
         {
             return JsonNode.Parse(jsonString);
-            var reader = new StringReader(jsonString);
-            var yamlStream = new YamlStream();
-            yamlStream.Load(reader);
-
-            var yamlDocument = yamlStream.Documents.First();
-            return yamlDocument.RootNode.ToJsonNode();
         }
     }
 }

@@ -6,11 +6,11 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.Json;
     using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Exceptions;
-    using YamlDotNet.Serialization;
 
     public class MapNode : ParseNode, IEnumerable<PropertyNode>
     {
@@ -176,8 +176,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public override string GetRaw()
         {
-            var x = new SerializerBuilder().JsonCompatible().Build();
-            return x.Serialize(this.node);
+            return JsonSerializer.Serialize(this.node);
         }
 
         public T GetReferencedObject<T>(ReferenceType referenceType, string referenceId)
@@ -203,7 +202,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         public string GetScalarValue(ValueNode key)
         {
             var scalarNode = this.node[key.GetScalarValue()] is JsonValue jsonValue 
-                ? jsonValue 
+                ? jsonValue
                 : throw new AsyncApiReaderException($"Expected scalar value while parsing {key.GetScalarValue()}", this.Context);
 
             return scalarNode.GetScalarValue();
