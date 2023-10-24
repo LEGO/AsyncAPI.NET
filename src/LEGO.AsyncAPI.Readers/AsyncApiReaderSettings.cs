@@ -42,7 +42,7 @@ namespace LEGO.AsyncAPI.Readers
         { get; set; } =
             new Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>>();
 
-        public List<IBindingParser<IBinding>>
+        public IEnumerable<IBindingParser<IBinding>>
            Bindings
         { get; set; } =
            new List<IBindingParser<IBinding>>();

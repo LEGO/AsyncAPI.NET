@@ -111,7 +111,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(new MyBinding());
+            settings.Bindings = new[] { new MyBinding() };
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert

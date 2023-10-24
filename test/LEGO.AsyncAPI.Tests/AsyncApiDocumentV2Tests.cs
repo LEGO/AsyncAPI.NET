@@ -1207,7 +1207,7 @@ components:
             var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.AddRange(BindingsCollection.Pulsar);
+            settings.Bindings = BindingsCollection.Pulsar;
             var reader = new AsyncApiStringReader(settings);
             var deserialized = reader.Read(actual, out var diagnostic);
         }
@@ -1300,7 +1300,7 @@ channels:
             var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.AddRange(BindingsCollection.All);
+            settings.Bindings = BindingsCollection.All;
             var reader = new AsyncApiStringReader(settings);
             var deserialized = reader.Read(actual, out var diagnostic);
 
