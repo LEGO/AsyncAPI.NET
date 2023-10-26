@@ -2,12 +2,9 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
-    using Extensions;
-    using LEGO.AsyncAPI.Readers;
-    using LEGO.AsyncAPI.Readers.ParseNodes;
+    using LEGO.AsyncAPI.Attributes;
 
     public class Queue : IAsyncApiExtensible
     {
@@ -20,6 +17,16 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
         /// Is this a FIFO queue?
         /// </summary>
         public bool FifoQueue { get; set; }
+
+        /// <summary>
+        /// Specifies whether message deduplication occurs at the message group or queue level. Valid values are messageGroup and queue (default).
+        /// </summary>
+        public DeduplicationScope? DeduplicationScope { get; set; }
+
+        /// <summary>
+        /// Specifies whether the FIFO queue throughput quota applies to the entire queue or per message group. Valid values are perQueue (default) and perMessageGroupId.
+        /// </summary>
+       public FifoThroughputLimit? FifoThroughputLimit { get; set; }
 
         /// <summary>
         /// The number of seconds to delay before a message sent to the queue can be received. used to create a delay queue.
@@ -68,6 +75,8 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
             writer.WriteStartObject();
             writer.WriteRequiredProperty("name", this.Name);
             writer.WriteOptionalProperty("fifoQueue", this.FifoQueue);
+            writer.WriteOptionalProperty("deduplicationScope", this.DeduplicationScope?.GetDisplayName());
+            writer.WriteOptionalProperty("fifoThroughputLimit", this.FifoThroughputLimit?.GetDisplayName());
             writer.WriteOptionalProperty("deliveryDelay", this.DeliveryDelay);
             writer.WriteOptionalProperty("visibilityTimeout", this.VisibilityTimeout);
             writer.WriteOptionalProperty("receiveMessageWaitTime", this.ReceiveMessageWaitTime);
@@ -78,5 +87,17 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
             writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
+    }
+
+    public enum DeduplicationScope
+    {
+        [Display("queue")] Queue,
+        [Display("messageGroup")] MessageGroup,
+    }
+
+    public enum FifoThroughputLimit
+    {
+        [Display("perQueue")] PerQueue,
+        [Display("perMessageGroupId")] PerMessageGroupId,
     }
 }
