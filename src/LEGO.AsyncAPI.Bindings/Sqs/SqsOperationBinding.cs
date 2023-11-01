@@ -23,6 +23,8 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
             { "fifoQueue", (a, n) => { a.FifoQueue = n.GetBooleanValue(); } },
+            { "deduplicationScope", (a, n) => { a.DeduplicationScope = n.GetScalarValue().GetEnumFromDisplayName<DeduplicationScope>(); } },
+            { "fifoThroughputLimit", (a, n) => { a.FifoThroughputLimit = n.GetScalarValue().GetEnumFromDisplayName<FifoThroughputLimit>(); } },
             { "deliveryDelay", (a, n) => { a.DeliveryDelay = n.GetIntegerValue(); } },
             { "visibilityTimeout", (a, n) => { a.VisibilityTimeout = n.GetIntegerValue(); } },
             { "receiveMessageWaitTime", (a, n) => { a.ReceiveMessageWaitTime = n.GetIntegerValue(); } },
