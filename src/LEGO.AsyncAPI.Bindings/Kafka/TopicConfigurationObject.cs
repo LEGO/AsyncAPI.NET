@@ -1,11 +1,13 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.Kafka
+using System;
+using System.Collections.Generic;
+using LEGO.AsyncAPI.Models;
+using LEGO.AsyncAPI.Models.Interfaces;
+using LEGO.AsyncAPI.Writers;
+
+namespace LEGO.AsyncAPI.Bindings.Kafka
 {
-    using System;
-    using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Writers;
 
     public class TopicConfigurationObject : IAsyncApiElement
     {
@@ -17,7 +19,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// The retention.ms configuration option.
         /// </summary>
-        public int? RetentionMiliseconds { get; set; }
+        public int? RetentionMilliseconds { get; set; }
 
         /// <summary>
         /// The retention.bytes configuration option.
@@ -27,7 +29,7 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// The delete.retention.ms configuration option.
         /// </summary>
-        public int? DeleteRetentionMiliseconds { get; set; }
+        public int? DeleteRetentionMilliseconds { get; set; }
 
         /// <summary>
         /// The max.message.bytes configuration option.
@@ -43,9 +45,9 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
 
             writer.WriteStartObject();
             writer.WriteOptionalCollection(AsyncApiConstants.CleanupPolicy, this.CleanupPolicy, (w, s) => w.WriteValue(s));
-            writer.WriteOptionalProperty<int>(AsyncApiConstants.RetentionMiliseconds, this.RetentionMiliseconds);
+            writer.WriteOptionalProperty<int>(AsyncApiConstants.RetentionMilliseconds, this.RetentionMilliseconds);
             writer.WriteOptionalProperty<int>(AsyncApiConstants.RetentionBytes, this.RetentionBytes);
-            writer.WriteOptionalProperty<int>(AsyncApiConstants.DeleteRetentionMiliseconds, this.DeleteRetentionMiliseconds);
+            writer.WriteOptionalProperty<int>(AsyncApiConstants.DeleteRetentionMilliseconds, this.DeleteRetentionMilliseconds);
             writer.WriteOptionalProperty<int>(AsyncApiConstants.MaxMessageBytes, this.MaxMessageBytes);
             writer.WriteEndObject();
         }

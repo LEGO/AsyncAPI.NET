@@ -2,14 +2,13 @@
 
 namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
 {
+    using System.Collections.Generic;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings.Kafka;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
-    using System.Collections.Generic;
 
     internal class KafkaBindings_Should
     {
@@ -41,9 +40,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
                 TopicConfiguration = new TopicConfigurationObject()
                 {
                     CleanupPolicy = new List<string> { "delete", "compact" },
-                    RetentionMiliseconds = 1,
+                    RetentionMilliseconds = 1,
                     RetentionBytes = 2,
-                    DeleteRetentionMiliseconds = 3,
+                    DeleteRetentionMilliseconds = 3,
                     MaxMessageBytes = 4,
                 },
             });
