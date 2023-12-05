@@ -39,7 +39,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "topic", (a, n) => { a.Topic = n.GetScalarValue(); } },
             { "partitions", (a, n) => { a.Partitions = n.GetIntegerValue(); } },
-            { "topicConfiguration", (a, n) => { a.TopicConfiguration = n.ParseMap(kafkaChannelTopicConfigurationObjectFixedFields); } },
+            { "topicConfiguration", (a, n) => { a.TopicConfiguration = n.ParseMapWithExtensions(kafkaChannelTopicConfigurationObjectFixedFields); } },
             { "replicas", (a, n) => { a.Replicas = n.GetIntegerValue(); } },
         };
 
@@ -50,7 +50,6 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
             { "retention.bytes", (a, n) => { a.RetentionBytes = n.GetIntegerValue(); } },
             { "delete.retention.ms", (a, n) => { a.DeleteRetentionMilliseconds = n.GetIntegerValue(); } },
             { "max.message.bytes", (a, n) => { a.MaxMessageBytes = n.GetIntegerValue(); } },
-            { "custom.configs", (a, n) => { a.CustomConfigs = n.CreateSimpleMap(s => s.GetScalarValue()); } },
         };
 
         /// <summary>

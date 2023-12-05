@@ -1,5 +1,8 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Models.Any;
+using LEGO.AsyncAPI.Models.Interfaces;
+
 namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
 {
     using System.Collections.Generic;
@@ -30,9 +33,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
       retention.bytes: 2
       delete.retention.ms: 3
       max.message.bytes: 4
-      custom.configs:
-        key.schema.validation: 'true'
-        key.subject.name.strategy: TopicNameStrategy";
+      x-key.schema.validation: true
+      x-key.subject.name.strategy: TopicNameStrategy";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new KafkaChannelBinding
@@ -47,13 +49,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
                     RetentionBytes = 2,
                     DeleteRetentionMilliseconds = 3,
                     MaxMessageBytes = 4,
-                    CustomConfigs = new Dictionary<string, string>
+                    Extensions = new Dictionary<string, IAsyncApiExtension>
                     {
-                        { "key.schema.validation", "true" },
-                        { "key.subject.name.strategy", "TopicNameStrategy" }
+                        { "x-key.schema.validation", new AsyncApiBoolean(true) },
+                        { "x-key.subject.name.strategy", new AsyncApiString("TopicNameStrategy") },
                     },
                 },
-                
             });
 
             // Act

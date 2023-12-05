@@ -9,7 +9,7 @@ using LEGO.AsyncAPI.Writers;
 namespace LEGO.AsyncAPI.Bindings.Kafka
 {
 
-    public class TopicConfigurationObject : IAsyncApiElement
+    public class TopicConfigurationObject : IAsyncApiExtensible
     {
         /// <summary>
         /// The cleanup.policy configuration option.
@@ -37,9 +37,9 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
         public int? MaxMessageBytes { get; set; }
         
         /// <summary>
-        /// The custom.configs properties configuration option.
+        /// Extensions can be used to handle the configurations that are not covered by AsyncAPI bindings.
         /// </summary>
-        public Dictionary<string, string>? CustomConfigs { get; set; }
+        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
         public void Serialize(IAsyncApiWriter writer)
         {
@@ -54,7 +54,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
             writer.WriteOptionalProperty<int>(AsyncApiConstants.RetentionBytes, this.RetentionBytes);
             writer.WriteOptionalProperty<int>(AsyncApiConstants.DeleteRetentionMilliseconds, this.DeleteRetentionMilliseconds);
             writer.WriteOptionalProperty<int>(AsyncApiConstants.MaxMessageBytes, this.MaxMessageBytes);
-            writer.WriteOptionalMap(AsyncApiConstants.CustomConfigs, this.CustomConfigs, (w, t) => w.WriteValue(t));
+            writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
     }
