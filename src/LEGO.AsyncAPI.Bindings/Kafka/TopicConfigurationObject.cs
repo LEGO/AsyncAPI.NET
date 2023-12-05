@@ -35,6 +35,11 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
         /// The max.message.bytes configuration option.
         /// </summary>
         public int? MaxMessageBytes { get; set; }
+        
+        /// <summary>
+        /// The custom.configs properties configuration option.
+        /// </summary>
+        public Dictionary<string, string>? CustomConfigs { get; set; }
 
         public void Serialize(IAsyncApiWriter writer)
         {
@@ -49,6 +54,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
             writer.WriteOptionalProperty<int>(AsyncApiConstants.RetentionBytes, this.RetentionBytes);
             writer.WriteOptionalProperty<int>(AsyncApiConstants.DeleteRetentionMilliseconds, this.DeleteRetentionMilliseconds);
             writer.WriteOptionalProperty<int>(AsyncApiConstants.MaxMessageBytes, this.MaxMessageBytes);
+            writer.WriteOptionalMap(AsyncApiConstants.CustomConfigs, this.CustomConfigs, (w, t) => w.WriteValue(t));
             writer.WriteEndObject();
         }
     }

@@ -29,7 +29,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
       retention.ms: 1
       retention.bytes: 2
       delete.retention.ms: 3
-      max.message.bytes: 4";
+      max.message.bytes: 4
+      custom.configs:
+        key.schema.validation: 'true'
+        key.subject.name.strategy: TopicNameStrategy";
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new KafkaChannelBinding
@@ -44,7 +47,13 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
                     RetentionBytes = 2,
                     DeleteRetentionMilliseconds = 3,
                     MaxMessageBytes = 4,
+                    CustomConfigs = new Dictionary<string, string>
+                    {
+                        { "key.schema.validation", "true" },
+                        { "key.subject.name.strategy", "TopicNameStrategy" }
+                    },
                 },
+                
             });
 
             // Act

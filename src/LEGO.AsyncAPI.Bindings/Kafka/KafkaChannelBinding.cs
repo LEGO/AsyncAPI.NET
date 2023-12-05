@@ -50,6 +50,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
             { "retention.bytes", (a, n) => { a.RetentionBytes = n.GetIntegerValue(); } },
             { "delete.retention.ms", (a, n) => { a.DeleteRetentionMilliseconds = n.GetIntegerValue(); } },
             { "max.message.bytes", (a, n) => { a.MaxMessageBytes = n.GetIntegerValue(); } },
+            { "custom.configs", (a, n) => { a.CustomConfigs = n.CreateSimpleMap(s => s.GetScalarValue()); } },
         };
 
         /// <summary>

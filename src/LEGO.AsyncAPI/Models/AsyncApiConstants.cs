@@ -136,6 +136,7 @@ namespace LEGO.AsyncAPI.Models
         public const string RetentionBytes = "retention.bytes";
         public const string DeleteRetentionMilliseconds = "delete.retention.ms";
         public const string MaxMessageBytes = "max.message.bytes";
+        public const string CustomConfigs = "custom.configs";
         public const string TopicConfiguration = "topicConfiguration";
         public const string GeoReplication = "geo-replication";
         public const string AdditionalItems = "additionalItems";
