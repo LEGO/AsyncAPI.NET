@@ -54,78 +54,81 @@ namespace LEGO.AsyncAPI.Readers.V2
             string reference,
             ReferenceType? type)
         {
-            if (!string.IsNullOrWhiteSpace(reference))
+            if (string.IsNullOrWhiteSpace(reference))
             {
-                var segments = reference.Split('#');
-                if (segments.Length == 1)
+                throw new AsyncApiException($"The reference string '{reference}' has invalid format.");
+            }
+
+            var segments = reference.Split('#');
+            if (segments.Length == 1)
+            {
+                if (type == ReferenceType.SecurityScheme)
                 {
-                    if (type == ReferenceType.SecurityScheme)
+                    return new AsyncApiReference
                     {
-                        return new AsyncApiReference
-                        {
-                            Type = type,
-                            Id = reference,
-                        };
-                    }
-
-                    var asyncApiReference = new AsyncApiReference();
-                    if (reference.StartsWith("/"))
-                    {
-                        asyncApiReference.IsFragment = true;
-                    }
-
-                    asyncApiReference.ExternalResource = segments[0];
-
-                    return asyncApiReference;
-
+                        Type = type,
+                        Id = reference,
+                    };
                 }
-                else if (segments.Length == 2)
+
+                var asyncApiReference = new AsyncApiReference();
+                asyncApiReference.Type = type;
+                if (reference.StartsWith("/"))
                 {
-                    // Local reference
-                    if (reference.StartsWith("#"))
+                    asyncApiReference.IsFragment = true;
+                }
+
+                asyncApiReference.ExternalResource = segments[0];
+
+                return asyncApiReference;
+
+            }
+            else if (segments.Length == 2)
+            {
+                // Local reference
+                if (reference.StartsWith("#"))
+                {
+                    try
                     {
-                        try
-                        {
-                            return this.ParseReference(segments[1]);
-                        }
-                        catch (AsyncApiException ex)
-                        {
-                            this.Diagnostic.Errors.Add(new AsyncApiError(ex));
-                            return null;
-                        }
+                        return this.ParseReference(segments[1]);
                     }
-
-                    var id = segments[1];
-                    var asyncApiReference = new AsyncApiReference();
-                    if (id.StartsWith("/components/"))
+                    catch (AsyncApiException ex)
                     {
-                        var localSegments = segments[1].Split('/');
-                        var referencedType = localSegments[2].GetEnumFromDisplayName<ReferenceType>();
-                        if (type == null)
-                        {
-                            type = referencedType;
-                        }
-                        else
-                        {
-                            if (type != referencedType)
-                            {
-                                throw new AsyncApiException("Referenced type mismatch");
-                            }
-                        }
+                        this.Diagnostic.Errors.Add(new AsyncApiError(ex));
+                        return null;
+                    }
+                }
 
-                        id = localSegments[3];
+                var id = segments[1];
+                var asyncApiReference = new AsyncApiReference();
+                if (id.StartsWith("/components/"))
+                {
+                    var localSegments = segments[1].Split('/');
+                    var referencedType = localSegments[2].GetEnumFromDisplayName<ReferenceType>();
+                    if (type == null)
+                    {
+                        type = referencedType;
                     }
                     else
                     {
-                        asyncApiReference.IsFragment = true;
+                        if (type != referencedType)
+                        {
+                            throw new AsyncApiException("Referenced type mismatch");
+                        }
                     }
 
-                    asyncApiReference.ExternalResource = segments[0];
-                    asyncApiReference.Type = type;
-                    asyncApiReference.Id = id;
-
-                    return asyncApiReference;
+                    id = localSegments[3];
                 }
+                else
+                {
+                    asyncApiReference.IsFragment = true;
+                }
+
+                asyncApiReference.ExternalResource = segments[0];
+                asyncApiReference.Type = type;
+                asyncApiReference.Id = id;
+
+                return asyncApiReference;
             }
 
             throw new AsyncApiException($"The reference string '{reference}' has invalid format.");
