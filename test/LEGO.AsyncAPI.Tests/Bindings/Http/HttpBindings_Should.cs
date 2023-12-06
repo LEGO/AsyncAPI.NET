@@ -36,7 +36,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Http
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(BindingsCollection.Http);
+            settings.Bindings = BindingsCollection.Http;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiMessage>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -73,7 +73,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Http
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(BindingsCollection.Http);
+            settings.Bindings = BindingsCollection.Http;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert

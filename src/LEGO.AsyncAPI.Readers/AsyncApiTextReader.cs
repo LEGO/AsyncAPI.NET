@@ -6,6 +6,7 @@ namespace LEGO.AsyncAPI.Readers
     using System.Linq;
     using System.Text.Json;
     using System.Text.Json.Nodes;
+    using System.Threading;
     using System.Threading.Tasks;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -57,8 +58,11 @@ namespace LEGO.AsyncAPI.Readers
         /// Reads the content of the TextReader.
         /// </summary>
         /// <param name="input">TextReader containing AsyncApi description to parse.</param>
-        /// <returns>A ReadResult instance that contains the resulting AsyncApiDocument and a diagnostics instance.</returns>
-        public async Task<ReadResult> ReadAsync(TextReader input)
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// A ReadResult instance that contains the resulting AsyncApiDocument and a diagnostics instance.
+        /// </returns>
+        public async Task<ReadResult> ReadAsync(TextReader input, CancellationToken cancellationToken)
         {
             JsonNode jsonNode;
 
@@ -78,7 +82,7 @@ namespace LEGO.AsyncAPI.Readers
                 };
             }
 
-            return await new AsyncApiJsonDocumentReader(this.settings).ReadAsync(jsonNode);
+            return await new AsyncApiJsonDocumentReader(this.settings).ReadAsync(jsonNode, cancellationToken);
         }
 
         /// <summary>

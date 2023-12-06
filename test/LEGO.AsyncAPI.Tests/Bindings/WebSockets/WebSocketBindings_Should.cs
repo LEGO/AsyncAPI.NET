@@ -44,7 +44,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.WebSockets
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(BindingsCollection.Websockets);
+            settings.Bindings = BindingsCollection.Websockets;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert

@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.Tests
             reference.Id.Should().Be("/path/to/external/fragment");
             reference.IsFragment.Should().BeTrue();
             reference.IsExternal.Should().BeTrue();
-
+            reference.Type.Should().Be(ReferenceType.Schema);
             var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             var expected = serialized.MakeLineBreaksEnvironmentNeutral();
@@ -54,6 +54,7 @@ namespace LEGO.AsyncAPI.Tests
             deserialized.Payload.UnresolvedReference.Should().BeTrue();
 
             var reference = deserialized.Payload.Reference;
+            reference.Type.Should().Be(ReferenceType.Schema);
             reference.ExternalResource.Should().Be("/fragments/myFragment");
             reference.Id.Should().BeNull();
             reference.IsFragment.Should().BeTrue();
@@ -159,7 +160,7 @@ components:
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveReferences,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveInternalReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 
@@ -188,11 +189,11 @@ info:
   version: 1.0.0
 channels:
   myChannel:
-    $ref: http://example.com/channel.json";
+    $ref: https://gist.githubusercontent.com/VisualBean/826205b3f599f3ca520c8507bdc62e41/raw/31030db12e5700039244864c6b5531d2b24f95b2/channel.yaml";
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveReferences,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 
@@ -206,10 +207,10 @@ channels:
             channel.UnresolvedReference.Should().BeTrue();
             channel.Description.Should().BeNull();
             channel.Reference.ExternalResource.Should().Be("http://example.com/channel.json");
+            channel.Reference.Type.Should().Be(ReferenceType.Channel);
             channel.Reference.Id.Should().BeNull();
             channel.Reference.IsExternal.Should().BeTrue();
             channel.Reference.IsFragment.Should().BeFalse();
-            channel.Reference.Type.Should().BeNull();
         }
 
         [Test]

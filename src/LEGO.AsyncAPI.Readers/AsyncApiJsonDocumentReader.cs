@@ -1,4 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers
 {
@@ -63,12 +63,12 @@ namespace LEGO.AsyncAPI.Readers
             if (this.settings.RuleSet != null && this.settings.RuleSet.Rules.Count > 0)
             {
                 var asyncApiErrors = document.Validate(this.settings.RuleSet);
-                foreach (var item in asyncApiErrors.Where(e => e is AsyncApiValidatorError))
+                foreach (var item in asyncApiErrors.OfType<AsyncApiValidatorError>())
                 {
                     diagnostic.Errors.Add(item);
                 }
 
-                foreach (var item in asyncApiErrors.Where(e => e is AsyncApiValidatorWarning))
+                foreach (var item in asyncApiErrors.OfType<AsyncApiValidatorWarning>())
                 {
                     diagnostic.Warnings.Add(item);
                 }
@@ -100,10 +100,15 @@ namespace LEGO.AsyncAPI.Readers
             // Validate the document
             if (this.settings.RuleSet != null && this.settings.RuleSet.Rules.Count > 0)
             {
-                var errors = document.Validate(this.settings.RuleSet);
-                foreach (var item in errors)
+                var asyncApiErrors = document.Validate(this.settings.RuleSet);
+                foreach (var item in asyncApiErrors.OfType<AsyncApiValidatorError>())
                 {
                     diagnostic.Errors.Add(item);
+                }
+
+                foreach (var item in asyncApiErrors.OfType<AsyncApiValidatorWarning>())
+                {
+                    diagnostic.Warnings.Add(item);
                 }
             }
 

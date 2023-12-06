@@ -393,7 +393,7 @@ traits:
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(BindingsCollection.All);
+            settings.Bindings = BindingsCollection.All;
             var deserializedMessage = new AsyncApiStringReader(settings).ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
