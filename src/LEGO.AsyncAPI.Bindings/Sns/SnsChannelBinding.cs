@@ -37,6 +37,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
             { "type", (a, n) => { a.Ordering = n.ParseMapWithExtensions(this.orderingFixedFields); } },
+            { "ordering", (a, n) => { a.Ordering = n.ParseMapWithExtensions(this.orderingFixedFields); } },
             { "policy", (a, n) => { a.Policy = n.ParseMapWithExtensions(this.policyFixedFields); } },
             { "tags", (a, n) => { a.Tags = n.CreateSimpleMap(s => s.GetScalarValue()); } },
         };

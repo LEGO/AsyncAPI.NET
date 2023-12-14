@@ -22,6 +22,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
     queue:
       name: myQueue
       fifoQueue: true
+      deduplicationScope: messageGroup
+      fifoThroughputLimit: perMessageGroupId
       deliveryDelay: 30
       visibilityTimeout: 60
       receiveMessageWaitTime: 0
@@ -77,6 +79,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                 {
                     Name = "myQueue",
                     FifoQueue = true,
+                    DeduplicationScope = DeduplicationScope.MessageGroup,
+                    FifoThroughputLimit = FifoThroughputLimit.PerMessageGroupId,
                     DeliveryDelay = 30,
                     VisibilityTimeout = 60,
                     ReceiveMessageWaitTime = 0,
@@ -232,7 +236,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
   sqs:
     queues:
       - name: myQueue
-        fifoQueue: true
         deliveryDelay: 30
         visibilityTimeout: 60
         receiveMessageWaitTime: 0
@@ -290,7 +293,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                     new Queue()
                     {
                         Name = "myQueue",
-                        FifoQueue = true,
+                        FifoQueue = false,
+                        DeduplicationScope = null,
+                        FifoThroughputLimit = null,
                         DeliveryDelay = 30,
                         VisibilityTimeout = 60,
                         ReceiveMessageWaitTime = 0,
