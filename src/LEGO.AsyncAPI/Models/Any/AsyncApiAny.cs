@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Models
         /// <value>
         /// The node.
         /// </value>
-        public JsonNode Node => this.node;
+        public JsonNode GetNode() => this.node;
 
         public T GetValue<T>()
         {

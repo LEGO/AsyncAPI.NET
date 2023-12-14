@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.Bindings
     {
         public StringOrStringList(AsyncApiAny value)
         {
-            this.Value = value.Node switch
+            this.Value = value.GetNode() switch
             {
                 JsonArray array => IsValidStringList(array) ? new AsyncApiAny(array) : throw new ArgumentException($"{nameof(StringOrStringList)} value should only contain string items."),
                 JsonValue jValue => IsString(jValue) ? new AsyncApiAny(jValue) : throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list."),

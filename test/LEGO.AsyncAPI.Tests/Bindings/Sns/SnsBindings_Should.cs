@@ -141,11 +141,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 
             // Assert
             Assert.AreEqual(actual, expected);
-            
+
             var expectedSnsBinding = (SnsChannelBinding)channel.Bindings.Values.First();
-            expectedSnsBinding.Should().BeEquivalentTo((SnsChannelBinding)binding.Bindings.Values.First());
+            expectedSnsBinding.Should().BeEquivalentTo((SnsChannelBinding)binding.Bindings.Values.First(), options => options.IgnoringCyclicReferences());
         }
-        
+
         [Test]
         public void SnsOperationBinding_WithFilledObject_SerializesAndDeserializes()
         {
@@ -382,12 +382,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             settings.Bindings = BindingsCollection.Sns;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
-
             // Assert
             Assert.AreEqual(actual, expected);
-            
+
             var expectedSnsBinding = (SnsOperationBinding)operation.Bindings.Values.First();
-            expectedSnsBinding.Should().BeEquivalentTo((SnsOperationBinding)binding.Bindings.Values.First());
+            expectedSnsBinding.Should().BeEquivalentTo((SnsOperationBinding)binding.Bindings.Values.First(), options => options.IgnoringCyclicReferences());
         }
     }
 }

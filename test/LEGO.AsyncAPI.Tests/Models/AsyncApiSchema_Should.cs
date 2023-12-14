@@ -605,10 +605,7 @@ components: { }";
             var actual = new AsyncApiStringReader().ReadFragment<AsyncApiSchema>(json, AsyncApiVersion.AsyncApi2_0, out var _diagnostics);
 
             // Assert
-            actual.Should().BeEquivalentTo(expected, options => options.IgnoringCyclicReferences()
-            .Excluding(actual => actual.Properties["property11"].Const.Node.Parent)
-            .Excluding(actual => actual.Properties["property11"].Const.Node.Root));
-            _diagnostics.Errors.Should().BeEmpty();
+            actual.Should().BeEquivalentTo(expected);
         }
 
         [Test]

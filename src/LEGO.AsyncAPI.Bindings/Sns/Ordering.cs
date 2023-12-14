@@ -12,14 +12,14 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// What type of SNS Topic is this?
         /// </summary>
         public OrderingType Type { get; set; }
-    
+
         /// <summary>
         /// True to turn on de-duplication of messages for a channel.
         /// </summary>
         public bool ContentBasedDeduplication { get; set; }
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
-    
+
         public void Serialize(IAsyncApiWriter writer)
         {
             if (writer is null)

@@ -398,11 +398,7 @@ traits:
 
             // Assert
             Assert.AreEqual(expected, actual);
-            message.Should().BeEquivalentTo(deserializedMessage, options => options.IgnoringCyclicReferences()
-            .Excluding(message => message.Headers.Examples[0].Node.Parent)
-            .Excluding(message => message.Traits[0].Headers.Examples[0].Node.Parent)
-            .Excluding(message => message.Traits[0].Examples[0].Payload.Node.Parent)
-            .Excluding(message => message.Examples[0].Payload.Node.Parent));
+            message.Should().BeEquivalentTo(deserializedMessage);
         }
     }
 }

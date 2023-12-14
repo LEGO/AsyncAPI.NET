@@ -54,13 +54,13 @@ namespace LEGO.AsyncAPI.Writers
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (any.Node == null)
+            if (any.GetNode() == null)
             {
                 writer.WriteNull();
                 return;
             }
 
-            var node = any.Node;
+            var node = any.GetNode();
 
             var element = JsonDocument.Parse(node.ToJsonString()).RootElement;
             switch (element.ValueKind)

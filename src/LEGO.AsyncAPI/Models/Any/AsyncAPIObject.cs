@@ -18,7 +18,7 @@ namespace LEGO.AsyncAPI.Models
             var jObject = new JsonObject();
             foreach (var item in obj)
             {
-                jObject.Add(item.Key, item.Value.Node);
+                jObject.Add(item.Key, item.Value.GetNode());
             }
 
             return new AsyncApiAny(jObject);

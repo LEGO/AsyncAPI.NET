@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Models
         public static explicit operator AsyncApiArray(AsyncApiAny any)
         {
             var a = new AsyncApiArray();
-            if (any.Node is JsonArray arr)
+            if (any.GetNode() is JsonArray arr)
             {
                 foreach (var item in arr)
                 {
@@ -29,7 +29,7 @@ namespace LEGO.AsyncAPI.Models
             var jArray = new JsonArray();
             foreach (var item in arr)
             {
-                jArray.Add(item.Node);
+                jArray.Add(item.GetNode());
             }
 
             return new AsyncApiAny(jArray);

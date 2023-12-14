@@ -40,7 +40,7 @@ channels:
 ";
             Func<AsyncApiAny, IAsyncApiExtension> valueExtensionParser = (any) =>
             {
-                if (any.Node is JsonValue value)
+                if (any.GetNode() is JsonValue value)
                 {
                     if (value.GetScalarValue() == "onetwothreefour")
                     {
