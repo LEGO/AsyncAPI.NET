@@ -1,7 +1,5 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Readers;
-
 namespace LEGO.AsyncAPI.Tests.Models
 {
     using System;
@@ -10,6 +8,7 @@ namespace LEGO.AsyncAPI.Tests.Models
     using System.IO;
     using FluentAssertions;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 

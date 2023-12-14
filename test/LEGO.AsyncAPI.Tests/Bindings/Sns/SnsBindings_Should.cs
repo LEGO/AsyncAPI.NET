@@ -1,14 +1,12 @@
-using System.Linq;
-using LEGO.AsyncAPI.Models.Any;
-using LEGO.AsyncAPI.Models.Interfaces;
-
 namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 {
     using System.Collections.Generic;
+    using System.Linq;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Sns;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 
