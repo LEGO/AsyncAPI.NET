@@ -1,3 +1,26 @@
+# [5.0.0](https://github.com/LEGO/AsyncAPI.NET/compare/v4.1.0...v5.0.0) (2023-12-14)
+
+
+### Bug Fixes
+
+* add type to references, always. ([#139](https://github.com/LEGO/AsyncAPI.NET/issues/139)) ([3031023](https://github.com/LEGO/AsyncAPI.NET/commit/30310232bb3869258486d9f7f85721d4e3fb46eb))
+* added missing mapping for ordering ([#138](https://github.com/LEGO/AsyncAPI.NET/issues/138)) ([510426e](https://github.com/LEGO/AsyncAPI.NET/commit/510426e200b4fe97ad1b8e9a6e94a615593c2a3c))
+* patternProperties should also be walked as a reference ([#133](https://github.com/LEGO/AsyncAPI.NET/issues/133)) ([dc544f1](https://github.com/LEGO/AsyncAPI.NET/commit/dc544f1c01be3b95ded08ee894453ce8529eafb3))
+
+
+* chore(settings)!: make reader bindings IEnumerable to allow for simpler usage ([e1f8c87](https://github.com/LEGO/AsyncAPI.NET/commit/e1f8c8766767ce642546a911810064a5234f04c3))
+
+
+### Features
+
+* allow non-component references ([#132](https://github.com/LEGO/AsyncAPI.NET/issues/132)) ([71fe571](https://github.com/LEGO/AsyncAPI.NET/commit/71fe571a3db0b4fbc13f4573b4d4b53f4f6b0911))
+* **bindings:** add high throughput fifo properties ([#135](https://github.com/LEGO/AsyncAPI.NET/issues/135)) ([44ffcf4](https://github.com/LEGO/AsyncAPI.NET/commit/44ffcf4ceaf06a5168597e1eeb9407f09d47ab23))
+
+
+### BREAKING CHANGES
+
+* changes how bindings are applied.
+
 # [4.1.0](https://github.com/LEGO/AsyncAPI.NET/compare/v4.0.2...v4.1.0) (2023-09-27)
 
 
