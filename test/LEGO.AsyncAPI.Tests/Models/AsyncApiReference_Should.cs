@@ -160,7 +160,7 @@ components:
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveInternalReferences,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 
@@ -189,11 +189,11 @@ info:
   version: 1.0.0
 channels:
   myChannel:
-    $ref: https://gist.githubusercontent.com/VisualBean/826205b3f599f3ca520c8507bdc62e41/raw/31030db12e5700039244864c6b5531d2b24f95b2/channel.yaml";
+    $ref: http://example.com/channel.json";
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 
