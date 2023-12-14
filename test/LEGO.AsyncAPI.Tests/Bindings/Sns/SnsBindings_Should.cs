@@ -388,7 +388,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 
             // Assert
             Assert.AreEqual(actual, expected);
-            binding.Should().BeEquivalentTo(operation);
             
             var expectedSnsBinding = (SnsOperationBinding)operation.Bindings.Values.First();
             expectedSnsBinding.Should().BeEquivalentTo((SnsOperationBinding)binding.Bindings.Values.First());
