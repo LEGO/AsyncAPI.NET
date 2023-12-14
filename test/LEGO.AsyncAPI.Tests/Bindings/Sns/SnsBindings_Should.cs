@@ -1,17 +1,16 @@
-using System;
+using System.Linq;
 using LEGO.AsyncAPI.Models.Any;
 using LEGO.AsyncAPI.Models.Interfaces;
-using BindingsCollection = LEGO.AsyncAPI.Bindings.BindingsCollection;
 
 namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 {
-    using NUnit.Framework;
     using System.Collections.Generic;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Sns;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
+    using NUnit.Framework;
 
     internal class SnsBindings_Should
     {
@@ -145,8 +144,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 
             // Assert
             Assert.AreEqual(actual, expected);
-            binding.Should().BeEquivalentTo(channel);
-
+            
+            var expectedSnsBinding = (SnsChannelBinding)channel.Bindings.Values.First();
+            expectedSnsBinding.Should().BeEquivalentTo((SnsChannelBinding)binding.Bindings.Values.First());
         }
         
         [Test]
@@ -389,7 +389,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             // Assert
             Assert.AreEqual(actual, expected);
             binding.Should().BeEquivalentTo(operation);
-
+            
+            var expectedSnsBinding = (SnsOperationBinding)operation.Bindings.Values.First();
+            expectedSnsBinding.Should().BeEquivalentTo((SnsOperationBinding)binding.Bindings.Values.First());
         }
     }
 }
