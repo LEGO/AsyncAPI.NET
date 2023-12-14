@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.Tests
             reference.Id.Should().Be("/path/to/external/fragment");
             reference.IsFragment.Should().BeTrue();
             reference.IsExternal.Should().BeTrue();
-
+            reference.Type.Should().Be(ReferenceType.Schema);
             var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             var expected = serialized.MakeLineBreaksEnvironmentNeutral();
@@ -54,6 +54,7 @@ namespace LEGO.AsyncAPI.Tests
             deserialized.Payload.UnresolvedReference.Should().BeTrue();
 
             var reference = deserialized.Payload.Reference;
+            reference.Type.Should().Be(ReferenceType.Schema);
             reference.ExternalResource.Should().Be("/fragments/myFragment");
             reference.Id.Should().BeNull();
             reference.IsFragment.Should().BeTrue();
@@ -206,10 +207,10 @@ channels:
             channel.UnresolvedReference.Should().BeTrue();
             channel.Description.Should().BeNull();
             channel.Reference.ExternalResource.Should().Be("http://example.com/channel.json");
+            channel.Reference.Type.Should().Be(ReferenceType.Channel);
             channel.Reference.Id.Should().BeNull();
             channel.Reference.IsExternal.Should().BeTrue();
             channel.Reference.IsFragment.Should().BeFalse();
-            channel.Reference.Type.Should().BeNull();
         }
 
         [Test]

@@ -61,7 +61,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
             expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(BindingsCollection.Pulsar);
+            settings.Bindings = BindingsCollection.Pulsar;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -80,7 +80,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
 
             // Act
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(BindingsCollection.Pulsar);
+            settings.Bindings = BindingsCollection.Pulsar;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -99,7 +99,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
             // Act
             // Assert
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(BindingsCollection.Pulsar);
+            settings.Bindings = BindingsCollection.Pulsar;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
             var pulsarBinding = ((PulsarChannelBinding)binding.Bindings["pulsar"]);
 
@@ -139,7 +139,7 @@ bindings:
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(BindingsCollection.Pulsar);
+            settings.Bindings = BindingsCollection.Pulsar;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -175,7 +175,7 @@ bindings:
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(BindingsCollection.Pulsar);
+            settings.Bindings = BindingsCollection.Pulsar;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -212,7 +212,7 @@ bindings:
             actual = actual.MakeLineBreaksEnvironmentNeutral();
             expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings.Add(BindingsCollection.Pulsar);
+            settings.Bindings = BindingsCollection.Pulsar;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert

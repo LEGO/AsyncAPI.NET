@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.Readers
 {
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -46,8 +47,11 @@ namespace LEGO.AsyncAPI.Readers
         /// Reads the stream input and parses it into an AsyncApi document.
         /// </summary>
         /// <param name="input">Stream containing AsyncApi description to parse.</param>
-        /// <returns>Instance result containing newly created AsyncApiDocument and diagnostics object from the process.</returns>
-        public async Task<ReadResult> ReadAsync(Stream input)
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// Instance result containing newly created AsyncApiDocument and diagnostics object from the process.
+        /// </returns>
+        public async Task<ReadResult> ReadAsync(Stream input, CancellationToken cancellationToken)
         {
             MemoryStream bufferedStream;
             if (input is MemoryStream)
@@ -65,7 +69,7 @@ namespace LEGO.AsyncAPI.Readers
 
             var reader = new StreamReader(bufferedStream);
 
-            return await new AsyncApiTextReader(this.settings).ReadAsync(reader);
+            return await new AsyncApiTextReader(this.settings).ReadAsync(reader, cancellationToken);
         }
 
         /// <summary>
