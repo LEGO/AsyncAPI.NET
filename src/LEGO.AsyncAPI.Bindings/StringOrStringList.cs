@@ -14,12 +14,21 @@ namespace LEGO.AsyncAPI.Bindings
     {
         public StringOrStringList(AsyncApiAny value)
         {
-            this.Value = value.GetNode() switch
+            switch (value.GetNode())
             {
-                JsonArray array => IsValidStringList(array) ? new AsyncApiAny(array) : throw new ArgumentException($"{nameof(StringOrStringList)} value should only contain string items."),
-                JsonValue jValue => IsString(jValue) ? new AsyncApiAny(jValue) : throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list."),
-                _ => throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list.")
-            };
+                case JsonArray array:
+                    this.Value = IsValidStringList(array)
+                        ? new AsyncApiAny(array)
+                        : throw new ArgumentException($"{nameof(StringOrStringList)} value should only contain string items.");
+                    break;
+                case JsonValue jValue:
+                    this.Value = IsString(jValue)
+                        ? new AsyncApiAny(jValue)
+                        : throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list.");
+                    break;
+                default:
+                    throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list.");
+            }
         }
 
         public AsyncApiAny Value { get; }
@@ -28,12 +37,12 @@ namespace LEGO.AsyncAPI.Bindings
         {
             switch (node)
             {
-                case ValueNode:
-                    return new StringOrStringList(new AsyncApiAny(node.GetScalarValue()));
-                case ListNode:
+                case ValueNode vn:
+                    return new StringOrStringList(new AsyncApiAny(vn.GetScalarValue()));
+                case ListNode ln:
                 {
                     var jsonArray = new JsonArray();
-                    foreach (var item in node as ListNode)
+                    foreach (var item in ln)
                     {
                         jsonArray.Add(item.GetScalarValue());
                     }

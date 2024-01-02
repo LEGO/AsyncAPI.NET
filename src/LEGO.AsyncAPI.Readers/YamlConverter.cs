@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Readers
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Readers
 {
     using System;
     using System.Globalization;
