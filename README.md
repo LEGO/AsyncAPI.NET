@@ -84,7 +84,7 @@ There is a nifty helper to add different types of bindings, or like in the examp
 
 ```csharp
 var settings = new AsyncApiReaderSettings();
-settings.Bindings.Add(BindingsCollection.All);
+settings.Bindings = BindingsCollection.All;
 var asyncApiDocument = new AsyncApiStringReader(settings).Read(stream, out var diagnostic);
 ```
 
