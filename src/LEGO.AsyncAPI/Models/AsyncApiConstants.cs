@@ -136,6 +136,10 @@ namespace LEGO.AsyncAPI.Models
         public const string RetentionBytes = "retention.bytes";
         public const string DeleteRetentionMiliseconds = "delete.retention.ms";
         public const string MaxMessageBytes = "max.message.bytes";
+        public const string ConfluentKeySchemaValidation = "confluent.key.schema.validation";
+        public const string ConfluentKeySubjectName = "confluent.key.subject.name.strategy";
+        public const string ConfluentValueSchemaValidation = "confluent.value.schema.validation";
+        public const string ConfluentValueSubjectName = "confluent.value.subject.name.strategy";
         public const string TopicConfiguration = "topicConfiguration";
         public const string GeoReplication = "geo-replication";
         public const string AdditionalItems = "additionalItems";

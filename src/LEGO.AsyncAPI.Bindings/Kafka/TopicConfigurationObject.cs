@@ -33,6 +33,26 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// The max.message.bytes configuration option.
         /// </summary>
         public int? MaxMessageBytes { get; set; }
+        
+        /// <summary>
+        /// The confluent.key.schema.validation configuration option.
+        /// </summary>
+        public bool? ConfluentKeySchemaValidation { get; set; }
+        
+        /// <summary>
+        /// The confluent.key.subject.name.strategy configuration option.
+        /// </summary>
+        public string ConfluentKeySubjectName { get; set; }
+        
+        /// <summary>
+        /// The confluent.value.schema.validation configuration option.
+        /// </summary>
+        public bool? ConfluentValueSchemaValidation { get; set; }
+        
+        /// <summary>
+        /// The confluent.value.subject.name.strategy configuration option.
+        /// </summary>
+        public string ConfluentValueSubjectName { get; set; }
 
         public void Serialize(IAsyncApiWriter writer)
         {
@@ -47,6 +67,10 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
             writer.WriteOptionalProperty<int>(AsyncApiConstants.RetentionBytes, this.RetentionBytes);
             writer.WriteOptionalProperty<int>(AsyncApiConstants.DeleteRetentionMiliseconds, this.DeleteRetentionMiliseconds);
             writer.WriteOptionalProperty<int>(AsyncApiConstants.MaxMessageBytes, this.MaxMessageBytes);
+            writer.WriteOptionalProperty<bool>(AsyncApiConstants.ConfluentKeySchemaValidation, this.ConfluentKeySchemaValidation);
+            writer.WriteOptionalProperty(AsyncApiConstants.ConfluentKeySubjectName, this.ConfluentKeySubjectName);
+            writer.WriteOptionalProperty<bool>(AsyncApiConstants.ConfluentValueSchemaValidation, this.ConfluentValueSchemaValidation);
+            writer.WriteOptionalProperty(AsyncApiConstants.ConfluentValueSubjectName, this.ConfluentValueSubjectName);
             writer.WriteEndObject();
         }
     }

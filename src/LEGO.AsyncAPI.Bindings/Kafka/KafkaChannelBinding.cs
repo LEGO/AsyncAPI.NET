@@ -51,6 +51,10 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
             { "retention.bytes", (a, n) => { a.RetentionBytes = n.GetIntegerValue(); } },
             { "delete.retention.ms", (a, n) => { a.DeleteRetentionMiliseconds = n.GetIntegerValue(); } },
             { "max.message.bytes", (a, n) => { a.MaxMessageBytes = n.GetIntegerValue(); } },
+            { "confluent.key.schema.validation", (a, n) => { a.ConfluentKeySchemaValidation = n.GetBooleanValue(); } },
+            { "confluent.key.subject.name.strategy", (a, n) => { a.ConfluentKeySubjectName = n.GetScalarValue(); } },
+            { "confluent.value.schema.validation", (a, n) => { a.ConfluentValueSchemaValidation = n.GetBooleanValue(); } },
+            { "confluent.value.subject.name.strategy", (a, n) => { a.ConfluentValueSubjectName = n.GetScalarValue(); } },
         };
 
         /// <summary>
