@@ -132,9 +132,9 @@ namespace LEGO.AsyncAPI.Models
         public const string ServerVariables = "serverVariables";
         public const string MessageId = "messageId";
         public const string CleanupPolicy = "cleanup.policy";
-        public const string RetentionMiliseconds = "retention.ms";
+        public const string RetentionMilliseconds = "retention.ms";
         public const string RetentionBytes = "retention.bytes";
-        public const string DeleteRetentionMiliseconds = "delete.retention.ms";
+        public const string DeleteRetentionMilliseconds = "delete.retention.ms";
         public const string MaxMessageBytes = "max.message.bytes";
         public const string ConfluentKeySchemaValidation = "confluent.key.schema.validation";
         public const string ConfluentKeySubjectName = "confluent.key.subject.name.strategy";
