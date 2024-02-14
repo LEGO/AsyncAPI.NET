@@ -17,17 +17,17 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// <summary>
         /// The retention.ms configuration option.
         /// </summary>
-        public int? RetentionMiliseconds { get; set; }
+        public long? RetentionMilliseconds { get; set; }
 
         /// <summary>
         /// The retention.bytes configuration option.
         /// </summary>
-        public int? RetentionBytes { get; set; }
+        public long? RetentionBytes { get; set; }
 
         /// <summary>
         /// The delete.retention.ms configuration option.
         /// </summary>
-        public int? DeleteRetentionMiliseconds { get; set; }
+        public long? DeleteRetentionMilliseconds { get; set; }
 
         /// <summary>
         /// The max.message.bytes configuration option.
@@ -63,10 +63,10 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
 
             writer.WriteStartObject();
             writer.WriteOptionalCollection(AsyncApiConstants.CleanupPolicy, this.CleanupPolicy, (w, s) => w.WriteValue(s));
-            writer.WriteOptionalProperty<int>(AsyncApiConstants.RetentionMiliseconds, this.RetentionMiliseconds);
-            writer.WriteOptionalProperty<int>(AsyncApiConstants.RetentionBytes, this.RetentionBytes);
-            writer.WriteOptionalProperty<int>(AsyncApiConstants.DeleteRetentionMiliseconds, this.DeleteRetentionMiliseconds);
-            writer.WriteOptionalProperty<int>(AsyncApiConstants.MaxMessageBytes, this.MaxMessageBytes);
+            writer.WriteOptionalProperty(AsyncApiConstants.RetentionMilliseconds, this.RetentionMilliseconds);
+            writer.WriteOptionalProperty(AsyncApiConstants.RetentionBytes, this.RetentionBytes);
+            writer.WriteOptionalProperty(AsyncApiConstants.DeleteRetentionMilliseconds, this.DeleteRetentionMilliseconds);
+            writer.WriteOptionalProperty(AsyncApiConstants.MaxMessageBytes, this.MaxMessageBytes);
             writer.WriteOptionalProperty<bool>(AsyncApiConstants.ConfluentKeySchemaValidation, this.ConfluentKeySchemaValidation);
             writer.WriteOptionalProperty(AsyncApiConstants.ConfluentKeySubjectName, this.ConfluentKeySubjectName);
             writer.WriteOptionalProperty<bool>(AsyncApiConstants.ConfluentValueSchemaValidation, this.ConfluentValueSchemaValidation);

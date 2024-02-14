@@ -27,7 +27,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
       cleanup.policy:
         - delete
         - compact
-      retention.ms: 1
+      retention.ms: 2592000000
       retention.bytes: 2
       delete.retention.ms: 3
       max.message.bytes: 4
@@ -45,9 +45,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
                 TopicConfiguration = new TopicConfigurationObject()
                 {
                     CleanupPolicy = new List<string> { "delete", "compact" },
-                    RetentionMiliseconds = 1,
+                    RetentionMilliseconds = 2592000000,
                     RetentionBytes = 2,
-                    DeleteRetentionMiliseconds = 3,
+                    DeleteRetentionMilliseconds = 3,
                     MaxMessageBytes = 4,
                     ConfluentKeySchemaValidation = true,
                     ConfluentKeySubjectName = "TopicNameStrategy",
