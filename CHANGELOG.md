@@ -1,3 +1,15 @@
+# [5.1.0](https://github.com/LEGO/AsyncAPI.NET/compare/v5.0.0...v5.1.0) (2024-02-15)
+
+
+### Bug Fixes
+
+* updated topic configuration data types ([eace86d](https://github.com/LEGO/AsyncAPI.NET/commit/eace86dde4fc704d4652d19e7073be3b37ade6c7))
+
+
+### Features
+
+* added new topic configuration properties ([4a6c6a8](https://github.com/LEGO/AsyncAPI.NET/commit/4a6c6a8fed3a970153bd511daad5e614dbcdf2df))
+
 # [5.0.0](https://github.com/LEGO/AsyncAPI.NET/compare/v4.1.0...v5.0.0) (2023-12-14)
 
 
