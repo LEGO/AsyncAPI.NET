@@ -1,3 +1,10 @@
+## [5.1.1](https://github.com/LEGO/AsyncAPI.NET/compare/v5.1.0...v5.1.1) (2024-02-16)
+
+
+### Bug Fixes
+
+* long values for missing retention properties ([93ba475](https://github.com/LEGO/AsyncAPI.NET/commit/93ba4755babd05a0d21f3530aab417eeed3b7073))
+
 # [5.1.0](https://github.com/LEGO/AsyncAPI.NET/compare/v5.0.0...v5.1.0) (2024-02-15)
 
 
