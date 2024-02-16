@@ -47,9 +47,9 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
         private static FixedFieldMap<TopicConfigurationObject> kafkaChannelTopicConfigurationObjectFixedFields = new ()
         {
             { "cleanup.policy", (a, n) => { a.CleanupPolicy = n.CreateSimpleList(s => s.GetScalarValue()); } },
-            { "retention.ms", (a, n) => { a.RetentionMilliseconds = n.GetIntegerValue(); } },
-            { "retention.bytes", (a, n) => { a.RetentionBytes = n.GetIntegerValue(); } },
-            { "delete.retention.ms", (a, n) => { a.DeleteRetentionMilliseconds = n.GetIntegerValue(); } },
+            { "retention.ms", (a, n) => { a.RetentionMilliseconds = n.GetLongValue(); } },
+            { "retention.bytes", (a, n) => { a.RetentionBytes = n.GetLongValue(); } },
+            { "delete.retention.ms", (a, n) => { a.DeleteRetentionMilliseconds = n.GetLongValue(); } },
             { "max.message.bytes", (a, n) => { a.MaxMessageBytes = n.GetIntegerValue(); } },
             { "confluent.key.schema.validation", (a, n) => { a.ConfluentKeySchemaValidation = n.GetBooleanValue(); } },
             { "confluent.key.subject.name.strategy", (a, n) => { a.ConfluentKeySubjectName = n.GetScalarValue(); } },
