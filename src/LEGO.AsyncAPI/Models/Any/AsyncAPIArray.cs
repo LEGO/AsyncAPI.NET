@@ -2,11 +2,13 @@
 
 namespace LEGO.AsyncAPI.Models
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
+    [Obsolete("Please use AsyncApiAny instead")]
     public class AsyncApiArray : Collection<AsyncApiAny>, IAsyncApiExtension, IAsyncApiElement
     {
 

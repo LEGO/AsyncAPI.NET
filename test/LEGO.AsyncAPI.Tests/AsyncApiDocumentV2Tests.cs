@@ -7,16 +7,21 @@ namespace LEGO.AsyncAPI.Tests
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using LEGO.AsyncAPI.Bindings.Pulsar;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Bindings.Kafka;
+    using LEGO.AsyncAPI.Bindings.Pulsar;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
+    public class ExtensionClass
+    {
+        public string Key { get; set; }
+        public long OtherKey { get; set; }
+    }
     public class AsyncApiDocumentV2Tests
     {
         [Test]
@@ -838,8 +843,6 @@ components:
             string traitTitle = "traitTitle";
             string schemaTitle = "schemaTitle";
             string schemaDescription = "schemaDescription";
-            string anyKey = "key";
-            string anyOtherKey = "otherKey";
             string anyStringValue = "value";
             long anyLongValue = long.MaxValue;
             string exampleSummary = "exampleSummary";
@@ -864,6 +867,8 @@ components:
             string refreshUrl = "https://example.com/refresh";
             string authorizationUrl = "https://example.com/authorization";
             string requirementString = "requirementItem";
+
+            
             var document = new AsyncApiDocument()
             {
                 Id = documentId,
@@ -1016,11 +1021,11 @@ components:
                                                         Description = schemaDescription,
                                                         Examples = new List<AsyncApiAny>
                                                         {
-                                                            new AsyncApiObject
+                                                            new AsyncApiAny(new ExtensionClass
                                                             {
-                                                                { anyKey, new AsyncApiAny(anyStringValue) },
-                                                                { anyOtherKey, new AsyncApiAny(anyLongValue) },
-                                                            },
+                                                                Key = anyStringValue,
+                                                                OtherKey = anyLongValue,
+                                                            }),
                                                         },
                                                     },
                                                     Examples = new List<AsyncApiMessageExample>
@@ -1029,11 +1034,11 @@ components:
                                                         {
                                                             Summary = exampleSummary,
                                                             Name = exampleName,
-                                                            Payload = new AsyncApiObject
+                                                            Payload =new AsyncApiAny(new ExtensionClass
                                                             {
-                                                                { anyKey, new AsyncApiAny(anyStringValue) },
-                                                                { anyOtherKey, new AsyncApiAny(anyLongValue) },
-                                                            },
+                                                                Key = anyStringValue,
+                                                                OtherKey = anyLongValue,
+                                                            }),
                                                             Extensions = new Dictionary<string, IAsyncApiExtension>
                                                             {
                                                                 { extensionKey, new AsyncApiAny(extensionString) },
