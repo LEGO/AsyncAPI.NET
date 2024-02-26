@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Extensions
 {
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -37,6 +38,26 @@ namespace LEGO.AsyncAPI.Extensions
             }
 
             element.Extensions[name] = any ?? throw Error.ArgumentNull(nameof(any));
+        }
+
+        /// <summary>
+        /// Tries the get value or default.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static bool TryGetValueOrDefault<T>(this IDictionary<string, IAsyncApiExtension> dictionary, string key, out T value)
+        {
+            if (dictionary.TryGetValue(key, out var extension))
+            {
+                value = AsyncApiAny.FromExtensionOrDefault<T>(extension);
+                return true;
+            }
+
+            value = default(T);
+            return false;
         }
     }
 }
