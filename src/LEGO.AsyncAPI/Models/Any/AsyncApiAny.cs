@@ -43,54 +43,6 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncApiAny"/> class.
         /// </summary>
-        /// <param name="dictionary">The dictionary.</param>
-        public AsyncApiAny(Dictionary<string, AsyncApiAny> dictionary)
-        {
-            var jsonObject = new JsonObject();
-            foreach (var kvp in dictionary)
-            {
-                jsonObject.Add(kvp.Key, kvp.Value.node);
-            }
-
-            this.node = jsonObject;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncApiAny"/> class.
-        /// </summary>
-        /// <param name="list">The list.</param>
-        public AsyncApiAny(List<object> list)
-        {
-            var jsonArray = new JsonArray();
-            foreach (var item in list)
-            {
-                string jsonString = JsonSerializer.Serialize(item, this.options);
-                jsonArray.Add(JsonNode.Parse(jsonString));
-            }
-
-            this.node = jsonArray;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncApiAny"/> class.
-        /// </summary>
-        /// <param name="dictionary">The dictionary.</param>
-        public AsyncApiAny(Dictionary<string, object> dictionary)
-        {
-            var jsonObject = new JsonObject();
-            foreach (var kvp in dictionary)
-            {
-                string jsonString = JsonSerializer.Serialize(kvp.Value, this.options);
-                jsonObject.Add(kvp.Key, JsonNode.Parse(jsonString));
-            }
-
-            this.node = jsonObject;
-        }
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncApiAny"/> class.
-        /// </summary>
         /// <param name="node">The node.</param>
         public AsyncApiAny(JsonArray node)
         {

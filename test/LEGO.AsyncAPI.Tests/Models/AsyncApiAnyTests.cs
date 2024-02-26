@@ -3,8 +3,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LEGO.AsyncAPI.Tests
 {
@@ -22,9 +20,10 @@ namespace LEGO.AsyncAPI.Tests
             var d = new AsyncApiAny(true);
             var e = new AsyncApiAny(new MyType("test"));
             var f = new AsyncApiAny(new List<string>() { "test", "test2"});
-            var g = new AsyncApiAny(new List<MyType>() { new MyType("test") });
-            var h = new AsyncApiAny(new Dictionary<string, int>() { { "t", 2 } });
-            var i = new AsyncApiAny(new Dictionary<string, MyType>() { { "t", new MyType("test") } });
+            var g = new AsyncApiAny(new List<string>() { "test", "test2"}.AsEnumerable());
+            var h = new AsyncApiAny(new List<MyType>() { new MyType("test") });
+            var i = new AsyncApiAny(new Dictionary<string, int>() { { "t", 2 } });
+            var j = new AsyncApiAny(new Dictionary<string, MyType>() { { "t", new MyType("test") } });
 
             // Assert
             Assert.AreEqual("string", a.GetValue<string>());
@@ -34,10 +33,12 @@ namespace LEGO.AsyncAPI.Tests
             Assert.NotNull(e.GetValue<MyType>());
             Assert.IsNotEmpty(f.GetValue<List<string>>());
             Assert.IsNotEmpty(f.GetValue<IEnumerable<string>>());
-            Assert.IsNotEmpty(g.GetValue<List<MyType>>());
-            Assert.IsNotEmpty(g.GetValue<IEnumerable<MyType>>());
-            Assert.IsNotEmpty(h.GetValue<Dictionary<string, int>>());
-            Assert.IsNotEmpty(i.GetValue<Dictionary<string, MyType>>());
+            Assert.IsNotEmpty(g.GetValue<List<string>>());
+            Assert.IsNotEmpty(g.GetValue<IEnumerable<string>>());
+            Assert.IsNotEmpty(h.GetValue<List<MyType>>());
+            Assert.IsNotEmpty(h.GetValue<IEnumerable<MyType>>());
+            Assert.IsNotEmpty(i.GetValue<Dictionary<string, int>>());
+            Assert.IsNotEmpty(j.GetValue<Dictionary<string, MyType>>());
         }
 
         class MyType
