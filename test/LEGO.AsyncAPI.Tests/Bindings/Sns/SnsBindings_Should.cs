@@ -383,7 +383,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
             var binding2 = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(expected, AsyncApiVersion.AsyncApi2_0, out _);
             binding2.Bindings.First().Value.Extensions.TryGetValue("x-bindingExtension", out IAsyncApiExtension any);
-            var val = AsyncApiAny.FromExtension<ExtensionClass>(any);
+            var val = AsyncApiAny.FromExtensionOrDefault<ExtensionClass>(any);
 
             // Assert
             Assert.AreEqual(actual, expected);

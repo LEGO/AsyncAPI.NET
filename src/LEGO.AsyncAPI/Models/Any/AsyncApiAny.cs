@@ -64,7 +64,7 @@ namespace LEGO.AsyncAPI.Models
         /// <typeparam name="T">T.</typeparam>
         /// <param name="extension">The extension.</param>
         /// <returns><see cref="{T}"/>.</returns>
-        public static T FromExtension<T>(IAsyncApiExtension extension)
+        public static T FromExtensionOrDefault<T>(IAsyncApiExtension extension)
         {
             if (extension is AsyncApiAny any)
             {
@@ -122,7 +122,6 @@ namespace LEGO.AsyncAPI.Models
         {
             try
             {
-
                 value = this.GetValue<T>();
                 return true;
             }
