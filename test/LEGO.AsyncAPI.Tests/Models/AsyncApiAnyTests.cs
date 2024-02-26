@@ -12,16 +12,7 @@ namespace LEGO.AsyncAPI.Tests
     public class AsyncApiAnyTests
     {
         [Test]
-        public void Test()
-        {
-            // Arrange
-            // Act
-            // Assert
-        }
-
-
-        [Test]
-        public void ctor_Primitives()
+        public void GetValue_ReturnsCorrectConversions()
         {
             // Arrange
             // Act
@@ -35,11 +26,19 @@ namespace LEGO.AsyncAPI.Tests
             var h = new AsyncApiAny(new Dictionary<string, int>() { { "t", 2 } });
             var i = new AsyncApiAny(new Dictionary<string, MyType>() { { "t", new MyType("test") } });
 
-            var v = e.GetValue<MyType>();
-            var k = i.GetValue<Dictionary<string, MyType>>();
             // Assert
+            Assert.AreEqual("string", a.GetValue<string>());
+            Assert.AreEqual(1, b.GetValue<int>());
+            Assert.AreEqual(1.1, c.GetValue<decimal>());
+            Assert.AreEqual(true, d.GetValue<bool>());
+            Assert.NotNull(e.GetValue<MyType>());
+            Assert.IsNotEmpty(f.GetValue<List<string>>());
+            Assert.IsNotEmpty(f.GetValue<IEnumerable<string>>());
+            Assert.IsNotEmpty(g.GetValue<List<MyType>>());
+            Assert.IsNotEmpty(g.GetValue<IEnumerable<MyType>>());
+            Assert.IsNotEmpty(h.GetValue<Dictionary<string, int>>());
+            Assert.IsNotEmpty(i.GetValue<Dictionary<string, MyType>>());
         }
-
 
         class MyType
         {
@@ -47,6 +46,7 @@ namespace LEGO.AsyncAPI.Tests
             {
                 this.Value = value;
             }
+
             public string Value { get; set; }
         }
     }

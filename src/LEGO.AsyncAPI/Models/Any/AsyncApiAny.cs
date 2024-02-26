@@ -2,10 +2,7 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using System.Collections;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq;
     using System.Text.Json;
     using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -26,7 +23,7 @@ namespace LEGO.AsyncAPI.Models
         private JsonNode node;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AsyncApiAny"/> class.
+        /// Initializes a new instance of the <see cref="AsyncApiAny" /> class.
         /// </summary>
         /// <param name="node">The node.</param>
         public AsyncApiAny(JsonNode node)
@@ -34,11 +31,19 @@ namespace LEGO.AsyncAPI.Models
             this.node = node;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AsyncApiAny"/> class.
+        /// </summary>
+        /// <param name="obj">The object.</param>
         public AsyncApiAny(object obj)
         {
             this.node = JsonNode.Parse(JsonSerializer.Serialize(obj, this.options));
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AsyncApiAny"/> class.
+        /// </summary>
+        /// <param name="dictionary">The dictionary.</param>
         public AsyncApiAny(Dictionary<string, AsyncApiAny> dictionary)
         {
             var jsonObject = new JsonObject();
@@ -50,6 +55,10 @@ namespace LEGO.AsyncAPI.Models
             this.node = jsonObject;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AsyncApiAny"/> class.
+        /// </summary>
+        /// <param name="list">The list.</param>
         public AsyncApiAny(List<object> list)
         {
             var jsonArray = new JsonArray();
@@ -62,6 +71,10 @@ namespace LEGO.AsyncAPI.Models
             this.node = jsonArray;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AsyncApiAny"/> class.
+        /// </summary>
+        /// <param name="dictionary">The dictionary.</param>
         public AsyncApiAny(Dictionary<string, object> dictionary)
         {
             var jsonObject = new JsonObject();
@@ -73,6 +86,7 @@ namespace LEGO.AsyncAPI.Models
 
             this.node = jsonObject;
         }
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncApiAny"/> class.
@@ -93,18 +107,65 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
+        /// Converts to <see cref="{T}" /> from an Extension.
+        /// </summary>
+        /// <typeparam name="T">T.</typeparam>
+        /// <param name="extension">The extension.</param>
+        /// <returns><see cref="{T}"/>.</returns>
+        public static T FromExtension<T>(IAsyncApiExtension extension)
+        {
+            if (extension is AsyncApiAny any)
+            {
+                return any.GetValueOrDefault<T>();
+            }
+            else
+            {
+                return default(T);
+            }
+        }
+
+        /// <summary>
         /// Gets the node.
         /// </summary>
+        /// <returns><see cref="JsonNode"/>.</returns>
         /// <value>
         /// The node.
         /// </value>
         public JsonNode GetNode() => this.node;
 
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <typeparam name="T"><see cref="{T}" />.</typeparam>
+        /// <returns><see cref="{T}" />.</returns>
         public T GetValue<T>()
         {
             return JsonSerializer.Deserialize<T>(this.node.ToJsonString());
         }
 
+        /// <summary>
+        /// Gets the value or default.
+        /// </summary>
+        /// <typeparam name="T"><see cref="{T}" />.</typeparam>
+        /// <returns><see cref="{T}" /> or default.</returns>
+        public T GetValueOrDefault<T>()
+        {
+            try
+            {
+                return this.GetValue<T>();
+            }
+            catch (System.Exception)
+            {
+                return default(T);
+            }
+        }
+
+        /// <summary>
+        /// Tries the get value.
+        /// </summary>
+        /// <typeparam name="T"><see cref="{T}" />.</typeparam>
+        /// <param name="value">The value.</param>
+        /// <returns>true if the value could be converted, otherwise false.</returns>
         public bool TryGetValue<T>(out T value)
         {
             try
