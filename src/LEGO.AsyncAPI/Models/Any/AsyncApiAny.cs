@@ -92,6 +92,11 @@ namespace LEGO.AsyncAPI.Models
         /// <returns><see cref="{T}" />.</returns>
         public T GetValue<T>()
         {
+            if (this.node is JsonValue)
+            {
+                return this.node.GetValue<T>();
+            }
+
             return JsonSerializer.Deserialize<T>(this.node.ToJsonString());
         }
 

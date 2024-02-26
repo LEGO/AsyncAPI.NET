@@ -28,7 +28,7 @@ namespace LEGO.AsyncAPI.Tests
             // Assert
             Assert.AreEqual("string", a.GetValue<string>());
             Assert.AreEqual(1, b.GetValue<int>());
-            Assert.AreEqual(1.1, c.GetValue<decimal>());
+            Assert.AreEqual(1.1, c.GetValue<double>());
             Assert.AreEqual(true, d.GetValue<bool>());
             Assert.NotNull(e.GetValue<MyType>());
             Assert.IsNotEmpty(f.GetValue<List<string>>());
