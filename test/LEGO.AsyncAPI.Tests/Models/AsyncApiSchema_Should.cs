@@ -284,75 +284,79 @@ namespace LEGO.AsyncAPI.Tests.Models
         };
 
         private string NoInlinedReferences =>
-            @"asyncapi: '2.6.0'
-info:
-  title: Streetlights Kafka API
-  version: 1.0.0
-  description: The Smartylighting Streetlights API allows you to remotely manage the city lights.
-  license:
-    name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0
-channels:
-  mychannel:
-    publish:
-      message:
-        payload:
-          type: object
-          required:
-            - testB
-          properties:
-            testC:
-              $ref: '#/components/schemas/testC'
-            testB:
-              $ref: '#/components/schemas/testB'
-components:
-  schemas:
-    testD:
-      type: string
-      format: uuid
-    testC:
-      type: object
-      properties:
-        testD:
-          $ref: '#/components/schemas/testD'
-    testB:
-      type: boolean
-      description: test";
-
-        private string InlinedReferences =>
-            @"asyncapi: '2.6.0'
-info:
-  title: Streetlights Kafka API
-  version: 1.0.0
-  description: The Smartylighting Streetlights API allows you to remotely manage the city lights.
-  license:
-    name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0
-channels:
-  mychannel:
-    publish:
-      message:
-        payload:
-          type: object
-          required:
-            - testB
-          properties:
-            testC:
-              type: object
-              properties:
+            """
+            asyncapi: '2.6.0'
+            info:
+              title: Streetlights Kafka API
+              version: '1.0.0'
+              description: The Smartylighting Streetlights API allows you to remotely manage the city lights.
+              license:
+                name: Apache 2.0
+                url: https://www.apache.org/licenses/LICENSE-2.0
+            channels:
+              mychannel:
+                publish:
+                  message:
+                    payload:
+                      type: object
+                      required:
+                        - testB
+                      properties:
+                        testC:
+                          $ref: '#/components/schemas/testC'
+                        testB:
+                          $ref: '#/components/schemas/testB'
+            components:
+              schemas:
                 testD:
                   type: string
                   format: uuid
-            testB:
-              type: boolean
-              description: test
-components: { }";
+                testC:
+                  type: object
+                  properties:
+                    testD:
+                      $ref: '#/components/schemas/testD'
+                testB:
+                  type: boolean
+                  description: test
+            """;
+
+        private string InlinedReferences =>
+            """
+            asyncapi: '2.6.0'
+            info:
+              title: Streetlights Kafka API
+              version: '1.0.0'
+              description: The Smartylighting Streetlights API allows you to remotely manage the city lights.
+              license:
+                name: Apache 2.0
+                url: https://www.apache.org/licenses/LICENSE-2.0
+            channels:
+              mychannel:
+                publish:
+                  message:
+                    payload:
+                      type: object
+                      required:
+                        - testB
+                      properties:
+                        testC:
+                          type: object
+                          properties:
+                            testD:
+                              type: string
+                              format: uuid
+                        testB:
+                          type: boolean
+                          description: test
+            components: { }
+            """;
 
         [Test]
         public void SerializeAsJson_WithBasicSchema_V2Works()
         {
             // Arrange
-            var expected = @"{ }";
+            var expected = "{ }";
 
             // Act
             var actual = BasicSchema.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
@@ -367,19 +371,21 @@ components: { }";
         public void SerializeAsJson_WithAdvancedSchemaNumber_V2Works()
         {
             // Arrange
-            var expected = @"{
-  ""title"": ""title1"",
-  ""type"": ""integer"",
-  ""maximum"": 42,
-  ""minimum"": 10,
-  ""exclusiveMinimum"": true,
-  ""multipleOf"": 3,
-  ""default"": 15,
-  ""nullable"": true,
-  ""externalDocs"": {
-    ""url"": ""http://example.com/externalDocs""
-  }
-}";
+            var expected = """
+                           {
+                             "title": "title1",
+                             "type": "integer",
+                             "maximum": 42,
+                             "minimum": 10,
+                             "exclusiveMinimum": true,
+                             "multipleOf": 3,
+                             "default": 15,
+                             "nullable": true,
+                             "externalDocs": {
+                               "url": "http://example.com/externalDocs"
+                             }
+                           }
+                           """;
 
             // Act
             var actual = AdvancedSchemaNumber.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
@@ -394,19 +400,21 @@ components: { }";
         public void SerializeAsJson_WithAdvancedSchemaBigNumbers_V2Works()
         {
             // Arrange
-            var expected = @"{
-  ""title"": ""title1"",
-  ""type"": ""integer"",
-  ""maximum"": 1.7976931348623157E+308,
-  ""minimum"": -1.7976931348623157E+308,
-  ""exclusiveMinimum"": true,
-  ""multipleOf"": 3,
-  ""default"": 15,
-  ""nullable"": true,
-  ""externalDocs"": {
-    ""url"": ""http://example.com/externalDocs""
-  }
-}";
+            var expected = """
+                           {
+                             "title": "title1",
+                             "type": "integer",
+                             "maximum": 1.7976931348623157E+308,
+                             "minimum": -1.7976931348623157E+308,
+                             "exclusiveMinimum": true,
+                             "multipleOf": 3,
+                             "default": 15,
+                             "nullable": true,
+                             "externalDocs": {
+                               "url": "http://example.com/externalDocs"
+                             }
+                           }
+                           """;
 
             // Act
             var actual = AdvancedSchemaBigNumbers.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
@@ -421,88 +429,90 @@ components: { }";
         public void SerializeAsJson_WithAdvancedSchemaObject_V2Works()
         {
             // Arrange
-            var expected = @"{
-  ""title"": ""title1"",
-  ""properties"": {
-    ""property1"": {
-      ""items"": false,
-      ""additionalItems"": false,
-      ""properties"": {
-        ""property2"": {
-          ""type"": ""integer""
-        },
-        ""property3"": {
-          ""type"": ""string"",
-          ""maxLength"": 15
-        }
-      },
-      ""additionalProperties"": false
-    },
-    ""property4"": {
-      ""items"": {
-        ""properties"": {
-          ""Property9"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""additionalItems"": {
-        ""properties"": {
-          ""Property10"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""properties"": {
-        ""property5"": {
-          ""properties"": {
-            ""property6"": {
-              ""type"": ""boolean""
-            }
-          }
-        },
-        ""property7"": {
-          ""type"": ""string"",
-          ""minLength"": 2
-        }
-      },
-      ""additionalProperties"": {
-        ""properties"": {
-          ""Property8"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""patternProperties"": {
-        ""^S_"": {
-          ""type"": ""string""
-        },
-        ""^I_"": {
-          ""type"": ""integer""
-        }
-      },
-      ""propertyNames"": {
-        ""pattern"": ""^[A-Za-z_][A-Za-z0-9_]*$""
-      }
-    },
-    ""property11"": {
-      ""const"": ""aSpecialConstant""
-    }
-  },
-  ""nullable"": true,
-  ""externalDocs"": {
-    ""url"": ""http://example.com/externalDocs""
-  }
-}";
+            var expected = """
+                           {
+                             "title": "title1",
+                             "properties": {
+                               "property1": {
+                                 "items": false,
+                                 "additionalItems": false,
+                                 "properties": {
+                                   "property2": {
+                                     "type": "integer"
+                                   },
+                                   "property3": {
+                                     "type": "string",
+                                     "maxLength": 15
+                                   }
+                                 },
+                                 "additionalProperties": false
+                               },
+                               "property4": {
+                                 "items": {
+                                   "properties": {
+                                     "Property9": {
+                                       "type": [
+                                         "null",
+                                         "string"
+                                       ]
+                                     }
+                                   }
+                                 },
+                                 "additionalItems": {
+                                   "properties": {
+                                     "Property10": {
+                                       "type": [
+                                         "null",
+                                         "string"
+                                       ]
+                                     }
+                                   }
+                                 },
+                                 "properties": {
+                                   "property5": {
+                                     "properties": {
+                                       "property6": {
+                                         "type": "boolean"
+                                       }
+                                     }
+                                   },
+                                   "property7": {
+                                     "type": "string",
+                                     "minLength": 2
+                                   }
+                                 },
+                                 "additionalProperties": {
+                                   "properties": {
+                                     "Property8": {
+                                       "type": [
+                                         "null",
+                                         "string"
+                                       ]
+                                     }
+                                   }
+                                 },
+                                 "patternProperties": {
+                                   "^S_": {
+                                     "type": "string"
+                                   },
+                                   "^I_": {
+                                     "type": "integer"
+                                   }
+                                 },
+                                 "propertyNames": {
+                                   "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                                 }
+                               },
+                               "property11": {
+                                 "const": "aSpecialConstant"
+                               }
+                             },
+                             "nullable": true,
+                             "externalDocs": {
+                               "url": "http://example.com/externalDocs"
+                             }
+                           }
+                           """;
 
             // Act
             var actual = AdvancedSchemaObject.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
@@ -517,88 +527,90 @@ components: { }";
         public void Deserialize_WithAdvancedSchema_Works()
         {
             // Arrange
-            var json = @"{
-  ""title"": ""title1"",
-  ""properties"": {
-    ""property1"": {
-      ""items"": false,
-      ""additionalItems"": false,
-      ""properties"": {
-        ""property2"": {
-          ""type"": ""integer""
-        },
-        ""property3"": {
-          ""type"": ""string"",
-          ""maxLength"": 15
-        }
-      },
-      ""additionalProperties"": false
-    },
-    ""property4"": {
-      ""items"": {
-        ""properties"": {
-          ""Property9"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""additionalItems"": {
-        ""properties"": {
-          ""Property10"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""properties"": {
-        ""property5"": {
-          ""properties"": {
-            ""property6"": {
-              ""type"": ""boolean""
-            }
-          }
-        },
-        ""property7"": {
-          ""type"": ""string"",
-          ""minLength"": 2
-        }
-      },
-      ""additionalProperties"": {
-        ""properties"": {
-          ""Property8"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""patternProperties"": {
-        ""^S_"": {
-          ""type"": ""string""
-        },
-        ""^I_"": {
-          ""type"": ""integer""
-        }
-      },
-      ""propertyNames"": {
-        ""pattern"": ""^[A-Za-z_][A-Za-z0-9_]*$""
-      }
-    },
-    ""property11"": {
-      ""const"": ""aSpecialConstant""
-    }
-  },
-  ""nullable"": true,
-  ""externalDocs"": {
-    ""url"": ""http://example.com/externalDocs""
-  }
-}";
+            var json = """
+                       {
+                         "title": "title1",
+                         "properties": {
+                           "property1": {
+                             "items": false,
+                             "additionalItems": false,
+                             "properties": {
+                               "property2": {
+                                 "type": "integer"
+                               },
+                               "property3": {
+                                 "type": "string",
+                                 "maxLength": 15
+                               }
+                             },
+                             "additionalProperties": false
+                           },
+                           "property4": {
+                             "items": {
+                               "properties": {
+                                 "Property9": {
+                                   "type": [
+                                     "null",
+                                     "string"
+                                   ]
+                                 }
+                               }
+                             },
+                             "additionalItems": {
+                               "properties": {
+                                 "Property10": {
+                                   "type": [
+                                     "null",
+                                     "string"
+                                   ]
+                                 }
+                               }
+                             },
+                             "properties": {
+                               "property5": {
+                                 "properties": {
+                                   "property6": {
+                                     "type": "boolean"
+                                   }
+                                 }
+                               },
+                               "property7": {
+                                 "type": "string",
+                                 "minLength": 2
+                               }
+                             },
+                             "additionalProperties": {
+                               "properties": {
+                                 "Property8": {
+                                   "type": [
+                                     "null",
+                                     "string"
+                                   ]
+                                 }
+                               }
+                             },
+                             "patternProperties": {
+                               "^S_": {
+                                 "type": "string"
+                               },
+                               "^I_": {
+                                 "type": "integer"
+                               }
+                             },
+                             "propertyNames": {
+                               "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                             }
+                           },
+                           "property11": {
+                             "const": "aSpecialConstant"
+                           }
+                         },
+                         "nullable": true,
+                         "externalDocs": {
+                           "url": "http://example.com/externalDocs"
+                         }
+                       }
+                       """;
             var expected = AdvancedSchemaObject;
 
             // Act
@@ -612,44 +624,46 @@ components: { }";
         public void SerializeAsJson_WithAdvancedSchemaWithAllOf_V2Works()
         {
             // Arrange
-            var expected = @"{
-  ""title"": ""title1"",
-  ""allOf"": [
-    {
-      ""title"": ""title2"",
-      ""properties"": {
-        ""property1"": {
-          ""type"": ""integer""
-        },
-        ""property2"": {
-          ""type"": ""string"",
-          ""maxLength"": 15
-        }
-      }
-    },
-    {
-      ""title"": ""title3"",
-      ""properties"": {
-        ""property3"": {
-          ""properties"": {
-            ""property4"": {
-              ""type"": ""boolean""
-            }
-          }
-        },
-        ""property5"": {
-          ""type"": ""string"",
-          ""minLength"": 2
-        }
-      },
-      ""nullable"": true
-    }
-  ],
-  ""nullable"": true,
-  ""externalDocs"": {
-    ""url"": ""http://example.com/externalDocs""
-  }
-}";
+            var expected = """
+                           {
+                             "title": "title1",
+                             "allOf": [
+                               {
+                                 "title": "title2",
+                                 "properties": {
+                                   "property1": {
+                                     "type": "integer"
+                                   },
+                                   "property2": {
+                                     "type": "string",
+                                     "maxLength": 15
+                                   }
+                                 }
+                               },
+                               {
+                                 "title": "title3",
+                                 "properties": {
+                                   "property3": {
+                                     "properties": {
+                                       "property4": {
+                                         "type": "boolean"
+                                       }
+                                     }
+                                   },
+                                   "property5": {
+                                     "type": "string",
+                                     "minLength": 2
+                                   }
+                                 },
+                                 "nullable": true
+                               }
+                             ],
+                             "nullable": true,
+                             "externalDocs": {
+                               "url": "http://example.com/externalDocs"
+                             }
+                           }
+                           """;
 
             // Act
             var actual = AdvancedSchemaWithAllOf.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);

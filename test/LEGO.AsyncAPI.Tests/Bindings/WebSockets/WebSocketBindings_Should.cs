@@ -16,13 +16,15 @@ namespace LEGO.AsyncAPI.Tests.Bindings.WebSockets
         {
             // Arrange
             var expected =
-@"bindings:
-  websockets:
-    method: POST
-    query:
-      description: this mah query
-    headers:
-      description: this mah binding";
+                """
+                bindings:
+                  websockets:
+                    method: POST
+                    query:
+                      description: this mah query
+                    headers:
+                      description: this mah binding
+                """;
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new WebSocketsChannelBinding
