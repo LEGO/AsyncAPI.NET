@@ -4,11 +4,13 @@ on:
     branches: [ main, vnext ]
     paths: 
       - 'src/**'
+      - 'test/**' 
       - '!**/*.md'
   pull_request:
     branches: [ main, vnext ]
     paths: 
       - 'src/**'
+      - 'test/**' 
       - '!**/*.md'
   workflow_dispatch:
 jobs:
