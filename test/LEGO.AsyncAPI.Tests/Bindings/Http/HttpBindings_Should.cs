@@ -16,10 +16,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Http
         {
             // Arrange
             var expected =
-@"bindings:
-  http:
-    headers:
-      description: this mah binding";
+                """
+                bindings:
+                  http:
+                    headers:
+                      description: this mah binding
+                """;
 
             var message = new AsyncApiMessage();
 
@@ -49,12 +51,14 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Http
         {
             // Arrange
             var expected =
-@"bindings:
-  http:
-    type: request
-    method: POST
-    query:
-      description: this mah query";
+                """
+                bindings:
+                  http:
+                    type: request
+                    method: POST
+                    query:
+                      description: this mah query
+                """;
 
             var operation = new AsyncApiOperation();
 

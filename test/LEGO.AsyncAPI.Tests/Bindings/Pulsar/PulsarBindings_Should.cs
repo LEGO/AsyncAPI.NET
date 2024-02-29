@@ -17,20 +17,22 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
         {
             // Arrange
             var expected =
-@"bindings:
-  pulsar:
-    namespace: staging
-    persistence: persistent
-    compaction: 1000
-    geo-replication:
-      - us-east1
-      - us-west1
-    retention:
-      time: 7
-      size: 1000
-    ttl: 360
-    deduplication: true
-    bindingVersion: 0.1.0";
+                """
+                bindings:
+                  pulsar:
+                    namespace: staging
+                    persistence: persistent
+                    compaction: 1000
+                    geo-replication:
+                      - us-east1
+                      - us-west1
+                    retention:
+                      time: 7
+                      size: 1000
+                    ttl: 360
+                    deduplication: true
+                    bindingVersion: '0.1.0'
+                """;
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new PulsarChannelBinding
@@ -73,10 +75,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
         public void PulsarChannelBindingNamespaceDefaultToNull()
         {
             // Arrange
-            var actual =
-                @"bindings:
-  pulsar:
-    persistence: persistent";
+            var actual = """
+                         bindings:
+                           pulsar:
+                             persistence: persistent
+                         """;
 
             // Act
             var settings = new AsyncApiReaderSettings();
@@ -92,9 +95,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
         {
             // Arrange
             var actual =
-                @"bindings:
-  pulsar:
-    namespace: staging";
+                """
+                bindings:
+                  pulsar:
+                    namespace: staging
+                """;
 
             // Act
             // Assert
@@ -117,11 +122,13 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
         {
             // Arrange
             var expected =
-@"url: https://example.com
-protocol: pulsar
-bindings:
-  pulsar:
-    tenant: contoso";
+                """
+                url: https://example.com
+                protocol: pulsar
+                bindings:
+                  pulsar:
+                    tenant: contoso
+                """;
 
             var server = new AsyncApiServer()
             {
@@ -152,11 +159,13 @@ bindings:
         {
             // Arrange
             var expected =
-                @"url: https://example.com
-protocol: pulsar
-bindings:
-  pulsar:
-    tenant: contoso";
+                """
+                url: https://example.com
+                protocol: pulsar
+                bindings:
+                  pulsar:
+                    tenant: contoso
+                """;
 
             var server = new AsyncApiServer()
             {
@@ -189,11 +198,13 @@ bindings:
         {
             // Arrange
             var expected =
-                @"url: https://example.com
-protocol: pulsar
-bindings:
-  pulsar:
-    bindingVersion: latest";
+                """
+                url: https://example.com
+                protocol: pulsar
+                bindings:
+                  pulsar:
+                    bindingVersion: latest
+                """;
 
             var server = new AsyncApiServer()
             {

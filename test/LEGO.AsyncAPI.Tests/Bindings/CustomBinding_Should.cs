@@ -69,16 +69,18 @@ namespace LEGO.AsyncAPI.Tests.Bindings
         {
             // Arrange
             var expected =
-@"bindings:
-  my:
-    custom: someValue
-    bindingVersion: 0.1.0
-    any:
-      anyKeyName: anyValue
-    nestedConfiguration:
-      name: nested
-      x-myNestedExtension: nestedValue
-    x-myextension: someValue";
+                """
+                bindings:
+                  my:
+                    custom: someValue
+                    bindingVersion: '0.1.0'
+                    any:
+                      anyKeyName: anyValue
+                    nestedConfiguration:
+                      name: nested
+                      x-myNestedExtension: nestedValue
+                    x-myextension: someValue
+                """;
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new MyBinding
