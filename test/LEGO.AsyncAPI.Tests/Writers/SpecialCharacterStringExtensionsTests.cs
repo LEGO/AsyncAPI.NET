@@ -25,6 +25,42 @@ namespace LEGO.AsyncAPI.Tests.Writers
               => this.Compose("~", "'~'");
 
         [Test]
+        public void GetYamlCompatibleString_IntegerWithTwoPeriods_RendersPlainStyle()
+            => this.Compose("1.2.3", "1.2.3");
+
+        [Test]
+        public void GetYamlCompatibleString_Float_WrappedWithQuotes()
+            => this.Compose("1.2", "'1.2'");
+
+        [Test]
+        public void GetYamlCompatibleString_PositiveFloat_WrappedWithQuotes()
+            => this.Compose("+1.2", "'+1.2'");
+
+        [Test]
+        public void GetYamlCompatibleString_NegativeFloat_WrappedWithQuotes()
+               => this.Compose("-1.2", "'-1.2'");
+
+        [Test]
+        public void GetYamlCompatibleString_PositiveInfinityFloat_WrappedWithQuotes()
+            => this.Compose(".inf", "'.inf'");
+
+        [Test]
+        public void GetYamlCompatibleString_NegativeInfinityFloat_WrappedWithQuotes()
+           => this.Compose("-.inf", "'-.inf'");
+
+        [Test]
+        public void GetYamlCompatibleString_NanFloat_WrappedWithQuotes()
+            => this.Compose(".nan", "'.nan'");
+
+        [Test]
+        public void GetYamlCompatibleString_TrueString_WrappedWithQuotes()
+            => this.Compose("true", "'true'");
+
+        [Test]
+        public void GetYamlCompatibleString_FalseString_WrappedWithQuotes()
+            => this.Compose("false", "'flase'");
+
+        [Test]
         [TestCase("\0", "\\0")]
         [TestCase("\x01", "\\x01")]
         [TestCase("\x02", "\\x02")]

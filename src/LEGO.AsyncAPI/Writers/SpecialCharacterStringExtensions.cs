@@ -5,9 +5,12 @@ namespace LEGO.AsyncAPI.Writers
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     public static class SpecialCharacterStringExtensions
     {
+        private static readonly Regex numberRegex = new Regex("^[+-]?[0-9]*\\.?[0-9]*$", RegexOptions.Compiled);
+
         // Plain style strings cannot start with indicators.
         // http://www.yaml.org/spec/1.2/spec.html#indicator//
         private static readonly char[] yamlIndicators =
@@ -206,8 +209,7 @@ namespace LEGO.AsyncAPI.Writers
             }
 
             // Handle numbers
-            char first = input[0];
-            if (char.IsDigit(first) || first == '-' || first == '+') 
+            if (numberRegex.IsMatch(input))
             {
                 return $"'{input}'";
             }

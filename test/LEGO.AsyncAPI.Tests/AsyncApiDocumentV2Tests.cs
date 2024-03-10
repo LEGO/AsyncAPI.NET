@@ -26,13 +26,13 @@ namespace LEGO.AsyncAPI.Tests
     public class AsyncApiDocumentV2Tests
     {
         [Test]
-        public void AsyncApiDocumentYaml_DefalutVersionNumber_IsWrappedInSingleQuotes()
+        public void AsyncApiDocumentYaml_DefalutVersionNumber_IsNotWrappedInSingleQuotes()
         {
             string actual = new AsyncApiDocumentBuilder()
                 .Build()
                 .SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
-            Assert.AreEqual("asyncapi: '2.6.0'\ninfo: { }", actual);
+            Assert.AreEqual("asyncapi: 2.6.0\ninfo: { }", actual);
         }
 
         [Test]
@@ -40,10 +40,10 @@ namespace LEGO.AsyncAPI.Tests
         {
             // Arrange
             var expected =
-@"asyncapi: '2.6.0'
+@"asyncapi: 2.6.0
 info:
   title: Streetlights Kafka API
-  version: '1.0.0'
+  version: 1.0.0
   description: The Smartylighting Streetlights API allows you to remotely manage the city lights.
   license:
     name: Apache 2.0
@@ -715,7 +715,7 @@ components:
         public void SerializeV2_WithFullSpec_Serializes()
         {
             var expected =
-                @"asyncapi: '2.6.0'
+                @"asyncapi: 2.6.0
 info:
   title: apiTitle
   version: apiVersion
@@ -1231,7 +1231,7 @@ components:
         [Test]
         public void Serializev2_WithBindings_Serializes()
         {
-            var expected = @"asyncapi: '2.6.0'
+            var expected = @"asyncapi: 2.6.0
 info:
   description: test description
 servers:
