@@ -1,18 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="../../Common.Build.props"/>
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
-	<Company>The LEGO Group</Company>
-	<PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<Description>AsyncAPI.NET Readers for JSON and YAML documents</Description>
-	<PackageTags>asyncapi .net openapi documentation</PackageTags>
-	<PackageId>AsyncAPI.NET.Readers</PackageId>
-	<AssemblyName>LEGO.AsyncAPI.Readers</AssemblyName>
-	<RootNamespace>LEGO.AsyncAPI.Readers</RootNamespace>
-	<RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
+	  <Description>AsyncAPI.NET Readers for JSON and YAML documents</Description>
+	  <PackageId>AsyncAPI.NET.Readers</PackageId>
+	  <AssemblyName>LEGO.AsyncAPI.Readers</AssemblyName>
+	  <RootNamespace>LEGO.AsyncAPI.Readers</RootNamespace>
   </PropertyGroup>	
 
   <ItemGroup>
