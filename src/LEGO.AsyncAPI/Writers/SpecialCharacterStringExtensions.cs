@@ -100,10 +100,15 @@ namespace LEGO.AsyncAPI.Writers
         /// Escapes all special characters and put the string in quotes if necessary to
         /// get a YAML-compatible string.
         /// </summary>
-        internal static string GetYamlCompatibleString(this string input)
+        internal static string GetYamlCompatibleString(this string? input)
         {
+            if (input == null)
+            {
+                return "null";
+            }
+
             // If string is an empty string, wrap it in quote to ensure it is not recognized as null.
-            if (input == "")
+            if (input.Length == 0)
             {
                 return "''";
             }
@@ -163,7 +168,7 @@ namespace LEGO.AsyncAPI.Writers
                 input = input.Replace("\x1e", "\\x1e");
                 input = input.Replace("\x1f", "\\x1f");
 
-                return $"\"{input}\"";
+                return $"'{input}'";
             }
 
             // If string
@@ -183,11 +188,26 @@ namespace LEGO.AsyncAPI.Writers
                 return $"'{input}'";
             }
 
-            // If string can be mistaken as a number, a boolean, or a timestamp,
-            // wrap it in quote to indicate that this is indeed a string, not a number, a boolean, or a timestamp
-            if (decimal.TryParse(input, NumberStyles.Float, CultureInfo.InvariantCulture, out var _) ||
-                bool.TryParse(input, out var _) ||
-                DateTime.TryParse(input, out var _))
+            // Handle lexemes that can be intperated as as string
+            // https://yaml.org/spec/1.2-old/spec.html#id2761292 
+            switch (input.ToLower())
+            {
+                // Example 2.20. Floating Point
+                case "-.inf":
+                case ".inf":
+                case ".nan":
+                // Example 2.21. Miscellaneous
+                case "null":
+
+                // Booleans
+                case "true":
+                case "false":
+                    return $"'{input}'";
+            }
+
+            // Handle numbers
+            char first = input[0];
+            if (char.IsDigit(first) || first == '-' || first == '+') 
             {
                 return $"'{input}'";
             }
