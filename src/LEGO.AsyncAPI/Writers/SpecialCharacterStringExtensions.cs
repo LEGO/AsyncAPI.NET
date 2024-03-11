@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Writers
 
     public static class SpecialCharacterStringExtensions
     {
-        private static readonly Regex numberRegex = new Regex("^[+-]?[0-9]*\\.?[0-9]*$", RegexOptions.Compiled);
+        private static readonly Regex numberRegex = new Regex("^[+-]?[0-9]*\\.?[0-9]*$", RegexOptions.Compiled, TimeSpan.FromSeconds(1));
 
         // Plain style strings cannot start with indicators.
         // http://www.yaml.org/spec/1.2/spec.html#indicator//
