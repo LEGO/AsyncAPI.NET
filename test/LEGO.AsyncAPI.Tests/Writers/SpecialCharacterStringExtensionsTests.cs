@@ -58,7 +58,7 @@ namespace LEGO.AsyncAPI.Tests.Writers
 
         [Test]
         public void GetYamlCompatibleString_FalseString_WrappedWithQuotes()
-            => this.Compose("false", "'flase'");
+            => this.Compose("false", "'false'");
 
         [Test]
         [TestCase("\0", "\\0")]
