@@ -61,6 +61,17 @@ namespace LEGO.AsyncAPI.Tests.Writers
             => this.Compose("false", "'false'");
 
         [Test]
+        public void GetYamlCompatibleString_DateTimeSlashString_WrappedWithQuotes()
+            => this.Compose("12/31/2022 23:59:59", "'12/31/2022 23:59:59'");
+           
+        [Test]
+        public void GetYamlCompatibleString_DateTimeDashString_WrappedWithQuotes()
+            => this.Compose("2022-12-31 23:59:59", "'2022-12-31 23:59:59'");
+            
+        [Test]
+        public void GetYamlCompatibleString_DateTimeISOString_NotWrappedWithQuotes()
+            => this.Compose("2022-12-31T23:59:59Z", "2022-12-31T23:59:59Z");
+        [Test]
         [TestCase("\0", "\\0")]
         [TestCase("\x01", "\\x01")]
         [TestCase("\x02", "\\x02")]
