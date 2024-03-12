@@ -47,22 +47,41 @@
             };
         }
 
-        private static JsonValue ToJsonValue(this YamlScalarNode yaml)
+        public static JsonValue ToJsonValue(this YamlScalarNode yaml)
         {
+            string value = yaml.Value;
+
             switch (yaml.Style)
             {
                 case ScalarStyle.Plain:
-                    return decimal.TryParse(yaml.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out var d)
-                        ? JsonValue.Create(d)
-                        : bool.TryParse(yaml.Value, out var b)
-                            ? JsonValue.Create(b)
-                            : JsonValue.Create(yaml.Value)!;
+                    // We need to guess the types just based on it's format, so that means parsing
+                    if (int.TryParse(value, out int intValue))
+                    {
+                        return JsonValue.Create<int>(intValue);
+                    }
+
+                    if (double.TryParse(value, out double doubleValue))
+                    {
+                        return JsonValue.Create<double>(doubleValue);
+                    }
+
+                    if (DateTime.TryParse(value, out DateTime dateTimeValue))
+                    {
+                        return JsonValue.Create<DateTime>(dateTimeValue);
+                    }
+
+                    if (bool.TryParse(value, out bool boolValue))
+                    {
+                        return JsonValue.Create<bool>(boolValue);
+                    }
+
+                    return JsonValue.Create<string>(value);
                 case ScalarStyle.SingleQuoted:
                 case ScalarStyle.DoubleQuoted:
                 case ScalarStyle.Literal:
                 case ScalarStyle.Folded:
                 case ScalarStyle.Any:
-                    return JsonValue.Create(yaml.Value);
+                    return JsonValue.Create<string>(yaml.Value);
                 default:
                     throw new ArgumentOutOfRangeException();
             }

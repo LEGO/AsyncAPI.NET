@@ -2,3 +2,6 @@
 
 # SA1623: Property summary documentation should match accessors
 dotnet_diagnostic.SA1623.severity = suggestion
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none

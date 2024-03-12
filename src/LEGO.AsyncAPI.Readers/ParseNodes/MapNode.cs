@@ -196,7 +196,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 return null;
             }
 
-            return refNode.GetScalarValue();
+            return refNode.AsValue().GetScalarValue();
         }
 
         public string GetScalarValue(ValueNode key)

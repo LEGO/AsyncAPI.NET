@@ -26,7 +26,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         {
             if (this.cachedScalarValue == null)
             {
-                this.cachedScalarValue = this.node.GetScalarValue();
+                this.cachedScalarValue = this.node.AsValue().GetScalarValue();
             }
 
             return this.cachedScalarValue;
