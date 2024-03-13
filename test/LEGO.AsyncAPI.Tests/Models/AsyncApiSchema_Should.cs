@@ -263,7 +263,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                             {
                                 ["property6"] = new AsyncApiSchema
                                 {
-                                    Type = SchemaType.Boolean ,
+                                    Type = SchemaType.Boolean,
                                 },
                             },
                         },
@@ -284,7 +284,7 @@ namespace LEGO.AsyncAPI.Tests.Models
         };
 
         private string NoInlinedReferences =>
-            @"asyncapi: 2.6.0
+            @"asyncapi: '2.6.0'
 info:
   title: Streetlights Kafka API
   version: 1.0.0
@@ -320,7 +320,7 @@ components:
       description: test";
 
         private string InlinedReferences =>
-            @"asyncapi: 2.6.0
+            @"asyncapi: '2.6.0'
 info:
   title: Streetlights Kafka API
   version: 1.0.0
