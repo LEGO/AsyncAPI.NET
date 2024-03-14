@@ -1,5 +1,7 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
+using System.IO;
+
 namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Exceptions;
@@ -94,7 +96,13 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiMessage>(ReferenceType.Message, pointer);
+                // pointer is an internal components reference:
+                if (pointer.StartsWith("#")) return mapNode.GetReferencedObject<AsyncApiMessage>(ReferenceType.Message, pointer);
+
+                // how can we pass in settings and options for user to inject their own file reader
+                // is version matching important?
+                var referencedContent = File.ReadAllText(pointer);
+                return new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(referencedContent, AsyncApiVersion.AsyncApi2_0, out _);
             }
 
             var message = new AsyncApiMessage();

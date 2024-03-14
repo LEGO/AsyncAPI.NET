@@ -1,0 +1,20 @@
+type: object
+description: A test schema that is referenced.
+properties:
+  id:
+    description: The workspace id.
+    type: string
+    format: uuid
+  content:
+    description: Content for this message.
+    type: string
+  amount:
+    description: Canonical amount transmitted.
+    type: number
+require:
+  - id
+  - content
+example:
+  id: db59a138-90fb-4e5f-b890-bb0d75425a7c
+  content: test message
+  amount: 2023

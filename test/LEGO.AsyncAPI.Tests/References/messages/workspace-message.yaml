@@ -1,0 +1,6 @@
+title: workspace message
+name: workspace-message
+summary: a test message
+schemaFormat: application/schema+yaml;version=draft-07
+payload:
+  $ref: ../../../References/schemas/workspace-schema.yaml

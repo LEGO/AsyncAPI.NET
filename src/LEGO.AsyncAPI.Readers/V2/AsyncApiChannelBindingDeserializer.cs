@@ -1,5 +1,7 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using System.IO;
+
 namespace LEGO.AsyncAPI.Readers
 {
     using LEGO.AsyncAPI.Exceptions;
@@ -15,7 +17,13 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiBindings<IChannelBinding>>(ReferenceType.ChannelBindings, pointer);
+                if (pointer.StartsWith("#"))
+                {
+                    return mapNode.GetReferencedObject<AsyncApiBindings<IChannelBinding>>(ReferenceType.ChannelBindings, pointer);
+                }
+
+                var referencedContent = File.ReadAllText(pointer);
+                return new AsyncApiStringReader().ReadFragment<AsyncApiBindings<IChannelBinding>>(referencedContent, AsyncApiVersion.AsyncApi2_0, out _);
             }
 
             var channelBindings = new AsyncApiBindings<IChannelBinding>();
