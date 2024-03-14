@@ -19,8 +19,15 @@ namespace LEGO.AsyncAPI.Bindings
     IEnumerable<TItem> source)
     where TCollection : ICollection<TItem>
         {
-            ArgumentNullException.ThrowIfNull(destination);
-            ArgumentNullException.ThrowIfNull(source);
+            if (destination == null)
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
+
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
             if (destination is List<TItem> list)
             {
