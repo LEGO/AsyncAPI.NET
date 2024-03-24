@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Http
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 
-    internal class HttpBindings_Should
+    internal class HttpBindings_Should : TestBase
     {
         [Test]
         public void HttpMessageBinding_FilledObject_SerializesAndDeserializes()
@@ -33,14 +33,13 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Http
 
             // Act
             var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = BindingsCollection.Http;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiMessage>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(message);
         }
 
@@ -70,14 +69,13 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Http
 
             // Act
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = BindingsCollection.Http;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(operation);
         }
     }

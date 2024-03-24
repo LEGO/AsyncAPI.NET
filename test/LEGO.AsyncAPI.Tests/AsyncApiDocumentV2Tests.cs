@@ -7,6 +7,7 @@ namespace LEGO.AsyncAPI.Tests
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Bindings.Kafka;
@@ -22,14 +23,14 @@ namespace LEGO.AsyncAPI.Tests
         public string Key { get; set; }
         public long OtherKey { get; set; }
     }
-    public class AsyncApiDocumentV2Tests
+    public class AsyncApiDocumentV2Tests : TestBase
     {
         [Test]
         public void AsyncApiDocument_WithStreetLightsExample_SerializesAndDeserializes()
         {
             // Arrange
             var expected =
-@"asyncapi: '2.6.0'
+@"asyncapi: 2.6.0
 info:
   title: Streetlights Kafka API
   version: 1.0.0
@@ -693,18 +694,16 @@ components:
 
             // Act
             var actual = asyncApiDocument.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
         public void SerializeV2_WithFullSpec_Serializes()
         {
             var expected =
-                @"asyncapi: '2.6.0'
+                @"asyncapi: 2.6.0
 info:
   title: apiTitle
   version: apiVersion
@@ -1124,11 +1123,9 @@ components:
             document.SerializeV2(writer);
             var actual = outputString.GetStringBuilder().ToString();
 
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -1220,7 +1217,7 @@ components:
         [Test]
         public void Serializev2_WithBindings_Serializes()
         {
-            var expected = @"asyncapi: '2.6.0'
+            var expected = @"asyncapi: 2.6.0
 info:
   description: test description
 servers:
@@ -1309,11 +1306,9 @@ channels:
             var reader = new AsyncApiStringReader(settings);
             var deserialized = reader.Read(actual, out var diagnostic);
 
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
             Assert.AreEqual(2, deserialized.Channels.First().Value.Publish.Message.First().Bindings.Count);
 
             var binding = deserialized.Channels.First().Value.Publish.Message.First().Bindings.First();

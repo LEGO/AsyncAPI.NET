@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
-    public class StringOrStringList_Should
+    public class StringOrStringList_Should : TestBase
     {
 
         [Test]
@@ -77,15 +77,13 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = new[] { new StringOrStringListTestBinding() };
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(channel);
         }
 
@@ -115,15 +113,13 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = new[] { new StringOrStringListTestBinding() };
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(channel);
         }
     }

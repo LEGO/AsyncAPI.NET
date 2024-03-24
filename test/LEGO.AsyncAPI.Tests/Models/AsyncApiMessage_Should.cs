@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Tests.Models
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 
-    internal class AsyncApiMessage_Should
+    internal class AsyncApiMessage_Should : TestBase
     {
             [Test]
             public void AsyncApiMessage_WithNoType_DeserializesToDefault()
@@ -112,14 +112,12 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
                 // Act
                 var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
-                actual = actual.MakeLineBreaksEnvironmentNeutral();
-                expected = expected.MakeLineBreaksEnvironmentNeutral();
-
                 var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
-                // Assert
-                Assert.AreEqual(expected, actual);
-                message.Should().BeEquivalentTo(deserializedMessage);
+            // Assert
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
+            message.Should().BeEquivalentTo(deserializedMessage);
             }
 
             [Test]
@@ -153,14 +151,12 @@ schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
                 // Act
                 var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
-                actual = actual.MakeLineBreaksEnvironmentNeutral();
-                expected = expected.MakeLineBreaksEnvironmentNeutral();
-
                 var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
-                // Assert
-                Assert.AreEqual(expected, actual);
-                message.Should().BeEquivalentTo(deserializedMessage);
+            // Assert
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
+            message.Should().BeEquivalentTo(deserializedMessage);
             }
 
         [Test]
@@ -389,15 +385,13 @@ traits:
 
             var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = BindingsCollection.All;
             var deserializedMessage = new AsyncApiStringReader(settings).ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
             message.Should().BeEquivalentTo(deserializedMessage);
         }
     }

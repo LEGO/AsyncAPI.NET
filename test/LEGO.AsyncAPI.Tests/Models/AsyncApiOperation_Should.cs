@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Tests.Models
     using System;
     using System.Globalization;
     using System.IO;
+    using FluentAssertions;
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Models;
@@ -45,10 +46,9 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             // Assert
             var actual = outputString.GetStringBuilder().ToString();
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -68,10 +68,9 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             // Assert
             var actual = outputString.GetStringBuilder().ToString();
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -123,11 +122,9 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                .BePlatformAgnosticEquivalentTo(expected);
         }
     }
 }

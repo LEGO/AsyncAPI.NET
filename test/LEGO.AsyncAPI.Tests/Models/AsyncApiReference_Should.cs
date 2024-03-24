@@ -3,12 +3,13 @@
 namespace LEGO.AsyncAPI.Tests
 {
     using FluentAssertions;
+    using FluentAssertions.Primitives;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
     using System.Linq;
 
-    public class AsyncApiReference_Should
+    public class AsyncApiReference_Should : TestBase
     {
 
         [Test]
@@ -32,10 +33,9 @@ namespace LEGO.AsyncAPI.Tests
             reference.IsFragment.Should().BeTrue();
             reference.IsExternal.Should().BeTrue();
             reference.Type.Should().Be(ReferenceType.Schema);
-            var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            var expected = serialized.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            var expected = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -59,10 +59,9 @@ namespace LEGO.AsyncAPI.Tests
             reference.Id.Should().BeNull();
             reference.IsFragment.Should().BeTrue();
             reference.IsExternal.Should().BeTrue();
-            var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            var expected = serialized.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            var expected = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -85,10 +84,9 @@ namespace LEGO.AsyncAPI.Tests
             reference.IsFragment.Should().BeFalse();
             reference.IsExternal.Should().BeFalse();
 
-            var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            var expected = serialized.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            var expected = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -110,10 +108,9 @@ namespace LEGO.AsyncAPI.Tests
             reference.IsFragment.Should().BeTrue();
             reference.IsExternal.Should().BeTrue();
 
-            var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            var expected = serialized.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            var expected = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -136,10 +133,9 @@ namespace LEGO.AsyncAPI.Tests
             reference.IsFragment.Should().BeFalse();
             reference.IsExternal.Should().BeTrue();
 
-            var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            var expected = serialized.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            var expected = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -233,10 +229,11 @@ channels:
             reference.IsFragment.Should().BeFalse();
             diagnostic.Errors.Should().BeEmpty();
 
-            var serialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            var expected = serialized.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            var expected = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+
+            expected
+                .Should()
+                .BePlatformAgnosticEquivalentTo(actual);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 
-    internal class SnsBindings_Should
+    internal class SnsBindings_Should : TestBase
     {
         [Test]
         public void SnsChannelBinding_WithFilledObject_SerializesAndDeserializes()
@@ -133,14 +133,13 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = BindingsCollection.Sns;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
 
             var expectedSnsBinding = (SnsChannelBinding)channel.Bindings.Values.First();
             expectedSnsBinding.Should().BeEquivalentTo((SnsChannelBinding)binding.Bindings.Values.First(), options => options.IgnoringCyclicReferences());
@@ -376,8 +375,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = BindingsCollection.Sns;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
@@ -386,14 +383,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             var val = AsyncApiAny.FromExtensionOrDefault<ExtensionClass>(any);
 
             // Assert
-            Assert.AreEqual(actual, expected);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
 
             var expectedSnsBinding = (SnsOperationBinding)operation.Bindings.Values.First();
             expectedSnsBinding.Should().BeEquivalentTo((SnsOperationBinding)binding.Bindings.Values.First(), options => options.IgnoringCyclicReferences());
-        }
-        class ExtensionClass
-        {
-            public string bindingXPropertyName { get; set; }
         }
     }
 }
