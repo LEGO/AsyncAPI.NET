@@ -94,7 +94,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }
 
-        public virtual string GetScalarValueOrDefault(string defaultValue)
+        public virtual string GetScalarValueOrDefault(string defaultValue = null)
         {
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }
@@ -104,7 +104,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }
 
-        public virtual bool? GetBooleanValueOrDefault(bool? defaultValue)
+        public virtual bool? GetBooleanValueOrDefault(bool? defaultValue = null)
         {
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }
@@ -114,7 +114,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }
 
-        public virtual int? GetIntegerValueOrDefault(int? defaultValue)
+        public virtual int? GetIntegerValueOrDefault(int? defaultValue = null)
         {
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }
@@ -124,7 +124,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }
 
-        public virtual long? GetLongValueOrDefault(long? defaultValue)
+        public virtual long? GetLongValueOrDefault(long? defaultValue = null)
         {
             throw new AsyncApiReaderException("Cannot create a scalar value from this type of node.", this.Context);
         }
