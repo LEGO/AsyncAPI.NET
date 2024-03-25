@@ -443,7 +443,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             .WithComponent("testB", new AsyncApiSchema() { Description = "test", Type = SchemaType.Boolean })
             .Build();
 
-            var outputString = new StringWriter(CultureInfo.InvariantCulture);
+            var outputString = new StringWriter(Configuration.CultureInfo);
             var writer = new AsyncApiYamlWriter(outputString, new AsyncApiWriterSettings { InlineReferences = shouldInline });
 
             // Act

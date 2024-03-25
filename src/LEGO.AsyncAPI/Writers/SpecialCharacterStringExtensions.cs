@@ -185,9 +185,9 @@ namespace LEGO.AsyncAPI.Writers
 
             // If string can be mistaken as a number, a boolean, or a timestamp,
             // wrap it in quot number, a boolean, or a timestamp
-            if (decimal.TryParse(input, NumberStyles.Float, CultureInfo.InvariantCulture, out var _) ||
+            if (decimal.TryParse(input, NumberStyles.Float, Configuration.CultureInfo, out var _) ||
                 bool.TryParse(input, out var _) ||
-                DateTime.TryParseExact(input, AsyncApiConfiguration.DateTimeFormat, AsyncApiConfiguration.CultureInfo, DateTimeStyles.RoundtripKind, out var _))
+                DateTime.TryParseExact(input, Configuration.DateTimeFormat, Configuration.CultureInfo, DateTimeStyles.RoundtripKind, out var _))
             {
                 return $"'{input}'";
             }

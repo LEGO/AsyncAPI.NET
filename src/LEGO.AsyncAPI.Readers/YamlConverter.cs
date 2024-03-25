@@ -52,7 +52,7 @@
             switch (yaml.Style)
             {
                 case ScalarStyle.Plain:
-                    return decimal.TryParse(yaml.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out var d)
+                    return decimal.TryParse(yaml.Value, NumberStyles.Float, Configuration.CultureInfo, out var d)
                         ? JsonValue.Create(d)
                         : bool.TryParse(yaml.Value, out var b)
                             ? JsonValue.Create(b)

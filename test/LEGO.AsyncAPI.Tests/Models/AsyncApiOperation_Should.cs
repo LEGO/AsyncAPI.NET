@@ -38,7 +38,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             var asyncApiOperation = new AsyncApiOperation();
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "First Message" });
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "Second Message" });
-            var outputString = new StringWriter(CultureInfo.InvariantCulture);
+            var outputString = new StringWriter(Configuration.CultureInfo);
             var writer = new AsyncApiYamlWriter(outputString);
 
             // Act
@@ -60,7 +60,7 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             var asyncApiOperation = new AsyncApiOperation();
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "First Message" });
-            var outputString = new StringWriter(CultureInfo.InvariantCulture);
+            var outputString = new StringWriter(Configuration.CultureInfo);
             var writer = new AsyncApiYamlWriter(outputString);
 
             // Act

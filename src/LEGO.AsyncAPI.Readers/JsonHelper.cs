@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Readers
         public static string GetScalarValue(this JsonNode node)
         {
             var scalarNode = node is JsonValue value ? value : throw new AsyncApiException($"Expected scalar value");
-            return Convert.ToString(scalarNode.GetValue<object>(), CultureInfo.InvariantCulture);
+            return Convert.ToString(scalarNode.GetValue<object>(), Configuration.CultureInfo);
         }
 
         public static JsonNode ParseJsonString(string jsonString)

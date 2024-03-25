@@ -1116,7 +1116,7 @@ components:
                 },
             };
 
-            var outputString = new StringWriter(CultureInfo.InvariantCulture);
+            var outputString = new StringWriter(Configuration.CultureInfo);
             var writer = new AsyncApiYamlWriter(outputString);
 
             // Act

@@ -1,18 +1,18 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using System;
-using System.Globalization;
-
 namespace LEGO.AsyncAPI
 {
+    using System.Globalization;
+
     /// <summary>
     /// Contains configuration settings for AsyncAPI used across the board.
     /// </summary>
-    public static class AsyncApiConfiguration
+    public static class Configuration
     {
-        static AsyncApiConfiguration()
+        static Configuration()
         {
             DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffzzz";
+            CultureInfo = CultureInfo.InvariantCulture;
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace LEGO.AsyncAPI
         public static string DateTimeFormat { get; }
 
         /// <summary>
-        /// Gets the culture info used for strings
+        /// Gets the culture info used for strings.
         /// </summary>
         public static CultureInfo CultureInfo { get; }
     }

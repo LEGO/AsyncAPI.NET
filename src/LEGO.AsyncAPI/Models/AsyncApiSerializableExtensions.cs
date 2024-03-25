@@ -79,7 +79,7 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            var streamWriter = new FormattingStreamWriter(stream, CultureInfo.InvariantCulture);
+            var streamWriter = new FormattingStreamWriter(stream, Configuration.CultureInfo);
 
             IAsyncApiWriter writer = format switch
             {

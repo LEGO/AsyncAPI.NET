@@ -177,7 +177,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="value">The DateTime value.</param>
         public virtual void WriteValue(DateTime value)
         {
-            this.WriteValue(value.ToString(AsyncApiConfiguration.DateTimeFormat, AsyncApiConfiguration.CultureInfo));
+            this.WriteValue(value.ToString(Configuration.DateTimeFormat, Configuration.CultureInfo));
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <param name="value">The DateTimeOffset value.</param>
         public virtual void WriteValue(DateTimeOffset value)
         {
-            this.WriteValue(value.ToString(AsyncApiConfiguration.DateTimeFormat, AsyncApiConfiguration.CultureInfo));
+            this.WriteValue(value.ToString(Configuration.DateTimeFormat, Configuration.CultureInfo));
         }
 
         /// <summary>

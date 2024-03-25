@@ -18,7 +18,7 @@ namespace LEGO.AsyncAPI.Readers.Exceptions
         /// </summary>
         /// <param name="specificationVersion">Version that caused this exception to be thrown.</param>
         public AsyncApiUnsupportedSpecVersionException(string specificationVersion)
-            : base(string.Format(CultureInfo.InvariantCulture, MessagePattern, specificationVersion))
+            : base(string.Format(Configuration.CultureInfo, MessagePattern, specificationVersion))
         {
             this.SpecificationVersion = specificationVersion;
         }
@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Readers.Exceptions
         /// <param name="specificationVersion">Version that caused this exception to be thrown.</param>
         /// <param name="innerException">Inner exception that caused this exception to be thrown.</param>
         public AsyncApiUnsupportedSpecVersionException(string specificationVersion, Exception innerException)
-            : base(string.Format(CultureInfo.InvariantCulture, MessagePattern, specificationVersion), innerException)
+            : base(string.Format(Configuration.CultureInfo, MessagePattern, specificationVersion), innerException)
         {
             this.SpecificationVersion = specificationVersion;
         }
