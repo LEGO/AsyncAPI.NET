@@ -33,22 +33,22 @@ namespace LEGO.AsyncAPI.Models.Bindings.Kafka
         /// The max.message.bytes configuration option.
         /// </summary>
         public int? MaxMessageBytes { get; set; }
-        
+
         /// <summary>
         /// The confluent.key.schema.validation configuration option.
         /// </summary>
         public bool? ConfluentKeySchemaValidation { get; set; }
-        
+
         /// <summary>
         /// The confluent.key.subject.name.strategy configuration option.
         /// </summary>
         public string ConfluentKeySubjectName { get; set; }
-        
+
         /// <summary>
         /// The confluent.value.schema.validation configuration option.
         /// </summary>
         public bool? ConfluentValueSchemaValidation { get; set; }
-        
+
         /// <summary>
         /// The confluent.value.subject.name.strategy configuration option.
         /// </summary>
