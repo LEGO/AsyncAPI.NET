@@ -6,6 +6,7 @@ namespace LEGO.AsyncAPI.Bindings
     using LEGO.AsyncAPI.Bindings.AMQP;
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Bindings.Kafka;
+    using LEGO.AsyncAPI.Bindings.MQTT;
     using LEGO.AsyncAPI.Bindings.Pulsar;
     using LEGO.AsyncAPI.Bindings.Sns;
     using LEGO.AsyncAPI.Bindings.Sqs;
@@ -53,6 +54,7 @@ namespace LEGO.AsyncAPI.Bindings
             Sqs,
             Sns,
             AMQP,
+            MQTT,
         };
 
         public static IEnumerable<IBindingParser<IBinding>> Http => new List<IBindingParser<IBinding>>
@@ -97,6 +99,13 @@ namespace LEGO.AsyncAPI.Bindings
             new AMQPChannelBinding(),
             new AMQPOperationBinding(),
             new AMQPMessageBinding(),
+        };
+
+        public static IEnumerable<IBindingParser<IBinding>> MQTT => new List<IBindingParser<IBinding>>
+        {
+            new MQTTServerBinding(),
+            new MQTTOperationBinding(),
+            new MQTTMessageBinding(),
         };
     }
 }
