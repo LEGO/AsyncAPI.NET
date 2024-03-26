@@ -1,9 +1,10 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models.Bindings.Kafka
+namespace LEGO.AsyncAPI.Bindings.Kafka
 {
     using System;
     using System.Collections.Generic;
+    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
