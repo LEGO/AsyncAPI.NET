@@ -21,7 +21,6 @@ namespace LEGO.AsyncAPI.Validation.Rules
                     }
 
                     context.Exit();
-
                 });
     }
 }

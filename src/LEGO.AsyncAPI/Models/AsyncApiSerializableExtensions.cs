@@ -119,10 +119,10 @@ namespace LEGO.AsyncAPI.Models
             switch (specificationVersion)
             {
                 case AsyncApiVersion.AsyncApi2_0:
-                     element.SerializeV2(writer);
-                     break;
+                    element.SerializeV2(writer);
+                    break;
                 default:
-                     throw new AsyncApiException($"specification version '{specificationVersion}' is not supported.");
+                    throw new AsyncApiException($"specification version '{specificationVersion}' is not supported.");
             }
 
             writer.Flush();

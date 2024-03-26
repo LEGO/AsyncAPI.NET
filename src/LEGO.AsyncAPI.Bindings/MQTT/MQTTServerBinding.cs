@@ -49,7 +49,7 @@ namespace LEGO.AsyncAPI.Bindings.MQTT
 
         public override string BindingKey => "mqtt";
 
-        protected override FixedFieldMap<MQTTServerBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<MQTTServerBinding> FixedFieldMap => new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "clientId", (a, n) => { a.ClientId = n.GetScalarValue(); } },
@@ -60,7 +60,7 @@ namespace LEGO.AsyncAPI.Bindings.MQTT
             { "maximumPacketSize", (a, n) => { a.MaximumPacketSize = n.GetIntegerValueOrDefault(); } },
         };
 
-        private static FixedFieldMap<LastWill> LastWillFixedFields = new ()
+        private static FixedFieldMap<LastWill> LastWillFixedFields = new()
         {
             { "topic", (a, n) => { a.Topic = n.GetScalarValue(); } },
             { "qos", (a, n) => { a.QoS = (uint?)n.GetIntegerValueOrDefault(); } },

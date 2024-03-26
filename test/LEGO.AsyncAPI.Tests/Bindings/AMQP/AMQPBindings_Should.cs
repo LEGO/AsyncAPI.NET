@@ -162,7 +162,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.AMQP
                 Bcc = new List<string> { "external.audit" },
                 Timestamp = true,
                 Ack = false,
-            });;
+            }); ;
 
             // Act
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);

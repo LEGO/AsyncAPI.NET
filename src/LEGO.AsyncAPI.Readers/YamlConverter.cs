@@ -43,7 +43,7 @@
                 YamlMappingNode map => map.ToJsonObject(),
                 YamlSequenceNode seq => seq.ToJsonArray(),
                 YamlScalarNode scalar => scalar.ToJsonValue(),
-                _ => throw new NotSupportedException("This yaml isn't convertible to JSON")
+                _ => throw new NotSupportedException("This yaml isn't convertible to JSON"),
             };
         }
 

@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
 
         public override string BindingKey => "kafka";
 
-        protected override FixedFieldMap<KafkaOperationBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<KafkaOperationBinding> FixedFieldMap => new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "groupId", (a, n) => { a.GroupId = JsonSchemaDeserializer.LoadSchema(n); } },

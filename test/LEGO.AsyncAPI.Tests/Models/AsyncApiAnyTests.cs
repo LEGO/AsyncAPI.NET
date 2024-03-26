@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace LEGO.AsyncAPI.Tests
 {
-
     public class AsyncApiAnyTests
     {
         [Test]
@@ -19,8 +18,8 @@ namespace LEGO.AsyncAPI.Tests
             var c = new AsyncApiAny(1.1);
             var d = new AsyncApiAny(true);
             var e = new AsyncApiAny(new MyType("test"));
-            var f = new AsyncApiAny(new List<string>() { "test", "test2"});
-            var g = new AsyncApiAny(new List<string>() { "test", "test2"}.AsEnumerable());
+            var f = new AsyncApiAny(new List<string>() { "test", "test2" });
+            var g = new AsyncApiAny(new List<string>() { "test", "test2" }.AsEnumerable());
             var h = new AsyncApiAny(new List<MyType>() { new MyType("test") });
             var i = new AsyncApiAny(new Dictionary<string, int>() { { "t", 2 } });
             var j = new AsyncApiAny(new Dictionary<string, MyType>() { { "t", new MyType("test") } });

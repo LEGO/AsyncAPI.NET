@@ -93,6 +93,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write a primitive property.
         /// </summary>
+        /// <typeparam name="T"><see cref="T"/>.</typeparam>
         /// <param name="writer">The writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
@@ -110,6 +111,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Write a string/number property.
         /// </summary>
+        /// <typeparam name="T"><see cref="T"/>.</typeparam>
         /// <param name="writer">The writer.</param>
         /// <param name="name">The property name.</param>
         /// <param name="value">The property value.</param>
@@ -280,7 +282,8 @@ namespace LEGO.AsyncAPI.Writers
             this IAsyncApiWriter writer,
             string name,
             IDictionary<string, T> elements,
-            Action<IAsyncApiWriter, string, T> action) where T : IAsyncApiElement
+            Action<IAsyncApiWriter, string, T> action)
+            where T : IAsyncApiElement
         {
             if (elements != null && elements.Any())
             {

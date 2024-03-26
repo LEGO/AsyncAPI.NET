@@ -124,7 +124,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 Action = new StringOrStringList(new AsyncApiArray()
                                 {
                                     new AsyncApiAny("sqs:SendMessage"),
-                                    new AsyncApiAny("sqs:ReceiveMessage")
+                                    new AsyncApiAny("sqs:ReceiveMessage"),
                                 }),
                                 Extensions = new Dictionary<string, IAsyncApiExtension>()
                                 {
@@ -143,7 +143,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 Principal = new StringOrStringList(new AsyncApiArray
                                 {
                                         new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann"),
-                                        new AsyncApiAny("arn:aws:iam::123456789012:user/dec.kolakowski")
+                                        new AsyncApiAny("arn:aws:iam::123456789012:user/dec.kolakowski"),
                                 }),
                                 Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue")),
                             },
@@ -339,7 +339,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                     Action = new StringOrStringList(new AsyncApiArray()
                                     {
                                         new AsyncApiAny("sqs:SendMessage"),
-                                        new AsyncApiAny("sqs:ReceiveMessage")
+                                        new AsyncApiAny("sqs:ReceiveMessage"),
                                     }),
                                     Extensions = new Dictionary<string, IAsyncApiExtension>()
                                     {
@@ -360,7 +360,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                         new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann"),
                                         new AsyncApiAny("arn:aws:iam::123456789012:user/dec.kolakowski"),
                                     }),
-                                    Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue"))
+                                    Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue")),
                                 },
                             },
                             Extensions = new Dictionary<string, IAsyncApiExtension>()
@@ -408,8 +408,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                     Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
                                     Action = new StringOrStringList(new AsyncApiArray
                                     {
-                                        new AsyncApiAny("sqs:*")
-                                    })
+                                        new AsyncApiAny("sqs:*"),
+                                    }),
                                 },
                             },
                         },

@@ -81,7 +81,6 @@ namespace LEGO.AsyncAPI.Readers.V2
                 asyncApiReference.ExternalResource = segments[0];
 
                 return asyncApiReference;
-
             }
             else if (segments.Length == 2)
             {
@@ -139,7 +138,8 @@ namespace LEGO.AsyncAPI.Readers.V2
             return AsyncApiV2Deserializer.LoadAsyncApi(rootNode);
         }
 
-        public T LoadElement<T>(ParseNode node) where T : IAsyncApiElement
+        public T LoadElement<T>(ParseNode node)
+            where T : IAsyncApiElement
         {
             return (T)this.loaders[typeof(T)](node);
         }

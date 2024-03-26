@@ -8,7 +8,6 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
 
     public class Statement : IAsyncApiExtensible
     {
-
         public Effect Effect { get; set; }
 
         /// <summary>

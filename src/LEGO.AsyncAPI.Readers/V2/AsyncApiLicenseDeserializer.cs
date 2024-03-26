@@ -9,14 +9,14 @@ namespace LEGO.AsyncAPI.Readers
 
     internal static partial class AsyncApiV2Deserializer
     {
-        private static FixedFieldMap<AsyncApiLicense> licenseFixedFields = new ()
+        private static FixedFieldMap<AsyncApiLicense> licenseFixedFields = new()
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
             { "url", (a, n) => { a.Url = new Uri(n.GetScalarValue()); } },
         };
 
         private static PatternFieldMap<AsyncApiLicense> licensePatternFields =
-            new ()
+            new()
             {
                 { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, LoadExtension(p, n)) },
             };

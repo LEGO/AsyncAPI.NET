@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers
 
     public class JsonSchemaDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiSchema> schemaFixedFields = new ()
+        private static readonly FixedFieldMap<AsyncApiSchema> schemaFixedFields = new()
         {
             {
                 "title", (a, n) => { a.Title = n.GetScalarValue(); }
@@ -23,6 +23,7 @@ namespace LEGO.AsyncAPI.Readers
                     {
                         a.Type = n.GetScalarValue().GetEnumFromDisplayName<SchemaType>();
                     }
+
                     if (n.GetType() == typeof(ListNode))
                     {
                         SchemaType? initialValue = null;
@@ -209,12 +210,12 @@ namespace LEGO.AsyncAPI.Readers
         };
 
         private static readonly PatternFieldMap<AsyncApiSchema> schemaPatternFields =
-            new ()
+            new()
             {
                 { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, AsyncApiV2Deserializer.LoadExtension(p, n)) },
             };
 
-        private static readonly AnyFieldMap<AsyncApiSchema> schemaAnyFields = new ()
+        private static readonly AnyFieldMap<AsyncApiSchema> schemaAnyFields = new()
         {
             {
                 AsyncApiConstants.Default,
@@ -225,7 +226,7 @@ namespace LEGO.AsyncAPI.Readers
             },
         };
 
-        private static readonly AnyListFieldMap<AsyncApiSchema> schemaAnyListFields = new ()
+        private static readonly AnyListFieldMap<AsyncApiSchema> schemaAnyListFields = new()
         {
             {
                 AsyncApiConstants.Enum,

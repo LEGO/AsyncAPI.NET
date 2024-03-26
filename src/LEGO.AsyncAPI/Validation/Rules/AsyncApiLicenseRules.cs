@@ -27,14 +27,12 @@ namespace LEGO.AsyncAPI.Validation.Rules
            new ValidationRule<AsyncApiLicense>(
                (context, license) =>
                {
-
                    context.Enter("url");
                    if (license.Url != null && !license.Url.IsAbsoluteUri)
                    {
                        context.CreateError(
                             nameof(LicenseUrlMustBeAbsolute),
                             string.Format(Resource.Validation_MustBeAbsoluteUrl, "url", "license"));
-
                    }
 
                    context.Exit();

@@ -14,7 +14,6 @@ namespace LEGO.AsyncAPI.Models
     [Obsolete("Please use AsyncApiAny instead")]
     public class AsyncApiObject : Dictionary<string, AsyncApiAny>, IAsyncApiExtension, IAsyncApiElement
     {
-
         public static implicit operator AsyncApiAny(AsyncApiObject obj)
         {
             var jObject = new JsonObject();

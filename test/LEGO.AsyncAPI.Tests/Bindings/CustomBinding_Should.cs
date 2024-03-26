@@ -18,7 +18,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        public static FixedFieldMap<NestedConfiguration> FixedFieldMap = new ()
+        public static FixedFieldMap<NestedConfiguration> FixedFieldMap = new()
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
         };

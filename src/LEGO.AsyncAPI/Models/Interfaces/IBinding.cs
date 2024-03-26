@@ -6,8 +6,8 @@ namespace LEGO.AsyncAPI.Models.Interfaces
     /// </summary>
     public interface IBinding : IAsyncApiSerializable, IAsyncApiExtensible
     {
-       public string BindingKey { get; }
+        public string BindingKey { get; }
 
-       public string BindingVersion { get; set; }
+        public string BindingVersion { get; set; }
     }
 }

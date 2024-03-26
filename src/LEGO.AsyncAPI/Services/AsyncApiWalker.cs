@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Services
     public class AsyncApiWalker
     {
         private readonly AsyncApiVisitorBase visitor;
-        private readonly Stack<AsyncApiSchema> schemaLoop = new ();
+        private readonly Stack<AsyncApiSchema> schemaLoop = new();
 
         public AsyncApiWalker(AsyncApiVisitorBase visitor)
         {

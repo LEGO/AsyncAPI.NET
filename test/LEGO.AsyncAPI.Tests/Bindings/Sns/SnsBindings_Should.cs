@@ -77,7 +77,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             Action = new StringOrStringList(new AsyncApiArray()
                             {
                                 new AsyncApiAny("sns:Publish"),
-                                new AsyncApiAny("sns:Delete")
+                                new AsyncApiAny("sns:Delete"),
                             }),
                         },
                         new Statement()
@@ -86,7 +86,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             Principal = new StringOrStringList(new AsyncApiArray()
                             {
                                 new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann"),
-                                new AsyncApiAny("arn:aws:iam::123456789012:user/dec.kolakowski")
+                                new AsyncApiAny("arn:aws:iam::123456789012:user/dec.kolakowski"),
                             }),
                             Action = new StringOrStringList(new AsyncApiAny("sns:Create")),
                             Extensions = new Dictionary<string, IAsyncApiExtension>()
@@ -249,7 +249,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             },
                         },
                         FilterPolicy = new AsyncApiObject()
-                        { 
+                        {
                             { "store", new AsyncApiArray() { new AsyncApiAny("asyncapi_corp") } },
                             { "contact", new AsyncApiAny("dec.kolakowski") },
                             {
@@ -391,6 +391,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             var expectedSnsBinding = (SnsOperationBinding)operation.Bindings.Values.First();
             expectedSnsBinding.Should().BeEquivalentTo((SnsOperationBinding)binding.Bindings.Values.First(), options => options.IgnoringCyclicReferences());
         }
+
         class ExtensionClass
         {
             public string bindingXPropertyName { get; set; }

@@ -13,7 +13,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
     public class StringOrStringList_Should
     {
-
         [Test]
         public void StringOrStringList_IsInitialised_WhenPassedStringOrStringList()
         {
@@ -141,7 +140,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             writer.WriteEndObject();
         }
 
-        protected override FixedFieldMap<StringOrStringListTestBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<StringOrStringListTestBinding> FixedFieldMap => new()
         {
             { "testProperty", (a, n) => { a.TestProperty = new StringOrStringList(n.CreateAny()); } },
         };

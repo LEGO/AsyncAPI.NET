@@ -25,6 +25,7 @@ namespace LEGO.AsyncAPI.Validation.Rules
                                 string.Format(Resource.Validation_ExtensionNameMustBeginWithXDash, extensible.Key, context.PathString));
                         }
                     }
+
                     context.Exit();
                 });
     }
