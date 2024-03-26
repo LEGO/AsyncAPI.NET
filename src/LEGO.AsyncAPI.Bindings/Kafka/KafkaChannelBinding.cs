@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
 {
     using System;
     using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Models.Bindings.Kafka;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
