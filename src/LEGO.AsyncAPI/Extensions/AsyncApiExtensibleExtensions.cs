@@ -1,10 +1,9 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Extensions
+namespace LEGO.AsyncAPI.Models
 {
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Exceptions;
-    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     /// <summary>

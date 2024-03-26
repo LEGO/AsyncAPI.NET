@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Models
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -19,7 +20,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// An object to hold reusable Schema Objects.
         /// </summary>
-        public IDictionary<string, AsyncApiSchema> Schemas { get; set; } = new Dictionary<string, AsyncApiSchema>();
+        public IDictionary<string, JsonSchema> Schemas { get; set; } = new Dictionary<string, JsonSchema>();
 
         /// <summary>
         /// An object to hold reusable Server Objects.
@@ -101,11 +102,8 @@ namespace LEGO.AsyncAPI.Models
             {
                 var loops = writer.GetSettings().LoopDetector.Loops;
                 writer.WriteStartObject();
-                if (loops.TryGetValue(typeof(AsyncApiSchema), out List<object> schemas))
+                if (loops.TryGetValue(typeof(JsonSchema), out List<object> schemas))
                 {
-                    var asyncApiSchemas = schemas.Cast<AsyncApiSchema>().Distinct().ToList()
-                        .ToDictionary<AsyncApiSchema, string>(k => k.Reference.Id);
-
                     writer.WriteOptionalMap(
                        AsyncApiConstants.Schemas,
                        this.Schemas,
@@ -130,9 +128,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Schemas,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Schema &&
-                        component.Reference.Id == key)
+                    var reference = component.GetRef();
+                    if (reference != null &&
+                        reference.OriginalString.Split('/').Last().Equals(key))
                     {
                         component.SerializeV2WithoutReference(w);
                     }

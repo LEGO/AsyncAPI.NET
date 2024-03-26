@@ -28,11 +28,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.WebSockets
             channel.Bindings.Add(new WebSocketsChannelBinding
             {
                 Method = "POST",
-                Query = new AsyncApiSchema
+                Query = new JsonSchema
                 {
                     Description = "this mah query",
                 },
-                Headers = new AsyncApiSchema
+                Headers = new JsonSchema
                 {
                     Description = "this mah binding",
                 },

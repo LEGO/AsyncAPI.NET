@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.Bindings.Kafka
 {
     using System;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -16,12 +17,12 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
         /// <summary>
         /// Id of the consumer group.
         /// </summary>
-        public AsyncApiSchema GroupId { get; set; }
+        public JsonSchema GroupId { get; set; }
 
         /// <summary>
         /// Id of the consumer inside a consumer group.
         /// </summary>
-        public AsyncApiSchema ClientId { get; set; }
+        public JsonSchema ClientId { get; set; }
 
         public override string BindingKey => "kafka";
 

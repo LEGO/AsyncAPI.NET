@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Readers
 {
     using System;
-    using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 

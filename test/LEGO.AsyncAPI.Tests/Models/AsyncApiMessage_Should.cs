@@ -96,12 +96,12 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
         - string";
 
             var message = new AsyncApiMessage();
-            message.Payload = new AsyncApiSchema()
+            message.Payload = new JsonSchema()
             {
-                Properties = new Dictionary<string, AsyncApiSchema>()
+                Properties = new Dictionary<string, JsonSchema>()
                 {
                     {
-                        "propertyA", new AsyncApiSchema()
+                        "propertyA", new JsonSchema()
                         {
                             Type = SchemaType.String | SchemaType.Null,
                         }
@@ -137,12 +137,12 @@ schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
 
             var message = new AsyncApiMessage();
             message.SchemaFormat = "application/vnd.aai.asyncapi+json;version=2.6.0";
-            message.Payload = new AsyncApiSchema()
+            message.Payload = new JsonSchema()
             {
-                Properties = new Dictionary<string, AsyncApiSchema>()
+                Properties = new Dictionary<string, JsonSchema>()
                 {
                     {
-                        "propertyA", new AsyncApiSchema()
+                        "propertyA", new JsonSchema()
                         {
                             Type = SchemaType.String | SchemaType.Null,
                         }
@@ -236,7 +236,7 @@ traits:
 
             var message = new AsyncApiMessage
             {
-                Headers = new AsyncApiSchema
+                Headers = new JsonSchema
                 {
                     Title = "HeaderTitle",
                     WriteOnly = true,
@@ -249,18 +249,18 @@ traits:
                         }),
                     },
                 },
-                Payload = new AsyncApiSchema()
+                Payload = new JsonSchema()
                 {
-                    Properties = new Dictionary<string, AsyncApiSchema>
+                    Properties = new Dictionary<string, JsonSchema>
                     {
                         {
-                            "propA", new AsyncApiSchema()
+                            "propA", new JsonSchema()
                             {
                                 Type = SchemaType.String,
                             }
                         },
                         {
-                            "propB", new AsyncApiSchema()
+                            "propB", new JsonSchema()
                             {
                                 Type = SchemaType.String,
                             }
@@ -299,7 +299,7 @@ traits:
                     {
                         "http", new HttpMessageBinding
                         {
-                            Headers = new AsyncApiSchema
+                            Headers = new JsonSchema
                             {
                                 Title = "SchemaTitle",
                                 WriteOnly = true,
@@ -333,7 +333,7 @@ traits:
                     {
                         Name = "MessageTraitName",
                         Title = "MessageTraitTitle",
-                        Headers = new AsyncApiSchema
+                        Headers = new JsonSchema
                         {
                             Title = "SchemaTitle",
                             WriteOnly = true,

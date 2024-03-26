@@ -7,16 +7,17 @@ namespace LEGO.AsyncAPI.Tests.Models
     using System.Globalization;
     using System.IO;
     using FluentAssertions;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
-    public class AsyncApiSchema_Should
+    public class JsonSchema_Should
     {
-        public static AsyncApiSchema BasicSchema = new AsyncApiSchema();
+        public static JsonSchema BasicSchema = new JsonSchema();
 
-        public static AsyncApiSchema AdvancedSchemaNumber = new AsyncApiSchema
+        public static JsonSchema AdvancedSchemaNumber = new JsonSchema
         {
             Title = "title1",
             MultipleOf = 3,
@@ -32,7 +33,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             },
         };
 
-        public static AsyncApiSchema AdvancedSchemaBigNumbers = new AsyncApiSchema
+        public static JsonSchema AdvancedSchemaBigNumbers = new JsonSchema
         {
             Title = "title1",
             MultipleOf = 3,
@@ -48,20 +49,20 @@ namespace LEGO.AsyncAPI.Tests.Models
             },
         };
 
-        public static AsyncApiSchema AdvancedSchemaObject = new AsyncApiSchema
+        public static JsonSchema AdvancedSchemaObject = new JsonSchema
         {
             Title = "title1",
-            Properties = new Dictionary<string, AsyncApiSchema>
+            Properties = new Dictionary<string, JsonSchema>
             {
-                ["property1"] = new AsyncApiSchema
+                ["property1"] = new JsonSchema
                 {
-                    Properties = new Dictionary<string, AsyncApiSchema>
+                    Properties = new Dictionary<string, JsonSchema>
                     {
-                        ["property2"] = new AsyncApiSchema
+                        ["property2"] = new JsonSchema
                         {
                             Type = SchemaType.Integer,
                         },
-                        ["property3"] = new AsyncApiSchema
+                        ["property3"] = new JsonSchema
                         {
                             Type = SchemaType.String,
                             MaxLength = 15,
@@ -71,78 +72,78 @@ namespace LEGO.AsyncAPI.Tests.Models
                     Items = new FalseApiSchema(),
                     AdditionalItems = new FalseApiSchema(),
                 },
-                ["property4"] = new AsyncApiSchema
+                ["property4"] = new JsonSchema
                 {
-                    Properties = new Dictionary<string, AsyncApiSchema>
+                    Properties = new Dictionary<string, JsonSchema>
                     {
-                        ["property5"] = new AsyncApiSchema
+                        ["property5"] = new JsonSchema
                         {
-                            Properties = new Dictionary<string, AsyncApiSchema>
+                            Properties = new Dictionary<string, JsonSchema>
                             {
-                                ["property6"] = new AsyncApiSchema
+                                ["property6"] = new JsonSchema
                                 {
                                     Type = SchemaType.Boolean,
                                 },
                             },
                         },
-                        ["property7"] = new AsyncApiSchema
+                        ["property7"] = new JsonSchema
                         {
                             Type = SchemaType.String,
                             MinLength = 2,
                         },
                     },
-                    PatternProperties = new Dictionary<string, AsyncApiSchema>()
+                    PatternProperties = new Dictionary<string, JsonSchema>()
                     {
                         {
                             "^S_",
-                            new AsyncApiSchema()
+                            new JsonSchema()
                             {
                                 Type = SchemaType.String,
                             }
                         },
                         {
-                            "^I_", new AsyncApiSchema()
+                            "^I_", new JsonSchema()
                             {
                                 Type = SchemaType.Integer,
                             }
                         },
                     },
-                    PropertyNames = new AsyncApiSchema()
+                    PropertyNames = new JsonSchema()
                     {
                         Pattern = "^[A-Za-z_][A-Za-z0-9_]*$",
                     },
-                    AdditionalProperties = new AsyncApiSchema
+                    AdditionalProperties = new JsonSchema
                     {
-                        Properties = new Dictionary<string, AsyncApiSchema>
+                        Properties = new Dictionary<string, JsonSchema>
                         {
-                            ["Property8"] = new AsyncApiSchema
+                            ["Property8"] = new JsonSchema
                             {
                                 Type = SchemaType.String | SchemaType.Null,
                             },
                         },
                     },
-                    Items = new AsyncApiSchema
+                    Items = new JsonSchema
                     {
-                        Properties = new Dictionary<string, AsyncApiSchema>
+                        Properties = new Dictionary<string, JsonSchema>
                         {
-                            ["Property9"] = new AsyncApiSchema
+                            ["Property9"] = new JsonSchema
                             {
                                 Type = SchemaType.String | SchemaType.Null,
                             },
                         },
                     },
-                    AdditionalItems = new AsyncApiSchema
+                    AdditionalItems = new JsonSchema
                     {
-                        Properties = new Dictionary<string, AsyncApiSchema>
+                        Properties = new Dictionary<string, JsonSchema>
                         {
-                            ["Property10"] = new AsyncApiSchema
+                            ["Property10"] = new JsonSchema
                             {
                                 Type = SchemaType.String | SchemaType.Null,
                             },
                         },
                     },
                 },
-                ["property11"] = new AsyncApiSchema
+                ["property11"] = new JsonSchema
                 {
                     Const = new AsyncApiAny("aSpecialConstant"),
                 },
@@ -154,43 +155,43 @@ namespace LEGO.AsyncAPI.Tests.Models
             },
         };
 
-        public static AsyncApiSchema AdvancedSchemaWithAllOf = new AsyncApiSchema
+        public static JsonSchema AdvancedSchemaWithAllOf = new JsonSchema
         {
             Title = "title1",
-            AllOf = new List<AsyncApiSchema>
+            AllOf = new List<JsonSchema>
             {
-                new AsyncApiSchema
+                new JsonSchema
                 {
                     Title = "title2",
-                    Properties = new Dictionary<string, AsyncApiSchema>
+                    Properties = new Dictionary<string, JsonSchema>
                     {
-                        ["property1"] = new AsyncApiSchema
+                        ["property1"] = new JsonSchema
                         {
                             Type = SchemaType.Integer,
                         },
-                        ["property2"] = new AsyncApiSchema
+                        ["property2"] = new JsonSchema
                         {
                             Type = SchemaType.String,
                             MaxLength = 15,
                         },
                     },
                 },
-                new AsyncApiSchema
+                new JsonSchema
                 {
                     Title = "title3",
-                    Properties = new Dictionary<string, AsyncApiSchema>
+                    Properties = new Dictionary<string, JsonSchema>
                     {
-                        ["property3"] = new AsyncApiSchema
+                        ["property3"] = new JsonSchema
                         {
-                            Properties = new Dictionary<string, AsyncApiSchema>
+                            Properties = new Dictionary<string, JsonSchema>
                             {
-                                ["property4"] = new AsyncApiSchema
+                                ["property4"] = new JsonSchema
                                 {
                                     Type = SchemaType.Boolean ,
                                 },
                             },
                         },
-                        ["property5"] = new AsyncApiSchema
+                        ["property5"] = new JsonSchema
                         {
                             Type = SchemaType.String,
                             MinLength = 2,
@@ -206,7 +207,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             },
         };
 
-        public static AsyncApiSchema ReferencedSchema = new AsyncApiSchema
+        public static JsonSchema ReferencedSchema = new JsonSchema
         {
             Title = "title1",
             MultipleOf = 3,
@@ -229,22 +230,22 @@ namespace LEGO.AsyncAPI.Tests.Models
             },
         };
 
-        public static AsyncApiSchema AdvancedSchemaWithRequiredPropertiesObject = new AsyncApiSchema
+        public static JsonSchema AdvancedSchemaWithRequiredPropertiesObject = new JsonSchema
         {
             Title = "title1",
             Required = new HashSet<string>() { "property1" },
-            Properties = new Dictionary<string, AsyncApiSchema>
+            Properties = new Dictionary<string, JsonSchema>
             {
-                ["property1"] = new AsyncApiSchema
+                ["property1"] = new JsonSchema
                 {
                     Required = new HashSet<string>() { "property3" },
-                    Properties = new Dictionary<string, AsyncApiSchema>
+                    Properties = new Dictionary<string, JsonSchema>
                     {
-                        ["property2"] = new AsyncApiSchema
+                        ["property2"] = new JsonSchema
                         {
                             Type = SchemaType.Integer,
                         },
-                        ["property3"] = new AsyncApiSchema
+                        ["property3"] = new JsonSchema
                         {
                             Type = SchemaType.String,
                             MaxLength = 15,
@@ -253,21 +254,21 @@ namespace LEGO.AsyncAPI.Tests.Models
                     },
                     ReadOnly = true,
                 },
-                ["property4"] = new AsyncApiSchema
+                ["property4"] = new JsonSchema
                 {
-                    Properties = new Dictionary<string, AsyncApiSchema>
+                    Properties = new Dictionary<string, JsonSchema>
                     {
-                        ["property5"] = new AsyncApiSchema
+                        ["property5"] = new JsonSchema
                         {
-                            Properties = new Dictionary<string, AsyncApiSchema>
+                            Properties = new Dictionary<string, JsonSchema>
                             {
-                                ["property6"] = new AsyncApiSchema
+                                ["property6"] = new JsonSchema
                                 {
                                     Type = SchemaType.Boolean,
                                 },
                             },
                         },
-                        ["property7"] = new AsyncApiSchema
+                        ["property7"] = new JsonSchema
                         {
                             Type = SchemaType.String,
                             MinLength = 2,
@@ -602,7 +603,7 @@ components: { }";
             var expected = AdvancedSchemaObject;
 
             // Act
-            var actual = new AsyncApiStringReader().ReadFragment<AsyncApiSchema>(json, AsyncApiVersion.AsyncApi2_0, out var _diagnostics);
+            var actual = new AsyncApiStringReader().ReadFragment<JsonSchema>(json, AsyncApiVersion.AsyncApi2_0, out var _diagnostics);
 
             // Assert
             actual.Should().BeEquivalentTo(expected);
@@ -686,30 +687,30 @@ components: { }";
                     {
                         new AsyncApiMessage
                         {
-                            Payload = new AsyncApiSchema
+                            Payload = new JsonSchema
                             {
                                 Type = SchemaType.Object,
                                 Required = new HashSet<string> { "testB" },
-                                Properties = new Dictionary<string, AsyncApiSchema>
+                                Properties = new Dictionary<string, JsonSchema>
                                 {
-                                    { "testC", new AsyncApiSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testC" } } },
-                                    { "testB", new AsyncApiSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testB" } } },
+                                    { "testC", new JsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testC" } } },
+                                    { "testB", new JsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testB" } } },
                                 },
                             },
                         },
                     },
                 },
             })
-            .WithComponent("testD", new AsyncApiSchema() { Type = SchemaType.String, Format = "uuid" })
-            .WithComponent("testC", new AsyncApiSchema()
+            .WithComponent("testD", new JsonSchema() { Type = SchemaType.String, Format = "uuid" })
+            .WithComponent("testC", new JsonSchema()
             {
                 Type = SchemaType.Object,
-                Properties = new Dictionary<string, AsyncApiSchema>
+                Properties = new Dictionary<string, JsonSchema>
                 {
-                    { "testD", new AsyncApiSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testD" } } },
+                    { "testD", new JsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testD" } } },
                 },
             })
-            .WithComponent("testB", new AsyncApiSchema() { Description = "test", Type = SchemaType.Boolean })
+            .WithComponent("testB", new JsonSchema() { Description = "test", Type = SchemaType.Boolean })
             .Build();
 
             var outputString = new StringWriter(CultureInfo.InvariantCulture);
@@ -756,10 +757,10 @@ components: { }";
         [Test]
         public void Serialize_WithOneOf_DoesNotWriteThen()
         {
-            var mainSchema = new AsyncApiSchema();
-            var subSchema = new AsyncApiSchema();
-            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = SchemaType.String });
-            mainSchema.OneOf = new List<AsyncApiSchema>() { subSchema };
+            var mainSchema = new JsonSchema();
+            var subSchema = new JsonSchema();
+            subSchema.Properties.Add("title", new JsonSchema() { Type = SchemaType.String });
+            mainSchema.OneOf = new List<JsonSchema>() { subSchema };
 
             var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
@@ -774,10 +775,10 @@ components: { }";
         [Test]
         public void Serialize_WithAnyOf_DoesNotWriteIf()
         {
-            var mainSchema = new AsyncApiSchema();
-            var subSchema = new AsyncApiSchema();
-            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = SchemaType.String });
-            mainSchema.AnyOf = new List<AsyncApiSchema>() { subSchema };
+            var mainSchema = new JsonSchema();
+            var subSchema = new JsonSchema();
+            subSchema.Properties.Add("title", new JsonSchema() { Type = SchemaType.String });
+            mainSchema.AnyOf = new List<JsonSchema>() { subSchema };
 
             var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
@@ -791,9 +792,9 @@ components: { }";
         [Test]
         public void Serialize_WithNot_DoesNotWriteElse()
         {
-            var mainSchema = new AsyncApiSchema();
-            var subSchema = new AsyncApiSchema();
-            subSchema.Properties.Add("title", new AsyncApiSchema() { Type = SchemaType.String });
+            var mainSchema = new JsonSchema();
+            var subSchema = new JsonSchema();
+            subSchema.Properties.Add("title", new JsonSchema() { Type = SchemaType.String });
             mainSchema.Not = subSchema;
 
             var yaml = mainSchema.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);

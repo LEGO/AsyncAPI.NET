@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Tests
 {
+    using Json.Schema;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using System;
@@ -46,7 +47,7 @@ namespace LEGO.AsyncAPI.Tests
             return this;
         }
 
-        public AsyncApiDocumentBuilder WithComponent(string key, AsyncApiSchema schema)
+        public AsyncApiDocumentBuilder WithComponent(string key, JsonSchema schema)
         {
             if (this.document.Components == null)
             {

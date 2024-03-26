@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.Bindings.Http
 {
     using System;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -16,7 +17,7 @@ namespace LEGO.AsyncAPI.Bindings.Http
         /// <summary>
         /// A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type object and have a properties key.
         /// </summary>
-        public AsyncApiSchema Headers { get; set; }
+        public JsonSchema Headers { get; set; }
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.

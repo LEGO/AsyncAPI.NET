@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -20,12 +21,12 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
-        public AsyncApiSchema Headers { get; set; }
+        public JsonSchema Headers { get; set; }
 
         /// <summary>
         /// definition of the message payload. It can be of any type but defaults to Schema object. It must match the schema format, including encoding type - e.g Avro should be inlined as either a YAML or JSON object NOT a string to be parsed as YAML or JSON.
         /// </summary>
-        public AsyncApiSchema Payload { get; set; }
+        public JsonSchema Payload { get; set; }
 
         /// <summary>
         /// definition of the correlation ID used for message tracing or matching.

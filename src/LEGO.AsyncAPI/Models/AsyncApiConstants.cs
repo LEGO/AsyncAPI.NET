@@ -145,5 +145,6 @@ namespace LEGO.AsyncAPI.Models
         public const string AdditionalItems = "additionalItems";
         public const string PropertyNames = "propertyNames";
         public const string PatternProperties = "patternProperties";
+        public const string V2ReferenceUri = "https://registry/components/schemas/";
     }
 }
