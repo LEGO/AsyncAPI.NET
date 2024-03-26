@@ -5,9 +5,12 @@ namespace LEGO.AsyncAPI.Writers
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     public static class SpecialCharacterStringExtensions
     {
+        private static readonly Regex numberRegex = new Regex("^[+-]?[0-9]*\\.?[0-9]*$", RegexOptions.Compiled);
+
         // Plain style strings cannot start with indicators.
         // http://www.yaml.org/spec/1.2/spec.html#indicator//
         private static readonly char[] yamlIndicators =
@@ -100,24 +103,32 @@ namespace LEGO.AsyncAPI.Writers
         /// Escapes all special characters and put the string in quotes if necessary to
         /// get a YAML-compatible string.
         /// </summary>
+        /// <param name="input">The string to turn into yaml</param>
+        /// <returns>The string as yaml.</returns>
         internal static string GetYamlCompatibleString(this string input)
         {
-            // If string is an empty string, wrap it in quote to ensure it is not recognized as null.
-            if (input == "")
+            if (input == null)
             {
-                return "''";
+                return "null";
             }
 
-            // If string is the word null, wrap it in quote to ensure it is not recognized as empty scalar null.
-            if (input == "null")
+            switch (input.ToLower())
             {
-                return "'null'";
-            }
+                case "":
+                    return "''";
 
-            // If string is the letter ~, wrap it in quote to ensure it is not recognized as empty scalar null.
-            if (input == "~")
-            {
-                return "'~'";
+                case "~":
+                // Example 2.20. Floating Point
+                case "-.inf":
+                case ".inf":
+                case ".nan":
+                // Example 2.21. Miscellaneous
+                case "null":
+
+                // Booleans
+                case "true":
+                case "false":
+                    return $"'{input}'";
             }
 
             // If string includes a control character, wrapping in double quote is required.
@@ -188,6 +199,12 @@ namespace LEGO.AsyncAPI.Writers
             if (decimal.TryParse(input, NumberStyles.Float, Configuration.CultureInfo, out var _) ||
                 bool.TryParse(input, out var _) ||
                 DateTime.TryParseExact(input, Configuration.DateTimeFormat, Configuration.CultureInfo, DateTimeStyles.RoundtripKind, out var _))
+            {
+                return $"'{input}'";
+            }
+
+            // Handle numbers
+            if (numberRegex.IsMatch(input))
             {
                 return $"'{input}'";
             }
