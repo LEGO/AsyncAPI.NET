@@ -172,8 +172,6 @@ namespace LEGO.AsyncAPI.Models
             {
                 switch (reference.Type)
                 {
-                    case ReferenceType.Schema:
-                        return this.Components.Schemas[reference.Id];
                     case ReferenceType.Server:
                         return this.Components.Servers[reference.Id];
                     case ReferenceType.Channel:

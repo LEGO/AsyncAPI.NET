@@ -2,15 +2,16 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using LEGO.AsyncAPI.Extensions;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.ParseNodes;
+    using System;
 
     internal static partial class AsyncApiV2Deserializer
     {
         private static FixedFieldMap<AsyncApiComponents> componentsFixedFields = new()
         {
-            { "schemas", (a, n) => a.Schemas = n.CreateMapWithReference(ReferenceType.Schema, JsonSchemaDeserializer.LoadSchema) },
+            { "schemas", (a, n) => a.Schemas = n.CreateMap(JsonSchemaDeserializer.LoadSchema) },
             { "servers", (a, n) => a.Servers = n.CreateMapWithReference(ReferenceType.Server, LoadServer) },
             { "channels", (a, n) => a.Channels = n.CreateMapWithReference(ReferenceType.Channel, LoadChannel) },
             { "messages", (a, n) => a.Messages = n.CreateMapWithReference(ReferenceType.Message, LoadMessage) },
@@ -37,7 +38,11 @@ namespace LEGO.AsyncAPI.Readers
             var components = new AsyncApiComponents();
 
             ParseMap(mapNode, components, componentsFixedFields, componentsPatternFields);
-
+            foreach (var schema in components.Schemas)
+            {
+                var refUri = new Uri(AsyncApiConstants.V2ReferenceUri + schema.Key);
+                SchemaRegistry.Global.Register(refUri, schema.Value);
+            }
             return components;
         }
     }

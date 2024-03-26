@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Readers.V2
 {
     using System;
     using System.Collections.Generic;
+    using Json.Schema;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -35,7 +36,7 @@ namespace LEGO.AsyncAPI.Readers.V2
             [typeof(AsyncApiOAuthFlows)] = AsyncApiV2Deserializer.LoadOAuthFlows,
             [typeof(AsyncApiOperation)] = AsyncApiV2Deserializer.LoadOperation,
             [typeof(AsyncApiParameter)] = AsyncApiV2Deserializer.LoadParameter,
-            [typeof(AsyncApiSchema)] = JsonSchemaDeserializer.LoadSchema,
+            [typeof(JsonSchema)] = JsonSchemaDeserializer.LoadSchema,
             [typeof(AsyncApiSecurityRequirement)] = AsyncApiV2Deserializer.LoadSecurityRequirement,
             [typeof(AsyncApiSecurityScheme)] = AsyncApiV2Deserializer.LoadSecurityScheme,
             [typeof(AsyncApiServer)] = AsyncApiV2Deserializer.LoadServer,

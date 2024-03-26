@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
     using System;
     using System.Collections.Generic;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models;
 
     internal class AnyMapFieldMapParameter<T, U>
@@ -12,7 +13,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             Func<T, IDictionary<string, U>> propertyMapGetter,
             Func<U, AsyncApiAny> propertyGetter,
             Action<U, AsyncApiAny> propertySetter,
-            Func<T, AsyncApiSchema> schemaGetter)
+            Func<T, JsonSchema> schemaGetter)
         {
             this.PropertyMapGetter = propertyMapGetter;
             this.PropertyGetter = propertyGetter;
@@ -26,6 +27,6 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public Action<U, AsyncApiAny> PropertySetter { get; }
 
-        public Func<T, AsyncApiSchema> SchemaGetter { get; }
+        public Func<T, JsonSchema> SchemaGetter { get; }
     }
 }

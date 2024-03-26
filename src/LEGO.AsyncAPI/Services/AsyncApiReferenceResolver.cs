@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Services
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Json.Schema;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -70,7 +71,7 @@ namespace LEGO.AsyncAPI.Services
         public override void Visit(AsyncApiMessageTrait trait)
         {
             this.ResolveObject(trait.CorrelationId, r => trait.CorrelationId = r);
-            this.ResolveObject(trait.Headers, r => trait.Headers = r);
+            this.ResolveJsonSchema(trait.Headers, r => trait.Headers = r);
         }
 
         /// <summary>
@@ -85,8 +86,8 @@ namespace LEGO.AsyncAPI.Services
 
         public override void Visit(AsyncApiMessage message)
         {
-            this.ResolveObject(message.Headers, r => message.Headers = r);
-            this.ResolveObject(message.Payload, r => message.Payload = r);
+            this.ResolveJsonSchema(message.Headers, r => message.Headers = r);
+            this.ResolveJsonSchema(message.Payload, r => message.Payload = r);
             this.ResolveList(message.Traits);
             this.ResolveObject(message.CorrelationId, r => message.CorrelationId = r);
             this.ResolveObject(message.Bindings, r => message.Bindings = r);
@@ -131,27 +132,64 @@ namespace LEGO.AsyncAPI.Services
         /// </summary>
         public override void Visit(AsyncApiParameter parameter)
         {
-            this.ResolveObject(parameter.Schema, r => parameter.Schema = r);
+            this.ResolveJsonSchema(parameter.Schema, r => parameter.Schema = r);
         }
 
         /// <summary>
         /// Resolve all references used in a schema.
         /// </summary>
-        public override void Visit(AsyncApiSchema schema)
+        public override void Visit(ref JsonSchema schema)
         {
-            this.ResolveObject(schema.Items, r => schema.Items = r);
-            this.ResolveList(schema.OneOf);
-            this.ResolveList(schema.AllOf);
-            this.ResolveList(schema.AnyOf);
-            this.ResolveObject(schema.Contains, r => schema.Contains = r);
-            this.ResolveObject(schema.Else, r => schema.Else = r);
-            this.ResolveObject(schema.If, r => schema.If = r);
-            this.ResolveObject(schema.Items, r => schema.Items = r);
-            this.ResolveObject(schema.Not, r => schema.Not = r);
-            this.ResolveObject(schema.Then, r => schema.Then = r);
-            this.ResolveObject(schema.PropertyNames, r => schema.PropertyNames = r);
-            this.ResolveObject(schema.AdditionalProperties, r => schema.AdditionalProperties = r);
-            this.ResolveMap(schema.Properties);
+            var reference = schema.GetRef();
+
+            if (reference != null)
+            {
+                schema = this.ResolveJsonSchemaReference(reference);
+            }
+
+            var builder = new JsonSchemaBuilder();
+            foreach (var keyword in schema.Keywords)
+            {
+                builder.Add(keyword);
+            }
+
+            schema = builder.Build();
+        }
+
+        private void ResolveJsonSchema(JsonSchema schema, Action<JsonSchema> assign)
+        {
+            if (schema == null)
+            {
+                return;
+            }
+
+            var reference = schema.GetRef();
+            if (reference != null)
+            {
+                assign(this.ResolveJsonSchemaReference(reference));
+            }
+        }
+
+        public JsonSchema ResolveJsonSchemaReference(Uri reference)
+        {
+            var refUri = $"https://registry{reference.OriginalString.Split('#').LastOrDefault()}";
+            var resolvedSchema = (JsonSchema)SchemaRegistry.Global.Get(new Uri(refUri));
+
+            if (resolvedSchema != null)
+            {
+                var resolvedSchemaBuilder = new JsonSchemaBuilder();
+
+                foreach (var keyword in resolvedSchema.Keywords)
+                {
+                    resolvedSchemaBuilder.Add(keyword);
+                }
+
+                return resolvedSchemaBuilder.Build();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private void ResolveObject<T>(T entity, Action<T> assign)
@@ -201,6 +239,15 @@ namespace LEGO.AsyncAPI.Services
                 {
                     map[key] = this.ResolveReference<T>(entity.Reference);
                 }
+            }
+        }
+
+        private void ResolveMap(IDictionary<string, JsonSchema> map)
+        {
+            foreach (var schema in map)
+            {
+                var schemaValue = schema.Value;
+                this.Visit(ref schemaValue);
             }
         }
 

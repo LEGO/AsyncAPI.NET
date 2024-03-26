@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Http
 
             message.Bindings.Add(new HttpMessageBinding
             {
-                Headers = new AsyncApiSchema
+                Headers = new JsonSchema
                 {
                     Description = "this mah binding",
                 },
@@ -62,7 +62,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Http
             {
                 Type = HttpOperationBinding.HttpOperationType.Request,
                 Method = "POST",
-                Query = new AsyncApiSchema
+                Query = new JsonSchema
                 {
                     Description = "this mah query",
                 },

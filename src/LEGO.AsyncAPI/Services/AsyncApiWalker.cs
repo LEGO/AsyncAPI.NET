@@ -4,13 +4,14 @@ namespace LEGO.AsyncAPI.Services
 {
     using System;
     using System.Collections.Generic;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     public class AsyncApiWalker
     {
         private readonly AsyncApiVisitorBase visitor;
-        private readonly Stack<AsyncApiSchema> schemaLoop = new();
+        private readonly Stack<JsonSchema> schemaLoop = new();
 
         public AsyncApiWalker(AsyncApiVisitorBase visitor)
         {
@@ -293,7 +294,7 @@ namespace LEGO.AsyncAPI.Services
             this.Walk(parameter as IAsyncApiExtensible);
         }
 
-        internal void Walk(AsyncApiSchema schema, bool isComponent = false)
+        internal void Walk(JsonSchema schema, bool isComponent = false)
         {
             if (schema == null || this.ProcessAsReference(schema, isComponent))
             {
@@ -309,121 +310,121 @@ namespace LEGO.AsyncAPI.Services
                 this.schemaLoop.Push(schema);
             }
 
-            this.visitor.Visit(schema);
+            this.visitor.Visit(ref schema);
 
-            if (schema.Items != null)
+            if (schema.GetItems() != null)
             {
-                this.Walk("items", () => this.Walk(schema.Items));
+                this.Walk("items", () => this.Walk(schema.GetItems()));
             }
 
-            if (schema.Default != null)
+            if (schema.GetDefault() != null)
             {
-                this.Walk(AsyncApiConstants.Default, () => this.Walk(schema.Default));
+                this.Walk(AsyncApiConstants.Default, () => this.Walk(new AsyncApiAny(schema.GetDefault())));
             }
 
-            if (schema.AllOf != null)
+            if (schema.GetAllOf() != null)
             {
-                foreach (var item in schema.AllOf)
+                foreach (var item in schema.GetAllOf())
                 {
                     this.Walk("allOf", () => this.Walk(item));
                 }
             }
 
-            if (schema.AnyOf != null)
+            if (schema.GetAnyOf() != null)
             {
-                foreach (var item in schema.AnyOf)
+                foreach (var item in schema.GetAnyOf())
                 {
                     this.Walk("anyOf", () => this.Walk(item));
                 }
             }
 
-            if (schema.Not != null)
+            if (schema.GetNot() != null)
             {
-                this.Walk("not", () => this.Walk(schema.Not));
+                this.Walk("not", () => this.Walk(schema.GetNot()));
             }
 
-            if (schema.Contains != null)
+            if (schema.GetContains() != null)
             {
-                this.Walk("contains", () => this.Walk(schema.Contains));
+                this.Walk("contains", () => this.Walk(schema.GetContains()));
             }
 
-            if (schema.If != null)
+            if (schema.GetIf() != null)
             {
-                this.Walk("if", () => this.Walk(schema.If));
+                this.Walk("if", () => this.Walk(schema.GetIf()));
             }
 
-            if (schema.Then != null)
+            if (schema.GetThen() != null)
             {
-                this.Walk("then", () => this.Walk(schema.Then));
+                this.Walk("then", () => this.Walk(schema.GetThen()));
             }
 
-            if (schema.Else != null)
+            if (schema.GetElse() != null)
             {
-                this.Walk("else", () => this.Walk(schema.Else));
+                this.Walk("else", () => this.Walk(schema.GetElse()));
             }
 
-            if (schema.OneOf != null)
+            if (schema.GetOneOf() != null)
             {
-                foreach (var item in schema.OneOf)
+                foreach (var item in schema.GetOneOf())
                 {
                     this.Walk("oneOf", () => this.Walk(item));
                 }
             }
 
-            if (schema.Properties != null)
+            if (schema.GetProperties() != null)
             {
                 this.Walk("properties", () =>
                 {
-                    foreach (var item in schema.Properties)
+                    foreach (var item in schema.GetProperties())
                     {
                         this.Walk(item.Key, () => this.Walk(item.Value));
                     }
                 });
             }
 
-            if (schema.AdditionalProperties != null)
+            if (schema.GetAdditionalProperties() != null)
             {
-                this.Walk("additionalProperties", () => this.Walk(schema.AdditionalProperties));
+                this.Walk("additionalProperties", () => this.Walk(schema.GetAdditionalProperties()));
             }
 
-            if (schema.PatternProperties != null)
+            if (schema.GetPatternProperties() != null)
             {
                 this.Walk("patternProperties", () =>
                 {
-                    foreach (var item in schema.PatternProperties)
+                    foreach (var item in schema.GetPatternProperties())
                     {
-                        this.Walk(item.Key, () => this.Walk(item.Value));
+                        this.Walk(item.Key.ToString(), () => this.Walk(item.Value));
                     }
                 });
             }
 
-            if (schema.PropertyNames != null)
+            if (schema.GetPropertyNames() != null)
             {
-                this.Walk("propertyNames", () => this.Walk(schema.PropertyNames));
+                this.Walk("propertyNames", () => this.Walk(schema.GetPropertyNames()));
             }
 
-            if (schema.Enum != null)
+            if (schema.GetEnum() != null)
             {
-                foreach (var item in schema.Enum)
+                foreach (var item in schema.GetEnum())
                 {
-                    this.Walk("enum", () => this.Walk(item));
+                    this.Walk("enum", () => this.Walk(new AsyncApiAny(item)));
                 }
             }
 
-            if (schema.Examples != null)
+            if (schema.GetExamples() != null)
             {
-                foreach (var item in schema.Examples)
+                foreach (var item in schema.GetExamples())
                 {
-                    this.Walk("examples", () => this.Walk(item));
+                    this.Walk("examples", () => this.Walk(new AsyncApiAny(item)));
                 }
             }
 
-            if (schema.Const != null)
+            if (schema.GetConst() != null)
             {
-                this.Walk("const", () => this.Walk(schema.Const));
+                this.Walk("const", () => this.Walk(new AsyncApiAny(schema.GetConst())));
             }
 
-            this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(schema.ExternalDocs));
+            this.Walk(AsyncApiConstants.ExternalDocs, () => this.Walk(schema.GetExternalDocs()));
 
             this.Walk(schema as IAsyncApiExtensible);
 
@@ -903,6 +904,17 @@ namespace LEGO.AsyncAPI.Services
             return isReference;
         }
 
+        private bool ProcessAsReference(JsonSchema jsonSchema, bool isComponent = false)
+        {
+            var isReference = jsonSchema.GetRef() != null && !isComponent;
+            if (isReference)
+            {
+                this.Walk(jsonSchema);
+            }
+
+            return isReference;
+        }
+
         internal void Walk(IAsyncApiReferenceable referenceable)
         {
             this.visitor.Visit(referenceable);
@@ -933,7 +945,7 @@ namespace LEGO.AsyncAPI.Services
                 case AsyncApiOAuthFlow e: this.Walk(e); break;
                 case AsyncApiOperation e: this.Walk(e); break;
                 case AsyncApiParameter e: this.Walk(e); break;
-                case AsyncApiSchema e: this.Walk(e); break;
+                case JsonSchema e: this.Walk(e); break;
                 case AsyncApiSecurityRequirement e: this.Walk(e); break;
                 case AsyncApiSecurityScheme e: this.Walk(e); break;
                 case AsyncApiServer e: this.Walk(e); break;

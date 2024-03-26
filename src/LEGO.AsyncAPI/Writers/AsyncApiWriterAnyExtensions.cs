@@ -41,6 +41,11 @@ namespace LEGO.AsyncAPI.Writers
             }
         }
 
+        public static void WriteAny(this IAsyncApiWriter writer, JsonNode node)
+        {
+            WriteAny(writer, new AsyncApiAny(node));
+        }
+
         /// <summary>
         /// Write the <see cref="AsyncApiAny"/> value.
         /// </summary>

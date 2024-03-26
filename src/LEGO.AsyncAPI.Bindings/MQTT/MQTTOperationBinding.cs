@@ -3,9 +3,6 @@
 namespace LEGO.AsyncAPI.Bindings.MQTT
 {
     using System;
-    using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models;
-    using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 

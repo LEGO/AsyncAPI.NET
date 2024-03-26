@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Validations
 {
     using System;
     using System.Collections.Generic;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Services;
@@ -125,10 +126,10 @@ namespace LEGO.AsyncAPI.Validations
         public override void Visit(AsyncApiParameter item) => this.Validate(item);
 
         /// <summary>
-        /// Execute validation rules against an <see cref="AsyncApiSchema"/>.
+        /// Execute validation rules against an <see cref="JsonSchema"/>.
         /// </summary>
         /// <param name="item">The object to be validated.</param>
-        public override void Visit(AsyncApiSchema item) => this.Validate(item);
+        public override void Visit(ref JsonSchema item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiServer"/>.
