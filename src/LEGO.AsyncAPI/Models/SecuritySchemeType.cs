@@ -27,51 +27,51 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Symmetric Encryption.
         /// </summary>
-        [Display("symmetricEncryption")]SymmetricEncryption,
+        [Display("symmetricEncryption")] SymmetricEncryption,
 
         /// <summary>
         /// Asymmetric Encryption.
         /// </summary>
-        [Display("asymmetricEncryption")]AsymmetricEncryption,
+        [Display("asymmetricEncryption")] AsymmetricEncryption,
 
         /// <summary>
         /// Api Key.
         /// </summary>
-        [Display("httpApiKey")]HttpApiKey,
+        [Display("httpApiKey")] HttpApiKey,
 
         /// <summary>
         /// Basic or Bearer token authorization header.
         /// </summary>
-        [Display("http")]Http,
+        [Display("http")] Http,
 
         /// <summary>
         /// OAuth2.
         /// </summary>
-        [Display("oauth2")]OAuth2,
+        [Display("oauth2")] OAuth2,
 
         /// <summary>
         /// OIDC.
         /// </summary>
-        [Display("openIdConnect")]OpenIdConnect,
+        [Display("openIdConnect")] OpenIdConnect,
 
         /// <summary>
         /// Plain.
         /// </summary>
-        [Display("plain")]Plain,
+        [Display("plain")] Plain,
 
         /// <summary>
         /// Sha256.
         /// </summary>
-        [Display("scramSha256")]ScramSha256,
+        [Display("scramSha256")] ScramSha256,
 
         /// <summary>
         /// Sha512.
         /// </summary>
-        [Display("scramSha512")]ScramSha512,
+        [Display("scramSha512")] ScramSha512,
 
         /// <summary>
         /// GssApi.
         /// </summary>
-        [Display("gssapi")]Gssapi,
+        [Display("gssapi")] Gssapi,
     }
 }

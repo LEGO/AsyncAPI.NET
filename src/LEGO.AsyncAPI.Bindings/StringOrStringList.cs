@@ -18,7 +18,7 @@ namespace LEGO.AsyncAPI.Bindings
             {
                 JsonArray array => IsValidStringList(array) ? new AsyncApiAny(array) : throw new ArgumentException($"{nameof(StringOrStringList)} value should only contain string items."),
                 JsonValue jValue => IsString(jValue) ? new AsyncApiAny(jValue) : throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list."),
-                _ => throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list.")
+                _ => throw new ArgumentException($"{nameof(StringOrStringList)} should be a string value or a string list."),
             };
         }
 
@@ -31,15 +31,15 @@ namespace LEGO.AsyncAPI.Bindings
                 case ValueNode:
                     return new StringOrStringList(new AsyncApiAny(node.GetScalarValue()));
                 case ListNode:
-                {
-                    var jsonArray = new JsonArray();
-                    foreach (var item in node as ListNode)
                     {
-                        jsonArray.Add(item.GetScalarValue());
-                    }
+                        var jsonArray = new JsonArray();
+                        foreach (var item in node as ListNode)
+                        {
+                            jsonArray.Add(item.GetScalarValue());
+                        }
 
-                    return new StringOrStringList(new AsyncApiAny(jsonArray));
-                }
+                        return new StringOrStringList(new AsyncApiAny(jsonArray));
+                    }
 
                 default:
                     throw new ArgumentException($"An error occured while parsing a {nameof(StringOrStringList)} node. " +

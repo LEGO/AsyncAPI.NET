@@ -48,9 +48,9 @@ namespace LEGO.AsyncAPI.Validation.Rules
                     context.Enter("url");
                     if (contact != null && contact.Url != null && !contact.Url.IsAbsoluteUri)
                     {
-                            context.CreateError(
-                                nameof(ContactUrlMustBeAbsolute),
-                                string.Format(Resource.Validation_MustBeAbsoluteUrl, "url", "contact"));
+                        context.CreateError(
+                            nameof(ContactUrlMustBeAbsolute),
+                            string.Format(Resource.Validation_MustBeAbsoluteUrl, "url", "contact"));
                     }
 
                     context.Exit();

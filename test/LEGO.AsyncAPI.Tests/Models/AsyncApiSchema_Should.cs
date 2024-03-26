@@ -263,7 +263,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                             {
                                 ["property6"] = new AsyncApiSchema
                                 {
-                                    Type = SchemaType.Boolean ,
+                                    Type = SchemaType.Boolean,
                                 },
                             },
                         },

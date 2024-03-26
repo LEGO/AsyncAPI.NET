@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Bindings.Sns
 {
     using System;
@@ -24,7 +26,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         /// Depending on the FilterPolicyScope, a map of either a message attribute or message body to an array of possible matches. The match may be a simple string for an exact match, but it may also be an object that represents a constraint and values for that constraint.
         /// </summary>
         public AsyncApiAny FilterPolicy { get; set; }
-        
+
         /// <summary>
         /// Determines whether the FilterPolicy applies to MessageAttributes or MessageBody.
         /// </summary>
@@ -85,7 +87,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
         [Display("lambda")] Lambda,
         [Display("firehose")] Firehose,
     }
-    
+
     public enum FilterPolicyScope
     {
         [Display("MessageAttributes")] MessageAttributes,

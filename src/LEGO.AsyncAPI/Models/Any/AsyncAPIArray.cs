@@ -11,7 +11,6 @@ namespace LEGO.AsyncAPI.Models
     [Obsolete("Please use AsyncApiAny instead")]
     public class AsyncApiArray : Collection<AsyncApiAny>, IAsyncApiExtension, IAsyncApiElement
     {
-
         public static explicit operator AsyncApiArray(AsyncApiAny any)
         {
             var a = new AsyncApiArray();

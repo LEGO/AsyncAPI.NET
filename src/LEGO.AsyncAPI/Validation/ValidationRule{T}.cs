@@ -9,7 +9,8 @@ namespace LEGO.AsyncAPI.Validations
     /// Class containing validation rule logic for <see cref="IAsyncApiElement"/>.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ValidationRule<T> : ValidationRule where T : IAsyncApiElement
+    public class ValidationRule<T> : ValidationRule
+        where T : IAsyncApiElement
     {
         private readonly Action<IValidationContext, T> validate;
 

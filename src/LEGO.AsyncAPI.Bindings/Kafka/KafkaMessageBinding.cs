@@ -36,7 +36,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
         /// <summary>
         /// The version of this binding. If omitted, "latest" MUST be assumed.
         /// </summary>
-        
+
         public override void SerializeProperties(IAsyncApiWriter writer)
         {
             if (writer is null)
@@ -62,9 +62,9 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
         /// <param name="writer">The writer.</param>
         /// <exception cref="ArgumentNullException">writer.</exception>
 
-       public override string BindingKey => "kafka";
+        public override string BindingKey => "kafka";
 
-        protected override FixedFieldMap<KafkaMessageBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<KafkaMessageBinding> FixedFieldMap => new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "key", (a, n) => { a.Key = JsonSchemaDeserializer.LoadSchema(n); } },

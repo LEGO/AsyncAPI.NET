@@ -29,7 +29,7 @@ namespace LEGO.AsyncAPI.Bindings.AMQP
 
         public override string BindingKey => "amqp";
 
-        protected override FixedFieldMap<AMQPChannelBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<AMQPChannelBinding> FixedFieldMap => new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "is", (a, n) => { a.Is = n.GetScalarValue().GetEnumFromDisplayName<ChannelType>(); } },
@@ -37,7 +37,7 @@ namespace LEGO.AsyncAPI.Bindings.AMQP
             { "queue", (a, n) => { a.Queue = n.ParseMap(QueueFixedFields); } },
         };
 
-        private static FixedFieldMap<Exchange> ExchangeFixedFields = new ()
+        private static FixedFieldMap<Exchange> ExchangeFixedFields = new()
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
             { "durable", (a, n) => { a.Durable = n.GetBooleanValue(); } },

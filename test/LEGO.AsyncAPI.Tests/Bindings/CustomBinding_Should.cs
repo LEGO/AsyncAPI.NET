@@ -18,7 +18,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        public static FixedFieldMap<NestedConfiguration> FixedFieldMap = new ()
+        public static FixedFieldMap<NestedConfiguration> FixedFieldMap = new()
         {
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
         };
@@ -84,10 +84,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             channel.Bindings.Add(new MyBinding
             {
                 Custom = "someValue",
-                Any = new AsyncApiObject()
+                Any = new AsyncApiAny(new Dictionary<string, string>()
                 {
-                    { "anyKeyName", new AsyncApiAny("anyValue") },
-                },
+                    { "anyKeyName", "anyValue" },
+                }),
                 BindingVersion = "0.1.0",
                 NestedConfiguration = new NestedConfiguration()
                 {

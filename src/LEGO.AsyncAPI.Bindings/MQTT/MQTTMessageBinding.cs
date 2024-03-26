@@ -54,7 +54,7 @@ namespace LEGO.AsyncAPI.Bindings.MQTT
 
         public override string BindingKey => "mqtt";
 
-        protected override FixedFieldMap<MQTTMessageBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<MQTTMessageBinding> FixedFieldMap => new()
         {
             { "payloadFormatIndicator", (a, n) => { a.PayloadFormatIndicator = n.GetIntegerValueOrDefault(); } },
             { "correlationData", (a, n) => { a.CorrelationData = JsonSchemaDeserializer.LoadSchema(n); } },

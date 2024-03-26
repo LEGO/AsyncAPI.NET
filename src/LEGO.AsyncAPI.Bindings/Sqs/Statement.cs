@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Bindings.Sqs
 {
     using System;
@@ -8,7 +10,6 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
 
     public class Statement : IAsyncApiExtensible
     {
-
         public Effect Effect { get; set; }
 
         /// <summary>

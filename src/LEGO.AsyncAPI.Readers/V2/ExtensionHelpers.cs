@@ -10,9 +10,10 @@ namespace LEGO.AsyncAPI.Readers
 
     public static class ExtensionHelpers
     {
-        public static PatternFieldMap<T> GetExtensionsFieldMap<T>() where T : IAsyncApiExtensible
+        public static PatternFieldMap<T> GetExtensionsFieldMap<T>()
+            where T : IAsyncApiExtensible
         {
-            return new ()
+            return new()
             {
                 {
                     s => s.StartsWith("x-"),

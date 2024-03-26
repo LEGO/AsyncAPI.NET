@@ -42,7 +42,6 @@ namespace LEGO.AsyncAPI.Validation.Rules
                     }
 
                     context.Exit();
-
                 });
 
         public static ValidationRule<AsyncApiOAuthFlow> OAuthFlowUrlMustBeAbsolute =>
@@ -55,7 +54,6 @@ namespace LEGO.AsyncAPI.Validation.Rules
                        context.CreateError(
                             nameof(OAuthFlowUrlMustBeAbsolute),
                             string.Format(Resource.Validation_MustBeAbsoluteUrl, "authorizationUrl", "flow"));
-
                    }
 
                    context.Exit();
@@ -66,7 +64,6 @@ namespace LEGO.AsyncAPI.Validation.Rules
                        context.CreateError(
                             nameof(OAuthFlowUrlMustBeAbsolute),
                             string.Format(Resource.Validation_MustBeAbsoluteUrl, "tokenUrl", "flow"));
-
                    }
 
                    context.Exit();

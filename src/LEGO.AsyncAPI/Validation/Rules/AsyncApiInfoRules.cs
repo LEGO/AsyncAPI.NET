@@ -43,7 +43,6 @@ namespace LEGO.AsyncAPI.Validation.Rules
                        context.CreateError(
                             nameof(TermsOfServiceUrlMustBeAbsolute),
                             string.Format(Resource.Validation_MustBeAbsoluteUrl, "termsOfService", "info"));
-
                    }
 
                    context.Exit();

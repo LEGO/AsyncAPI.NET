@@ -41,7 +41,7 @@ namespace LEGO.AsyncAPI.Bindings.AMQP
 
         public override string BindingKey => "amqp";
 
-        protected override FixedFieldMap<AMQPMessageBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<AMQPMessageBinding> FixedFieldMap => new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "contentEncoding", (a, n) => { a.ContentEncoding = n.GetScalarValue(); } },

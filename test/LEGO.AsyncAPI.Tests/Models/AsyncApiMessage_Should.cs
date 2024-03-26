@@ -15,12 +15,12 @@ namespace LEGO.AsyncAPI.Tests.Models
 
     internal class AsyncApiMessage_Should
     {
-            [Test]
-            public void AsyncApiMessage_WithNoType_DeserializesToDefault()
-            {
-                // Arrange
-                var expected =
-                    @"{
+        [Test]
+        public void AsyncApiMessage_WithNoType_DeserializesToDefault()
+        {
+            // Arrange
+            var expected =
+                @"{
                       ""payload"": {
                         ""type"": ""object"",
                         ""properties"": {
@@ -34,19 +34,19 @@ namespace LEGO.AsyncAPI.Tests.Models
                       }
                     }";
 
-                // Act
-                var message = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
+            // Act
+            var message = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
 
-                // Assert
-                diagnostic.Errors.Should().BeEmpty();
-                message.Payload.Properties.First().Value.Enum.Should().HaveCount(2);
-            }
+            // Assert
+            diagnostic.Errors.Should().BeEmpty();
+            message.Payload.Properties.First().Value.Enum.Should().HaveCount(2);
+        }
 
-            [Test]
-            public void AsyncApiMessage_WithNoSchemaFormat_DeserializesToDefault()
-            {
-                // Arrange
-                var expected =
+        [Test]
+        public void AsyncApiMessage_WithNoSchemaFormat_DeserializesToDefault()
+        {
+            // Arrange
+            var expected =
 @"payload:
   properties:
     propertyA:
@@ -54,20 +54,20 @@ namespace LEGO.AsyncAPI.Tests.Models
         - 'null'
         - string";
 
-                // Act
-                var message = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
+            // Act
+            var message = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
 
-                // Assert
-                diagnostic.Errors.Should().BeEmpty();
-                message.SchemaFormat.Should().BeNull();
-            }
+            // Assert
+            diagnostic.Errors.Should().BeEmpty();
+            message.SchemaFormat.Should().BeNull();
+        }
 
-            [Test]
-            public void AsyncApiMessage_WithUnsupportedSchemaFormat_DeserializesWithError()
-            {
-                // Arrange
-                var expected =
-    @"payload:
+        [Test]
+        public void AsyncApiMessage_WithUnsupportedSchemaFormat_DeserializesWithError()
+        {
+            // Arrange
+            var expected =
+@"payload:
   properties:
     propertyA:
       type:
@@ -75,30 +75,30 @@ namespace LEGO.AsyncAPI.Tests.Models
         - string
 schemaFormat: application/vnd.apache.avro;version=1.9.0";
 
-                // Act
-                new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
+            // Act
+            new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
 
-                // Assert
-                diagnostic.Errors.Should().HaveCount(1);
-                diagnostic.Errors.First().Message.Should().StartWith("'application/vnd.apache.avro;version=1.9.0' is not a supported format");
-            }
+            // Assert
+            diagnostic.Errors.Should().HaveCount(1);
+            diagnostic.Errors.First().Message.Should().StartWith("'application/vnd.apache.avro;version=1.9.0' is not a supported format");
+        }
 
-            [Test]
-            public void AsyncApiMessage_WithNoSchemaFormat_DoesNotSerializeSchemaFormat()
-            {
-                // Arrange
-                var expected =
-    @"payload:
+        [Test]
+        public void AsyncApiMessage_WithNoSchemaFormat_DoesNotSerializeSchemaFormat()
+        {
+            // Arrange
+            var expected =
+@"payload:
   properties:
     propertyA:
       type:
         - 'null'
         - string";
 
-                var message = new AsyncApiMessage();
-                message.Payload = new AsyncApiSchema()
-                {
-                    Properties = new Dictionary<string, AsyncApiSchema>()
+            var message = new AsyncApiMessage();
+            message.Payload = new AsyncApiSchema()
+            {
+                Properties = new Dictionary<string, AsyncApiSchema>()
                 {
                     {
                         "propertyA", new AsyncApiSchema()
@@ -107,27 +107,27 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
                         }
                     },
                 },
-                };
+            };
 
-                // Act
-                var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            // Act
+            var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
-                actual = actual.MakeLineBreaksEnvironmentNeutral();
-                expected = expected.MakeLineBreaksEnvironmentNeutral();
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-                var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
+            var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
-                // Assert
-                Assert.AreEqual(expected, actual);
-                message.Should().BeEquivalentTo(deserializedMessage);
-            }
+            // Assert
+            Assert.AreEqual(expected, actual);
+            message.Should().BeEquivalentTo(deserializedMessage);
+        }
 
-            [Test]
-            public void AsyncApiMessage_WithSchemaFormat_Serializes()
-            {
-                // Arrange
-                var expected =
-    @"payload:
+        [Test]
+        public void AsyncApiMessage_WithSchemaFormat_Serializes()
+        {
+            // Arrange
+            var expected =
+@"payload:
   properties:
     propertyA:
       type:
@@ -135,11 +135,11 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
         - string
 schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
 
-                var message = new AsyncApiMessage();
-                message.SchemaFormat = "application/vnd.aai.asyncapi+json;version=2.6.0";
-                message.Payload = new AsyncApiSchema()
-                {
-                    Properties = new Dictionary<string, AsyncApiSchema>()
+            var message = new AsyncApiMessage();
+            message.SchemaFormat = "application/vnd.aai.asyncapi+json;version=2.6.0";
+            message.Payload = new AsyncApiSchema()
+            {
+                Properties = new Dictionary<string, AsyncApiSchema>()
                 {
                     {
                         "propertyA", new AsyncApiSchema()
@@ -148,20 +148,20 @@ schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
                         }
                     },
                 },
-                };
+            };
 
-                // Act
-                var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            // Act
+            var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
-                actual = actual.MakeLineBreaksEnvironmentNeutral();
-                expected = expected.MakeLineBreaksEnvironmentNeutral();
+            actual = actual.MakeLineBreaksEnvironmentNeutral();
+            expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-                var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
+            var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
-                // Assert
-                Assert.AreEqual(expected, actual);
-                message.Should().BeEquivalentTo(deserializedMessage);
-            }
+            // Assert
+            Assert.AreEqual(expected, actual);
+            message.Should().BeEquivalentTo(deserializedMessage);
+        }
 
         [Test]
         public void AsyncApiMessage_WithFilledObject_Serializes()
@@ -243,10 +243,10 @@ traits:
                     Description = "HeaderDescription",
                     Examples = new List<AsyncApiAny>
                     {
-                        new AsyncApiObject
+                        new AsyncApiAny(new Dictionary<string, string>
                         {
-                            { "x-correlation-id", new AsyncApiAny("nil") },
-                        },
+                            { "x-correlation-id", "nil" },
+                        }),
                     },
                 },
                 Payload = new AsyncApiSchema()
@@ -262,7 +262,7 @@ traits:
                         {
                             "propB", new AsyncApiSchema()
                             {
-                                Type =SchemaType.String,
+                                Type = SchemaType.String,
                             }
                         },
                     },
@@ -306,11 +306,11 @@ traits:
                                 Description = "SchemaDescription",
                                 Examples = new List<AsyncApiAny>
                                 {
-                                    new AsyncApiObject
+                                    new AsyncApiAny(new Dictionary<string, object>
                                     {
-                                        { "cKey", new AsyncApiAny("c") },
-                                        { "dKey", new AsyncApiAny(1) },
-                                    },
+                                        { "cKey", "c" },
+                                        { "dKey", 1 },
+                                    }),
                                 },
                             },
                         }
@@ -320,11 +320,11 @@ traits:
                 {
                     new AsyncApiMessageExample
                     {
-                        Payload = new AsyncApiObject()
+                        Payload = new AsyncApiAny(new Dictionary<string, string>()
                         {
-                            { "PropA", new AsyncApiAny("a") },
-                            { "PropB", new AsyncApiAny("b") },
-                        },
+                            { "PropA", "a" },
+                            { "PropB", "b" },
+                        }),
                     },
                 },
                 Traits = new List<AsyncApiMessageTrait>
@@ -340,11 +340,11 @@ traits:
                             Description = "SchemaDescription",
                             Examples = new List<AsyncApiAny>
                             {
-                                new AsyncApiObject
+                                new AsyncApiAny(new Dictionary<string, object>
                                 {
-                                    { "eKey", new AsyncApiAny("e") },
-                                    { "fKey", new AsyncApiAny(1) },
-                                },
+                                    { "eKey", "e" },
+                                    { "fKey", 1 },
+                                }),
                             },
                         },
                         Examples = new List<AsyncApiMessageExample>
@@ -353,11 +353,11 @@ traits:
                             {
                                 Summary = "MessageExampleSummary",
                                 Name = "MessageExampleName",
-                                Payload = new AsyncApiObject
+                                Payload = new AsyncApiAny(new Dictionary<string, object>
                                 {
-                                    { "gKey", new AsyncApiAny("g") },
-                                    { "hKey", new AsyncApiAny(true) },
-                                },
+                                    { "gKey", "g" },
+                                    { "hKey", true },
+                                }),
                                 Extensions = new Dictionary<string, IAsyncApiExtension>
                                 {
                                     { "x-extension-b", new AsyncApiAny("b") },
