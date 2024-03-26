@@ -7,6 +7,33 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
+    public static class BindingExtensions
+    {
+        public static bool TryGetValue<TBinding>(this AsyncApiBindings<IServerBinding> bindings, out IServerBinding binding)
+            where TBinding : IServerBinding
+        {
+            return bindings.TryGetValue(Activator.CreateInstance<TBinding>().BindingKey, out binding);
+        }
+
+        public static bool TryGetValue<TBinding>(this AsyncApiBindings<IChannelBinding> bindings, out IChannelBinding binding)
+    where TBinding : IChannelBinding
+        {
+            return bindings.TryGetValue(Activator.CreateInstance<TBinding>().BindingKey, out binding);
+        }
+
+        public static bool TryGetValue<TBinding>(this AsyncApiBindings<IOperationBinding> bindings, out IOperationBinding binding)
+    where TBinding : IOperationBinding
+        {
+            return bindings.TryGetValue(Activator.CreateInstance<TBinding>().BindingKey, out binding);
+        }
+
+        public static bool TryGetValue<TBinding>(this AsyncApiBindings<IMessageBinding> bindings, out IMessageBinding binding)
+    where TBinding : IMessageBinding
+        {
+            return bindings.TryGetValue(Activator.CreateInstance<TBinding>().BindingKey, out binding);
+        }
+    }
+
     public class AsyncApiBindings<TBinding> : Dictionary<string, TBinding>, IAsyncApiReferenceable
         where TBinding : IBinding
     {
