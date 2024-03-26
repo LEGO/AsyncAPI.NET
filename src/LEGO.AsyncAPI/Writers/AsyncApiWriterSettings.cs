@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.Writers
 {
     using LEGO.AsyncAPI.Models;
 
-    public class AsyncApiWriterSettings
+    public class AsyncApiWriterSettings : AsyncApiSettings
     {
         private ReferenceInlineSetting referenceInline = ReferenceInlineSetting.DoNotInlineReferences;
 

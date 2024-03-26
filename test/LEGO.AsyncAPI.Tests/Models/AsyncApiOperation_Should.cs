@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Tests.Models
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
-    public class AsyncApiOperation_Should
+    public class AsyncApiOperation_Should : TestBase
     {
         [Test]
         public void SerializeV2_WithNullWriter_Throws()
@@ -38,8 +38,9 @@ namespace LEGO.AsyncAPI.Tests.Models
             var asyncApiOperation = new AsyncApiOperation();
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "First Message" });
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "Second Message" });
-            var outputString = new StringWriter(Configuration.CultureInfo);
-            var writer = new AsyncApiYamlWriter(outputString);
+            var outputString = new StringWriter();
+            var settings = new AsyncApiWriterSettings();
+            var writer = new AsyncApiYamlWriter(outputString, settings);
 
             // Act
             asyncApiOperation.SerializeV2(writer);
@@ -60,8 +61,9 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             var asyncApiOperation = new AsyncApiOperation();
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "First Message" });
-            var outputString = new StringWriter(Configuration.CultureInfo);
-            var writer = new AsyncApiYamlWriter(outputString);
+            var settings = new AsyncApiWriterSettings();
+            var outputString = new StringWriter();
+            var writer = new AsyncApiYamlWriter(outputString, settings);
 
             // Act
             asyncApiOperation.SerializeV2(writer);

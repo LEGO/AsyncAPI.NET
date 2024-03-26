@@ -8,6 +8,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     using System.Linq;
     using System.Text.Json;
     using System.Text.Json.Nodes;
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Exceptions;
@@ -18,7 +19,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         private readonly List<PropertyNode> nodes;
 
         public MapNode(ParsingContext context, string jsonString)
-            : this(context, JsonHelper.ParseJsonString(jsonString))
+            : this(context, JsonNode.Parse(jsonString))
         {
         }
 
@@ -196,7 +197,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 return null;
             }
 
-            return refNode.GetScalarValue();
+            return this.ToScalarValue(refNode);
         }
 
         public string GetScalarValue(ValueNode key)
@@ -205,12 +206,18 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 ? jsonValue
                 : throw new AsyncApiReaderException($"Expected scalar value while parsing {key.GetScalarValue()}", this.Context);
 
-            return scalarNode.GetScalarValue();
+            return this.ToScalarValue(scalarNode);
         }
 
         public override AsyncApiAny CreateAny()
         {
             return new AsyncApiAny(this.node);
+        }
+
+        private string ToScalarValue(JsonNode node)
+        {
+            var scalarNode = node is JsonValue value ? value : throw new AsyncApiException($"Expected scalar value");
+            return Convert.ToString(scalarNode.GetValue<object>(), this.Context.Settings.CultureInfo);
         }
     }
 }

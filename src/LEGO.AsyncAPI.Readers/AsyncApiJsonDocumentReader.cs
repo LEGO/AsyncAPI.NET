@@ -22,9 +22,9 @@ namespace LEGO.AsyncAPI.Readers
         private readonly AsyncApiReaderSettings settings;
 
         /// <summary>
-        /// Create stream reader with custom settings if desired.
+        /// Initializes a new instance of the <see cref="AsyncApiJsonDocumentReader"/> class.
         /// </summary>
-        /// <param name="settings"></param>
+        /// <param name="settings">The settings used to read json.</param>
         public AsyncApiJsonDocumentReader(AsyncApiReaderSettings settings = null)
         {
             this.settings = settings ?? new AsyncApiReaderSettings();
@@ -39,7 +39,7 @@ namespace LEGO.AsyncAPI.Readers
         public AsyncApiDocument Read(JsonNode input, out AsyncApiDiagnostic diagnostic)
         {
             diagnostic = new AsyncApiDiagnostic();
-            var context = new ParsingContext(diagnostic)
+            var context = new ParsingContext(diagnostic, this.settings)
             {
                 ExtensionParsers = this.settings.ExtensionParsers,
                 ServerBindingParsers = this.settings.Bindings.OfType<IBindingParser<IServerBinding>>().ToDictionary(b => b.BindingKey, b => b),
@@ -80,7 +80,7 @@ namespace LEGO.AsyncAPI.Readers
         public async Task<ReadResult> ReadAsync(JsonNode input, CancellationToken cancellationToken = default)
         {
             var diagnostic = new AsyncApiDiagnostic();
-            var context = new ParsingContext(diagnostic)
+            var context = new ParsingContext(diagnostic, this.settings)
             {
                 ExtensionParsers = this.settings.ExtensionParsers,
             };
@@ -150,7 +150,7 @@ namespace LEGO.AsyncAPI.Readers
             where T : IAsyncApiElement
         {
             diagnostic = new AsyncApiDiagnostic();
-            var context = new ParsingContext(diagnostic)
+            var context = new ParsingContext(diagnostic, this.settings)
             {
                 ExtensionParsers = this.settings.ExtensionParsers,
                 ServerBindingParsers = this.settings.Bindings.OfType<IBindingParser<IServerBinding>>().ToDictionary(b => b.BindingKey, b => b),

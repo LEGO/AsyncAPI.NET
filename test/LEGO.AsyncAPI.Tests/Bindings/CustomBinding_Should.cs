@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
-    public class NestedConfiguration : TestBase, IAsyncApiExtensible
+    public class NestedConfiguration : IAsyncApiExtensible
     {
         public string Name { get; set; }
 

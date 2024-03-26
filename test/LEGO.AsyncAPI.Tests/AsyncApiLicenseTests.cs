@@ -63,7 +63,8 @@ namespace LEGO.AsyncAPI.Tests
            using (var stream = GenerateStreamFromString(input))
            {
                 var diagnostic = new AsyncApiDiagnostic();
-                var context = new ParsingContext(diagnostic);
+                var settings = new AsyncApiReaderSettings();
+                var context = new ParsingContext(diagnostic, settings);
 
                 var node = new MapNode(context, JsonNode.Parse(stream));
 
