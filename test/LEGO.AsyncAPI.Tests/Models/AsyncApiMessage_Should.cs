@@ -243,10 +243,10 @@ traits:
                     Description = "HeaderDescription",
                     Examples = new List<AsyncApiAny>
                     {
-                        new AsyncApiObject
+                        new AsyncApiAny(new Dictionary<string, string>
                         {
-                            { "x-correlation-id", new AsyncApiAny("nil") },
-                        },
+                            { "x-correlation-id", "nil" },
+                        }),
                     },
                 },
                 Payload = new AsyncApiSchema()
@@ -306,11 +306,11 @@ traits:
                                 Description = "SchemaDescription",
                                 Examples = new List<AsyncApiAny>
                                 {
-                                    new AsyncApiObject
+                                    new AsyncApiAny(new Dictionary<string, object>
                                     {
-                                        { "cKey", new AsyncApiAny("c") },
-                                        { "dKey", new AsyncApiAny(1) },
-                                    },
+                                        { "cKey", "c" },
+                                        { "dKey", 1 },
+                                    }),
                                 },
                             },
                         }
@@ -320,11 +320,11 @@ traits:
                 {
                     new AsyncApiMessageExample
                     {
-                        Payload = new AsyncApiObject()
+                        Payload = new AsyncApiAny(new Dictionary<string, string>()
                         {
-                            { "PropA", new AsyncApiAny("a") },
-                            { "PropB", new AsyncApiAny("b") },
-                        },
+                            { "PropA", "a" },
+                            { "PropB", "b" },
+                        }),
                     },
                 },
                 Traits = new List<AsyncApiMessageTrait>
@@ -340,11 +340,11 @@ traits:
                             Description = "SchemaDescription",
                             Examples = new List<AsyncApiAny>
                             {
-                                new AsyncApiObject
+                                new AsyncApiAny(new Dictionary<string, object>
                                 {
-                                    { "eKey", new AsyncApiAny("e") },
-                                    { "fKey", new AsyncApiAny(1) },
-                                },
+                                    { "eKey", "e" },
+                                    { "fKey", 1 },
+                                }),
                             },
                         },
                         Examples = new List<AsyncApiMessageExample>
@@ -353,11 +353,11 @@ traits:
                             {
                                 Summary = "MessageExampleSummary",
                                 Name = "MessageExampleName",
-                                Payload = new AsyncApiObject
+                                Payload = new AsyncApiAny(new Dictionary<string, object>
                                 {
-                                    { "gKey", new AsyncApiAny("g") },
-                                    { "hKey", new AsyncApiAny(true) },
-                                },
+                                    { "gKey", "g" },
+                                    { "hKey", true },
+                                }),
                                 Extensions = new Dictionary<string, IAsyncApiExtension>
                                 {
                                     { "x-extension-b", new AsyncApiAny("b") },
