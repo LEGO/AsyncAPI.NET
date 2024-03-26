@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
 {
     using System.Collections.Generic;
