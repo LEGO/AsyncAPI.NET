@@ -46,6 +46,7 @@ namespace LEGO.AsyncAPI.Readers
                 ChannelBindingParsers = this.settings.Bindings.OfType<IBindingParser<IChannelBinding>>().ToDictionary(b => b.BindingKey, b => b),
                 OperationBindingParsers = this.settings.Bindings.OfType<IBindingParser<IOperationBinding>>().ToDictionary(b => b.BindingKey, b => b),
                 MessageBindingParsers = this.settings.Bindings.OfType<IBindingParser<IMessageBinding>>().ToDictionary(b => b.BindingKey, b => b),
+                CultureInfo = this.settings.CultureInfo,
             };
 
             AsyncApiDocument document = null;

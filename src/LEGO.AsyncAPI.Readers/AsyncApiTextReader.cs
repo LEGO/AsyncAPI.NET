@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Readers
 {
     using System.IO;
     using System.Linq;
+    using System.Runtime.CompilerServices;
     using System.Text.Json;
     using System.Text.Json.Nodes;
     using System.Threading;
@@ -100,7 +101,7 @@ namespace LEGO.AsyncAPI.Readers
             // Parse the YAML/JSON
             try
             {
-                jsonNode = LoadYamlDocument(input);
+                jsonNode = LoadYamlDocument(input, this.settings);
             }
             catch (JsonException ex)
             {
@@ -118,11 +119,11 @@ namespace LEGO.AsyncAPI.Readers
         /// </summary>
         /// <param name="input">Stream containing YAML formatted text.</param>
         /// <returns>Instance of a YamlDocument.</returns>
-        static JsonNode LoadYamlDocument(TextReader input)
+        static JsonNode LoadYamlDocument(TextReader input, AsyncApiReaderSettings settings)
         {
             var yamlStream = new YamlStream();
             yamlStream.Load(input);
-            return yamlStream.Documents.First().ToJsonNode();
+            return yamlStream.Documents.First().ToJsonNode(settings);
         }
     }
 }

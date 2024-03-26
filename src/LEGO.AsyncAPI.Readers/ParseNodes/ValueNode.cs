@@ -2,14 +2,17 @@
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using System;
+    using System.Text.Json.Nodes;
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Exceptions;
-    using System.Text.Json.Nodes;
 
     public class ValueNode : ParseNode
     {
         private readonly JsonNode node;
         private string cachedScalarValue;
+
         public ValueNode(ParsingContext context, JsonNode node)
             : base(
             context)
@@ -26,7 +29,8 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         {
             if (this.cachedScalarValue == null)
             {
-                this.cachedScalarValue = this.node.GetScalarValue();
+                var scalarNode = this.node is JsonValue value ? value : throw new AsyncApiException($"Expected scalar value");
+                this.cachedScalarValue = Convert.ToString(scalarNode.GetValue<object>(), this.Context.CultureInfo);
             }
 
             return this.cachedScalarValue;

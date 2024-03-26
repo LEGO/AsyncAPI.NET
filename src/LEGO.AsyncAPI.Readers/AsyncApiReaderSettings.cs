@@ -26,7 +26,7 @@ namespace LEGO.AsyncAPI.Readers
     /// <summary>
     /// Configuration settings to control how AsyncApi documents are parsed.
     /// </summary>
-    public class AsyncApiReaderSettings
+    public class AsyncApiReaderSettings : AsyncApiSettings
     {
         /// <summary>
         /// Indicates how references in the source document should be handled.

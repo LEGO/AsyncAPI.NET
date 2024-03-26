@@ -100,7 +100,7 @@ namespace LEGO.AsyncAPI.Writers
         /// Escapes all special characters and put the string in quotes if necessary to
         /// get a YAML-compatible string.
         /// </summary>
-        internal static string GetYamlCompatibleString(this string input)
+        internal static string GetYamlCompatibleString(this string input, AsyncApiWriterSettings settings)
         {
             // If string is an empty string, wrap it in quote to ensure it is not recognized as null.
             if (input == "")
@@ -185,7 +185,7 @@ namespace LEGO.AsyncAPI.Writers
 
             // If string can be mistaken as a number, a boolean, or a timestamp,
             // wrap it in quote to indicate that this is indeed a string, not a number, a boolean, or a timestamp
-            if (decimal.TryParse(input, NumberStyles.Float, CultureInfo.InvariantCulture, out var _) ||
+            if (decimal.TryParse(input, NumberStyles.Float, settings.CultureInfo, out var _) ||
                 bool.TryParse(input, out var _) ||
                 DateTime.TryParse(input, out var _))
             {

@@ -9,12 +9,6 @@ namespace LEGO.AsyncAPI.Readers
 
     internal static class JsonHelper
     {
-        public static string GetScalarValue(this JsonNode node)
-        {
-            var scalarNode = node is JsonValue value ? value : throw new AsyncApiException($"Expected scalar value");
-            return Convert.ToString(scalarNode.GetValue<object>(), CultureInfo.InvariantCulture);
-        }
-
         public static JsonNode ParseJsonString(string jsonString)
         {
             return JsonNode.Parse(jsonString);

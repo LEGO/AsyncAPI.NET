@@ -153,7 +153,7 @@ namespace LEGO.AsyncAPI.Writers
                 this.WriteIndentation();
             }
 
-            name = name.GetYamlCompatibleString();
+            name = name.GetYamlCompatibleString(this.Settings);
 
             this.Writer.Write(name);
             this.Writer.Write(":");
@@ -171,7 +171,7 @@ namespace LEGO.AsyncAPI.Writers
             {
                 this.WriteValueSeparator();
 
-                value = value.GetYamlCompatibleString();
+                value = value.GetYamlCompatibleString(this.Settings);
 
                 this.Writer.Write(value);
             }

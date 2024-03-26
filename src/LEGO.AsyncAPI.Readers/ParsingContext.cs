@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Readers
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Models;
@@ -34,6 +35,8 @@ namespace LEGO.AsyncAPI.Readers
         internal Dictionary<string, IBindingParser<IMessageBinding>> MessageBindingParsers { get; set; } = new();
 
         internal RootNode RootNode { get; set; }
+
+        internal CultureInfo CultureInfo { get; set; } = CultureInfo.InvariantCulture;
 
         internal List<AsyncApiTag> Tags { get; private set; } = new();
 
