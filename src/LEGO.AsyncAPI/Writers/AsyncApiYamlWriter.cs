@@ -64,9 +64,9 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override void WriteStartObject()
         {
-            Scope previousScope = this.CurrentScope();
+            var previousScope = this.CurrentScope();
 
-            Scope currentScope = this.StartScope(ScopeType.Object);
+            var currentScope = this.StartScope(ScopeType.Object);
 
             if (previousScope != null && previousScope.Type == ScopeType.Array)
             {
@@ -87,10 +87,10 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override void WriteEndObject()
         {
-            Scope previousScope = this.EndScope(ScopeType.Object);
+            var previousScope = this.EndScope(ScopeType.Object);
             this.DecreaseIndentation();
 
-            Scope currentScope = this.CurrentScope();
+            var currentScope = this.CurrentScope();
 
             // If the object is empty, indicate it by writing { }
             if (previousScope.ObjectCount == 0)
@@ -110,9 +110,9 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override void WriteStartArray()
         {
-            Scope previousScope = this.CurrentScope();
+            var previousScope = this.CurrentScope();
 
-            Scope currentScope = this.StartScope(ScopeType.Array);
+            var currentScope = this.StartScope(ScopeType.Array);
 
             if (previousScope != null && previousScope.Type == ScopeType.Array)
             {
@@ -133,10 +133,10 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public override void WriteEndArray()
         {
-            Scope previousScope = this.EndScope(ScopeType.Array);
+            var previousScope = this.EndScope(ScopeType.Array);
             this.DecreaseIndentation();
 
-            Scope currentScope = this.CurrentScope();
+            var currentScope = this.CurrentScope();
 
             // If the array is empty, indicate it by writing [ ]
             if (previousScope.ObjectCount == 0)
@@ -158,7 +158,7 @@ namespace LEGO.AsyncAPI.Writers
         {
             this.VerifyCanWritePropertyName(name);
 
-            Scope currentScope = this.CurrentScope();
+            var currentScope = this.CurrentScope();
 
             // If this is NOT the first property in the object, always start a new line and add indentation.
             if (currentScope.ObjectCount != 0)
@@ -249,13 +249,13 @@ namespace LEGO.AsyncAPI.Writers
 
         private void WriteChompingIndicator(string value)
         {
-            int trailingNewlines = 0;
-            int end = value.Length - 1;
+            var trailingNewlines = 0;
+            var end = value.Length - 1;
 
             // We only need to know whether there are 0, 1, or more trailing newlines
             while (end >= 0 && trailingNewlines < 2)
             {
-                int found = value.LastIndexOfAny(new[] { '\n', '\r' }, end, 2);
+                var found = value.LastIndexOfAny(new[] { '\n', '\r' }, end, 2);
                 if (found == -1 || found != end)
                 {
                     // does not ends with newline
