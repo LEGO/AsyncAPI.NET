@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 {
     using System.Collections.Generic;
@@ -59,10 +61,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                     {
                         {
                             "x-orderingExtension",
-                            new AsyncApiObject()
+                            new AsyncApiAny(new Dictionary<string, string>()
                             {
-                                { "orderingXPropertyName", new AsyncApiAny("orderingXPropertyValue") },
-                            }
+                                { "orderingXPropertyName", "orderingXPropertyValue" },
+                            })
                         },
                     },
                 },
@@ -74,29 +76,29 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         {
                             Effect = Effect.Deny,
                             Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
-                            Action = new StringOrStringList(new AsyncApiArray()
+                            Action = new StringOrStringList(new AsyncApiAny(new List<string>()
                             {
-                                new AsyncApiAny("sns:Publish"),
-                                new AsyncApiAny("sns:Delete")
-                            }),
+                                "sns:Publish",
+                                "sns:Delete",
+                            })),
                         },
                         new Statement()
                         {
                             Effect = Effect.Allow,
-                            Principal = new StringOrStringList(new AsyncApiArray()
+                            Principal = new StringOrStringList(new AsyncApiAny(new List<string>()
                             {
-                                new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann"),
-                                new AsyncApiAny("arn:aws:iam::123456789012:user/dec.kolakowski")
-                            }),
+                                "arn:aws:iam::123456789012:user/alex.wichmann",
+                                "arn:aws:iam::123456789012:user/dec.kolakowski",
+                            })),
                             Action = new StringOrStringList(new AsyncApiAny("sns:Create")),
                             Extensions = new Dictionary<string, IAsyncApiExtension>()
                             {
                                 {
                                     "x-statementExtension",
-                                    new AsyncApiObject()
+                                    new AsyncApiAny(new Dictionary<string, string>()
                                     {
-                                        { "statementXPropertyName", new AsyncApiAny("statementXPropertyValue") },
-                                    }
+                                        { "statementXPropertyName", "statementXPropertyValue" },
+                                    })
                                 },
                             },
                         },
@@ -105,10 +107,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                     {
                         {
                             "x-policyExtension",
-                            new AsyncApiObject()
+                            new AsyncApiAny(new Dictionary<string, string>()
                             {
-                                { "policyXPropertyName", new AsyncApiAny("policyXPropertyValue") },
-                            }
+                                { "policyXPropertyName", "policyXPropertyValue" },
+                            })
                         },
                     },
                 },
@@ -121,10 +123,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                 {
                     {
                         "x-bindingExtension",
-                        new AsyncApiObject()
+                        new AsyncApiAny(new Dictionary<string, string>()
                         {
-                            { "bindingXPropertyName", new AsyncApiAny("bindingXPropertyValue") },
-                        }
+                            { "bindingXPropertyName", "bindingXPropertyValue" },
+                        })
                     },
                 },
             });
@@ -221,10 +223,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                     {
                         {
                             "x-identifierExtension",
-                            new AsyncApiObject()
+                            new AsyncApiAny(new Dictionary<string, string>()
                             {
-                                { "identifierXPropertyName", new AsyncApiAny("identifierXPropertyValue") },
-                            }
+                                { "identifierXPropertyName", "identifierXPropertyValue" },
+                            })
                         },
                     },
                 },
@@ -240,41 +242,41 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             {
                                 {
                                     "x-identifierExtension",
-                                    new AsyncApiObject()
+                                    new AsyncApiAny(new Dictionary<string, string>()
                                     {
-                                        { "identifierXPropertyName", new AsyncApiAny("identifierXPropertyValue") },
-                                    }
+                                        { "identifierXPropertyName", "identifierXPropertyValue" },
+                                    })
                                 },
                             },
                         },
-                        FilterPolicy = new AsyncApiObject()
-                        { 
-                            { "store", new AsyncApiArray() { new AsyncApiAny("asyncapi_corp") } },
-                            { "contact", new AsyncApiAny("dec.kolakowski") },
+                        FilterPolicy = new AsyncApiAny(new Dictionary<string, object>()
+                        {
+                            { "store", new List<string>() { "asyncapi_corp" } },
+                            { "contact", "dec.kolakowski" },
                             {
-                                "event", new AsyncApiArray()
+                                "event", new List<Dictionary<string, string>>()
                                 {
-                                    new AsyncApiObject()
+                                    new Dictionary<string, string>()
                                     {
-                                        { "anything-but", new AsyncApiAny("order_cancelled") },
+                                        { "anything-but", "order_cancelled" },
                                     },
                                 }
                             },
                             {
-                                "order_key", new AsyncApiObject()
+                                "order_key", new Dictionary<string, string>()
                                 {
-                                    { "transient", new AsyncApiAny("by_area") },
+                                    { "transient", "by_area" },
                                 }
                             },
                             {
-                                "customer_interests", new AsyncApiArray()
+                                "customer_interests", new List<string>()
                                 {
-                                    new AsyncApiAny("rugby"),
-                                    new AsyncApiAny("football"),
-                                    new AsyncApiAny("baseball"),
+                                    "rugby",
+                                    "football",
+                                    "baseball",
                                 }
                             },
-                        },
+                        }),
                         FilterPolicyScope = FilterPolicyScope.MessageAttributes,
                         RawMessageDelivery = false,
                         RedrivePolicy = new RedrivePolicy()
@@ -286,10 +288,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                                 {
                                     {
                                         "x-identifierExtension",
-                                        new AsyncApiObject()
+                                        new AsyncApiAny(new Dictionary<string, string>()
                                         {
-                                            { "identifierXPropertyName", new AsyncApiAny("identifierXPropertyValue") },
-                                        }
+                                            { "identifierXPropertyName", "identifierXPropertyValue" },
+                                        })
                                     },
                                 },
                             },
@@ -298,10 +300,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             {
                                 {
                                     "x-redrivePolicyExtension",
-                                    new AsyncApiObject()
+                                    new AsyncApiAny(new Dictionary<string, string>()
                                     {
-                                        { "redrivePolicyXPropertyName", new AsyncApiAny("redrivePolicyXPropertyValue") },
-                                    }
+                                        { "redrivePolicyXPropertyName", "redrivePolicyXPropertyValue" },
+                                    })
                                 },
                             },
                         },
@@ -319,10 +321,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                             {
                                 {
                                     "x-deliveryPolicyExtension",
-                                    new AsyncApiObject()
+                                    new AsyncApiAny(new Dictionary<string, string>()
                                     {
-                                        { "deliveryPolicyXPropertyName", new AsyncApiAny("deliveryPolicyXPropertyValue") },
-                                    }
+                                        { "deliveryPolicyXPropertyName", "deliveryPolicyXPropertyValue" },
+                                    })
                                 },
                             },
                         },
@@ -330,10 +332,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         {
                             {
                                 "x-consumerExtension",
-                                new AsyncApiObject()
+                                new AsyncApiAny(new Dictionary<string, string>()
                                 {
-                                    { "consumerXPropertyName", new AsyncApiAny("consumerXPropertyValue") },
-                                }
+                                    { "consumerXPropertyName", "consumerXPropertyValue" },
+                                })
                             },
                         },
                     },
@@ -352,10 +354,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                     {
                         {
                             "x-deliveryPolicyExtension",
-                            new AsyncApiObject()
+                            new AsyncApiAny(new Dictionary<string, string>()
                             {
-                                { "deliveryPolicyXPropertyName", new AsyncApiAny("deliveryPolicyXPropertyValue") },
-                            }
+                                { "deliveryPolicyXPropertyName", "deliveryPolicyXPropertyValue" },
+                            })
                         },
                     },
                 },
@@ -363,10 +365,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                 {
                     {
                         "x-bindingExtension",
-                        new AsyncApiObject()
+                        new AsyncApiAny(new Dictionary<string, string>()
                         {
-                            { "bindingXPropertyName", new AsyncApiAny("bindingXPropertyValue") },
-                        }
+                            { "bindingXPropertyName", "bindingXPropertyValue" },
+                        })
                     },
                 },
             });
@@ -388,6 +390,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 
             var expectedSnsBinding = (SnsOperationBinding)operation.Bindings.Values.First();
             expectedSnsBinding.Should().BeEquivalentTo((SnsOperationBinding)binding.Bindings.Values.First(), options => options.IgnoringCyclicReferences());
+        }
+
+        class ExtensionClass
+        {
+            public string bindingXPropertyName { get; set; }
         }
     }
 }

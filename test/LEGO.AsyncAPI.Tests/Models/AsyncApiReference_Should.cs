@@ -11,7 +11,6 @@ namespace LEGO.AsyncAPI.Tests
 
     public class AsyncApiReference_Should : TestBase
     {
-
         [Test]
         public void AsyncApiReference_WithExternalFragmentUriReference_AllowReference()
         {

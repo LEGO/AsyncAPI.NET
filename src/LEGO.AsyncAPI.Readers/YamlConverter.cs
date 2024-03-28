@@ -1,4 +1,6 @@
-﻿namespace LEGO.AsyncAPI.Readers
+﻿// Copyright (c) The LEGO Group. All rights reserved.
+
+namespace LEGO.AsyncAPI.Readers
 {
     using System;
     using System.Globalization;
@@ -43,7 +45,7 @@
                 YamlMappingNode map => map.ToJsonObject(settings),
                 YamlSequenceNode seq => seq.ToJsonArray(settings),
                 YamlScalarNode scalar => scalar.ToJsonValue(settings),
-                _ => throw new NotSupportedException("This yaml isn't convertible to JSON")
+                _ => throw new NotSupportedException("This yaml isn't convertible to JSON"),
             };
         }
 

@@ -1,20 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../Common.Build.props" />
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
-	<Company>The LEGO Group</Company>
-	<PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<Description>AsyncAPI.NET Bindings</Description>
-	<PackageTags>asyncapi .net openapi documentation</PackageTags>
-	<PackageId>AsyncAPI.NET.Bindings</PackageId>
-	<AssemblyName>LEGO.AsyncAPI.Bindings</AssemblyName>
-	<RootNamespace>LEGO.AsyncAPI.Bindings</RootNamespace>
-	<RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
+	  <Description>AsyncAPI.NET Bindings</Description>
+	  <PackageId>AsyncAPI.NET.Bindings</PackageId>
+	  <AssemblyName>LEGO.AsyncAPI.Bindings</AssemblyName>
+	  <RootNamespace>LEGO.AsyncAPI.Bindings</RootNamespace>
   </PropertyGroup>
-
-	
   <ItemGroup>
     <None Remove="stylecop.json" />
   </ItemGroup>
@@ -24,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

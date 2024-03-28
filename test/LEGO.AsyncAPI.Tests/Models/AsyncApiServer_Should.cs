@@ -60,7 +60,7 @@ bindings:
                         }
                     },
                 });
-            server.Tags.Add(new AsyncApiTag { Name = "mytag1", Description ="description of tag1" });
+            server.Tags.Add(new AsyncApiTag { Name = "mytag1", Description = "description of tag1" });
             server.Bindings.Add(new KafkaServerBinding
             {
                 SchemaRegistryUrl = "http://example.com",

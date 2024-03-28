@@ -95,7 +95,6 @@ namespace LEGO.AsyncAPI.Tests.Models
                             Replicas = 2,
                         }
                     },
-
                 },
             };
 

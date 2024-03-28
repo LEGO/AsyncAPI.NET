@@ -174,6 +174,7 @@ namespace LEGO.AsyncAPI.Writers
                     writer.WriteValue(intValue);
                 }
             }
+
             if (primitive.ValueKind is JsonValueKind.True or JsonValueKind.False)
             {
                 writer.WriteValue(primitive.GetBoolean());

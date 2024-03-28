@@ -3,8 +3,10 @@ namespace LEGO.AsyncAPI.Bindings
 {
     using System;
     using System.Collections.Generic;
+    using LEGO.AsyncAPI.Bindings.AMQP;
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Bindings.Kafka;
+    using LEGO.AsyncAPI.Bindings.MQTT;
     using LEGO.AsyncAPI.Bindings.Pulsar;
     using LEGO.AsyncAPI.Bindings.Sns;
     using LEGO.AsyncAPI.Bindings.Sqs;
@@ -19,8 +21,15 @@ namespace LEGO.AsyncAPI.Bindings
     IEnumerable<TItem> source)
     where TCollection : ICollection<TItem>
         {
-            ArgumentNullException.ThrowIfNull(destination);
-            ArgumentNullException.ThrowIfNull(source);
+            if (destination == null)
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
+
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
             if (destination is List<TItem> list)
             {
@@ -44,6 +53,8 @@ namespace LEGO.AsyncAPI.Bindings
             Websockets,
             Sqs,
             Sns,
+            AMQP,
+            MQTT,
         };
 
         public static IEnumerable<IBindingParser<IBinding>> Http => new List<IBindingParser<IBinding>>
@@ -81,6 +92,20 @@ namespace LEGO.AsyncAPI.Bindings
         {
             new SnsChannelBinding(),
             new SnsOperationBinding(),
+        };
+
+        public static IEnumerable<IBindingParser<IBinding>> AMQP => new List<IBindingParser<IBinding>>
+        {
+            new AMQPChannelBinding(),
+            new AMQPOperationBinding(),
+            new AMQPMessageBinding(),
+        };
+
+        public static IEnumerable<IBindingParser<IBinding>> MQTT => new List<IBindingParser<IBinding>>
+        {
+            new MQTTServerBinding(),
+            new MQTTOperationBinding(),
+            new MQTTMessageBinding(),
         };
     }
 }

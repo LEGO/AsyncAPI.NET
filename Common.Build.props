@@ -1,0 +1,13 @@
+<Project>
+  <!-- Common Properties used by all assemblies -->
+  <PropertyGroup>
+    <LangVersion>10</LangVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Company>The LEGO Group</Company>
+    <PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
+    <PackageTags>asyncapi .net openapi documentation</PackageTags>
+  </PropertyGroup>
+</Project>

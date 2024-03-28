@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Bindings.Sqs
 {
     using System;
@@ -26,7 +28,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
         /// <summary>
         /// Specifies whether the FIFO queue throughput quota applies to the entire queue or per message group. Valid values are perQueue (default) and perMessageGroupId.
         /// </summary>
-       public FifoThroughputLimit? FifoThroughputLimit { get; set; }
+        public FifoThroughputLimit? FifoThroughputLimit { get; set; }
 
         /// <summary>
         /// The number of seconds to delay before a message sent to the queue can be received. used to create a delay queue.

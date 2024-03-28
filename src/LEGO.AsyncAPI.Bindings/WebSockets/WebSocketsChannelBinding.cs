@@ -25,9 +25,9 @@ namespace LEGO.AsyncAPI.Bindings.WebSockets
         /// </summary>
         public AsyncApiSchema Headers { get; set; }
 
-       public override  string BindingKey => "websockets";
+        public override string BindingKey => "websockets";
 
-        protected override FixedFieldMap<WebSocketsChannelBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<WebSocketsChannelBinding> FixedFieldMap => new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "method", (a, n) => { a.Method = n.GetScalarValue(); } },

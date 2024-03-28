@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.Readers
         private static PatternFieldMap<T> BindingPatternExtensionFields<T>()
     where T : IBinding, new()
         {
-            return new ()
+            return new()
             {
                 { s => s.StartsWith("x-"), (a, p, n) => a.AddExtension(p, AsyncApiV2Deserializer.LoadExtension(p, n)) },
             };

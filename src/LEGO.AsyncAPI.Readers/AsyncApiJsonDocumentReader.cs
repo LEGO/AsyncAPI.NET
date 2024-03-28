@@ -119,26 +119,6 @@ namespace LEGO.AsyncAPI.Readers
             };
         }
 
-        private void ResolveReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
-        {
-            var errors = new List<AsyncApiError>();
-
-            // Resolve References if requested
-            switch (this.settings.ReferenceResolution)
-            {
-                case ReferenceResolutionSetting.ResolveReferences:
-                    errors.AddRange(document.ResolveReferences());
-                    break;
-                case ReferenceResolutionSetting.DoNotResolveReferences:
-                    break;
-            }
-
-            foreach (var item in errors)
-            {
-                diagnostic.Errors.Add(item);
-            }
-        }
-
         /// <summary>
         /// Reads the stream input and parses the fragment of an AsyncApi description into an AsyncApi Element.
         /// </summary>
@@ -181,6 +161,27 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             return (T)element;
+        }
+
+        private void ResolveReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
+        {
+            var errors = new List<AsyncApiError>();
+
+            // Resolve References if requested
+            switch (this.settings.ReferenceResolution)
+            {
+                case ReferenceResolutionSetting.ResolveReferences:
+                    errors.AddRange(document.ResolveReferences());
+                    break;
+
+                case ReferenceResolutionSetting.DoNotResolveReferences:
+                    break;
+            }
+
+            foreach (var item in errors)
+            {
+                diagnostic.Errors.Add(item);
+            }
         }
     }
 }

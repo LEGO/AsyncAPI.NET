@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Bindings.Sns
 {
     using System;
@@ -43,7 +45,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             { "name", (a, n) => { a.Name = n.GetScalarValue(); } },
         };
 
-        private FixedFieldMap<Consumer> consumerFixedFields => new ()
+        private FixedFieldMap<Consumer> consumerFixedFields => new()
         {
             { "protocol", (a, n) => { a.Protocol = n.GetScalarValue().GetEnumFromDisplayName<Protocol>(); } },
             { "endpoint", (a, n) => { a.Endpoint = n.ParseMapWithExtensions(this.identifierFixFields); } },

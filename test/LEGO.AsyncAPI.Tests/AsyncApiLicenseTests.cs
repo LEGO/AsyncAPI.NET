@@ -54,14 +54,14 @@ namespace LEGO.AsyncAPI.Tests
         public void LoadLicense_WithJson_Deserializes()
         {
             // Arrange
-           var input = @"{
+            var input = @"{
   ""name"": ""test"",
   ""url"": ""https://example.com/license"",
   ""x-extension"": ""value""
 }";
 
-           using (var stream = GenerateStreamFromString(input))
-           {
+            using (var stream = GenerateStreamFromString(input))
+            {
                 var diagnostic = new AsyncApiDiagnostic();
                 var settings = new AsyncApiReaderSettings();
                 var context = new ParsingContext(diagnostic, settings);

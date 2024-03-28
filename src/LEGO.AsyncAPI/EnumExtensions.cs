@@ -18,7 +18,8 @@ namespace LEGO.AsyncAPI
         /// <returns>
         /// The attribute of the specified type or null.
         /// </returns>
-        public static T GetAttributeOfType<T>(this Enum enumValue) where T : Attribute
+        public static T GetAttributeOfType<T>(this Enum enumValue)
+            where T : Attribute
         {
             var type = enumValue.GetType();
             var memInfo = type.GetMember(enumValue.ToString()).First();

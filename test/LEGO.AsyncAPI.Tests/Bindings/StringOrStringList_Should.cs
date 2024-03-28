@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Tests.Bindings
 {
     using System;
@@ -13,23 +15,21 @@ namespace LEGO.AsyncAPI.Tests.Bindings
 
     public class StringOrStringList_Should : TestBase
     {
-
         [Test]
         public void StringOrStringList_IsInitialised_WhenPassedStringOrStringList()
         {
             // Arrange
             var stringValue = new StringOrStringList(new AsyncApiAny("AsyncApi"));
             var listValue = new StringOrStringList(
-                new AsyncApiArray()
+                new AsyncApiAny(new List<string>()
                 {
-                    new AsyncApiAny("Async"),
-                    new AsyncApiAny("Api"),
-                });
+                    "Async",
+                    "Api",
+                }));
 
             // Assert
             stringValue.Value.GetValue<string>().Should().Be("AsyncApi");
-            ((AsyncApiArray)listValue.Value)
-                .Select(s => s.GetValue<string>())
+            listValue.Value.GetValue<List<string>>()
                 .Should().BeEquivalentTo(new List<string>() { "Async", "Api" });
         }
 
@@ -48,12 +48,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings
         {
             // Assert
             var ex = Assert.Throws<ArgumentException>(() => new StringOrStringList(
-                new AsyncApiArray()
+                new AsyncApiAny(new List<object>()
                 {
-                    new AsyncApiAny("x"),
-                    new AsyncApiAny(1),
-                    new AsyncApiAny("y"),
-                }));
+                    "x",
+                    1,
+                    "y",
+                })));
 
             // Assert
             ex.Message.Should().Be("StringOrStringList value should only contain string items.");
@@ -101,12 +101,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new StringOrStringListTestBinding
             {
-                TestProperty = new StringOrStringList(new AsyncApiArray
+                TestProperty = new StringOrStringList(new AsyncApiAny(new List<string>
                 {
-                    new AsyncApiAny("someValue01"),
-                    new AsyncApiAny("someValue02"),
-                    new AsyncApiAny("someValue03"),
-                }),
+                    "someValue01",
+                    "someValue02",
+                    "someValue03",
+                })),
             });
 
             // Act
@@ -137,7 +137,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             writer.WriteEndObject();
         }
 
-        protected override FixedFieldMap<StringOrStringListTestBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<StringOrStringListTestBinding> FixedFieldMap => new()
         {
             { "testProperty", (a, n) => { a.TestProperty = new StringOrStringList(n.CreateAny()); } },
         };

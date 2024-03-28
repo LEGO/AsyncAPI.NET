@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Bindings
     using LEGO.AsyncAPI.Readers;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
-    public abstract class OperationBinding<T> : Binding<T> , IOperationBinding
+    public abstract class OperationBinding<T> : Binding<T>, IOperationBinding
         where T : IOperationBinding, new()
     {
         protected abstract FixedFieldMap<T> FixedFieldMap { get; }

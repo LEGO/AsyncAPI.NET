@@ -202,7 +202,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public string GetScalarValue(ValueNode key)
         {
-            var scalarNode = this.node[key.GetScalarValue()] is JsonValue jsonValue 
+            var scalarNode = this.node[key.GetScalarValue()] is JsonValue jsonValue
                 ? jsonValue
                 : throw new AsyncApiReaderException($"Expected scalar value while parsing {key.GetScalarValue()}", this.Context);
 

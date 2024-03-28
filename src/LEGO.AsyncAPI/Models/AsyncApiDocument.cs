@@ -145,7 +145,8 @@ namespace LEGO.AsyncAPI.Models
             return resolver.Errors;
         }
 
-        internal T ResolveReference<T>(AsyncApiReference reference) where T : class, IAsyncApiReferenceable
+        internal T ResolveReference<T>(AsyncApiReference reference)
+            where T : class, IAsyncApiReferenceable
         {
             return this.ResolveReference(reference) as T;
         }

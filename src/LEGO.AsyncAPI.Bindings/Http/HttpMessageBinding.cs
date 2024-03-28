@@ -13,7 +13,6 @@ namespace LEGO.AsyncAPI.Bindings.Http
     /// </summary>
     public class HttpMessageBinding : MessageBinding<HttpMessageBinding>
     {
-
         /// <summary>
         /// A Schema object containing the definitions for HTTP-specific headers. This schema MUST be of type object and have a properties key.
         /// </summary>
@@ -40,11 +39,10 @@ namespace LEGO.AsyncAPI.Bindings.Http
 
         public override string BindingKey => "http";
 
-        protected override FixedFieldMap<HttpMessageBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<HttpMessageBinding> FixedFieldMap => new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "headers", (a, n) => { a.Headers = JsonSchemaDeserializer.LoadSchema(n); } },
         };
-
     }
 }

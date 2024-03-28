@@ -21,7 +21,6 @@ namespace LEGO.AsyncAPI.Validation.Rules
                     }
 
                     context.Exit();
-
                 });
 
         public static ValidationRule<AsyncApiExternalDocumentation> ExternalDocumentationUrlMustBeAbsolute =>
@@ -34,7 +33,6 @@ namespace LEGO.AsyncAPI.Validation.Rules
                        context.CreateError(
                             nameof(ExternalDocumentationUrlMustBeAbsolute),
                             string.Format(Resource.Validation_MustBeAbsoluteUrl, "url", "externalDocumentation"));
-
                    }
 
                    context.Exit();

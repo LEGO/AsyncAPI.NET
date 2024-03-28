@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Readers
 
     public class ParsingContext
     {
-        private readonly Stack<string> currentLocation = new ();
+        private readonly Stack<string> currentLocation = new();
 
         internal Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>> ExtensionParsers
         {
@@ -23,19 +23,19 @@ namespace LEGO.AsyncAPI.Readers
             set;
         }
 
-        = new ();
+        = new();
 
-        internal Dictionary<string, IBindingParser<IServerBinding>> ServerBindingParsers { get; set; } = new ();
+        internal Dictionary<string, IBindingParser<IServerBinding>> ServerBindingParsers { get; set; } = new();
 
-        internal Dictionary<string, IBindingParser<IChannelBinding>> ChannelBindingParsers { get; set; }
-        
-        internal Dictionary<string, IBindingParser<IOperationBinding>> OperationBindingParsers { get; set; } = new ();
-        
-        internal Dictionary<string, IBindingParser<IMessageBinding>> MessageBindingParsers { get; set; } = new ();
+        internal Dictionary<string, IBindingParser<IChannelBinding>> ChannelBindingParsers { get; set; } = new();
+
+        internal Dictionary<string, IBindingParser<IOperationBinding>> OperationBindingParsers { get; set; } = new();
+
+        internal Dictionary<string, IBindingParser<IMessageBinding>> MessageBindingParsers { get; set; } = new();
 
         internal RootNode RootNode { get; set; }
 
-        internal List<AsyncApiTag> Tags { get; private set; } = new ();
+        internal List<AsyncApiTag> Tags { get; private set; } = new();
 
         public AsyncApiDiagnostic Diagnostic { get; }
 
@@ -88,7 +88,8 @@ namespace LEGO.AsyncAPI.Readers
             return doc;
         }
 
-        internal T ParseFragment<T>(JsonNode jsonNode, AsyncApiVersion version) where T : IAsyncApiElement
+        internal T ParseFragment<T>(JsonNode jsonNode, AsyncApiVersion version)
+            where T : IAsyncApiElement
         {
             var node = ParseNode.Create(this, jsonNode);
 
@@ -120,7 +121,8 @@ namespace LEGO.AsyncAPI.Readers
 
         public string GetLocation()
         {
-            return "#/" + string.Join("/",
+            return "#/" + string.Join(
+                "/",
                 this.currentLocation.Reverse().Select(s => s.Replace("~", "~0").Replace("/", "~1")).ToArray());
         }
 

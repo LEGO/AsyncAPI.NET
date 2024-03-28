@@ -21,8 +21,10 @@ namespace LEGO.AsyncAPI.Tests
     public class ExtensionClass
     {
         public string Key { get; set; }
+
         public long OtherKey { get; set; }
     }
+
     public class AsyncApiDocumentV2Tests : TestBase
     {
         [Test]
@@ -201,25 +203,25 @@ components:
             maximum: 100
             minimum: 0";
 
-        var asyncApiDocument = new AsyncApiDocumentBuilder()
-            .WithInfo(new AsyncApiInfo
-            {
-                Title = "Streetlights Kafka API",
-                Version = "1.0.0",
-                Description = "The Smartylighting Streetlights API allows you to remotely manage the city lights.",
-                License = new AsyncApiLicense
+            var asyncApiDocument = new AsyncApiDocumentBuilder()
+                .WithInfo(new AsyncApiInfo
                 {
-                    Name = "Apache 2.0",
-                    Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0"),
-                },
-            })
-            .WithServer("scram-connections", new AsyncApiServer
-            {
-                Url = "test.mykafkacluster.org:18092",
-                Protocol = "kafka-secure",
-                Description = "Test broker secured with scramSha256",
-                Security = new List<AsyncApiSecurityRequirement>
+                    Title = "Streetlights Kafka API",
+                    Version = "1.0.0",
+                    Description = "The Smartylighting Streetlights API allows you to remotely manage the city lights.",
+                    License = new AsyncApiLicense
+                    {
+                        Name = "Apache 2.0",
+                        Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0"),
+                    },
+                })
+                .WithServer("scram-connections", new AsyncApiServer
                 {
+                    Url = "test.mykafkacluster.org:18092",
+                    Protocol = "kafka-secure",
+                    Description = "Test broker secured with scramSha256",
+                    Security = new List<AsyncApiSecurityRequirement>
+                    {
                     new AsyncApiSecurityRequirement
                     {
                         {
@@ -233,9 +235,9 @@ components:
                             }, new List<string>()
                         },
                     },
-                },
-                Tags = new List<AsyncApiTag>
-                {
+                    },
+                    Tags = new List<AsyncApiTag>
+                    {
                     new AsyncApiTag
                     {
                         Name = "env:test-scram",
@@ -251,15 +253,15 @@ components:
                         Name = "visibility:private",
                         Description = "This resource is private and only available to certain users",
                     },
-                },
-            })
-            .WithServer("mtls-connections", new AsyncApiServer
-            {
-                Url = "test.mykafkacluster.org:28092",
-                Protocol = "kafka-secure",
-                Description = "Test broker secured with X509",
-                Security = new List<AsyncApiSecurityRequirement>
+                    },
+                })
+                .WithServer("mtls-connections", new AsyncApiServer
                 {
+                    Url = "test.mykafkacluster.org:28092",
+                    Protocol = "kafka-secure",
+                    Description = "Test broker secured with X509",
+                    Security = new List<AsyncApiSecurityRequirement>
+                    {
                     new AsyncApiSecurityRequirement
                     {
                         {
@@ -273,9 +275,9 @@ components:
                             }, new List<string>()
                         },
                     },
-                },
-                Tags = new List<AsyncApiTag>
-                {
+                    },
+                    Tags = new List<AsyncApiTag>
+                    {
                     new AsyncApiTag
                     {
                         Name = "env:test-mtls",
@@ -291,16 +293,16 @@ components:
                         Name = "visibility:private",
                         Description = "This resource is private and only available to certain users",
                     },
-                },
-            })
-            .WithDefaultContentType()
-            .WithChannel(
-            "smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured",
-            new AsyncApiChannel()
-            {
-                Description = "The topic on which measured values may be produced and consumed.",
-                Parameters = new Dictionary<string, AsyncApiParameter>
+                    },
+                })
+                .WithDefaultContentType()
+                .WithChannel(
+                "smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured",
+                new AsyncApiChannel()
                 {
+                    Description = "The topic on which measured values may be produced and consumed.",
+                    Parameters = new Dictionary<string, AsyncApiParameter>
+                    {
                     {
                         "streetlightId", new AsyncApiParameter()
                         {
@@ -311,13 +313,13 @@ components:
                             },
                         }
                     },
-                },
-                Publish = new AsyncApiOperation()
-                {
-                    Summary = "Inform about environmental lighting conditions of a particular streetlight.",
-                    OperationId = "receiveLightMeasurement",
-                    Traits = new List<AsyncApiOperationTrait>
+                    },
+                    Publish = new AsyncApiOperation()
                     {
+                        Summary = "Inform about environmental lighting conditions of a particular streetlight.",
+                        OperationId = "receiveLightMeasurement",
+                        Traits = new List<AsyncApiOperationTrait>
+                        {
                         new AsyncApiOperationTrait()
                         {
                             Reference = new AsyncApiReference()
@@ -326,9 +328,9 @@ components:
                                 Type = ReferenceType.OperationTrait,
                             },
                         },
-                    },
-                    Message = new List<AsyncApiMessage>
-                    {
+                        },
+                        Message = new List<AsyncApiMessage>
+                        {
                         new AsyncApiMessage()
                         {
                             Reference = new AsyncApiReference()
@@ -337,15 +339,15 @@ components:
                                 Type = ReferenceType.Message,
                             },
                         },
+                        },
                     },
-                },
-            })
-            .WithChannel(
-            "smartylighting.streetlights.1.0.action.{streetlightId}.turn.on",
-            new AsyncApiChannel()
-            {
-                Parameters = new Dictionary<string, AsyncApiParameter>
+                })
+                .WithChannel(
+                "smartylighting.streetlights.1.0.action.{streetlightId}.turn.on",
+                new AsyncApiChannel()
                 {
+                    Parameters = new Dictionary<string, AsyncApiParameter>
+                    {
                     {
                         "streetlightId", new AsyncApiParameter()
                         {
@@ -356,12 +358,12 @@ components:
                             },
                         }
                     },
-                },
-                Subscribe = new AsyncApiOperation()
-                {
-                    OperationId = "turnOn",
-                    Traits = new List<AsyncApiOperationTrait>
+                    },
+                    Subscribe = new AsyncApiOperation()
                     {
+                        OperationId = "turnOn",
+                        Traits = new List<AsyncApiOperationTrait>
+                        {
                         new AsyncApiOperationTrait()
                         {
                             Reference = new AsyncApiReference()
@@ -370,9 +372,9 @@ components:
                                 Type = ReferenceType.OperationTrait,
                             },
                         },
-                    },
-                    Message = new List<AsyncApiMessage>
-                    {
+                        },
+                        Message = new List<AsyncApiMessage>
+                        {
                         new AsyncApiMessage()
                         {
                             Reference = new AsyncApiReference()
@@ -381,15 +383,15 @@ components:
                                 Type = ReferenceType.Message,
                             },
                         },
+                        },
                     },
-                },
-            })
-            .WithChannel(
-            "smartylighting.streetlights.1.0.action.{streetlightId}.turn.off",
-            new AsyncApiChannel()
-            {
-                Parameters = new Dictionary<string, AsyncApiParameter>
+                })
+                .WithChannel(
+                "smartylighting.streetlights.1.0.action.{streetlightId}.turn.off",
+                new AsyncApiChannel()
                 {
+                    Parameters = new Dictionary<string, AsyncApiParameter>
+                    {
                     {
                         "streetlightId", new AsyncApiParameter()
                         {
@@ -400,12 +402,12 @@ components:
                             },
                         }
                     },
-                },
-                Subscribe = new AsyncApiOperation()
-                {
-                    OperationId = "turnOff",
-                    Traits = new List<AsyncApiOperationTrait>
+                    },
+                    Subscribe = new AsyncApiOperation()
                     {
+                        OperationId = "turnOff",
+                        Traits = new List<AsyncApiOperationTrait>
+                        {
                         new AsyncApiOperationTrait()
                         {
                             Reference = new AsyncApiReference()
@@ -414,9 +416,9 @@ components:
                                 Type = ReferenceType.OperationTrait,
                             },
                         },
-                    },
-                    Message = new List<AsyncApiMessage>
-                    {
+                        },
+                        Message = new List<AsyncApiMessage>
+                        {
                         new AsyncApiMessage()
                         {
                             Reference = new AsyncApiReference()
@@ -425,15 +427,15 @@ components:
                                 Type = ReferenceType.Message,
                             },
                         },
+                        },
                     },
-                },
-            })
-            .WithChannel(
-            "smartylighting.streetlights.1.0.action.{streetlightId}.dim",
-            new AsyncApiChannel()
-            {
-                Parameters = new Dictionary<string, AsyncApiParameter>
+                })
+                .WithChannel(
+                "smartylighting.streetlights.1.0.action.{streetlightId}.dim",
+                new AsyncApiChannel()
                 {
+                    Parameters = new Dictionary<string, AsyncApiParameter>
+                    {
                     {
                         "streetlightId", new AsyncApiParameter()
                         {
@@ -444,12 +446,12 @@ components:
                             },
                         }
                     },
-                },
-                Subscribe = new AsyncApiOperation()
-                {
-                    OperationId = "dimLight",
-                    Traits = new List<AsyncApiOperationTrait>
+                    },
+                    Subscribe = new AsyncApiOperation()
                     {
+                        OperationId = "dimLight",
+                        Traits = new List<AsyncApiOperationTrait>
+                        {
                         new AsyncApiOperationTrait()
                         {
                             Reference = new AsyncApiReference()
@@ -458,9 +460,9 @@ components:
                                 Type = ReferenceType.OperationTrait,
                             },
                         },
-                    },
-                    Message = new List<AsyncApiMessage>
-                    {
+                        },
+                        Message = new List<AsyncApiMessage>
+                        {
                         new AsyncApiMessage()
                         {
                             Reference = new AsyncApiReference()
@@ -469,17 +471,17 @@ components:
                                 Type = ReferenceType.Message,
                             },
                         },
+                        },
                     },
-                },
-            })
-            .WithComponent("lightMeasured", new AsyncApiMessage()
-            {
-                Name = "lightMeasured",
-                Title = "Light measured",
-                Summary = "Inform about environmental lighting conditions of a particular streetlight.",
-                ContentType = "application/json",
-                Traits = new List<AsyncApiMessageTrait>()
+                })
+                .WithComponent("lightMeasured", new AsyncApiMessage()
                 {
+                    Name = "lightMeasured",
+                    Title = "Light measured",
+                    Summary = "Inform about environmental lighting conditions of a particular streetlight.",
+                    ContentType = "application/json",
+                    Traits = new List<AsyncApiMessageTrait>()
+                    {
                     new AsyncApiMessageTrait()
                     {
                         Reference = new AsyncApiReference()
@@ -488,23 +490,23 @@ components:
                             Id = "commonHeaders",
                         },
                     },
-                },
-                Payload = new AsyncApiSchema()
-                {
-                    Reference = new AsyncApiReference()
-                    {
-                        Type = ReferenceType.Schema,
-                        Id = "lightMeasuredPayload",
                     },
-                },
-            })
-            .WithComponent("turnOnOff", new AsyncApiMessage()
-            {
-                Name = "turnOnOff",
-                Title = "Turn on/off",
-                Summary = "Command a particular streetlight to turn the lights on or off.",
-                Traits = new List<AsyncApiMessageTrait>()
+                    Payload = new AsyncApiSchema()
+                    {
+                        Reference = new AsyncApiReference()
+                        {
+                            Type = ReferenceType.Schema,
+                            Id = "lightMeasuredPayload",
+                        },
+                    },
+                })
+                .WithComponent("turnOnOff", new AsyncApiMessage()
                 {
+                    Name = "turnOnOff",
+                    Title = "Turn on/off",
+                    Summary = "Command a particular streetlight to turn the lights on or off.",
+                    Traits = new List<AsyncApiMessageTrait>()
+                    {
                     new AsyncApiMessageTrait()
                     {
                         Reference = new AsyncApiReference()
@@ -513,23 +515,23 @@ components:
                             Id = "commonHeaders",
                         },
                     },
-                },
-                Payload = new AsyncApiSchema()
-                {
-                    Reference = new AsyncApiReference()
-                    {
-                        Type = ReferenceType.Schema,
-                        Id = "turnOnOffPayload",
                     },
-                },
-            })
-            .WithComponent("dimLight", new AsyncApiMessage()
-            {
-                Name = "dimLight",
-                Title = "Dim light",
-                Summary = "Command a particular streetlight to dim the lights.",
-                Traits = new List<AsyncApiMessageTrait>()
+                    Payload = new AsyncApiSchema()
+                    {
+                        Reference = new AsyncApiReference()
+                        {
+                            Type = ReferenceType.Schema,
+                            Id = "turnOnOffPayload",
+                        },
+                    },
+                })
+                .WithComponent("dimLight", new AsyncApiMessage()
                 {
+                    Name = "dimLight",
+                    Title = "Dim light",
+                    Summary = "Command a particular streetlight to dim the lights.",
+                    Traits = new List<AsyncApiMessageTrait>()
+                    {
                     new AsyncApiMessageTrait()
                     {
                         Reference = new AsyncApiReference()
@@ -538,21 +540,21 @@ components:
                             Id = "commonHeaders",
                         },
                     },
-                },
-                Payload = new AsyncApiSchema()
-                {
-                    Reference = new AsyncApiReference()
-                    {
-                        Type = ReferenceType.Schema,
-                        Id = "dimLightPayload",
                     },
-                },
-            })
-            .WithComponent("lightMeasuredPayload", new AsyncApiSchema()
-            {
-                Type = SchemaType.Object,
-                Properties = new Dictionary<string, AsyncApiSchema>()
+                    Payload = new AsyncApiSchema()
+                    {
+                        Reference = new AsyncApiReference()
+                        {
+                            Type = ReferenceType.Schema,
+                            Id = "dimLightPayload",
+                        },
+                    },
+                })
+                .WithComponent("lightMeasuredPayload", new AsyncApiSchema()
                 {
+                    Type = SchemaType.Object,
+                    Properties = new Dictionary<string, AsyncApiSchema>()
+                    {
                     {
                         "lumens", new AsyncApiSchema()
                         {
@@ -571,13 +573,13 @@ components:
                             },
                         }
                     },
-                },
-            })
-            .WithComponent("turnOnOffPayload", new AsyncApiSchema()
-            {
-                Type = SchemaType.Object,
-                Properties = new Dictionary<string, AsyncApiSchema>()
+                    },
+                })
+                .WithComponent("turnOnOffPayload", new AsyncApiSchema()
                 {
+                    Type = SchemaType.Object,
+                    Properties = new Dictionary<string, AsyncApiSchema>()
+                    {
                     {
                         "command", new AsyncApiSchema()
                         {
@@ -587,7 +589,7 @@ components:
                                 new AsyncApiAny("on"),
                                 new AsyncApiAny("off"),
                             },
-                            Description = "Whether to turn on or off the light."
+                            Description = "Whether to turn on or off the light.",
                         }
                     },
                     {
@@ -600,13 +602,13 @@ components:
                             },
                         }
                     },
-                },
-            })
-            .WithComponent("dimLightPayload", new AsyncApiSchema()
-            {
-                Type = SchemaType.Object,
-                Properties = new Dictionary<string, AsyncApiSchema>()
+                    },
+                })
+                .WithComponent("dimLightPayload", new AsyncApiSchema()
                 {
+                    Type = SchemaType.Object,
+                    Properties = new Dictionary<string, AsyncApiSchema>()
+                    {
                     {
                         "percentage", new AsyncApiSchema()
                         {
@@ -626,40 +628,39 @@ components:
                             },
                         }
                     },
-                },
-            })
-            .WithComponent("sentAt", new AsyncApiSchema()
-            {
-                Type = SchemaType.String,
-                Format = "date-time",
-                Description = "Date and time when the message was sent.",
-
-            })
-            .WithComponent("saslScram", new AsyncApiSecurityScheme
-            {
-                Type = SecuritySchemeType.ScramSha256,
-                Description = "Provide your username and password for SASL/SCRAM authentication",
-            })
-            .WithComponent("certs", new AsyncApiSecurityScheme
-            {
-                Type = SecuritySchemeType.X509,
-                Description = "Download the certificate files from service provider",
-            })
-            .WithComponent("streetlightId", new AsyncApiParameter()
-            {
-                Description = "The ID of the streetlight.",
-                Schema = new AsyncApiSchema()
+                    },
+                })
+                .WithComponent("sentAt", new AsyncApiSchema()
                 {
                     Type = SchemaType.String,
-                },
-            })
-            .WithComponent("commonHeaders", new AsyncApiMessageTrait()
-            {
-                Headers = new AsyncApiSchema()
+                    Format = "date-time",
+                    Description = "Date and time when the message was sent.",
+                })
+                .WithComponent("saslScram", new AsyncApiSecurityScheme
                 {
-                    Type = SchemaType.Object,
-                    Properties = new Dictionary<string, AsyncApiSchema>()
+                    Type = SecuritySchemeType.ScramSha256,
+                    Description = "Provide your username and password for SASL/SCRAM authentication",
+                })
+                .WithComponent("certs", new AsyncApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.X509,
+                    Description = "Download the certificate files from service provider",
+                })
+                .WithComponent("streetlightId", new AsyncApiParameter()
+                {
+                    Description = "The ID of the streetlight.",
+                    Schema = new AsyncApiSchema()
                     {
+                        Type = SchemaType.String,
+                    },
+                })
+                .WithComponent("commonHeaders", new AsyncApiMessageTrait()
+                {
+                    Headers = new AsyncApiSchema()
+                    {
+                        Type = SchemaType.Object,
+                        Properties = new Dictionary<string, AsyncApiSchema>()
+                        {
                         {
                             "my-app-header", new AsyncApiSchema()
                             {
@@ -668,13 +669,13 @@ components:
                                 Maximum = 100,
                             }
                         },
+                        },
                     },
-                },
-            })
-            .WithComponent("kafka", new AsyncApiOperationTrait()
-            {
-                Bindings = new AsyncApiBindings<IOperationBinding>()
+                })
+                .WithComponent("kafka", new AsyncApiOperationTrait()
                 {
+                    Bindings = new AsyncApiBindings<IOperationBinding>()
+                    {
                     {
                         "kafka", new KafkaOperationBinding()
                         {
@@ -688,9 +689,9 @@ components:
                             },
                         }
                     },
-                },
-            })
-            .Build();
+                    },
+                })
+                .Build();
 
             // Act
             var actual = asyncApiDocument.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
@@ -867,7 +868,6 @@ components:
             string authorizationUrl = "https://example.com/authorization";
             string requirementString = "requirementItem";
 
-            
             var document = new AsyncApiDocument()
             {
                 Id = documentId,
@@ -1033,7 +1033,7 @@ components:
                                                         {
                                                             Summary = exampleSummary,
                                                             Name = exampleName,
-                                                            Payload =new AsyncApiAny(new ExtensionClass
+                                                            Payload = new AsyncApiAny(new ExtensionClass
                                                             {
                                                                 Key = anyStringValue,
                                                                 OtherKey = anyLongValue,
@@ -1134,7 +1134,7 @@ components:
             var doc = new AsyncApiDocument();
             doc.Info = new AsyncApiInfo()
             {
-                Description = "test description"
+                Description = "test description",
             };
             doc.Servers.Add("production", new AsyncApiServer
             {
@@ -1154,7 +1154,8 @@ components:
             {
                 Channels = new Dictionary<string, AsyncApiChannel>()
                 {
-                    { "otherchannel", new AsyncApiChannel()
+                    {
+                        "otherchannel", new AsyncApiChannel()
                         {
                             Publish = new AsyncApiOperation()
                             {
@@ -1168,8 +1169,8 @@ components:
                                     Id = "bindings",
                                 },
                             },
-                        } 
-                    }
+                        }
+                    },
                 },
                 ServerBindings = new Dictionary<string, AsyncApiBindings<IServerBinding>>()
                 {
@@ -1178,10 +1179,10 @@ components:
                         {
                             new PulsarServerBinding()
                             {
-                                Tenant = "staging"
+                                Tenant = "staging",
                             },
                         }
-                    }
+                    },
                 },
                 ChannelBindings = new Dictionary<string, AsyncApiBindings<IChannelBinding>>()
                 {
@@ -1190,21 +1191,22 @@ components:
                         {
                             new PulsarChannelBinding()
                             {
-                                Namespace = "users", 
+                                Namespace = "users",
                                 Persistence = AsyncAPI.Models.Bindings.Pulsar.Persistence.Persistent,
-                            }
+                            },
                         }
-                    }
+                    },
                 },
             };
-            doc.Channels.Add("testChannel",
+            doc.Channels.Add(
+                "testChannel",
                 new AsyncApiChannel
                 {
                     Reference = new AsyncApiReference()
                     {
                         Type = ReferenceType.Channel,
-                        Id = "otherchannel"
-                    }
+                        Id = "otherchannel",
+                    },
                 });
             var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
@@ -1213,7 +1215,7 @@ components:
             var reader = new AsyncApiStringReader(settings);
             var deserialized = reader.Read(actual, out var diagnostic);
         }
-        
+
         [Test]
         public void Serializev2_WithBindings_Serializes()
         {
@@ -1244,7 +1246,7 @@ channels:
             var doc = new AsyncApiDocument();
             doc.Info = new AsyncApiInfo()
             {
-                Description = "test description"
+                Description = "test description",
             };
             doc.Servers.Add("production", new AsyncApiServer
             {
@@ -1252,7 +1254,8 @@ channels:
                 Protocol = "pulsar+ssl",
                 Url = "example.com",
             });
-            doc.Channels.Add("testChannel",
+            doc.Channels.Add(
+                "testChannel",
                 new AsyncApiChannel
                 {
                     Bindings = new AsyncApiBindings<IChannelBinding>
@@ -1292,7 +1295,6 @@ channels:
                                                 },
                                             }
                                         },
-
                                     },
                                 }
                             },

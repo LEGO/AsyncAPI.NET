@@ -58,7 +58,7 @@ namespace LEGO.AsyncAPI.Bindings.Http
             writer.WriteEndObject();
         }
 
-        protected override FixedFieldMap<HttpOperationBinding> FixedFieldMap => new ()
+        protected override FixedFieldMap<HttpOperationBinding> FixedFieldMap => new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
             { "type", (a, n) => { a.Type = n.GetScalarValue().GetEnumFromDisplayName<HttpOperationType>(); } },
