@@ -82,7 +82,7 @@ namespace LEGO.AsyncAPI.Readers
                     break;
 
                 default:
-                    throw new AsyncApiUnsupportedSpecVersionException(inputVersion, this.Settings);
+                    throw new AsyncApiUnsupportedSpecVersionException(inputVersion);
             }
 
             return doc;
