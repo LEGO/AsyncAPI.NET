@@ -54,14 +54,13 @@ bindings:
             var actual = server.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = BindingsCollection.MQTT;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiServer>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(server);
         }
 
@@ -86,15 +85,14 @@ bindings:
 
             // Act
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = BindingsCollection.MQTT;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(operation);
         }
 
@@ -124,14 +122,13 @@ bindings:
 
             // Act
             var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = BindingsCollection.MQTT;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiMessage>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(message);
         }
     }
