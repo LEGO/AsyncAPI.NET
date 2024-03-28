@@ -47,7 +47,7 @@ namespace LEGO.AsyncAPI.Models
         /// <param name="stream">The given stream.</param>
         /// <param name="specVersion">The AsyncApi specification version.</param>
         /// <param name="format">The output format (JSON or YAML).</param>
-        [Obsolete($"Please use overridden version that accets a {nameof(AsyncApiWriterSettings)} instance.")]
+        [Obsolete($"Please use overridden version that accepts a {nameof(AsyncApiWriterSettings)} instance.")]
         public static void Serialize<T>(
             this T element,
             Stream stream,
