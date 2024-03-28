@@ -1,0 +1,38 @@
+{
+  "title": "title1",
+  "allOf": [
+    {
+      "title": "title2",
+      "properties": {
+        "property1": {
+          "type": "integer"
+        },
+        "property2": {
+          "type": "string",
+          "maxLength": 15
+        }
+      }
+    },
+    {
+      "title": "title3",
+      "properties": {
+        "property3": {
+          "properties": {
+            "property4": {
+              "type": "boolean"
+            }
+          }
+        },
+        "property5": {
+          "type": "string",
+          "minLength": 2
+        }
+      },
+      "nullable": true
+    }
+  ],
+  "nullable": true,
+  "externalDocs": {
+    "url": "http://example.com/externalDocs"
+  }
+}

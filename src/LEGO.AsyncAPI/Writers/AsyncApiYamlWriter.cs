@@ -1,17 +1,40 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+
 namespace LEGO.AsyncAPI.Writers
 {
-    using System.IO;
-
+    /// <summary>
+    /// Used to conver an AsyncApi schema into a yaml document.
+    /// </summary>
     public class AsyncApiYamlWriter : AsyncApiWriterBase
     {
+        private static readonly Regex YamlNumberRegex;
+        private static readonly char[] YamlIndicators;
+        private static readonly string[] YamlPlainStringForbiddenCobinations;
+        private static readonly string[] YamlPlainStringForbiddenTerminals;
+        private static readonly char[] YamlControlCharacters;
+
+        static AsyncApiYamlWriter()
+        {
+            YamlNumberRegex = new Regex("^[+-]?[0-9]*\\.?[0-9]*$", RegexOptions.Compiled);
+            YamlIndicators = new char[] { '-', '?', ':', ',', '{', '}', '[', ']', '&', '*', '#', '?', '|', '-', '>', '!', '%', '@', '`', '\'', '"', };
+            YamlPlainStringForbiddenCobinations = new string[] { ": ", " #", "[", "]", "{", "}", ",", };
+            YamlPlainStringForbiddenTerminals = new string[] { ":" };
+            YamlControlCharacters = new char[] { '\0', '\x01', '\x02', '\x03', '\x04', '\x05', '\x06', '\a', '\b', '\t', '\n', '\v', '\f', '\r', '\x0e', '\x0f', '\x10', '\x11', '\x12', '\x13', '\x14', '\x15', '\x16', '\x17', '\x18', '\x19', '\x1a', '\x1b', '\x1c', '\x1d', '\x1e', '\x1f', };
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncApiYamlWriter"/> class.
         /// </summary>
         /// <param name="textWriter">The text writer.</param>
+        [Obsolete($"Please use overridden constructor that takes in a {nameof(AsyncApiWriterSettings)} instance.")]
         public AsyncApiYamlWriter(TextWriter textWriter)
-            : this(textWriter, null)
+            : this(textWriter, new AsyncApiWriterSettings())
         {
         }
 
@@ -19,7 +42,7 @@ namespace LEGO.AsyncAPI.Writers
         /// Initializes a new instance of the <see cref="AsyncApiYamlWriter"/> class.
         /// </summary>
         /// <param name="textWriter">The text writer.</param>
-        /// <param name="settings"></param>
+        /// <param name="settings">The settings used to read and write yaml</param>
         public AsyncApiYamlWriter(TextWriter textWriter, AsyncApiWriterSettings settings)
             : base(textWriter, settings)
         {
@@ -153,7 +176,7 @@ namespace LEGO.AsyncAPI.Writers
                 this.WriteIndentation();
             }
 
-            name = name.GetYamlCompatibleString();
+            name = this.GetYamlCompatibleString(name);
 
             this.Writer.Write(name);
             this.Writer.Write(":");
@@ -171,7 +194,7 @@ namespace LEGO.AsyncAPI.Writers
             {
                 this.WriteValueSeparator();
 
-                value = value.GetYamlCompatibleString();
+                value = this.GetYamlCompatibleString(value);
 
                 this.Writer.Write(value);
             }
@@ -196,7 +219,7 @@ namespace LEGO.AsyncAPI.Writers
 
                 this.IncreaseIndentation();
 
-                using (var reader = new StringReader(value))
+                using (StringReader reader = new(value))
                 {
                     bool firstLine = true;
                     while (reader.ReadLine() is var line && line != null)
@@ -315,6 +338,114 @@ namespace LEGO.AsyncAPI.Writers
         {
             this.WriteValueSeparator();
             this.Writer.Write(value);
+        }
+
+        /// <summary>
+        /// Escapes all special characters and put the string in quotes if necessary to
+        /// get a YAML-compatible string.
+        /// </summary>
+        /// <param name="input">The string to turn into yaml.</param>
+        /// <returns>The string as yaml.</returns>
+        internal string GetYamlCompatibleString(string input)
+        {
+            if (input == null)
+            {
+                return "null";
+            }
+
+            switch (input.ToLower())
+            {
+                case "":
+                    return "''";
+
+                case "~":
+                // Example 2.20. Floating Point
+                case "-.inf":
+                case ".inf":
+                case ".nan":
+                // Example 2.21. Miscellaneous
+                case "null":
+
+                // Booleans
+                case "true":
+                case "false":
+                    return $"'{input}'";
+            }
+
+            // If string includes a control character, wrapping in double quote is required.
+            if (input.Any(c => YamlControlCharacters.Contains(c)))
+            {
+                // Replace the backslash first, so that the new backslashes created by other Replaces are not duplicated.
+                input = input.Replace("\\", "\\\\");
+
+                // Escape the double quotes.
+                input = input.Replace("\"", "\\\"");
+
+                // Escape all the control characters.
+                input = input.Replace("\0", "\\0");
+                input = input.Replace("\x01", "\\x01");
+                input = input.Replace("\x02", "\\x02");
+                input = input.Replace("\x03", "\\x03");
+                input = input.Replace("\x04", "\\x04");
+                input = input.Replace("\x05", "\\x05");
+                input = input.Replace("\x06", "\\x06");
+                input = input.Replace("\a", "\\a");
+                input = input.Replace("\b", "\\b");
+                input = input.Replace("\t", "\\t");
+                input = input.Replace("\n", "\\n");
+                input = input.Replace("\v", "\\v");
+                input = input.Replace("\f", "\\f");
+                input = input.Replace("\r", "\\r");
+                input = input.Replace("\x0e", "\\x0e");
+                input = input.Replace("\x0f", "\\x0f");
+                input = input.Replace("\x10", "\\x10");
+                input = input.Replace("\x11", "\\x11");
+                input = input.Replace("\x12", "\\x12");
+                input = input.Replace("\x13", "\\x13");
+                input = input.Replace("\x14", "\\x14");
+                input = input.Replace("\x15", "\\x15");
+                input = input.Replace("\x16", "\\x16");
+                input = input.Replace("\x17", "\\x17");
+                input = input.Replace("\x18", "\\x18");
+                input = input.Replace("\x19", "\\x19");
+                input = input.Replace("\x1a", "\\x1a");
+                input = input.Replace("\x1b", "\\x1b");
+                input = input.Replace("\x1c", "\\x1c");
+                input = input.Replace("\x1d", "\\x1d");
+                input = input.Replace("\x1e", "\\x1e");
+                input = input.Replace("\x1f", "\\x1f");
+
+                return $"\"{input}\"";
+            }
+
+            // If string
+            // 1) includes a character forbidden in plain string,
+            // 2) starts with an indicator, OR
+            // 3) has trailing/leading white spaces,
+            // wrap the string in single quote.
+            // http://www.yaml.org/spec/1.2/spec.html#style/flow/plain
+            if (YamlPlainStringForbiddenCobinations.Any(fc => input.Contains(fc)) ||
+                YamlIndicators.Any(i => input.StartsWith(i.ToString())) ||
+                YamlPlainStringForbiddenTerminals.Any(i => input.EndsWith(i.ToString())) ||
+                input.Trim() != input)
+            {
+                // Escape single quotes with two single quotes.
+                input = input.Replace("'", "''");
+
+                return $"'{input}'";
+            }
+
+            // If string can be mistaken as a number, a boolean, or a timestamp,
+            // wrap it in quot number, a boolean, or a timestamp
+            if (decimal.TryParse(input, NumberStyles.Float, this.Settings.CultureInfo, out decimal _) ||
+                bool.TryParse(input, out bool _) ||
+                DateTime.TryParseExact(input, this.Settings.DateTimeFormat, this.Settings.CultureInfo, DateTimeStyles.RoundtripKind, out DateTime _))
+            {
+                return $"'{input}'";
+            }
+
+            // Handle numbers
+            return YamlNumberRegex.IsMatch(input) ? $"'{input}'" : input;
         }
     }
 }

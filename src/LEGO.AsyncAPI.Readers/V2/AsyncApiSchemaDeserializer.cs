@@ -50,14 +50,14 @@ namespace LEGO.AsyncAPI.Readers
                 "multipleOf",
                 (a, n) =>
                 {
-                    a.MultipleOf = double.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
+                    a.MultipleOf = double.Parse(n.GetScalarValue(), NumberStyles.Float, n.Context.Settings.CultureInfo);
                 }
             },
             {
                 "maximum",
                 (a, n) =>
                 {
-                    a.Maximum = double.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
+                    a.Maximum = double.Parse(n.GetScalarValue(), NumberStyles.Float, n.Context.Settings.CultureInfo);
                 }
             },
             {
@@ -67,37 +67,37 @@ namespace LEGO.AsyncAPI.Readers
                 "minimum",
                 (a, n) =>
                 {
-                    a.Minimum = double.Parse(n.GetScalarValue(), NumberStyles.Float, CultureInfo.InvariantCulture);
+                    a.Minimum = double.Parse(n.GetScalarValue(), NumberStyles.Float, n.Context.Settings.CultureInfo);
                 }
             },
             {
                 "exclusiveMinimum", (a, n) => { a.ExclusiveMinimum = bool.Parse(n.GetScalarValue()); }
             },
             {
-                "maxLength", (a, n) => { a.MaxLength = int.Parse(n.GetScalarValue(), CultureInfo.InvariantCulture); }
+                "maxLength", (a, n) => { a.MaxLength = int.Parse(n.GetScalarValue(), n.Context.Settings.CultureInfo); }
             },
             {
-                "minLength", (a, n) => { a.MinLength = int.Parse(n.GetScalarValue(), CultureInfo.InvariantCulture); }
+                "minLength", (a, n) => { a.MinLength = int.Parse(n.GetScalarValue(), n.Context.Settings.CultureInfo); }
             },
             {
                 "pattern", (a, n) => { a.Pattern = n.GetScalarValue(); }
             },
             {
-                "maxItems", (a, n) => { a.MaxItems = int.Parse(n.GetScalarValue(), CultureInfo.InvariantCulture); }
+                "maxItems", (a, n) => { a.MaxItems = int.Parse(n.GetScalarValue(), n.Context.Settings.CultureInfo); }
             },
             {
-                "minItems", (a, n) => { a.MinItems = int.Parse(n.GetScalarValue(), CultureInfo.InvariantCulture); }
+                "minItems", (a, n) => { a.MinItems = int.Parse(n.GetScalarValue(), n.Context.Settings.CultureInfo); }
             },
             {
                 "uniqueItems", (a, n) => { a.UniqueItems = bool.Parse(n.GetScalarValue()); }
             },
             {
                 "maxProperties",
-                (a, n) => { a.MaxProperties = int.Parse(n.GetScalarValue(), CultureInfo.InvariantCulture); }
+                (a, n) => { a.MaxProperties = int.Parse(n.GetScalarValue(), n.Context.Settings.CultureInfo); }
             },
             {
                 "minProperties",
-                (a, n) => { a.MinProperties = int.Parse(n.GetScalarValue(), CultureInfo.InvariantCulture); }
+                (a, n) => { a.MinProperties = int.Parse(n.GetScalarValue(), n.Context.Settings.CultureInfo); }
             },
             {
                 "enum", (a, n) => { a.Enum = n.CreateListOfAny(); }

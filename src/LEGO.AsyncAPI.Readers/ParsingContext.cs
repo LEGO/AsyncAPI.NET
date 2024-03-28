@@ -39,9 +39,30 @@ namespace LEGO.AsyncAPI.Readers
 
         public AsyncApiDiagnostic Diagnostic { get; }
 
+        /// <summary>
+        /// Gets the settings used fore reading json.  
+        /// </summary>
+        public AsyncApiReaderSettings Settings { get; }
+
+        ///// <summary>
+        ///// Initializes a new instance of the <see cref="ParsingContext"/> class.
+        ///// </summary>
+        /// <param name="diagnostic">The diagnostics.</param>
+        [Obsolete($"Please use the overloaded version that takes in an instance of {nameof(AsyncApiReaderSettings)} isntead.")]
         public ParsingContext(AsyncApiDiagnostic diagnostic)
+            : this(diagnostic, new AsyncApiReaderSettings())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParsingContext"/> class.
+        /// </summary>
+        /// <param name="diagnostic">The diagnostics.</param>
+        /// <param name="settings">The settings used to read json.</param>
+        public ParsingContext(AsyncApiDiagnostic diagnostic, AsyncApiReaderSettings settings)
         {
             this.Diagnostic = diagnostic;
+            this.Settings = settings;
         }
 
         internal AsyncApiDocument Parse(JsonNode jsonNode)

@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.WebSockets
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 
-    internal class WebSocketBindings_Should
+    internal class WebSocketBindings_Should : TestBase
     {
         [Test]
         public void WebSocketChannelBinding_WithFilledObject_SerializesAndDeserializes()
@@ -40,15 +40,15 @@ namespace LEGO.AsyncAPI.Tests.Bindings.WebSockets
 
             // Act
             var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
 
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = BindingsCollection.Websockets;
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                .BePlatformAgnosticEquivalentTo(expected);
+
             binding.Should().BeEquivalentTo(channel);
         }
     }

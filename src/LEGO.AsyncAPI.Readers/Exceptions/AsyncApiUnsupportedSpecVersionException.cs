@@ -11,12 +11,13 @@ namespace LEGO.AsyncAPI.Readers.Exceptions
     [Serializable]
     public class AsyncApiUnsupportedSpecVersionException : Exception
     {
-        const string MessagePattern = "AsyncApi specification version '{0}' is not supported.";
+        private const string MessagePattern = "AsyncApi specification version '{0}' is not supported.";
 
         /// <summary>
-        /// Initializes the <see cref="AsyncApiUnsupportedSpecVersionException"/> class with a specification version.
+        /// Initializes a new instance of the <see cref="AsyncApiUnsupportedSpecVersionException"/> class.
         /// </summary>
         /// <param name="specificationVersion">Version that caused this exception to be thrown.</param>
+        /// <param name="settings">The settings used for reading and writing.</param>
         public AsyncApiUnsupportedSpecVersionException(string specificationVersion)
             : base(string.Format(CultureInfo.InvariantCulture, MessagePattern, specificationVersion))
         {
@@ -24,10 +25,11 @@ namespace LEGO.AsyncAPI.Readers.Exceptions
         }
 
         /// <summary>
-        /// Initializes the <see cref="AsyncApiUnsupportedSpecVersionException"/> class with a specification version and
+        /// Initializes a new instance of the <see cref="AsyncApiUnsupportedSpecVersionException"/> class.
         /// inner exception.
         /// </summary>
         /// <param name="specificationVersion">Version that caused this exception to be thrown.</param>
+        /// <param name="settings">The setting used for reading and writing</param>
         /// <param name="innerException">Inner exception that caused this exception to be thrown.</param>
         public AsyncApiUnsupportedSpecVersionException(string specificationVersion, Exception innerException)
             : base(string.Format(CultureInfo.InvariantCulture, MessagePattern, specificationVersion), innerException)

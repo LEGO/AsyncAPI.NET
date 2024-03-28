@@ -62,7 +62,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings
         }
     }
 
-    public class CustomBinding_Should
+    public class CustomBinding_Should : TestBase
     {
         [Test]
         public void CustomBinding_SerializesDeserializes()
@@ -107,15 +107,13 @@ namespace LEGO.AsyncAPI.Tests.Bindings
             var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = new[] { new MyBinding() };
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(channel);
         }
     }
