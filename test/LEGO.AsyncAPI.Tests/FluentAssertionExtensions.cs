@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Tests
     {
         private static readonly char[] SeperatorChars;
 
-        static FluentAssersionExtensions()
+        static FluentAssertionExtensions()
         {
             SeperatorChars = new[]
             {
