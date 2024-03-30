@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Tests
     /// <summary>
     /// Contains extension methods for working with fluent assertions.
     /// </summary>
-    internal static class FluentAssersionExtensions
+    internal static class FluentAssertionExtensions
     {
         private static readonly char[] SeperatorChars;
 
