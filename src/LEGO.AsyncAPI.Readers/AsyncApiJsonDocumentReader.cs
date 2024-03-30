@@ -8,7 +8,6 @@ namespace LEGO.AsyncAPI.Readers
     using System.Threading;
     using System.Threading.Tasks;
     using LEGO.AsyncAPI.Exceptions;
-    using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;

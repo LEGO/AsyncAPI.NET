@@ -9,11 +9,6 @@ namespace LEGO.AsyncAPI.Models
         None,
 
         /// <summary>
-        /// Schema item.
-        /// </summary>
-        [Display("schemas")] Schema,
-
-        /// <summary>
         /// Servers item.
         /// </summary>
         [Display("servers")] Server,

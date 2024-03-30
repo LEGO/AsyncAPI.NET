@@ -115,7 +115,7 @@ bindings:
             message.Bindings.Add(new MQTTMessageBinding
             {
                 ContentType = "application/json",
-                CorrelationData = new AsyncApiSchema
+                CorrelationData = new JsonSchema
                 {
                     Type = SchemaType.String,
                     Format = "uuid",

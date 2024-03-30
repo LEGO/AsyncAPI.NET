@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.Bindings.Http
 {
     using System;
+    using Json.Schema;
     using LEGO.AsyncAPI.Attributes;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
@@ -36,7 +37,7 @@ namespace LEGO.AsyncAPI.Bindings.Http
         /// <summary>
         /// A Schema object containing the definitions for each query parameter. This schema MUST be of type object and have a properties key.
         /// </summary>
-        public AsyncApiSchema Query { get; set; }
+        public JsonSchema Query { get; set; }
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.

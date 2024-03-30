@@ -6,6 +6,7 @@ namespace LEGO.AsyncAPI.Writers
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     public static class AsyncApiWriterExtensions
@@ -156,6 +157,30 @@ namespace LEGO.AsyncAPI.Writers
             }
         }
 
+        public static void WriteOptionalObject(
+            this IAsyncApiWriter writer,
+            string name,
+            JsonSchema value,
+            Action<IAsyncApiWriter, JsonSchema> action)
+        {
+            if (value != null)
+            {
+                if (value is IAsyncApiReferenceable refer && refer.Reference != null)
+                {
+                    writer.WriteRequiredObject(name, value, action);
+                    return;
+                }
+
+                var values = value as IEnumerable;
+                if (values != null && !values.GetEnumerator().MoveNext())
+                {
+                    return; // Don't render optional empty collections
+                }
+
+                writer.WriteRequiredObject(name, value, action);
+            }
+        }
+
         /// <summary>
         /// Write the required AsyncApi object/element.
         /// </summary>
@@ -185,6 +210,26 @@ namespace LEGO.AsyncAPI.Writers
             }
         }
 
+        public static void WriteRequiredObject(
+            this IAsyncApiWriter writer,
+            string name,
+            JsonSchema value,
+            Action<IAsyncApiWriter, JsonSchema> action)
+        {
+            CheckArguments(writer, name, action);
+
+            writer.WritePropertyName(name);
+            if (value != null)
+            {
+                action(writer, value);
+            }
+            else
+            {
+                writer.WriteStartObject();
+                writer.WriteEndObject();
+            }
+        }
+
         /// <summary>
         /// Write the optional of collection string.
         /// </summary>
@@ -197,6 +242,18 @@ namespace LEGO.AsyncAPI.Writers
             string name,
             IEnumerable<string> elements,
             Action<IAsyncApiWriter, string> action)
+        {
+            if (elements != null && elements.Any())
+            {
+                writer.WriteCollectionInternal(name, elements, action);
+            }
+        }
+
+        public static void WriteOptionalCollection(
+            this IAsyncApiWriter writer,
+            string name,
+            IEnumerable<JsonSchema> elements,
+            Action<IAsyncApiWriter, JsonSchema> action)
         {
             if (elements != null && elements.Any())
             {
@@ -255,6 +312,18 @@ namespace LEGO.AsyncAPI.Writers
             string name,
             IDictionary<string, string> elements,
             Action<IAsyncApiWriter, string> action)
+        {
+            if (elements != null && elements.Any())
+            {
+                writer.WriteMapInternal(name, elements, action);
+            }
+        }
+
+        public static void WriteOptionalMap(
+            this IAsyncApiWriter writer,
+            string name,
+            IDictionary<string, JsonSchema> elements,
+            Action<IAsyncApiWriter, string, JsonSchema> action)
         {
             if (elements != null && elements.Any())
             {

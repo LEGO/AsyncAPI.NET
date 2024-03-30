@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Services
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
 
@@ -145,9 +146,9 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiSchema"/>.
+        /// Visits <see cref="JsonSchema"/>.
         /// </summary>
-        public virtual void Visit(AsyncApiSchema schema)
+        public virtual void Visit(ref JsonSchema schema)
         {
         }
 

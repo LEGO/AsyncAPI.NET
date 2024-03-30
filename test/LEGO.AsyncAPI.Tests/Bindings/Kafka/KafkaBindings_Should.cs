@@ -124,7 +124,7 @@ bindings:
 
             message.Bindings.Add(new KafkaMessageBinding
             {
-                Key = new AsyncApiSchema
+                Key = new JsonSchema
                 {
                     Description = "this mah other binding",
                 },
@@ -162,11 +162,11 @@ bindings:
 
             operation.Bindings.Add(new KafkaOperationBinding
             {
-                GroupId = new AsyncApiSchema
+                GroupId = new JsonSchema
                 {
                     Description = "this mah groupId",
                 },
-                ClientId = new AsyncApiSchema
+                ClientId = new JsonSchema
                 {
                     Description = "this mah clientId",
                 },

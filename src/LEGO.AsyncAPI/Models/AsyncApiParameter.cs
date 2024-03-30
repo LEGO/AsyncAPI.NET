@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -20,7 +21,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets definition of the parameter.
         /// </summary>
-        public AsyncApiSchema Schema { get; set; }
+        public JsonSchema Schema { get; set; }
 
         /// <summary>
         /// Gets or sets a runtime expression that specifies the location of the parameter value.

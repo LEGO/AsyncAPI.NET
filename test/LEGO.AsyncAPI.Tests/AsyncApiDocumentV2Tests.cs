@@ -490,7 +490,7 @@ components:
                         },
                     },
                     },
-                    Payload = new AsyncApiSchema()
+                    Payload = new JsonSchema()
                     {
                         Reference = new AsyncApiReference()
                         {
@@ -515,7 +515,7 @@ components:
                         },
                     },
                     },
-                    Payload = new AsyncApiSchema()
+                    Payload = new JsonSchema()
                     {
                         Reference = new AsyncApiReference()
                         {
@@ -540,7 +540,7 @@ components:
                         },
                     },
                     },
-                    Payload = new AsyncApiSchema()
+                    Payload = new JsonSchema()
                     {
                         Reference = new AsyncApiReference()
                         {
@@ -549,13 +549,13 @@ components:
                         },
                     },
                 })
-                .WithComponent("lightMeasuredPayload", new AsyncApiSchema()
+                .WithComponent("lightMeasuredPayload", new JsonSchema()
                 {
                     Type = SchemaType.Object,
-                    Properties = new Dictionary<string, AsyncApiSchema>()
+                    Properties = new Dictionary<string, JsonSchema>()
                     {
                     {
-                        "lumens", new AsyncApiSchema()
+                        "lumens", new JsonSchema()
                         {
                             Type = SchemaType.Integer,
                             Minimum = 0,
@@ -563,7 +563,7 @@ components:
                         }
                     },
                     {
-                        "sentAt", new AsyncApiSchema()
+                        "sentAt", new JsonSchema()
                         {
                             Reference = new AsyncApiReference()
                             {
@@ -574,13 +574,13 @@ components:
                     },
                     },
                 })
-                .WithComponent("turnOnOffPayload", new AsyncApiSchema()
+                .WithComponent("turnOnOffPayload", new JsonSchema()
                 {
                     Type = SchemaType.Object,
-                    Properties = new Dictionary<string, AsyncApiSchema>()
+                    Properties = new Dictionary<string, JsonSchema>()
                     {
                     {
-                        "command", new AsyncApiSchema()
+                        "command", new JsonSchema()
                         {
                             Type = SchemaType.String,
                             Enum = new List<AsyncApiAny>
@@ -592,7 +592,7 @@ components:
                         }
                     },
                     {
-                        "sentAt", new AsyncApiSchema()
+                        "sentAt", new JsonSchema()
                         {
                             Reference = new AsyncApiReference()
                             {
@@ -603,13 +603,13 @@ components:
                     },
                     },
                 })
-                .WithComponent("dimLightPayload", new AsyncApiSchema()
+                .WithComponent("dimLightPayload", new JsonSchema()
                 {
                     Type = SchemaType.Object,
-                    Properties = new Dictionary<string, AsyncApiSchema>()
+                    Properties = new Dictionary<string, JsonSchema>()
                     {
                     {
-                        "percentage", new AsyncApiSchema()
+                        "percentage", new JsonSchema()
                         {
                             Type = SchemaType.Integer,
                             Description = "Percentage to which the light should be dimmed to.",
@@ -618,7 +618,7 @@ components:
                         }
                     },
                     {
-                        "sentAt", new AsyncApiSchema()
+                        "sentAt", new JsonSchema()
                         {
                             Reference = new AsyncApiReference()
                             {
@@ -629,7 +629,7 @@ components:
                     },
                     },
                 })
-                .WithComponent("sentAt", new AsyncApiSchema()
+                .WithComponent("sentAt", new JsonSchema()
                 {
                     Type = SchemaType.String,
                     Format = "date-time",
@@ -648,20 +648,20 @@ components:
                 .WithComponent("streetlightId", new AsyncApiParameter()
                 {
                     Description = "The ID of the streetlight.",
-                    Schema = new AsyncApiSchema()
+                    Schema = new JsonSchema()
                     {
                         Type = SchemaType.String,
                     },
                 })
                 .WithComponent("commonHeaders", new AsyncApiMessageTrait()
                 {
-                    Headers = new AsyncApiSchema()
+                    Headers = new JsonSchema()
                     {
                         Type = SchemaType.Object,
-                        Properties = new Dictionary<string, AsyncApiSchema>()
+                        Properties = new Dictionary<string, JsonSchema>()
                         {
                         {
-                            "my-app-header", new AsyncApiSchema()
+                            "my-app-header", new JsonSchema()
                             {
                                 Type = SchemaType.Integer,
                                 Minimum = 0,
@@ -678,7 +678,7 @@ components:
                     {
                         "kafka", new KafkaOperationBinding()
                         {
-                            ClientId = new AsyncApiSchema()
+                            ClientId = new JsonSchema()
                             {
                                 Type = SchemaType.String,
                                 Enum = new List<AsyncApiAny>
@@ -1014,7 +1014,7 @@ components:
                                                 {
                                                     Name = traitName,
                                                     Title = traitTitle,
-                                                    Headers = new AsyncApiSchema
+                                                    Headers = new JsonSchema
                                                     {
                                                         Title = schemaTitle,
                                                         WriteOnly = true,
@@ -1283,7 +1283,7 @@ channels:
                                         {
                                             new HttpMessageBinding
                                             {
-                                                Headers = new AsyncApiSchema
+                                                Headers = new JsonSchema
                                                 {
                                                     Description = "this mah binding",
                                                 },
@@ -1292,7 +1292,7 @@ channels:
                                         {
                                             new KafkaMessageBinding
                                             {
-                                                Key = new AsyncApiSchema
+                                                Key = new JsonSchema
                                                 {
                                                     Description = "this mah other binding",
                                                 },

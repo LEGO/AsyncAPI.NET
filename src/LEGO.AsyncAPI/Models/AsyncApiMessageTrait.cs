@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
+    using Json.Schema;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -20,7 +21,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
-        public AsyncApiSchema Headers { get; set; }
+        public JsonSchema Headers { get; set; }
 
         /// <summary>
         /// definition of the correlation ID used for message tracing or matching.
