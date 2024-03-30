@@ -3,12 +3,14 @@
 namespace LEGO.AsyncAPI.Models
 {
     using System;
-    using System.Globalization;
     using System.IO;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
+    /// <summary>
+    /// Contains extension methods for working with async api elements.
+    /// </summary>
     public static class AsyncApiSerializableExtensions
     {
         /// <summary>
@@ -21,7 +23,21 @@ namespace LEGO.AsyncAPI.Models
         public static void SerializeAsJson<T>(this T element, Stream stream, AsyncApiVersion specificationVersion)
             where T : IAsyncApiSerializable
         {
-            element.Serialize(stream, specificationVersion, AsyncApiFormat.Json);
+            element.SerializeAsJson(stream, specificationVersion, AsyncApiWriterSettings.Default);
+        }
+
+        /// <summary>
+        /// Serialize the <see cref="IAsyncApiSerializable"/> to the AsyncApi document (JSON) using the given stream and specification version.
+        /// </summary>
+        /// <typeparam name="T">the <see cref="IAsyncApiSerializable"/>.</typeparam>
+        /// <param name="element">The AsyncApi element.</param>
+        /// <param name="stream">The output stream.</param>
+        /// <param name="specificationVersion">The AsyncApi specification version.</param>
+        /// <param name="settings">The settings used for writing</param>
+        public static void SerializeAsJson<T>(this T element, Stream stream, AsyncApiVersion specificationVersion, AsyncApiWriterSettings settings)
+            where T : IAsyncApiSerializable
+        {
+            element.Serialize(stream, specificationVersion, AsyncApiFormat.Json, settings);
         }
 
         /// <summary>
@@ -34,7 +50,21 @@ namespace LEGO.AsyncAPI.Models
         public static void SerializeAsYaml<T>(this T element, Stream stream, AsyncApiVersion specificationVersion)
             where T : IAsyncApiSerializable
         {
-            element.Serialize(stream, specificationVersion, AsyncApiFormat.Yaml);
+            element.SerializeAsYaml(stream, specificationVersion, AsyncApiWriterSettings.Default);
+        }
+
+        /// <summary>
+        /// Serializes the <see cref="IAsyncApiSerializable"/> to the AsyncApi document (YAML) using the given stream and specification version.
+        /// </summary>
+        /// <typeparam name="T">the <see cref="IAsyncApiSerializable"/>.</typeparam>
+        /// <param name="element">The AsyncApi element.</param>
+        /// <param name="stream">The output stream.</param>
+        /// <param name="specificationVersion">The AsyncApi specification version.</param>
+        /// <param name="settings">The settings used for writing</param>
+        public static void SerializeAsYaml<T>(this T element, Stream stream, AsyncApiVersion specificationVersion, AsyncApiWriterSettings settings)
+            where T : IAsyncApiSerializable
+        {
+            element.Serialize(stream, specificationVersion, AsyncApiFormat.Yaml, settings);
         }
 
         /// <summary>
@@ -44,7 +74,7 @@ namespace LEGO.AsyncAPI.Models
         /// <typeparam name="T">the <see cref="IAsyncApiSerializable"/>.</typeparam>
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="stream">The given stream.</param>
-        /// <param name="specVersion">The AsyncApi specification version.</param>
+        /// <param name="specificationVersion">The AsyncApi specification version.</param>
         /// <param name="format">The output format (JSON or YAML).</param>
         public static void Serialize<T>(
             this T element,
@@ -53,7 +83,7 @@ namespace LEGO.AsyncAPI.Models
             AsyncApiFormat format)
             where T : IAsyncApiSerializable
         {
-            element.Serialize(stream, specificationVersion, format, null);
+            element.Serialize(stream, specificationVersion, format, new AsyncApiWriterSettings());
         }
 
         /// <summary>
@@ -79,7 +109,7 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            var streamWriter = new FormattingStreamWriter(stream, CultureInfo.InvariantCulture);
+            var streamWriter = new FormattingStreamWriter(stream, settings.CultureInfo);
 
             IAsyncApiWriter writer = format switch
             {

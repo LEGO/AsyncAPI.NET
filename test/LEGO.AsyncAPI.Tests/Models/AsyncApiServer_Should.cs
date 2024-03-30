@@ -3,12 +3,13 @@
 namespace LEGO.AsyncAPI.Tests.Models
 {
     using System.Collections.Generic;
+    using FluentAssertions;
     using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using NUnit.Framework;
 
-    internal class AsyncApiServer_Should
+    internal class AsyncApiServer_Should : TestBase
     {
         [Test]
         public void AsyncApiServer_Serializes()
@@ -70,10 +71,8 @@ bindings:
             var actual = server.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -102,11 +101,9 @@ bindings:
 
             var actual = server.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                 .BePlatformAgnosticEquivalentTo(expected);
         }
     }
 }

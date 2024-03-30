@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Tests
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using NUnit.Framework;
 
-    public class AsyncApiLicenseTests
+    public class AsyncApiLicenseTests : TestBase
     {
         [Test]
         public void Serialize_WithAllProperties_Serializes()
@@ -36,10 +36,8 @@ namespace LEGO.AsyncAPI.Tests
             var actual = license.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                .BePlatformAgnosticEquivalentTo(expected);
         }
 
         public static Stream GenerateStreamFromString(string s)
@@ -65,7 +63,8 @@ namespace LEGO.AsyncAPI.Tests
             using (var stream = GenerateStreamFromString(input))
             {
                 var diagnostic = new AsyncApiDiagnostic();
-                var context = new ParsingContext(diagnostic);
+                var settings = new AsyncApiReaderSettings();
+                var context = new ParsingContext(diagnostic, settings);
 
                 var node = new MapNode(context, JsonNode.Parse(stream));
 

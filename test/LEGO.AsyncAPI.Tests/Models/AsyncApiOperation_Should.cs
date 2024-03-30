@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Tests.Models
     using System;
     using System.Globalization;
     using System.IO;
+    using FluentAssertions;
     using LEGO.AsyncAPI.Bindings.Http;
     using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Models;
@@ -12,7 +13,7 @@ namespace LEGO.AsyncAPI.Tests.Models
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
-    public class AsyncApiOperation_Should
+    public class AsyncApiOperation_Should : TestBase
     {
         [Test]
         public void SerializeV2_WithNullWriter_Throws()
@@ -37,18 +38,18 @@ namespace LEGO.AsyncAPI.Tests.Models
             var asyncApiOperation = new AsyncApiOperation();
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "First Message" });
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "Second Message" });
-            var outputString = new StringWriter(CultureInfo.InvariantCulture);
-            var writer = new AsyncApiYamlWriter(outputString);
+            var outputString = new StringWriter();
+            var settings = new AsyncApiWriterSettings();
+            var writer = new AsyncApiYamlWriter(outputString, settings);
 
             // Act
             asyncApiOperation.SerializeV2(writer);
 
             // Assert
             var actual = outputString.GetStringBuilder().ToString();
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -60,18 +61,18 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             var asyncApiOperation = new AsyncApiOperation();
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "First Message" });
-            var outputString = new StringWriter(CultureInfo.InvariantCulture);
-            var writer = new AsyncApiYamlWriter(outputString);
+            var settings = new AsyncApiWriterSettings();
+            var outputString = new StringWriter();
+            var writer = new AsyncApiYamlWriter(outputString, settings);
 
             // Act
             asyncApiOperation.SerializeV2(writer);
 
             // Assert
             var actual = outputString.GetStringBuilder().ToString();
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
 
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -123,11 +124,9 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
             // Assert
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                .BePlatformAgnosticEquivalentTo(expected);
         }
     }
 }

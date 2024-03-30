@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Tests.Models
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
 
-    public class AsyncApiSchema_Should
+    public class AsyncApiSchema_Should : TestBase
     {
         public static AsyncApiSchema BasicSchema = new AsyncApiSchema();
 
@@ -283,71 +283,6 @@ namespace LEGO.AsyncAPI.Tests.Models
             },
         };
 
-        private string NoInlinedReferences =>
-            @"asyncapi: '2.6.0'
-info:
-  title: Streetlights Kafka API
-  version: 1.0.0
-  description: The Smartylighting Streetlights API allows you to remotely manage the city lights.
-  license:
-    name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0
-channels:
-  mychannel:
-    publish:
-      message:
-        payload:
-          type: object
-          required:
-            - testB
-          properties:
-            testC:
-              $ref: '#/components/schemas/testC'
-            testB:
-              $ref: '#/components/schemas/testB'
-components:
-  schemas:
-    testD:
-      type: string
-      format: uuid
-    testC:
-      type: object
-      properties:
-        testD:
-          $ref: '#/components/schemas/testD'
-    testB:
-      type: boolean
-      description: test";
-
-        private string InlinedReferences =>
-            @"asyncapi: '2.6.0'
-info:
-  title: Streetlights Kafka API
-  version: 1.0.0
-  description: The Smartylighting Streetlights API allows you to remotely manage the city lights.
-  license:
-    name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0
-channels:
-  mychannel:
-    publish:
-      message:
-        payload:
-          type: object
-          required:
-            - testB
-          properties:
-            testC:
-              type: object
-              properties:
-                testD:
-                  type: string
-                  format: uuid
-            testB:
-              type: boolean
-              description: test
-components: { }";
-
         [Test]
         public void SerializeAsJson_WithBasicSchema_V2Works()
         {
@@ -358,9 +293,8 @@ components: { }";
             var actual = BasicSchema.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -385,9 +319,8 @@ components: { }";
             var actual = AdvancedSchemaNumber.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
@@ -412,193 +345,29 @@ components: { }";
             var actual = AdvancedSchemaBigNumbers.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
         public void SerializeAsJson_WithAdvancedSchemaObject_V2Works()
         {
             // Arrange
-            var expected = @"{
-  ""title"": ""title1"",
-  ""properties"": {
-    ""property1"": {
-      ""items"": false,
-      ""additionalItems"": false,
-      ""properties"": {
-        ""property2"": {
-          ""type"": ""integer""
-        },
-        ""property3"": {
-          ""type"": ""string"",
-          ""maxLength"": 15
-        }
-      },
-      ""additionalProperties"": false
-    },
-    ""property4"": {
-      ""items"": {
-        ""properties"": {
-          ""Property9"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""additionalItems"": {
-        ""properties"": {
-          ""Property10"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""properties"": {
-        ""property5"": {
-          ""properties"": {
-            ""property6"": {
-              ""type"": ""boolean""
-            }
-          }
-        },
-        ""property7"": {
-          ""type"": ""string"",
-          ""minLength"": 2
-        }
-      },
-      ""additionalProperties"": {
-        ""properties"": {
-          ""Property8"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""patternProperties"": {
-        ""^S_"": {
-          ""type"": ""string""
-        },
-        ""^I_"": {
-          ""type"": ""integer""
-        }
-      },
-      ""propertyNames"": {
-        ""pattern"": ""^[A-Za-z_][A-Za-z0-9_]*$""
-      }
-    },
-    ""property11"": {
-      ""const"": ""aSpecialConstant""
-    }
-  },
-  ""nullable"": true,
-  ""externalDocs"": {
-    ""url"": ""http://example.com/externalDocs""
-  }
-}";
+            string expected = this.GetTestData<string>();
 
             // Act
             var actual = AdvancedSchemaObject.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]
         public void Deserialize_WithAdvancedSchema_Works()
         {
             // Arrange
-            var json = @"{
-  ""title"": ""title1"",
-  ""properties"": {
-    ""property1"": {
-      ""items"": false,
-      ""additionalItems"": false,
-      ""properties"": {
-        ""property2"": {
-          ""type"": ""integer""
-        },
-        ""property3"": {
-          ""type"": ""string"",
-          ""maxLength"": 15
-        }
-      },
-      ""additionalProperties"": false
-    },
-    ""property4"": {
-      ""items"": {
-        ""properties"": {
-          ""Property9"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""additionalItems"": {
-        ""properties"": {
-          ""Property10"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""properties"": {
-        ""property5"": {
-          ""properties"": {
-            ""property6"": {
-              ""type"": ""boolean""
-            }
-          }
-        },
-        ""property7"": {
-          ""type"": ""string"",
-          ""minLength"": 2
-        }
-      },
-      ""additionalProperties"": {
-        ""properties"": {
-          ""Property8"": {
-            ""type"": [
-              ""null"",
-              ""string""
-            ]
-          }
-        }
-      },
-      ""patternProperties"": {
-        ""^S_"": {
-          ""type"": ""string""
-        },
-        ""^I_"": {
-          ""type"": ""integer""
-        }
-      },
-      ""propertyNames"": {
-        ""pattern"": ""^[A-Za-z_][A-Za-z0-9_]*$""
-      }
-    },
-    ""property11"": {
-      ""const"": ""aSpecialConstant""
-    }
-  },
-  ""nullable"": true,
-  ""externalDocs"": {
-    ""url"": ""http://example.com/externalDocs""
-  }
-}";
+            var json = GetTestData<string>();
             var expected = AdvancedSchemaObject;
 
             // Act
@@ -612,52 +381,14 @@ components: { }";
         public void SerializeAsJson_WithAdvancedSchemaWithAllOf_V2Works()
         {
             // Arrange
-            var expected = @"{
-  ""title"": ""title1"",
-  ""allOf"": [
-    {
-      ""title"": ""title2"",
-      ""properties"": {
-        ""property1"": {
-          ""type"": ""integer""
-        },
-        ""property2"": {
-          ""type"": ""string"",
-          ""maxLength"": 15
-        }
-      }
-    },
-    {
-      ""title"": ""title3"",
-      ""properties"": {
-        ""property3"": {
-          ""properties"": {
-            ""property4"": {
-              ""type"": ""boolean""
-            }
-          }
-        },
-        ""property5"": {
-          ""type"": ""string"",
-          ""minLength"": 2
-        }
-      },
-      ""nullable"": true
-    }
-  ],
-  ""nullable"": true,
-  ""externalDocs"": {
-    ""url"": ""http://example.com/externalDocs""
-  }
-}";
+            var expected = this.GetTestData<string>();
 
             // Act
             var actual = AdvancedSchemaWithAllOf.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-            actual.Should().Be(expected);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Theory]
@@ -712,30 +443,21 @@ components: { }";
             .WithComponent("testB", new AsyncApiSchema() { Description = "test", Type = SchemaType.Boolean })
             .Build();
 
-            var outputString = new StringWriter(CultureInfo.InvariantCulture);
+            var outputString = new StringWriter();
             var writer = new AsyncApiYamlWriter(outputString, new AsyncApiWriterSettings { InlineReferences = shouldInline });
 
             // Act
             asyncApiDocument.SerializeV2(writer);
 
             var actual = outputString.ToString();
-            actual = actual.MakeLineBreaksEnvironmentNeutral();
-
-            string expected = string.Empty;
 
             // Assert
-            if (shouldInline)
-            {
-                expected = this.InlinedReferences;
-            }
-            else
-            {
-                expected = this.NoInlinedReferences;
-            }
+            string expected = this.GetTestData<string>(shouldInline
+                ? "AsyncApiSchema_InlinedReferences"
+                : "AsyncApiSchema_NoInlinedReferences.yml");
 
-            expected = expected.MakeLineBreaksEnvironmentNeutral();
-
-            Assert.AreEqual(expected, actual);
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]

@@ -20,32 +20,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="ReportGenerator" Version="5.1.2" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Bindings\LEGO.AsyncAPI.Bindings.csproj" />
     <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj" />
     <ProjectReference Include="..\..\src\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="readers\Basic.yaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="readers\samples\AsyncApi\AsyncApiChannelObject\Basic.yaml" />
-    <None Remove="readers\samples\AsyncApi\AsyncApiInfoObject\Advanced.yaml" />
-    <None Remove="readers\samples\AsyncApi\AsyncApiInfoObject\Basic.yaml" />
-    <None Remove="readers\samples\AsyncApi\Basic.yaml" />
-    <None Remove="readers\samples\AsyncApi\schema-v2.3.0.json" />
-    <None Remove="stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />
+    <None Update="TestData\**" CopyToOutputDirectory="PreserveNewest"/>
   </ItemGroup>
 </Project>

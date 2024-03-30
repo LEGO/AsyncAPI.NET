@@ -1,0 +1,82 @@
+{
+  "title": "title1",
+  "properties": {
+    "property1": {
+      "items": false,
+      "additionalItems": false,
+      "properties": {
+        "property2": {
+          "type": "integer"
+        },
+        "property3": {
+          "type": "string",
+          "maxLength": 15
+        }
+      },
+      "additionalProperties": false
+    },
+    "property4": {
+      "items": {
+        "properties": {
+          "Property9": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "additionalItems": {
+        "properties": {
+          "Property10": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "properties": {
+        "property5": {
+          "properties": {
+            "property6": {
+              "type": "boolean"
+            }
+          }
+        },
+        "property7": {
+          "type": "string",
+          "minLength": 2
+        }
+      },
+      "additionalProperties": {
+        "properties": {
+          "Property8": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "patternProperties": {
+        "^S_": {
+          "type": "string"
+        },
+        "^I_": {
+          "type": "integer"
+        }
+      },
+      "propertyNames": {
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+      }
+    },
+    "property11": {
+      "const": "aSpecialConstant"
+    }
+  },
+  "nullable": true,
+  "externalDocs": {
+    "url": "http://example.com/externalDocs"
+  }
+}
