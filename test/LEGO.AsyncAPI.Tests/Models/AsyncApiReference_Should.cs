@@ -15,8 +15,10 @@ namespace LEGO.AsyncAPI.Tests
         public void AsyncApiReference_WithExternalFragmentUriReference_AllowReference()
         {
             // Arrange
-            var actual = @"payload:
-  $ref: http://example.com/some-resource#/path/to/external/fragment";
+            var actual = """
+                payload:
+                  $ref: http://example.com/some-resource#/path/to/external/fragment
+                """;
             var reader = new AsyncApiStringReader();
 
             // Act
@@ -41,8 +43,10 @@ namespace LEGO.AsyncAPI.Tests
         public void AsyncApiReference_WithFragmentReference_AllowReference()
         {
             // Arrange
-            var actual = @"payload:
-  $ref: /fragments/myFragment";
+            var actual = """
+                payload:
+                  $ref: /fragments/myFragment
+                """;
             var reader = new AsyncApiStringReader();
 
             // Act
@@ -67,8 +71,10 @@ namespace LEGO.AsyncAPI.Tests
         public void AsyncApiReference_WithInternalComponentReference_AllowReference()
         {
             // Arrange
-            var actual = @"payload:
-  $ref: '#/components/schemas/test'";
+            var actual = """
+                payload:
+                  $ref: '#/components/schemas/test'
+                """;
             var reader = new AsyncApiStringReader();
 
             // Act
@@ -92,8 +98,10 @@ namespace LEGO.AsyncAPI.Tests
         public void AsyncApiReference_WithExternalFragmentReference_AllowReference()
         {
             // Arrange
-            var actual = @"payload:
-  $ref: ./myjsonfile.json#/fragment";
+            var actual = """
+                payload:
+                  $ref: ./myjsonfile.json#/fragment
+                """;
             var reader = new AsyncApiStringReader();
 
             // Act
@@ -116,8 +124,10 @@ namespace LEGO.AsyncAPI.Tests
         public void AsyncApiReference_WithExternalComponentReference_AllowReference()
         {
             // Arrange
-            var actual = @"payload:
-  $ref: ./someotherdocument.json#/components/schemas/test";
+            var actual = """
+                payload:
+                  $ref: ./someotherdocument.json#/components/schemas/test
+                """;
             var reader = new AsyncApiStringReader();
 
             // Act
@@ -141,17 +151,19 @@ namespace LEGO.AsyncAPI.Tests
         public void AsyncApiDocument_WithInternalComponentReference_ResolvesReference()
         {
             // Arrange
-            var actual = @"asyncapi: 2.6.0
-info:
-  title: My AsyncAPI Document
-  version: 1.0.0
-channels:
-  myChannel:
-    $ref: '#/components/channels/myChannel' 
-components:
-  channels: 
-    myChannel:
-      description: customDescription";
+            var actual = """
+                asyncapi: 2.6.0
+                info:
+                  title: My AsyncAPI Document
+                  version: 1.0.0
+                channels:
+                  myChannel:
+                    $ref: '#/components/channels/myChannel' 
+                components:
+                  channels: 
+                    myChannel:
+                      description: customDescription
+                """;
 
             var settings = new AsyncApiReaderSettings()
             {
@@ -178,13 +190,15 @@ components:
         public void AsyncApiDocument_WithExternalReference_DoesNotResolve()
         {
             // Arrange
-            var actual = @"asyncapi: 2.6.0
-info:
-  title: My AsyncAPI Document
-  version: 1.0.0
-channels:
-  myChannel:
-    $ref: http://example.com/channel.json";
+            var actual = """
+                asyncapi: 2.6.0
+                info:
+                  title: My AsyncAPI Document
+                  version: 1.0.0
+                channels:
+                  myChannel:
+                    $ref: http://example.com/channel.json
+                """;
 
             var settings = new AsyncApiReaderSettings()
             {
@@ -212,8 +226,10 @@ channels:
         public void AsyncApiReference_WithExternalReference_AllowsReferenceDoesNotResolve()
         {
             // Arrange
-            var actual = @"payload:
-  $ref: http://example.com/json.json";
+            var actual = """
+                payload:
+                  $ref: http://example.com/json.json
+                """;
             var reader = new AsyncApiStringReader();
 
             // Act

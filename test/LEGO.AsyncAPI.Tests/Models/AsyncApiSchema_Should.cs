@@ -301,19 +301,21 @@ namespace LEGO.AsyncAPI.Tests.Models
         public void SerializeAsJson_WithAdvancedSchemaNumber_V2Works()
         {
             // Arrange
-            var expected = @"{
-  ""title"": ""title1"",
-  ""type"": ""integer"",
-  ""maximum"": 42,
-  ""minimum"": 10,
-  ""exclusiveMinimum"": true,
-  ""multipleOf"": 3,
-  ""default"": 15,
-  ""nullable"": true,
-  ""externalDocs"": {
-    ""url"": ""http://example.com/externalDocs""
-  }
-}";
+            var expected = """
+                {
+                  "title": "title1",
+                  "type": "integer",
+                  "maximum": 42,
+                  "minimum": 10,
+                  "exclusiveMinimum": true,
+                  "multipleOf": 3,
+                  "default": 15,
+                  "nullable": true,
+                  "externalDocs": {
+                    "url": "http://example.com/externalDocs"
+                  }
+                }
+                """;
 
             // Act
             var actual = AdvancedSchemaNumber.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
@@ -327,19 +329,21 @@ namespace LEGO.AsyncAPI.Tests.Models
         public void SerializeAsJson_WithAdvancedSchemaBigNumbers_V2Works()
         {
             // Arrange
-            var expected = @"{
-  ""title"": ""title1"",
-  ""type"": ""integer"",
-  ""maximum"": 1.7976931348623157E+308,
-  ""minimum"": -1.7976931348623157E+308,
-  ""exclusiveMinimum"": true,
-  ""multipleOf"": 3,
-  ""default"": 15,
-  ""nullable"": true,
-  ""externalDocs"": {
-    ""url"": ""http://example.com/externalDocs""
-  }
-}";
+            var expected = """
+                {
+                  "title": "title1",
+                  "type": "integer",
+                  "maximum": 1.7976931348623157E+308,
+                  "minimum": -1.7976931348623157E+308,
+                  "exclusiveMinimum": true,
+                  "multipleOf": 3,
+                  "default": 15,
+                  "nullable": true,
+                  "externalDocs": {
+                    "url": "http://example.com/externalDocs"
+                  }
+                }
+                """;
 
             // Act
             var actual = AdvancedSchemaBigNumbers.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);

@@ -30,10 +30,12 @@ namespace LEGO.AsyncAPI.Tests.Models
         public void SerializeV2_WithMultipleMessages_SerializesWithOneOf()
         {
             // Arrange
-            var expected = @"message:
-  oneOf:
-    - name: First Message
-    - name: Second Message";
+            var expected = """
+                message:
+                  oneOf:
+                    - name: First Message
+                    - name: Second Message
+                """;
 
             var asyncApiOperation = new AsyncApiOperation();
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "First Message" });
@@ -56,8 +58,10 @@ namespace LEGO.AsyncAPI.Tests.Models
         public void SerializeV2_WithSingleMessage_Serializes()
         {
             // Arrange
-            var expected = @"message:
-  name: First Message";
+            var expected = """
+                message:
+                  name: First Message
+                """;
 
             var asyncApiOperation = new AsyncApiOperation();
             asyncApiOperation.Message.Add(new AsyncApiMessage { Name = "First Message" });
@@ -79,17 +83,19 @@ namespace LEGO.AsyncAPI.Tests.Models
         public void AsyncApiOperation_WithBindings_Serializes()
         {
             var expected =
-@"bindings:
-  http:
-    type: request
-    method: PUT
-    query:
-      description: some query
-  kafka:
-    groupId:
-      description: some Id
-    clientId:
-      description: some Id";
+                """
+                bindings:
+                  http:
+                    type: request
+                    method: PUT
+                    query:
+                      description: some query
+                  kafka:
+                    groupId:
+                      description: some Id
+                    clientId:
+                      description: some Id
+                """;
 
             var operation = new AsyncApiOperation
             {

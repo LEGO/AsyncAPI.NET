@@ -19,35 +19,37 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
         {
             // Arrange
             var expected =
-                @"bindings:
-  sns:
-    name: myTopic
-    ordering:
-      type: FIFO
-      contentBasedDeduplication: true
-      x-orderingExtension:
-        orderingXPropertyName: orderingXPropertyValue
-    policy:
-      statements:
-        - effect: Deny
-          principal: arn:aws:iam::123456789012:user/alex.wichmann
-          action:
-            - sns:Publish
-            - sns:Delete
-        - effect: Allow
-          principal:
-            - arn:aws:iam::123456789012:user/alex.wichmann
-            - arn:aws:iam::123456789012:user/dec.kolakowski
-          action: sns:Create
-          x-statementExtension:
-            statementXPropertyName: statementXPropertyValue
-      x-policyExtension:
-        policyXPropertyName: policyXPropertyValue
-    tags:
-      owner: AsyncAPI.NET
-      platform: AsyncAPIOrg
-    x-bindingExtension:
-      bindingXPropertyName: bindingXPropertyValue";
+                """
+                bindings:
+                  sns:
+                    name: myTopic
+                    ordering:
+                      type: FIFO
+                      contentBasedDeduplication: true
+                      x-orderingExtension:
+                        orderingXPropertyName: orderingXPropertyValue
+                    policy:
+                      statements:
+                        - effect: Deny
+                          principal: arn:aws:iam::123456789012:user/alex.wichmann
+                          action:
+                            - sns:Publish
+                            - sns:Delete
+                        - effect: Allow
+                          principal:
+                            - arn:aws:iam::123456789012:user/alex.wichmann
+                            - arn:aws:iam::123456789012:user/dec.kolakowski
+                          action: sns:Create
+                          x-statementExtension:
+                            statementXPropertyName: statementXPropertyValue
+                      x-policyExtension:
+                        policyXPropertyName: policyXPropertyValue
+                    tags:
+                      owner: AsyncAPI.NET
+                      platform: AsyncAPIOrg
+                    x-bindingExtension:
+                      bindingXPropertyName: bindingXPropertyValue
+                """;
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new SnsChannelBinding()
@@ -152,66 +154,68 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
         {
             // Arrange
             var expected =
-                @"bindings:
-  sns:
-    topic:
-      name: someTopic
-      x-identifierExtension:
-        identifierXPropertyName: identifierXPropertyValue
-    consumers:
-      - protocol: sqs
-        endpoint:
-          name: someQueue
-          x-identifierExtension:
-            identifierXPropertyName: identifierXPropertyValue
-        filterPolicy:
-          store:
-            - asyncapi_corp
-          contact: dec.kolakowski
-          event:
-            - anything-but: order_cancelled
-          order_key:
-            transient: by_area
-          customer_interests:
-            - rugby
-            - football
-            - baseball
-        filterPolicyScope: MessageAttributes
-        rawMessageDelivery: false
-        redrivePolicy:
-          deadLetterQueue:
-            arn: arn:aws:SQS:eu-west-1:0000000:123456789
-            x-identifierExtension:
-              identifierXPropertyName: identifierXPropertyValue
-          maxReceiveCount: 25
-          x-redrivePolicyExtension:
-            redrivePolicyXPropertyName: redrivePolicyXPropertyValue
-        deliveryPolicy:
-          minDelayTarget: 10
-          maxDelayTarget: 100
-          numRetries: 5
-          numNoDelayRetries: 2
-          numMinDelayRetries: 3
-          numMaxDelayRetries: 5
-          backoffFunction: linear
-          maxReceivesPerSecond: 2
-          x-deliveryPolicyExtension:
-            deliveryPolicyXPropertyName: deliveryPolicyXPropertyValue
-        x-consumerExtension:
-          consumerXPropertyName: consumerXPropertyValue
-    deliveryPolicy:
-      minDelayTarget: 10
-      maxDelayTarget: 100
-      numRetries: 5
-      numNoDelayRetries: 2
-      numMinDelayRetries: 3
-      numMaxDelayRetries: 5
-      backoffFunction: geometric
-      maxReceivesPerSecond: 10
-      x-deliveryPolicyExtension:
-        deliveryPolicyXPropertyName: deliveryPolicyXPropertyValue
-    x-bindingExtension:
-      bindingXPropertyName: bindingXPropertyValue";
+                """
+                bindings:
+                  sns:
+                    topic:
+                      name: someTopic
+                      x-identifierExtension:
+                        identifierXPropertyName: identifierXPropertyValue
+                    consumers:
+                      - protocol: sqs
+                        endpoint:
+                          name: someQueue
+                          x-identifierExtension:
+                            identifierXPropertyName: identifierXPropertyValue
+                        filterPolicy:
+                          store:
+                            - asyncapi_corp
+                          contact: dec.kolakowski
+                          event:
+                            - anything-but: order_cancelled
+                          order_key:
+                            transient: by_area
+                          customer_interests:
+                            - rugby
+                            - football
+                            - baseball
+                        filterPolicyScope: MessageAttributes
+                        rawMessageDelivery: false
+                        redrivePolicy:
+                          deadLetterQueue:
+                            arn: arn:aws:SQS:eu-west-1:0000000:123456789
+                            x-identifierExtension:
+                              identifierXPropertyName: identifierXPropertyValue
+                          maxReceiveCount: 25
+                          x-redrivePolicyExtension:
+                            redrivePolicyXPropertyName: redrivePolicyXPropertyValue
+                        deliveryPolicy:
+                          minDelayTarget: 10
+                          maxDelayTarget: 100
+                          numRetries: 5
+                          numNoDelayRetries: 2
+                          numMinDelayRetries: 3
+                          numMaxDelayRetries: 5
+                          backoffFunction: linear
+                          maxReceivesPerSecond: 2
+                          x-deliveryPolicyExtension:
+                            deliveryPolicyXPropertyName: deliveryPolicyXPropertyValue
+                        x-consumerExtension:
+                          consumerXPropertyName: consumerXPropertyValue
+                    deliveryPolicy:
+                      minDelayTarget: 10
+                      maxDelayTarget: 100
+                      numRetries: 5
+                      numNoDelayRetries: 2
+                      numMinDelayRetries: 3
+                      numMaxDelayRetries: 5
+                      backoffFunction: geometric
+                      maxReceivesPerSecond: 10
+                      x-deliveryPolicyExtension:
+                        deliveryPolicyXPropertyName: deliveryPolicyXPropertyValue
+                    x-bindingExtension:
+                      bindingXPropertyName: bindingXPropertyValue
+                """;
 
             var operation = new AsyncApiOperation();
             operation.Bindings.Add(new SnsOperationBinding()

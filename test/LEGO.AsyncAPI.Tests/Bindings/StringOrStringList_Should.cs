@@ -63,9 +63,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings
         public void StringOrStringList_WhenValueIsString_SerializesDeserializes()
         {
             // Arrange
-            var expected = @"bindings:
-  testBinding:
-    testProperty: someValue";
+            var expected = """
+                bindings:
+                  testBinding:
+                    testProperty: someValue
+                """;
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new StringOrStringListTestBinding
@@ -91,12 +93,14 @@ namespace LEGO.AsyncAPI.Tests.Bindings
         public void StringOrStringList_WhenValueIsStringList_SerializesDeserializes()
         {
             // Arrange
-            var expected = @"bindings:
-  testBinding:
-    testProperty:
-      - someValue01
-      - someValue02
-      - someValue03";
+            var expected = """
+                bindings:
+                  testBinding:
+                    testProperty:
+                      - someValue01
+                      - someValue02
+                      - someValue03
+                """;
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new StringOrStringListTestBinding

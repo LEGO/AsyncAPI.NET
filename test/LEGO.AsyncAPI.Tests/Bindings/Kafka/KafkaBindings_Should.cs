@@ -17,23 +17,25 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
         {
             // Arrange
             var expected =
-@"bindings:
-  kafka:
-    topic: myTopic
-    partitions: 5
-    replicas: 4
-    topicConfiguration:
-      cleanup.policy:
-        - delete
-        - compact
-      retention.ms: 15552000000
-      retention.bytes: 2
-      delete.retention.ms: 3
-      max.message.bytes: 4
-      confluent.key.schema.validation: true
-      confluent.key.subject.name.strategy: TopicNameStrategy
-      confluent.value.schema.validation: true
-      confluent.value.subject.name.strategy: TopicNameStrategy";
+                """
+                bindings:
+                  kafka:
+                    topic: myTopic
+                    partitions: 5
+                    replicas: 4
+                    topicConfiguration:
+                      cleanup.policy:
+                        - delete
+                        - compact
+                      retention.ms: 15552000000
+                      retention.bytes: 2
+                      delete.retention.ms: 3
+                      max.message.bytes: 4
+                      confluent.key.schema.validation: true
+                      confluent.key.subject.name.strategy: TopicNameStrategy
+                      confluent.value.schema.validation: true
+                      confluent.value.subject.name.strategy: TopicNameStrategy
+                """;
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new KafkaChannelBinding
@@ -74,12 +76,14 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
         {
             // Arrange
             var expected =
-@"url: https://example.com
-protocol: kafka
-bindings:
-  kafka:
-    schemaRegistryUrl: https://example.com/schemaregistry
-    schemaRegistryVendor: confluent";
+                """
+                url: https://example.com
+                protocol: kafka
+                bindings:
+                  kafka:
+                    schemaRegistryUrl: https://example.com/schemaregistry
+                    schemaRegistryVendor: confluent
+                """;
 
             var server = new AsyncApiServer()
             {
@@ -110,13 +114,15 @@ bindings:
         {
             // Arrange
             var expected =
-@"bindings:
-  kafka:
-    key:
-      description: this mah other binding
-    SchemaIdLocation: test
-    schemaIdPayloadEncoding: test
-    schemaLookupStrategy: header";
+                """
+                bindings:
+                  kafka:
+                    key:
+                      description: this mah other binding
+                    SchemaIdLocation: test
+                    schemaIdPayloadEncoding: test
+                    schemaLookupStrategy: header
+                """;
 
             var message = new AsyncApiMessage();
 
@@ -148,12 +154,14 @@ bindings:
         {
             // Arrange
             var expected =
-@"bindings:
-  kafka:
-    groupId:
-      description: this mah groupId
-    clientId:
-      description: this mah clientId";
+                """
+                bindings:
+                  kafka:
+                    groupId:
+                      description: this mah groupId
+                    clientId:
+                      description: this mah clientId
+                """;
 
             var operation = new AsyncApiOperation();
 

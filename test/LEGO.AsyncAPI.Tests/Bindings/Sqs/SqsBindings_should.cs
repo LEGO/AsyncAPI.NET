@@ -19,60 +19,62 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
         {
             // Arrange
             var expected =
-                @"bindings:
-  sqs:
-    queue:
-      name: myQueue
-      fifoQueue: true
-      deduplicationScope: messageGroup
-      fifoThroughputLimit: perMessageGroupId
-      deliveryDelay: 30
-      visibilityTimeout: 60
-      receiveMessageWaitTime: 0
-      messageRetentionPeriod: 86400
-      redrivePolicy:
-        deadLetterQueue:
-          arn: arn:aws:SQS:eu-west-1:0000000:123456789
-          x-identifierExtension:
-            identifierXPropertyName: identifierXPropertyValue
-        maxReceiveCount: 15
-        x-redrivePolicyExtension:
-          redrivePolicyXPropertyName: redrivePolicyXPropertyValue
-      policy:
-        statements:
-          - effect: deny
-            principal: arn:aws:iam::123456789012:user/alex.wichmann
-            action:
-              - sqs:SendMessage
-              - sqs:ReceiveMessage
-            x-statementExtension:
-              statementXPropertyName: statementXPropertyValue
-          - effect: allow
-            principal:
-              - arn:aws:iam::123456789012:user/alex.wichmann
-              - arn:aws:iam::123456789012:user/dec.kolakowski
-            action: sqs:CreateQueue
-        x-policyExtension:
-          policyXPropertyName: policyXPropertyValue
-      tags:
-        owner: AsyncAPI.NET
-        platform: AsyncAPIOrg
-      x-queueExtension:
-        queueXPropertyName: queueXPropertyValue
-    deadLetterQueue:
-      name: myQueue_error
-      deliveryDelay: 0
-      visibilityTimeout: 0
-      receiveMessageWaitTime: 0
-      messageRetentionPeriod: 604800
-      policy:
-        statements:
-          - effect: allow
-            principal: arn:aws:iam::123456789012:user/alex.wichmann
-            action:
-              - sqs:*
-    x-internalObject:
-      myExtensionPropertyName: myExtensionPropertyValue";
+                """
+                bindings:
+                  sqs:
+                    queue:
+                      name: myQueue
+                      fifoQueue: true
+                      deduplicationScope: messageGroup
+                      fifoThroughputLimit: perMessageGroupId
+                      deliveryDelay: 30
+                      visibilityTimeout: 60
+                      receiveMessageWaitTime: 0
+                      messageRetentionPeriod: 86400
+                      redrivePolicy:
+                        deadLetterQueue:
+                          arn: arn:aws:SQS:eu-west-1:0000000:123456789
+                          x-identifierExtension:
+                            identifierXPropertyName: identifierXPropertyValue
+                        maxReceiveCount: 15
+                        x-redrivePolicyExtension:
+                          redrivePolicyXPropertyName: redrivePolicyXPropertyValue
+                      policy:
+                        statements:
+                          - effect: deny
+                            principal: arn:aws:iam::123456789012:user/alex.wichmann
+                            action:
+                              - sqs:SendMessage
+                              - sqs:ReceiveMessage
+                            x-statementExtension:
+                              statementXPropertyName: statementXPropertyValue
+                          - effect: allow
+                            principal:
+                              - arn:aws:iam::123456789012:user/alex.wichmann
+                              - arn:aws:iam::123456789012:user/dec.kolakowski
+                            action: sqs:CreateQueue
+                        x-policyExtension:
+                          policyXPropertyName: policyXPropertyValue
+                      tags:
+                        owner: AsyncAPI.NET
+                        platform: AsyncAPIOrg
+                      x-queueExtension:
+                        queueXPropertyName: queueXPropertyValue
+                    deadLetterQueue:
+                      name: myQueue_error
+                      deliveryDelay: 0
+                      visibilityTimeout: 0
+                      receiveMessageWaitTime: 0
+                      messageRetentionPeriod: 604800
+                      policy:
+                        statements:
+                          - effect: allow
+                            principal: arn:aws:iam::123456789012:user/alex.wichmann
+                            action:
+                              - sqs:*
+                    x-internalObject:
+                      myExtensionPropertyName: myExtensionPropertyValue
+                """;
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new SqsChannelBinding()
@@ -232,58 +234,60 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
         {
             // Arrange
             var expected =
-                @"bindings:
-  sqs:
-    queues:
-      - name: myQueue
-        deliveryDelay: 30
-        visibilityTimeout: 60
-        receiveMessageWaitTime: 0
-        messageRetentionPeriod: 86400
-        redrivePolicy:
-          deadLetterQueue:
-            arn: arn:aws:SQS:eu-west-1:0000000:123456789
-            x-identifierExtension:
-              identifierXPropertyName: identifierXPropertyValue
-          maxReceiveCount: 15
-          x-redrivePolicyExtension:
-            redrivePolicyXPropertyName: redrivePolicyXPropertyValue
-        policy:
-          statements:
-            - effect: deny
-              principal: arn:aws:iam::123456789012:user/alex.wichmann
-              action:
-                - sqs:SendMessage
-                - sqs:ReceiveMessage
-              x-statementExtension:
-                statementXPropertyName: statementXPropertyValue
-            - effect: allow
-              principal:
-                - arn:aws:iam::123456789012:user/alex.wichmann
-                - arn:aws:iam::123456789012:user/dec.kolakowski
-              action: sqs:CreateQueue
-          x-policyExtension:
-            policyXPropertyName: policyXPropertyValue
-        tags:
-          owner: AsyncAPI.NET
-          platform: AsyncAPIOrg
-        x-queueExtension:
-          queueXPropertyName: queueXPropertyValue
-      - name: myQueue_error
-        deliveryDelay: 0
-        visibilityTimeout: 0
-        receiveMessageWaitTime: 0
-        messageRetentionPeriod: 604800
-        policy:
-          statements:
-            - effect: allow
-              principal: arn:aws:iam::123456789012:user/alex.wichmann
-              action:
-                - sqs:*
-        x-queueExtension:
-          queueXPropertyName: queueXPropertyValue
-    x-internalObject:
-      myExtensionPropertyName: myExtensionPropertyValue";
+                """
+                bindings:
+                  sqs:
+                    queues:
+                      - name: myQueue
+                        deliveryDelay: 30
+                        visibilityTimeout: 60
+                        receiveMessageWaitTime: 0
+                        messageRetentionPeriod: 86400
+                        redrivePolicy:
+                          deadLetterQueue:
+                            arn: arn:aws:SQS:eu-west-1:0000000:123456789
+                            x-identifierExtension:
+                              identifierXPropertyName: identifierXPropertyValue
+                          maxReceiveCount: 15
+                          x-redrivePolicyExtension:
+                            redrivePolicyXPropertyName: redrivePolicyXPropertyValue
+                        policy:
+                          statements:
+                            - effect: deny
+                              principal: arn:aws:iam::123456789012:user/alex.wichmann
+                              action:
+                                - sqs:SendMessage
+                                - sqs:ReceiveMessage
+                              x-statementExtension:
+                                statementXPropertyName: statementXPropertyValue
+                            - effect: allow
+                              principal:
+                                - arn:aws:iam::123456789012:user/alex.wichmann
+                                - arn:aws:iam::123456789012:user/dec.kolakowski
+                              action: sqs:CreateQueue
+                          x-policyExtension:
+                            policyXPropertyName: policyXPropertyValue
+                        tags:
+                          owner: AsyncAPI.NET
+                          platform: AsyncAPIOrg
+                        x-queueExtension:
+                          queueXPropertyName: queueXPropertyValue
+                      - name: myQueue_error
+                        deliveryDelay: 0
+                        visibilityTimeout: 0
+                        receiveMessageWaitTime: 0
+                        messageRetentionPeriod: 604800
+                        policy:
+                          statements:
+                            - effect: allow
+                              principal: arn:aws:iam::123456789012:user/alex.wichmann
+                              action:
+                                - sqs:*
+                        x-queueExtension:
+                          queueXPropertyName: queueXPropertyValue
+                    x-internalObject:
+                      myExtensionPropertyName: myExtensionPropertyValue
+                """;
 
             var operation = new AsyncApiOperation();
             operation.Bindings.Add(new SqsOperationBinding()

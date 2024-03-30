@@ -17,15 +17,17 @@ namespace LEGO.AsyncAPI.Tests.Bindings.AMQP
         {
             // Arrange
             var expected =
-@"bindings:
-  amqp:
-    is: routingKey
-    exchange:
-      name: myExchange
-      type: topic
-      durable: true
-      autoDelete: false
-      vhost: /";
+                """
+                bindings:
+                  amqp:
+                    is: routingKey
+                    exchange:
+                      name: myExchange
+                      type: topic
+                      durable: true
+                      autoDelete: false
+                      vhost: /
+                """;
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new AMQPChannelBinding
@@ -60,15 +62,17 @@ namespace LEGO.AsyncAPI.Tests.Bindings.AMQP
         {
             // Arrange
             var expected =
-@"bindings:
-  amqp:
-    is: queue
-    queue:
-      name: my-queue-name
-      durable: true
-      exclusive: true
-      autoDelete: false
-      vhost: /";
+                """
+                bindings:
+                  amqp:
+                    is: queue
+                    queue:
+                      name: my-queue-name
+                      durable: true
+                      exclusive: true
+                      autoDelete: false
+                      vhost: /
+                """;
 
             var channel = new AsyncApiChannel();
             channel.Bindings.Add(new AMQPChannelBinding
@@ -103,10 +107,12 @@ namespace LEGO.AsyncAPI.Tests.Bindings.AMQP
         {
             // Arrange
             var expected =
-@"bindings:
-  amqp:
-    contentEncoding: gzip
-    messageType: user.signup";
+                """
+                bindings:
+                  amqp:
+                    contentEncoding: gzip
+                    messageType: user.signup
+                """;
 
             var message = new AsyncApiMessage();
 
@@ -133,19 +139,21 @@ namespace LEGO.AsyncAPI.Tests.Bindings.AMQP
         {
             // Arrange
             var expected =
-@"bindings:
-  amqp:
-    expiration: 100000
-    userId: guest
-    cc:
-      - user.logs
-    priority: 10
-    deliveryMode: 2
-    mandatory: false
-    bcc:
-      - external.audit
-    timestamp: true
-    ack: false";
+                """
+                bindings:
+                  amqp:
+                    expiration: 100000
+                    userId: guest
+                    cc:
+                      - user.logs
+                    priority: 10
+                    deliveryMode: 2
+                    mandatory: false
+                    bcc:
+                      - external.audit
+                    timestamp: true
+                    ack: false
+                """;
 
             var operation = new AsyncApiOperation();
             operation.Bindings.Add(new AMQPOperationBinding
