@@ -32,176 +32,178 @@ namespace LEGO.AsyncAPI.Tests
         {
             // Arrange
             var expected =
-@"asyncapi: 2.6.0
-info:
-  title: Streetlights Kafka API
-  version: 1.0.0
-  description: The Smartylighting Streetlights API allows you to remotely manage the city lights.
-  license:
-    name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0
-servers:
-  scram-connections:
-    url: test.mykafkacluster.org:18092
-    protocol: kafka-secure
-    description: Test broker secured with scramSha256
-    security:
-      - saslScram: []
-    tags:
-      - name: env:test-scram
-        description: This environment is meant for running internal tests through scramSha256
-      - name: kind:remote
-        description: This server is a remote server. Not exposed by the application
-      - name: visibility:private
-        description: This resource is private and only available to certain users
-  mtls-connections:
-    url: test.mykafkacluster.org:28092
-    protocol: kafka-secure
-    description: Test broker secured with X509
-    security:
-      - certs: []
-    tags:
-      - name: env:test-mtls
-        description: This environment is meant for running internal tests through mtls
-      - name: kind:remote
-        description: This server is a remote server. Not exposed by the application
-      - name: visibility:private
-        description: This resource is private and only available to certain users
-defaultContentType: application/json
-channels:
-  'smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured':
-    description: The topic on which measured values may be produced and consumed.
-    publish:
-      operationId: receiveLightMeasurement
-      summary: Inform about environmental lighting conditions of a particular streetlight.
-      traits:
-        - $ref: '#/components/operationTraits/kafka'
-      message:
-        $ref: '#/components/messages/lightMeasured'
-    parameters:
-      streetlightId:
-        $ref: '#/components/parameters/streetlightId'
-  'smartylighting.streetlights.1.0.action.{streetlightId}.turn.on':
-    subscribe:
-      operationId: turnOn
-      traits:
-        - $ref: '#/components/operationTraits/kafka'
-      message:
-        $ref: '#/components/messages/turnOnOff'
-    parameters:
-      streetlightId:
-        $ref: '#/components/parameters/streetlightId'
-  'smartylighting.streetlights.1.0.action.{streetlightId}.turn.off':
-    subscribe:
-      operationId: turnOff
-      traits:
-        - $ref: '#/components/operationTraits/kafka'
-      message:
-        $ref: '#/components/messages/turnOnOff'
-    parameters:
-      streetlightId:
-        $ref: '#/components/parameters/streetlightId'
-  'smartylighting.streetlights.1.0.action.{streetlightId}.dim':
-    subscribe:
-      operationId: dimLight
-      traits:
-        - $ref: '#/components/operationTraits/kafka'
-      message:
-        $ref: '#/components/messages/dimLight'
-    parameters:
-      streetlightId:
-        $ref: '#/components/parameters/streetlightId'
-components:
-  schemas:
-    lightMeasuredPayload:
-      type: object
-      properties:
-        lumens:
-          type: integer
-          description: Light intensity measured in lumens.
-          minimum: 0
-        sentAt:
-          $ref: '#/components/schemas/sentAt'
-    turnOnOffPayload:
-      type: object
-      properties:
-        command:
-          type: string
-          description: Whether to turn on or off the light.
-          enum:
-            - on
-            - off
-        sentAt:
-          $ref: '#/components/schemas/sentAt'
-    dimLightPayload:
-      type: object
-      properties:
-        percentage:
-          type: integer
-          description: Percentage to which the light should be dimmed to.
-          maximum: 100
-          minimum: 0
-        sentAt:
-          $ref: '#/components/schemas/sentAt'
-    sentAt:
-      type: string
-      format: date-time
-      description: Date and time when the message was sent.
-  messages:
-    lightMeasured:
-      payload:
-        $ref: '#/components/schemas/lightMeasuredPayload'
-      contentType: application/json
-      name: lightMeasured
-      title: Light measured
-      summary: Inform about environmental lighting conditions of a particular streetlight.
-      traits:
-        - $ref: '#/components/messageTraits/commonHeaders'
-    turnOnOff:
-      payload:
-        $ref: '#/components/schemas/turnOnOffPayload'
-      name: turnOnOff
-      title: Turn on/off
-      summary: Command a particular streetlight to turn the lights on or off.
-      traits:
-        - $ref: '#/components/messageTraits/commonHeaders'
-    dimLight:
-      payload:
-        $ref: '#/components/schemas/dimLightPayload'
-      name: dimLight
-      title: Dim light
-      summary: Command a particular streetlight to dim the lights.
-      traits:
-        - $ref: '#/components/messageTraits/commonHeaders'
-  securitySchemes:
-    saslScram:
-      type: scramSha256
-      description: Provide your username and password for SASL/SCRAM authentication
-    certs:
-      type: X509
-      description: Download the certificate files from service provider
-  parameters:
-    streetlightId:
-      description: The ID of the streetlight.
-      schema:
-        type: string
-  operationTraits:
-    kafka:
-      bindings:
-        kafka:
-          clientId:
-            type: string
-            enum:
-              - my-app-id
-  messageTraits:
-    commonHeaders:
-      headers:
-        type: object
-        properties:
-          my-app-header:
-            type: integer
-            maximum: 100
-            minimum: 0";
+                """
+                asyncapi: 2.6.0
+                info:
+                  title: Streetlights Kafka API
+                  version: 1.0.0
+                  description: The Smartylighting Streetlights API allows you to remotely manage the city lights.
+                  license:
+                    name: Apache 2.0
+                    url: https://www.apache.org/licenses/LICENSE-2.0
+                servers:
+                  scram-connections:
+                    url: test.mykafkacluster.org:18092
+                    protocol: kafka-secure
+                    description: Test broker secured with scramSha256
+                    security:
+                      - saslScram: []
+                    tags:
+                      - name: env:test-scram
+                        description: This environment is meant for running internal tests through scramSha256
+                      - name: kind:remote
+                        description: This server is a remote server. Not exposed by the application
+                      - name: visibility:private
+                        description: This resource is private and only available to certain users
+                  mtls-connections:
+                    url: test.mykafkacluster.org:28092
+                    protocol: kafka-secure
+                    description: Test broker secured with X509
+                    security:
+                      - certs: []
+                    tags:
+                      - name: env:test-mtls
+                        description: This environment is meant for running internal tests through mtls
+                      - name: kind:remote
+                        description: This server is a remote server. Not exposed by the application
+                      - name: visibility:private
+                        description: This resource is private and only available to certain users
+                defaultContentType: application/json
+                channels:
+                  'smartylighting.streetlights.1.0.event.{streetlightId}.lighting.measured':
+                    description: The topic on which measured values may be produced and consumed.
+                    publish:
+                      operationId: receiveLightMeasurement
+                      summary: Inform about environmental lighting conditions of a particular streetlight.
+                      traits:
+                        - $ref: '#/components/operationTraits/kafka'
+                      message:
+                        $ref: '#/components/messages/lightMeasured'
+                    parameters:
+                      streetlightId:
+                        $ref: '#/components/parameters/streetlightId'
+                  'smartylighting.streetlights.1.0.action.{streetlightId}.turn.on':
+                    subscribe:
+                      operationId: turnOn
+                      traits:
+                        - $ref: '#/components/operationTraits/kafka'
+                      message:
+                        $ref: '#/components/messages/turnOnOff'
+                    parameters:
+                      streetlightId:
+                        $ref: '#/components/parameters/streetlightId'
+                  'smartylighting.streetlights.1.0.action.{streetlightId}.turn.off':
+                    subscribe:
+                      operationId: turnOff
+                      traits:
+                        - $ref: '#/components/operationTraits/kafka'
+                      message:
+                        $ref: '#/components/messages/turnOnOff'
+                    parameters:
+                      streetlightId:
+                        $ref: '#/components/parameters/streetlightId'
+                  'smartylighting.streetlights.1.0.action.{streetlightId}.dim':
+                    subscribe:
+                      operationId: dimLight
+                      traits:
+                        - $ref: '#/components/operationTraits/kafka'
+                      message:
+                        $ref: '#/components/messages/dimLight'
+                    parameters:
+                      streetlightId:
+                        $ref: '#/components/parameters/streetlightId'
+                components:
+                  schemas:
+                    lightMeasuredPayload:
+                      type: object
+                      properties:
+                        lumens:
+                          type: integer
+                          description: Light intensity measured in lumens.
+                          minimum: 0
+                        sentAt:
+                          $ref: '#/components/schemas/sentAt'
+                    turnOnOffPayload:
+                      type: object
+                      properties:
+                        command:
+                          type: string
+                          description: Whether to turn on or off the light.
+                          enum:
+                            - on
+                            - off
+                        sentAt:
+                          $ref: '#/components/schemas/sentAt'
+                    dimLightPayload:
+                      type: object
+                      properties:
+                        percentage:
+                          type: integer
+                          description: Percentage to which the light should be dimmed to.
+                          maximum: 100
+                          minimum: 0
+                        sentAt:
+                          $ref: '#/components/schemas/sentAt'
+                    sentAt:
+                      type: string
+                      format: date-time
+                      description: Date and time when the message was sent.
+                  messages:
+                    lightMeasured:
+                      payload:
+                        $ref: '#/components/schemas/lightMeasuredPayload'
+                      contentType: application/json
+                      name: lightMeasured
+                      title: Light measured
+                      summary: Inform about environmental lighting conditions of a particular streetlight.
+                      traits:
+                        - $ref: '#/components/messageTraits/commonHeaders'
+                    turnOnOff:
+                      payload:
+                        $ref: '#/components/schemas/turnOnOffPayload'
+                      name: turnOnOff
+                      title: Turn on/off
+                      summary: Command a particular streetlight to turn the lights on or off.
+                      traits:
+                        - $ref: '#/components/messageTraits/commonHeaders'
+                    dimLight:
+                      payload:
+                        $ref: '#/components/schemas/dimLightPayload'
+                      name: dimLight
+                      title: Dim light
+                      summary: Command a particular streetlight to dim the lights.
+                      traits:
+                        - $ref: '#/components/messageTraits/commonHeaders'
+                  securitySchemes:
+                    saslScram:
+                      type: scramSha256
+                      description: Provide your username and password for SASL/SCRAM authentication
+                    certs:
+                      type: X509
+                      description: Download the certificate files from service provider
+                  parameters:
+                    streetlightId:
+                      description: The ID of the streetlight.
+                      schema:
+                        type: string
+                  operationTraits:
+                    kafka:
+                      bindings:
+                        kafka:
+                          clientId:
+                            type: string
+                            enum:
+                              - my-app-id
+                  messageTraits:
+                    commonHeaders:
+                      headers:
+                        type: object
+                        properties:
+                          my-app-header:
+                            type: integer
+                            maximum: 100
+                            minimum: 0
+                """;
 
             var asyncApiDocument = new AsyncApiDocumentBuilder()
                 .WithInfo(new AsyncApiInfo
@@ -704,113 +706,115 @@ components:
         public void SerializeV2_WithFullSpec_Serializes()
         {
             var expected =
-                @"asyncapi: 2.6.0
-info:
-  title: apiTitle
-  version: apiVersion
-  description: description
-  termsOfService: https://example.com/termsOfService
-  contact:
-    name: contactName
-    url: https://example.com/contact
-    email: contactEmail
-  license:
-    name: licenseName
-    url: https://example.com/license
-    x-extension: value
-  x-extension: value
-id: documentId
-servers:
-  myServer:
-    url: https://example.com/server
-    protocol: KafkaProtocol
-    protocolVersion: protocolVersion
-    description: serverDescription
-    security:
-      - securitySchemeName:
-          - requirementItem
-channels:
-  channel1:
-    description: channelDescription
-    subscribe:
-      operationId: myOperation
-      summary: operationSummary
-      description: operationDescription
-      tags:
-        - name: tagName
-          description: tagDescription
-      externalDocs:
-        description: externalDocsDescription
-        url: https://example.com/externalDocs
-      traits:
-        - operationId: myOperation
-          summary: traitSummary
-          description: traitDescription
-          tags:
-            - name: tagName
-              description: tagDescription
-          externalDocs:
-            description: externalDocsDescription
-            url: https://example.com/externalDocs
-          x-extension: value
-      message:
-        oneOf:
-          - contentType: contentType
-            name: messageName
-            title: messageTitle
-            summary: messageSummary
-            description: messageDescription
-          - correlationId:
-              description: correlationDescription
-              location: correlationLocation
-              x-extension: value
-            schemaFormat: schemaFormat
-            contentType: contentType
-            name: messageName
-            title: messageTitle
-            summary: messageSummary
-            description: messageDescription
-            traits:
-              - headers:
-                  title: schemaTitle
-                  description: schemaDescription
-                  writeOnly: true
-                  examples:
-                    - key: value
-                      otherKey: 9223372036854775807
-                name: traitName
-                title: traitTitle
-                summary: traitSummary
-                description: traitDescription
-                tags:
-                  - name: tagName
-                    description: tagDescription
-                externalDocs:
-                  description: externalDocsDescription
-                  url: https://example.com/externalDocs
-                examples:
-                  - name: exampleName
-                    summary: exampleSummary
-                    payload:
-                      key: value
-                      otherKey: 9223372036854775807
+                """
+                asyncapi: 2.6.0
+                info:
+                  title: apiTitle
+                  version: apiVersion
+                  description: description
+                  termsOfService: https://example.com/termsOfService
+                  contact:
+                    name: contactName
+                    url: https://example.com/contact
+                    email: contactEmail
+                  license:
+                    name: licenseName
+                    url: https://example.com/license
                     x-extension: value
-                x-extension: value
-            x-extension: value
-      x-extension: value
-components:
-  securitySchemes:
-    securitySchemeName:
-      type: oauth2
-      description: securitySchemeDescription
-      flows:
-        implicit:
-          authorizationUrl: https://example.com/authorization
-          tokenUrl: https://example.com/tokenUrl
-          refreshUrl: https://example.com/refresh
-          scopes:
-            securitySchemeScopeKey: securitySchemeScopeValue
-          x-extension: value";
+                  x-extension: value
+                id: documentId
+                servers:
+                  myServer:
+                    url: https://example.com/server
+                    protocol: KafkaProtocol
+                    protocolVersion: protocolVersion
+                    description: serverDescription
+                    security:
+                      - securitySchemeName:
+                          - requirementItem
+                channels:
+                  channel1:
+                    description: channelDescription
+                    subscribe:
+                      operationId: myOperation
+                      summary: operationSummary
+                      description: operationDescription
+                      tags:
+                        - name: tagName
+                          description: tagDescription
+                      externalDocs:
+                        description: externalDocsDescription
+                        url: https://example.com/externalDocs
+                      traits:
+                        - operationId: myOperation
+                          summary: traitSummary
+                          description: traitDescription
+                          tags:
+                            - name: tagName
+                              description: tagDescription
+                          externalDocs:
+                            description: externalDocsDescription
+                            url: https://example.com/externalDocs
+                          x-extension: value
+                      message:
+                        oneOf:
+                          - contentType: contentType
+                            name: messageName
+                            title: messageTitle
+                            summary: messageSummary
+                            description: messageDescription
+                          - correlationId:
+                              description: correlationDescription
+                              location: correlationLocation
+                              x-extension: value
+                            schemaFormat: schemaFormat
+                            contentType: contentType
+                            name: messageName
+                            title: messageTitle
+                            summary: messageSummary
+                            description: messageDescription
+                            traits:
+                              - headers:
+                                  title: schemaTitle
+                                  description: schemaDescription
+                                  writeOnly: true
+                                  examples:
+                                    - key: value
+                                      otherKey: 9223372036854775807
+                                name: traitName
+                                title: traitTitle
+                                summary: traitSummary
+                                description: traitDescription
+                                tags:
+                                  - name: tagName
+                                    description: tagDescription
+                                externalDocs:
+                                  description: externalDocsDescription
+                                  url: https://example.com/externalDocs
+                                examples:
+                                  - name: exampleName
+                                    summary: exampleSummary
+                                    payload:
+                                      key: value
+                                      otherKey: 9223372036854775807
+                                    x-extension: value
+                                x-extension: value
+                            x-extension: value
+                      x-extension: value
+                components:
+                  securitySchemes:
+                    securitySchemeName:
+                      type: oauth2
+                      description: securitySchemeDescription
+                      flows:
+                        implicit:
+                          authorizationUrl: https://example.com/authorization
+                          tokenUrl: https://example.com/tokenUrl
+                          refreshUrl: https://example.com/refresh
+                          scopes:
+                            securitySchemeScopeKey: securitySchemeScopeValue
+                          x-extension: value
+                """;
 
             // Arrange
             var title = "apiTitle";
@@ -1219,29 +1223,31 @@ components:
         [Test]
         public void Serializev2_WithBindings_Serializes()
         {
-            var expected = @"asyncapi: 2.6.0
-info:
-  description: test description
-servers:
-  production:
-    url: example.com
-    protocol: pulsar+ssl
-    description: test description
-channels:
-  testChannel:
-    publish:
-      message:
-        bindings:
-          http:
-            headers:
-              description: this mah binding
-          kafka:
-            key:
-              description: this mah other binding
-    bindings:
-      kafka:
-        partitions: 2
-        replicas: 1";
+            var expected = """
+                asyncapi: 2.6.0
+                info:
+                  description: test description
+                servers:
+                  production:
+                    url: example.com
+                    protocol: pulsar+ssl
+                    description: test description
+                channels:
+                  testChannel:
+                    publish:
+                      message:
+                        bindings:
+                          http:
+                            headers:
+                              description: this mah binding
+                          kafka:
+                            key:
+                              description: this mah other binding
+                    bindings:
+                      kafka:
+                        partitions: 2
+                        replicas: 1
+                """;
 
             var doc = new AsyncApiDocument();
             doc.Info = new AsyncApiInfo()

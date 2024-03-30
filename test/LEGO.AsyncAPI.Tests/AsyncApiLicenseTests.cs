@@ -18,11 +18,13 @@ namespace LEGO.AsyncAPI.Tests
         [Test]
         public void Serialize_WithAllProperties_Serializes()
         {
-            var expected = @"{
-  ""name"": ""test"",
-  ""url"": ""https://example.com/license"",
-  ""x-extension"": ""value""
-}";
+            var expected = """
+                {
+                  "name": "test",
+                  "url": "https://example.com/license",
+                  "x-extension": "value"
+                }
+                """;
             var license = new AsyncApiLicense()
             {
                 Name = "test",
@@ -54,11 +56,13 @@ namespace LEGO.AsyncAPI.Tests
         public void LoadLicense_WithJson_Deserializes()
         {
             // Arrange
-            var input = @"{
-  ""name"": ""test"",
-  ""url"": ""https://example.com/license"",
-  ""x-extension"": ""value""
-}";
+            var input = """
+                {
+                  "name": "test",
+                  "url": "https://example.com/license",
+                  "x-extension": "value"
+                }
+                """;
 
             using (var stream = GenerateStreamFromString(input))
             {

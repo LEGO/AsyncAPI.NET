@@ -1,34 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <IsPackable>false</IsPackable>
-    <NoWarn>$(NoWarn);SA1600</NoWarn>
+	<LangVersion>11</LangVersion>
+	<TargetFramework>net8.0</TargetFramework>
+	<ImplicitUsings>disable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+	<IsPackable>false</IsPackable>
+	<NoWarn>$(NoWarn);SA1600</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="6.7.0" />
-    <PackageReference Include="LiquidTestReports.Markdown" Version="1.0.9" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-    <PackageReference Include="JsonSchema.Net" Version="2.0.1" />
-    <PackageReference Include="NUnit" Version="3.13.2" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
-    <PackageReference Include="coverlet.collector" Version="3.1.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="ReportGenerator" Version="5.1.2" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Bindings\LEGO.AsyncAPI.Bindings.csproj" />
-    <ProjectReference Include="..\..\src\LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj" />
-    <ProjectReference Include="..\..\src\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
-    <AdditionalFiles Include="stylecop.json" />
-    <None Include="..\..\.editorconfig" Link=".editorconfig" />
-    <None Update="TestData\**" CopyToOutputDirectory="PreserveNewest"/>
+	<PackageReference Include="FluentAssertions" Version="6.7.0" />
+	<PackageReference Include="LiquidTestReports.Markdown" Version="1.0.9" />
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+	<PackageReference Include="JsonSchema.Net" Version="2.0.1" />
+	<PackageReference Include="NUnit" Version="3.13.2" />
+	<PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+	<PackageReference Include="coverlet.collector" Version="3.1.2">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="ReportGenerator" Version="5.1.2" />
+	<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<ProjectReference Include="..\..\src\LEGO.AsyncAPI.Bindings\LEGO.AsyncAPI.Bindings.csproj" />
+	<ProjectReference Include="..\..\src\LEGO.AsyncAPI.Readers\LEGO.AsyncAPI.Readers.csproj" />
+	<ProjectReference Include="..\..\src\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
+	<AdditionalFiles Include="stylecop.json" />
+	<None Include="..\..\.editorconfig" Link=".editorconfig" />
+	<None Update="TestData\**" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

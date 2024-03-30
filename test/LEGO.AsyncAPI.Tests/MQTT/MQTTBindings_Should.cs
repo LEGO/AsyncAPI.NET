@@ -16,20 +16,22 @@ namespace LEGO.AsyncAPI.Tests.Bindings.MQTT
         {
             // Arrange
             var expected =
-@"url: https://example.com
-protocol: mqtt
-bindings:
-  mqtt:
-    clientId: guest
-    cleanSession: true
-    lastWill:
-      topic: /last-wills
-      qos: 2
-      message: Guest gone offline.
-      retain: false
-    keepAlive: 60
-    sessionExpiryInterval: 600
-    maximumPacketSize: 1200";
+                """
+                url: https://example.com
+                protocol: mqtt
+                bindings:
+                  mqtt:
+                    clientId: guest
+                    cleanSession: true
+                    lastWill:
+                      topic: /last-wills
+                      qos: 2
+                      message: Guest gone offline.
+                      retain: false
+                    keepAlive: 60
+                    sessionExpiryInterval: 600
+                    maximumPacketSize: 1200
+                """;
 
             var server = new AsyncApiServer();
             server.Url = "https://example.com";
@@ -69,11 +71,13 @@ bindings:
         {
             // Arrange
             var expected =
-@"bindings:
-  mqtt:
-    qos: 2
-    retain: true
-    messageExpiryInterval: 60";
+                """
+                bindings:
+                  mqtt:
+                    qos: 2
+                    retain: true
+                    messageExpiryInterval: 60
+                """;
 
             var operation = new AsyncApiOperation();
             operation.Bindings.Add(new MQTTOperationBinding
@@ -101,12 +105,14 @@ bindings:
         {
             // Arrange
             var expected =
-@"bindings:
-  mqtt:
-    correlationData:
-      type: string
-      format: uuid
-    contentType: application/json";
+                """
+                bindings:
+                  mqtt:
+                    correlationData:
+                      type: string
+                      format: uuid
+                    contentType: application/json
+                """;
 
             var message = new AsyncApiMessage();
 

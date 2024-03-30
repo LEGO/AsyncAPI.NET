@@ -15,18 +15,20 @@ namespace LEGO.AsyncAPI.Tests.Models
         [Test]
         public void AsyncApiChannel_WithWebSocketsBinding_Serializes()
         {
-            var expected = @"bindings:
-  websockets:
-    method: POST
-    query:
-      properties:
-        index:
-          description: the index
-    headers:
-      properties:
-        x-correlation-id:
-          description: the correlationid
-    bindingVersion: 0.1.0";
+            var expected = """
+                bindings:
+                  websockets:
+                    method: POST
+                    query:
+                      properties:
+                        index:
+                          description: the index
+                    headers:
+                      properties:
+                        x-correlation-id:
+                          description: the correlationid
+                    bindingVersion: 0.1.0
+                """;
 
             var channel = new AsyncApiChannel
             {
@@ -77,11 +79,13 @@ namespace LEGO.AsyncAPI.Tests.Models
         public void AsyncApiChannel_WithKafkaBinding_Serializes()
         {
             var expected =
-@"bindings:
-  kafka:
-    topic: topic
-    partitions: 5
-    replicas: 2";
+                """
+                bindings:
+                  kafka:
+                    topic: topic
+                    partitions: 5
+                    replicas: 2
+                """;
 
             var channel = new AsyncApiChannel
             {

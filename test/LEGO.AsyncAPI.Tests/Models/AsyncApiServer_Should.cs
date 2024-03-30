@@ -16,23 +16,25 @@ namespace LEGO.AsyncAPI.Tests.Models
         {
             // Arrange
             var expected =
-@"url: 'https://example.com/{channelkey}'
-protocol: test
-protocolVersion: 0.1.0
-description: some description
-variables:
-  channelkey:
-    description: some description
-security:
-  - schem1:
-      - requirement
-tags:
-  - name: mytag1
-    description: description of tag1
-bindings:
-  kafka:
-    schemaRegistryUrl: http://example.com
-    schemaRegistryVendor: kafka";
+                """
+                url: 'https://example.com/{channelkey}'
+                protocol: test
+                protocolVersion: 0.1.0
+                description: some description
+                variables:
+                  channelkey:
+                    description: some description
+                security:
+                  - schem1:
+                      - requirement
+                tags:
+                  - name: mytag1
+                    description: description of tag1
+                bindings:
+                  kafka:
+                    schemaRegistryUrl: http://example.com
+                    schemaRegistryVendor: kafka
+                """;
 
             var server = new AsyncApiServer
             {
@@ -79,12 +81,14 @@ bindings:
         public void AsyncApiServer_WithKafkaBinding_Serializes()
         {
             var expected =
-@"url: 
-protocol: 
-bindings:
-  kafka:
-    schemaRegistryUrl: http://example.com
-    schemaRegistryVendor: kafka";
+                """
+                url: 
+                protocol: 
+                bindings:
+                  kafka:
+                    schemaRegistryUrl: http://example.com
+                    schemaRegistryVendor: kafka
+                """;
             var server = new AsyncApiServer
             {
                 Bindings = new AsyncApiBindings<IServerBinding>

@@ -20,19 +20,21 @@ namespace LEGO.AsyncAPI.Tests.Models
         {
             // Arrange
             var expected =
-                @"{
-                      ""payload"": {
-                        ""type"": ""object"",
-                        ""properties"": {
-                          ""someProp"": {
-                            ""enum"": [
-                              ""test"",
-                              ""test2""
-                            ]
-                          }
-                        }
-                      }
-                    }";
+                """
+                {
+                                      "payload": {
+                                        "type": "object",
+                                        "properties": {
+                                          "someProp": {
+                                            "enum": [
+                                              "test",
+                                              "test2"
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                """;
 
             // Act
             var message = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
@@ -47,12 +49,14 @@ namespace LEGO.AsyncAPI.Tests.Models
         {
             // Arrange
             var expected =
-@"payload:
-  properties:
-    propertyA:
-      type:
-        - 'null'
-        - string";
+                """
+                payload:
+                  properties:
+                    propertyA:
+                      type:
+                        - 'null'
+                        - string
+                """;
 
             // Act
             var message = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
@@ -67,13 +71,15 @@ namespace LEGO.AsyncAPI.Tests.Models
         {
             // Arrange
             var expected =
-@"payload:
-  properties:
-    propertyA:
-      type:
-        - 'null'
-        - string
-schemaFormat: application/vnd.apache.avro;version=1.9.0";
+                """
+                payload:
+                  properties:
+                    propertyA:
+                      type:
+                        - 'null'
+                        - string
+                schemaFormat: application/vnd.apache.avro;version=1.9.0
+                """;
 
             // Act
             new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
@@ -88,12 +94,14 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
         {
             // Arrange
             var expected =
-@"payload:
-  properties:
-    propertyA:
-      type:
-        - 'null'
-        - string";
+                """
+                payload:
+                  properties:
+                    propertyA:
+                      type:
+                        - 'null'
+                        - string
+                """;
 
             var message = new AsyncApiMessage();
             message.Payload = new AsyncApiSchema()
@@ -126,13 +134,15 @@ schemaFormat: application/vnd.apache.avro;version=1.9.0";
         {
             // Arrange
             var expected =
-@"payload:
-  properties:
-    propertyA:
-      type:
-        - 'null'
-        - string
-schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
+                """
+                payload:
+                  properties:
+                    propertyA:
+                      type:
+                        - 'null'
+                        - string
+                schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0
+                """;
 
             var message = new AsyncApiMessage();
             message.SchemaFormat = "application/vnd.aai.asyncapi+json;version=2.6.0";
@@ -163,72 +173,74 @@ schemaFormat: application/vnd.aai.asyncapi+json;version=2.6.0";
         public void AsyncApiMessage_WithFilledObject_Serializes()
         {
             var expected =
-@"headers:
-  title: HeaderTitle
-  description: HeaderDescription
-  writeOnly: true
-  examples:
-    - x-correlation-id: nil
-payload:
-  properties:
-    propA:
-      type: string
-    propB:
-      type: string
-correlationId:
-  description: CorrelationDescription
-  location: Header
-  x-extension-a: a
-contentType: MessageContentType
-name: MessageName
-title: MessageTitle
-summary: MessageSummary
-description: MessageDescription
-tags:
-  - name: tagA
-    description: a
-externalDocs:
-  description: example docs description
-  url: https://example.com/docs
-bindings:
-  http:
-    headers:
-      title: SchemaTitle
-      description: SchemaDescription
-      writeOnly: true
-      examples:
-        - cKey: c
-          dKey: 1
-examples:
-  - payload:
-      PropA: a
-      PropB: b
-traits:
-  - headers:
-      title: SchemaTitle
-      description: SchemaDescription
-      writeOnly: true
-      examples:
-        - eKey: e
-          fKey: 1
-    name: MessageTraitName
-    title: MessageTraitTitle
-    summary: MessageTraitSummary
-    description: MessageTraitDescription
-    tags:
-      - name: tagB
-        description: b
-    externalDocs:
-      description: example docs description
-      url: https://example.com/docs
-    examples:
-      - name: MessageExampleName
-        summary: MessageExampleSummary
-        payload:
-          gKey: g
-          hKey: true
-        x-extension-b: b
-    x-extension-c: c";
+                """
+                headers:
+                  title: HeaderTitle
+                  description: HeaderDescription
+                  writeOnly: true
+                  examples:
+                    - x-correlation-id: nil
+                payload:
+                  properties:
+                    propA:
+                      type: string
+                    propB:
+                      type: string
+                correlationId:
+                  description: CorrelationDescription
+                  location: Header
+                  x-extension-a: a
+                contentType: MessageContentType
+                name: MessageName
+                title: MessageTitle
+                summary: MessageSummary
+                description: MessageDescription
+                tags:
+                  - name: tagA
+                    description: a
+                externalDocs:
+                  description: example docs description
+                  url: https://example.com/docs
+                bindings:
+                  http:
+                    headers:
+                      title: SchemaTitle
+                      description: SchemaDescription
+                      writeOnly: true
+                      examples:
+                        - cKey: c
+                          dKey: 1
+                examples:
+                  - payload:
+                      PropA: a
+                      PropB: b
+                traits:
+                  - headers:
+                      title: SchemaTitle
+                      description: SchemaDescription
+                      writeOnly: true
+                      examples:
+                        - eKey: e
+                          fKey: 1
+                    name: MessageTraitName
+                    title: MessageTraitTitle
+                    summary: MessageTraitSummary
+                    description: MessageTraitDescription
+                    tags:
+                      - name: tagB
+                        description: b
+                    externalDocs:
+                      description: example docs description
+                      url: https://example.com/docs
+                    examples:
+                      - name: MessageExampleName
+                        summary: MessageExampleSummary
+                        payload:
+                          gKey: g
+                          hKey: true
+                        x-extension-b: b
+                    x-extension-c: c
+                """;
 
             var message = new AsyncApiMessage
             {
