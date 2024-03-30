@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	<LangVersion>11</LangVersion>
-	<TargetFramework>net6.0</TargetFramework>
+	<TargetFramework>net8.0</TargetFramework>
 	<ImplicitUsings>disable</ImplicitUsings>
 	<Nullable>enable</Nullable>
 	<IsPackable>false</IsPackable>
@@ -30,6 +30,6 @@
 	<ProjectReference Include="..\..\src\LEGO.AsyncAPI\LEGO.AsyncAPI.csproj" />
 	<AdditionalFiles Include="stylecop.json" />
 	<None Include="..\..\.editorconfig" Link=".editorconfig" />
-	<None Update="TestData\**" CopyToOutputDirectory="PreserveNewest"/>
+	<None Update="TestData\**" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
