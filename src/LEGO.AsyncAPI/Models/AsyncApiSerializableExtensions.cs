@@ -3,13 +3,14 @@
 namespace LEGO.AsyncAPI.Models
 {
     using System;
-    using System.Globalization;
     using System.IO;
-    using System.Runtime.CompilerServices;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
+    /// <summary>
+    /// Contains extension methods for working with async api elements.
+    /// </summary>
     public static class AsyncApiSerializableExtensions
     {
         /// <summary>
@@ -19,7 +20,6 @@ namespace LEGO.AsyncAPI.Models
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="stream">The output stream.</param>
         /// <param name="specificationVersion">The AsyncApi specification version.</param>
-        [Obsolete($"Please use overridden version that accepts a {nameof(AsyncApiWriterSettings)} instance.")]
         public static void SerializeAsJson<T>(this T element, Stream stream, AsyncApiVersion specificationVersion)
             where T : IAsyncApiSerializable
         {
@@ -47,7 +47,6 @@ namespace LEGO.AsyncAPI.Models
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="stream">The output stream.</param>
         /// <param name="specificationVersion">The AsyncApi specification version.</param>
-        [Obsolete($"Please use overridden version that accepts a {nameof(AsyncApiWriterSettings)} instance.")]
         public static void SerializeAsYaml<T>(this T element, Stream stream, AsyncApiVersion specificationVersion)
             where T : IAsyncApiSerializable
         {
@@ -77,7 +76,6 @@ namespace LEGO.AsyncAPI.Models
         /// <param name="stream">The given stream.</param>
         /// <param name="specificationVersion">The AsyncApi specification version.</param>
         /// <param name="format">The output format (JSON or YAML).</param>
-        [Obsolete($"Please use overridden version that accepts a {nameof(AsyncApiWriterSettings)} instance.")]
         public static void Serialize<T>(
             this T element,
             Stream stream,
