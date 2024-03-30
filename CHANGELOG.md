@@ -1,3 +1,14 @@
+# [5.2.0](https://github.com/LEGO/AsyncAPI.NET/compare/v5.1.1...v5.2.0) (2024-03-30)
+
+
+### Features
+
+* add cultureinfo to reader/writer settings. ([#152](https://github.com/LEGO/AsyncAPI.NET/issues/152)) ([0199420](https://github.com/LEGO/AsyncAPI.NET/commit/01994205ecde4e17317762374b03ec23aad17022))
+* **bindings:** add amqp bindings ([#153](https://github.com/LEGO/AsyncAPI.NET/issues/153)) ([8d128db](https://github.com/LEGO/AsyncAPI.NET/commit/8d128db869d8164cfaad156d4f29a7130a00827e))
+* **bindings:** add mqtt bindings ([#154](https://github.com/LEGO/AsyncAPI.NET/issues/154)) ([f5529e0](https://github.com/LEGO/AsyncAPI.NET/commit/f5529e0e96d139e0cb1958d6b0620ed826e21cb5))
+* improve AsyncApiAny api surface. ([9063f4e](https://github.com/LEGO/AsyncAPI.NET/commit/9063f4e4f19929f8ccbdee5bd46dd9e27a3e0c08))
+* targetframework to netstandard2.0 ([#150](https://github.com/LEGO/AsyncAPI.NET/issues/150)) ([9291da6](https://github.com/LEGO/AsyncAPI.NET/commit/9291da603335fd202b59f421945629952f136296))
+
 ## [5.1.1](https://github.com/LEGO/AsyncAPI.NET/compare/v5.1.0...v5.1.1) (2024-02-16)
 
 
