@@ -57,5 +57,10 @@ namespace LEGO.AsyncAPI.Readers
         /// from an <see cref="AsyncApiStreamReader"/> object.
         /// </summary>
         public bool LeaveStreamOpen { get; set; }
+
+        /// <summary>
+        /// External reference reader implementation provided by users for reading external resources.
+        /// </summary>
+        public IAsyncApiExternalReferenceReader ExternalReferenceReader { get; set; }
     }
 }

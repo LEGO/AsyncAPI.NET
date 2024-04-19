@@ -49,4 +49,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../LEGO.AsyncAPI.Readers/LEGO.AsyncAPI.Readers.csproj" />
+  </ItemGroup>
+
 </Project>

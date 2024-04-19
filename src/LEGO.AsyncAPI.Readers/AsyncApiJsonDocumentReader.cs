@@ -167,16 +167,14 @@ namespace LEGO.AsyncAPI.Readers
         {
             var errors = new List<AsyncApiError>();
 
-            // Resolve References if requested
-            switch (this.settings.ReferenceResolution)
+            if (this.settings.ReferenceResolution == ReferenceResolutionSetting.DoNotResolveReferences)
             {
-                case ReferenceResolutionSetting.ResolveReferences:
-                    errors.AddRange(document.ResolveReferences());
-                    break;
-
-                case ReferenceResolutionSetting.DoNotResolveReferences:
-                    break;
+                return;
             }
+
+            // Resolve References if requested
+            var reader = new AsyncApiStringReader(this.settings);
+            errors.AddRange(document.ResolveReferences(this.settings.ExternalReferenceReader, reader));
 
             foreach (var item in errors)
             {

@@ -1,5 +1,7 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Readers;
+
 namespace LEGO.AsyncAPI.Services
 {
     using System;
@@ -16,10 +18,17 @@ namespace LEGO.AsyncAPI.Services
     {
         private AsyncApiDocument currentDocument;
         private List<AsyncApiError> errors = new List<AsyncApiError>();
+        private IAsyncApiExternalReferenceReader referenceReader;
+        private AsyncApiStringReader reader;
 
-        public AsyncApiReferenceResolver(AsyncApiDocument currentDocument)
+        public AsyncApiReferenceResolver(
+            AsyncApiDocument currentDocument,
+            IAsyncApiExternalReferenceReader referenceReader,
+            AsyncApiStringReader reader)
         {
             this.currentDocument = currentDocument;
+            this.referenceReader = referenceReader;
+            this.reader = reader;
         }
 
         public IEnumerable<AsyncApiError> Errors
@@ -207,13 +216,16 @@ namespace LEGO.AsyncAPI.Services
         private T ResolveReference<T>(AsyncApiReference reference)
             where T : class, IAsyncApiReferenceable, new()
         {
+            // this is where external references should be resolved with the provided interface
+            // we need to load the external file and then read the fragment as if it were T
+            // but if T also will that reference be unpopulated?
             if (reference.IsExternal)
             {
-                return new()
-                {
-                    UnresolvedReference = true,
-                    Reference = reference,
-                };
+                // read external content
+                var externalContent = this.referenceReader.GetExternalResource(reference.Reference);
+
+                // read external object content
+                return this.reader.ReadFragment<T>(externalContent, AsyncApiVersion.AsyncApi2_0, out _);
             }
 
             try
