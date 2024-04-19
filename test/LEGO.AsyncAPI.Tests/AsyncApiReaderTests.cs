@@ -1,5 +1,7 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
+using FluentAssertions;
+
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
@@ -591,5 +593,42 @@ namespace LEGO.AsyncAPI.Tests
             Assert.IsTrue(requirement.Value.Contains("write:pets"));
             Assert.IsTrue(requirement.Value.Contains("read:pets"));
         }
+
+        [Test]
+        public void Read_WithExternalResourcesInterfaceDeserializes()
+        {
+          var yaml = """
+                     asyncapi: 2.3.0
+                     info:
+                       title: test
+                       version: 1.0.0
+                     channels:
+                       workspace:
+                         publish:
+                           message:
+                             $ref: "./some/path/to/external/resource.yaml"
+                     """;
+          var settings = new AsyncApiReaderSettings
+          {
+            ExternalReferenceReader = new MockExternalReferenceReader(),
+          };
+          var reader = new AsyncApiStringReader(settings);
+          var doc = reader.Read(yaml, out var diagnostic);
+          doc.Info.Title.Should().Be("test");
+        }
+    }
+
+    public class MockExternalReferenceReader : IAsyncApiExternalReferenceReader
+    {
+      public string GetExternalResource(string reference)
+      {
+        return """
+               name: Test
+               title: Test message
+               summary: Test.
+               schemaFormat: application/schema+yaml;version=draft-07
+               contentType: application/cloudevents+json
+               """;
+      }
     }
 }
