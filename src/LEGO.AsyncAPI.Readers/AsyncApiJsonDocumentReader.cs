@@ -1,5 +1,7 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Services;
+
 namespace LEGO.AsyncAPI.Readers
 {
     using System.Collections.Generic;
@@ -174,12 +176,39 @@ namespace LEGO.AsyncAPI.Readers
 
             // Resolve References if requested
             var reader = new AsyncApiStringReader(this.settings);
-            errors.AddRange(document.ResolveReferences(this.settings.ExternalReferenceReader, reader));
+            errors.AddRange(document.ResolveReferences());
 
             foreach (var item in errors)
             {
                 diagnostic.Errors.Add(item);
             }
+        }
+
+        private void ResolveInternalReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
+        {
+            var errors = new List<AsyncApiError>();
+
+            if (this.settings.ReferenceResolution == ReferenceResolutionSetting.DoNotResolveReferences)
+            {
+                return;
+            }
+
+            // Resolve References if requested
+            var reader = new AsyncApiStringReader(this.settings);
+            errors.AddRange(document.ResolveReferences());
+
+            foreach (var item in errors)
+            {
+                diagnostic.Errors.Add(item);
+            }
+        }
+
+        private void ResolveExternalReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
+        {
+            var resolver = new AsyncApiExternalReferenceResolver(document, this.settings.ExternalReferenceReader, this);
+            var walker = new AsyncApiWalker(resolver);
+            walker.Walk(document);
+            // return resolver.Errors;
         }
     }
 }

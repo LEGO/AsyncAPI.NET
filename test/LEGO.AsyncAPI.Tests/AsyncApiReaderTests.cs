@@ -614,7 +614,7 @@ namespace LEGO.AsyncAPI.Tests
           };
           var reader = new AsyncApiStringReader(settings);
           var doc = reader.Read(yaml, out var diagnostic);
-          doc.Info.Title.Should().Be("test");
+          doc.Channels["workspace"].Publish.Message.First().Name.Should().Be("Test");
         }
     }
 

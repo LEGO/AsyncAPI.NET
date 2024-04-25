@@ -1,7 +1,4 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
-
-using LEGO.AsyncAPI.Readers;
-
 namespace LEGO.AsyncAPI.Models
 {
     using System;
@@ -78,7 +75,7 @@ namespace LEGO.AsyncAPI.Models
             if (writer.GetSettings().InlineReferences)
             {
                 // not thinking about writing right now
-                this.ResolveReferences(null, null);
+                this.ResolveReferences();
             }
 
             writer.WriteStartObject();
@@ -140,11 +137,9 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteEndObject();
         }
 
-        public IEnumerable<AsyncApiError> ResolveReferences(
-            IAsyncApiExternalReferenceReader referenceReader,
-            AsyncApiStringReader reader)
+        public IEnumerable<AsyncApiError> ResolveReferences()
         {
-            var resolver = new AsyncApiReferenceResolver(this, referenceReader, reader);
+            var resolver = new AsyncApiReferenceResolver(this);
             var walker = new AsyncApiWalker(resolver);
             walker.Walk(this);
             return resolver.Errors;
