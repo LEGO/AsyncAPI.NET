@@ -56,6 +56,7 @@ namespace LEGO.AsyncAPI.Readers
                 document = context.Parse(input);
 
                 this.ResolveReferences(diagnostic, document);
+                this.ResolveExternalReferences(diagnostic, document);
             }
             catch (AsyncApiException ex)
             {
@@ -205,7 +206,7 @@ namespace LEGO.AsyncAPI.Readers
 
         private void ResolveExternalReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
         {
-            var resolver = new AsyncApiExternalReferenceResolver(document, this.settings.ExternalReferenceReader, this);
+            var resolver = new AsyncApiExternalReferenceResolver(document, this.settings);
             var walker = new AsyncApiWalker(resolver);
             walker.Walk(document);
             // return resolver.Errors;

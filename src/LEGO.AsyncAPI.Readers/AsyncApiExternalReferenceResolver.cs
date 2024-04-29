@@ -16,17 +16,14 @@ namespace LEGO.AsyncAPI.Readers
     {
         private AsyncApiDocument currentDocument;
         private List<AsyncApiError> errors = new List<AsyncApiError>();
-        private IAsyncApiExternalReferenceReader referenceReader;
-        private AsyncApiJsonDocumentReader reader;
+        private AsyncApiReaderSettings readerSettings;
 
         public AsyncApiExternalReferenceResolver(
             AsyncApiDocument currentDocument,
-            IAsyncApiExternalReferenceReader referenceReader,
-            AsyncApiJsonDocumentReader reader)
+            AsyncApiReaderSettings readerSettings)
         {
             this.currentDocument = currentDocument;
-            this.referenceReader = referenceReader;
-            this.reader = reader;
+            this.readerSettings = readerSettings;
         }
 
         public IEnumerable<AsyncApiError> Errors
@@ -220,10 +217,11 @@ namespace LEGO.AsyncAPI.Readers
             if (reference.IsExternal)
             {
                 // read external content
-                var externalContent = this.referenceReader.GetExternalResource(reference.Reference);
+                var externalContent = this.readerSettings.ExternalReferenceReader.GetExternalResource(reference.Reference);
 
                 // read external object content
-                return this.reader.ReadFragment<T>(externalContent, AsyncApiVersion.AsyncApi2_0, out _);
+                var reader = new AsyncApiStringReader(this.readerSettings);
+                return reader.ReadFragment<T>(externalContent, AsyncApiVersion.AsyncApi2_0, out _);
             }
 
             return null;
