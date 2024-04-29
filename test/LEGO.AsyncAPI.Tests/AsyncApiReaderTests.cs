@@ -606,7 +606,7 @@ namespace LEGO.AsyncAPI.Tests
                        workspace:
                          publish:
                            message:
-                             $ref: "./some/path/to/external/resource.yaml"
+                             $ref: "./some/path/to/external/message.yaml"
                      """;
           var settings = new AsyncApiReaderSettings
           {
@@ -614,21 +614,59 @@ namespace LEGO.AsyncAPI.Tests
           };
           var reader = new AsyncApiStringReader(settings);
           var doc = reader.Read(yaml, out var diagnostic);
-          doc.Channels["workspace"].Publish.Message.First().Name.Should().Be("Test");
+          var message = doc.Channels["workspace"].Publish.Message.First();
+          message.Name.Should().Be("Test");
+          message.Payload.Properties.Count.Should().Be(3);
         }
     }
 
     public class MockExternalReferenceReader : IAsyncApiExternalReferenceReader
     {
-      public string GetExternalResource(string reference)
-      {
-        return """
+        public string GetExternalResource(string reference)
+        {
+            if (reference == "./some/path/to/external/message.yaml")
+            {
+              return """
                name: Test
                title: Test message
                summary: Test.
                schemaFormat: application/schema+yaml;version=draft-07
                contentType: application/cloudevents+json
+               payload:
+                $ref: "./some/path/to/schema.yaml"
                """;
-      }
+            }
+
+            return """
+                   type: object
+                   properties:
+                     orderId:
+                       description: The ID of the order.
+                       type: string
+                       format: uuid
+                     name:
+                       description: Name of order.
+                       type: string
+                     orderDetails:
+                       description: User details.
+                       type: object
+                       properties:
+                         userId:
+                           description: User Id.
+                           type: string
+                           format: uuid
+                         userName:
+                           description: User name.
+                           type: string
+                   required:
+                   - orderId
+                   example:
+                     orderId: 8f9189f8-653b-4849-a1ec-c838c030bd67
+                     handler: SomeName
+                     orderDetails:
+                       userId: Admin
+                       userName: Admin
+                   """;
+        }
     }
 }
