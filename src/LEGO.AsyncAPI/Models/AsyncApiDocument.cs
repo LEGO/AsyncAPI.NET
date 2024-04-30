@@ -74,7 +74,6 @@ namespace LEGO.AsyncAPI.Models
 
             if (writer.GetSettings().InlineReferences)
             {
-                // not thinking about writing right now
                 this.ResolveReferences();
             }
 
