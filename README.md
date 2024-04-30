@@ -78,6 +78,45 @@ var stream = await httpClient.GetStreamAsync("master/examples/streetlights-kafka
 var asyncApiDocument = new AsyncApiStreamReader().Read(stream, out var diagnostic);
 ```
 
+#### Reading External $ref
+
+You can read externally referenced AsyncAPI documents by providing an implementation for the `IAsyncApiExternalReferenceReader` interface. This interface contains a single method that is passed the content of the `$ref` and returns a `string` which is the content retrieved from wherever the `$ref` points to. This interface allows users to load the content of their external reference however and from whereever is required. A new instance of the implementor of `IAsyncApiExternalReferenceReader` should be registered with the `ExternalReferenceReader` property of the `AsyncApiReaderSettings` when creating the reader from which the `GetExternalResource` method will be called when resolving external references.
+
+Below is a very simple example of implementation for `IAsyncApiExternalReferenceReader` that simply loads a file and returns it as a string found at the reference endpoint.
+```csharp
+using System.IO;
+
+public class AsyncApiExternalFileSystemReader : IAsyncApiExternalReferenceReader
+{
+    public string GetExternalResource(string reference)
+    {
+        return File.ReadAllText(reference);
+    }
+}
+```
+
+This can then be configured in the reader as follows:
+```csharp
+var settings = new AsyncApiReaderSettings
+{
+  ExternalReferenceReader = new AsyncApiExternalFileSystemReader(),
+};
+var reader = new AsyncApiStringReader(settings);
+```
+
+This would function for a AsyncAPI document with following reference:
+```yaml
+asyncapi: 2.3.0
+info:
+  title: test
+  version: 1.0.0
+channels:
+  workspace:
+    publish:
+      message:
+        $ref: "../../../message.yaml"
+```
+
 ### Bindings
 To add support for reading bindings, simply add the bindings you wish to support, to the `Bindings` collection of `AsyncApiReaderSettings`.
 There is a nifty helper to add different types of bindings, or like in the example `All` of them.
