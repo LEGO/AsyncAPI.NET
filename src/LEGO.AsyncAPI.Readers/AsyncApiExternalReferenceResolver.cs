@@ -211,9 +211,6 @@ namespace LEGO.AsyncAPI.Readers
         private T ResolveReference<T>(AsyncApiReference reference)
             where T : class, IAsyncApiReferenceable, new()
         {
-            // this is where external references should be resolved with the provided interface
-            // we need to load the external file and then read the fragment as if it were T
-            // but if T also will that reference be unpopulated?
             if (reference.IsExternal)
             {
                 // read external content
