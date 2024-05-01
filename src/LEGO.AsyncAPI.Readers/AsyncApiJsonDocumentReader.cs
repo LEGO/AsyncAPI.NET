@@ -1,5 +1,7 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
+using System;
+
 namespace LEGO.AsyncAPI.Readers
 {
     using System.Collections.Generic;
@@ -55,7 +57,6 @@ namespace LEGO.AsyncAPI.Readers
                 document = context.Parse(input);
 
                 this.ResolveReferences(diagnostic, document);
-                this.ResolveExternalReferences(diagnostic, document);
             }
             catch (AsyncApiException ex)
             {
@@ -93,7 +94,6 @@ namespace LEGO.AsyncAPI.Readers
                 // Parse the AsyncApi Document
                 document = context.Parse(input);
                 this.ResolveReferences(diagnostic, document);
-                this.ResolveExternalReferences(diagnostic, document);
             }
             catch (AsyncApiException ex)
             {
@@ -168,21 +168,23 @@ namespace LEGO.AsyncAPI.Readers
 
         private void ResolveReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
         {
-            var errors = new List<AsyncApiError>();
-
-            if (this.settings.ReferenceResolution == ReferenceResolutionSetting.DoNotResolveReferences)
+            switch (this.settings.ReferenceResolution)
             {
-                return;
+                case ReferenceResolutionSetting.ResolveAllReferences:
+                    this.ResolveAllReferences(diagnostic, document);
+                    break;
+                case ReferenceResolutionSetting.ResolveInternalReferencesOnly:
+                    this.ResolveInternalReferences(diagnostic, document);
+                    break;
             }
 
-            // Resolve References if requested
-            var reader = new AsyncApiStringReader(this.settings);
-            errors.AddRange(document.ResolveReferences());
+            // do nothing if ReferenceResolutionSetting.DoNotResolveReferences is configured
+        }
 
-            foreach (var item in errors)
-            {
-                diagnostic.Errors.Add(item);
-            }
+        private void ResolveAllReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
+        {
+            this.ResolveInternalReferences(diagnostic, document);
+            this.ResolveExternalReferences(diagnostic, document);
         }
 
         private void ResolveInternalReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
