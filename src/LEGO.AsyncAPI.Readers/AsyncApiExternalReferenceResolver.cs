@@ -1,3 +1,4 @@
+using LEGO.AsyncAPI.Readers.Exceptions;
 using LEGO.AsyncAPI.Services;
 
 namespace LEGO.AsyncAPI.Readers
@@ -213,6 +214,12 @@ namespace LEGO.AsyncAPI.Readers
         {
             if (reference.IsExternal)
             {
+                if (this.readerSettings.ExternalReferenceReader is null)
+                {
+                    throw new AsyncApiReaderException(
+                        "External reference configured in AsyncApi document but no implementation provided for ExternalReferenceReader.");
+                }
+
                 // read external content
                 var externalContent = this.readerSettings.ExternalReferenceReader.GetExternalResource(reference.Reference);
 

@@ -187,7 +187,7 @@ namespace LEGO.AsyncAPI.Tests
         }
 
         [Test]
-        public void AsyncApiDocument_WithExternalReference_DoesNotResolve()
+        public void AsyncApiDocument_WithNoConfiguredExternalReferenceReader_DoesNotResolve()
         {
             // Arrange
             var actual = """
@@ -210,16 +210,11 @@ namespace LEGO.AsyncAPI.Tests
             var deserialized = reader.Read(actual, out var diagnostic);
 
             // Assert
-            diagnostic.Errors.Should().BeEmpty();
-            var channel = deserialized.Channels.First().Value;
-
-            channel.UnresolvedReference.Should().BeTrue();
-            channel.Description.Should().BeNull();
-            channel.Reference.ExternalResource.Should().Be("http://example.com/channel.json");
-            channel.Reference.Type.Should().Be(ReferenceType.Channel);
-            channel.Reference.Id.Should().BeNull();
-            channel.Reference.IsExternal.Should().BeTrue();
-            channel.Reference.IsFragment.Should().BeFalse();
+            diagnostic.Errors.Count.Should().Be(1);
+            var error = diagnostic.Errors.First();
+            error.Message.Should()
+                .Be(
+                    "External reference configured in AsyncApi document but no implementation provided for ExternalReferenceReader.");
         }
 
         [Test]
