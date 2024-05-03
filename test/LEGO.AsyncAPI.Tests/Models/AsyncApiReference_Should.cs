@@ -167,7 +167,7 @@ namespace LEGO.AsyncAPI.Tests
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 
@@ -202,7 +202,7 @@ namespace LEGO.AsyncAPI.Tests
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 

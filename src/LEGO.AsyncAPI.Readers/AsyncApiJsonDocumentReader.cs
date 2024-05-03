@@ -170,7 +170,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             switch (this.settings.ReferenceResolution)
             {
-                case ReferenceResolutionSetting.ResolveAllReferences:
+                case ReferenceResolutionSetting.ResolveReferences:
                     this.ResolveAllReferences(diagnostic, document);
                     break;
                 case ReferenceResolutionSetting.ResolveInternalReferencesOnly:
