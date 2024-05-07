@@ -167,7 +167,7 @@ namespace LEGO.AsyncAPI.Tests
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveReferences,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveInternalReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 
@@ -202,7 +202,7 @@ namespace LEGO.AsyncAPI.Tests
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveReferences,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 
@@ -233,7 +233,7 @@ namespace LEGO.AsyncAPI.Tests
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveInternalReferencesOnly,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveInternalReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 
@@ -283,7 +283,7 @@ namespace LEGO.AsyncAPI.Tests
         }
 
         [Test]
-        public void Read_WithExternalResourcesInterfaceDeserializes()
+        public void AsyncApiReference_WithExternalResourcesInterface_DeserializesCorrectly()
         {
             var yaml = """
                        asyncapi: 2.3.0
@@ -298,6 +298,7 @@ namespace LEGO.AsyncAPI.Tests
                        """;
             var settings = new AsyncApiReaderSettings
             {
+                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
                 ExternalReferenceReader = new MockExternalReferenceReader(),
             };
             var reader = new AsyncApiStringReader(settings);

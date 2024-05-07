@@ -20,12 +20,12 @@ namespace LEGO.AsyncAPI.Readers
         /// <summary>
         /// Resolve all references and inline them.
         /// </summary>
-        ResolveReferences,
+        ResolveInternalReferences,
 
         /// <summary>
         /// Resolve internal component references and inline them while leaving external references as placeholder objects with an AsyncApiReference instance and UnresolvedReference set to true.
         /// </summary>
-        ResolveInternalReferencesOnly,
+        ResolveAllReferences,
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ namespace LEGO.AsyncAPI.Readers
         /// Indicates how references in the source document should be handled.
         /// </summary>
         public ReferenceResolutionSetting ReferenceResolution { get; set; } =
-            ReferenceResolutionSetting.ResolveReferences;
+            ReferenceResolutionSetting.ResolveInternalReferences;
 
         /// <summary>
         /// Dictionary of parsers for converting extensions into strongly typed classes.
