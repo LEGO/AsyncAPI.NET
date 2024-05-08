@@ -176,9 +176,9 @@ namespace LEGO.AsyncAPI.Readers
                 case ReferenceResolutionSetting.ResolveInternalReferences:
                     this.ResolveInternalReferences(diagnostic, document);
                     break;
+                case ReferenceResolutionSetting.DoNotResolveReferences:
+                    break;
             }
-
-            // do nothing if ReferenceResolutionSetting.DoNotResolveReferences is configured
         }
 
         private void ResolveAllReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
@@ -191,12 +191,6 @@ namespace LEGO.AsyncAPI.Readers
         {
             var errors = new List<AsyncApiError>();
 
-            if (this.settings.ReferenceResolution == ReferenceResolutionSetting.DoNotResolveReferences)
-            {
-                return;
-            }
-
-            // Resolve References if requested
             var reader = new AsyncApiStringReader(this.settings);
             errors.AddRange(document.ResolveReferences());
 
