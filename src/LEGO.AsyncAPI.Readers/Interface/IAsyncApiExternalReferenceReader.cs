@@ -10,5 +10,5 @@ public interface IAsyncApiExternalReferenceReader
     /// </summary>
     /// <param name="reference">The content address of the $ref.</param>
     /// <returns>The content of the reference as a string.</returns>
-    public string GetExternalResource(string reference);
+    public string Load(string reference);
 }

@@ -311,7 +311,7 @@ namespace LEGO.AsyncAPI.Tests
 
     public class MockExternalReferenceReader : IAsyncApiExternalReferenceReader
     {
-        public string GetExternalResource(string reference)
+        public string Load(string reference)
         {
             if (reference == "./some/path/to/external/message.yaml")
             {

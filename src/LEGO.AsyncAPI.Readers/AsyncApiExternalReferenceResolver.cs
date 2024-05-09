@@ -221,11 +221,17 @@ namespace LEGO.AsyncAPI.Readers
                 }
 
                 // read external content
-                var externalContent = this.readerSettings.ExternalReferenceReader.GetExternalResource(reference.Reference);
+                var externalContent = this.readerSettings.ExternalReferenceReader.Load(reference.Reference);
 
                 // read external object content
                 var reader = new AsyncApiStringReader(this.readerSettings);
-                return reader.ReadFragment<T>(externalContent, AsyncApiVersion.AsyncApi2_0, out _);
+                var externalAsyncApiContent = reader.ReadFragment<T>(externalContent, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
+                foreach (var error in diagnostic.Errors)
+                {
+                    this.errors.Add(error);
+                }
+
+                return externalAsyncApiContent;
             }
 
             return null;
