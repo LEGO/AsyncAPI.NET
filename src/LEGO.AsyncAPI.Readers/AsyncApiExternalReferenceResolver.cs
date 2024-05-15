@@ -1,5 +1,7 @@
-// Copyright (c) The LEGO Group. All rights reserved.
-namespace LEGO.AsyncAPI.Services
+using LEGO.AsyncAPI.Readers.Exceptions;
+using LEGO.AsyncAPI.Services;
+
+namespace LEGO.AsyncAPI.Readers
 {
     using System;
     using System.Collections.Generic;
@@ -11,15 +13,18 @@ namespace LEGO.AsyncAPI.Services
     /// <summary>
     /// This class is used to walk an AsyncApiDocument and convert unresolved references to references to populated objects.
     /// </summary>
-    internal class AsyncApiReferenceResolver : AsyncApiVisitorBase
+    internal class AsyncApiExternalReferenceResolver : AsyncApiVisitorBase
     {
         private AsyncApiDocument currentDocument;
         private List<AsyncApiError> errors = new List<AsyncApiError>();
+        private AsyncApiReaderSettings readerSettings;
 
-        public AsyncApiReferenceResolver(
-            AsyncApiDocument currentDocument)
+        public AsyncApiExternalReferenceResolver(
+            AsyncApiDocument currentDocument,
+            AsyncApiReaderSettings readerSettings)
         {
             this.currentDocument = currentDocument;
+            this.readerSettings = readerSettings;
         }
 
         public IEnumerable<AsyncApiError> Errors
@@ -207,25 +212,29 @@ namespace LEGO.AsyncAPI.Services
         private T ResolveReference<T>(AsyncApiReference reference)
             where T : class, IAsyncApiReferenceable, new()
         {
-            // external references are resolved by the AsyncApiExternalReferenceResolver
             if (reference.IsExternal)
             {
-                return new()
+                if (this.readerSettings.ExternalReferenceReader is null)
                 {
-                    UnresolvedReference = true,
-                    Reference = reference,
-                };
+                    throw new AsyncApiReaderException(
+                        "External reference configured in AsyncApi document but no implementation provided for ExternalReferenceReader.");
+                }
+
+                // read external content
+                var externalContent = this.readerSettings.ExternalReferenceReader.Load(reference.Reference);
+
+                // read external object content
+                var reader = new AsyncApiStringReader(this.readerSettings);
+                var externalAsyncApiContent = reader.ReadFragment<T>(externalContent, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
+                foreach (var error in diagnostic.Errors)
+                {
+                    this.errors.Add(error);
+                }
+
+                return externalAsyncApiContent;
             }
 
-            try
-            {
-                return this.currentDocument.ResolveReference(reference) as T;
-            }
-            catch (AsyncApiException ex)
-            {
-                this.errors.Add(new AsyncApiReferenceError(ex));
-                return null;
-            }
+            return null;
         }
 
         private bool IsUnresolvedReference(IAsyncApiReferenceable possibleReference)

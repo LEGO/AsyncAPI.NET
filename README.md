@@ -78,6 +78,48 @@ var stream = await httpClient.GetStreamAsync("master/examples/streetlights-kafka
 var asyncApiDocument = new AsyncApiStreamReader().Read(stream, out var diagnostic);
 ```
 
+#### Reading External $ref
+
+You can read externally referenced AsyncAPI documents by setting the `ReferenceResolution` property of the `AsyncApiReaderSettings` object to `ReferenceResolutionSetting.ResolveAllReferences` and providing an implementation for the `IAsyncApiExternalReferenceReader` interface. This interface contains a single method to which the built AsyncAPI.NET reader library will pass the location content contained in a `$ref` property (usually some form of path) and interface will return the content which is retrieved from wherever the `$ref` points to as a `string`. The AsyncAPI.NET reader will then automatically infer the `T` type of the content and recursively parse the external content into an AsyncAPI document as a child of the original document that contained the `$ref`. This means that you can have externally referenced documents that themselves contain external references. 
+
+This interface allows users to load the content of their external reference however and from whereever is required. A new instance of the implementor of `IAsyncApiExternalReferenceReader` should be registered with the `ExternalReferenceReader` property of the `AsyncApiReaderSettings` when creating the reader from which the `GetExternalResource` method will be called when resolving external references.
+
+Below is a very simple example of implementation for `IAsyncApiExternalReferenceReader` that simply loads a file and returns it as a string found at the reference endpoint.
+```csharp
+using System.IO;
+
+public class AsyncApiExternalFileSystemReader : IAsyncApiExternalReferenceReader
+{
+    public string GetExternalResource(string reference)
+    {
+        return File.ReadAllText(reference);
+    }
+}
+```
+
+This can then be configured in the reader as follows:
+```csharp
+var settings = new AsyncApiReaderSettings
+{
+  ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
+  ExternalReferenceReader = new AsyncApiExternalFileSystemReader(),
+};
+var reader = new AsyncApiStringReader(settings);
+```
+
+This would function for a AsyncAPI document with following reference to load the content of `message.yaml` as a `AsyncApiMessage` object inline with the document object.
+```yaml
+asyncapi: 2.3.0
+info:
+  title: test
+  version: 1.0.0
+channels:
+  workspace:
+    publish:
+      message:
+        $ref: "../../../message.yaml"
+```
+
 ### Bindings
 To add support for reading bindings, simply add the bindings you wish to support, to the `Bindings` collection of `AsyncApiReaderSettings`.
 There is a nifty helper to add different types of bindings, or like in the example `All` of them.

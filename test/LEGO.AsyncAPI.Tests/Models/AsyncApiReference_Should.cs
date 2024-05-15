@@ -167,7 +167,7 @@ namespace LEGO.AsyncAPI.Tests
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveReferences,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveInternalReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 
@@ -187,7 +187,7 @@ namespace LEGO.AsyncAPI.Tests
         }
 
         [Test]
-        public void AsyncApiDocument_WithExternalReference_DoesNotResolve()
+        public void AsyncApiDocument_WithNoConfiguredExternalReferenceReader_ThrowsError()
         {
             // Arrange
             var actual = """
@@ -202,7 +202,38 @@ namespace LEGO.AsyncAPI.Tests
 
             var settings = new AsyncApiReaderSettings()
             {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveReferences,
+                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
+            };
+            var reader = new AsyncApiStringReader(settings);
+
+            // Act
+            reader.Read(actual, out var diagnostic);
+
+            // Assert
+            diagnostic.Errors.Count.Should().Be(1);
+            var error = diagnostic.Errors.First();
+            error.Message.Should()
+                .Be(
+                    "External reference configured in AsyncApi document but no implementation provided for ExternalReferenceReader.");
+        }
+
+        [Test]
+        public void AsyncApiDocument_WithExternalReferenceOnlySetToResolveInternalReferences_DoesNotResolve()
+        {
+            // Arrange
+            var actual = """
+                         asyncapi: 2.6.0
+                         info:
+                           title: My AsyncAPI Document
+                           version: 1.0.0
+                         channels:
+                           myChannel:
+                             $ref: http://example.com/channel.json
+                         """;
+
+            var settings = new AsyncApiReaderSettings()
+            {
+                ReferenceResolution = ReferenceResolutionSetting.ResolveInternalReferences,
             };
             var reader = new AsyncApiStringReader(settings);
 
@@ -249,6 +280,82 @@ namespace LEGO.AsyncAPI.Tests
             expected
                 .Should()
                 .BePlatformAgnosticEquivalentTo(actual);
+        }
+
+        [Test]
+        public void AsyncApiReference_WithExternalResourcesInterface_DeserializesCorrectly()
+        {
+            var yaml = """
+                       asyncapi: 2.3.0
+                       info:
+                         title: test
+                         version: 1.0.0
+                       channels:
+                         workspace:
+                           publish:
+                             message:
+                               $ref: "./some/path/to/external/message.yaml"
+                       """;
+            var settings = new AsyncApiReaderSettings
+            {
+                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
+                ExternalReferenceReader = new MockExternalReferenceReader(),
+            };
+            var reader = new AsyncApiStringReader(settings);
+            var doc = reader.Read(yaml, out var diagnostic);
+            var message = doc.Channels["workspace"].Publish.Message.First();
+            message.Name.Should().Be("Test");
+            message.Payload.Properties.Count.Should().Be(3);
+        }
+    }
+
+    public class MockExternalReferenceReader : IAsyncApiExternalReferenceReader
+    {
+        public string Load(string reference)
+        {
+            if (reference == "./some/path/to/external/message.yaml")
+            {
+                return """
+                       name: Test
+                       title: Test message
+                       summary: Test.
+                       schemaFormat: application/schema+yaml;version=draft-07
+                       contentType: application/cloudevents+json
+                       payload:
+                        $ref: "./some/path/to/schema.yaml"
+                       """;
+            }
+
+            return """
+                   type: object
+                   properties:
+                     orderId:
+                       description: The ID of the order.
+                       type: string
+                       format: uuid
+                     name:
+                       description: Name of order.
+                       type: string
+                     orderDetails:
+                       description: User details.
+                       type: object
+                       properties:
+                         userId:
+                           description: User Id.
+                           type: string
+                           format: uuid
+                         userName:
+                           description: User name.
+                           type: string
+                   required:
+                   - orderId
+                   example:
+                     orderId: 8f9189f8-653b-4849-a1ec-c838c030bd67
+                     handler: SomeName
+                     orderDetails:
+                       userId: Admin
+                       userName: Admin
+                   """;
         }
     }
 }
