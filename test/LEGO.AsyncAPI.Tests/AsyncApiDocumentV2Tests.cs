@@ -493,7 +493,7 @@ namespace LEGO.AsyncAPI.Tests
                         },
                     },
                     },
-                    Payload = new AsyncApiSchema()
+                    Payload = new AsyncApiSchemaPayload
                     {
                         Reference = new AsyncApiReference()
                         {
@@ -518,7 +518,7 @@ namespace LEGO.AsyncAPI.Tests
                         },
                     },
                     },
-                    Payload = new AsyncApiSchema()
+                    Payload = new AsyncApiSchemaPayload()
                     {
                         Reference = new AsyncApiReference()
                         {
@@ -543,7 +543,7 @@ namespace LEGO.AsyncAPI.Tests
                         },
                     },
                     },
-                    Payload = new AsyncApiSchema()
+                    Payload = new AsyncApiSchemaPayload()
                     {
                         Reference = new AsyncApiReference()
                         {

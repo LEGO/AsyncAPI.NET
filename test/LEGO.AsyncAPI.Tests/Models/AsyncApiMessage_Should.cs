@@ -41,7 +41,7 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            message.Payload.Properties.First().Value.Enum.Should().HaveCount(2);
+            message.Payload.As<AsyncApiSchemaPayload>().Properties.First().Value.Enum.Should().HaveCount(2);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                       type:
                         - 'null'
                         - string
-                schemaFormat: application/vnd.apache.avro;version=1.9.0
+                schemaFormat: whatever
                 """;
 
             // Act
@@ -86,7 +86,7 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             // Assert
             diagnostic.Errors.Should().HaveCount(1);
-            diagnostic.Errors.First().Message.Should().StartWith("'application/vnd.apache.avro;version=1.9.0' is not a supported format");
+            diagnostic.Errors.First().Message.Should().StartWith("'whatever' is not a supported format");
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                 """;
 
             var message = new AsyncApiMessage();
-            message.Payload = new AsyncApiSchema()
+            message.Payload = new AsyncApiSchemaPayload()
             {
                 Properties = new Dictionary<string, AsyncApiSchema>()
                 {
@@ -119,7 +119,6 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             // Act
             var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
-
 
             var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
@@ -146,7 +145,7 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             var message = new AsyncApiMessage();
             message.SchemaFormat = "application/vnd.aai.asyncapi+json;version=2.6.0";
-            message.Payload = new AsyncApiSchema()
+            message.Payload = new AsyncApiSchemaPayload()
             {
                 Properties = new Dictionary<string, AsyncApiSchema>()
                 {
@@ -257,7 +256,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         }),
                     },
                 },
-                Payload = new AsyncApiSchema()
+                Payload = new AsyncApiSchemaPayload()
                 {
                     Properties = new Dictionary<string, AsyncApiSchema>
                     {

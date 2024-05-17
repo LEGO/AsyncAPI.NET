@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
-    public class JsonSchemaDeserializer
+    public class AsyncApiSchemaDeserializer
     {
         private static readonly FixedFieldMap<AsyncApiSchema> schemaFixedFields = new()
         {

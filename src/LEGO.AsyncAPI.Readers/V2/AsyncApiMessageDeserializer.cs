@@ -5,9 +5,18 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+
+
+    internal static partial class AsyncApiV2Deserializer
+    {
+
+    }
 
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
@@ -21,10 +30,10 @@ namespace LEGO.AsyncAPI.Readers
                 "messageId", (a, n) => { a.MessageId = n.GetScalarValue(); }
             },
             {
-                "headers", (a, n) => { a.Headers = JsonSchemaDeserializer.LoadSchema(n); }
+                "headers", (a, n) => { a.Headers = AsyncApiSchemaDeserializer.LoadSchema(n); }
             },
             {
-                "payload", (a, n) => { a.Payload = JsonSchemaDeserializer.LoadSchema(n); }
+                "payload", (a, n) => { a.Payload = null; /* resolved after the initial run */ }
             },
             {
                 "correlationId", (a, n) => { a.CorrelationId = LoadCorrelationId(n); }
@@ -64,7 +73,34 @@ namespace LEGO.AsyncAPI.Readers
             },
         };
 
-        static readonly IEnumerable<string> SupportedSchemaFormats = new List<string>
+        public static IAsyncApiMessagePayload LoadPayload(ParseNode n)
+        {
+            // #ToFix figure out a way to get the format in a proper way.
+            return LoadPayload(n, null);
+        }
+
+        private static IAsyncApiMessagePayload LoadPayload(ParseNode n, string format)
+        {
+            if (n == null)
+            {
+                return null;
+            }
+
+            switch (format)
+            {
+                case null:
+                case "":
+                case var _ when SupportedJsonSchemaFormats.Where(s => format.StartsWith(s)).Any():
+                    return new AsyncApiSchemaPayload(AsyncApiSchemaDeserializer.LoadSchema(n));
+                case var _ when SupportedAvroSchemaFormats.Where(s => format.StartsWith(s)).Any():
+                    return new AsyncApiAvroSchemaPayload();
+                default:
+                    var supportedFormats = SupportedJsonSchemaFormats.Concat(SupportedAvroSchemaFormats);
+                    throw new AsyncApiException($"'Could not deserialize Payload. Supported formats are {string.Join(", ", supportedFormats)}");
+            }
+        }
+
+        static readonly IEnumerable<string> SupportedJsonSchemaFormats = new List<string>
         {
             "application/vnd.aai.asyncapi+json",
             "application/vnd.aai.asyncapi+yaml",
@@ -73,11 +109,18 @@ namespace LEGO.AsyncAPI.Readers
             "application/schema+yaml;version=draft-07",
         };
 
+        static readonly IEnumerable<string> SupportedAvroSchemaFormats = new List<string>
+        {
+            "application/vnd.apache.avro+json;version=1.9.0",
+            "application/vnd.apache.avro+yaml;version=1.9.0",
+        };
+
         private static string LoadSchemaFormat(string schemaFormat)
         {
-            if (!SupportedSchemaFormats.Where(s => schemaFormat.StartsWith(s)).Any())
+            var supportedFormats = SupportedJsonSchemaFormats.Concat(SupportedAvroSchemaFormats);
+            if (!supportedFormats.Where(s => schemaFormat.StartsWith(s)).Any())
             {
-                throw new AsyncApiException($"'{schemaFormat}' is not a supported format. Supported formats are {string.Join(", ", SupportedSchemaFormats)}");
+                throw new AsyncApiException($"'{schemaFormat}' is not a supported format. Supported formats are {string.Join(", ", supportedFormats)}");
             }
 
             return schemaFormat;
@@ -100,6 +143,7 @@ namespace LEGO.AsyncAPI.Readers
             var message = new AsyncApiMessage();
 
             ParseMap(mapNode, message, messageFixedFields, messagePatternFields);
+            message.Payload = LoadPayload(mapNode["payload"]?.Value, message.SchemaFormat);
 
             return message;
         }
