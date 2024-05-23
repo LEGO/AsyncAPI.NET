@@ -421,7 +421,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         new AsyncApiMessage
                         {
-                            Payload = new AsyncApiSchemaPayload
+                            Payload = new AsyncApiJsonSchemaPayload
                             {
                                 Type = SchemaType.Object,
                                 Required = new HashSet<string> { "testB" },

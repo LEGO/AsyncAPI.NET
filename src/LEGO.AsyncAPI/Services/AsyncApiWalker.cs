@@ -501,10 +501,11 @@ namespace LEGO.AsyncAPI.Services
             if (message != null)
             {
                 this.Walk(AsyncApiConstants.Headers, () => this.Walk(message.Headers));
-                if (message.Payload is AsyncApiSchemaPayload payload)
+                if (message.Payload is AsyncApiJsonSchemaPayload payload)
                 {
                     this.Walk(AsyncApiConstants.Payload, () => this.Walk((AsyncApiSchema)payload));
                 }
+
                 // #ToFix Add walking for avro.
                 this.Walk(AsyncApiConstants.CorrelationId, () => this.Walk(message.CorrelationId));
                 this.Walk(AsyncApiConstants.Tags, () => this.Walk(message.Tags));

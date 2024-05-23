@@ -41,7 +41,7 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            message.Payload.As<AsyncApiSchemaPayload>().Properties.First().Value.Enum.Should().HaveCount(2);
+            message.Payload.As<AsyncApiJsonSchemaPayload>().Properties.First().Value.Enum.Should().HaveCount(2);
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                 """;
 
             var message = new AsyncApiMessage();
-            message.Payload = new AsyncApiSchemaPayload()
+            message.Payload = new AsyncApiJsonSchemaPayload()
             {
                 Properties = new Dictionary<string, AsyncApiSchema>()
                 {
@@ -145,7 +145,7 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             var message = new AsyncApiMessage();
             message.SchemaFormat = "application/vnd.aai.asyncapi+json;version=2.6.0";
-            message.Payload = new AsyncApiSchemaPayload()
+            message.Payload = new AsyncApiJsonSchemaPayload()
             {
                 Properties = new Dictionary<string, AsyncApiSchema>()
                 {
@@ -256,7 +256,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         }),
                     },
                 },
-                Payload = new AsyncApiSchemaPayload()
+                Payload = new AsyncApiJsonSchemaPayload()
                 {
                     Properties = new Dictionary<string, AsyncApiSchema>
                     {

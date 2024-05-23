@@ -7,16 +7,16 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public class AsyncApiSchemaPayload : IAsyncApiMessagePayload, IAsyncApiReferenceable
+    public class AsyncApiJsonSchemaPayload : IAsyncApiMessagePayload, IAsyncApiReferenceable
     {
         private readonly AsyncApiSchema schema;
 
-        public AsyncApiSchemaPayload()
+        public AsyncApiJsonSchemaPayload()
         {
             this.schema = new AsyncApiSchema();
         }
 
-        public AsyncApiSchemaPayload(AsyncApiSchema schema)
+        public AsyncApiJsonSchemaPayload(AsyncApiSchema schema)
         {
             this.schema = schema;
         }
@@ -111,9 +111,9 @@ namespace LEGO.AsyncAPI.Models
 
         public AsyncApiSchema AdditionalProperties { get => this.schema.AdditionalProperties; set => this.schema.AdditionalProperties = value; }
 
-        public static implicit operator AsyncApiSchema(AsyncApiSchemaPayload payload) => payload.schema;
+        public static implicit operator AsyncApiSchema(AsyncApiJsonSchemaPayload payload) => payload.schema;
 
-        public static implicit operator AsyncApiSchemaPayload(AsyncApiSchema schema) => new AsyncApiSchemaPayload(schema);
+        public static implicit operator AsyncApiJsonSchemaPayload(AsyncApiSchema schema) => new AsyncApiJsonSchemaPayload(schema);
 
         public void SerializeV2(IAsyncApiWriter writer)
         {

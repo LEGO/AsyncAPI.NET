@@ -26,7 +26,7 @@ namespace LEGO.AsyncAPI.Tests
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            var payload = deserialized.Payload.As<AsyncApiSchemaPayload>();
+            var payload = deserialized.Payload.As<AsyncApiJsonSchemaPayload>();
             payload.UnresolvedReference.Should().BeTrue();
 
             var reference = payload.Reference;
@@ -55,7 +55,7 @@ namespace LEGO.AsyncAPI.Tests
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            var payload = deserialized.Payload.As<AsyncApiSchemaPayload>();
+            var payload = deserialized.Payload.As<AsyncApiJsonSchemaPayload>();
             payload.UnresolvedReference.Should().BeTrue();
 
             var reference = payload.Reference;
@@ -84,7 +84,7 @@ namespace LEGO.AsyncAPI.Tests
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            var payload = deserialized.Payload.As<AsyncApiSchemaPayload>();
+            var payload = deserialized.Payload.As<AsyncApiJsonSchemaPayload>();
             var reference = payload.Reference;
             reference.ExternalResource.Should().BeNull();
             reference.Type.Should().Be(ReferenceType.Schema);
@@ -112,7 +112,7 @@ namespace LEGO.AsyncAPI.Tests
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            var payload = deserialized.Payload.As<AsyncApiSchemaPayload>();
+            var payload = deserialized.Payload.As<AsyncApiJsonSchemaPayload>();
             var reference = payload.Reference;
             reference.ExternalResource.Should().Be("./myjsonfile.json");
             reference.Id.Should().Be("/fragment");
@@ -139,7 +139,7 @@ namespace LEGO.AsyncAPI.Tests
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            var payload = deserialized.Payload.As<AsyncApiSchemaPayload>();
+            var payload = deserialized.Payload.As<AsyncApiJsonSchemaPayload>();
             var reference = payload.Reference;
             reference.ExternalResource.Should().Be("./someotherdocument.json");
             reference.Type.Should().Be(ReferenceType.Schema);
@@ -273,7 +273,7 @@ namespace LEGO.AsyncAPI.Tests
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            var payload = deserialized.Payload.As<AsyncApiSchemaPayload>();
+            var payload = deserialized.Payload.As<AsyncApiJsonSchemaPayload>();
             var reference = payload.Reference;
             reference.ExternalResource.Should().Be("http://example.com/json.json");
             reference.Id.Should().BeNull();
@@ -311,7 +311,7 @@ namespace LEGO.AsyncAPI.Tests
             var doc = reader.Read(yaml, out var diagnostic);
             var message = doc.Channels["workspace"].Publish.Message.First();
             message.Name.Should().Be("Test");
-            var payload = message.Payload.As<AsyncApiSchemaPayload>();
+            var payload = message.Payload.As<AsyncApiJsonSchemaPayload>();
             payload.Properties.Count.Should().Be(3);
         }
     }

@@ -73,10 +73,14 @@ namespace LEGO.AsyncAPI.Readers
             },
         };
 
-        public static IAsyncApiMessagePayload LoadPayload(ParseNode n)
+        public static IAsyncApiMessagePayload LoadJsonSchemaPayload(ParseNode n)
         {
-            // #ToFix figure out a way to get the format in a proper way.
             return LoadPayload(n, null);
+        }
+
+        public static IAsyncApiMessagePayload LoadAvroPayload(ParseNode n)
+        {
+            return LoadPayload(n, "application/vnd.apache.avro");
         }
 
         private static IAsyncApiMessagePayload LoadPayload(ParseNode n, string format)
@@ -91,7 +95,7 @@ namespace LEGO.AsyncAPI.Readers
                 case null:
                 case "":
                 case var _ when SupportedJsonSchemaFormats.Where(s => format.StartsWith(s)).Any():
-                    return new AsyncApiSchemaPayload(AsyncApiSchemaDeserializer.LoadSchema(n));
+                    return new AsyncApiJsonSchemaPayload(AsyncApiSchemaDeserializer.LoadSchema(n));
                 case var _ when SupportedAvroSchemaFormats.Where(s => format.StartsWith(s)).Any():
                     return new AsyncApiAvroSchemaPayload();
                 default:
