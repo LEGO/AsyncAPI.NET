@@ -2,9 +2,6 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -46,11 +43,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalProperty("name", this.Name);
 
             // type
-            if (this.Type != null)
-            {
-                writer.WritePropertyName("type");
-                this.Type.SerializeV2(writer);
-            }
+            writer.WriteOptionalObject("type", this.Type, (w, s) => s.SerializeV2(w));
 
             // doc
             writer.WriteOptionalProperty("doc", this.Doc);

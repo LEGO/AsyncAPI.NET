@@ -2,15 +2,11 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
     public class AvroFixed : AvroFieldType
     {
-        public string Type { get; set; } = "fixed";
+        public string Type { get; } = "fixed";
 
         public string Name { get; set; }
 

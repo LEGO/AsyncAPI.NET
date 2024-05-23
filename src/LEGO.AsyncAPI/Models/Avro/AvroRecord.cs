@@ -2,10 +2,7 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
     public class AvroRecord : AvroFieldType
@@ -21,14 +18,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
             writer.WriteOptionalProperty("type", this.Type);
             writer.WriteRequiredProperty("name", this.Name);
-            writer.WritePropertyName("fields");
-            writer.WriteStartArray();
-            foreach (var field in this.Fields)
-            {
-                field.SerializeV2(writer);
-            }
-
-            writer.WriteEndArray();
+            writer.WriteRequiredCollection("fields", this.Fields, (w, s) => s.SerializeV2(w));
             writer.WriteEndObject();
         }
     }

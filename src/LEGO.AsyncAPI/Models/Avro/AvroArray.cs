@@ -2,15 +2,11 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
     public class AvroArray : AvroFieldType
     {
-        public string Type { get; set; } = "array";
+        public string Type { get; } = "array";
 
         public AvroFieldType Items { get; set; }
 
@@ -18,8 +14,7 @@ namespace LEGO.AsyncAPI.Models
         {
             writer.WriteStartObject();
             writer.WriteOptionalProperty("type", this.Type);
-            writer.WritePropertyName("items");
-            this.Items.SerializeV2(writer);
+            writer.WriteRequiredObject("items", this.Items, (w, f) => f.SerializeV2(w));
             writer.WriteEndObject();
         }
     }

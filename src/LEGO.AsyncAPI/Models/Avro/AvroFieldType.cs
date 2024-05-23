@@ -2,14 +2,16 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
     public abstract class AvroFieldType : IAsyncApiSerializable
     {
+        public static implicit operator AvroFieldType(AvroPrimitiveType type)
+        {
+            return new AvroPrimitive(type);
+        }
+
         public abstract void SerializeV2(IAsyncApiWriter writer);
     }
 }

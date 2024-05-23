@@ -2,7 +2,6 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -33,9 +32,17 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public string? Doc { get; set; }
 
+        /// <summary>
+        /// The list of fields in the schema.
+        /// </summary>
+        public IList<AvroField> Fields { get; set; } = new List<AvroField>();
+
         public void SerializeV2(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
+
+            // type
+            writer.WriteOptionalProperty(AsyncApiConstants.Type, this.Type.GetDisplayName());
 
             // name
             writer.WriteOptionalProperty("name", this.Name);
@@ -43,19 +50,11 @@ namespace LEGO.AsyncAPI.Models
             // namespace
             writer.WriteOptionalProperty("namespace", this.Namespace);
 
-            // type
-            var types = EnumExtensions.GetFlags<AvroSchemaType>(this.Type);
-            if (types.Count() == 1)
-            {
-                writer.WriteOptionalProperty(AsyncApiConstants.Type, types.First().GetDisplayName());
-            }
-            else
-            {
-                writer.WriteOptionalCollection(AsyncApiConstants.Type, types.Select(t => t.GetDisplayName()), (w, s) => w.WriteValue(s));
-            }
-
             // doc
             writer.WriteOptionalProperty("doc", this.Doc);
+
+            // fields
+            writer.WriteOptionalCollection("fields", this.Fields, (w, f) => f.SerializeV2(w));
 
             writer.WriteEndObject();
         }

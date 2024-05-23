@@ -2,24 +2,21 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+    using System.Runtime.CompilerServices;
 
     public class AvroPrimitive : AvroFieldType
     {
-        public string Type { get; set; }
+        public AvroPrimitiveType Type { get; set; }
 
-        public AvroPrimitive(string type)
+        public AvroPrimitive(AvroPrimitiveType type)
         {
             this.Type = type;
         }
 
         public override void SerializeV2(IAsyncApiWriter writer)
         {
-            writer.WriteValue(this.Type);
+            writer.WriteValue(this.Type.GetDisplayName());
         }
     }
 }

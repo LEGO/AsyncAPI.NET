@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Models
 {
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 

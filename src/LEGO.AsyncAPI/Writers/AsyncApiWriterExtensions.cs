@@ -205,6 +205,22 @@ namespace LEGO.AsyncAPI.Writers
         }
 
         /// <summary>
+        /// Write the required of collection string.
+        /// </summary>
+        /// <param name="writer">The AsyncApi writer.</param>
+        /// <param name="name">The property name.</param>
+        /// <param name="elements">The collection values.</param>
+        /// <param name="action">The collection element writer action.</param>
+        public static void WriteRequiredCollection(
+            this IAsyncApiWriter writer,
+            string name,
+            IEnumerable<string> elements,
+            Action<IAsyncApiWriter, string> action)
+        {
+            writer.WriteCollectionInternal(name, elements, action);
+        }
+
+        /// <summary>
         /// Write the optional AsyncApi object/element collection.
         /// </summary>
         /// <typeparam name="T">The AsyncApi element type. <see cref="IAsyncApiElement"/>.</typeparam>
