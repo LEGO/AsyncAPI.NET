@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Models
 
     public class AvroRecord : AvroFieldType
     {
-        public string Type { get; set; } = "record";
+        public string Type { get; } = "record";
 
         public string Name { get; set; }
 

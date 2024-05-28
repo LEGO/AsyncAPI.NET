@@ -2,9 +2,7 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using System.Collections.Generic;
-    using System.Globalization;
-    using LEGO.AsyncAPI.Extensions;
+    using System;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Exceptions;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -26,10 +24,7 @@ namespace LEGO.AsyncAPI.Readers
             var mapNode = node.CheckMapNode("schema");
             var schema = new AvroSchema();
 
-            foreach (var propertyNode in mapNode)
-            {
-                propertyNode.ParseField(schema, schemaFixedFields, null);
-            }
+            mapNode.ParseFields(ref schema, schemaFixedFields, null);
 
             return schema;
         }
@@ -39,10 +34,7 @@ namespace LEGO.AsyncAPI.Readers
             var mapNode = node.CheckMapNode("field");
             var field = new AvroField();
 
-            foreach (var propertyNode in mapNode)
-            {
-                propertyNode.ParseField(field, fieldFixedFields, null);
-            }
+            mapNode.ParseFields(ref field, fieldFixedFields, null);
 
             return field;
         }
@@ -56,6 +48,44 @@ namespace LEGO.AsyncAPI.Readers
             { "order", (a, n) => a.Order = n.GetScalarValue() },
         };
 
+        private static readonly FixedFieldMap<AvroRecord> recordFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "name", (a, n) => a.Name = n.GetScalarValue() },
+            { "fields", (a, n) => a.Fields = n.CreateList(LoadField) },
+        };
+
+        private static readonly FixedFieldMap<AvroEnum> enumFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "name", (a, n) => a.Name = n.GetScalarValue() },
+            { "symbols", (a, n) => a.Symbols = n.CreateSimpleList(n2 => n2.GetScalarValue()) },
+        };
+
+        private static readonly FixedFieldMap<AvroFixed> fixedFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "name", (a, n) => a.Name = n.GetScalarValue() },
+            { "size", (a, n) => a.Size = int.Parse(n.GetScalarValue(), n.Context.Settings.CultureInfo) },
+        };
+
+        private static readonly FixedFieldMap<AvroArray> arrayFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "items", (a, n) => a.Items = LoadFieldType(n) },
+        };
+
+        private static readonly FixedFieldMap<AvroMap> mapFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "values", (a, n) => a.Values = LoadFieldType(n) },
+        };
+
+        private static readonly FixedFieldMap<AvroUnion> unionFixedFields = new()
+        {
+            { "types", (a, n) => a.Types = n.CreateList(LoadFieldType) },
+        };
+
         private static AvroFieldType LoadFieldType(ParseNode node)
         {
             if (node is ValueNode valueNode)
@@ -63,49 +93,50 @@ namespace LEGO.AsyncAPI.Readers
                 return new AvroPrimitive(valueNode.GetScalarValue().GetEnumFromDisplayName<AvroPrimitiveType>());
             }
 
+            if (node is ListNode)
+            {
+                var union = new AvroUnion();
+                foreach (var item in node as ListNode)
+                {
+                    union.Types.Add(LoadFieldType(item));
+                }
+
+                return union;
+            }
+
             if (node is MapNode mapNode)
             {
-                //var typeNode = mapNode.GetValue("type");
-                //var type = typeNode?.GetScalarValue();
+                var type = mapNode["type"].Value?.GetScalarValue();
 
-                //switch (type)
-                //{
-                //    case "record":
-                //        return new AvroRecord
-                //        {
-                //            Name = mapNode.GetValue("name")?.GetScalarValue(),
-                //            Fields = mapNode.GetValue("fields").CreateList(LoadField)
-                //        };
-                //    case "enum":
-                //        return new AvroEnum
-                //        {
-                //            Name = mapNode.GetValue("name")?.GetScalarValue(),
-                //            Symbols = mapNode.GetValue("symbols").CreateSimpleList(n => n.GetScalarValue())
-                //        };
-                //    case "fixed":
-                //        return new AvroFixed
-                //        {
-                //            Name = mapNode.GetValue("name")?.GetScalarValue(),
-                //            Size = int.Parse(mapNode.GetValue("size").GetScalarValue())
-                //        };
-                //    case "array":
-                //        return new AvroArray
-                //        {
-                //            Items = LoadFieldType(mapNode.GetValue("items"))
-                //        };
-                //    case "map":
-                //        return new AvroMap
-                //        {
-                //            Values = LoadFieldType(mapNode.GetValue("values"))
-                //        };
-                //    case "union":
-                //        return new AvroUnion
-                //        {
-                //            Types = mapNode.GetValue("types").CreateList(LoadFieldType)
-                //        };
-                //    default:
-                //        throw new InvalidOperationException($"Unsupported type: {type}");
-                //}
+                switch (type)
+                {
+                    case "record":
+                        var record = new AvroRecord();
+                        mapNode.ParseFields(ref record, recordFixedFields, null);
+                        return record;
+                    case "enum":
+                        var @enum = new AvroEnum();
+                        mapNode.ParseFields(ref @enum, enumFixedFields, null);
+                        return @enum;
+                    case "fixed":
+                        var @fixed = new AvroFixed();
+                        mapNode.ParseFields(ref @fixed, fixedFixedFields, null);
+                        return @fixed;
+                    case "array":
+                        var array = new AvroArray();
+                        mapNode.ParseFields(ref array, arrayFixedFields, null);
+                        return array;
+                    case "map":
+                        var map = new AvroMap();
+                        mapNode.ParseFields(ref map, mapFixedFields, null);
+                        return map;
+                    case "union":
+                        var union = new AvroUnion();
+                        mapNode.ParseFields(ref union, unionFixedFields, null);
+                        return union;
+                    default:
+                        throw new InvalidOperationException($"Unsupported type: {type}");
+                }
             }
 
             throw new AsyncApiReaderException("Invalid node type");
