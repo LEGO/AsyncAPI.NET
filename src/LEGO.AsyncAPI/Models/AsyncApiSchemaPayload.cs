@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public class AsyncApiJsonSchemaPayload : IAsyncApiMessagePayload, IAsyncApiReferenceable
+    public class AsyncApiJsonSchemaPayload : IAsyncApiMessagePayload
     {
         private readonly AsyncApiSchema schema;
 

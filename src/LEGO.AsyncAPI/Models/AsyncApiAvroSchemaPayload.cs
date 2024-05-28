@@ -45,9 +45,18 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public IList<AvroField> Fields { get => this.schema.Fields; set => this.schema.Fields = value; }
 
+        public bool UnresolvedReference { get => this.schema.UnresolvedReference; set => this.schema.UnresolvedReference = value; }
+
+        public AsyncApiReference Reference { get => this.schema.Reference; set => this.schema.Reference = value; }
+
         public void SerializeV2(IAsyncApiWriter writer)
         {
             this.schema.SerializeV2(writer);
+        }
+
+        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        {
+            this.schema.SerializeV2WithoutReference(writer);
         }
     }
 }

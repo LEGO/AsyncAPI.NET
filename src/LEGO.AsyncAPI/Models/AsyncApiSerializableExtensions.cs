@@ -33,7 +33,7 @@ namespace LEGO.AsyncAPI.Models
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="stream">The output stream.</param>
         /// <param name="specificationVersion">The AsyncApi specification version.</param>
-        /// <param name="settings">The settings used for writing</param>
+        /// <param name="settings">The settings used for writing.</param>
         public static void SerializeAsJson<T>(this T element, Stream stream, AsyncApiVersion specificationVersion, AsyncApiWriterSettings settings)
             where T : IAsyncApiSerializable
         {
@@ -60,7 +60,7 @@ namespace LEGO.AsyncAPI.Models
         /// <param name="element">The AsyncApi element.</param>
         /// <param name="stream">The output stream.</param>
         /// <param name="specificationVersion">The AsyncApi specification version.</param>
-        /// <param name="settings">The settings used for writing</param>
+        /// <param name="settings">The settings used for writing.</param>
         public static void SerializeAsYaml<T>(this T element, Stream stream, AsyncApiVersion specificationVersion, AsyncApiWriterSettings settings)
             where T : IAsyncApiSerializable
         {

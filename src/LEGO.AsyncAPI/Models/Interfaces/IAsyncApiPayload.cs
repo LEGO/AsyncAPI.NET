@@ -2,7 +2,7 @@
 
 namespace LEGO.AsyncAPI.Models.Interfaces
 {
-    public interface IAsyncApiMessagePayload : IAsyncApiSerializable
+    public interface IAsyncApiMessagePayload : IAsyncApiSerializable, IAsyncApiReferenceable
     {
     }
 }

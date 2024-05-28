@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Models
         /// External resource in the reference.
         /// It maybe:
         /// 1. a absolute/relative file path, for example:  ../commons/pet.json
-        /// 2. a Url, for example: http://localhost/pet.json
+        /// 2. a Url, for example: http://localhost/pet.json.
         /// </summary>
         public string ExternalResource { get; set; }
 
@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Models
         public AsyncApiDocument HostDocument { get; set; } = null;
 
         /// <summary>
-        /// Gets a flag indicating whether a file is a valid OpenAPI document or a fragment
+        /// Gets a flag indicating whether a file is a valid OpenAPI document or a fragment.
         /// </summary>
         public bool IsFragment { get; set; } = false;
 
@@ -71,7 +71,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         /// <summary>
-        /// Serialize <see cref="AsyncApiReference"/> to Async Api v2.4.
+        /// Serialize <see cref="AsyncApiReference"/> to Async Api.
         /// </summary>
         public void SerializeV2(IAsyncApiWriter writer)
         {
