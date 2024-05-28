@@ -2,7 +2,6 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using System;
     using LEGO.AsyncAPI.Attributes;
 
     /// <summary>

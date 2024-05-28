@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
-    using System.IO;
     using FluentAssertions;
     using FluentAssertions.Primitives;
     using NUnit.Framework;

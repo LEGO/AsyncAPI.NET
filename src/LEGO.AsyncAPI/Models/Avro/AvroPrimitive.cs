@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Writers;
-    using System.Runtime.CompilerServices;
 
     public class AvroPrimitive : AvroFieldType
     {

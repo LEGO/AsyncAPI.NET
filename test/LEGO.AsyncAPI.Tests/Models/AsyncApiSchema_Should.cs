@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Tests.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using FluentAssertions;
     using LEGO.AsyncAPI.Models;

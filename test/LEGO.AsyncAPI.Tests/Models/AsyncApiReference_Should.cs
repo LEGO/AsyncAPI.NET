@@ -2,12 +2,11 @@
 
 namespace LEGO.AsyncAPI.Tests
 {
+    using System.Linq;
     using FluentAssertions;
-    using FluentAssertions.Primitives;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
-    using System.Linq;
 
     public class AsyncApiReference_Should : TestBase
     {
