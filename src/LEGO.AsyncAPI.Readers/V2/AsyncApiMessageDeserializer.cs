@@ -10,11 +10,6 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
 
-    internal static partial class AsyncApiV2Deserializer
-    {
-
-    }
-
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
     /// runtime AsyncApi object model.
