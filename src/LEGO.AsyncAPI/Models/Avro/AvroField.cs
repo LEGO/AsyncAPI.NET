@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Represents a field within an Avro record schema.
@@ -35,25 +36,20 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public string Order { get; set; }
 
+        /// <summary>
+        /// An array of strings, providing alternate names for this record (optional).
+        /// </summary>
+        public IList<string> Aliases { get; set; } = new List<string>();
+
         public void SerializeV2(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
-
-            // name
             writer.WriteOptionalProperty("name", this.Name);
-
-            // type
             writer.WriteOptionalObject("type", this.Type, (w, s) => s.SerializeV2(w));
-
-            // doc
             writer.WriteOptionalProperty("doc", this.Doc);
-
-            // default
             writer.WriteOptionalObject("default", this.Default, (w, s) => w.WriteAny(s));
-
-            // order
             writer.WriteOptionalProperty("order", this.Order);
-
+            writer.WriteOptionalCollection("aliases", this.Aliases, (w, s) => w.WriteValue(s));
             writer.WriteEndObject();
         }
     }

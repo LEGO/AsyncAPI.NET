@@ -172,6 +172,50 @@ namespace LEGO.AsyncAPI.Tests.Models
             // Assert
             actual.Should()
                   .BePlatformAgnosticEquivalentTo(expected);
+        }[Test]
+        public void test()
+        {
+            // Arrange
+            var input = """
+            {
+              "type": "record",
+              "name": "SomeEvent",
+              "namespace": "my.namspace.for.event",
+              "example": {
+                "occurredOn": "2023-11-03T09:59:56.582908743Z",
+                "partnerId": "1",
+                "platformSource": "Brecht",
+                "countryCode": "DE"
+              },
+              "fields": [
+                {
+                  "name": "countryCode",
+                  "type": "string",
+                  "doc": "Country of the partner, (e.g. DE)"
+                },
+                {
+                  "name": "occurredOn",
+                  "type": "string",
+                  "doc": "Timestamp of when action occurred."
+                },
+                {
+                  "name": "partnerId",
+                  "type": "string",
+                  "doc": "Id of the partner"
+                },
+                {
+                  "name": "platformSource",
+                  "type": "string",
+                  "doc": "Platform source"
+                }
+              ]
+            }
+            """;
+
+            // Act
+            var actual = new AsyncApiStringReader().ReadFragment<AvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
+
+            // Assert
         }
 
         [Test]
