@@ -10,9 +10,11 @@
     <RepositoryUrl>https://github.com/LEGO/AsyncAPI.NET</RepositoryUrl>
     <PackageTags>asyncapi .net openapi documentation</PackageTags>
     <PackageIcon>logo.png</PackageIcon>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\media\logo.png" Pack="true" PackagePath="\" />
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
