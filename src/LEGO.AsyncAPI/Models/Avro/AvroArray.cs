@@ -4,11 +4,11 @@ namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroArray : AvroFieldType
+    public class AvroArray : AvroSchema
     {
         public string Type { get; } = "array";
 
-        public AvroFieldType Items { get; set; }
+        public AvroSchema Items { get; set; }
 
         public override void SerializeV2(IAsyncApiWriter writer)
         {

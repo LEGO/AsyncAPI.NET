@@ -147,7 +147,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         Name = "contact",
                         Type = new AvroUnion
                         {
-                            Types = new List<AvroFieldType>
+                            Types = new List<AvroSchema>
                             {
                                 AvroPrimitiveType.Null,
                                 new AvroRecord
@@ -355,7 +355,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         Name = "contact",
                         Type = new AvroUnion
                         {
-                            Types = new List<AvroFieldType>
+                            Types = new List<AvroSchema>
                             {
                                 AvroPrimitiveType.Null,
                                 new AvroRecord

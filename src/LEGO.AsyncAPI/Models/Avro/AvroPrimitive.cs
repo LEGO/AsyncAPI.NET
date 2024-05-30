@@ -4,7 +4,7 @@ namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroPrimitive : AvroFieldType
+    public class AvroPrimitive : AvroSchema
     {
         public AvroPrimitiveType Type { get; set; }
 

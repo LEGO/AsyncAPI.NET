@@ -10,39 +10,39 @@ namespace LEGO.AsyncAPI.Readers
 
     public class AsyncApiAvroSchemaDeserializer
     {
-        private static readonly FixedFieldMap<AvroSchema> schemaFixedFields = new()
-        {
-            { "type", (a, n) => a.Type = n.GetScalarValue().GetEnumFromDisplayName<AvroSchemaType>() },
-            { "name", (a, n) => a.Name = n.GetScalarValue() },
-            { "namespace", (a, n) => a.Namespace = n.GetScalarValue() },
-            { "doc", (a, n) => a.Doc = n.GetScalarValue() },
-            { "fields", (a, n) => a.Fields = n.CreateList(LoadField) },
-        };
+        // private static readonly FixedFieldMap<AvroSchema> schemaFixedFields = new()
+        // {
+        //     { "type", (a, n) => a.Type = n.GetScalarValue() },
+        //     { "name", (a, n) => a.Name = n.GetScalarValue() },
+        //     { "namespace", (a, n) => a.Namespace = n.GetScalarValue() },
+        //     { "doc", (a, n) => a.Doc = n.GetScalarValue() },
+        //     { "fields", (a, n) => a.Fields = n.CreateList(LoadField) },
+        // };
 
-        public static AvroSchema LoadSchema(ParseNode node)
-        {
-            var mapNode = node.CheckMapNode("schema");
-            var schema = new AvroSchema();
-
-            mapNode.ParseFields(ref schema, schemaFixedFields, null);
-
-            return schema;
-        }
+        // public static AvroSchema LoadSchema(ParseNode node)
+        // {
+        //     var mapNode = node.CheckMapNode("schema");
+        //     var schema = new AvroSchema();
+        //
+        //     mapNode.ParseFields(ref schema, schemaFixedFields, null);
+        //
+        //     return schema;
+        // }
 
         private static AvroField LoadField(ParseNode node)
         {
             var mapNode = node.CheckMapNode("field");
             var field = new AvroField();
-
+        
             mapNode.ParseFields(ref field, fieldFixedFields, null);
-
+        
             return field;
         }
 
         private static readonly FixedFieldMap<AvroField> fieldFixedFields = new()
         {
             { "name", (a, n) => a.Name = n.GetScalarValue() },
-            { "type", (a, n) => a.Type = LoadFieldType(n) },
+            { "type", (a, n) => a.Type = LoadSchema(n) },
             { "doc", (a, n) => a.Doc = n.GetScalarValue() },
             { "default", (a, n) => a.Default = n.CreateAny() },
             { "order", (a, n) => a.Order = n.GetScalarValue() },
@@ -72,21 +72,21 @@ namespace LEGO.AsyncAPI.Readers
         private static readonly FixedFieldMap<AvroArray> arrayFixedFields = new()
         {
             { "type", (a, n) => { } },
-            { "items", (a, n) => a.Items = LoadFieldType(n) },
+            { "items", (a, n) => a.Items = LoadSchema(n) },
         };
 
         private static readonly FixedFieldMap<AvroMap> mapFixedFields = new()
         {
             { "type", (a, n) => { } },
-            { "values", (a, n) => a.Values = LoadFieldType(n) },
+            { "values", (a, n) => a.Values = LoadSchema(n) },
         };
 
         private static readonly FixedFieldMap<AvroUnion> unionFixedFields = new()
         {
-            { "types", (a, n) => a.Types = n.CreateList(LoadFieldType) },
+            { "types", (a, n) => a.Types = n.CreateList(LoadSchema) },
         };
 
-        private static AvroFieldType LoadFieldType(ParseNode node)
+        private static AvroSchema LoadSchema(ParseNode node)
         {
             if (node is ValueNode valueNode)
             {
@@ -98,7 +98,7 @@ namespace LEGO.AsyncAPI.Readers
                 var union = new AvroUnion();
                 foreach (var item in node as ListNode)
                 {
-                    union.Types.Add(LoadFieldType(item));
+                    union.Types.Add(LoadSchema(item));
                 }
 
                 return union;

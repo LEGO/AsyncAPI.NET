@@ -5,9 +5,9 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public abstract class AvroFieldType : IAsyncApiSerializable
+    public abstract class AvroSchema : IAsyncApiSerializable
     {
-        public static implicit operator AvroFieldType(AvroPrimitiveType type)
+        public static implicit operator AvroSchema(AvroPrimitiveType type)
         {
             return new AvroPrimitive(type);
         }

@@ -5,11 +5,12 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Writers;
     using System.Collections.Generic;
 
-    public class AvroFixed : AvroFieldType
+    public class AvroFixed : AvroSchema
     {
         public string Type { get; } = "fixed";
 
         public string Name { get; set; }
+        public string Namespaace { get; set; }
 
         public IList<string> Aliases { get; set; } = new List<string>();
 
@@ -20,6 +21,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
             writer.WriteOptionalProperty("type", this.Type);
             writer.WriteRequiredProperty("name", this.Name);
+            writer.WriteRequiredProperty("name", this.Namespaace);
             writer.WriteOptionalCollection("aliases", this.Aliases, (w, s) => w.WriteValue(s));
             writer.WriteRequiredProperty("size", this.Size);
             writer.WriteEndObject();

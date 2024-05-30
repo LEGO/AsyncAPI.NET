@@ -5,11 +5,13 @@ namespace LEGO.AsyncAPI.Models
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroEnum : AvroFieldType
+    public class AvroEnum : AvroSchema
     {
         public string Type { get; } = "enum";
 
         public string Name { get; set; }
+        
+        public string Namespace { get; set; }
 
         public string Doc { get; set; }
 
@@ -24,6 +26,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
             writer.WriteOptionalProperty("type", this.Type);
             writer.WriteRequiredProperty("name", this.Name);
+            writer.WriteRequiredProperty("namespace", this.Namespace);
             writer.WriteOptionalCollection("aliases", this.Aliases, (w, s) => w.WriteValue(s));
             writer.WriteOptionalProperty("doc", this.Doc);
             writer.WriteRequiredCollection("symbols", this.Symbols, (w, s) => w.WriteValue(s));
