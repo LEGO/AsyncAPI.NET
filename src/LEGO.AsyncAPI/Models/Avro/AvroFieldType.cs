@@ -7,6 +7,8 @@ namespace LEGO.AsyncAPI.Models
 
     public abstract class AvroSchema : IAsyncApiSerializable
     {
+        public abstract string Type { get; }
+        
         public static implicit operator AvroSchema(AvroPrimitiveType type)
         {
             return new AvroPrimitive(type);

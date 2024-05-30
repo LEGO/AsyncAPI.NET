@@ -8,55 +8,40 @@ namespace LEGO.AsyncAPI.Models
 
     public class AsyncApiAvroSchemaPayload : IAsyncApiMessagePayload
     {
-        private AvroSchema schema;
-
-        public AsyncApiAvroSchemaPayload()
-        {
-            this.schema = new AvroSchema();
-        }
+        public AvroSchema Schema { get; set; }
 
         public AsyncApiAvroSchemaPayload(AvroSchema schema)
         {
-            this.schema = schema;
+            this.Schema = schema;
         }
 
-        /// <summary>
-        /// The type of the schema. See <a href="https://avro.apache.org/docs/1.9.0/spec.html#schema_primitive">Avro Schema Types</a>.
-        /// </summary>
-        public AvroSchemaType Type { get => this.schema.Type; set => this.schema.Type = value; }
+        public AsyncApiAvroSchemaPayload()
+        {
+        }
 
-        /// <summary>
-        /// The name of the schema. Required for named types (e.g., record, enum, fixed). See <a href="https://avro.apache.org/docs/1.9.0/spec.html#names">Avro Names</a>.
-        /// </summary>
-        public string Name { get => this.schema.Name; set => this.schema.Name = value; }
+        public bool UnresolvedReference { get; set; }
 
-        /// <summary>
-        /// The namespace of the schema. Useful for named types to avoid name conflicts.
-        /// </summary>
-        public string? Namespace { get => this.schema.Namespace; set => this.schema.Namespace = value; }
-
-        /// <summary>
-        /// Documentation for the schema.
-        /// </summary>
-        public string? Doc { get => this.schema.Doc; set => this.schema.Doc = value; }
-
-        /// <summary>
-        /// The list of fields in the schema.
-        /// </summary>
-        public IList<AvroField> Fields { get => this.schema.Fields; set => this.schema.Fields = value; }
-
-        public bool UnresolvedReference { get => this.schema.UnresolvedReference; set => this.schema.UnresolvedReference = value; }
-
-        public AsyncApiReference Reference { get => this.schema.Reference; set => this.schema.Reference = value; }
+        public AsyncApiReference Reference { get; set; }
 
         public void SerializeV2(IAsyncApiWriter writer)
         {
-            this.schema.SerializeV2(writer);
+            var settings = writer.GetSettings();
+
+            if (this.Reference != null)
+            {
+                if (!settings.ShouldInlineReference(this.Reference))
+                {
+                    this.Reference.SerializeV2(writer);
+                    return;
+                }
+            }
+
+            this.SerializeV2WithoutReference(writer);
         }
 
         public void SerializeV2WithoutReference(IAsyncApiWriter writer)
         {
-            this.schema.SerializeV2WithoutReference(writer);
+            this.Schema.SerializeV2(writer);
         }
     }
 }

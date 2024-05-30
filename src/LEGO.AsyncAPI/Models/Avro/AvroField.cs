@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Represents a field within an Avro record schema.
@@ -41,6 +42,11 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public IList<string> Aliases { get; set; } = new List<string>();
 
+        /// <summary>
+        /// A map of properties not in the schema, but added as additional metadata.
+        /// </summary>
+        public IDictionary<string, AvroSchema> Metadata { get; set; } = new Dictionary<string, AvroSchema>();
+
         public void SerializeV2(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
@@ -50,6 +56,21 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject("default", this.Default, (w, s) => w.WriteAny(s));
             writer.WriteOptionalProperty("order", this.Order);
             writer.WriteOptionalCollection("aliases", this.Aliases, (w, s) => w.WriteValue(s));
+            if (this.Metadata.Any())
+            {
+                foreach (var item in this.Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNull();
+                    }
+                    else
+                    {
+                        item.Value.SerializeV2(writer);
+                    }
+                }
+            }
             writer.WriteEndObject();
         }
     }

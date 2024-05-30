@@ -8,7 +8,7 @@ namespace LEGO.AsyncAPI.Models
 
     public class AvroRecord : AvroSchema
     {
-        public string Type { get; } = "record";
+        public override string Type { get; } = "record";
 
         /// <summary>
         /// The name of the schema. Required for named types. See <a href="https://avro.apache.org/docs/1.9.0/spec.html#names">Avro Names</a>.
@@ -25,18 +25,27 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public string? Doc { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IList<string> Aliases { get; set; } = new List<string>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IList<AvroField> Fields { get; set; } = new List<AvroField>();
 
-        public IDictionary<string, AvroFieldType> Metadata { get; set; } = new Dictionary<string, AvroFieldType>();
+        /// <summary>
+        /// A map of properties not in the schema, but added as additional metadata.
+        /// </summary>
+        public IDictionary<string, AvroSchema> Metadata { get; set; } = new Dictionary<string, AvroSchema>();
 
         public override void SerializeV2(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteOptionalProperty("type", this.Type);
             writer.WriteRequiredProperty("name", this.Name);
-            writer.WriteRequiredProperty("namespace", this.Namespace);
+            writer.WriteOptionalProperty("namespace", this.Namespace);
             writer.WriteOptionalProperty("doc", this.Doc);
             writer.WriteOptionalCollection("aliases", this.Aliases, (w, s) => w.WriteValue(s));
             writer.WriteRequiredCollection("fields", this.Fields, (w, s) => s.SerializeV2(w));
