@@ -10,16 +10,34 @@ namespace LEGO.AsyncAPI.Models
     {
         public override string Type { get; } = "enum";
 
+        /// <summary>
+        /// The name of the schema. Required for named types. See <a href="https://avro.apache.org/docs/1.9.0/spec.html#names">Avro Names</a>.
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The namespace of the schema. Useful for named types to avoid name conflicts.
+        /// </summary>
         public string Namespace { get; set; }
 
+        /// <summary>
+        /// Documentation for the schema.
+        /// </summary>
         public string Doc { get; set; }
 
+        /// <summary>
+        /// Alternate names for this enum.
+        /// </summary>
         public IList<string> Aliases { get; set; } = new List<string>();
 
+        /// <summary>
+        /// Listing symbols. All symbols in an enum must be unique.
+        /// </summary>
         public IList<string> Symbols { get; set; } = new List<string>();
 
+        /// <summary>
+        /// A default value for this enumeration.
+        /// </summary>
         public string Default { get; set; }
 
         /// <summary>
@@ -52,6 +70,7 @@ namespace LEGO.AsyncAPI.Models
                     }
                 }
             }
+
             writer.WriteEndObject();
         }
     }

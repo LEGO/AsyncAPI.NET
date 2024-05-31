@@ -10,6 +10,9 @@ namespace LEGO.AsyncAPI.Models
     {
         public override string Type { get; } = "array";
 
+        /// <summary>
+        /// The schema of the array's items.
+        /// </summary>
         public AvroSchema Items { get; set; }
 
         /// <summary>
@@ -37,6 +40,7 @@ namespace LEGO.AsyncAPI.Models
                     }
                 }
             }
+
             writer.WriteEndObject();
         }
     }

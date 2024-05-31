@@ -2,10 +2,10 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Writers;
     using System.Collections.Generic;
     using System.Linq;
+    using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// Represents a field within an Avro record schema.
@@ -38,7 +38,7 @@ namespace LEGO.AsyncAPI.Models
         public string Order { get; set; }
 
         /// <summary>
-        /// An array of strings, providing alternate names for this record (optional).
+        /// Alternate names for this record (optional).
         /// </summary>
         public IList<string> Aliases { get; set; } = new List<string>();
 
@@ -71,6 +71,7 @@ namespace LEGO.AsyncAPI.Models
                     }
                 }
             }
+
             writer.WriteEndObject();
         }
     }

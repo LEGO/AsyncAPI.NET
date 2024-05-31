@@ -92,6 +92,7 @@ namespace LEGO.AsyncAPI.Services
             {
                 this.ResolveObject(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = r);
             }
+
             this.ResolveList(message.Traits);
             this.ResolveObject(message.CorrelationId, r => message.CorrelationId = r);
             this.ResolveObject(message.Bindings, r => message.Bindings = r);

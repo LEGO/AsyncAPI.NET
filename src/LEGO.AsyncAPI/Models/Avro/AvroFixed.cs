@@ -2,20 +2,33 @@
 
 namespace LEGO.AsyncAPI.Models
 {
-    using LEGO.AsyncAPI.Writers;
     using System.Collections.Generic;
     using System.Linq;
+    using LEGO.AsyncAPI.Writers;
 
     public class AvroFixed : AvroSchema
     {
         public override string Type { get; } = "fixed";
 
+        /// <summary>
+        /// The name of the schema. Required for named types. See <a href="https://avro.apache.org/docs/1.9.0/spec.html#names">Avro Names</a>.
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The namespace of the schema. Useful for named types to avoid name conflicts.
+        /// </summary>
         public string Namespace { get; set; }
 
+
+        /// <summary>
+        /// Alternate names for this record.
+        /// </summary>
         public IList<string> Aliases { get; set; } = new List<string>();
 
+        /// <summary>
+        /// Number of bytes per value.
+        /// </summary>
         public int Size { get; set; }
 
         /// <summary>
@@ -46,6 +59,7 @@ namespace LEGO.AsyncAPI.Models
                     }
                 }
             }
+
             writer.WriteEndObject();
         }
     }

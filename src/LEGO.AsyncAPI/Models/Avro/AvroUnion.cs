@@ -10,6 +10,9 @@ namespace LEGO.AsyncAPI.Models
     {
         public override string Type { get; } = "map";
 
+        /// <summary>
+        /// The types in this union.
+        /// </summary>
         public IList<AvroSchema> Types { get; set; } = new List<AvroSchema>();
 
         /// <summary>
@@ -40,6 +43,7 @@ namespace LEGO.AsyncAPI.Models
                     }
                 }
             }
+
             writer.WriteEndArray();
         }
     }

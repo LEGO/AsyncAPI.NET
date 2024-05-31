@@ -26,7 +26,7 @@ namespace LEGO.AsyncAPI.Models
         public string Doc { get; set; }
 
         /// <summary>
-        /// 
+        /// Alternate names for this record.
         /// </summary>
         public IList<string> Aliases { get; set; } = new List<string>();
 
@@ -64,6 +64,7 @@ namespace LEGO.AsyncAPI.Models
                     }
                 }
             }
+
             writer.WriteEndObject();
         }
     }
