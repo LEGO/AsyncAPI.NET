@@ -18,12 +18,12 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// The namespace of the schema. Useful for named types to avoid name conflicts.
         /// </summary>
-        public string? Namespace { get; set; }
+        public string Namespace { get; set; }
 
         /// <summary>
         /// Documentation for the schema.
         /// </summary>
-        public string? Doc { get; set; }
+        public string Doc { get; set; }
 
         /// <summary>
         /// 
@@ -38,7 +38,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A map of properties not in the schema, but added as additional metadata.
         /// </summary>
-        public IDictionary<string, AvroSchema> Metadata { get; set; } = new Dictionary<string, AvroSchema>();
+        public override IDictionary<string, AsyncApiAny> Metadata { get; set; } = new Dictionary<string, AsyncApiAny>();
 
         public override void SerializeV2(IAsyncApiWriter writer)
         {
@@ -60,7 +60,7 @@ namespace LEGO.AsyncAPI.Models
                     }
                     else
                     {
-                        item.Value.SerializeV2(writer);
+                        writer.WriteAny(item.Value);
                     }
                 }
             }

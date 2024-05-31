@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A map of properties not in the schema, but added as additional metadata.
         /// </summary>
-        public IDictionary<string, AvroSchema> Metadata { get; set; } = new Dictionary<string, AvroSchema>();
+        public override IDictionary<string, AsyncApiAny> Metadata { get; set; } = new Dictionary<string, AsyncApiAny>();
 
         public override void SerializeV2(IAsyncApiWriter writer)
         {
@@ -36,7 +36,7 @@ namespace LEGO.AsyncAPI.Models
                     }
                     else
                     {
-                        item.Value.SerializeV2(writer);
+                        writer.WriteAny(item.Value);
                     }
                 }
             }

@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Models
 
         public string Name { get; set; }
 
-        public string? Namespaace { get; set; }
+        public string Namespace { get; set; }
 
         public IList<string> Aliases { get; set; } = new List<string>();
 
@@ -21,14 +21,14 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// A map of properties not in the schema, but added as additional metadata.
         /// </summary>
-        public IDictionary<string, AvroSchema> Metadata { get; set; } = new Dictionary<string, AvroSchema>();
+        public override IDictionary<string, AsyncApiAny> Metadata { get; set; } = new Dictionary<string, AsyncApiAny>();
 
         public override void SerializeV2(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteOptionalProperty("type", this.Type);
             writer.WriteRequiredProperty("name", this.Name);
-            writer.WriteOptionalProperty("namespace", this.Namespaace);
+            writer.WriteOptionalProperty("namespace", this.Namespace);
             writer.WriteOptionalCollection("aliases", this.Aliases, (w, s) => w.WriteValue(s));
             writer.WriteRequiredProperty("size", this.Size);
             if (this.Metadata.Any())
@@ -42,7 +42,7 @@ namespace LEGO.AsyncAPI.Models
                     }
                     else
                     {
-                        item.Value.SerializeV2(writer);
+                        writer.WriteAny(item.Value);
                     }
                 }
             }

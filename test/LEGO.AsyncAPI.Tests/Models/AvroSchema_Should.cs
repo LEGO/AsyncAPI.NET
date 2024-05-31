@@ -11,6 +11,49 @@ namespace LEGO.AsyncAPI.Tests.Models
     public class AvroSchema_Should
     {
         [Test]
+        public void Deserialize_WithMetadata_CreatesMetadata()
+        {
+            var input =
+                """
+                {
+                  "type": "record",
+                  "name": "SomeEvent",
+                  "namespace": "my.namspace.for.event",
+                  "example": {
+                    "occurredOn": "2023-11-03T09:59:56.582908743Z",
+                    "partnerId": "1",
+                    "platformSource": "Brecht",
+                    "countryCode": "DE"
+                  },
+                  "fields": [
+                    {
+                      "name": "countryCode",
+                      "type": "string",
+                      "doc": "Country of the partner, (e.g. DE)"
+                    },
+                    {
+                      "name": "occurredOn",
+                      "type": "string",
+                      "doc": "Timestamp of when action occurred."
+                    },
+                    {
+                      "name": "partnerId",
+                      "type": "string",
+                      "doc": "Id of the partner"
+                    },
+                    {
+                      "name": "platformSource",
+                      "type": "string",
+                      "doc": "Platform source"
+                    }
+                  ]
+                }
+                """;
+            var model = new AsyncApiStringReader().ReadFragment<AvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
+            model.Metadata.Should().HaveCount(1);
+        }
+
+        [Test]
         public void SerializeV2_SerializesCorrectly()
         {
             // Arrange
@@ -74,9 +117,8 @@ namespace LEGO.AsyncAPI.Tests.Models
                 doc: 'The contact information of the user, which can be either null or a phone number.'
             """;
 
-            var schema = new AvroSchema
+            var schema = new AvroRecord
             {
-                Type = AvroSchemaType.Record,
                 Name = "User",
                 Namespace = "com.example",
                 Fields = new List<AvroField>
@@ -172,50 +214,6 @@ namespace LEGO.AsyncAPI.Tests.Models
             // Assert
             actual.Should()
                   .BePlatformAgnosticEquivalentTo(expected);
-        }[Test]
-        public void test()
-        {
-            // Arrange
-            var input = """
-            {
-              "type": "record",
-              "name": "SomeEvent",
-              "namespace": "my.namspace.for.event",
-              "example": {
-                "occurredOn": "2023-11-03T09:59:56.582908743Z",
-                "partnerId": "1",
-                "platformSource": "Brecht",
-                "countryCode": "DE"
-              },
-              "fields": [
-                {
-                  "name": "countryCode",
-                  "type": "string",
-                  "doc": "Country of the partner, (e.g. DE)"
-                },
-                {
-                  "name": "occurredOn",
-                  "type": "string",
-                  "doc": "Timestamp of when action occurred."
-                },
-                {
-                  "name": "partnerId",
-                  "type": "string",
-                  "doc": "Id of the partner"
-                },
-                {
-                  "name": "platformSource",
-                  "type": "string",
-                  "doc": "Platform source"
-                }
-              ]
-            }
-            """;
-
-            // Act
-            var actual = new AsyncApiStringReader().ReadFragment<AvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
-
-            // Assert
         }
 
         [Test]
@@ -282,9 +280,8 @@ namespace LEGO.AsyncAPI.Tests.Models
                 doc: 'The contact information of the user, which can be either null or a phone number.'
             """;
 
-            var expected = new AvroSchema
+            var expected = new AvroRecord
             {
-                Type = AvroSchemaType.Record,
                 Name = "User",
                 Namespace = "com.example",
                 Fields = new List<AvroField>

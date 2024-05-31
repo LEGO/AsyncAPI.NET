@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.Readers
 {
     using System;
+    using System.Collections;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Exceptions;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -10,83 +11,106 @@ namespace LEGO.AsyncAPI.Readers
 
     public class AsyncApiAvroSchemaDeserializer
     {
-        // private static readonly FixedFieldMap<AvroSchema> schemaFixedFields = new()
-        // {
-        //     { "type", (a, n) => a.Type = n.GetScalarValue() },
-        //     { "name", (a, n) => a.Name = n.GetScalarValue() },
-        //     { "namespace", (a, n) => a.Namespace = n.GetScalarValue() },
-        //     { "doc", (a, n) => a.Doc = n.GetScalarValue() },
-        //     { "fields", (a, n) => a.Fields = n.CreateList(LoadField) },
-        // };
-
-        // public static AvroSchema LoadSchema(ParseNode node)
-        // {
-        //     var mapNode = node.CheckMapNode("schema");
-        //     var schema = new AvroSchema();
-        //
-        //     mapNode.ParseFields(ref schema, schemaFixedFields, null);
-        //
-        //     return schema;
-        // }
-
-        private static AvroField LoadField(ParseNode node)
-        {
-            var mapNode = node.CheckMapNode("field");
-            var field = new AvroField();
-        
-            mapNode.ParseFields(ref field, fieldFixedFields, null);
-        
-            return field;
-        }
-
-        private static readonly FixedFieldMap<AvroField> fieldFixedFields = new()
+        private static readonly FixedFieldMap<AvroField> FieldFixedFields = new()
         {
             { "name", (a, n) => a.Name = n.GetScalarValue() },
             { "type", (a, n) => a.Type = LoadSchema(n) },
             { "doc", (a, n) => a.Doc = n.GetScalarValue() },
             { "default", (a, n) => a.Default = n.CreateAny() },
+            { "aliases", (a, n) => a.Aliases = n.CreateSimpleList(n2 => n2.GetScalarValue()) },
             { "order", (a, n) => a.Order = n.GetScalarValue() },
         };
 
-        private static readonly FixedFieldMap<AvroRecord> recordFixedFields = new()
+        private static readonly FixedFieldMap<AvroRecord> RecordFixedFields = new()
         {
             { "type", (a, n) => { } },
             { "name", (a, n) => a.Name = n.GetScalarValue() },
+            { "doc", (a, n) => a.Doc = n.GetScalarValue() },
+            { "namespace", (a, n) => a.Namespace = n.GetScalarValue() },
+            { "aliases", (a, n) => a.Aliases = n.CreateSimpleList(n2 => n2.GetScalarValue()) },
             { "fields", (a, n) => a.Fields = n.CreateList(LoadField) },
         };
 
-        private static readonly FixedFieldMap<AvroEnum> enumFixedFields = new()
+        private static readonly FixedFieldMap<AvroEnum> EnumFixedFields = new()
         {
             { "type", (a, n) => { } },
             { "name", (a, n) => a.Name = n.GetScalarValue() },
+            { "doc", (a, n) => a.Doc = n.GetScalarValue() },
+            { "namespace", (a, n) => a.Namespace = n.GetScalarValue() },
+            { "aliases", (a, n) => a.Aliases = n.CreateSimpleList(n2 => n2.GetScalarValue()) },
             { "symbols", (a, n) => a.Symbols = n.CreateSimpleList(n2 => n2.GetScalarValue()) },
+            { "default", (a, n) => a.Default = n.GetScalarValue() },
         };
 
-        private static readonly FixedFieldMap<AvroFixed> fixedFixedFields = new()
+        private static readonly FixedFieldMap<AvroFixed> FixedFixedFields = new()
         {
             { "type", (a, n) => { } },
             { "name", (a, n) => a.Name = n.GetScalarValue() },
+            { "namespace", (a, n) => a.Namespace = n.GetScalarValue() },
+            { "aliases", (a, n) => a.Aliases = n.CreateSimpleList(n2 => n2.GetScalarValue()) },
             { "size", (a, n) => a.Size = int.Parse(n.GetScalarValue(), n.Context.Settings.CultureInfo) },
         };
 
-        private static readonly FixedFieldMap<AvroArray> arrayFixedFields = new()
+        private static readonly FixedFieldMap<AvroArray> ArrayFixedFields = new()
         {
             { "type", (a, n) => { } },
             { "items", (a, n) => a.Items = LoadSchema(n) },
         };
 
-        private static readonly FixedFieldMap<AvroMap> mapFixedFields = new()
+        private static readonly FixedFieldMap<AvroMap> MapFixedFields = new()
         {
             { "type", (a, n) => { } },
-            { "values", (a, n) => a.Values = LoadSchema(n) },
+            { "values", (a, n) => a.Values = n.GetScalarValue().GetEnumFromDisplayName<AvroPrimitiveType>() },
         };
 
-        private static readonly FixedFieldMap<AvroUnion> unionFixedFields = new()
+        private static readonly FixedFieldMap<AvroUnion> UnionFixedFields = new()
         {
             { "types", (a, n) => a.Types = n.CreateList(LoadSchema) },
         };
 
-        private static AvroSchema LoadSchema(ParseNode node)
+        private static readonly PatternFieldMap<AvroRecord> RecordMetadataPatternFields =
+        new()
+        {
+            { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroField> FieldMetadataPatternFields =
+        new()
+        {
+                { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroEnum> EnumMetadataPatternFields =
+        new()
+        {
+             { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroFixed> FixedMetadataPatternFields =
+        new()
+        {
+             { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroArray> ArrayMetadataPatternFields =
+        new()
+        {
+             { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroMap> MapMetadataPatternFields =
+        new()
+        {
+             { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroUnion> UnionMetadataPatternFields =
+        new()
+        {
+             { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        public static AvroSchema LoadSchema(ParseNode node)
         {
             if (node is ValueNode valueNode)
             {
@@ -106,33 +130,33 @@ namespace LEGO.AsyncAPI.Readers
 
             if (node is MapNode mapNode)
             {
-                var type = mapNode["type"].Value?.GetScalarValue();
+                var type = mapNode["type"]?.Value.GetScalarValue();
 
                 switch (type)
                 {
                     case "record":
                         var record = new AvroRecord();
-                        mapNode.ParseFields(ref record, recordFixedFields, null);
+                        mapNode.ParseFields(ref record, RecordFixedFields, RecordMetadataPatternFields);
                         return record;
                     case "enum":
                         var @enum = new AvroEnum();
-                        mapNode.ParseFields(ref @enum, enumFixedFields, null);
+                        mapNode.ParseFields(ref @enum, EnumFixedFields, EnumMetadataPatternFields);
                         return @enum;
                     case "fixed":
                         var @fixed = new AvroFixed();
-                        mapNode.ParseFields(ref @fixed, fixedFixedFields, null);
+                        mapNode.ParseFields(ref @fixed, FixedFixedFields, FixedMetadataPatternFields);
                         return @fixed;
                     case "array":
                         var array = new AvroArray();
-                        mapNode.ParseFields(ref array, arrayFixedFields, null);
+                        mapNode.ParseFields(ref array, ArrayFixedFields, ArrayMetadataPatternFields);
                         return array;
                     case "map":
                         var map = new AvroMap();
-                        mapNode.ParseFields(ref map, mapFixedFields, null);
+                        mapNode.ParseFields(ref map, MapFixedFields, MapMetadataPatternFields);
                         return map;
                     case "union":
                         var union = new AvroUnion();
-                        mapNode.ParseFields(ref union, unionFixedFields, null);
+                        mapNode.ParseFields(ref union, UnionFixedFields, UnionMetadataPatternFields);
                         return union;
                     default:
                         throw new InvalidOperationException($"Unsupported type: {type}");
@@ -140,6 +164,17 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             throw new AsyncApiReaderException("Invalid node type");
+        }
+
+        private static AvroField LoadField(ParseNode node)
+        {
+            var mapNode = node.CheckMapNode("field");
+            var field = new AvroField();
+
+            mapNode.ParseFields<AvroField>(ref field, FieldFixedFields, FieldMetadataPatternFields);
+
+            return field;
+
         }
     }
 }
