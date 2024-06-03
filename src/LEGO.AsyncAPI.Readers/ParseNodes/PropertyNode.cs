@@ -29,8 +29,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             IDictionary<string, Action<T, ParseNode>> fixedFields,
             IDictionary<Func<string, bool>, Action<T, string, ParseNode>> patternFields)
         {
-            var found = fixedFields.TryGetValue(this.Name, out var fixedFieldMap);
-
+            var _ = fixedFields.TryGetValue(this.Name, out var fixedFieldMap);
             if (fixedFieldMap != null)
             {
                 try
@@ -78,8 +77,12 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 }
                 else
                 {
-                    this.Context.Diagnostic.Errors.Add(
-                        new AsyncApiError(string.Empty, $"{this.Name} is not a valid property at {this.Context.GetLocation()}"));
+                    switch (this.Context.Settings.UnmappedMemberHandling)
+                    {
+                        case UnmappedMemberHandling.Error:
+                            this.Context.Diagnostic.Errors.Add(new AsyncApiError(string.Empty, $"{this.Name} is not a valid property at {this.Context.GetLocation()}"));
+                            break;
+                    }
                 }
             }
         }
