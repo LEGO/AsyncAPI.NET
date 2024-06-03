@@ -43,9 +43,9 @@ namespace LEGO.AsyncAPI.Tests
         /// Attempts to find the first file that matches the name of the active unit test
         /// and returns it as an expected type.
         /// </summary>
-        /// <typeparam name="T">The type to return</typeparam>
+        /// <typeparam name="T">The type to return.</typeparam>
         /// <param name="resourceName">The name of the resource file with an optional extension.</param>
-        /// <returns>The result</returns>
+        /// <returns>The result.</returns>
         protected T GetTestData<T>([CallerMemberName] string resourceName = "")
         {
             string searchPattern = string.IsNullOrWhiteSpace(Path.GetExtension(resourceName))

@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     public class Ordering : IAsyncApiExtensible
     {
         /// <summary>
-        /// What type of SNS Topic is this?
+        /// What type of SNS Topic is this?.
         /// </summary>
         public OrderingType Type { get; set; }
 

@@ -2,9 +2,9 @@
 
 namespace LEGO.AsyncAPI.Bindings.MQTT
 {
+    using System;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
-    using System;
 
     public class LastWill : IAsyncApiElement
     {

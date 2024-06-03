@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Tests.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using FluentAssertions;
     using LEGO.AsyncAPI.Models;
@@ -421,7 +420,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         new AsyncApiMessage
                         {
-                            Payload = new AsyncApiSchema
+                            Payload = new AsyncApiJsonSchemaPayload
                             {
                                 Type = SchemaType.Object,
                                 Required = new HashSet<string> { "testB" },
@@ -510,6 +509,28 @@ namespace LEGO.AsyncAPI.Tests.Models
             Assert.True(!yaml.Contains("if:"));
         }
 
+        [Test]
+        public void Deserialize_BasicExample()
+        {
+            var input =
+                """
+                title: title1
+                type: integer
+                maximum: 42
+                minimum: 10
+                exclusiveMinimum: true
+                multipleOf: 3
+                default: 15
+                nullable: true
+                externalDocs:
+                  url: http://example.com/externalDocs
+                """;
+
+            var schema = new AsyncApiStringReader().ReadFragment<AsyncApiSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
+
+            diag.Errors.Should().BeEmpty();
+            schema.Should().BeEquivalentTo(AdvancedSchemaNumber);
+        }
         /// <summary>
         /// Regression test.
         /// Bug: Serializing properties multiple times - specifically Schema.Not was serialized into Not and Else.

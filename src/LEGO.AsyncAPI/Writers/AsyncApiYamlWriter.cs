@@ -42,7 +42,7 @@ namespace LEGO.AsyncAPI.Writers
         /// Initializes a new instance of the <see cref="AsyncApiYamlWriter"/> class.
         /// </summary>
         /// <param name="textWriter">The text writer.</param>
-        /// <param name="settings">The settings used to read and write yaml</param>
+        /// <param name="settings">The settings used to read and write yaml.</param>
         public AsyncApiYamlWriter(TextWriter textWriter, AsyncApiWriterSettings settings)
             : base(textWriter, settings)
         {

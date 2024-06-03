@@ -214,6 +214,14 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             return new AsyncApiAny(this.node);
         }
 
+        public void ParseFields<T>(ref T parentInstance, IDictionary<string, Action<T, ParseNode>> fixedFields, IDictionary<Func<string, bool>, Action<T, string, ParseNode>> patternFields)
+        {
+            foreach (var propertyNode in this)
+            {
+                propertyNode.ParseField(parentInstance, fixedFields, patternFields);
+            }
+        }
+
         private string ToScalarValue(JsonNode node)
         {
             var scalarNode = node is JsonValue value ? value : throw new AsyncApiException($"Expected scalar value");
