@@ -77,6 +77,7 @@ namespace LEGO.AsyncAPI.Readers
 
         private static IAsyncApiMessagePayload LoadPayload(ParseNode n, string format)
         {
+
             if (n == null)
             {
                 return null;
@@ -107,6 +108,9 @@ namespace LEGO.AsyncAPI.Readers
 
         static readonly IEnumerable<string> SupportedAvroSchemaFormats = new List<string>
         {
+            "application/vnd.apache.avro",
+            "application/vnd.apache.avro+json",
+            "application/vnd.apache.avro+yaml",
             "application/vnd.apache.avro+json;version=1.9.0",
             "application/vnd.apache.avro+yaml;version=1.9.0",
         };

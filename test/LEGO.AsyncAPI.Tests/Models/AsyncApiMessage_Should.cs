@@ -129,7 +129,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             }
 
         [Test]
-        public void AsyncApiMessage_WithSchemaFormat_Serializes()
+        public void AsyncApiMessage_WithJsonSchemaFormat_Serializes()
         {
             // Arrange
             var expected =
@@ -166,6 +166,78 @@ namespace LEGO.AsyncAPI.Tests.Models
             actual.Should()
                   .BePlatformAgnosticEquivalentTo(expected);
             message.Should().BeEquivalentTo(deserializedMessage);
+        }
+
+        [Test]
+        public void AsyncApiMessage_WithAvroSchemaFormat_Serializes()
+        {
+            // Arrange
+            var expected =
+            """
+            payload:
+              type: record
+              name: User
+              namespace: com.example
+              fields:
+                - name: username
+                  type: string
+                  doc: The username of the user.
+                  default: guest
+                  order: ascending
+            schemaFormat: application/vnd.apache.avro
+            """;
+
+            var message = new AsyncApiMessage();
+            message.SchemaFormat = "application/vnd.apache.avro";
+            message.Payload = new AsyncApiAvroSchemaPayload()
+            {
+                Schema = new AvroRecord()
+                {
+                    Name = "User",
+                    Namespace = "com.example",
+                    Fields = new List<AvroField>
+                    {
+                        new AvroField()
+                        {
+                            Name = "username",
+                            Type = AvroPrimitiveType.String,
+                            Doc = "The username of the user.",
+                            Default = new AsyncApiAny("guest"),
+                            Order = AvroFieldOrder.Ascending,
+                        },
+                    },
+                },
+            };
+
+            // Act
+            var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
+
+            // Assert
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
+            message.Should().BeEquivalentTo(deserializedMessage);
+        }
+
+        [Test]
+        public void AsyncApiMessage_WithAvroAsReference_Deserializes()
+        {
+            // Arrange
+            var input =
+            """
+            schemaFormat: 'application/vnd.apache.avro+yaml;version=1.9.0'
+            payload:
+              $ref: 'path/to/user-create.avsc/#UserCreate'
+            """;
+
+            // Act
+            var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(input, AsyncApiVersion.AsyncApi2_0, out _);
+
+            // Assert
+            deserializedMessage.Payload.Reference.Should().NotBeNull();
+            deserializedMessage.Payload.Reference.IsExternal.Should().BeTrue();
+            deserializedMessage.Payload.Reference.IsFragment.Should().BeTrue();
+
         }
 
         [Test]

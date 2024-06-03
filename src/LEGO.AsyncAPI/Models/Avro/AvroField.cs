@@ -4,9 +4,23 @@ namespace LEGO.AsyncAPI.Models
 {
     using System.Collections.Generic;
     using System.Linq;
+    using LEGO.AsyncAPI.Attributes;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
+    public enum AvroFieldOrder
+    {
+        None = 0,
+
+        [Display("ascending")]
+        Ascending,
+
+        [Display("descending")]
+        Descending,
+
+        [Display("ignore")]
+        Ignore,
+    }
     /// <summary>
     /// Represents a field within an Avro record schema.
     /// </summary>
@@ -35,7 +49,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// The order of the field, can be 'ascending', 'descending', or 'ignore'.
         /// </summary>
-        public string Order { get; set; }
+        public AvroFieldOrder Order { get; set; }
 
         /// <summary>
         /// Alternate names for this record (optional).
@@ -54,7 +68,11 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject("type", this.Type, (w, s) => s.SerializeV2(w));
             writer.WriteOptionalProperty("doc", this.Doc);
             writer.WriteOptionalObject("default", this.Default, (w, s) => w.WriteAny(s));
-            writer.WriteOptionalProperty("order", this.Order);
+            if (this.Order != AvroFieldOrder.None)
+            {
+                writer.WriteOptionalProperty("order", this.Order.GetDisplayName());
+            }
+
             writer.WriteOptionalCollection("aliases", this.Aliases, (w, s) => w.WriteValue(s));
             if (this.Metadata.Any())
             {

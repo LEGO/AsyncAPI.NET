@@ -18,9 +18,16 @@ namespace LEGO.AsyncAPI.Models
         {
         }
 
-        public bool UnresolvedReference { get; set; }
+        public bool TryGetAs<T>(out T schema)
+            where T : AvroSchema
+        {
+            schema = this.Schema as T;
+            return schema != null;
+        }
 
-        public AsyncApiReference Reference { get; set; }
+        public bool UnresolvedReference { get => this.Schema.UnresolvedReference; set => this.Schema.UnresolvedReference = value; }
+
+        public AsyncApiReference Reference { get => this.Schema.Reference; set => this.Schema.Reference = value; }
 
         public void SerializeV2(IAsyncApiWriter writer)
         {

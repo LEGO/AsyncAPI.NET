@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Readers
 {
     using System;
-    using System.Collections;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Exceptions;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -18,7 +17,7 @@ namespace LEGO.AsyncAPI.Readers
             { "doc", (a, n) => a.Doc = n.GetScalarValue() },
             { "default", (a, n) => a.Default = n.CreateAny() },
             { "aliases", (a, n) => a.Aliases = n.CreateSimpleList(n2 => n2.GetScalarValue()) },
-            { "order", (a, n) => a.Order = n.GetScalarValue() },
+            { "order", (a, n) => a.Order = n.GetScalarValue().GetEnumFromDisplayName<AvroFieldOrder>() },
         };
 
         private static readonly FixedFieldMap<AvroRecord> RecordFixedFields = new()
@@ -130,6 +129,17 @@ namespace LEGO.AsyncAPI.Readers
 
             if (node is MapNode mapNode)
             {
+                var pointer = mapNode.GetReferencePointer();
+
+                if (pointer != null)
+                {
+                    return new AvroRecord
+                    {
+                        UnresolvedReference = true,
+                        Reference = node.Context.VersionService.ConvertToAsyncApiReference(pointer, ReferenceType.Schema),
+                    };
+                }
+
                 var type = mapNode["type"]?.Value.GetScalarValue();
 
                 switch (type)

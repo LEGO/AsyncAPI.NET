@@ -24,7 +24,7 @@ namespace LEGO.AsyncAPI.Models
         {
         }
 
-        public override void SerializeV2(IAsyncApiWriter writer)
+        public override void SerializeV2WithoutReference(IAsyncApiWriter writer)
         {
             writer.WriteValue(this.Type);
             if (this.Metadata.Any())

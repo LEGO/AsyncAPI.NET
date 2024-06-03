@@ -129,7 +129,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         Type = AvroPrimitiveType.String,
                         Doc = "The username of the user.",
                         Default = new AsyncApiAny("guest"),
-                        Order = "ascending",
+                        Order = AvroFieldOrder.Ascending,
                     },
                     new AvroField
                     {
@@ -292,7 +292,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         Type = AvroPrimitiveType.String,
                         Doc = "The username of the user.",
                         Default = new AsyncApiAny("guest"),
-                        Order = "ascending",
+                        Order = AvroFieldOrder.Ascending,
                     },
                     new AvroField
                     {
