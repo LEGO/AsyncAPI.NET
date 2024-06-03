@@ -19,12 +19,6 @@ namespace LEGO.AsyncAPI.Tests.Models
                   "type": "record",
                   "name": "SomeEvent",
                   "namespace": "my.namspace.for.event",
-                  "example": {
-                    "occurredOn": "2023-11-03T09:59:56.582908743Z",
-                    "partnerId": "1",
-                    "platformSource": "Brecht",
-                    "countryCode": "DE"
-                  },
                   "fields": [
                     {
                       "name": "countryCode",
@@ -46,11 +40,23 @@ namespace LEGO.AsyncAPI.Tests.Models
                       "type": "string",
                       "doc": "Platform source"
                     }
-                  ]
+                  ],
+                  "example": {
+                    "occurredOn": "2023-11-03T09:56.582+00:00",
+                    "partnerId": "1",
+                    "platformSource": "Brecht",
+                    "countryCode": "DE"
+                  }
                 }
                 """;
             var model = new AsyncApiStringReader().ReadFragment<AvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
             model.Metadata.Should().HaveCount(1);
+            var reserialized = model.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
+
+            // Assert
+            input.Should()
+                  .BePlatformAgnosticEquivalentTo(reserialized);
+
         }
 
         [Test]
