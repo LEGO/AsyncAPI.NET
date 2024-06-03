@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Tests
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
     using FluentAssertions;
@@ -493,7 +492,7 @@ namespace LEGO.AsyncAPI.Tests
                         },
                     },
                     },
-                    Payload = new AsyncApiSchema()
+                    Payload = new AsyncApiJsonSchemaPayload
                     {
                         Reference = new AsyncApiReference()
                         {
@@ -518,7 +517,7 @@ namespace LEGO.AsyncAPI.Tests
                         },
                     },
                     },
-                    Payload = new AsyncApiSchema()
+                    Payload = new AsyncApiJsonSchemaPayload()
                     {
                         Reference = new AsyncApiReference()
                         {
@@ -543,7 +542,7 @@ namespace LEGO.AsyncAPI.Tests
                         },
                     },
                     },
-                    Payload = new AsyncApiSchema()
+                    Payload = new AsyncApiJsonSchemaPayload()
                     {
                         Reference = new AsyncApiReference()
                         {

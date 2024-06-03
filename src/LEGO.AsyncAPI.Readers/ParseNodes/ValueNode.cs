@@ -2,11 +2,11 @@
 
 namespace LEGO.AsyncAPI.Readers.ParseNodes
 {
+    using System;
+    using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Exceptions;
-    using System;
-    using System.Text.Json.Nodes;
 
     public class ValueNode : ParseNode
     {

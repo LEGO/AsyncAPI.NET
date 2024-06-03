@@ -86,7 +86,13 @@ namespace LEGO.AsyncAPI.Services
         public override void Visit(AsyncApiMessage message)
         {
             this.ResolveObject(message.Headers, r => message.Headers = r);
-            this.ResolveObject(message.Payload, r => message.Payload = r);
+
+            // #ToFix Resolve references correctly
+            if (message.Payload is AsyncApiJsonSchemaPayload)
+            {
+                this.ResolveObject(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = r);
+            }
+
             this.ResolveList(message.Traits);
             this.ResolveObject(message.CorrelationId, r => message.CorrelationId = r);
             this.ResolveObject(message.Bindings, r => message.Bindings = r);

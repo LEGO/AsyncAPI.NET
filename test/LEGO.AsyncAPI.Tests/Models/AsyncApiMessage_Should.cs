@@ -41,7 +41,7 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            message.Payload.Properties.First().Value.Enum.Should().HaveCount(2);
+            message.Payload.As<AsyncApiJsonSchemaPayload>().Properties.First().Value.Enum.Should().HaveCount(2);
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                       type:
                         - 'null'
                         - string
-                schemaFormat: application/vnd.apache.avro;version=1.9.0
+                schemaFormat: whatever
                 """;
 
             // Act
@@ -86,7 +86,7 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             // Assert
             diagnostic.Errors.Should().HaveCount(1);
-            diagnostic.Errors.First().Message.Should().StartWith("'application/vnd.apache.avro;version=1.9.0' is not a supported format");
+            diagnostic.Errors.First().Message.Should().StartWith("'whatever' is not a supported format");
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                 """;
 
             var message = new AsyncApiMessage();
-            message.Payload = new AsyncApiSchema()
+            message.Payload = new AsyncApiJsonSchemaPayload()
             {
                 Properties = new Dictionary<string, AsyncApiSchema>()
                 {
@@ -120,7 +120,6 @@ namespace LEGO.AsyncAPI.Tests.Models
             // Act
             var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
-
             var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -130,7 +129,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             }
 
         [Test]
-        public void AsyncApiMessage_WithSchemaFormat_Serializes()
+        public void AsyncApiMessage_WithJsonSchemaFormat_Serializes()
         {
             // Arrange
             var expected =
@@ -146,7 +145,7 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             var message = new AsyncApiMessage();
             message.SchemaFormat = "application/vnd.aai.asyncapi+json;version=2.6.0";
-            message.Payload = new AsyncApiSchema()
+            message.Payload = new AsyncApiJsonSchemaPayload()
             {
                 Properties = new Dictionary<string, AsyncApiSchema>()
                 {
@@ -167,6 +166,78 @@ namespace LEGO.AsyncAPI.Tests.Models
             actual.Should()
                   .BePlatformAgnosticEquivalentTo(expected);
             message.Should().BeEquivalentTo(deserializedMessage);
+        }
+
+        [Test]
+        public void AsyncApiMessage_WithAvroSchemaFormat_Serializes()
+        {
+            // Arrange
+            var expected =
+            """
+            payload:
+              type: record
+              name: User
+              namespace: com.example
+              fields:
+                - name: username
+                  type: string
+                  doc: The username of the user.
+                  default: guest
+                  order: ascending
+            schemaFormat: application/vnd.apache.avro
+            """;
+
+            var message = new AsyncApiMessage();
+            message.SchemaFormat = "application/vnd.apache.avro";
+            message.Payload = new AsyncApiAvroSchemaPayload()
+            {
+                Schema = new AvroRecord()
+                {
+                    Name = "User",
+                    Namespace = "com.example",
+                    Fields = new List<AvroField>
+                    {
+                        new AvroField()
+                        {
+                            Name = "username",
+                            Type = AvroPrimitiveType.String,
+                            Doc = "The username of the user.",
+                            Default = new AsyncApiAny("guest"),
+                            Order = AvroFieldOrder.Ascending,
+                        },
+                    },
+                },
+            };
+
+            // Act
+            var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(expected, AsyncApiVersion.AsyncApi2_0, out _);
+
+            // Assert
+            actual.Should()
+                  .BePlatformAgnosticEquivalentTo(expected);
+            message.Should().BeEquivalentTo(deserializedMessage);
+        }
+
+        [Test]
+        public void AsyncApiMessage_WithAvroAsReference_Deserializes()
+        {
+            // Arrange
+            var input =
+            """
+            schemaFormat: 'application/vnd.apache.avro+yaml;version=1.9.0'
+            payload:
+              $ref: 'path/to/user-create.avsc/#UserCreate'
+            """;
+
+            // Act
+            var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(input, AsyncApiVersion.AsyncApi2_0, out _);
+
+            // Assert
+            deserializedMessage.Payload.Reference.Should().NotBeNull();
+            deserializedMessage.Payload.Reference.IsExternal.Should().BeTrue();
+            deserializedMessage.Payload.Reference.IsFragment.Should().BeTrue();
+
         }
 
         [Test]
@@ -257,7 +328,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         }),
                     },
                 },
-                Payload = new AsyncApiSchema()
+                Payload = new AsyncApiJsonSchemaPayload()
                 {
                     Properties = new Dictionary<string, AsyncApiSchema>
                     {

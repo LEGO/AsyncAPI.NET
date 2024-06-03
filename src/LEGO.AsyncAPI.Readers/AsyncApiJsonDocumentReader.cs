@@ -1,7 +1,5 @@
 // Copyright (c) The LEGO Group. All rights reserved.
 
-using System;
-
 namespace LEGO.AsyncAPI.Readers
 {
     using System.Collections.Generic;

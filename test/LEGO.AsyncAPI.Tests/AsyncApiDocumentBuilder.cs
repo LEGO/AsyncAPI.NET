@@ -2,9 +2,9 @@
 
 namespace LEGO.AsyncAPI.Tests
 {
+    using System;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using System;
 
     internal class AsyncApiDocumentBuilder
     {

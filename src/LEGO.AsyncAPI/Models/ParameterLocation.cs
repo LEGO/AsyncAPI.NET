@@ -7,12 +7,12 @@ namespace LEGO.AsyncAPI.Models
     public enum ParameterLocation
     {
         /// <summary>
-        /// The user
+        /// The user.
         /// </summary>
         [Display("user")] User,
 
         /// <summary>
-        /// The password
+        /// The password.
         /// </summary>
         [Display("password")] Password,
 

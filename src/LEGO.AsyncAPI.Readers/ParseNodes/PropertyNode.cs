@@ -79,7 +79,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
                 else
                 {
                     this.Context.Diagnostic.Errors.Add(
-                        new AsyncApiError("", $"{this.Name} is not a valid property at {this.Context.GetLocation()}"));
+                        new AsyncApiError(string.Empty, $"{this.Name} is not a valid property at {this.Context.GetLocation()}"));
                 }
             }
         }

@@ -1,7 +1,7 @@
 namespace LEGO.AsyncAPI.Readers;
 
 /// <summary>
-/// Interface that provides method for reading external references.å
+/// Interface that provides method for reading external references.å.
 /// </summary>
 public interface IAsyncApiExternalReferenceReader
 {
