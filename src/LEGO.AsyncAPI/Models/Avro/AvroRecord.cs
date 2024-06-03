@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.Models
         public IList<string> Aliases { get; set; } = new List<string>();
 
         /// <summary>
-        /// 
+        /// A list of fields contained within this record.
         /// </summary>
         public IList<AvroField> Fields { get; set; } = new List<AvroField>();
 
