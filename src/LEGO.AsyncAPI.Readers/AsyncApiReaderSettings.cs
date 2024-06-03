@@ -40,6 +40,12 @@ namespace LEGO.AsyncAPI.Readers
             ReferenceResolutionSetting.ResolveInternalReferences;
 
         /// <summary>
+        /// Indicates what should happen when unmapped members are encountered during deserialization.
+        /// Error and Warning will add an error or warning to the diagnostics object.
+        /// </summary>
+        public UnmappedMemberHandling UnmappedMemberHandling { get; set; } = UnmappedMemberHandling.Error;
+
+        /// <summary>
         /// Dictionary of parsers for converting extensions into strongly typed classes.
         /// </summary>
         public Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>>

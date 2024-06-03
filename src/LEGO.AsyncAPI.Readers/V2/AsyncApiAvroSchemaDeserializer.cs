@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.Readers
 {
     using System;
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers.Exceptions;
     using LEGO.AsyncAPI.Readers.ParseNodes;
@@ -169,7 +170,7 @@ namespace LEGO.AsyncAPI.Readers
                         mapNode.ParseFields(ref union, UnionFixedFields, UnionMetadataPatternFields);
                         return union;
                     default:
-                        throw new InvalidOperationException($"Unsupported type: {type}");
+                        throw new AsyncApiException($"Unsupported type: {type}");
                 }
             }
 
