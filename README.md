@@ -15,11 +15,11 @@ The AsyncAPI.NET SDK contains a useful object model for the AsyncAPI specificati
 Install the NuGet packages:
 ### AsyncAPI.NET
 [![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET?label=AsyncAPI.NET&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET/)  
-[![Nuget](https://img.shields.io/nuget/vpre/AsyncAPI.NET?label=AsyncAPI.NET&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET/)  
+[![Nuget](https://img.shields.io/nuget/vpre/AsyncAPI.NET?label=AsyncAPI.NET-nightly&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET/)  
 
 ### AsyncAPI.Readers
 [![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET.Readers?label=AsyncAPI.Readers&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)  
-[![Nuget](https://img.shields.io/nuget/vpre/AsyncAPI.NET.Readers?label=AsyncAPI.Readers&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)  
+[![Nuget](https://img.shields.io/nuget/vpre/AsyncAPI.NET.Readers?label=AsyncAPI.Readers-nightly&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Readers/)  
 
 ### AsyncAPI.Bindings
 [![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET.Bindings?label=AsyncAPI.Bindings&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Bindings/)  
