@@ -1,13 +1,5 @@
 name: Publish beta NuGet package
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'src/LEGO.AsyncAPI/**'
-      - 'src/LEGO.AsyncAPI.Readers/**'
-      - 'src/LEGO.AsyncAPI.Bindings/**'
-      - ".github/workflows/release-internal.yml"
-      - '!**/*.md' 
   workflow_dispatch:
 
 jobs:
