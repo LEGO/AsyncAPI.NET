@@ -1,3 +1,10 @@
+## [5.2.1](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.0...v5.2.1) (2024-06-12)
+
+
+### Bug Fixes
+
+* inline channel parameters should not deserialize as references ([#172](https://github.com/LEGO/AsyncAPI.NET/issues/172)) ([7fd3af0](https://github.com/LEGO/AsyncAPI.NET/commit/7fd3af0e6669d18e805e0bab9cafac819ea64c1d))
+
 # [5.2.0](https://github.com/LEGO/AsyncAPI.NET/compare/v5.1.1...v5.2.0) (2024-03-30)
 
 

@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.Readers
             { "servers", (a, n) => { a.Servers = n.CreateSimpleList(s => s.GetScalarValue()); } },
             { "subscribe", (a, n) => { a.Subscribe = LoadOperation(n); } },
             { "publish", (a, n) => { a.Publish = LoadOperation(n); } },
-            { "parameters", (a, n) => { a.Parameters = n.CreateMapWithReference(ReferenceType.Parameter, LoadParameter); } },
+            { "parameters", (a, n) => { a.Parameters = n.CreateMap(LoadParameter); } },
             { "bindings", (a, n) => { a.Bindings = LoadChannelBindings(n); } },
         };
 

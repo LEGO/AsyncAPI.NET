@@ -3,15 +3,36 @@
 namespace LEGO.AsyncAPI.Tests.Models
 {
     using System.Collections.Generic;
+    using System.Linq;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings.Kafka;
     using LEGO.AsyncAPI.Bindings.WebSockets;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
+    using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 
     public class AsyncApiChannel_Should : TestBase
     {
+        [Test]
+        public void AsyncApiChannel_WithInlineParameter_DoesNotCreateReference()
+        {
+            var input =
+                """
+                    parameters:
+                      id:
+                        description: ids
+                        schema:
+                          type: string
+                          enum:
+                            - 08735ae0-6a1a-4578-8b4a-35aa26d15993
+                            - 97845c62-329c-4d87-ad24-4f611b909a10
+                """;
+
+            var channel = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(input, AsyncApiVersion.AsyncApi2_0, out var _ );
+            channel.Parameters.First().Value.Reference.Should().BeNull();
+        }
+
         [Test]
         public void AsyncApiChannel_WithWebSocketsBinding_Serializes()
         {
