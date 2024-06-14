@@ -6,6 +6,7 @@ namespace LEGO.AsyncAPI.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.Json.Nodes;
+    using FluentAssertions;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -334,6 +335,32 @@ namespace LEGO.AsyncAPI.Tests
             Assert.AreEqual("saslScram", scheme.Key);
             Assert.AreEqual(SecuritySchemeType.ScramSha256, scheme.Value.Type);
             Assert.AreEqual("Provide your username and password for SASL/SCRAM authentication", scheme.Value.Description);
+        }
+
+        [Test]
+        public void Read_WithWrongReference_AddsError()
+        {
+            var yaml = 
+                """
+                asyncapi: 2.3.0
+                info:
+                  title: test
+                  version: 1.0.0
+                channels:
+                  workspace:
+                    publish:
+                      message:
+                        $ref: '#/components/securitySchemes/saslScram'
+                components:
+                  securitySchemes:
+                    saslScram:
+                      type: scramSha256
+                      description: Provide your username and password for SASL/SCRAM authentication
+                """;
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+            diagnostic.Errors.Should().NotBeEmpty();
+            doc.Channels.Values.First().Publish.Message.First().Should().BeNull();
         }
 
         [Test]

@@ -218,7 +218,13 @@ namespace LEGO.AsyncAPI.Services
 
             try
             {
-                return this.currentDocument.ResolveReference(reference) as T;
+                var resolvedReference = this.currentDocument.ResolveReference(reference) as T;
+                if (resolvedReference == null)
+                {
+                    throw new AsyncApiException($"Cannot resolve reference '{reference.Reference}' to '{typeof(T).Name}'.");
+                }
+
+                return resolvedReference;
             }
             catch (AsyncApiException ex)
             {
