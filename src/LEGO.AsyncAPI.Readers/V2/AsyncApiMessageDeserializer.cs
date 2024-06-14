@@ -2,12 +2,13 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-    using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Class containing logic to deserialize AsyncApi document into
@@ -21,10 +22,10 @@ namespace LEGO.AsyncAPI.Readers
                 "messageId", (a, n) => { a.MessageId = n.GetScalarValue(); }
             },
             {
-                "headers", (a, n) => { a.Headers = JsonSchemaDeserializer.LoadSchema(n); }
+                "headers", (a, n) => { a.Headers = AsyncApiSchemaDeserializer.LoadSchema(n); }
             },
             {
-                "payload", (a, n) => { a.Payload = JsonSchemaDeserializer.LoadSchema(n); }
+                "payload", (a, n) => { a.Payload = null; /* resolved after the initial run */ }
             },
             {
                 "correlationId", (a, n) => { a.CorrelationId = LoadCorrelationId(n); }
@@ -64,7 +65,39 @@ namespace LEGO.AsyncAPI.Readers
             },
         };
 
-        static readonly IEnumerable<string> SupportedSchemaFormats = new List<string>
+        public static IAsyncApiMessagePayload LoadJsonSchemaPayload(ParseNode n)
+        {
+            return LoadPayload(n, null);
+        }
+
+        public static IAsyncApiMessagePayload LoadAvroPayload(ParseNode n)
+        {
+            return LoadPayload(n, "application/vnd.apache.avro");
+        }
+
+        private static IAsyncApiMessagePayload LoadPayload(ParseNode n, string format)
+        {
+
+            if (n == null)
+            {
+                return null;
+            }
+
+            switch (format)
+            {
+                case null:
+                case "":
+                case var _ when SupportedJsonSchemaFormats.Where(s => format.StartsWith(s)).Any():
+                    return new AsyncApiJsonSchemaPayload(AsyncApiSchemaDeserializer.LoadSchema(n));
+                case var _ when SupportedAvroSchemaFormats.Where(s => format.StartsWith(s)).Any():
+                    return new AsyncApiAvroSchemaPayload(AsyncApiAvroSchemaDeserializer.LoadSchema(n));
+                default:
+                    var supportedFormats = SupportedJsonSchemaFormats.Concat(SupportedAvroSchemaFormats);
+                    throw new AsyncApiException($"'Could not deserialize Payload. Supported formats are {string.Join(", ", supportedFormats)}");
+            }
+        }
+
+        static readonly IEnumerable<string> SupportedJsonSchemaFormats = new List<string>
         {
             "application/vnd.aai.asyncapi+json",
             "application/vnd.aai.asyncapi+yaml",
@@ -73,11 +106,21 @@ namespace LEGO.AsyncAPI.Readers
             "application/schema+yaml;version=draft-07",
         };
 
+        static readonly IEnumerable<string> SupportedAvroSchemaFormats = new List<string>
+        {
+            "application/vnd.apache.avro",
+            "application/vnd.apache.avro+json",
+            "application/vnd.apache.avro+yaml",
+            "application/vnd.apache.avro+json;version=1.9.0",
+            "application/vnd.apache.avro+yaml;version=1.9.0",
+        };
+
         private static string LoadSchemaFormat(string schemaFormat)
         {
-            if (!SupportedSchemaFormats.Where(s => schemaFormat.StartsWith(s)).Any())
+            var supportedFormats = SupportedJsonSchemaFormats.Concat(SupportedAvroSchemaFormats);
+            if (!supportedFormats.Where(s => schemaFormat.StartsWith(s)).Any())
             {
-                throw new AsyncApiException($"'{schemaFormat}' is not a supported format. Supported formats are {string.Join(", ", SupportedSchemaFormats)}");
+                throw new AsyncApiException($"'{schemaFormat}' is not a supported format. Supported formats are {string.Join(", ", supportedFormats)}");
             }
 
             return schemaFormat;
@@ -100,6 +143,7 @@ namespace LEGO.AsyncAPI.Readers
             var message = new AsyncApiMessage();
 
             ParseMap(mapNode, message, messageFixedFields, messagePatternFields);
+            message.Payload = LoadPayload(mapNode["payload"]?.Value, message.SchemaFormat);
 
             return message;
         }

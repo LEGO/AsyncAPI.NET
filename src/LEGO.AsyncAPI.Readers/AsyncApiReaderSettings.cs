@@ -18,9 +18,14 @@ namespace LEGO.AsyncAPI.Readers
         DoNotResolveReferences,
 
         /// <summary>
-        /// Resolve internal component references and inline them.
+        /// Resolve all references and inline them.
         /// </summary>
-        ResolveReferences,
+        ResolveInternalReferences,
+
+        /// <summary>
+        /// Resolve internal component references and inline them while leaving external references as placeholder objects with an AsyncApiReference instance and UnresolvedReference set to true.
+        /// </summary>
+        ResolveAllReferences,
     }
 
     /// <summary>
@@ -32,7 +37,13 @@ namespace LEGO.AsyncAPI.Readers
         /// Indicates how references in the source document should be handled.
         /// </summary>
         public ReferenceResolutionSetting ReferenceResolution { get; set; } =
-            ReferenceResolutionSetting.ResolveReferences;
+            ReferenceResolutionSetting.ResolveInternalReferences;
+
+        /// <summary>
+        /// Indicates what should happen when unmapped members are encountered during deserialization.
+        /// Error and Warning will add an error or warning to the diagnostics object.
+        /// </summary>
+        public UnmappedMemberHandling UnmappedMemberHandling { get; set; } = UnmappedMemberHandling.Error;
 
         /// <summary>
         /// Dictionary of parsers for converting extensions into strongly typed classes.
@@ -42,7 +53,7 @@ namespace LEGO.AsyncAPI.Readers
         { get; set; } =
             new Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>>();
 
-        public IEnumerable<IBindingParser<IBinding>>
+        public ICollection<IBindingParser<IBinding>>
            Bindings
         { get; set; } =
            new List<IBindingParser<IBinding>>();
@@ -57,5 +68,10 @@ namespace LEGO.AsyncAPI.Readers
         /// from an <see cref="AsyncApiStreamReader"/> object.
         /// </summary>
         public bool LeaveStreamOpen { get; set; }
+
+        /// <summary>
+        /// External reference reader implementation provided by users for reading external resources.
+        /// </summary>
+        public IAsyncApiExternalReferenceReader ExternalReferenceReader { get; set; }
     }
 }

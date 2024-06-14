@@ -2,10 +2,9 @@
 
 namespace LEGO.AsyncAPI.Tests.Writers
 {
+    using System.IO;
     using LEGO.AsyncAPI.Writers;
     using NUnit.Framework;
-    using System;
-    using System.IO;
 
     internal class AsyncApiYamlWriterTests : TestBase
     {

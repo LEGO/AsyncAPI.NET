@@ -2,11 +2,6 @@
 
 namespace LEGO.AsyncAPI.Writers
 {
-    using System;
-    using System.Globalization;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-
     public static class SpecialCharacterStringExtensions
     {
         /// <summary>

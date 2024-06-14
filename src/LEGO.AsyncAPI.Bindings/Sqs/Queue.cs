@@ -16,7 +16,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
         public string Name { get; set; }
 
         /// <summary>
-        /// Is this a FIFO queue?
+        /// Is this a FIFO queue?.
         /// </summary>
         public bool FifoQueue { get; set; }
 
@@ -56,7 +56,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
         public RedrivePolicy RedrivePolicy { get; set; }
 
         /// <summary>
-        /// The security policy for the SQS Queue
+        /// The security policy for the SQS Queue.
         /// </summary>
         public Policy Policy { get; set; }
 

@@ -9,7 +9,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
 
-    public class JsonSchemaDeserializer
+    public class AsyncApiSchemaDeserializer
     {
         private static readonly FixedFieldMap<AsyncApiSchema> schemaFixedFields = new()
         {
@@ -215,28 +215,6 @@ namespace LEGO.AsyncAPI.Readers
                 { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, AsyncApiV2Deserializer.LoadExtension(p, n)) },
             };
 
-        private static readonly AnyFieldMap<AsyncApiSchema> schemaAnyFields = new()
-        {
-            {
-                AsyncApiConstants.Default,
-                new AnyFieldMapParameter<AsyncApiSchema>(
-                    s => s.Default,
-                    (s, v) => s.Default = v,
-                    s => s)
-            },
-        };
-
-        private static readonly AnyListFieldMap<AsyncApiSchema> schemaAnyListFields = new()
-        {
-            {
-                AsyncApiConstants.Enum,
-                new AnyListFieldMapParameter<AsyncApiSchema>(
-                    s => s.Enum,
-                    (s, v) => s.Enum = v,
-                    s => s)
-            },
-        };
-
         public static AsyncApiSchema LoadSchema(ParseNode node)
         {
             var mapNode = node.CheckMapNode(AsyncApiConstants.Schema);
@@ -258,9 +236,6 @@ namespace LEGO.AsyncAPI.Readers
             {
                 propertyNode.ParseField(schema, schemaFixedFields, schemaPatternFields);
             }
-
-            AsyncApiV2Deserializer.ProcessAnyFields(mapNode, schema, schemaAnyFields);
-            AsyncApiV2Deserializer.ProcessAnyListFields(mapNode, schema, schemaAnyListFields);
 
             return schema;
         }

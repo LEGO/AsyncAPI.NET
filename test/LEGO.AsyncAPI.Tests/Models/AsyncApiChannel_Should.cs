@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Tests.Models
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
 
-    internal class AsyncApiChannel_Should : TestBase
+    public class AsyncApiChannel_Should : TestBase
     {
         [Test]
         public void AsyncApiChannel_WithInlineParameter_DoesNotCreateReference()

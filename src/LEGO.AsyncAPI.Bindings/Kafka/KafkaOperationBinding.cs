@@ -28,8 +28,8 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
         protected override FixedFieldMap<KafkaOperationBinding> FixedFieldMap => new()
         {
             { "bindingVersion", (a, n) => { a.BindingVersion = n.GetScalarValue(); } },
-            { "groupId", (a, n) => { a.GroupId = JsonSchemaDeserializer.LoadSchema(n); } },
-            { "clientId", (a, n) => { a.ClientId = JsonSchemaDeserializer.LoadSchema(n); } },
+            { "groupId", (a, n) => { a.GroupId = AsyncApiSchemaDeserializer.LoadSchema(n); } },
+            { "clientId", (a, n) => { a.ClientId = AsyncApiSchemaDeserializer.LoadSchema(n); } },
         };
 
         /// <summary>

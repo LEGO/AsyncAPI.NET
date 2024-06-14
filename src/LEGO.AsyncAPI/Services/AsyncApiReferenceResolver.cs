@@ -1,5 +1,4 @@
 // Copyright (c) The LEGO Group. All rights reserved.
-
 namespace LEGO.AsyncAPI.Services
 {
     using System;
@@ -17,7 +16,8 @@ namespace LEGO.AsyncAPI.Services
         private AsyncApiDocument currentDocument;
         private List<AsyncApiError> errors = new List<AsyncApiError>();
 
-        public AsyncApiReferenceResolver(AsyncApiDocument currentDocument)
+        public AsyncApiReferenceResolver(
+            AsyncApiDocument currentDocument)
         {
             this.currentDocument = currentDocument;
         }
@@ -86,7 +86,13 @@ namespace LEGO.AsyncAPI.Services
         public override void Visit(AsyncApiMessage message)
         {
             this.ResolveObject(message.Headers, r => message.Headers = r);
-            this.ResolveObject(message.Payload, r => message.Payload = r);
+
+            // #ToFix Resolve references correctly
+            if (message.Payload is AsyncApiJsonSchemaPayload)
+            {
+                this.ResolveObject(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = r);
+            }
+
             this.ResolveList(message.Traits);
             this.ResolveObject(message.CorrelationId, r => message.CorrelationId = r);
             this.ResolveObject(message.Bindings, r => message.Bindings = r);
@@ -207,6 +213,7 @@ namespace LEGO.AsyncAPI.Services
         private T ResolveReference<T>(AsyncApiReference reference)
             where T : class, IAsyncApiReferenceable, new()
         {
+            // external references are resolved by the AsyncApiExternalReferenceResolver
             if (reference.IsExternal)
             {
                 return new()

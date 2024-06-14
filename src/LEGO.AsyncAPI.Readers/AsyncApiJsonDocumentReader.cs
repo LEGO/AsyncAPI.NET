@@ -12,6 +12,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
+    using LEGO.AsyncAPI.Services;
     using LEGO.AsyncAPI.Validations;
 
     /// <summary>
@@ -165,22 +166,47 @@ namespace LEGO.AsyncAPI.Readers
 
         private void ResolveReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
         {
-            var errors = new List<AsyncApiError>();
-
-            // Resolve References if requested
             switch (this.settings.ReferenceResolution)
             {
-                case ReferenceResolutionSetting.ResolveReferences:
-                    errors.AddRange(document.ResolveReferences());
+                case ReferenceResolutionSetting.ResolveAllReferences:
+                    this.ResolveAllReferences(diagnostic, document);
                     break;
-
+                case ReferenceResolutionSetting.ResolveInternalReferences:
+                    this.ResolveInternalReferences(diagnostic, document);
+                    break;
                 case ReferenceResolutionSetting.DoNotResolveReferences:
                     break;
             }
+        }
+
+        private void ResolveAllReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
+        {
+            this.ResolveInternalReferences(diagnostic, document);
+            this.ResolveExternalReferences(diagnostic, document);
+        }
+
+        private void ResolveInternalReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
+        {
+            var errors = new List<AsyncApiError>();
+
+            var reader = new AsyncApiStringReader(this.settings);
+            errors.AddRange(document.ResolveReferences());
 
             foreach (var item in errors)
             {
                 diagnostic.Errors.Add(item);
+            }
+        }
+
+        private void ResolveExternalReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
+        {
+            var resolver = new AsyncApiExternalReferenceResolver(document, this.settings);
+            var walker = new AsyncApiWalker(resolver);
+            walker.Walk(document);
+
+            foreach (var error in resolver.Errors)
+            {
+                diagnostic.Errors.Add(error);
             }
         }
     }

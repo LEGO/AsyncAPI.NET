@@ -84,7 +84,7 @@ namespace LEGO.AsyncAPI.Models
         [Display("headers")] Header,
 
         /// <summary>
-        /// The server variable
+        /// The server variable.
         /// </summary>
         [Display("serverVariable")] ServerVariable,
     }

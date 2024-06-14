@@ -32,6 +32,7 @@ namespace LEGO.AsyncAPI.Tests
                 info:
                   title: test
                   version: 1.0.0
+                  test: 1234
                   contact:  
                     name: API Support
                     url: https://www.example.com/support
@@ -59,11 +60,102 @@ namespace LEGO.AsyncAPI.Tests
                 {
                     { extensionName, valueExtensionParser },
                 },
+                UnmappedMemberHandling = UnmappedMemberHandling.Ignore,
             };
 
             var reader = new AsyncApiStringReader(settings);
             var doc = reader.Read(yaml, out var diagnostic);
             Assert.AreEqual((doc.Channels["workspace"].Extensions[extensionName] as AsyncApiAny).GetValue<int>(), 1234);
+        }
+
+        [Test]
+        public void Read_WithUnmappedMemberHandlingError_AddsError()
+        {
+            var extensionName = "x-someValue";
+            var yaml = $"""
+        asyncapi: 2.3.0
+        info:
+          title: test
+          version: 1.0.0
+          test: 1234
+          contact:  
+            name: API Support
+            url: https://www.example.com/support
+            email: support@example.com
+        channels:
+          workspace:
+            {extensionName}: onetwothreefour
+        """;
+            Func<AsyncApiAny, IAsyncApiExtension> valueExtensionParser = (any) =>
+            {
+                if (any.TryGetValue<string>(out var value))
+                {
+                    if (value == "onetwothreefour")
+                    {
+                        return new AsyncApiAny(1234);
+                    }
+                }
+
+                return new AsyncApiAny("No value provided");
+            };
+
+            var settings = new AsyncApiReaderSettings
+            {
+                ExtensionParsers = new Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>>
+        {
+            { extensionName, valueExtensionParser },
+        },
+                UnmappedMemberHandling = UnmappedMemberHandling.Error,
+            };
+
+            var reader = new AsyncApiStringReader(settings);
+            var doc = reader.Read(yaml, out var diagnostic);
+            diagnostic.Errors.Should().HaveCount(1);
+        }
+
+        [Test]
+        public void Read_WithUnmappedMemberHandlingIgnore_NoErrors()
+        {
+            var extensionName = "x-someValue";
+            var yaml = $"""
+        asyncapi: 2.3.0
+        info:
+          title: test
+          version: 1.0.0
+          test: 1234
+          contact:  
+            name: API Support
+            url: https://www.example.com/support
+            email: support@example.com
+        channels:
+          workspace:
+            {extensionName}: onetwothreefour
+        """;
+            Func<AsyncApiAny, IAsyncApiExtension> valueExtensionParser = (any) =>
+            {
+                if (any.TryGetValue<string>(out var value))
+                {
+                    if (value == "onetwothreefour")
+                    {
+                        return new AsyncApiAny(1234);
+                    }
+                }
+
+                return new AsyncApiAny("No value provided");
+            };
+
+            var settings = new AsyncApiReaderSettings
+            {
+                ExtensionParsers = new Dictionary<string, Func<AsyncApiAny, IAsyncApiExtension>>
+            {
+                { extensionName, valueExtensionParser },
+            },
+                UnmappedMemberHandling = UnmappedMemberHandling.Ignore,
+            };
+
+            var reader = new AsyncApiStringReader(settings);
+            var doc = reader.Read(yaml, out var diagnostic);
+            diagnostic.Errors.Should().HaveCount(0);
         }
 
         [Test]

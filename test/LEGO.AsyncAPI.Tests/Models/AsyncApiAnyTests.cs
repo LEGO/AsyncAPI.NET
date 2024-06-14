@@ -1,10 +1,9 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using LEGO.AsyncAPI.Models;
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using LEGO.AsyncAPI.Models;
+using NUnit.Framework;
 
 namespace LEGO.AsyncAPI.Tests
 {

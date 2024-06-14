@@ -45,7 +45,7 @@ namespace LEGO.AsyncAPI.Bindings
             return destination;
         }
 
-        public static IEnumerable<IBindingParser<IBinding>> All => new List<IBindingParser<IBinding>>
+        public static ICollection<IBindingParser<IBinding>> All => new List<IBindingParser<IBinding>>
         {
             Pulsar,
             Kafka,
@@ -57,18 +57,18 @@ namespace LEGO.AsyncAPI.Bindings
             MQTT,
         };
 
-        public static IEnumerable<IBindingParser<IBinding>> Http => new List<IBindingParser<IBinding>>
+        public static ICollection<IBindingParser<IBinding>> Http => new List<IBindingParser<IBinding>>
         {
             new HttpOperationBinding(),
             new HttpMessageBinding(),
         };
 
-        public static IEnumerable<IBindingParser<IBinding>> Websockets => new List<IBindingParser<IBinding>>
+        public static ICollection<IBindingParser<IBinding>> Websockets => new List<IBindingParser<IBinding>>
         {
             new WebSocketsChannelBinding(),
         };
 
-        public static IEnumerable<IBindingParser<IBinding>> Kafka => new List<IBindingParser<IBinding>>
+        public static ICollection<IBindingParser<IBinding>> Kafka => new List<IBindingParser<IBinding>>
         {
             new KafkaServerBinding(),
             new KafkaChannelBinding(),
@@ -76,32 +76,32 @@ namespace LEGO.AsyncAPI.Bindings
             new KafkaMessageBinding(),
         };
 
-        public static IEnumerable<IBindingParser<IBinding>> Pulsar => new List<IBindingParser<IBinding>>
+        public static ICollection<IBindingParser<IBinding>> Pulsar => new List<IBindingParser<IBinding>>
         {
             new PulsarServerBinding(),
             new PulsarChannelBinding(),
         };
 
-        public static IEnumerable<IBindingParser<IBinding>> Sqs => new List<IBindingParser<IBinding>>
+        public static ICollection<IBindingParser<IBinding>> Sqs => new List<IBindingParser<IBinding>>
         {
             new SqsChannelBinding(),
             new SqsOperationBinding(),
         };
 
-        public static IEnumerable<IBindingParser<IBinding>> Sns => new List<IBindingParser<IBinding>>
+        public static ICollection<IBindingParser<IBinding>> Sns => new List<IBindingParser<IBinding>>
         {
             new SnsChannelBinding(),
             new SnsOperationBinding(),
         };
 
-        public static IEnumerable<IBindingParser<IBinding>> AMQP => new List<IBindingParser<IBinding>>
+        public static ICollection<IBindingParser<IBinding>> AMQP => new List<IBindingParser<IBinding>>
         {
             new AMQPChannelBinding(),
             new AMQPOperationBinding(),
             new AMQPMessageBinding(),
         };
 
-        public static IEnumerable<IBindingParser<IBinding>> MQTT => new List<IBindingParser<IBinding>>
+        public static ICollection<IBindingParser<IBinding>> MQTT => new List<IBindingParser<IBinding>>
         {
             new MQTTServerBinding(),
             new MQTTOperationBinding(),
