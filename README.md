@@ -90,7 +90,7 @@ using System.IO;
 
 public class AsyncApiExternalFileSystemReader : IAsyncApiExternalReferenceReader
 {
-    public string GetExternalResource(string reference)
+    public string Load(string reference)
     {
         return File.ReadAllText(reference);
     }
