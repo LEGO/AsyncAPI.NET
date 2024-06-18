@@ -90,10 +90,18 @@ namespace LEGO.AsyncAPI.Readers
         public override void Visit(AsyncApiMessage message)
         {
             this.ResolveObject(message.Headers, r => message.Headers = r);
-            if (message.Payload is AsyncApiJsonSchemaPayload)
+            switch (message.Payload)
             {
-                this.ResolveObject(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = r);
+                case AsyncApiJsonSchemaPayload json:
+                    this.ResolveObject(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = r);
+                    break;
+                case AsyncApiAvroSchemaPayload avro:
+                    this.ResolveObject(message.Payload as AsyncApiAvroSchemaPayload, r => message.Payload = r);
+                    break;
+                default:
+                    break;
             }
+
             this.ResolveList(message.Traits);
             this.ResolveObject(message.CorrelationId, r => message.CorrelationId = r);
             this.ResolveObject(message.Bindings, r => message.Bindings = r);
