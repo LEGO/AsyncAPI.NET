@@ -311,7 +311,10 @@ namespace LEGO.AsyncAPI.Tests
             var message = doc.Channels["workspace"].Publish.Message.First();
             message.Name.Should().Be("Test");
             var payload = message.Payload.As<AsyncApiJsonSchemaPayload>();
-            payload.Properties.Count.Should().Be(3);
+            payload.Properties.Count.Should().Be(4);
+            payload.Properties["orderHistory"].Properties.Count.Should().Be(2);
+            payload.Properties["orderHistory"].Properties["historyStorageRecord"].Properties.First().Key.Should()
+                .Be("historyLog");
         }
     }
 
@@ -353,6 +356,8 @@ namespace LEGO.AsyncAPI.Tests
                          userName:
                            description: User name.
                            type: string
+                     orderHistory:
+                       $ref: '#/components/OrderHistory'
                    required:
                    - orderId
                    example:
@@ -361,6 +366,23 @@ namespace LEGO.AsyncAPI.Tests
                      orderDetails:
                        userId: Admin
                        userName: Admin
+                   components:
+                     OrderHistory:
+                       type: object
+                       properties:
+                         historyId:
+                           description: ID for order history storage
+                           type: string
+                           format: uuid
+                         historyStorageRecord:
+                           $ref: '#/components/HistoryStorageRecord'
+                     HistoryStorageRecord:
+                       type: object:
+                       properties:
+                         historyLog:
+                           type: array
+                           items:
+                             type: string
                    """;
         }
     }
