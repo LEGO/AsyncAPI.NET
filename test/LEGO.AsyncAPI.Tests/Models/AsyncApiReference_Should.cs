@@ -377,7 +377,7 @@ namespace LEGO.AsyncAPI.Tests
                          historyStorageRecord:
                            $ref: '#/components/HistoryStorageRecord'
                      HistoryStorageRecord:
-                       type: object:
+                       type: object
                        properties:
                          historyLog:
                            type: array
