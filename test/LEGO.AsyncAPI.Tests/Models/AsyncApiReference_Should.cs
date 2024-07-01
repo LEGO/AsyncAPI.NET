@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Tests
 {
     using System.Linq;
     using FluentAssertions;
+    using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
@@ -316,8 +317,80 @@ namespace LEGO.AsyncAPI.Tests
             payload.Properties["orderHistory"].Properties["historyStorageRecord"].Properties.First().Key.Should()
                 .Be("historyLog");
         }
+
+        [Test]
+        public void AvroReference_WithExternalResourcesInterface_DeserializesCorrectly()
+        {
+            var yaml = """
+               asyncapi: 2.3.0
+               info:
+                 title: test
+                 version: 1.0.0
+               channels:
+                 workspace:
+                   publish:
+                     message:
+                      schemaFormat: 'application/vnd.apache.avro+yaml;version=1.9.0'
+                      payload:
+                        $ref: 'path/to/user-create.avsc/#UserCreate'
+               """;
+            var settings = new AsyncApiReaderSettings
+            {
+                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
+                ExternalReferenceReader = new MockExternalAvroReferenceReader(),
+            };
+            var reader = new AsyncApiStringReader(settings);
+            var doc = reader.Read(yaml, out var diagnostic);
+            var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
+            payload.Should().BeAssignableTo(typeof(AsyncApiAvroSchemaPayload));
+            var avro = payload as AsyncApiAvroSchemaPayload;
+            avro.TryGetAs<AvroRecord>(out var record);
+            record.Name.Should().Be("SomeEvent");
+        }
     }
 
+    public class MockExternalAvroReferenceReader : IAsyncApiExternalReferenceReader
+    {
+        public string Load(string reference)
+        {
+            return
+            """
+            {
+              "type": "record",
+              "name": "SomeEvent",
+              "namespace": "my.namspace.for.event",
+              "fields": [
+                {
+                  "name": "countryCode",
+                  "type": "string",
+                  "doc": "Country of the partner, (e.g. DE)"
+                },
+                {
+                  "name": "occurredOn",
+                  "type": "string",
+                  "doc": "Timestamp of when action occurred."
+                },
+                {
+                  "name": "partnerId",
+                  "type": "string",
+                  "doc": "Id of the partner"
+                },
+                {
+                  "name": "platformSource",
+                  "type": "string",
+                  "doc": "Platform source"
+                }
+              ],
+              "example": {
+                "occurredOn": "2023-11-03T09:56.582+00:00",
+                "partnerId": "1",
+                "platformSource": "Brecht",
+                "countryCode": "DE"
+              }
+            }
+            """;
+                }
+    }
     public class MockExternalReferenceReader : IAsyncApiExternalReferenceReader
     {
         public string Load(string reference)
