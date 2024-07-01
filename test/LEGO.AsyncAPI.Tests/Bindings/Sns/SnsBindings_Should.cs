@@ -31,15 +31,24 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                     policy:
                       statements:
                         - effect: Deny
-                          principal: arn:aws:iam::123456789012:user/alex.wichmann
+                          principal: '*'
                           action:
                             - sns:Publish
                             - sns:Delete
+                          condition:
+                            StringEquals:
+                              aws:username:
+                                - johndoe
+                                - mrsmith
                         - effect: Allow
                           principal:
-                            - arn:aws:iam::123456789012:user/alex.wichmann
-                            - arn:aws:iam::123456789012:user/dec.kolakowski
+                            AWS:
+                              - arn:aws:iam::123456789012:user/alex.wichmann
+                              - arn:aws:iam::123456789012:user/dec.kolakowski
                           action: sns:Create
+                          condition:
+                            NumericLessThanEquals:
+                              aws:MultiFactorAuthAge: '3600'
                           x-statementExtension:
                             statementXPropertyName: statementXPropertyValue
                       x-policyExtension:
@@ -77,22 +86,39 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         new Statement()
                         {
                             Effect = Effect.Deny,
-                            Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
+                            Principal = new AsyncApiAny("*"),
                             Action = new StringOrStringList(new AsyncApiAny(new List<string>()
                             {
                                 "sns:Publish",
                                 "sns:Delete",
                             })),
+                            Condition = new AsyncApiAny(new Dictionary<string, object>()
+                            {
+                                {
+                                    "StringEquals", new Dictionary<string, List<string>>()
+                                    {
+                                        { "aws:username", new List<string>() { "johndoe", "mrsmith" } },
+                                    }
+                                },
+                            }),
                         },
                         new Statement()
                         {
                             Effect = Effect.Allow,
-                            Principal = new StringOrStringList(new AsyncApiAny(new List<string>()
+                            Principal = new AsyncApiAny(new Dictionary<string, List<string>>()
                             {
-                                "arn:aws:iam::123456789012:user/alex.wichmann",
-                                "arn:aws:iam::123456789012:user/dec.kolakowski",
-                            })),
+                                { "AWS", new List<string>() { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" } },
+                            }),
                             Action = new StringOrStringList(new AsyncApiAny("sns:Create")),
+                            Condition = new AsyncApiAny(new Dictionary<string, object>()
+                            {
+                                {
+                                    "NumericLessThanEquals", new Dictionary<string, string>()
+                                    {
+                                        { "aws:MultiFactorAuthAge", "3600" },
+                                    }
+                                },
+                            }),
                             Extensions = new Dictionary<string, IAsyncApiExtension>()
                             {
                                 {
