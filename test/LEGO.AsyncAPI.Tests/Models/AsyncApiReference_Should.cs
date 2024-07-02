@@ -430,7 +430,7 @@ namespace LEGO.AsyncAPI.Tests
                            description: User name.
                            type: string
                      orderHistory:
-                       $ref: '#/components/OrderHistory'
+                       $ref: '#/components/schemas/OrderHistory'
                    required:
                    - orderId
                    example:
@@ -440,22 +440,23 @@ namespace LEGO.AsyncAPI.Tests
                        userId: Admin
                        userName: Admin
                    components:
-                     OrderHistory:
-                       type: object
-                       properties:
-                         historyId:
-                           description: ID for order history storage
-                           type: string
-                           format: uuid
-                         historyStorageRecord:
-                           $ref: '#/components/HistoryStorageRecord'
-                     HistoryStorageRecord:
-                       type: object
-                       properties:
-                         historyLog:
-                           type: array
-                           items:
+                     schemas:
+                       OrderHistory:
+                         type: object
+                         properties:
+                           historyId:
+                             description: ID for order history storage
                              type: string
+                             format: uuid
+                           historyStorageRecord:
+                             $ref: '#/components/schemas/HistoryStorageRecord'
+                       HistoryStorageRecord:
+                         type: object
+                         properties:
+                           historyLog:
+                             type: array
+                             items:
+                               type: string
                    """;
         }
     }
