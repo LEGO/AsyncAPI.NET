@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.Json.Nodes;
@@ -12,6 +13,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
+    using LEGO.AsyncAPI.Readers.Services;
     using LEGO.AsyncAPI.Services;
     using LEGO.AsyncAPI.Validations;
 
@@ -200,13 +202,84 @@ namespace LEGO.AsyncAPI.Readers
 
         private void ResolveExternalReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
         {
-            var resolver = new AsyncApiExternalReferenceResolver(document, this.settings);
-            var walker = new AsyncApiWalker(resolver);
+            var loader = this.settings.ExternalReferenceLoader ?? new DefaultStreamLoader(this.settings.BaseUrl);
+            var collector = new AsyncApiRemoteReferenceCollector();
+            var walker = new AsyncApiWalker(collector);
             walker.Walk(document);
 
-            foreach (var error in resolver.Errors)
+            var reader = new AsyncApiStreamReader(this.settings);
+            foreach (var reference in collector.References)
             {
-                diagnostic.Errors.Add(error);
+                var input = loader.Load(new Uri(reference.ExternalResource, UriKind.RelativeOrAbsolute));
+
+                // If Id is not null, the reference is for a fragment of a full document.
+                if (reference.Id != null)
+                {
+                    var result = reader.Read(input, out var streamDiagnostics); // How about avro?!
+                    if (streamDiagnostics.Warnings.Any() || streamDiagnostics.Errors.Any())
+                    {
+                        diagnostic.Append(streamDiagnostics, reference.ExternalResource);
+                    }
+                    if (result != null)
+                    {
+                        this.ResolveExternalReferences(diagnostic, result);
+                    }
+                }
+                else
+                {
+                    // If id IS null, its a fragment that we can resolve directly.
+                    // #TODO Use proxy references for easier fragment resolution.
+                    IAsyncApiElement result;
+                    switch (reference.Type)
+                    {
+                        case ReferenceType.Schema:
+                            result = reader.ReadFragment<AsyncApiSchema>(input, AsyncApiVersion.AsyncApi2_0, out var streamDiagnostics);
+                            break;
+                        case ReferenceType.Server:
+                            result = reader.ReadFragment<AsyncApiServer>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.Channel:
+                            result = reader.ReadFragment<AsyncApiChannel>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.Message:
+                            result = reader.ReadFragment<AsyncApiMessage>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.SecurityScheme:
+                            result = reader.ReadFragment<AsyncApiSecurityScheme>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.Parameter:
+                            result = reader.ReadFragment<AsyncApiParameter>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.CorrelationId:
+                            result = reader.ReadFragment<AsyncApiCorrelationId>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.OperationTrait:
+                            result = reader.ReadFragment<AsyncApiOperationTrait>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.MessageTrait:
+                            result = reader.ReadFragment<AsyncApiMessage>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.ServerBindings:
+                            result = reader.ReadFragment<AsyncApiMessage>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.ChannelBindings:
+                            result = reader.ReadFragment<AsyncApiMessage>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.OperationBindings:
+                            result = reader.ReadFragment<AsyncApiMessage>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        case ReferenceType.MessageBindings:
+                            result = reader.ReadFragment<AsyncApiMessage>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                            break;
+                        default:
+                            diagnostic.Errors.Add(new AsyncApiError(reference.Reference, "Could not resolve reference."));
+                            break;
+                    }
+                }
+                //if (result != null)
+                //{
+                //    this.ResolveExternalReferences(diagnostic, result);
+                //}
             }
         }
     }

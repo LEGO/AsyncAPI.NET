@@ -76,18 +76,13 @@ namespace LEGO.AsyncAPI.Readers.V2
 
                 var asyncApiReference = new AsyncApiReference();
                 asyncApiReference.Type = type;
-                if (reference.StartsWith("/"))
-                {
-                    asyncApiReference.IsFragment = true;
-                }
-
                 asyncApiReference.ExternalResource = segments[0];
 
                 return asyncApiReference;
             }
             else if (segments.Length == 2)
             {
-                // Local reference
+                // Local components reference
                 if (reference.StartsWith("#"))
                 {
                     try
@@ -101,8 +96,8 @@ namespace LEGO.AsyncAPI.Readers.V2
                     }
                 }
 
-                var id = segments[1];
                 var asyncApiReference = new AsyncApiReference();
+                var id = segments[1];
                 if (id.StartsWith("/components/"))
                 {
                     var localSegments = segments[1].Split('/');

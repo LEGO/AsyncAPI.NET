@@ -20,14 +20,15 @@ namespace LEGO.AsyncAPI.Readers.Services
 
         public Stream Load(Uri uri)
         {
-            var absoluteUri = new Uri(this.baseUrl, uri);
+
+            uri = new Uri(this.baseUrl, uri);
             switch (uri.Scheme)
             {
                 case "file":
-                    return File.OpenRead(absoluteUri.AbsolutePath);
+                    return File.OpenRead(uri.AbsolutePath);
                 case "http":
                 case "https":
-                    return this.httpClient.GetStreamAsync(absoluteUri).GetAwaiter().GetResult();
+                    return this.httpClient.GetStreamAsync(uri).GetAwaiter().GetResult();
                 default:
                     throw new ArgumentException("Unsupported scheme");
             }
@@ -35,15 +36,14 @@ namespace LEGO.AsyncAPI.Readers.Services
 
         public async Task<Stream> LoadAsync(Uri uri)
         {
-            var absoluteUri = new Uri(this.baseUrl, uri);
-
-            switch (absoluteUri.Scheme)
+            uri = new Uri(this.baseUrl, uri);
+            switch (uri.Scheme)
             {
                 case "file":
-                    return File.OpenRead(absoluteUri.AbsolutePath);
+                    return File.OpenRead(uri.AbsolutePath);
                 case "http":
                 case "https":
-                    return await this.httpClient.GetStreamAsync(absoluteUri);
+                    return await this.httpClient.GetStreamAsync(uri);
                 default:
                     throw new ArgumentException("Unsupported scheme");
             }

@@ -2,10 +2,14 @@
 
 namespace LEGO.AsyncAPI.Tests
 {
+    using System;
+    using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
     using FluentAssertions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
+    using LEGO.AsyncAPI.Readers.Interface;
     using NUnit.Framework;
 
     public class AsyncApiReference_Should : TestBase
@@ -61,7 +65,7 @@ namespace LEGO.AsyncAPI.Tests
             reference.Type.Should().Be(ReferenceType.Schema);
             reference.ExternalResource.Should().Be("/fragments/myFragment");
             reference.Id.Should().BeNull();
-            reference.IsFragment.Should().BeTrue();
+            reference.IsFragment.Should().BeFalse();
             reference.IsExternal.Should().BeTrue();
             var expected = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
             actual.Should()
@@ -304,7 +308,7 @@ namespace LEGO.AsyncAPI.Tests
             var settings = new AsyncApiReaderSettings
             {
                 ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
-                ExternalReferenceReader = new MockExternalReferenceReader(),
+                ExternalReferenceLoader = new MockLoader(),
             };
             var reader = new AsyncApiStringReader(settings);
             var doc = reader.Read(yaml, out var diagnostic);
@@ -315,53 +319,32 @@ namespace LEGO.AsyncAPI.Tests
         }
     }
 
-    public class MockExternalReferenceReader : IAsyncApiExternalReferenceReader
+    public class MockLoader : IStreamLoader
     {
-        public string Load(string reference)
-        {
-            if (reference == "./some/path/to/external/message.yaml")
-            {
-                return """
-                       name: Test
-                       title: Test message
-                       summary: Test.
-                       schemaFormat: application/schema+yaml;version=draft-07
-                       contentType: application/cloudevents+json
-                       payload:
-                        $ref: "./some/path/to/schema.yaml"
-                       """;
-            }
+        const string Message = 
+            """
+            name: Test
+            title: Test message
+            summary: Test.
+            schemaFormat: application/schema+yaml;version=draft-07
+            contentType: application/cloudevents+json
+            payload:
+              $ref: "./some/path/to/schema.yaml"
+            """;
 
-            return """
-                   type: object
-                   properties:
-                     orderId:
-                       description: The ID of the order.
-                       type: string
-                       format: uuid
-                     name:
-                       description: Name of order.
-                       type: string
-                     orderDetails:
-                       description: User details.
-                       type: object
-                       properties:
-                         userId:
-                           description: User Id.
-                           type: string
-                           format: uuid
-                         userName:
-                           description: User name.
-                           type: string
-                   required:
-                   - orderId
-                   example:
-                     orderId: 8f9189f8-653b-4849-a1ec-c838c030bd67
-                     handler: SomeName
-                     orderDetails:
-                       userId: Admin
-                       userName: Admin
-                   """;
+        public Stream Load(Uri uri)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(Message);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+
+        public Task<Stream> LoadAsync(Uri uri)
+        {
+            return Task.FromResult(this.Load(uri));
         }
     }
 }
