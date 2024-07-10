@@ -61,7 +61,10 @@ namespace LEGO.AsyncAPI.Readers
                 }
             },
             {
-                "exclusiveMaximum", (a, n) => { a.ExclusiveMaximum = bool.Parse(n.GetScalarValue()); }
+                "exclusiveMaximum", (a, n) =>
+                {
+                    a.ExclusiveMaximum = double.Parse(n.GetScalarValue(), NumberStyles.Float, n.Context.Settings.CultureInfo);
+                }
             },
             {
                 "minimum",
@@ -71,7 +74,10 @@ namespace LEGO.AsyncAPI.Readers
                 }
             },
             {
-                "exclusiveMinimum", (a, n) => { a.ExclusiveMinimum = bool.Parse(n.GetScalarValue()); }
+                "exclusiveMinimum", (a, n) =>
+                {
+                    a.ExclusiveMinimum = double.Parse(n.GetScalarValue(), NumberStyles.Float, n.Context.Settings.CultureInfo);
+                }
             },
             {
                 "maxLength", (a, n) => { a.MaxLength = int.Parse(n.GetScalarValue(), n.Context.Settings.CultureInfo); }
