@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
         /// <summary>
         /// The AWS account(s) or resource ARN(s) that this statement applies to.
         /// </summary>
-        public AsyncApiAny Principal { get; set; }
+        public Principal Principal { get; set; }
 
         /// <summary>
         /// The SNS permission being allowed or denied e.g. sns:Publish.
@@ -47,7 +47,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
 
             writer.WriteStartObject();
             writer.WriteRequiredProperty("effect", this.Effect.GetDisplayName());
-            writer.WriteRequiredObject("principal", this.Principal, (w, t) => t.Write(w));
+            writer.WriteRequiredObject("principal", this.Principal, (w, t) => t.Value.Write(w));
             writer.WriteRequiredObject("action", this.Action, (w, t) => t.Value.Write(w));
             writer.WriteOptionalObject("resource", this.Resource, (w, t) => t?.Value.Write(w));
             writer.WriteOptionalObject("condition", this.Condition, (w, t) => t?.Write(w));

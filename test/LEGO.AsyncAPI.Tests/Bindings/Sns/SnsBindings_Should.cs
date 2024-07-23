@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
@@ -86,7 +87,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         new Statement()
                         {
                             Effect = Effect.Deny,
-                            Principal = new AsyncApiAny("*"),
+                            Principal = new Principal(new AsyncApiAny("*")),
                             Action = new StringOrStringList(new AsyncApiAny(new List<string>()
                             {
                                 "sns:Publish",
@@ -105,10 +106,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         new Statement()
                         {
                             Effect = Effect.Allow,
-                            Principal = new AsyncApiAny(new Dictionary<string, List<string>>()
+                            Principal = new Principal(new AsyncApiAny(new Dictionary<string, List<string>>()
                             {
                                 { "AWS", new List<string>() { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" } },
-                            }),
+                            })),
                             Action = new StringOrStringList(new AsyncApiAny("sns:Create")),
                             Condition = new AsyncApiAny(new Dictionary<string, object>()
                             {
@@ -163,8 +164,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            var settings = new AsyncApiReaderSettings();
-            settings.Bindings = BindingsCollection.Sns;
+            var settings = new AsyncApiReaderSettings
+            {
+                Bindings = BindingsCollection.Sns,
+            };
+
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -407,8 +411,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            var settings = new AsyncApiReaderSettings();
-            settings.Bindings = BindingsCollection.Sns;
+            var settings = new AsyncApiReaderSettings
+            {
+                Bindings = BindingsCollection.Sns,
+            };
+
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
             var binding2 = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(expected, AsyncApiVersion.AsyncApi2_0, out _);
             binding2.Bindings.First().Value.Extensions.TryGetValue("x-bindingExtension", out IAsyncApiExtension any);

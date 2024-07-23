@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
 {
     using System.Collections.Generic;
+    using System.Linq;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Sqs;
@@ -80,7 +81,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                         statements:
                           - effect: allow
                             principal:
-                              AWS: arn:aws:iam::123456789012:user/alex.wichmann
+                              Service: s3.amazonaws.com
                             action:
                               - sqs:*
                     x-internalObject:
@@ -135,10 +136,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Deny,
-                                Principal = new AsyncApiAny(new Dictionary<string, string>()
+                                Principal = new Principal(new AsyncApiAny(new Dictionary<string, string>()
                                 {
                                     { "AWS", "arn:aws:iam::123456789012:user/alex.wichmann" },
-                                }),
+                                })),
                                 Action = new StringOrStringList(new AsyncApiAny(new List<string>
                                 {
                                     "sqs:SendMessage",
@@ -167,10 +168,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Allow,
-                                Principal = new AsyncApiAny(new Dictionary<string, List<string>>()
+                                Principal = new Principal(new AsyncApiAny(new Dictionary<string, List<string>>()
                                 {
                                     { "AWS", new List<string>() { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" } },
-                                }),
+                                })),
                                 Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue")),
                                 Condition = new AsyncApiAny(new Dictionary<string, object>()
                                 {
@@ -225,10 +226,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Allow,
-                                Principal = new AsyncApiAny(new Dictionary<string, string>()
+                                Principal = new Principal(new AsyncApiAny(new Dictionary<string, string>()
                                 {
-                                    { "AWS", "arn:aws:iam::123456789012:user/alex.wichmann" },
-                                }),
+                                    { "Service", "s3.amazonaws.com" },
+                                })),
                                 Action = new StringOrStringList(new AsyncApiAny(new List<string>
                                 {
                                     "sqs:*",
@@ -252,8 +253,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
             var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            var settings = new AsyncApiReaderSettings();
-            settings.Bindings = BindingsCollection.Sqs;
+            var settings = new AsyncApiReaderSettings
+            {
+                Bindings = BindingsCollection.Sqs,
+            };
             var binding =
                 new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
@@ -261,6 +264,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
             actual.Should()
                   .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(channel);
+
+            var expectedSqsBinding = (SqsChannelBinding)channel.Bindings.Values.First();
+            expectedSqsBinding.Should().BeEquivalentTo((SqsChannelBinding)binding.Bindings.Values.First(), options => options.IgnoringCyclicReferences());
         }
 
         [Test]
@@ -376,10 +382,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Deny,
-                                    Principal = new AsyncApiAny(new Dictionary<string, string>()
+                                    Principal = new Principal(new AsyncApiAny(new Dictionary<string, string>()
                                     {
                                         { "AWS", "arn:aws:iam::123456789012:user/alex.wichmann" },
-                                    }),
+                                    })),
                                     Action = new StringOrStringList(new AsyncApiAny(new List<string>()
                                     {
                                         "sqs:SendMessage",
@@ -399,10 +405,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Allow,
-                                    Principal = new AsyncApiAny(new Dictionary<string, List<string>>()
+                                    Principal = new Principal(new AsyncApiAny(new Dictionary<string, List<string>>()
                                     {
                                         { "AWS", new List<string>() { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" } },
-                                    }),
+                                    })),
                                     Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue")),
                                 },
                             },
@@ -448,10 +454,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Allow,
-                                    Principal = new AsyncApiAny(new Dictionary<string, string>()
+                                    Principal = new Principal(new AsyncApiAny(new Dictionary<string, string>()
                                     {
                                         { "AWS", "arn:aws:iam::123456789012:user/alex.wichmann" },
-                                    }),
+                                    })),
                                     Action = new StringOrStringList(new AsyncApiAny(new List<string>
                                     {
                                         "sqs:*",
@@ -486,14 +492,20 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            var settings = new AsyncApiReaderSettings();
-            settings.Bindings = BindingsCollection.Sqs;
+            var settings = new AsyncApiReaderSettings
+            {
+                Bindings = BindingsCollection.Sqs,
+            };
+
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
             actual.Should()
                   .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(operation);
+
+            var expectedSqsBinding = (SqsOperationBinding)operation.Bindings.Values.First();
+            expectedSqsBinding.Should().BeEquivalentTo((SqsOperationBinding)binding.Bindings.Values.First(), options => options.IgnoringCyclicReferences());
         }
     }
 }
