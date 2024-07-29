@@ -1,3 +1,11 @@
+## [5.2.2](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.1...v5.2.2) (2024-07-29)
+
+
+### Bug Fixes
+
+* correct typing of exclusive maximums and minimums for draft7 jso… ([#188](https://github.com/LEGO/AsyncAPI.NET/issues/188)) ([fb50d00](https://github.com/LEGO/AsyncAPI.NET/commit/fb50d00192896f9ac26e65df1e991854b33aa17c))
+* resolving wrong reference ([#180](https://github.com/LEGO/AsyncAPI.NET/issues/180)) ([47685cd](https://github.com/LEGO/AsyncAPI.NET/commit/47685cd19c7e58391625be043b1e5d82c49eedc8))
+
 ## [5.2.1](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.0...v5.2.1) (2024-06-12)
 
 
