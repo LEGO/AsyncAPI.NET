@@ -246,6 +246,38 @@ namespace LEGO.AsyncAPI.Services
         {
         }
 
+        public virtual void Visit(AsyncApiBindings<IServerBinding> bindings)
+        {
+        }
+
+        public virtual void Visit(IServerBinding binding)
+        {
+        }
+
+        public virtual void Visit(AsyncApiBindings<IChannelBinding> bindings)
+        {
+        }
+
+        public virtual void Visit(IChannelBinding binding)
+        {
+        }
+
+        public virtual void Visit(AsyncApiBindings<IOperationBinding> bindings)
+        {
+        }
+
+        public virtual void Visit(IOperationBinding binding)
+        {
+        }
+
+        public virtual void Visit(AsyncApiBindings<IMessageBinding> bindings)
+        {
+        }
+
+        public virtual void Visit(IMessageBinding binding)
+        {
+        }
+
         public virtual void Visit(AsyncApiChannel channel)
         {
         }
