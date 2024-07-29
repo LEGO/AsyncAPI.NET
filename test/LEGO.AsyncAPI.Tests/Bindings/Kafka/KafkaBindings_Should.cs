@@ -128,7 +128,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
 
             message.Bindings.Add(new KafkaMessageBinding
             {
-                Key = new AsyncApiSchema
+                Key = new AsyncApiJsonSchema
                 {
                     Description = "this mah other binding",
                 },
@@ -167,11 +167,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Kafka
 
             operation.Bindings.Add(new KafkaOperationBinding
             {
-                GroupId = new AsyncApiSchema
+                GroupId = new AsyncApiJsonSchema
                 {
                     Description = "this mah groupId",
                 },
-                ClientId = new AsyncApiSchema
+                ClientId = new AsyncApiJsonSchema
                 {
                     Description = "this mah clientId",
                 },

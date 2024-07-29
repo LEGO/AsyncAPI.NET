@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Readers
 
     public class AsyncApiSchemaDeserializer
     {
-        private static readonly FixedFieldMap<AsyncApiSchema> schemaFixedFields = new()
+        private static readonly FixedFieldMap<AsyncApiJsonSchema> schemaFixedFields = new()
         {
             {
                 "title", (a, n) => { a.Title = n.GetScalarValue(); }
@@ -209,13 +209,13 @@ namespace LEGO.AsyncAPI.Readers
             },
         };
 
-        private static readonly PatternFieldMap<AsyncApiSchema> schemaPatternFields =
+        private static readonly PatternFieldMap<AsyncApiJsonSchema> schemaPatternFields =
             new()
             {
                 { s => s.StartsWith("x-"), (o, p, n) => o.AddExtension(p, AsyncApiV2Deserializer.LoadExtension(p, n)) },
             };
 
-        public static AsyncApiSchema LoadSchema(ParseNode node)
+        public static AsyncApiJsonSchema LoadSchema(ParseNode node)
         {
             var mapNode = node.CheckMapNode(AsyncApiConstants.Schema);
 
@@ -223,14 +223,14 @@ namespace LEGO.AsyncAPI.Readers
 
             if (pointer != null)
             {
-                return new AsyncApiSchema
+                return new AsyncApiJsonSchema
                 {
                     UnresolvedReference = true,
                     Reference = node.Context.VersionService.ConvertToAsyncApiReference(pointer, ReferenceType.Schema),
                 };
             }
 
-            var schema = new AsyncApiSchema();
+            var schema = new AsyncApiJsonSchema();
 
             foreach (var propertyNode in mapNode)
             {

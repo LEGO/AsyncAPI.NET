@@ -220,20 +220,21 @@ namespace LEGO.AsyncAPI.Readers
                     {
                         diagnostic.Append(streamDiagnostics, reference.ExternalResource);
                     }
+
                     if (result != null)
                     {
-                        this.ResolveExternalReferences(diagnostic, result);
+                        this.ResolveAllReferences(diagnostic, result);
                     }
                 }
                 else
                 {
                     // If id IS null, its a fragment that we can resolve directly.
                     // #TODO Use proxy references for easier fragment resolution.
-                    IAsyncApiElement result;
+                    IAsyncApiElement result = null;
                     switch (reference.Type)
                     {
                         case ReferenceType.Schema:
-                            result = reader.ReadFragment<AsyncApiSchema>(input, AsyncApiVersion.AsyncApi2_0, out var streamDiagnostics);
+                            result = reader.ReadFragment<AsyncApiJsonSchema>(input, AsyncApiVersion.AsyncApi2_0, out var streamDiagnostics);
                             break;
                         case ReferenceType.Server:
                             result = reader.ReadFragment<AsyncApiServer>(input, AsyncApiVersion.AsyncApi2_0, out var _);
@@ -275,11 +276,13 @@ namespace LEGO.AsyncAPI.Readers
                             diagnostic.Errors.Add(new AsyncApiError(reference.Reference, "Could not resolve reference."));
                             break;
                     }
-                }
-                //if (result != null)
-                //{
-                //    this.ResolveExternalReferences(diagnostic, result);
-                //}
+
+                    if (result != null)
+                    {
+                        this.ResolveAllReferences(diagnostic, document);
+                    }
+            }
+
             }
         }
     }

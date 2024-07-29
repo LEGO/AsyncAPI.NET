@@ -106,10 +106,10 @@ namespace LEGO.AsyncAPI.Tests.Models
             var message = new AsyncApiMessage();
             message.Payload = new AsyncApiJsonSchemaPayload()
             {
-                Properties = new Dictionary<string, AsyncApiSchema>()
+                Properties = new Dictionary<string, AsyncApiJsonSchema>()
                 {
                     {
-                        "propertyA", new AsyncApiSchema()
+                        "propertyA", new AsyncApiJsonSchema()
                         {
                             Type = SchemaType.String | SchemaType.Null,
                         }
@@ -147,10 +147,10 @@ namespace LEGO.AsyncAPI.Tests.Models
             message.SchemaFormat = "application/vnd.aai.asyncapi+json;version=2.6.0";
             message.Payload = new AsyncApiJsonSchemaPayload()
             {
-                Properties = new Dictionary<string, AsyncApiSchema>()
+                Properties = new Dictionary<string, AsyncApiJsonSchema>()
                 {
                     {
-                        "propertyA", new AsyncApiSchema()
+                        "propertyA", new AsyncApiJsonSchema()
                         {
                             Type = SchemaType.String | SchemaType.Null,
                         }
@@ -316,7 +316,7 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             var message = new AsyncApiMessage
             {
-                Headers = new AsyncApiSchema
+                Headers = new AsyncApiJsonSchema
                 {
                     Title = "HeaderTitle",
                     WriteOnly = true,
@@ -331,16 +331,16 @@ namespace LEGO.AsyncAPI.Tests.Models
                 },
                 Payload = new AsyncApiJsonSchemaPayload()
                 {
-                    Properties = new Dictionary<string, AsyncApiSchema>
+                    Properties = new Dictionary<string, AsyncApiJsonSchema>
                     {
                         {
-                            "propA", new AsyncApiSchema()
+                            "propA", new AsyncApiJsonSchema()
                             {
                                 Type = SchemaType.String,
                             }
                         },
                         {
-                            "propB", new AsyncApiSchema()
+                            "propB", new AsyncApiJsonSchema()
                             {
                                 Type = SchemaType.String,
                             }
@@ -379,7 +379,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         "http", new HttpMessageBinding
                         {
-                            Headers = new AsyncApiSchema
+                            Headers = new AsyncApiJsonSchema
                             {
                                 Title = "SchemaTitle",
                                 WriteOnly = true,
@@ -413,7 +413,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         Name = "MessageTraitName",
                         Title = "MessageTraitTitle",
-                        Headers = new AsyncApiSchema
+                        Headers = new AsyncApiJsonSchema
                         {
                             Title = "SchemaTitle",
                             WriteOnly = true,

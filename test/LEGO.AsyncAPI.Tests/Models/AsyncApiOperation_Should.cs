@@ -105,7 +105,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         {
                             Type = HttpOperationBinding.HttpOperationType.Request,
                             Method = "PUT",
-                            Query = new AsyncApiSchema
+                            Query = new AsyncApiJsonSchema
                             {
                                 Description = "some query",
                             },
@@ -114,11 +114,11 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         new KafkaOperationBinding
                         {
-                            GroupId = new AsyncApiSchema
+                            GroupId = new AsyncApiJsonSchema
                             {
                                 Description = "some Id",
                             },
-                            ClientId = new AsyncApiSchema
+                            ClientId = new AsyncApiJsonSchema
                             {
                                 Description = "some Id",
                             },

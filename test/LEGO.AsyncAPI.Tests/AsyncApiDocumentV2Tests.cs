@@ -551,13 +551,13 @@ namespace LEGO.AsyncAPI.Tests
                         },
                     },
                 })
-                .WithComponent("lightMeasuredPayload", new AsyncApiSchema()
+                .WithComponent("lightMeasuredPayload", new AsyncApiJsonSchema()
                 {
                     Type = SchemaType.Object,
-                    Properties = new Dictionary<string, AsyncApiSchema>()
+                    Properties = new Dictionary<string, AsyncApiJsonSchema>()
                     {
                     {
-                        "lumens", new AsyncApiSchema()
+                        "lumens", new AsyncApiJsonSchema()
                         {
                             Type = SchemaType.Integer,
                             Minimum = 0,
@@ -565,7 +565,7 @@ namespace LEGO.AsyncAPI.Tests
                         }
                     },
                     {
-                        "sentAt", new AsyncApiSchema()
+                        "sentAt", new AsyncApiJsonSchema()
                         {
                             Reference = new AsyncApiReference()
                             {
@@ -576,13 +576,13 @@ namespace LEGO.AsyncAPI.Tests
                     },
                     },
                 })
-                .WithComponent("turnOnOffPayload", new AsyncApiSchema()
+                .WithComponent("turnOnOffPayload", new AsyncApiJsonSchema()
                 {
                     Type = SchemaType.Object,
-                    Properties = new Dictionary<string, AsyncApiSchema>()
+                    Properties = new Dictionary<string, AsyncApiJsonSchema>()
                     {
                     {
-                        "command", new AsyncApiSchema()
+                        "command", new AsyncApiJsonSchema()
                         {
                             Type = SchemaType.String,
                             Enum = new List<AsyncApiAny>
@@ -594,7 +594,7 @@ namespace LEGO.AsyncAPI.Tests
                         }
                     },
                     {
-                        "sentAt", new AsyncApiSchema()
+                        "sentAt", new AsyncApiJsonSchema()
                         {
                             Reference = new AsyncApiReference()
                             {
@@ -605,13 +605,13 @@ namespace LEGO.AsyncAPI.Tests
                     },
                     },
                 })
-                .WithComponent("dimLightPayload", new AsyncApiSchema()
+                .WithComponent("dimLightPayload", new AsyncApiJsonSchema()
                 {
                     Type = SchemaType.Object,
-                    Properties = new Dictionary<string, AsyncApiSchema>()
+                    Properties = new Dictionary<string, AsyncApiJsonSchema>()
                     {
                     {
-                        "percentage", new AsyncApiSchema()
+                        "percentage", new AsyncApiJsonSchema()
                         {
                             Type = SchemaType.Integer,
                             Description = "Percentage to which the light should be dimmed to.",
@@ -620,7 +620,7 @@ namespace LEGO.AsyncAPI.Tests
                         }
                     },
                     {
-                        "sentAt", new AsyncApiSchema()
+                        "sentAt", new AsyncApiJsonSchema()
                         {
                             Reference = new AsyncApiReference()
                             {
@@ -631,7 +631,7 @@ namespace LEGO.AsyncAPI.Tests
                     },
                     },
                 })
-                .WithComponent("sentAt", new AsyncApiSchema()
+                .WithComponent("sentAt", new AsyncApiJsonSchema()
                 {
                     Type = SchemaType.String,
                     Format = "date-time",
@@ -650,20 +650,20 @@ namespace LEGO.AsyncAPI.Tests
                 .WithComponent("streetlightId", new AsyncApiParameter()
                 {
                     Description = "The ID of the streetlight.",
-                    Schema = new AsyncApiSchema()
+                    Schema = new AsyncApiJsonSchema()
                     {
                         Type = SchemaType.String,
                     },
                 })
                 .WithComponent("commonHeaders", new AsyncApiMessageTrait()
                 {
-                    Headers = new AsyncApiSchema()
+                    Headers = new AsyncApiJsonSchema()
                     {
                         Type = SchemaType.Object,
-                        Properties = new Dictionary<string, AsyncApiSchema>()
+                        Properties = new Dictionary<string, AsyncApiJsonSchema>()
                         {
                         {
-                            "my-app-header", new AsyncApiSchema()
+                            "my-app-header", new AsyncApiJsonSchema()
                             {
                                 Type = SchemaType.Integer,
                                 Minimum = 0,
@@ -680,7 +680,7 @@ namespace LEGO.AsyncAPI.Tests
                     {
                         "kafka", new KafkaOperationBinding()
                         {
-                            ClientId = new AsyncApiSchema()
+                            ClientId = new AsyncApiJsonSchema()
                             {
                                 Type = SchemaType.String,
                                 Enum = new List<AsyncApiAny>
@@ -1016,7 +1016,7 @@ namespace LEGO.AsyncAPI.Tests
                                                 {
                                                     Name = traitName,
                                                     Title = traitTitle,
-                                                    Headers = new AsyncApiSchema
+                                                    Headers = new AsyncApiJsonSchema
                                                     {
                                                         Title = schemaTitle,
                                                         WriteOnly = true,
@@ -1285,7 +1285,7 @@ namespace LEGO.AsyncAPI.Tests
                                         {
                                             new HttpMessageBinding
                                             {
-                                                Headers = new AsyncApiSchema
+                                                Headers = new AsyncApiJsonSchema
                                                 {
                                                     Description = "this mah binding",
                                                 },
@@ -1294,7 +1294,7 @@ namespace LEGO.AsyncAPI.Tests
                                         {
                                             new KafkaMessageBinding
                                             {
-                                                Key = new AsyncApiSchema
+                                                Key = new AsyncApiJsonSchema
                                                 {
                                                     Description = "this mah other binding",
                                                 },

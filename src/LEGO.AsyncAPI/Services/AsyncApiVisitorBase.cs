@@ -145,9 +145,9 @@ namespace LEGO.AsyncAPI.Services
         }
 
         /// <summary>
-        /// Visits <see cref="AsyncApiSchema"/>.
+        /// Visits <see cref="AsyncApiJsonSchema"/>.
         /// </summary>
-        public virtual void Visit(AsyncApiSchema schema)
+        public virtual void Visit(AsyncApiJsonSchema schema)
         {
         }
 

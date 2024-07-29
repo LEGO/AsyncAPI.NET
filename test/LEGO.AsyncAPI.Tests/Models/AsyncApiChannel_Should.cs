@@ -59,24 +59,24 @@ namespace LEGO.AsyncAPI.Tests.Models
                         new WebSocketsChannelBinding()
                         {
                             Method = "POST",
-                            Query = new AsyncApiSchema()
+                            Query = new AsyncApiJsonSchema()
                             {
-                                Properties = new Dictionary<string, AsyncApiSchema>()
+                                Properties = new Dictionary<string, AsyncApiJsonSchema>()
                                 {
                                     {
-                                        "index", new AsyncApiSchema()
+                                        "index", new AsyncApiJsonSchema()
                                         {
                                             Description = "the index",
                                         }
                                     },
                                 },
                             },
-                            Headers = new AsyncApiSchema()
+                            Headers = new AsyncApiJsonSchema()
                             {
-                                Properties = new Dictionary<string, AsyncApiSchema>()
+                                Properties = new Dictionary<string, AsyncApiJsonSchema>()
                                 {
                                     {
-                                        "x-correlation-id", new AsyncApiSchema()
+                                        "x-correlation-id", new AsyncApiJsonSchema()
                                         {
                                             Description = "the correlationid",
                                         }
