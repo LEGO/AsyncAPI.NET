@@ -1,3 +1,10 @@
+## [5.2.4](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.3...v5.2.4) (2024-07-29)
+
+
+### Bug Fixes
+
+* remove persistence nullability ([52165f2](https://github.com/LEGO/AsyncAPI.NET/commit/52165f213502d9436e25a4e761804b5796b5de8c))
+
 ## [5.2.3](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.2...v5.2.3) (2024-07-29)
 
 
