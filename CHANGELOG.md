@@ -1,3 +1,10 @@
+## [5.2.3](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.2...v5.2.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* add missing walk and visit methods for bindings. ([#191](https://github.com/LEGO/AsyncAPI.NET/issues/191)) ([b8307c5](https://github.com/LEGO/AsyncAPI.NET/commit/b8307c57a6f9bc7c546702c24dffdfb1833aa5d3))
+
 ## [5.2.2](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.1...v5.2.2) (2024-07-29)
 
 
