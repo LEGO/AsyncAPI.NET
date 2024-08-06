@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
@@ -31,15 +32,24 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                     policy:
                       statements:
                         - effect: Deny
-                          principal: arn:aws:iam::123456789012:user/alex.wichmann
+                          principal: '*'
                           action:
                             - sns:Publish
                             - sns:Delete
+                          condition:
+                            StringEquals:
+                              aws:username:
+                                - johndoe
+                                - mrsmith
                         - effect: Allow
                           principal:
-                            - arn:aws:iam::123456789012:user/alex.wichmann
-                            - arn:aws:iam::123456789012:user/dec.kolakowski
+                            AWS:
+                              - arn:aws:iam::123456789012:user/alex.wichmann
+                              - arn:aws:iam::123456789012:user/dec.kolakowski
                           action: sns:Create
+                          condition:
+                            NumericLessThanEquals:
+                              aws:MultiFactorAuthAge: '3600'
                           x-statementExtension:
                             statementXPropertyName: statementXPropertyValue
                       x-policyExtension:
@@ -77,22 +87,39 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         new Statement()
                         {
                             Effect = Effect.Deny,
-                            Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
+                            Principal = new Principal(new AsyncApiAny("*")),
                             Action = new StringOrStringList(new AsyncApiAny(new List<string>()
                             {
                                 "sns:Publish",
                                 "sns:Delete",
                             })),
+                            Condition = new AsyncApiAny(new Dictionary<string, object>()
+                            {
+                                {
+                                    "StringEquals", new Dictionary<string, List<string>>()
+                                    {
+                                        { "aws:username", new List<string>() { "johndoe", "mrsmith" } },
+                                    }
+                                },
+                            }),
                         },
                         new Statement()
                         {
                             Effect = Effect.Allow,
-                            Principal = new StringOrStringList(new AsyncApiAny(new List<string>()
+                            Principal = new Principal(new AsyncApiAny(new Dictionary<string, List<string>>()
                             {
-                                "arn:aws:iam::123456789012:user/alex.wichmann",
-                                "arn:aws:iam::123456789012:user/dec.kolakowski",
+                                { "AWS", new List<string>() { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" } },
                             })),
                             Action = new StringOrStringList(new AsyncApiAny("sns:Create")),
+                            Condition = new AsyncApiAny(new Dictionary<string, object>()
+                            {
+                                {
+                                    "NumericLessThanEquals", new Dictionary<string, string>()
+                                    {
+                                        { "aws:MultiFactorAuthAge", "3600" },
+                                    }
+                                },
+                            }),
                             Extensions = new Dictionary<string, IAsyncApiExtension>()
                             {
                                 {
@@ -137,8 +164,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            var settings = new AsyncApiReaderSettings();
-            settings.Bindings = BindingsCollection.Sns;
+            var settings = new AsyncApiReaderSettings
+            {
+                Bindings = BindingsCollection.Sns,
+            };
+
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
@@ -381,8 +411,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            var settings = new AsyncApiReaderSettings();
-            settings.Bindings = BindingsCollection.Sns;
+            var settings = new AsyncApiReaderSettings
+            {
+                Bindings = BindingsCollection.Sns,
+            };
+
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
             var binding2 = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(expected, AsyncApiVersion.AsyncApi2_0, out _);
             binding2.Bindings.First().Value.Extensions.TryGetValue("x-bindingExtension", out IAsyncApiExtension any);

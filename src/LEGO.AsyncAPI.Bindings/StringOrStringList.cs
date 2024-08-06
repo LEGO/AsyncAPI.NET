@@ -30,10 +30,10 @@ namespace LEGO.AsyncAPI.Bindings
             {
                 case ValueNode:
                     return new StringOrStringList(new AsyncApiAny(node.GetScalarValue()));
-                case ListNode:
+                case ListNode listNode:
                     {
                         var jsonArray = new JsonArray();
-                        foreach (var item in node as ListNode)
+                        foreach (var item in listNode)
                         {
                             jsonArray.Add(item.GetScalarValue());
                         }
