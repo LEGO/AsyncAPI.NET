@@ -1,3 +1,25 @@
+## [5.2.4](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.3...v5.2.4) (2024-07-29)
+
+
+### Bug Fixes
+
+* remove persistence nullability ([52165f2](https://github.com/LEGO/AsyncAPI.NET/commit/52165f213502d9436e25a4e761804b5796b5de8c))
+
+## [5.2.3](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.2...v5.2.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* add missing walk and visit methods for bindings. ([#191](https://github.com/LEGO/AsyncAPI.NET/issues/191)) ([b8307c5](https://github.com/LEGO/AsyncAPI.NET/commit/b8307c57a6f9bc7c546702c24dffdfb1833aa5d3))
+
+## [5.2.2](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.1...v5.2.2) (2024-07-29)
+
+
+### Bug Fixes
+
+* correct typing of exclusive maximums and minimums for draft7 jso… ([#188](https://github.com/LEGO/AsyncAPI.NET/issues/188)) ([fb50d00](https://github.com/LEGO/AsyncAPI.NET/commit/fb50d00192896f9ac26e65df1e991854b33aa17c))
+* resolving wrong reference ([#180](https://github.com/LEGO/AsyncAPI.NET/issues/180)) ([47685cd](https://github.com/LEGO/AsyncAPI.NET/commit/47685cd19c7e58391625be043b1e5d82c49eedc8))
+
 ## [5.2.1](https://github.com/LEGO/AsyncAPI.NET/compare/v5.2.0...v5.2.1) (2024-06-12)
 
 

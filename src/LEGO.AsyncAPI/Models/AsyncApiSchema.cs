@@ -42,7 +42,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public bool? ExclusiveMaximum { get; set; }
+        public double? ExclusiveMaximum { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
@@ -52,7 +52,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public bool? ExclusiveMinimum { get; set; }
+        public double? ExclusiveMinimum { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
