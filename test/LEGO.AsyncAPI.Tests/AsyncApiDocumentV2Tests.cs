@@ -1132,6 +1132,108 @@ namespace LEGO.AsyncAPI.Tests
         }
 
         [Test]
+        public void Read_WithAvroSchemaPayload_NoErrors()
+        {
+            // Arrange
+            var yaml =
+                """
+                asyncapi: '2.6.0'
+                info:
+                  title: schema-validation-test
+                  version: '1.0.0'
+                  description: Async API for schema validation tests
+                  contact:
+                    name: Test
+                    url: https://test.test/
+
+                channels:
+                  schema-validation-topic:
+                    description: A topic to publish messages for testing Pulsar schema validation
+                    publish:
+                      message:
+                        $ref: '#/components/messages/schema-validation-message'
+
+                components:
+                  messages:
+                    schema-validation-message:
+                      name: schema-validation-message
+                      title: Message for schema validation testing that is a json object
+                      summary: A test message is used for testing Pulsar schema validation
+                      payload:
+                        type: record
+                        name: UserSignedUp
+                        namespace: esp
+                        doc: ESP Schema validation test
+                        fields:
+                          - name: userId
+                            type: int
+                          - name: userEmail
+                            type: string
+                      schemaFormat: 'application/vnd.apache.avro;version=1.9.0'
+                """;
+
+            // Act
+            var result = new AsyncApiStringReader().Read(yaml, out var diagnostics);
+
+            // Assert
+            diagnostics.Errors.Should().HaveCount(0);
+            result.Channels.First().Value.Publish.Message.First().Payload.As<AsyncApiAvroSchemaPayload>().TryGetAs<AvroRecord>(out var record).Should().BeTrue();
+            record.Name.Should().Be("UserSignedUp");
+        }
+
+        [Test]
+        public void Read_WithJsonSchemaReference_NoErrors()
+        {
+            // Arrange
+            var yaml =
+                """
+                asyncapi: '2.6.0'
+                info:
+                  title: schema-validation-test
+                  version: '1.0.0'
+                  description: Async API for schema validation tests
+                  contact:
+                    name: Test
+                    url: https://test.test/
+
+                channels:
+                  schema-validation-topic:
+                    description: A topic to publish messages for testing Pulsar schema validation
+                    publish:
+                      message:
+                        $ref: '#/components/messages/schema-validation-message'
+                    subscribe:
+                      message:
+                        $ref: '#/components/messages/schema-validation-message'
+
+                components:
+                  schemas:
+                    schema-validation-message-payload:
+                      type: object
+                      properties:
+                        content:
+                          type: string
+                          description: Content of the message
+                  messages:
+                    schema-validation-message:
+                      name: schema-validation-message
+                      title: Message for schema validation testing that is a json object
+                      summary: A test message is used for testing Pulsar schema validation
+                      payload:
+                        $ref: '#/components/schemas/schema-validation-message-payload'
+                      contentType: application/json
+                """;
+
+            // Act
+            var result = new AsyncApiStringReader().Read(yaml, out var diagnostics);
+
+            // Assert
+            diagnostics.Errors.Should().HaveCount(0);
+            result.Channels.First().Value.Publish.Message.First().Title.Should().Be("Message for schema validation testing that is a json object");
+            result.Channels.First().Value.Publish.Message.First().Payload.As<AsyncApiJsonSchemaPayload>().Properties.Should().HaveCount(1);
+        }
+
+        [Test]
         public void Serialize_WithBindingReferences_SerializesDeserializes()
         {
             var doc = new AsyncApiDocument();

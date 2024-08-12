@@ -93,9 +93,10 @@ namespace LEGO.AsyncAPI.Readers
             switch (message.Payload)
             {
                 case AsyncApiJsonSchemaPayload json:
-                    this.ResolveObject(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = r);
+                    this.ResolveObject<AsyncApiSchema>(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = new AsyncApiJsonSchemaPayload(r));
                     break;
                 case AsyncApiAvroSchemaPayload avro:
+                    // ToFix: this might not resolve correctly.
                     this.ResolveObject(message.Payload as AsyncApiAvroSchemaPayload, r => message.Payload = r);
                     break;
                 default:

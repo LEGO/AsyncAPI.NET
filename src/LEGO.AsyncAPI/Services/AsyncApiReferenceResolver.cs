@@ -90,7 +90,7 @@ namespace LEGO.AsyncAPI.Services
             // #ToFix Resolve references correctly
             if (message.Payload is AsyncApiJsonSchemaPayload)
             {
-                this.ResolveObject(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = r);
+                this.ResolveObject<AsyncApiSchema>(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = new AsyncApiJsonSchemaPayload(r));
             }
 
             this.ResolveList(message.Traits);
