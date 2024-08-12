@@ -8,8 +8,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.WebSockets
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Readers;
     using NUnit.Framework;
-
-    internal class WebSocketBindings_Should : TestBase
+    
+    public class WebSocketBindings_Should : TestBase
     {
         [Test]
         public void WebSocketChannelBinding_WithFilledObject_SerializesAndDeserializes()
