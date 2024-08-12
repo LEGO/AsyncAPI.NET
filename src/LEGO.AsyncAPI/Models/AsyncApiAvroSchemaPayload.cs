@@ -4,30 +4,43 @@ namespace LEGO.AsyncAPI.Models
 {
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
+    using System;
 
     public class AsyncApiAvroSchemaPayload : IAsyncApiMessagePayload
     {
-        public AvroSchema Schema { get; set; }
+        private readonly AvroSchema schema;
 
         public AsyncApiAvroSchemaPayload(AvroSchema schema)
         {
-            this.Schema = schema;
+            this.schema = schema;
         }
 
         public AsyncApiAvroSchemaPayload()
         {
+            this.schema = new AvroRecord();
         }
 
         public bool TryGetAs<T>(out T schema)
             where T : AvroSchema
         {
-            schema = this.Schema as T;
+            schema = this.schema as T;
             return schema != null;
         }
 
-        public bool UnresolvedReference { get => this.Schema.UnresolvedReference; set => this.Schema.UnresolvedReference = value; }
+        public bool Is<T>()
+            where T : AvroSchema
+        {
+            return this.schema is T;
+        }
 
-        public AsyncApiReference Reference { get => this.Schema.Reference; set => this.Schema.Reference = value; }
+        public Type GetSchemaType()
+        {
+            return this.schema.GetType();
+        }
+
+        public bool UnresolvedReference { get => this.schema.UnresolvedReference; set => this.schema.UnresolvedReference = value; }
+
+        public AsyncApiReference Reference { get => this.schema.Reference; set => this.schema.Reference = value; }
 
         public void SerializeV2(IAsyncApiWriter writer)
         {
@@ -47,7 +60,7 @@ namespace LEGO.AsyncAPI.Models
 
         public void SerializeV2WithoutReference(IAsyncApiWriter writer)
         {
-            this.Schema.SerializeV2(writer);
+            this.schema.SerializeV2(writer);
         }
     }
 }

@@ -189,25 +189,23 @@ namespace LEGO.AsyncAPI.Tests.Models
 
             var message = new AsyncApiMessage();
             message.SchemaFormat = "application/vnd.apache.avro";
-            message.Payload = new AsyncApiAvroSchemaPayload()
+            var schema = new AvroRecord()
             {
-                Schema = new AvroRecord()
+                Name = "User",
+                Namespace = "com.example",
+                Fields = new List<AvroField>
                 {
-                    Name = "User",
-                    Namespace = "com.example",
-                    Fields = new List<AvroField>
+                    new AvroField()
                     {
-                        new AvroField()
-                        {
-                            Name = "username",
-                            Type = AvroPrimitiveType.String,
-                            Doc = "The username of the user.",
-                            Default = new AsyncApiAny("guest"),
-                            Order = AvroFieldOrder.Ascending,
-                        },
+                        Name = "username",
+                        Type = AvroPrimitiveType.String,
+                        Doc = "The username of the user.",
+                        Default = new AsyncApiAny("guest"),
+                        Order = AvroFieldOrder.Ascending,
                     },
                 },
             };
+            message.Payload = new AsyncApiAvroSchemaPayload(schema);
 
             // Act
             var actual = message.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
