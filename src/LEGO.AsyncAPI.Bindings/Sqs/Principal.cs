@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Bindings.Sqs;
 
 using System;
@@ -5,18 +7,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using LEGO.AsyncAPI.Models;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.ParseNodes;
 
 public class Principal : IAsyncApiElement
 {
-    public Principal(AsyncApiAny value)
+    public Principal(IPrincipalValue value)
     {
         this.Value = value;
     }
 
-    public AsyncApiAny Value { get; }
+    public IPrincipalValue Value { get; set; }
 
     public static Principal Parse(ParseNode node)
     {
@@ -30,7 +31,8 @@ public class Principal : IAsyncApiElement
                                                 $"Principal value without a property name can only be a string value of '*'.");
                 }
 
-                return new Principal(new AsyncApiAny(nodeValue));
+                return new Principal(new PrincipalStar(nodeValue));
+
             case MapNode mapNode:
             {
                 var propertyNode = mapNode.First();
@@ -40,10 +42,11 @@ public class Principal : IAsyncApiElement
                                                 $"Node should contain a valid AWS principal property name.");
                 }
 
-                var parsedObject = new Dictionary<string, AsyncApiAny>()
-                    { { propertyNode.Name, StringOrStringList.Parse(propertyNode.Value).Value } };
+                IPrincipalValue principalValue = new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                    propertyNode.Name,
+                    StringOrStringList.Parse(propertyNode.Value)));
 
-                return new Principal(new AsyncApiAny(parsedObject));
+                return new Principal(principalValue);
             }
 
             default:

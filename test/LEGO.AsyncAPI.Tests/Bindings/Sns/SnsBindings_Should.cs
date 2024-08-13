@@ -2,7 +2,6 @@
 
 namespace LEGO.AsyncAPI.Tests.Bindings.Sns
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
@@ -87,7 +86,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         new Statement()
                         {
                             Effect = Effect.Deny,
-                            Principal = new Principal(new AsyncApiAny("*")),
+                            Principal = new Principal(new PrincipalStar("*")),
                             Action = new StringOrStringList(new AsyncApiAny(new List<string>()
                             {
                                 "sns:Publish",
@@ -106,10 +105,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         new Statement()
                         {
                             Effect = Effect.Allow,
-                            Principal = new Principal(new AsyncApiAny(new Dictionary<string, List<string>>()
-                            {
-                                { "AWS", new List<string>() { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" } },
-                            })),
+                            Principal = new Principal(new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                                "AWS", new StringOrStringList(new AsyncApiAny(new List<string>
+                                    { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" }))))),
                             Action = new StringOrStringList(new AsyncApiAny("sns:Create")),
                             Condition = new AsyncApiAny(new Dictionary<string, object>()
                             {
