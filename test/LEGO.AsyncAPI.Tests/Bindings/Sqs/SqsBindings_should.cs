@@ -136,8 +136,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Deny,
-                                Principal = new Principal(new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
-                                    "AWS", new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann"))))),
+                                Principal = new Principal(new KeyValuePair<string, StringOrStringList>(
+                                    "AWS", new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")))),
                                 Action = new StringOrStringList(new AsyncApiAny(new List<string>
                                 {
                                     "sqs:SendMessage",
@@ -166,9 +166,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Allow,
-                                Principal = new Principal(new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                                Principal = new Principal(new KeyValuePair<string, StringOrStringList>(
                                     "AWS", new StringOrStringList(new AsyncApiAny(new List<string>
-                                        { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" }))))),
+                                        { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" })))),
                                 Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue")),
                                 Condition = new AsyncApiAny(new Dictionary<string, object>()
                                 {
@@ -223,8 +223,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Allow,
-                                Principal = new Principal(new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
-                                    "Service", new StringOrStringList(new AsyncApiAny("s3.amazonaws.com"))))),
+                                Principal = new Principal(new KeyValuePair<string, StringOrStringList>(
+                                    "Service", new StringOrStringList(new AsyncApiAny("s3.amazonaws.com")))),
                                 Action = new StringOrStringList(new AsyncApiAny(new List<string>
                                 {
                                     "sqs:*",
@@ -377,8 +377,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Deny,
-                                    Principal = new Principal(new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
-                                        "AWS", new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann"))))),
+                                    Principal = new Principal(new KeyValuePair<string, StringOrStringList>(
+                                        "AWS", new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")))),
                                     Action = new StringOrStringList(new AsyncApiAny(new List<string>()
                                     {
                                         "sqs:SendMessage",
@@ -398,9 +398,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Allow,
-                                    Principal = new Principal(new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                                    Principal = new Principal(new KeyValuePair<string, StringOrStringList>(
                                         "AWS", new StringOrStringList(new AsyncApiAny(new List<string>
-                                            { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" }))))),
+                                            { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" })))),
                                     Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue")),
                                 },
                             },
@@ -446,8 +446,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Allow,
-                                    Principal = new Principal(new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
-                                        "AWS", new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann"))))),
+                                    Principal = new Principal(new KeyValuePair<string, StringOrStringList>(
+                                        "AWS", new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")))),
                                     Action = new StringOrStringList(new AsyncApiAny(new List<string>
                                     {
                                         "sqs:*",

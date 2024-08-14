@@ -12,12 +12,17 @@ using LEGO.AsyncAPI.Readers.ParseNodes;
 
 public class Principal : IAsyncApiElement
 {
-    public Principal(IPrincipalValue value)
+    public Principal(KeyValuePair<string, StringOrStringList> value)
     {
-        this.Value = value;
+        this.Value = new PrincipalObject(value);
     }
 
-    public IPrincipalValue Value { get; set; }
+    public Principal()
+    {
+        this.Value = new PrincipalStar();
+    }
+
+    public IPrincipalValue Value { get; private set; }
 
     public static Principal Parse(ParseNode node)
     {
@@ -31,7 +36,7 @@ public class Principal : IAsyncApiElement
                                                 $"Principal value without a property name can only be a string value of '*'.");
                 }
 
-                return new Principal(new PrincipalStar());
+                return new Principal();
 
             case MapNode mapNode:
             {
@@ -42,9 +47,9 @@ public class Principal : IAsyncApiElement
                                                 $"Node should contain a valid AWS principal property name.");
                 }
 
-                IPrincipalValue principalValue = new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                var principalValue = new KeyValuePair<string, StringOrStringList>(
                     propertyNode.Name,
-                    StringOrStringList.Parse(propertyNode.Value)));
+                    StringOrStringList.Parse(propertyNode.Value));
 
                 return new Principal(principalValue);
             }
