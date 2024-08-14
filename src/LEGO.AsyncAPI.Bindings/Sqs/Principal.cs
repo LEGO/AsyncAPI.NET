@@ -31,7 +31,7 @@ public class Principal : IAsyncApiElement
                                                 $"Principal value without a property name can only be a string value of '*'.");
                 }
 
-                return new Principal(new PrincipalStar(nodeValue));
+                return new Principal(new PrincipalStar());
 
             case MapNode mapNode:
             {

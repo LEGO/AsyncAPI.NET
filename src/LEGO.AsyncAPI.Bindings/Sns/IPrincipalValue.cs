@@ -37,9 +37,9 @@ public struct PrincipalStar : IPrincipalValue
 {
     private string PrincipalValue;
 
-    public PrincipalStar(string principalValue)
+    public PrincipalStar()
     {
-        this.PrincipalValue = principalValue;
+        this.PrincipalValue = "*";
     }
 
     public void Serialize(IAsyncApiWriter writer)

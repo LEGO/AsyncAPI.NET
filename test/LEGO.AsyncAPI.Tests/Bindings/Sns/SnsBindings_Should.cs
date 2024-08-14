@@ -86,7 +86,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sns
                         new Statement()
                         {
                             Effect = Effect.Deny,
-                            Principal = new Principal(new PrincipalStar("*")),
+                            Principal = new Principal(new PrincipalStar()),
                             Action = new StringOrStringList(new AsyncApiAny(new List<string>()
                             {
                                 "sns:Publish",
