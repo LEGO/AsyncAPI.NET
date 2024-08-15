@@ -9,20 +9,11 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using LEGO.AsyncAPI.Models.Interfaces;
 using LEGO.AsyncAPI.Readers.ParseNodes;
+using LEGO.AsyncAPI.Writers;
 
-public class Principal : IAsyncApiElement
+public abstract class Principal : IAsyncApiElement
 {
-    public Principal(KeyValuePair<string, StringOrStringList> value)
-    {
-        this.Value = new PrincipalObject(value);
-    }
-
-    public Principal()
-    {
-        this.Value = new PrincipalStar();
-    }
-
-    public IPrincipalValue Value { get; private set; }
+    public abstract void Serialize(IAsyncApiWriter writer);
 
     public static Principal Parse(ParseNode node)
     {
@@ -36,7 +27,7 @@ public class Principal : IAsyncApiElement
                                                 $"Principal value without a property name can only be a string value of '*'.");
                 }
 
-                return new Principal();
+                return new PrincipalStar();
 
             case MapNode mapNode:
             {
@@ -51,7 +42,7 @@ public class Principal : IAsyncApiElement
                     propertyNode.Name,
                     StringOrStringList.Parse(propertyNode.Value));
 
-                return new Principal(principalValue);
+                return new PrincipalObject(principalValue);
             }
 
             default:
