@@ -23,7 +23,7 @@ Install the NuGet packages:
 
 ### AsyncAPI.Bindings
 [![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET.Bindings?label=AsyncAPI.Bindings&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Bindings/)  
-
+[![Nuget](https://img.shields.io/nuget/vpre/AsyncAPI.NET.Bindings?label=AsyncAPI.Bindings-Preview&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Bindings/)  
 ## Example Usage
 
 Main classes to know:
