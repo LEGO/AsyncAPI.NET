@@ -6,7 +6,7 @@ using LEGO.AsyncAPI.Writers;
 
 public class PrincipalObject : Principal
 {
-    private KeyValuePair<string, StringOrStringList> PrincipalValue;
+    public KeyValuePair<string, StringOrStringList> PrincipalValue;
 
     public PrincipalObject(KeyValuePair<string, StringOrStringList> principalValue)
     {

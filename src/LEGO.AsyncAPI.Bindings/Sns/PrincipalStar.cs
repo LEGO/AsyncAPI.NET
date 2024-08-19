@@ -5,7 +5,7 @@ using LEGO.AsyncAPI.Writers;
 
 public class PrincipalStar : Principal
 {
-    private string PrincipalValue;
+    public string PrincipalValue;
 
     public PrincipalStar()
     {
