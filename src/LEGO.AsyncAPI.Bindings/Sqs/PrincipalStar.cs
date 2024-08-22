@@ -5,11 +5,11 @@ using LEGO.AsyncAPI.Writers;
 
 public class PrincipalStar : Principal
 {
-    private string PrincipalValue;
+    public string Value { get; private set; }
 
     public PrincipalStar()
     {
-        this.PrincipalValue = "*";
+        this.Value = "*";
     }
 
     public override void Serialize(IAsyncApiWriter writer)
@@ -19,6 +19,6 @@ public class PrincipalStar : Principal
             throw new ArgumentNullException(nameof(writer));
         }
 
-        writer.WriteValue(this.PrincipalValue);
+        writer.WriteValue(this.Value);
     }
 }
