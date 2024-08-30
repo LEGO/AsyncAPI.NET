@@ -59,7 +59,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
             { "principal", (a, n) => { a.Principal = Principal.Parse(n); } },
             { "action", (a, n) => { a.Action = StringOrStringList.Parse(n); } },
             { "resource", (a, n) => { a.Resource = StringOrStringList.Parse(n); } },
-            { "condition", (a, n) => { a.Condition = n.CreateAny(); } },
+            { "condition", (a, n) => { a.Condition = Condition.Parse(n); } },
         };
 
         public override void SerializeProperties(IAsyncApiWriter writer)

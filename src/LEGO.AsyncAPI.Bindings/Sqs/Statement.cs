@@ -34,7 +34,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
         /// <summary>
         /// Specific circumstances under which the policy grants permission.
         /// </summary>
-        public AsyncApiAny? Condition { get; set; }
+        public Condition? Condition { get; set; }
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
@@ -50,7 +50,7 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
             writer.WriteRequiredObject("principal", this.Principal, (w, t) => t.Serialize(w));
             writer.WriteRequiredObject("action", this.Action, (w, t) => t.Value.Write(w));
             writer.WriteOptionalObject("resource", this.Resource, (w, t) => t?.Value.Write(w));
-            writer.WriteOptionalObject("condition", this.Condition, (w, t) => t?.Write(w));
+            writer.WriteOptionalObject("condition", this.Condition, (w, t) => t?.Serialize(w));
             writer.WriteExtensions(this.Extensions);
             writer.WriteEndObject();
         }
