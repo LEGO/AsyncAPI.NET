@@ -60,7 +60,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
             { "principal", (a, n) => { a.Principal = Principal.Parse(n); } },
             { "action", (a, n) => { a.Action = StringOrStringList.Parse(n); } },
             { "resource", (a, n) => { a.Resource = StringOrStringList.Parse(n); } },
-            { "condition", (a, n) => { a.Condition = n.CreateAny(); } },
+            { "condition", (a, n) => { a.Condition = Condition.Parse(n); } },
         };
 
         /// <inheritdoc/>
