@@ -143,12 +143,14 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                     "sqs:SendMessage",
                                     "sqs:ReceiveMessage",
                                 })),
-                                Condition = new AsyncApiAny(new Dictionary<string, object>()
+                                Condition = new Condition(new Dictionary<string, Dictionary<string, StringOrStringList>>
                                 {
                                     {
-                                        "StringEquals", new Dictionary<string, List<string>>()
+                                        "StringEquals", new Dictionary<string, StringOrStringList>
                                         {
-                                            { "aws:username", new List<string>() { "johndoe", "mrsmith" } },
+                                            {
+                                                "aws:username", new StringOrStringList(new AsyncApiAny(new List<string> { "johndoe", "mrsmith" }))
+                                            },
                                         }
                                     },
                                 }),
@@ -170,12 +172,14 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                     "AWS", new StringOrStringList(new AsyncApiAny(new List<string>
                                         { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" })))),
                                 Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue")),
-                                Condition = new AsyncApiAny(new Dictionary<string, object>()
+                                Condition = new Condition(new Dictionary<string, Dictionary<string, StringOrStringList>>
                                 {
                                     {
-                                        "NumericLessThanEquals", new Dictionary<string, string>()
+                                        "NumericLessThanEquals", new Dictionary<string, StringOrStringList>
                                         {
-                                            { "aws:MultiFactorAuthAge", "3600" },
+                                            {
+                                                "aws:MultiFactorAuthAge", new StringOrStringList(new AsyncApiAny("3600"))
+                                            },
                                         }
                                     },
                                 }),
