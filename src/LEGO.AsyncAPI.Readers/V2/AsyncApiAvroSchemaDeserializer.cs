@@ -3,8 +3,10 @@
 namespace LEGO.AsyncAPI.Readers
 {
     using System;
+    using System.Threading;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
+    using LEGO.AsyncAPI.Models.Avro.LogicalTypes;
     using LEGO.AsyncAPI.Readers.Exceptions;
     using LEGO.AsyncAPI.Readers.ParseNodes;
     using LEGO.AsyncAPI.Writers;
@@ -68,6 +70,60 @@ namespace LEGO.AsyncAPI.Readers
             { "types", (a, n) => a.Types = n.CreateList(LoadSchema) },
         };
 
+        private static readonly FixedFieldMap<AvroDecimal> DecimalFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "logicalType", (a, n) => { } },
+            { "precision", (a, n) => a.Precision = int.Parse(n.GetScalarValue()) },
+            { "scale", (a, n) => a.Scale = int.Parse(n.GetScalarValue()) },
+        };
+
+        private static readonly FixedFieldMap<AvroUUID> UUIDFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "logicalType", (a, n) => { } },
+        };
+
+        private static readonly FixedFieldMap<AvroDate> DateFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "logicalType", (a, n) => { } },
+        };
+
+        private static readonly FixedFieldMap<AvroTimeMillis> TimeMillisFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "logicalType", (a, n) => { } },
+        };
+
+        private static readonly FixedFieldMap<AvroTimeMicros> TimeMicrosFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "logicalType", (a, n) => { } },
+        };
+
+        private static readonly FixedFieldMap<AvroTimestampMillis> TimestampMillisFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "logicalType", (a, n) => { } },
+        };
+
+        private static readonly FixedFieldMap<AvroTimestampMicros> TimestampMicrosFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "logicalType", (a, n) => { } },
+        };
+
+        private static readonly FixedFieldMap<AvroDuration> DurationFixedFields = new()
+        {
+            { "type", (a, n) => { } },
+            { "logicalType", (a, n) => { } },
+            { "name", (a, n) => a.Name = n.GetScalarValue() },
+            { "namespace", (a, n) => a.Namespace = n.GetScalarValue() },
+            { "aliases", (a, n) => a.Aliases = n.CreateSimpleList(n2 => n2.GetScalarValue()) },
+            { "size", (a, n) => { } },
+        };
+
         private static readonly PatternFieldMap<AvroRecord> RecordMetadataPatternFields =
         new()
         {
@@ -110,6 +166,54 @@ namespace LEGO.AsyncAPI.Readers
              { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
         };
 
+        private static readonly PatternFieldMap<AvroDecimal> DecimalMetadataPatternFields =
+        new()
+        {
+            { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroUUID> UUIDMetadataPatternFields =
+        new()
+        {
+            { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroDate> DateMetadataPatternFields =
+        new()
+        {
+            { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroTimeMillis> TimeMillisMetadataPatternFields =
+        new()
+        {
+            { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroTimeMicros> TimeMicrosMetadataPatternFields =
+        new()
+        {
+            { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroTimestampMillis> TimestampMillisMetadataPatternFields =
+        new()
+        {
+            { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroTimestampMicros> TimestampMicrosMetadataPatternFields =
+        new()
+        {
+            { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
+        private static readonly PatternFieldMap<AvroDuration> DurationMetadataPatternFields =
+        new()
+        {
+            { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
+        };
+
         public static AvroSchema LoadSchema(ParseNode node)
         {
             if (node is ValueNode valueNode)
@@ -141,8 +245,13 @@ namespace LEGO.AsyncAPI.Readers
                     };
                 }
 
-                var type = mapNode["type"]?.Value.GetScalarValue();
+                var isLogicalType = mapNode["logicalType"] != null;
+                if (isLogicalType)
+                {
+                    return LoadLogicalType(mapNode);
+                }
 
+                var type = mapNode["type"]?.Value.GetScalarValue();
                 switch (type)
                 {
                     case "record":
@@ -175,6 +284,48 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             throw new AsyncApiReaderException("Invalid node type");
+        }
+
+        private static AvroSchema LoadLogicalType(MapNode mapNode)
+        {
+            var type = mapNode["logicalType"]?.Value.GetScalarValue();
+            switch (type)
+            {
+                case "decimal":
+                    var @decimal = new AvroDecimal();
+                    mapNode.ParseFields(ref @decimal, DecimalFixedFields, DecimalMetadataPatternFields);
+                    return @decimal;
+                case "uuid":
+                    var uuid = new AvroUUID();
+                    mapNode.ParseFields(ref uuid, UUIDFixedFields, UUIDMetadataPatternFields);
+                    return uuid;
+                case "date":
+                    var date = new AvroDate();
+                    mapNode.ParseFields(ref date, DateFixedFields, DateMetadataPatternFields);
+                    return date;
+                case "time-millis":
+                    var timeMillis = new AvroTimeMillis();
+                    mapNode.ParseFields(ref timeMillis, TimeMillisFixedFields, TimeMillisMetadataPatternFields);
+                    return timeMillis;
+                case "time-micros":
+                    var timeMicros = new AvroTimeMicros();
+                    mapNode.ParseFields(ref timeMicros, TimeMicrosFixedFields, TimeMicrosMetadataPatternFields);
+                    return timeMicros;
+                case "timestamp-millis":
+                    var timestampMillis = new AvroTimestampMillis();
+                    mapNode.ParseFields(ref timestampMillis, TimestampMillisFixedFields, TimestampMillisMetadataPatternFields);
+                    return timestampMillis;
+                case "timestamp-micros":
+                    var timestampMicros = new AvroTimestampMicros();
+                    mapNode.ParseFields(ref timestampMicros, TimestampMicrosFixedFields, TimestampMicrosMetadataPatternFields);
+                    return timestampMicros;
+                case "duration":
+                    var duration = new AvroDuration();
+                    mapNode.ParseFields(ref duration, DurationFixedFields, DurationMetadataPatternFields);
+                    return duration;
+                default:
+                    throw new AsyncApiException($"Unsupported type: {type}");
+            }
         }
 
         private static AvroField LoadField(ParseNode node)

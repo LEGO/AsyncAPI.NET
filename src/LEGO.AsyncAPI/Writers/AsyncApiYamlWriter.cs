@@ -1,13 +1,13 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-using System;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-
 namespace LEGO.AsyncAPI.Writers
 {
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// Used to conver an AsyncApi schema into a yaml document.
     /// </summary>

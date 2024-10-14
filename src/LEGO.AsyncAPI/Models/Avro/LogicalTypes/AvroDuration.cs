@@ -1,27 +1,25 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models
+namespace LEGO.AsyncAPI.Models.Avro.LogicalTypes
 {
-    using System.Collections.Generic;
     using System.Linq;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroMap : AvroSchema
+    public class AvroDuration : AvroFixed
     {
-        public override string Type { get; } = "map";
+        public LogicalType LogicalType { get; } = LogicalType.Duration;
 
-        public AvroPrimitiveType Values { get; set; }
-
-        /// <summary>
-        /// A map of properties not in the schema, but added as additional metadata.
-        /// </summary>
-        public override IDictionary<string, AsyncApiAny> Metadata { get; set; } = new Dictionary<string, AsyncApiAny>();
+        public new int Size { get; } = 12;
 
         public override void SerializeV2WithoutReference(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteOptionalProperty("type", this.Type);
-            writer.WriteRequiredProperty("values", this.Values.GetDisplayName());
+            writer.WriteOptionalProperty("logicalType", this.LogicalType.GetDisplayName());
+            writer.WriteRequiredProperty("name", this.Name);
+            writer.WriteOptionalProperty("namespace", this.Namespace);
+            writer.WriteOptionalCollection("aliases", this.Aliases, (w, s) => w.WriteValue(s));
+            writer.WriteRequiredProperty("size", this.Size);
             if (this.Metadata.Any())
             {
                 foreach (var item in this.Metadata)
