@@ -55,6 +55,14 @@ namespace LEGO.AsyncAPI.Services
         {
         }
 
+        public virtual void Visit(AsyncApiJsonSchemaPayload jsonPayload)
+        {
+        }
+
+        public virtual void Visit(AsyncApiAvroSchemaPayload avroPayload)
+        {
+        }
+
         public virtual void Visit(IDictionary<string, AsyncApiAny> anys)
         {
         }

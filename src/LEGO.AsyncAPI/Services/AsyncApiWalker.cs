@@ -326,6 +326,11 @@ namespace LEGO.AsyncAPI.Services
             this.Walk(parameter as IAsyncApiExtensible);
         }
 
+        internal void Walk(AsyncApiAvroSchemaPayload payload)
+        {
+            this.visitor.Visit(payload);
+        }
+
         internal void Walk(AsyncApiSchema schema, bool isComponent = false)
         {
             if (schema == null || this.ProcessAsReference(schema, isComponent))
@@ -539,7 +544,11 @@ namespace LEGO.AsyncAPI.Services
                     this.Walk(AsyncApiConstants.Payload, () => this.Walk((AsyncApiSchema)payload));
                 }
 
-                // #ToFix Add walking for avro.
+                if (message.Payload is AsyncApiAvroSchemaPayload avroPayload)
+                {
+                    this.Walk(AsyncApiConstants.Payload, () => this.Walk(avroPayload));
+                }
+
                 this.Walk(AsyncApiConstants.CorrelationId, () => this.Walk(message.CorrelationId));
                 this.Walk(AsyncApiConstants.Tags, () => this.Walk(message.Tags));
                 this.Walk(AsyncApiConstants.Examples, () => this.Walk(message.Examples));

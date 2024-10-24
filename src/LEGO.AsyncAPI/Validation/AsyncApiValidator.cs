@@ -144,6 +144,10 @@ namespace LEGO.AsyncAPI.Validations
 
         public override void Visit(IMessageBinding item) => this.Validate(item);
 
+        public override void Visit(AsyncApiAvroSchemaPayload item) => this.Validate(item);
+
+        public override void Visit(AsyncApiJsonSchemaPayload item) => this.Validate(item);
+
         /// <summary>
         /// Execute validation rules against an <see cref="IAsyncApiExtensible"/>.
         /// </summary>
