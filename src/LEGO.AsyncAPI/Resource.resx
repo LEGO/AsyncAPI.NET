@@ -132,4 +132,10 @@
   <data name="Validation_MustBeAbsoluteUrl" xml:space="preserve">
     <value>The field '{0}' in '{1}' object MUST be an absolute uri.</value>
   </data>
+  <data name="Validation_NameMustMatchRegularExpr" xml:space="preserve">
+    <value>'{0}'  MUST match the regular expression '{1}'.</value>
+  </data>
+  <data name="Validation_SymbolsMustMatchRegularExpression" xml:space="preserve">
+    <value>Symbols  MUST match the regular expression '{1}'.</value>
+  </data>
 </root>

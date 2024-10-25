@@ -104,5 +104,23 @@ namespace LEGO.AsyncAPI {
                 return ResourceManager.GetString("Validation_MustBeAbsoluteUrl", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos;  MUST match the regular expression &apos;{1}&apos;..
+        /// </summary>
+        internal static string Validation_NameMustMatchRegularExpr {
+            get {
+                return ResourceManager.GetString("Validation_NameMustMatchRegularExpr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbols  MUST match the regular expression &apos;{1}&apos;..
+        /// </summary>
+        internal static string Validation_SymbolsMustMatchRegularExpression {
+            get {
+                return ResourceManager.GetString("Validation_SymbolsMustMatchRegularExpression", resourceCulture);
+            }
+        }
     }
 }
