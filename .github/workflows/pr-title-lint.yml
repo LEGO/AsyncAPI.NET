@@ -17,7 +17,7 @@ jobs:
         with:
           subjectPattern: ^(?![A-Z]).+$
           subjectPatternError: |
-            The subject "{subject}" found in the pull request title "{title}" should start with a lowercase character.
+            The subject "{subject}" found in the pull request (PR) title "{title}" should start with a lowercase character.
 
       # Comments the error message from the above lint_pr_title action
       - if: ${{ always() && steps.lint_pr_title.outputs.error_message != null}}
