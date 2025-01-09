@@ -67,7 +67,18 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalProperty("name", this.Name);
             writer.WriteOptionalObject("type", this.Type, (w, s) => s.SerializeV2(w));
             writer.WriteOptionalProperty("doc", this.Doc);
-            writer.WriteOptionalObject("default", this.Default, (w, s) => w.WriteAny(s));
+            writer.WriteOptionalObject("default", this.Default, (w, s) =>
+            {
+                if (s.TryGetValue(out string value) && value == "null")
+                {
+                    w.WriteNull();
+                }
+                else
+                {
+                    w.WriteAny(s);
+                }
+            });
+
             if (this.Order != AvroFieldOrder.None)
             {
                 writer.WriteOptionalProperty("order", this.Order.GetDisplayName());
