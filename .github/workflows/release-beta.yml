@@ -1,7 +1,9 @@
 name: Publish beta NuGet package
 on:
   workflow_dispatch:
-
+  push:
+    branches:
+     - vnext
 jobs:
   check:
     runs-on: ubuntu-latest
