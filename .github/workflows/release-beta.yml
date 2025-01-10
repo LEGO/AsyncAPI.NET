@@ -40,7 +40,7 @@ jobs:
         uses: actions/setup-dotnet@v1
 
       - name: Build ${{ matrix.package-name }} project and pack NuGet package
-        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ needs.check.outputs.version }}-beta.${{github.run_number}}
+        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ needs.check.outputs.version }}-beta.${{github.run_number+99}}
 
       - name: Push generated package to GitHub Packages registry
         run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg -s https://api.nuget.org/v3/index.json --skip-duplicate -n --api-key ${{secrets.NUGET}}
