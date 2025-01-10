@@ -43,7 +43,7 @@ jobs:
         env:
           NUM: ${{ github.run_number }}
         run: |
-          echo ::set-env name=GITHUB_RUN_NUMBER_WITH_OFFSET::$(($NUM+100))
+          echo GITHUB_RUN_NUMBER_WITH_OFFSET=$(($NUM+100)) >> "$GITHUB_ENV"
       - run: echo ${{env.GITHUB_RUN_NUMBER_WITH_OFFSET}}
       - name: Build ${{ matrix.package-name }} project and pack NuGet package
         run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ needs.check.outputs.version }}-beta.${{env.GITHUB_RUN_NUMBER_WITH_OFFSET}}
