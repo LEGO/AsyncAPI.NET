@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Allows referencing an external resource for extended documentation.
     /// </summary>
-    public class AsyncApiExternalDocumentation : IAsyncApiExtensible, IAsyncApiSerializable
+    public class AsyncApiExternalDocumentation : IAsyncApiExtensible, IAsyncApiSerializable, IAsyncApiReferenceable
     {
         /// <summary>
         /// a short description of the target documentation. CommonMark syntax can be used for rich text representation.
@@ -25,8 +25,41 @@ namespace LEGO.AsyncAPI.Models
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
+        public bool UnresolvedReference { get; set; }
+
+        public AsyncApiReference Reference { get; set; }
+
         public void SerializeV2(IAsyncApiWriter writer)
         {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.WriteStartObject();
+
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
+
+            writer.WriteRequiredProperty(AsyncApiConstants.Url, this.Url?.OriginalString);
+
+            writer.WriteExtensions(this.Extensions);
+
+            writer.WriteEndObject();
+        }
+
+        public void SerializeV3(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
+            {
+                this.Reference.SerializeV3(writer);
+                return;
+            }
+
             if (writer is null)
             {
                 throw new ArgumentNullException(nameof(writer));

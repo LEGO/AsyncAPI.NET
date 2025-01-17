@@ -15,10 +15,5 @@ namespace LEGO.AsyncAPI.Models.Interfaces
         /// Reference object.
         /// </summary>
         AsyncApiReference Reference { get; set; }
-
-        /// <summary>
-        /// Serialize to AsyncAPI V2 document without using reference.
-        /// </summary>
-        void SerializeV2WithoutReference(IAsyncApiWriter writer);
     }
 }

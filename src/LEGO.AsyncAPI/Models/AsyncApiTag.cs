@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Allows adding meta data to a single tag.
     /// </summary>
-    public class AsyncApiTag : IAsyncApiExtensible, IAsyncApiSerializable
+    public class AsyncApiTag : IAsyncApiExtensible, IAsyncApiSerializable, IAsyncApiReferenceable
     {
         /// <summary>
         /// REQUIRED. The name of the tag.
@@ -29,6 +29,10 @@ namespace LEGO.AsyncAPI.Models
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
+        public bool UnresolvedReference { get; set; }
+
+        public AsyncApiReference Reference { get; set; }
+
         public void SerializeV2(IAsyncApiWriter writer)
         {
             if (writer is null)
@@ -42,7 +46,33 @@ namespace LEGO.AsyncAPI.Models
 
             writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
 
-            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV3(w));
+
+            writer.WriteExtensions(this.Extensions);
+
+            writer.WriteEndObject();
+        }
+
+        public void SerializeV3(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
+            {
+                this.Reference.SerializeV3(writer);
+                return;
+            }
+
+            writer.WriteStartObject();
+
+            writer.WriteRequiredProperty(AsyncApiConstants.Name, this.Name);
+
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
+
+            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV3(w));
 
             writer.WriteExtensions(this.Extensions);
 

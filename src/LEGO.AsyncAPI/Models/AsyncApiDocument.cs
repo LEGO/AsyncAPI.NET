@@ -44,24 +44,19 @@ namespace LEGO.AsyncAPI.Models
         public string DefaultContentType { get; set; }
 
         /// <summary>
-        /// REQUIRED. The available channels and messages for the API.
+        /// The channels used by this application.
         /// </summary>
         public IDictionary<string, AsyncApiChannel> Channels { get; set; } = new Dictionary<string, AsyncApiChannel>();
+
+        /// <summary>
+        /// The operations this application MUST implement.
+        /// </summary>
+        public IDictionary<string, AsyncApiOperation> Operations { get; set; } = new Dictionary<string, AsyncApiOperation>();
 
         /// <summary>
         /// an element to hold various schemas for the specification.
         /// </summary>
         public AsyncApiComponents Components { get; set; }
-
-        /// <summary>
-        /// a list of tags used by the specification with additional metadata. Each tag name in the list MUST be unique.
-        /// </summary>
-        public IList<AsyncApiTag> Tags { get; set; } = new List<AsyncApiTag>();
-
-        /// <summary>
-        /// additional external documentation.
-        /// </summary>
-        public AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
@@ -126,10 +121,10 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalObject(AsyncApiConstants.Components, this.Components, (w, c) => c.SerializeV2(w));
 
             // tags
-            writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV2(w));
+            writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Info.Tags, (w, t) => t.SerializeV2(w));
 
             // external docs
-            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV2(w));
+            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.Info.ExternalDocs, (w, e) => e.SerializeV2(w));
 
             // extensions
             writer.WriteExtensions(this.Extensions);
@@ -206,6 +201,71 @@ namespace LEGO.AsyncAPI.Models
             {
                 throw new AsyncApiException(string.Format("Invalid reference Id: '{0}'", reference.Id));
             }
+        }
+
+        public void SerializeV3(IAsyncApiWriter writer)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (writer.GetSettings().InlineReferences)
+            {
+                this.ResolveReferences();
+            }
+
+            writer.WriteStartObject();
+
+            // asyncApi
+            writer.WriteRequiredProperty(AsyncApiConstants.AsyncApi, "3.0.0");
+
+            // info
+            writer.WriteRequiredObject(AsyncApiConstants.Info, this.Info, (w, i) => i.SerializeV3(w));
+
+            // id
+            writer.WriteOptionalProperty(AsyncApiConstants.Id, this.Id);
+
+            // servers
+            writer.WriteOptionalMap(AsyncApiConstants.Servers, this.Servers, (writer, key, component) =>
+            {
+                if (component.Reference != null &&
+                component.Reference.Type == ReferenceType.Server &&
+                component.Reference.Id == key)
+                {
+                    component.SerializeV2WithoutReference(writer);
+                }
+                else
+                {
+                    component.SerializeV3(writer);
+                }
+            });
+
+            // content type
+            writer.WriteOptionalProperty(AsyncApiConstants.DefaultContentType, this.DefaultContentType);
+
+            // channels
+            writer.WriteRequiredMap(AsyncApiConstants.Channels, this.Channels, (writer, key, component) =>
+            {
+                if (component.Reference != null &&
+                component.Reference.Type == ReferenceType.Channel &&
+                component.Reference.Id == key)
+                {
+                    component.SerializeV2WithoutReference(writer);
+                }
+                else
+                {
+                    component.SerializeV3(writer);
+                }
+            });
+
+            // components
+            writer.WriteOptionalObject(AsyncApiConstants.Components, this.Components, (w, c) => c.SerializeV3(w));
+
+            // extensions
+            writer.WriteExtensions(this.Extensions);
+
+            writer.WriteEndObject();
         }
     }
 }

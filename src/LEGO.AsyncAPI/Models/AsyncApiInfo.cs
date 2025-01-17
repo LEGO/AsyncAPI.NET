@@ -13,34 +13,44 @@ namespace LEGO.AsyncAPI.Models
     public class AsyncApiInfo : IAsyncApiSerializable, IAsyncApiExtensible
     {
         /// <summary>
-        /// Gets or sets REQUIRED. The title of the application.
+        /// REQUIRED. The title of the application.
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets REQUIRED. Provides the version of the application API (not to be confused with the specification version).
+        /// REQUIRED Provides the version of the application API (not to be confused with the specification version).
         /// </summary>
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets or sets a short description of the application. CommonMark syntax can be used for rich text representation.
+        /// A short description of the application. CommonMark syntax can be used for rich text representation.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets a URL to the Terms of Service for the API. MUST be in the format of a URL.
+        /// A URL to the Terms of Service for the API. This MUST be in the form of an absolute URL.
         /// </summary>
         public Uri TermsOfService { get; set; }
 
         /// <summary>
-        /// Gets or sets the contact information for the exposed API.
+        /// The contact information for the exposed API.
         /// </summary>
         public AsyncApiContact Contact { get; set; }
 
         /// <summary>
-        /// Gets or sets the license information for the exposed API.
+        /// The license information for the exposed API.
         /// </summary>
         public AsyncApiLicense License { get; set; }
+
+        /// <summary>
+        /// a list of tags used by the specification with additional metadata. Each tag name in the list MUST be unique.
+        /// </summary>
+        public IList<AsyncApiTag> Tags { get; set; } = new List<AsyncApiTag>();
+
+        /// <summary>
+        /// additional external documentation.
+        /// </summary>
+        public AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
         /// <inheritdoc/>
         public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
@@ -55,7 +65,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteStartObject();
 
             // title
-            writer.WriteOptionalProperty(AsyncApiConstants.Title, this.Title);
+            writer.WriteRequiredProperty(AsyncApiConstants.Title, this.Title);
 
             // version
             writer.WriteOptionalProperty(AsyncApiConstants.Version, this.Version);
@@ -71,6 +81,46 @@ namespace LEGO.AsyncAPI.Models
 
             // license object
             writer.WriteOptionalObject(AsyncApiConstants.License, this.License, (w, l) => l.SerializeV2(w));
+
+            // specification extensions
+            writer.WriteExtensions(this.Extensions);
+
+            writer.WriteEndObject();
+        }
+
+        public void SerializeV3(IAsyncApiWriter writer)
+        {
+
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.WriteStartObject();
+
+            // title
+            writer.WriteRequiredProperty(AsyncApiConstants.Title, this.Title);
+
+            // version
+            writer.WriteOptionalProperty(AsyncApiConstants.Version, this.Version);
+
+            // description
+            writer.WriteOptionalProperty(AsyncApiConstants.Description, this.Description);
+
+            // termsOfService
+            writer.WriteOptionalProperty(AsyncApiConstants.TermsOfService, this.TermsOfService?.OriginalString);
+
+            // contact object
+            writer.WriteOptionalObject(AsyncApiConstants.Contact, this.Contact, (w, c) => c.SerializeV3(w));
+
+            // license object
+            writer.WriteOptionalObject(AsyncApiConstants.License, this.License, (w, l) => l.SerializeV3(w));
+
+            // tags
+            writer.WriteOptionalCollection(AsyncApiConstants.Tags, this.Tags, (w, t) => t.SerializeV3(w));
+
+            // external docs
+            writer.WriteOptionalObject(AsyncApiConstants.ExternalDocs, this.ExternalDocs, (w, e) => e.SerializeV3(w));
 
             // specification extensions
             writer.WriteExtensions(this.Extensions);

@@ -53,7 +53,7 @@ namespace LEGO.AsyncAPI.Models
             {
                 if (this.IsExternal)
                 {
-                    return this.GetExternalReferenceV2();
+                    return this.GetExternalReference();
                 }
 
                 if (!this.Type.HasValue)
@@ -95,7 +95,7 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteEndObject();
         }
 
-        private string GetExternalReferenceV2()
+        private string GetExternalReference()
         {
             if (this.Id != null)
             {
@@ -110,9 +110,26 @@ namespace LEGO.AsyncAPI.Models
             return this.ExternalResource;
         }
 
-        public void Write(IAsyncApiWriter writer)
+        public void SerializeV3(IAsyncApiWriter writer)
         {
-            this.SerializeV2(writer);
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (this.Type == ReferenceType.SecurityScheme)
+            {
+                // Write the string as property name
+                writer.WritePropertyName(this.Reference);
+                return;
+            }
+
+            writer.WriteStartObject();
+
+            // $ref
+            writer.WriteOptionalProperty(AsyncApiConstants.DollarRef, this.Reference);
+
+            writer.WriteEndObject();
         }
     }
 }

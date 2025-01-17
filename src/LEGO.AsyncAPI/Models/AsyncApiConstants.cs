@@ -145,5 +145,9 @@ namespace LEGO.AsyncAPI.Models
         public const string AdditionalItems = "additionalItems";
         public const string PropertyNames = "propertyNames";
         public const string PatternProperties = "patternProperties";
+        public const string Host = "host";
+        public const string PathName = "pathName";
+        public const string Operations = "operations";
+        public const string ReplyAddresses = "replyAddresses";
     }
 }
