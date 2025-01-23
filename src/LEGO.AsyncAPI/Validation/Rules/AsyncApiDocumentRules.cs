@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Validation.Rules
 {
+    using System;
     using System.Linq;
     using System.Text.RegularExpressions;
     using LEGO.AsyncAPI.Models;
@@ -10,10 +11,12 @@ namespace LEGO.AsyncAPI.Validation.Rules
     [AsyncApiRule]
     public static class AsyncApiDocumentRules
     {
+        private static TimeSpan RegexTimeout = TimeSpan.FromSeconds(1);
         /// <summary>
         /// The key regex.
         /// </summary>
-        public static Regex KeyRegex = new Regex(@"^[a-zA-Z0-9\.\-_]+$");
+        public static Regex KeyRegex = new Regex(@"^[a-zA-Z0-9\.\-_]+$", RegexOptions.None, RegexTimeout);
+        public static Regex ChannelKeyUriTemplateRegex = new Regex(@"^(?:(?:[^\x00-\x20""'<>%\\^`{|}]|%[0-9a-f]{2})|\{[+#./;?&=,!@|]?(?:[a-z0-9_]|%[0-9a-f]{2})+(?::[1-9][0-9]{0,3}|\*)?(?:,(?:[a-z0-9_]|%[0-9a-f]{2})+(?::[1-9][0-9]{0,3}|\*)?)*\})*$", RegexOptions.IgnoreCase, RegexTimeout);
 
         public static ValidationRule<AsyncApiDocument> DocumentRequiredFields =>
             new ValidationRule<AsyncApiDocument>(
@@ -30,14 +33,30 @@ namespace LEGO.AsyncAPI.Validation.Rules
                     context.Exit();
 
                     context.Enter("channels");
-                    if (document.Channels == null || !document.Channels.Keys.Any())
+                    try
                     {
-                        context.CreateError(
-                            nameof(DocumentRequiredFields),
-                            string.Format(Resource.Validation_FieldRequired, "channels", "document"));
-                    }
+                        if (document.Channels == null || !document.Channels.Keys.Any())
+                        {
+                            context.CreateError(
+                                nameof(DocumentRequiredFields),
+                                string.Format(Resource.Validation_FieldRequired, "channels", "document"));
+                            return;
+                        }
 
-                    context.Exit();
+                        foreach (var key in document.Channels.Keys)
+                        {
+                            if (!ChannelKeyUriTemplateRegex.IsMatch(key))
+                            {
+                                context.CreateError(
+                                    "ChannelKeys",
+                                    string.Format(Resource.Validation_KeyMustMatchRegularExpr, key, "channels", KeyRegex.ToString()));
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        context.Exit();
+                    }                    
                 });
 
         public static ValidationRule<AsyncApiDocument> KeyMustBeRegularExpression =>
