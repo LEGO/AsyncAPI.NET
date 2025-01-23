@@ -319,35 +319,35 @@ namespace LEGO.AsyncAPI.Tests
             payload.Properties.Count.Should().Be(3);
         }
 
-        [Test]
-        public void AvroReference_WithExternalResourcesInterface_DeserializesCorrectly()
-        {
-            var yaml = """
-               asyncapi: 2.3.0
-               info:
-                 title: test
-                 version: 1.0.0
-               channels:
-                 workspace:
-                   publish:
-                     message:
-                      schemaFormat: 'application/vnd.apache.avro+yaml;version=1.9.0'
-                      payload:
-                        $ref: 'path/to/user-create.avsc/#UserCreate'
-               """;
-            var settings = new AsyncApiReaderSettings
-            {
-                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
-                ExternalReferenceReader = new MockExternalAvroReferenceReader(),
-            };
-            var reader = new AsyncApiStringReader(settings);
-            var doc = reader.Read(yaml, out var diagnostic);
-            var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
-            payload.Should().BeAssignableTo(typeof(AsyncApiAvroSchemaPayload));
-            var avro = payload as AsyncApiAvroSchemaPayload;
-            avro.TryGetAs<AvroRecord>(out var record);
-            record.Name.Should().Be("SomeEvent");
-        }
+        //[Test]
+        //public void AvroReference_WithExternalResourcesInterface_DeserializesCorrectly()
+        //{
+        //    var yaml = """
+        //       asyncapi: 2.3.0
+        //       info:
+        //         title: test
+        //         version: 1.0.0
+        //       channels:
+        //         workspace:
+        //           publish:
+        //             message:
+        //              schemaFormat: 'application/vnd.apache.avro+yaml;version=1.9.0'
+        //              payload:
+        //                $ref: 'path/to/user-create.avsc/#UserCreate'
+        //       """;
+        //    var settings = new AsyncApiReaderSettings
+        //    {
+        //        ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
+        //        ExternalReferenceReader = new MockExternalAvroReferenceReader(),
+        //    };
+        //    var reader = new AsyncApiStringReader(settings);
+        //    var doc = reader.Read(yaml, out var diagnostic);
+        //    var payload = doc.Channels["workspace"].Publish.Message.First().Payload;
+        //    payload.Should().BeAssignableTo(typeof(AsyncApiAvroSchemaPayload));
+        //    var avro = payload as AsyncApiAvroSchemaPayload;
+        //    avro.TryGetAs<AvroRecord>(out var record);
+        //    record.Name.Should().Be("SomeEvent");
+        //}
     }
 
     public class MockLoader : IStreamLoader

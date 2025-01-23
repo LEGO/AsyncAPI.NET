@@ -44,6 +44,8 @@ namespace LEGO.AsyncAPI.Readers
         /// </summary>
         public AsyncApiReaderSettings Settings { get; }
 
+        public AsyncApiWorkspace Workspace { get; }
+
         ///// <summary>
         ///// Initializes a new instance of the <see cref="ParsingContext"/> class.
         ///// </summary>
@@ -63,6 +65,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             this.Diagnostic = diagnostic;
             this.Settings = settings;
+            this.Workspace = new AsyncApiWorkspace();
         }
 
         internal AsyncApiDocument Parse(JsonNode jsonNode)
@@ -78,6 +81,7 @@ namespace LEGO.AsyncAPI.Readers
                 case string version when version.StartsWith("2"):
                     this.VersionService = new AsyncApiV2VersionService(this.Diagnostic);
                     doc = this.VersionService.LoadDocument(this.RootNode);
+                    this.Workspace.RegisterComponents(doc);
                     this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_0;
                     break;
 

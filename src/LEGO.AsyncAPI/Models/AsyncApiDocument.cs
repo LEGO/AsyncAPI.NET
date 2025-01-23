@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
     using LEGO.AsyncAPI.Services;
@@ -14,6 +13,8 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class AsyncApiDocument : IAsyncApiExtensible, IAsyncApiSerializable
     {
+        internal AsyncApiWorkspace Workspace { get; set; }
+
         /// <summary>
         /// REQUIRED. Specifies the AsyncAPI Specification version being used.
         /// </summary>
@@ -90,37 +91,13 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteOptionalProperty(AsyncApiConstants.Id, this.Id);
 
             // servers
-            writer.WriteOptionalMap(AsyncApiConstants.Servers, this.Servers, (writer, key, component) =>
-            {
-                if (component.Reference != null &&
-                component.Reference.Type == ReferenceType.Server &&
-                component.Reference.Id == key)
-                {
-                    component.SerializeV2WithoutReference(writer);
-                }
-                else
-                {
-                    component.SerializeV2(writer);
-                }
-            });
+            writer.WriteOptionalMap(AsyncApiConstants.Servers, this.Servers, (writer, key, component) => component.SerializeV2(writer));
 
             // content type
             writer.WriteOptionalProperty(AsyncApiConstants.DefaultContentType, this.DefaultContentType);
 
             // channels
-            writer.WriteRequiredMap(AsyncApiConstants.Channels, this.Channels, (writer, key, component) =>
-            {
-                if (component.Reference != null &&
-                component.Reference.Type == ReferenceType.Channel &&
-                component.Reference.Id == key)
-                {
-                    component.SerializeV2WithoutReference(writer);
-                }
-                else
-                {
-                    component.SerializeV2(writer);
-                }
-            });
+            writer.WriteRequiredMap(AsyncApiConstants.Channels, this.Channels, (writer, key, component) => component.SerializeV2(writer));
 
             // components
             writer.WriteOptionalObject(AsyncApiConstants.Components, this.Components, (w, c) => c.SerializeV2(w));
@@ -145,67 +122,67 @@ namespace LEGO.AsyncAPI.Models
             return resolver.Errors;
         }
 
-        internal T ResolveReference<T>(AsyncApiReference reference)
-            where T : class, IAsyncApiReferenceable
+        internal T? ResolveReference<T>(AsyncApiReference reference)
+            where T : class
         {
-            return this.ResolveReference(reference) as T;
+            return this.Workspace.ResolveReference<T>(reference.Reference);
         }
 
-        internal IAsyncApiReferenceable ResolveReference(AsyncApiReference reference)
-        {
-            if (reference == null)
-            {
-                return null;
-            }
+        //internal IAsyncApiReferenceable ResolveReference(AsyncApiReference reference)
+        //{
+        //    if (reference == null)
+        //    {
+        //        return null;
+        //    }
 
-            if (!reference.Type.HasValue)
-            {
-                throw new ArgumentException("Reference must have a type.");
-            }
+        //    if (!reference.Type.HasValue)
+        //    {
+        //        throw new ArgumentException("Reference must have a type.");
+        //    }
 
-            if (this.Components == null)
-            {
-                throw new AsyncApiException(string.Format("Invalid reference Id: '{0}'", reference.Id));
-            }
+        //    if (this.Components == null)
+        //    {
+        //        throw new AsyncApiException(string.Format("Invalid reference Id: '{0}'", reference.Id));
+        //    }
 
-            try
-            {
-                switch (reference.Type)
-                {
-                    case ReferenceType.Schema:
-                        return this.Components.Schemas[reference.Id];
-                    case ReferenceType.Server:
-                        return this.Components.Servers[reference.Id];
-                    case ReferenceType.Channel:
-                        return this.Components.Channels[reference.Id];
-                    case ReferenceType.Message:
-                        return this.Components.Messages[reference.Id];
-                    case ReferenceType.SecurityScheme:
-                        return this.Components.SecuritySchemes[reference.Id];
-                    case ReferenceType.Parameter:
-                        return this.Components.Parameters[reference.Id];
-                    case ReferenceType.CorrelationId:
-                        return this.Components.CorrelationIds[reference.Id];
-                    case ReferenceType.OperationTrait:
-                        return this.Components.OperationTraits[reference.Id];
-                    case ReferenceType.MessageTrait:
-                        return this.Components.MessageTraits[reference.Id];
-                    case ReferenceType.ServerBindings:
-                        return this.Components.ServerBindings[reference.Id];
-                    case ReferenceType.ChannelBindings:
-                        return this.Components.ChannelBindings[reference.Id];
-                    case ReferenceType.OperationBindings:
-                        return this.Components.OperationBindings[reference.Id];
-                    case ReferenceType.MessageBindings:
-                        return this.Components.MessageBindings[reference.Id];
-                    default:
-                        throw new AsyncApiException("Invalid reference type.");
-                }
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new AsyncApiException(string.Format("Invalid reference Id: '{0}'", reference.Id));
-            }
-        }
+        //    try
+        //    {
+        //        switch (reference.Type)
+        //        {
+        //            case ReferenceType.Schema:
+        //                return this.Components.Schemas[reference.Id];
+        //            case ReferenceType.Server:
+        //                return this.Components.Servers[reference.Id];
+        //            case ReferenceType.Channel:
+        //                return this.Components.Channels[reference.Id];
+        //            case ReferenceType.Message:
+        //                return this.Components.Messages[reference.Id];
+        //            case ReferenceType.SecurityScheme:
+        //                return this.Components.SecuritySchemes[reference.Id];
+        //            case ReferenceType.Parameter:
+        //                return this.Components.Parameters[reference.Id];
+        //            case ReferenceType.CorrelationId:
+        //                return this.Components.CorrelationIds[reference.Id];
+        //            case ReferenceType.OperationTrait:
+        //                return this.Components.OperationTraits[reference.Id];
+        //            case ReferenceType.MessageTrait:
+        //                return this.Components.MessageTraits[reference.Id];
+        //            case ReferenceType.ServerBindings:
+        //                return this.Components.ServerBindings[reference.Id];
+        //            case ReferenceType.ChannelBindings:
+        //                return this.Components.ChannelBindings[reference.Id];
+        //            case ReferenceType.OperationBindings:
+        //                return this.Components.OperationBindings[reference.Id];
+        //            case ReferenceType.MessageBindings:
+        //                return this.Components.MessageBindings[reference.Id];
+        //            default:
+        //                throw new AsyncApiException("Invalid reference type.");
+        //        }
+        //    }
+        //    catch (KeyNotFoundException)
+        //    {
+        //        throw new AsyncApiException(string.Format("Invalid reference Id: '{0}'", reference.Id));
+        //    }
+        //}
     }
 }

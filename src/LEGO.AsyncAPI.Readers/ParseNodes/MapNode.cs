@@ -185,7 +185,6 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         {
             return new T()
             {
-                UnresolvedReference = true,
                 Reference = this.Context.VersionService.ConvertToAsyncApiReference(referenceId, referenceType),
             };
         }

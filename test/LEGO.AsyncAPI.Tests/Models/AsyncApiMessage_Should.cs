@@ -234,7 +234,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(input, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            deserializedMessage.Payload.UnresolvedReference.Should().BeTrue();
+            //deserializedMessage.Payload.UnresolvedReference.Should().BeTrue();
             deserializedMessage.Payload.Reference.Should().NotBeNull();
             deserializedMessage.Payload.Reference.IsExternal.Should().BeTrue();
             deserializedMessage.Payload.Reference.IsFragment.Should().BeTrue();

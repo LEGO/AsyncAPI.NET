@@ -1120,7 +1120,7 @@ namespace LEGO.AsyncAPI.Tests
             };
 
             var outputString = new StringWriter();
-            var writer = new AsyncApiYamlWriter(outputString);
+            var writer = new AsyncApiYamlWriter(outputString, AsyncApiWriterSettings.Default);
 
             // Act
             document.SerializeV2(writer);

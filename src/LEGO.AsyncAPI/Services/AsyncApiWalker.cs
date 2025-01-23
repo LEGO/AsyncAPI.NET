@@ -718,8 +718,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiServer server, bool isComponent = false)
         {
-            if (server == null || this.ProcessAsReference(server, isComponent))
+            if (server is AsyncApiServerReference)
             {
+                this.Walk(server as IAsyncApiReferenceable);
                 return;
             }
 

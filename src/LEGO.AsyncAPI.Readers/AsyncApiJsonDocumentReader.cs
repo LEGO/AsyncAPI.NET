@@ -236,8 +236,8 @@ namespace LEGO.AsyncAPI.Readers
                         case ReferenceType.Schema:
                             result = reader.ReadFragment<AsyncApiJsonSchema>(input, AsyncApiVersion.AsyncApi2_0, out var streamDiagnostics);
                             break;
-                        case ReferenceType.Server:
-                            result = reader.ReadFragment<AsyncApiServer>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+                        //case ReferenceType.Server:
+                        //    result = reader.ReadFragment<AsyncApiServer>(input, AsyncApiVersion.AsyncApi2_0, out var _);
                             break;
                         case ReferenceType.Channel:
                             result = reader.ReadFragment<AsyncApiChannel>(input, AsyncApiVersion.AsyncApi2_0, out var _);

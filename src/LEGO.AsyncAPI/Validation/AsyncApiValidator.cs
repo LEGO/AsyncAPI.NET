@@ -174,7 +174,7 @@ namespace LEGO.AsyncAPI.Validations
 
             // Validate unresolved references as references
             var potentialReference = item as IAsyncApiReferenceable;
-            if (potentialReference != null && potentialReference.UnresolvedReference)
+            if (potentialReference != null)
             {
                 type = typeof(IAsyncApiReferenceable);
             }

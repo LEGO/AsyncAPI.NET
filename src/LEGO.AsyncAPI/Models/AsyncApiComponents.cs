@@ -148,11 +148,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Servers,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Server &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiServerReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {

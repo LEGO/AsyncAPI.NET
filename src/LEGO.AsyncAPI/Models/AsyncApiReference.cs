@@ -3,6 +3,8 @@
 namespace LEGO.AsyncAPI.Models
 {
     using System;
+    using System.Linq;
+    using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
@@ -11,13 +13,97 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class AsyncApiReference : IAsyncApiSerializable
     {
+        public AsyncApiReference()
+        {
+        }
+
+        public AsyncApiReference(string reference, ReferenceType? type)
+        {
+            if (string.IsNullOrWhiteSpace(reference))
+            {
+                throw new AsyncApiException($"The reference string '{reference}' has invalid format.");
+            }
+
+            var segments = reference.Split('#');
+            if (segments.Length == 1)
+            {
+                if (type == ReferenceType.SecurityScheme)
+                {
+                    this.Type = type;
+                    this.Id = reference;
+                    return;
+                }
+
+                this.Type = type;
+                this.ExternalResource = segments[0];
+
+                return;
+            }
+            else if (segments.Length == 2)
+            {
+                // Local components reference
+                if (reference.StartsWith("#"))
+                {
+                    var localSegments = reference.Split('/');
+
+                    if (localSegments.Length == 4)
+                    {
+                        if (localSegments[1] == "components")
+                        {
+                            var referenceType = localSegments[2].GetEnumFromDisplayName<ReferenceType>();
+
+                            this.Type = referenceType;
+                            this.Id = localSegments[3];
+                            this.IsFragment = true;
+                            return;
+                        }
+                    }
+
+                    throw new AsyncApiException($"The reference string '{reference}' has invalid format.");
+                }
+
+                var id = segments[1];
+                if (id.StartsWith("/components/"))
+                {
+                    var localSegments = segments[1].Split('/');
+                    var referencedType = localSegments[2].GetEnumFromDisplayName<ReferenceType>();
+                    if (type == null)
+                    {
+                        type = referencedType;
+                    }
+                    else
+                    {
+                        if (type != referencedType)
+                        {
+                            throw new AsyncApiException("Referenced type mismatch");
+                        }
+                    }
+
+                    id = localSegments[3];
+                }
+
+                this.IsFragment = true;
+                this.ExternalResource = segments[0];
+                this.Type = type;
+                this.Id = id;
+
+                return;
+            }
+
+            throw new AsyncApiException($"The reference string '{reference}' has invalid format.");
+        }
+
         /// <summary>
         /// External resource in the reference.
         /// It maybe:
         /// 1. a absolute/relative file path, for example:  ../commons/pet.json
         /// 2. a Url, for example: http://localhost/pet.json.
         /// </summary>
-        public string ExternalResource { get; set; }
+        public string ExternalResource 
+        { 
+            get; 
+            set; 
+        }
 
         /// <summary>
         /// Gets or sets the element type referenced.
@@ -97,17 +183,8 @@ namespace LEGO.AsyncAPI.Models
 
         private string GetExternalReferenceV2()
         {
-            if (this.Id != null)
-            {
-                if (this.IsFragment)
-                {
-                    return this.ExternalResource + "#" + this.Id;
-                }
 
-                return this.ExternalResource + "#/components/" + this.Type.GetDisplayName() + "/" + this.Id;
-            }
-
-            return this.ExternalResource;
+            return this.ExternalResource + "/#/" + this.Id ?? string.Empty;
         }
 
         public void Write(IAsyncApiWriter writer)
