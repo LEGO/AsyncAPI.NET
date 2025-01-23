@@ -61,6 +61,15 @@ namespace LEGO.AsyncAPI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Channel signature &apos;{0}&apos; MUST be unique..
+        /// </summary>
+        internal static string Validation_ChannelsMustBeUnique {
+            get {
+                return ResourceManager.GetString("Validation_ChannelsMustBeUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The string &apos;{0}&apos; MUST be an email address..
         /// </summary>
         internal static string Validation_EmailMustBeEmailFormat {

@@ -47,6 +47,42 @@ namespace LEGO.AsyncAPI.Tests.Validation
         }
 
         [Test]
+        public void ChannelKey_WithNonUniqueKey_DiagnosticsError()
+        {
+            var input =
+                """
+                asyncapi: 2.6.0
+                info:
+                  title: Chat Application
+                  version: 1.0.0
+                servers:
+                  testing:
+                    url: test.mosquitto.org:1883
+                    protocol: mqtt
+                    description: Test broker
+                channels:
+                  chat/{personId}:
+                    publish:
+                      operationId: onMessageReceieved
+                      message:
+                        name: text
+                        payload:
+                          type: string
+                  chat/{personIdentity}:
+                    publish:
+                      operationId: onMessageReceieved
+                      message:
+                        name: text
+                        payload:
+                          type: string
+                """;
+
+            var document = new AsyncApiStringReader().Read(input, out var diagnostic);
+            diagnostic.Errors.First().Message.Should().Be("Channel signature 'chat/{}' MUST be unique.");
+            diagnostic.Errors.First().Pointer.Should().Be("#/channels");
+        }
+
+        [Test]
         [TestCase("chat")]
         [TestCase("/some/chat/{personId}")]
         [TestCase("chat-{personId}")]
