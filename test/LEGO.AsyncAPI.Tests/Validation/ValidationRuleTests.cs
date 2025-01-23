@@ -48,6 +48,7 @@ namespace LEGO.AsyncAPI.Tests.Validation
 
         [Test]
         [TestCase("chat")]
+        [TestCase("/some/chat/{personId}")]
         [TestCase("chat-{personId}")]
         [TestCase("chat-{person_id}")]
         [TestCase("chat-{person%2Did}")]
