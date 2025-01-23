@@ -23,7 +23,7 @@ Install the NuGet packages:
 
 ### AsyncAPI.Bindings
 [![Nuget](https://img.shields.io/nuget/v/AsyncAPI.NET.Bindings?label=AsyncAPI.Bindings&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Bindings/)  
-
+[![Nuget](https://img.shields.io/nuget/vpre/AsyncAPI.NET.Bindings?label=AsyncAPI.Bindings-Preview&style=for-the-badge)](https://www.nuget.org/packages/AsyncAPI.NET.Bindings/)  
 ## Example Usage
 
 Main classes to know:
@@ -141,4 +141,4 @@ This project welcomes contributions and suggestions.
 Do you want to contribute to the project? Find out how [here](CONTRIBUTING.md).
 
 ## License
-[Modified Apache 2.0 (Section 6)](https://github.com/LEGO/AsyncAPI.NET/blob/main/LICENSE)
+[Modified Apache 2.0 (Section 6)](https://github.com/LEGO/AsyncAPI.NET/blob/main/LICENSE.txt)

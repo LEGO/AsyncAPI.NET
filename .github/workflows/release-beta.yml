@@ -1,7 +1,9 @@
 name: Publish beta NuGet package
 on:
   workflow_dispatch:
-
+  push:
+    branches:
+     - vnext
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -36,9 +38,15 @@ jobs:
         
       - name: Setup .NET Core @ Latest
         uses: actions/setup-dotnet@v1
-
+     
+      - name: run number with offset
+        env:
+          NUM: ${{ github.run_number }}
+        run: |
+          echo GITHUB_RUN_NUMBER_WITH_OFFSET=$(($NUM+100)) >> "$GITHUB_ENV"
+      - run: echo ${{env.GITHUB_RUN_NUMBER_WITH_OFFSET}}
       - name: Build ${{ matrix.package-name }} project and pack NuGet package
-        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ needs.check.outputs.version }}-beta.${{github.run_number}}
+        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ needs.check.outputs.version }}-beta.${{env.GITHUB_RUN_NUMBER_WITH_OFFSET}}
 
       - name: Push generated package to GitHub Packages registry
         run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg -s https://api.nuget.org/v3/index.json --skip-duplicate -n --api-key ${{secrets.NUGET}}

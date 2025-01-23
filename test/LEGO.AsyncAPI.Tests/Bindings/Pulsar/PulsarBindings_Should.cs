@@ -89,33 +89,6 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Pulsar
         }
 
         [Test]
-        public void PulsarChannelBindingPropertiesExceptNamespaceDefaultToNull()
-        {
-            // Arrange
-            var actual =
-                """
-                bindings:
-                  pulsar:
-                    namespace: staging
-                """;
-
-            // Act
-            // Assert
-            var settings = new AsyncApiReaderSettings();
-            settings.Bindings = BindingsCollection.Pulsar;
-            var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
-            var pulsarBinding = ((PulsarChannelBinding)binding.Bindings["pulsar"]);
-
-            Assert.AreEqual("staging", pulsarBinding.Namespace);
-            Assert.AreEqual(null, pulsarBinding.Persistence);
-            Assert.AreEqual(null, pulsarBinding.Compaction);
-            Assert.AreEqual(null, pulsarBinding.GeoReplication);
-            Assert.AreEqual(null, pulsarBinding.Retention);
-            Assert.AreEqual(null, pulsarBinding.TTL);
-            Assert.AreEqual(null, pulsarBinding.Deduplication);
-        }
-
-        [Test]
         public void PulsarServerBinding_WithFilledObject_SerializesAndDeserializes()
         {
             // Arrange

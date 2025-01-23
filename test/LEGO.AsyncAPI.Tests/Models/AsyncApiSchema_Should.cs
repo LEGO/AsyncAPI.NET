@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             Title = "title1",
             MultipleOf = 3,
             Maximum = 42,
-            ExclusiveMinimum = true,
+            ExclusiveMinimum = 42,
             Minimum = 10,
             Default = new AsyncApiAny(15),
             Type = SchemaType.Integer,
@@ -36,7 +36,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             Title = "title1",
             MultipleOf = 3,
             Maximum = double.MaxValue,
-            ExclusiveMinimum = true,
+            ExclusiveMinimum = double.MinValue,
             Minimum = double.MinValue,
             Default = new AsyncApiAny(15),
             Type = SchemaType.Integer,
@@ -210,7 +210,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             Title = "title1",
             MultipleOf = 3,
             Maximum = 42,
-            ExclusiveMinimum = true,
+            ExclusiveMinimum = 42,
             Minimum = 10,
             Default = new AsyncApiAny(15),
             Type = SchemaType.Integer,
@@ -306,7 +306,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                   "type": "integer",
                   "maximum": 42,
                   "minimum": 10,
-                  "exclusiveMinimum": true,
+                  "exclusiveMinimum": 42,
                   "multipleOf": 3,
                   "default": 15,
                   "nullable": true,
@@ -334,7 +334,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                   "type": "integer",
                   "maximum": 1.7976931348623157E+308,
                   "minimum": -1.7976931348623157E+308,
-                  "exclusiveMinimum": true,
+                  "exclusiveMinimum": -1.7976931348623157E+308,
                   "multipleOf": 3,
                   "default": 15,
                   "nullable": true,
@@ -518,7 +518,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                 type: integer
                 maximum: 42
                 minimum: 10
-                exclusiveMinimum: true
+                exclusiveMinimum: 42.0
                 multipleOf: 3
                 default: 15
                 nullable: true

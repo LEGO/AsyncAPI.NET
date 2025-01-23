@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Validation_ChannelsMustBeUnique" xml:space="preserve">
+    <value>Channel signature '{0}' MUST be unique.</value>
+  </data>
   <data name="Validation_EmailMustBeEmailFormat" xml:space="preserve">
     <value>The string '{0}' MUST be an email address.</value>
   </data>
@@ -131,5 +134,11 @@
   </data>
   <data name="Validation_MustBeAbsoluteUrl" xml:space="preserve">
     <value>The field '{0}' in '{1}' object MUST be an absolute uri.</value>
+  </data>
+  <data name="Validation_NameMustMatchRegularExpr" xml:space="preserve">
+    <value>'{0}'  MUST match the regular expression '{1}'.</value>
+  </data>
+  <data name="Validation_SymbolsMustMatchRegularExpression" xml:space="preserve">
+    <value>Symbols  MUST match the regular expression '{1}'.</value>
   </data>
 </root>

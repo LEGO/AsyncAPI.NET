@@ -35,7 +35,7 @@ namespace LEGO.AsyncAPI.Tests.Validation
             Assert.IsNotEmpty(rules);
 
             // Update the number if you add new default rule(s).
-            Assert.AreEqual(17, rules.Count);
+            Assert.AreEqual(18, rules.Count);
         }
     }
 }

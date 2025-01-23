@@ -61,6 +61,15 @@ namespace LEGO.AsyncAPI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Channel signature &apos;{0}&apos; MUST be unique..
+        /// </summary>
+        internal static string Validation_ChannelsMustBeUnique {
+            get {
+                return ResourceManager.GetString("Validation_ChannelsMustBeUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The string &apos;{0}&apos; MUST be an email address..
         /// </summary>
         internal static string Validation_EmailMustBeEmailFormat {
@@ -102,6 +111,24 @@ namespace LEGO.AsyncAPI {
         internal static string Validation_MustBeAbsoluteUrl {
             get {
                 return ResourceManager.GetString("Validation_MustBeAbsoluteUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos;  MUST match the regular expression &apos;{1}&apos;..
+        /// </summary>
+        internal static string Validation_NameMustMatchRegularExpr {
+            get {
+                return ResourceManager.GetString("Validation_NameMustMatchRegularExpr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbols  MUST match the regular expression &apos;{1}&apos;..
+        /// </summary>
+        internal static string Validation_SymbolsMustMatchRegularExpression {
+            get {
+                return ResourceManager.GetString("Validation_SymbolsMustMatchRegularExpression", resourceCulture);
             }
         }
     }

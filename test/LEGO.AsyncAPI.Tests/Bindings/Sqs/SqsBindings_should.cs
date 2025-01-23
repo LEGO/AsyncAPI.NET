@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
 {
     using System.Collections.Generic;
+    using System.Linq;
     using FluentAssertions;
     using LEGO.AsyncAPI.Bindings;
     using LEGO.AsyncAPI.Bindings.Sqs;
@@ -42,17 +43,27 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                       policy:
                         statements:
                           - effect: deny
-                            principal: arn:aws:iam::123456789012:user/alex.wichmann
+                            principal:
+                              AWS: arn:aws:iam::123456789012:user/alex.wichmann
                             action:
                               - sqs:SendMessage
                               - sqs:ReceiveMessage
+                            condition:
+                              StringEquals:
+                                aws:username:
+                                  - johndoe
+                                  - mrsmith
                             x-statementExtension:
                               statementXPropertyName: statementXPropertyValue
                           - effect: allow
                             principal:
-                              - arn:aws:iam::123456789012:user/alex.wichmann
-                              - arn:aws:iam::123456789012:user/dec.kolakowski
+                              AWS:
+                                - arn:aws:iam::123456789012:user/alex.wichmann
+                                - arn:aws:iam::123456789012:user/dec.kolakowski
                             action: sqs:CreateQueue
+                            condition:
+                              NumericLessThanEquals:
+                                aws:MultiFactorAuthAge: '3600'
                         x-policyExtension:
                           policyXPropertyName: policyXPropertyValue
                       tags:
@@ -69,7 +80,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                       policy:
                         statements:
                           - effect: allow
-                            principal: arn:aws:iam::123456789012:user/alex.wichmann
+                            principal:
+                              Service: s3.amazonaws.com
                             action:
                               - sqs:*
                     x-internalObject:
@@ -124,12 +136,24 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Deny,
-                                Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                Principal = new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                                    "AWS", new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")))),
                                 Action = new StringOrStringList(new AsyncApiAny(new List<string>
                                 {
                                     "sqs:SendMessage",
                                     "sqs:ReceiveMessage",
                                 })),
+                                Condition = new Condition(new Dictionary<string, Dictionary<string, StringOrStringList>>
+                                {
+                                    {
+                                        "StringEquals", new Dictionary<string, StringOrStringList>
+                                        {
+                                            {
+                                                "aws:username", new StringOrStringList(new AsyncApiAny(new List<string> { "johndoe", "mrsmith" }))
+                                            },
+                                        }
+                                    },
+                                }),
                                 Extensions = new Dictionary<string, IAsyncApiExtension>()
                                 {
                                     {
@@ -144,12 +168,21 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Allow,
-                                Principal = new StringOrStringList(new AsyncApiAny(new List<string>
-                                {
-                                        "arn:aws:iam::123456789012:user/alex.wichmann",
-                                        "arn:aws:iam::123456789012:user/dec.kolakowski",
-                                })),
+                                Principal = new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                                    "AWS", new StringOrStringList(new AsyncApiAny(new List<string>
+                                        { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" })))),
                                 Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue")),
+                                Condition = new Condition(new Dictionary<string, Dictionary<string, StringOrStringList>>
+                                {
+                                    {
+                                        "NumericLessThanEquals", new Dictionary<string, StringOrStringList>
+                                        {
+                                            {
+                                                "aws:MultiFactorAuthAge", new StringOrStringList(new AsyncApiAny("3600"))
+                                            },
+                                        }
+                                    },
+                                }),
                             },
                         },
                         Extensions = new Dictionary<string, IAsyncApiExtension>()
@@ -194,7 +227,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                             new Statement()
                             {
                                 Effect = Effect.Allow,
-                                Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                Principal = new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                                    "Service", new StringOrStringList(new AsyncApiAny("s3.amazonaws.com")))),
                                 Action = new StringOrStringList(new AsyncApiAny(new List<string>
                                 {
                                     "sqs:*",
@@ -218,8 +252,10 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
             var actual = channel.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            var settings = new AsyncApiReaderSettings();
-            settings.Bindings = BindingsCollection.Sqs;
+            var settings = new AsyncApiReaderSettings
+            {
+                Bindings = BindingsCollection.Sqs,
+            };
             var binding =
                 new AsyncApiStringReader(settings).ReadFragment<AsyncApiChannel>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
@@ -227,6 +263,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
             actual.Should()
                   .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(channel);
+
+            var expectedSqsBinding = (SqsChannelBinding)channel.Bindings.Values.First();
+            expectedSqsBinding.Should().BeEquivalentTo((SqsChannelBinding)binding.Bindings.Values.First(), options => options.IgnoringCyclicReferences());
         }
 
         [Test]
@@ -254,7 +293,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                         policy:
                           statements:
                             - effect: deny
-                              principal: arn:aws:iam::123456789012:user/alex.wichmann
+                              principal:
+                                AWS: arn:aws:iam::123456789012:user/alex.wichmann
                               action:
                                 - sqs:SendMessage
                                 - sqs:ReceiveMessage
@@ -262,8 +302,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 statementXPropertyName: statementXPropertyValue
                             - effect: allow
                               principal:
-                                - arn:aws:iam::123456789012:user/alex.wichmann
-                                - arn:aws:iam::123456789012:user/dec.kolakowski
+                                AWS:
+                                  - arn:aws:iam::123456789012:user/alex.wichmann
+                                  - arn:aws:iam::123456789012:user/dec.kolakowski
                               action: sqs:CreateQueue
                           x-policyExtension:
                             policyXPropertyName: policyXPropertyValue
@@ -280,7 +321,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                         policy:
                           statements:
                             - effect: allow
-                              principal: arn:aws:iam::123456789012:user/alex.wichmann
+                              principal:
+                                AWS: arn:aws:iam::123456789012:user/alex.wichmann
                               action:
                                 - sqs:*
                         x-queueExtension:
@@ -339,7 +381,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Deny,
-                                    Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                    Principal = new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                                        "AWS", new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")))),
                                     Action = new StringOrStringList(new AsyncApiAny(new List<string>()
                                     {
                                         "sqs:SendMessage",
@@ -359,11 +402,9 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Allow,
-                                    Principal = new StringOrStringList(new AsyncApiAny(new List<string>
-                                    {
-                                        "arn:aws:iam::123456789012:user/alex.wichmann",
-                                        "arn:aws:iam::123456789012:user/dec.kolakowski",
-                                    })),
+                                    Principal = new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                                        "AWS", new StringOrStringList(new AsyncApiAny(new List<string>
+                                            { "arn:aws:iam::123456789012:user/alex.wichmann", "arn:aws:iam::123456789012:user/dec.kolakowski" })))),
                                     Action = new StringOrStringList(new AsyncApiAny("sqs:CreateQueue")),
                                 },
                             },
@@ -409,7 +450,8 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
                                 new Statement()
                                 {
                                     Effect = Effect.Allow,
-                                    Principal = new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")),
+                                    Principal = new PrincipalObject(new KeyValuePair<string, StringOrStringList>(
+                                        "AWS", new StringOrStringList(new AsyncApiAny("arn:aws:iam::123456789012:user/alex.wichmann")))),
                                     Action = new StringOrStringList(new AsyncApiAny(new List<string>
                                     {
                                         "sqs:*",
@@ -444,14 +486,20 @@ namespace LEGO.AsyncAPI.Tests.Bindings.Sqs
             var actual = operation.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
 
             // Assert
-            var settings = new AsyncApiReaderSettings();
-            settings.Bindings = BindingsCollection.Sqs;
+            var settings = new AsyncApiReaderSettings
+            {
+                Bindings = BindingsCollection.Sqs,
+            };
+
             var binding = new AsyncApiStringReader(settings).ReadFragment<AsyncApiOperation>(actual, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
             actual.Should()
                   .BePlatformAgnosticEquivalentTo(expected);
             binding.Should().BeEquivalentTo(operation);
+
+            var expectedSqsBinding = (SqsOperationBinding)operation.Bindings.Values.First();
+            expectedSqsBinding.Should().BeEquivalentTo((SqsOperationBinding)binding.Bindings.Values.First(), options => options.IgnoringCyclicReferences());
         }
     }
 }

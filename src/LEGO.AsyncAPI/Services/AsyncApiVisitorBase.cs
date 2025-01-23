@@ -55,6 +55,14 @@ namespace LEGO.AsyncAPI.Services
         {
         }
 
+        public virtual void Visit(AsyncApiJsonSchemaPayload jsonPayload)
+        {
+        }
+
+        public virtual void Visit(AsyncApiAvroSchemaPayload avroPayload)
+        {
+        }
+
         public virtual void Visit(IDictionary<string, AsyncApiAny> anys)
         {
         }
@@ -243,6 +251,38 @@ namespace LEGO.AsyncAPI.Services
         }
 
         public virtual void Visit(IDictionary<string, AsyncApiChannel> channels)
+        {
+        }
+
+        public virtual void Visit(AsyncApiBindings<IServerBinding> bindings)
+        {
+        }
+
+        public virtual void Visit(IServerBinding binding)
+        {
+        }
+
+        public virtual void Visit(AsyncApiBindings<IChannelBinding> bindings)
+        {
+        }
+
+        public virtual void Visit(IChannelBinding binding)
+        {
+        }
+
+        public virtual void Visit(AsyncApiBindings<IOperationBinding> bindings)
+        {
+        }
+
+        public virtual void Visit(IOperationBinding binding)
+        {
+        }
+
+        public virtual void Visit(AsyncApiBindings<IMessageBinding> bindings)
+        {
+        }
+
+        public virtual void Visit(IMessageBinding binding)
         {
         }
 

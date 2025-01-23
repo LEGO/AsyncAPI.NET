@@ -1,28 +1,31 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
-namespace LEGO.AsyncAPI.Models
+namespace LEGO.AsyncAPI.Models.Avro.LogicalTypes
 {
-    using System.Collections.Generic;
     using System.Linq;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroPrimitive : AvroSchema
+    public abstract class AvroLogicalType : AvroPrimitive
     {
-        public override string Type { get; }
-
-        /// <summary>
-        /// A map of properties not in the schema, but added as additional metadata.
-        /// </summary>
-        public override IDictionary<string, AsyncApiAny> Metadata { get; set; } = new Dictionary<string, AsyncApiAny>();
-
-        public AvroPrimitive(AvroPrimitiveType type)
+        protected AvroLogicalType(AvroPrimitiveType type)
+            : base(type)
         {
-            this.Type = type.GetDisplayName();
+        }
+
+        public abstract LogicalType LogicalType { get; }
+
+        public virtual void SerializeV2Core(IAsyncApiWriter writer)
+        {
         }
 
         public override void SerializeV2WithoutReference(IAsyncApiWriter writer)
         {
-            writer.WriteValue(this.Type);
+            writer.WriteStartObject();
+            writer.WriteOptionalProperty("type", this.Type);
+            writer.WriteOptionalProperty("logicalType", this.LogicalType.GetDisplayName());
+
+            this.SerializeV2Core(writer);
+
             if (this.Metadata.Any())
             {
                 foreach (var item in this.Metadata)
@@ -38,6 +41,8 @@ namespace LEGO.AsyncAPI.Models
                     }
                 }
             }
+
+            writer.WriteEndObject();
         }
     }
 }

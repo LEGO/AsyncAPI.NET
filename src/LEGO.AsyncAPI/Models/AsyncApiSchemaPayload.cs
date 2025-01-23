@@ -30,11 +30,11 @@ namespace LEGO.AsyncAPI.Models
 
         public double? Maximum { get => this.schema.Maximum; set => this.schema.Maximum = value; }
 
-        public bool? ExclusiveMaximum { get => this.schema.ExclusiveMaximum; set => this.schema.ExclusiveMaximum = value; }
+        public double? ExclusiveMaximum { get => this.schema.ExclusiveMaximum; set => this.schema.ExclusiveMaximum = value; }
 
         public double? Minimum { get => this.schema.Minimum; set => this.schema.Minimum = value; }
 
-        public bool? ExclusiveMinimum { get => this.schema.ExclusiveMinimum; set => this.schema.ExclusiveMinimum = value; }
+        public double? ExclusiveMinimum { get => this.schema.ExclusiveMinimum; set => this.schema.ExclusiveMinimum = value; }
 
         public int? MaxLength { get => this.schema.MaxLength; set => this.schema.MaxLength = value; }
 

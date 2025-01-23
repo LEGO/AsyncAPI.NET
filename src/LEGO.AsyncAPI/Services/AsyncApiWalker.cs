@@ -1,4 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Services
 {
@@ -74,15 +74,48 @@ namespace LEGO.AsyncAPI.Services
             });
 
             this.Walk(AsyncApiConstants.ServerBindings, () =>
-             {
-                 if (components.ServerBindings != null)
-                 {
-                     foreach (var item in components.ServerBindings)
-                     {
-                         this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
-                     }
-                 }
-             });
+            {
+                if (components.ServerBindings != null)
+                {
+                    foreach (var item in components.ServerBindings)
+                    {
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
+                    }
+                }
+            });
+
+            this.Walk(AsyncApiConstants.ChannelBindings, () =>
+            {
+                if (components.ChannelBindings != null)
+                {
+                    foreach (var item in components.ChannelBindings)
+                    {
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
+                    }
+                }
+            });
+
+            this.Walk(AsyncApiConstants.OperationBindings, () =>
+            {
+                if (components.OperationBindings != null)
+                {
+                    foreach (var item in components.OperationBindings)
+                    {
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
+                    }
+                }
+            });
+
+            this.Walk(AsyncApiConstants.MessageBindings, () =>
+            {
+                if (components.MessageBindings != null)
+                {
+                    foreach (var item in components.MessageBindings)
+                    {
+                        this.Walk(item.Key, () => this.Walk(item.Value, isComponent: true));
+                    }
+                }
+            });
 
             this.Walk(AsyncApiConstants.Parameters, () =>
             {
@@ -293,7 +326,12 @@ namespace LEGO.AsyncAPI.Services
             this.Walk(parameter as IAsyncApiExtensible);
         }
 
-        internal void Walk(AsyncApiJsonSchema schema, bool isComponent = false)
+        internal void Walk(AsyncApiAvroSchemaPayload payload)
+        {
+            this.visitor.Visit(payload);
+        }
+
+        internal void Walk(AsyncApiSchema schema, bool isComponent = false)
         {
             if (schema == null || this.ProcessAsReference(schema, isComponent))
             {
@@ -506,7 +544,11 @@ namespace LEGO.AsyncAPI.Services
                     this.Walk(AsyncApiConstants.Payload, () => this.Walk((AsyncApiJsonSchema)payload));
                 }
 
-                // #ToFix Add walking for avro.
+                if (message.Payload is AsyncApiAvroSchemaPayload avroPayload)
+                {
+                    this.Walk(AsyncApiConstants.Payload, () => this.Walk(avroPayload));
+                }
+
                 this.Walk(AsyncApiConstants.CorrelationId, () => this.Walk(message.CorrelationId));
                 this.Walk(AsyncApiConstants.Tags, () => this.Walk(message.Tags));
                 this.Walk(AsyncApiConstants.Examples, () => this.Walk(message.Examples));
@@ -567,6 +609,25 @@ namespace LEGO.AsyncAPI.Services
             }
 
             this.visitor.Visit(serverBindings);
+            if (serverBindings != null)
+            {
+                foreach (var binding in serverBindings)
+                {
+                    this.visitor.CurrentKeys.ServerBinding = binding.Key;
+                    this.Walk(binding.Key, () => this.Walk(binding.Value));
+                    this.visitor.CurrentKeys.ServerBinding = null;
+                }
+            }
+        }
+
+        internal void Walk(IServerBinding binding)
+        {
+            if (binding == null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(binding);
         }
 
         internal void Walk(AsyncApiBindings<IChannelBinding> channelBindings, bool isComponent = false)
@@ -577,6 +638,25 @@ namespace LEGO.AsyncAPI.Services
             }
 
             this.visitor.Visit(channelBindings);
+            if (channelBindings != null)
+            {
+                foreach (var binding in channelBindings)
+                {
+                    this.visitor.CurrentKeys.ChannelBinding = binding.Key;
+                    this.Walk(binding.Key, () => this.Walk(binding.Value));
+                    this.visitor.CurrentKeys.ChannelBinding = null;
+                }
+            }
+        }
+
+        internal void Walk(IChannelBinding binding)
+        {
+            if (binding == null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(binding);
         }
 
         internal void Walk(AsyncApiBindings<IOperationBinding> operationBindings, bool isComponent = false)
@@ -587,6 +667,25 @@ namespace LEGO.AsyncAPI.Services
             }
 
             this.visitor.Visit(operationBindings);
+            if (operationBindings != null)
+            {
+                foreach (var binding in operationBindings)
+                {
+                    this.visitor.CurrentKeys.OperationBinding = binding.Key;
+                    this.Walk(binding.Key, () => this.Walk(binding.Value));
+                    this.visitor.CurrentKeys.OperationBinding = null;
+                }
+            }
+        }
+
+        internal void Walk(IOperationBinding binding)
+        {
+            if (binding == null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(binding);
         }
 
         internal void Walk(AsyncApiBindings<IMessageBinding> messageBindings, bool isComponent = false)
@@ -597,6 +696,25 @@ namespace LEGO.AsyncAPI.Services
             }
 
             this.visitor.Visit(messageBindings);
+            if (messageBindings != null)
+            {
+                foreach (var binding in messageBindings)
+                {
+                    this.visitor.CurrentKeys.MessageBinding = binding.Key;
+                    this.Walk(binding.Key, () => this.Walk(binding.Value));
+                    this.visitor.CurrentKeys.MessageBinding = null;
+                }
+            }
+        }
+
+        internal void Walk(IMessageBinding binding)
+        {
+            if (binding == null)
+            {
+                return;
+            }
+
+            this.visitor.Visit(binding);
         }
 
         internal void Walk(IList<AsyncApiMessageExample> examples)

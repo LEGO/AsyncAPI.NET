@@ -11,6 +11,29 @@ namespace LEGO.AsyncAPI.Tests.Models
     public class AvroSchema_Should
     {
         [Test]
+        public void Serialize_WithDefaultNull_SetJsonNull()
+        {
+            var input = """
+            type: record
+            name: User
+            namespace: Producer
+            doc: ESP Schema validation test
+            fields:
+              - name: userId
+                type: int
+              - name: userEmail
+                type:
+                  - null
+                  - string
+                default: null
+            """;
+
+            var model = new AsyncApiStringReader().ReadFragment<AvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
+            var reserialized = model.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
+            reserialized.Should().Contain("default\": null");
+        }
+
+        [Test]
         public void Deserialize_WithMetadata_CreatesMetadata()
         {
             var input =
@@ -220,6 +243,63 @@ namespace LEGO.AsyncAPI.Tests.Models
             // Assert
             actual.Should()
                   .BePlatformAgnosticEquivalentTo(expected);
+        }
+
+        [Test]
+        public void SerializeV2_WithLogicalTypes_SerializesCorrectly()
+        {
+            // Arrange
+            var input = """
+                        {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "bytes",
+                              "logicalType": "decimal",
+                              "scale": 2,
+                              "precision": 4
+                            },
+                            {
+                              "type": "string",
+                              "logicalType": "uuid"
+                            },
+                            {
+                              "type": "int",
+                              "logicalType": "date"
+                            },
+                            {
+                              "type": "int",
+                              "logicalType": "time-millis"
+                            },
+                            {
+                              "type": "long",
+                              "logicalType": "time-micros"
+                            },
+                            {
+                              "type": "long",
+                              "logicalType": "timestamp-millis"
+                            },
+                            {
+                              "type": "long",
+                              "logicalType": "timestamp-micros"
+                            },
+                            {
+                              "type": "fixed",
+                              "logicalType": "duration",
+                              "name": "Duration",
+                              "size": 12
+                            }
+                          ]
+                        }
+                        """;
+
+            // Act
+            var model = new AsyncApiStringReader().ReadFragment<AvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
+            var serialized = model.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
+            // Assert
+            model.As<AvroArray>().Items.As<AvroUnion>().Types.Should().HaveCount(8);
+
+            serialized.Should().BePlatformAgnosticEquivalentTo(input);
         }
 
         [Test]
