@@ -164,11 +164,9 @@ namespace LEGO.AsyncAPI.Models
                 this.ServerVariables,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ServerVariable &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiServerVariableReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -182,11 +180,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Channels,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Channel &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiChannelReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -200,11 +196,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Messages,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Message &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiMessageReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -218,11 +212,9 @@ namespace LEGO.AsyncAPI.Models
                 this.SecuritySchemes,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.SecurityScheme &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiSecuritySchemeReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -236,11 +228,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Parameters,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Parameter &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiParameterReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -254,11 +244,9 @@ namespace LEGO.AsyncAPI.Models
                 this.CorrelationIds,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.CorrelationId &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiCorrelationIdReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {

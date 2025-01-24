@@ -225,8 +225,17 @@ namespace LEGO.AsyncAPI.Readers
 
                 try
                 {
-                    var input = loader.Load(new Uri(reference.Reference.Reference, UriKind.RelativeOrAbsolute));
-                    var component = this.ReadStreamFragment(input, reference, diagnostic);
+                    Stream stream;
+                    if (this.context.Workspace.Contains(reference.Reference.ExternalResource))
+                    {
+                        stream = this.context.Workspace.ResolveReference<Stream>(reference.Reference.ExternalResource);
+                    }
+                    else
+                    {
+                        stream = loader.Load(new Uri(reference.Reference.Reference, UriKind.RelativeOrAbsolute));
+                    }
+
+                    var component = this.ResolveStream(stream, reference, diagnostic);
                     if (component == null)
                     {
                         diagnostic.Errors.Add(new AsyncApiError(string.Empty, $"Unable to deserialize reference '{reference.Reference.Reference}'"));
@@ -243,7 +252,7 @@ namespace LEGO.AsyncAPI.Readers
             }
         }
 
-        private IAsyncApiSerializable ReadStreamFragment(Stream input, IAsyncApiReferenceable reference, AsyncApiDiagnostic diagnostic)
+        private IAsyncApiSerializable ResolveStream(Stream input, IAsyncApiReferenceable reference, AsyncApiDiagnostic diagnostic)
         {
             var json = JsonNode.Parse(input);
             if (reference.Reference.IsFragment)

@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                 """;
 
             var channel = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(input, AsyncApiVersion.AsyncApi2_0, out var _ );
-            channel.Parameters.First().Value.Reference.Should().BeNull();
+            (channel.Parameters.First().Value as AsyncApiParameterReference).Reference.Should().BeNull();
         }
 
         [Test]

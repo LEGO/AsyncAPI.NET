@@ -185,7 +185,7 @@ namespace LEGO.AsyncAPI.Tests
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            var channel = deserialized.Channels.First().Value;
+            var channel = deserialized.Channels.First().Value as AsyncApiChannelReference;
 
             channel.UnresolvedReference.Should().BeFalse();
             channel.Description.Should().Be("customDescription");
@@ -251,7 +251,7 @@ namespace LEGO.AsyncAPI.Tests
 
             // Assert
             diagnostic.Errors.Should().BeEmpty();
-            var channel = deserialized.Channels.First().Value;
+            var channel = deserialized.Channels.First().Value as AsyncApiChannelReference;
 
             channel.UnresolvedReference.Should().BeTrue();
             channel.Description.Should().BeNull();

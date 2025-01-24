@@ -110,7 +110,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         internal T? ResolveReference<T>(AsyncApiReference reference)
-            where T : class
+            where T : IAsyncApiSerializable
         {
             return this.Workspace.ResolveReference<T>(reference.Reference);
         }

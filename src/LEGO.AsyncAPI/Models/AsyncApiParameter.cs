@@ -10,49 +10,27 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Describes a parameter included in a channel name.
     /// </summary>
-    public class AsyncApiParameter : IAsyncApiReferenceable, IAsyncApiExtensible, IAsyncApiSerializable
+    public class AsyncApiParameter : IAsyncApiExtensible, IAsyncApiSerializable
     {
         /// <summary>
         /// Gets or sets a verbose explanation of the parameter. CommonMark syntax can be used for rich text representation.
         /// </summary>
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         /// <summary>
         /// Gets or sets definition of the parameter.
         /// </summary>
-        public AsyncApiJsonSchema Schema { get; set; }
+        public virtual AsyncApiJsonSchema Schema { get; set; }
 
         /// <summary>
         /// Gets or sets a runtime expression that specifies the location of the parameter value.
         /// </summary>
-        public string Location { get; set; }
+        public virtual string Location { get; set; }
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+        public virtual IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        /// <inheritdoc/>
-        public bool UnresolvedReference { get; set; }
-
-        /// <inheritdoc/>
-        public AsyncApiReference Reference { get; set; }
-
-        public void SerializeV2(IAsyncApiWriter writer)
-        {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
-            {
-                this.Reference.SerializeV2(writer);
-                return;
-            }
-
-            this.SerializeV2WithoutReference(writer);
-        }
-
-        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public virtual void SerializeV2(IAsyncApiWriter writer)
         {
             if (writer is null)
             {

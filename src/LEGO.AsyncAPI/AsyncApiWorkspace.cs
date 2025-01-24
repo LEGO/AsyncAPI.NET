@@ -5,6 +5,7 @@ namespace LEGO.AsyncAPI
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
 
@@ -143,6 +144,15 @@ namespace LEGO.AsyncAPI
                 }
             }
 
+            if (component is Stream stream)
+            {
+                if (!this.artifactsRegistry.ContainsKey(uri))
+                {
+                    this.artifactsRegistry[uri] = stream;
+                }
+                return true;
+            }
+
             return false;
         }
 
@@ -155,7 +165,7 @@ namespace LEGO.AsyncAPI
         public bool Contains(string location)
         {
             var key = this.ToLocationUrl(location);
-            return this.resolvedReferenceRegistry.ContainsKey(key);
+            return this.resolvedReferenceRegistry.ContainsKey(key) || this.artifactsRegistry.ContainsKey(key);
         }
 
         public T ResolveReference<T>(string location)
@@ -169,6 +179,11 @@ namespace LEGO.AsyncAPI
             if (this.resolvedReferenceRegistry.TryGetValue(uri, out var referenceableValue))
             {
                 return (T)referenceableValue;
+            }
+
+            if (this.artifactsRegistry.TryGetValue(uri, out var stream))
+            {
+                return (T)(object)stream;
             }
 
             return default;

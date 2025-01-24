@@ -137,7 +137,7 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiMessage>(ReferenceType.Message, pointer);
+                return new AsyncApiMessageReference(pointer);
             }
 
             var message = new AsyncApiMessage();

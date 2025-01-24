@@ -221,8 +221,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiSecurityScheme securityScheme, bool isComponent = false)
         {
-            if (securityScheme == null || this.ProcessAsReference(securityScheme, isComponent))
+            if (securityScheme is AsyncApiSecuritySchemeReference)
             {
+                this.Walk(securityScheme as IAsyncApiReferenceable);
                 return;
             }
 
@@ -270,8 +271,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiChannel channel, bool isComponent = false)
         {
-            if (channel == null || this.ProcessAsReference(channel, isComponent))
+            if (channel is AsyncApiChannelReference)
             {
+                this.Walk(channel as IAsyncApiReferenceable);
                 return;
             }
 
@@ -311,8 +313,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiParameter parameter, bool isComponent = false)
         {
-            if (parameter == null || this.ProcessAsReference(parameter, isComponent))
+            if (parameter is AsyncApiParameterReference reference)
             {
+                this.Walk(reference as IAsyncApiReferenceable);
                 return;
             }
 
@@ -529,8 +532,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiMessage message, bool isComponent = false)
         {
-            if (message == null || this.ProcessAsReference(message, isComponent))
+            if (message is AsyncApiMessageReference reference)
             {
+                this.Walk(reference as IAsyncApiReferenceable);
                 return;
             }
 
@@ -775,8 +779,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiCorrelationId correlationId, bool isComponent = false)
         {
-            if (correlationId == null || this.ProcessAsReference(correlationId, isComponent))
+            if (correlationId is AsyncApiCorrelationIdReference)
             {
+                this.Walk(correlationId as IAsyncApiReferenceable);
                 return;
             }
 

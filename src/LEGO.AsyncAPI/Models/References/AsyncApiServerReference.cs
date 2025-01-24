@@ -28,26 +28,27 @@ namespace LEGO.AsyncAPI.Models
             this.Reference = new AsyncApiReference(reference, ReferenceType.Server);
         }
 
-        public override string Url { get => this.Target.Url; set => this.Target.Url = value; }
+        public override string Url { get => this.Target?.Url; set => this.Target.Url = value; }
 
-        public override string Protocol { get => this.Target.Protocol; set => this.Target.Protocol = value; }
+        public override string Protocol { get => this.Target?.Protocol; set => this.Target.Protocol = value; }
 
-        public override string ProtocolVersion { get => this.Target.ProtocolVersion; set => this.Target.ProtocolVersion = value; }
+        public override string ProtocolVersion { get => this.Target?.ProtocolVersion; set => this.Target.ProtocolVersion = value; }
 
-        public override string Description { get => this.Target.Description; set => this.Target.Description = value; }
+        public override string Description { get => this.Target?.Description; set => this.Target.Description = value; }
 
-        public override IDictionary<string, AsyncApiServerVariable> Variables { get => this.Target.Variables; set => this.Target.Variables = value; }
+        public override IDictionary<string, AsyncApiServerVariable> Variables { get => this.Target?.Variables; set => this.Target.Variables = value; }
 
-        public override IList<AsyncApiSecurityRequirement> Security { get => this.Target.Security; set => this.Target.Security = value; }
+        public override IList<AsyncApiSecurityRequirement> Security { get => this.Target?.Security; set => this.Target.Security = value; }
 
-        public override IList<AsyncApiTag> Tags { get => this.Target.Tags; set => this.Target.Tags = value; }
+        public override IList<AsyncApiTag> Tags { get => this.Target?.Tags; set => this.Target.Tags = value; }
 
-        public override AsyncApiBindings<IServerBinding> Bindings { get => this.Target.Bindings; set => this.Target.Bindings = value; }
+        public override AsyncApiBindings<IServerBinding> Bindings { get => this.Target?.Bindings; set => this.Target.Bindings = value; }
 
-        public override IDictionary<string, IAsyncApiExtension> Extensions { get => this.Target.Extensions; set => this.Target.Extensions = value; }
+        public override IDictionary<string, IAsyncApiExtension> Extensions { get => this.Target?.Extensions; set => this.Target.Extensions = value; }
 
         public AsyncApiReference Reference { get; set; }
-        public bool UnresolvedReference { get; set; }
+
+        public bool UnresolvedReference { get { return this.Target == null; } }
 
         public override void SerializeV2(IAsyncApiWriter writer)
         {

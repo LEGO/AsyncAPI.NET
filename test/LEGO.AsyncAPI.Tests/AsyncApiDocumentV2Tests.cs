@@ -332,14 +332,7 @@ namespace LEGO.AsyncAPI.Tests
                         },
                         Message = new List<AsyncApiMessage>
                         {
-                        new AsyncApiMessage()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Id = "lightMeasured",
-                                Type = ReferenceType.Message,
-                            },
-                        },
+                        new AsyncApiMessageReference("#/components/messages/lightMeasured"),
                         },
                     },
                 })
@@ -350,14 +343,7 @@ namespace LEGO.AsyncAPI.Tests
                     Parameters = new Dictionary<string, AsyncApiParameter>
                     {
                     {
-                        "streetlightId", new AsyncApiParameter()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Id = "streetlightId",
-                                Type = ReferenceType.Parameter,
-                            },
-                        }
+                        "streetlightId", new AsyncApiParameterReference("#/components/parameters/streetlightId")
                     },
                     },
                     Subscribe = new AsyncApiOperation()
@@ -376,14 +362,7 @@ namespace LEGO.AsyncAPI.Tests
                         },
                         Message = new List<AsyncApiMessage>
                         {
-                        new AsyncApiMessage()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Id = "turnOnOff",
-                                Type = ReferenceType.Message,
-                            },
-                        },
+                        new AsyncApiMessageReference("#/components/messages/turnOnOff")
                         },
                     },
                 })
@@ -1305,14 +1284,7 @@ namespace LEGO.AsyncAPI.Tests
             };
             doc.Channels.Add(
                 "testChannel",
-                new AsyncApiChannel
-                {
-                    Reference = new AsyncApiReference()
-                    {
-                        Type = ReferenceType.Channel,
-                        Id = "otherchannel",
-                    },
-                });
+                new AsyncApiChannelReference("#/components/channels/otherchannel"));
             var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
 
             var settings = new AsyncApiReaderSettings();
