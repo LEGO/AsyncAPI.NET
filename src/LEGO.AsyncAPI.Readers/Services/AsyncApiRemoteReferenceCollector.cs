@@ -9,16 +9,22 @@ namespace LEGO.AsyncAPI.Readers.Services
 
     internal class AsyncApiRemoteReferenceCollector : AsyncApiVisitorBase
     {
-        private readonly Dictionary<string, AsyncApiReference> references = new();
+        private readonly List<IAsyncApiReferenceable> references = new();
+        private AsyncApiDocument currentDocument;
 
+        public AsyncApiRemoteReferenceCollector(
+            AsyncApiDocument currentDocument)
+                {
+                    this.currentDocument = currentDocument;
+                }
         /// <summary>
         /// List of all external references collected from AsyncApiDocument.
         /// </summary>
-        public IEnumerable<AsyncApiReference> References
+        public IEnumerable<IAsyncApiReferenceable> References
         {
             get
             {
-                return this.references.Values;
+                return this.references;
             }
         }
 
@@ -28,18 +34,14 @@ namespace LEGO.AsyncAPI.Readers.Services
         /// <param name="referenceable"></param>
         public override void Visit(IAsyncApiReferenceable referenceable)
         {
-            this.AddExternalReferences(referenceable.Reference);
-        }
-
-        /// <summary>
-        /// Collect external references.
-        /// </summary>
-        private void AddExternalReferences(AsyncApiReference reference)
-        {
-            if (reference is { IsExternal: true } &&
-                !this.references.ContainsKey(reference.ExternalResource))
+            if (referenceable.Reference != null && referenceable.Reference.IsExternal)
             {
-                this.references.Add(reference.ExternalResource, reference);
+                if (referenceable.Reference.HostDocument == null)
+                {
+                    referenceable.Reference.HostDocument = this.currentDocument;
+                }
+
+                this.references.Add(referenceable);
             }
         }
     }

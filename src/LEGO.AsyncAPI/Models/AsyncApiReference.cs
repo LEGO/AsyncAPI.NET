@@ -99,10 +99,10 @@ namespace LEGO.AsyncAPI.Models
         /// 1. a absolute/relative file path, for example:  ../commons/pet.json
         /// 2. a Url, for example: http://localhost/pet.json.
         /// </summary>
-        public string ExternalResource 
-        { 
-            get; 
-            set; 
+        public string ExternalResource
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace LEGO.AsyncAPI.Models
         private string GetExternalReferenceV2()
         {
 
-            return this.ExternalResource + "/#/" + this.Id ?? string.Empty;
+            return this.ExternalResource + (this.Id != null ? "/#/" + this.Id : string.Empty);
         }
 
         public void Write(IAsyncApiWriter writer)

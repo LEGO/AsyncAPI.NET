@@ -21,7 +21,7 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         public AsyncApiWriterSettings()
         {
-            this.InlineReferences = false;
+            this.InlineLocalReferences = false;
             this.LoopDetector = new LoopDetector();
         }
 
@@ -46,10 +46,10 @@ namespace LEGO.AsyncAPI.Writers
                 switch (this.referenceInline)
                 {
                     case ReferenceInlineSetting.DoNotInlineReferences:
-                        this.InlineReferences = false;
+                        this.InlineLocalReferences = false;
                         break;
                     case ReferenceInlineSetting.InlineReferences:
-                        this.InlineReferences = true;
+                        this.InlineLocalReferences = true;
                         break;
                 }
             }
@@ -58,7 +58,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <summary>
         /// Gets or sets a value indicating whether indicates if local references should be rendered as an inline object.
         /// </summary>
-        public bool InlineReferences { get; set; }
+        public bool InlineLocalReferences { get; set; }
 
         /// <summary>
         /// Figures out if a loop exists.
@@ -72,7 +72,7 @@ namespace LEGO.AsyncAPI.Writers
         /// <returns>True if it should be inlined otherwise false.</returns>
         public bool ShouldInlineReference(AsyncApiReference reference)
         {
-            return this.InlineReferences;
+            return this.InlineLocalReferences;
         }
     }
 }

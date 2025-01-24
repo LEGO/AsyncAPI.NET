@@ -10,21 +10,9 @@ namespace LEGO.AsyncAPI
 
     public class AsyncApiWorkspace
     {
-        private readonly Dictionary<string, Uri> documentsIdRegistry = new();
+        private readonly Dictionary<string, IAsyncApiReferenceable> referenceRegistry = new();
         private readonly Dictionary<Uri, Stream> artifactsRegistry = new();
-        private readonly Dictionary<Uri, IAsyncApiSerializable> asyncApiReferenceableRegistry = new();
-
-        public Uri BaseUrl { get; }
-
-        public AsyncApiWorkspace()
-        {
-            this.BaseUrl = new Uri("http://asyncapi.net");
-        }
-
-        public AsyncApiWorkspace(Uri baseUrl)
-        {
-            this.BaseUrl = baseUrl;
-        }
+        private readonly Dictionary<Uri, IAsyncApiSerializable> resolvedReferenceRegistry = new();
 
         public void RegisterComponents(AsyncApiDocument document)
         {
@@ -143,31 +131,14 @@ namespace LEGO.AsyncAPI
             }
         }
 
-        private void RegisterInternalComponent<T>(string location, IAsyncApiReferenceable component)
-        {
-            var uri = this.ToLocationUrl(location);
-            if (!this.asyncApiReferenceableRegistry.ContainsKey(uri))
-            {
-                this.asyncApiReferenceableRegistry[uri] = component;
-            }
-        }
-
         public bool RegisterComponent<T>(string location, T component)
         {
             var uri = this.ToLocationUrl(location);
             if (component is IAsyncApiSerializable referenceable)
             {
-                if (!this.asyncApiReferenceableRegistry.ContainsKey(uri))
+                if (!this.resolvedReferenceRegistry.ContainsKey(uri))
                 {
-                    this.asyncApiReferenceableRegistry[uri] = referenceable;
-                    return true;
-                }
-            }
-            else if (component is Stream stream)
-            {
-                if (!this.artifactsRegistry.ContainsKey(uri))
-                {
-                    this.artifactsRegistry[uri] = stream;
+                    this.resolvedReferenceRegistry[uri] = referenceable;
                     return true;
                 }
             }
@@ -175,22 +146,16 @@ namespace LEGO.AsyncAPI
             return false;
         }
 
-        public void AddDocumentId(string key, Uri value)
+        public void RegisterReference(IAsyncApiReferenceable reference)
         {
-            if (!this.documentsIdRegistry.ContainsKey(key))
-            {
-                this.documentsIdRegistry[key] = value;
-            }
+            var location = reference.Reference.Reference;
+            this.referenceRegistry[location] = reference;
         }
 
-        public Uri GetDocumentId(string key)
+        public bool Contains(string location)
         {
-            if (this.documentsIdRegistry.TryGetValue(key, out var id))
-            {
-                return id;
-            }
-
-            return null;
+            var key = this.ToLocationUrl(location);
+            return this.resolvedReferenceRegistry.ContainsKey(key);
         }
 
         public T ResolveReference<T>(string location)
@@ -201,7 +166,7 @@ namespace LEGO.AsyncAPI
             }
 
             var uri = this.ToLocationUrl(location);
-            if (this.asyncApiReferenceableRegistry.TryGetValue(uri, out var referenceableValue))
+            if (this.resolvedReferenceRegistry.TryGetValue(uri, out var referenceableValue))
             {
                 return (T)referenceableValue;
             }
@@ -211,7 +176,7 @@ namespace LEGO.AsyncAPI
 
         private Uri ToLocationUrl(string location)
         {
-            return new(this.BaseUrl, location);
+            return new(location, UriKind.RelativeOrAbsolute);
         }
     }
 }

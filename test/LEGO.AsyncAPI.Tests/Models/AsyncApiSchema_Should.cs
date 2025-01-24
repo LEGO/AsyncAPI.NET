@@ -370,7 +370,7 @@ namespace LEGO.AsyncAPI.Tests.Models
         public void Deserialize_WithAdvancedSchema_Works()
         {
             // Arrange
-            var json = GetTestData<string>();
+            var json = this.GetTestData<string>();
             var expected = AdvancedSchemaObject;
 
             // Act
@@ -447,7 +447,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             .Build();
 
             var outputString = new StringWriter();
-            var writer = new AsyncApiYamlWriter(outputString, new AsyncApiWriterSettings { InlineReferences = shouldInline });
+            var writer = new AsyncApiYamlWriter(outputString, new AsyncApiWriterSettings { InlineLocalReferences = shouldInline });
 
             // Act
             asyncApiDocument.SerializeV2(writer);

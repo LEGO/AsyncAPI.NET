@@ -70,7 +70,7 @@ namespace LEGO.AsyncAPI.Tests
                 var settings = new AsyncApiReaderSettings();
                 var context = new ParsingContext(diagnostic, settings);
 
-                var node = new MapNode(context, JsonNode.Parse(stream));
+                var node = new MapNode(context, JsonNode.Parse(stream).ToJsonString());
 
                 // Act
                 var actual = AsyncApiV2Deserializer.LoadLicense(node);

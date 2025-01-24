@@ -12,6 +12,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
     {
         private readonly JsonNode node;
         private string cachedScalarValue;
+
         public ValueNode(ParsingContext context, JsonNode node)
             : base(
             context)

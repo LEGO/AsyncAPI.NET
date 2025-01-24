@@ -97,7 +97,7 @@ namespace LEGO.AsyncAPI.Models
 
             // If references have been inlined we don't need the to render the components section
             // however if they have cycles, then we will need a component rendered
-            if (writer.GetSettings().InlineReferences)
+            if (writer.GetSettings().InlineLocalReferences)
             {
                 var loops = writer.GetSettings().LoopDetector.Loops;
                 writer.WriteStartObject();

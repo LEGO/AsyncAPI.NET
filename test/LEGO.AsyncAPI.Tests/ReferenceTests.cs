@@ -66,6 +66,75 @@ namespace LEGO.AsyncAPI.Tests
             reference.Reference.Id.Should().Be("whatever");
             reference.Reference.HostDocument.Should().Be(doc);
             reference.Reference.IsFragment.Should().BeTrue();
+        }
+
+        [Test]
+        public void ResolveExternalReference()
+        {
+            var json =
+                """
+         {
+           "asyncapi": "2.6.0",
+           "info": { },
+           "servers": {
+             "production": {
+               "$ref": "https://gist.githubusercontent.com/VisualBean/7dc9607d735122483e1bb7005ff3ad0e/raw/458729e4d56636ef3bb34762f4a5731ea5043bdf/servers.json/#/servers/0"
+             }
+           }
+         }
+         """;
+
+            var doc = new AsyncApiStringReader(new AsyncApiReaderSettings { ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences }).Read(json, out var diag);
+            var reference = doc.Servers.First().Value as AsyncApiServerReference;
+            //reference.Reference.Id.Should().Be("whatever");
+            //reference.Reference.HostDocument.Should().Be(doc);
+            //reference.Reference.IsFragment.Should().BeTrue();
+        }       
+
+
+        [Test]
+        public void ServerReference_WithComponentReference_ResolvesReference()
+        {
+            var json =
+                """
+                {
+                  "asyncapi": "2.6.0",
+                  "info": { },
+                  "servers": {
+                    "production": {
+                      "$ref": "#/components/servers/whatever"
+                    }
+                  },
+                  "components": {
+                    "servers": {
+                        "whatever": {
+                          "url": "wss://production.gigantic-server.com:443",
+                          "protocol": "wss",
+                          "protocolVersion": "1.0.0",
+                          "description": "The production API server",
+                          "variables": {
+                            "username": {
+                              "default": "demo",
+                              "description": "This value is assigned by the service provider"
+                            },
+                            "password": {
+                              "default": "demo",
+                              "description": "This value is assigned by the service provider"
+                            }
+                          }
+                        }
+                    }
+                  }
+                }
+                """;
+
+            var doc = new AsyncApiStringReader().Read(json, out var diag);
+            var reference = doc.Servers.First().Value as AsyncApiServerReference;
+            reference.Reference.ExternalResource.Should().BeNull();
+            reference.Reference.Id.Should().Be("whatever");
+            reference.Reference.HostDocument.Should().Be(doc);
+            reference.Reference.IsFragment.Should().BeTrue();
+            reference.Url.Should().Be("wss://production.gigantic-server.com:443");
 
         }
     } 

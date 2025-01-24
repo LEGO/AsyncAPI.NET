@@ -19,11 +19,11 @@ namespace LEGO.AsyncAPI.Tests.Bindings.WebSockets
             channel.Bindings.Add(new WebSocketsChannelBinding
             {
                 Method = "POST",
-                Query = new AsyncApiSchema
+                Query = new AsyncApiJsonSchema
                 {
                     Description = "this mah query",
                 },
-                Headers = new AsyncApiSchema
+                Headers = new AsyncApiJsonSchema
                 {
                     Description = "this mah binding",
                 },
@@ -74,7 +74,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.WebSockets
             message.Bindings.Add(new MQTTMessageBinding
             {
                 PayloadFormatIndicator = 2,
-                CorrelationData = new AsyncApiSchema
+                CorrelationData = new AsyncApiJsonSchema
                 {
                     Description = "Test",
                 },

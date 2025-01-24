@@ -331,7 +331,7 @@ namespace LEGO.AsyncAPI.Services
             this.visitor.Visit(payload);
         }
 
-        internal void Walk(AsyncApiSchema schema, bool isComponent = false)
+        internal void Walk(AsyncApiJsonSchema schema, bool isComponent = false)
         {
             if (schema == null || this.ProcessAsReference(schema, isComponent))
             {

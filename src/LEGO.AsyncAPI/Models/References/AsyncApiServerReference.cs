@@ -47,6 +47,7 @@ namespace LEGO.AsyncAPI.Models
         public override IDictionary<string, IAsyncApiExtension> Extensions { get => this.Target.Extensions; set => this.Target.Extensions = value; }
 
         public AsyncApiReference Reference { get; set; }
+        public bool UnresolvedReference { get; set; }
 
         public override void SerializeV2(IAsyncApiWriter writer)
         {

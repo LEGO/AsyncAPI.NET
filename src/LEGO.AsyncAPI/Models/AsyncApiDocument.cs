@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class AsyncApiDocument : IAsyncApiExtensible, IAsyncApiSerializable
     {
-        internal AsyncApiWorkspace Workspace { get; set; }
+        public AsyncApiWorkspace Workspace { get; set; }
 
         /// <summary>
         /// REQUIRED. Specifies the AsyncAPI Specification version being used.
@@ -74,11 +74,6 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            if (writer.GetSettings().InlineReferences)
-            {
-                this.ResolveReferences();
-            }
-
             writer.WriteStartObject();
 
             // asyncApi
@@ -112,14 +107,6 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteExtensions(this.Extensions);
 
             writer.WriteEndObject();
-        }
-
-        public IEnumerable<AsyncApiError> ResolveReferences()
-        {
-            var resolver = new AsyncApiReferenceResolver(this);
-            var walker = new AsyncApiWalker(resolver);
-            walker.Walk(this);
-            return resolver.Errors;
         }
 
         internal T? ResolveReference<T>(AsyncApiReference reference)
