@@ -2,7 +2,7 @@
   <!-- Common Properties used by all assemblies -->
   <PropertyGroup>
     <LangVersion>10</LangVersion>
-    <TargetFrameworks>netstandard2.0;net6</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net8</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Company>The LEGO Group</Company>
     <PackageProjectUrl>https://github.com/LEGO/AsyncAPI.NET</PackageProjectUrl>
