@@ -90,7 +90,7 @@ namespace LEGO.AsyncAPI.Services
             // #ToFix Resolve references correctly
             if (message.Payload is AsyncApiJsonSchemaPayload)
             {
-                this.ResolveObject<AsyncApiSchema>(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = new AsyncApiJsonSchemaPayload(r));
+                this.ResolveObject<AsyncApiJsonSchema>(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = new AsyncApiJsonSchemaPayload(r));
             }
 
             this.ResolveList(message.Traits);
@@ -143,7 +143,7 @@ namespace LEGO.AsyncAPI.Services
         /// <summary>
         /// Resolve all references used in a schema.
         /// </summary>
-        public override void Visit(AsyncApiSchema schema)
+        public override void Visit(AsyncApiJsonSchema schema)
         {
             this.ResolveObject(schema.Items, r => schema.Items = r);
             this.ResolveList(schema.OneOf);

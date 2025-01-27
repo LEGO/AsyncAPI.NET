@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
             Func<T, IDictionary<string, U>> propertyMapGetter,
             Func<U, AsyncApiAny> propertyGetter,
             Action<U, AsyncApiAny> propertySetter,
-            Func<T, AsyncApiSchema> schemaGetter)
+            Func<T, AsyncApiJsonSchema> schemaGetter)
         {
             this.PropertyMapGetter = propertyMapGetter;
             this.PropertyGetter = propertyGetter;
@@ -26,6 +26,6 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
         public Action<U, AsyncApiAny> PropertySetter { get; }
 
-        public Func<T, AsyncApiSchema> SchemaGetter { get; }
+        public Func<T, AsyncApiJsonSchema> SchemaGetter { get; }
     }
 }

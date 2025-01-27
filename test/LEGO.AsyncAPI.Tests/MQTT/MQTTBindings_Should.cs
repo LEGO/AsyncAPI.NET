@@ -119,7 +119,7 @@ namespace LEGO.AsyncAPI.Tests.Bindings.MQTT
             message.Bindings.Add(new MQTTMessageBinding
             {
                 ContentType = "application/json",
-                CorrelationData = new AsyncApiSchema
+                CorrelationData = new AsyncApiJsonSchema
                 {
                     Type = SchemaType.String,
                     Format = "uuid",

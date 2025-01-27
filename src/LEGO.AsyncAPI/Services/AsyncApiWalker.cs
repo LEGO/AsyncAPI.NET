@@ -10,7 +10,7 @@ namespace LEGO.AsyncAPI.Services
     public class AsyncApiWalker
     {
         private readonly AsyncApiVisitorBase visitor;
-        private readonly Stack<AsyncApiSchema> schemaLoop = new();
+        private readonly Stack<AsyncApiJsonSchema> schemaLoop = new();
 
         public AsyncApiWalker(AsyncApiVisitorBase visitor)
         {
@@ -331,7 +331,7 @@ namespace LEGO.AsyncAPI.Services
             this.visitor.Visit(payload);
         }
 
-        internal void Walk(AsyncApiSchema schema, bool isComponent = false)
+        internal void Walk(AsyncApiJsonSchema schema, bool isComponent = false)
         {
             if (schema == null || this.ProcessAsReference(schema, isComponent))
             {
@@ -541,7 +541,7 @@ namespace LEGO.AsyncAPI.Services
                 this.Walk(AsyncApiConstants.Headers, () => this.Walk(message.Headers));
                 if (message.Payload is AsyncApiJsonSchemaPayload payload)
                 {
-                    this.Walk(AsyncApiConstants.Payload, () => this.Walk((AsyncApiSchema)payload));
+                    this.Walk(AsyncApiConstants.Payload, () => this.Walk((AsyncApiJsonSchema)payload));
                 }
 
                 if (message.Payload is AsyncApiAvroSchemaPayload avroPayload)
@@ -1056,7 +1056,7 @@ namespace LEGO.AsyncAPI.Services
                 case AsyncApiOAuthFlow e: this.Walk(e); break;
                 case AsyncApiOperation e: this.Walk(e); break;
                 case AsyncApiParameter e: this.Walk(e); break;
-                case AsyncApiSchema e: this.Walk(e); break;
+                case AsyncApiJsonSchema e: this.Walk(e); break;
                 case AsyncApiSecurityRequirement e: this.Walk(e); break;
                 case AsyncApiSecurityScheme e: this.Walk(e); break;
                 case AsyncApiServer e: this.Walk(e); break;

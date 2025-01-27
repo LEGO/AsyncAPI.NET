@@ -16,12 +16,12 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
         /// <summary>
         /// Id of the consumer group.
         /// </summary>
-        public AsyncApiSchema GroupId { get; set; }
+        public AsyncApiJsonSchema GroupId { get; set; }
 
         /// <summary>
         /// Id of the consumer inside a consumer group.
         /// </summary>
-        public AsyncApiSchema ClientId { get; set; }
+        public AsyncApiJsonSchema ClientId { get; set; }
 
         public override string BindingKey => "kafka";
 

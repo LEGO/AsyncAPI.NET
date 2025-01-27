@@ -18,12 +18,12 @@ namespace LEGO.AsyncAPI.Bindings.WebSockets
         /// <summary>
         /// A Schema object containing the definitions for each query parameter. This schema MUST be of type 'object' and have a 'properties' key.
         /// </summary>
-        public AsyncApiSchema Query { get; set; }
+        public AsyncApiJsonSchema Query { get; set; }
 
         /// <summary>
         /// A Schema object containing the definitions of the HTTP headers to use when establishing the connection. This schma MUST be of type 'object' and have a 'properties' key.
         /// </summary>
-        public AsyncApiSchema Headers { get; set; }
+        public AsyncApiJsonSchema Headers { get; set; }
 
         public override string BindingKey => "websockets";
 

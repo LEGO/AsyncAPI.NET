@@ -36,7 +36,7 @@ namespace LEGO.AsyncAPI.Bindings.Http
         /// <summary>
         /// A Schema object containing the definitions for each query parameter. This schema MUST be of type object and have a properties key.
         /// </summary>
-        public AsyncApiSchema Query { get; set; }
+        public AsyncApiJsonSchema Query { get; set; }
 
         /// <summary>
         /// Serialize to AsyncAPI V2 document without using reference.

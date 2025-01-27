@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
-        public AsyncApiSchema Headers { get; set; }
+        public AsyncApiJsonSchema Headers { get; set; }
 
         /// <summary>
         /// definition of the message payload. It can be of any type but defaults to Schema object. It must match the schema format, including encoding type - e.g Avro should be inlined as either a YAML or JSON object NOT a string to be parsed as YAML or JSON.
