@@ -44,7 +44,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             ExternalDocs = new AsyncApiExternalDocumentation
             {
                 Url = new Uri("http://example.com/externalDocs"),
-            },
+            }, 
         };
 
         public static AsyncApiJsonSchema AdvancedSchemaObject = new AsyncApiJsonSchema
