@@ -16,7 +16,7 @@ namespace LEGO.AsyncAPI.Bindings.Kafka
         /// <summary>
         /// The message key. NOTE: You can also use the <a href="https://www.asyncapi.com/docs/reference/specification/v2.4.0#referenceObject">reference object</a> way.
         /// </summary>
-        public AsyncApiSchema Key { get; set; }
+        public AsyncApiJsonSchema Key { get; set; }
 
         /// <summary>
         /// If a Schema Registry is used when performing this operation, tells where the id of schema is stored (e.g. header or payload).

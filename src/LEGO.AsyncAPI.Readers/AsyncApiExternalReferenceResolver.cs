@@ -93,7 +93,7 @@ namespace LEGO.AsyncAPI.Readers
             switch (message.Payload)
             {
                 case AsyncApiJsonSchemaPayload json:
-                    this.ResolveObject<AsyncApiSchema>(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = new AsyncApiJsonSchemaPayload(r));
+                    this.ResolveObject<AsyncApiJsonSchema>(message.Payload as AsyncApiJsonSchemaPayload, r => message.Payload = new AsyncApiJsonSchemaPayload(r));
                     break;
                 case AsyncApiAvroSchemaPayload avro:
                     // ToFix: this might not resolve correctly.
@@ -153,7 +153,7 @@ namespace LEGO.AsyncAPI.Readers
         /// <summary>
         /// Resolve all references used in a schema.
         /// </summary>
-        public override void Visit(AsyncApiSchema schema)
+        public override void Visit(AsyncApiJsonSchema schema)
         {
             this.ResolveObject(schema.Items, r => schema.Items = r);
             this.ResolveList(schema.OneOf);

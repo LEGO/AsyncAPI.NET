@@ -19,7 +19,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// An object to hold reusable Schema Objects.
         /// </summary>
-        public IDictionary<string, AsyncApiSchema> Schemas { get; set; } = new Dictionary<string, AsyncApiSchema>();
+        public IDictionary<string, AsyncApiJsonSchema> Schemas { get; set; } = new Dictionary<string, AsyncApiJsonSchema>();
 
         /// <summary>
         /// An object to hold reusable Server Objects.
@@ -101,10 +101,10 @@ namespace LEGO.AsyncAPI.Models
             {
                 var loops = writer.GetSettings().LoopDetector.Loops;
                 writer.WriteStartObject();
-                if (loops.TryGetValue(typeof(AsyncApiSchema), out List<object> schemas))
+                if (loops.TryGetValue(typeof(AsyncApiJsonSchema), out List<object> schemas))
                 {
-                    var asyncApiSchemas = schemas.Cast<AsyncApiSchema>().Distinct().ToList()
-                        .ToDictionary<AsyncApiSchema, string>(k => k.Reference.Id);
+                    var asyncApiSchemas = schemas.Cast<AsyncApiJsonSchema>().Distinct().ToList()
+                        .ToDictionary<AsyncApiJsonSchema, string>(k => k.Reference.Id);
 
                     writer.WriteOptionalMap(
                        AsyncApiConstants.Schemas,

@@ -22,7 +22,7 @@ namespace LEGO.AsyncAPI.Bindings.MQTT
         /// <summary>
         /// Correlation Data is used to identify the request the response message is for.
         /// </summary>
-        public AsyncApiSchema CorrelationData { get; set; }
+        public AsyncApiJsonSchema CorrelationData { get; set; }
 
         /// <summary>
         /// String describing the content type of the message payload.

@@ -46,7 +46,7 @@ namespace LEGO.AsyncAPI.Tests
             return this;
         }
 
-        public AsyncApiDocumentBuilder WithComponent(string key, AsyncApiSchema schema)
+        public AsyncApiDocumentBuilder WithComponent(string key, AsyncApiJsonSchema schema)
         {
             if (this.document.Components == null)
             {

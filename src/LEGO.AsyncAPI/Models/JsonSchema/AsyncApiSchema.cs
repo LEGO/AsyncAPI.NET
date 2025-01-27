@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// The Schema Object allows the definition of input and output data types.
     /// </summary>
-    public class AsyncApiSchema : IAsyncApiReferenceable, IAsyncApiExtensible, IAsyncApiSerializable
+    public class AsyncApiJsonSchema : IAsyncApiReferenceable, IAsyncApiExtensible, IAsyncApiSerializable
     {
         /// <summary>
         /// follow JSON Schema definition. Short text providing information about the data.
@@ -107,45 +107,45 @@ namespace LEGO.AsyncAPI.Models
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        public IList<AsyncApiSchema> AllOf { get; set; } = new List<AsyncApiSchema>();
+        public IList<AsyncApiJsonSchema> AllOf { get; set; } = new List<AsyncApiJsonSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        public IList<AsyncApiSchema> OneOf { get; set; } = new List<AsyncApiSchema>();
+        public IList<AsyncApiJsonSchema> OneOf { get; set; } = new List<AsyncApiJsonSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        public IList<AsyncApiSchema> AnyOf { get; set; } = new List<AsyncApiSchema>();
+        public IList<AsyncApiJsonSchema> AnyOf { get; set; } = new List<AsyncApiJsonSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        public AsyncApiSchema Not { get; set; }
+        public AsyncApiJsonSchema Not { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiSchema Contains { get; set; }
+        public AsyncApiJsonSchema Contains { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiSchema If { get; set; }
+        public AsyncApiJsonSchema If { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiSchema Then { get; set; }
+        public AsyncApiJsonSchema Then { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiSchema Else { get; set; }
+        public AsyncApiJsonSchema Else { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
@@ -157,14 +157,14 @@ namespace LEGO.AsyncAPI.Models
         /// Value MUST be an object and not an array. Inline or referenced schema MUST be of a Schema Object
         /// and not a standard JSON Schema. items MUST be present if the type is array.
         /// </summary>
-        public AsyncApiSchema Items { get; set; }
+        public AsyncApiJsonSchema Items { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Value MUST be an object and not an array. Inline or referenced schema MUST be of a Schema Object
         /// and not a standard JSON Schema. items MUST be present if the type is array.
         /// </summary>
-        public AsyncApiSchema AdditionalItems { get; set; }
+        public AsyncApiJsonSchema AdditionalItems { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
@@ -185,7 +185,7 @@ namespace LEGO.AsyncAPI.Models
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Property definitions MUST be a Schema Object and not a standard JSON Schema (inline or referenced).
         /// </summary>
-        public IDictionary<string, AsyncApiSchema> Properties { get; set; } = new Dictionary<string, AsyncApiSchema>();
+        public IDictionary<string, AsyncApiJsonSchema> Properties { get; set; } = new Dictionary<string, AsyncApiJsonSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
@@ -202,14 +202,14 @@ namespace LEGO.AsyncAPI.Models
         /// Value can be boolean or object. Inline or referenced schema
         /// MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        public AsyncApiSchema AdditionalProperties { get; set; }
+        public AsyncApiJsonSchema AdditionalProperties { get; set; }
 
-        public IDictionary<string, AsyncApiSchema> PatternProperties { get; set; } = new Dictionary<string, AsyncApiSchema>();
+        public IDictionary<string, AsyncApiJsonSchema> PatternProperties { get; set; } = new Dictionary<string, AsyncApiJsonSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiSchema PropertyNames { get; set; }
+        public AsyncApiJsonSchema PropertyNames { get; set; }
 
         /// <summary>
         /// adds support for polymorphism.
@@ -455,15 +455,15 @@ namespace LEGO.AsyncAPI.Models
 
             if (this.Reference != null)
             {
-                settings.LoopDetector.PopLoop<AsyncApiSchema>();
+                settings.LoopDetector.PopLoop<AsyncApiJsonSchema>();
             }
         }
 
-        public AsyncApiSchema GetReferenced(AsyncApiDocument document)
+        public AsyncApiJsonSchema GetReferenced(AsyncApiDocument document)
         {
             if (this.Reference != null && document != null)
             {
-                return document.ResolveReference<AsyncApiSchema>(this.Reference);
+                return document.ResolveReference<AsyncApiJsonSchema>(this.Reference);
             }
             else
             {

@@ -8,14 +8,14 @@ namespace LEGO.AsyncAPI.Models
 
     public class AsyncApiJsonSchemaPayload : IAsyncApiMessagePayload
     {
-        private readonly AsyncApiSchema schema;
+        private readonly AsyncApiJsonSchema schema;
 
         public AsyncApiJsonSchemaPayload()
         {
-            this.schema = new AsyncApiSchema();
+            this.schema = new AsyncApiJsonSchema();
         }
 
-        public AsyncApiJsonSchemaPayload(AsyncApiSchema schema)
+        public AsyncApiJsonSchemaPayload(AsyncApiJsonSchema schema)
         {
             this.schema = schema;
         }
@@ -50,27 +50,27 @@ namespace LEGO.AsyncAPI.Models
 
         public bool WriteOnly { get => this.schema.WriteOnly; set => this.schema.WriteOnly = value; }
 
-        public IList<AsyncApiSchema> AllOf { get => this.schema.AllOf; set => this.schema.AllOf = value; }
+        public IList<AsyncApiJsonSchema> AllOf { get => this.schema.AllOf; set => this.schema.AllOf = value; }
 
-        public IList<AsyncApiSchema> OneOf { get => this.schema.OneOf; set => this.schema.OneOf = value; }
+        public IList<AsyncApiJsonSchema> OneOf { get => this.schema.OneOf; set => this.schema.OneOf = value; }
 
-        public IList<AsyncApiSchema> AnyOf { get => this.schema.AnyOf; set => this.schema.AnyOf = value; }
+        public IList<AsyncApiJsonSchema> AnyOf { get => this.schema.AnyOf; set => this.schema.AnyOf = value; }
 
-        public AsyncApiSchema Not { get => this.schema.Not; set => this.schema.Not = value; }
+        public AsyncApiJsonSchema Not { get => this.schema.Not; set => this.schema.Not = value; }
 
-        public AsyncApiSchema Contains { get => this.schema.Contains; set => this.schema.Contains = value; }
+        public AsyncApiJsonSchema Contains { get => this.schema.Contains; set => this.schema.Contains = value; }
 
-        public AsyncApiSchema If { get => this.schema.If; set => this.schema.If = value; }
+        public AsyncApiJsonSchema If { get => this.schema.If; set => this.schema.If = value; }
 
-        public AsyncApiSchema Then { get => this.schema.Then; set => this.schema.Then = value; }
+        public AsyncApiJsonSchema Then { get => this.schema.Then; set => this.schema.Then = value; }
 
-        public AsyncApiSchema Else { get => this.schema.Else; set => this.schema.Else = value; }
+        public AsyncApiJsonSchema Else { get => this.schema.Else; set => this.schema.Else = value; }
 
         public ISet<string> Required { get => this.schema.Required; set => this.schema.Required = value; }
 
-        public AsyncApiSchema Items { get => this.schema.Items; set => this.schema.Items = value; }
+        public AsyncApiJsonSchema Items { get => this.schema.Items; set => this.schema.Items = value; }
 
-        public AsyncApiSchema AdditionalItems { get => this.schema.AdditionalItems; set => this.schema.AdditionalItems = value; }
+        public AsyncApiJsonSchema AdditionalItems { get => this.schema.AdditionalItems; set => this.schema.AdditionalItems = value; }
 
         public int? MaxItems { get => this.schema.MaxItems; set => this.schema.MaxItems = value; }
 
@@ -78,15 +78,15 @@ namespace LEGO.AsyncAPI.Models
 
         public bool? UniqueItems { get => this.schema.UniqueItems; set => this.schema.UniqueItems = value; }
 
-        public IDictionary<string, AsyncApiSchema> Properties { get => this.schema.Properties; set => this.schema.Properties = value; }
+        public IDictionary<string, AsyncApiJsonSchema> Properties { get => this.schema.Properties; set => this.schema.Properties = value; }
 
         public int? MaxProperties { get => this.schema.MaxProperties; set => this.schema.MaxProperties = value; }
 
         public int? MinProperties { get => this.schema.MinProperties; set => this.schema.MinProperties = value; }
 
-        public IDictionary<string, AsyncApiSchema> PatternProperties { get => this.schema.PatternProperties; set => this.schema.PatternProperties = value; }
+        public IDictionary<string, AsyncApiJsonSchema> PatternProperties { get => this.schema.PatternProperties; set => this.schema.PatternProperties = value; }
 
-        public AsyncApiSchema PropertyNames { get => this.schema.PropertyNames; set => this.schema.PropertyNames = value; }
+        public AsyncApiJsonSchema PropertyNames { get => this.schema.PropertyNames; set => this.schema.PropertyNames = value; }
 
         public string Discriminator { get => this.schema.Discriminator; set => this.schema.Discriminator = value; }
 
@@ -108,11 +108,11 @@ namespace LEGO.AsyncAPI.Models
 
         public IDictionary<string, IAsyncApiExtension> Extensions { get => this.schema.Extensions; set => this.schema.Extensions = value; }
 
-        public AsyncApiSchema AdditionalProperties { get => this.schema.AdditionalProperties; set => this.schema.AdditionalProperties = value; }
+        public AsyncApiJsonSchema AdditionalProperties { get => this.schema.AdditionalProperties; set => this.schema.AdditionalProperties = value; }
 
-        public static implicit operator AsyncApiSchema(AsyncApiJsonSchemaPayload payload) => payload.schema;
+        public static implicit operator AsyncApiJsonSchema(AsyncApiJsonSchemaPayload payload) => payload.schema;
 
-        public static implicit operator AsyncApiJsonSchemaPayload(AsyncApiSchema schema) => new AsyncApiJsonSchemaPayload(schema);
+        public static implicit operator AsyncApiJsonSchemaPayload(AsyncApiJsonSchema schema) => new AsyncApiJsonSchemaPayload(schema);
 
         public void SerializeV2(IAsyncApiWriter writer)
         {

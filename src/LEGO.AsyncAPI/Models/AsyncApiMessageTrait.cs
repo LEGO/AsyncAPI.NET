@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// schema definition of the application headers. Schema MUST be of type "object".
         /// </summary>
-        public AsyncApiSchema Headers { get; set; }
+        public AsyncApiJsonSchema Headers { get; set; }
 
         /// <summary>
         /// definition of the correlation ID used for message tracing or matching.
