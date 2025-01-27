@@ -3,20 +3,16 @@
 namespace LEGO.AsyncAPI.Readers
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text.Json;
     using System.Text.Json.Nodes;
     using System.Threading;
     using System.Threading.Tasks;
-    using Json.More;
     using Json.Pointer;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Extensions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Readers.Exceptions;
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Readers.Services;
     using LEGO.AsyncAPI.Services;
@@ -238,7 +234,7 @@ namespace LEGO.AsyncAPI.Readers
                         this.context.Workspace.RegisterComponent(reference.Reference.ExternalResource, stream);
                     }
 
-                    var component = this.ResolveArtifactReferences(stream, reference, diagnostic);
+                    var component = this.ResolveStreamReferences(stream, reference, diagnostic);
                     if (component == null)
                     {
                         diagnostic.Errors.Add(new AsyncApiError(string.Empty, $"Unable to deserialize reference '{reference.Reference.Reference}'"));
@@ -268,7 +264,7 @@ namespace LEGO.AsyncAPI.Readers
             return default;
         }
 
-        private IAsyncApiSerializable ResolveArtifactReferences(Stream stream, IAsyncApiReferenceable reference, AsyncApiDiagnostic diagnostic)
+        private IAsyncApiSerializable ResolveStreamReferences(Stream stream, IAsyncApiReferenceable reference, AsyncApiDiagnostic diagnostic)
         {
             JsonNode json = null;
             try
