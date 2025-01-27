@@ -224,7 +224,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             Reference = new AsyncApiReference
             {
                 Type = ReferenceType.Schema,
-                Id = "schemaObject1",
+                FragmentId = "schemaObject1",
             },
         };
 
@@ -426,8 +426,8 @@ namespace LEGO.AsyncAPI.Tests.Models
                                 Required = new HashSet<string> { "testB" },
                                 Properties = new Dictionary<string, AsyncApiJsonSchema>
                                 {
-                                    { "testC", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testC" } } },
-                                    { "testB", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testB" } } },
+                                    { "testC", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, FragmentId = "testC" } } },
+                                    { "testB", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, FragmentId = "testB" } } },
                                 },
                             },
                         },
@@ -440,7 +440,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                 Type = SchemaType.Object,
                 Properties = new Dictionary<string, AsyncApiJsonSchema>
                 {
-                    { "testD", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testD" } } },
+                    { "testD", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, FragmentId = "testD" } } },
                 },
             })
             .WithComponent("testB", new AsyncApiJsonSchema() { Description = "test", Type = SchemaType.Boolean })

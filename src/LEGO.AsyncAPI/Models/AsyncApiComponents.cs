@@ -104,7 +104,7 @@ namespace LEGO.AsyncAPI.Models
                 if (loops.TryGetValue(typeof(AsyncApiJsonSchema), out List<object> schemas))
                 {
                     var asyncApiSchemas = schemas.Cast<AsyncApiJsonSchema>().Distinct().ToList()
-                        .ToDictionary<AsyncApiJsonSchema, string>(k => k.Reference.Id);
+                        .ToDictionary<AsyncApiJsonSchema, string>(k => k.Reference.FragmentId);
 
                     writer.WriteOptionalMap(
                        AsyncApiConstants.Schemas,
@@ -132,7 +132,7 @@ namespace LEGO.AsyncAPI.Models
                 {
                     if (component.Reference != null &&
                         component.Reference.Type == ReferenceType.Schema &&
-                        component.Reference.Id == key)
+                        component.Reference.FragmentId == key)
                     {
                         component.SerializeV2WithoutReference(w);
                     }
@@ -262,7 +262,7 @@ namespace LEGO.AsyncAPI.Models
                 {
                     if (component.Reference != null &&
                         component.Reference.Type == ReferenceType.OperationTrait &&
-                        component.Reference.Id == key)
+                        component.Reference.FragmentId == key)
                     {
                         component.SerializeV2WithoutReference(w);
                     }
@@ -280,7 +280,7 @@ namespace LEGO.AsyncAPI.Models
                 {
                     if (component.Reference != null &&
                         component.Reference.Type == ReferenceType.MessageTrait &&
-                        component.Reference.Id == key)
+                        component.Reference.FragmentId == key)
                     {
                         component.SerializeV2WithoutReference(w);
                     }
@@ -298,7 +298,7 @@ namespace LEGO.AsyncAPI.Models
                 {
                     if (component.Reference != null &&
                         component.Reference.Type == ReferenceType.ServerBindings &&
-                        component.Reference.Id == key)
+                        component.Reference.FragmentId == key)
                     {
                         component.SerializeV2WithoutReference(w);
                     }
@@ -316,7 +316,7 @@ namespace LEGO.AsyncAPI.Models
                 {
                     if (component.Reference != null &&
                         component.Reference.Type == ReferenceType.ChannelBindings &&
-                        component.Reference.Id == key)
+                        component.Reference.FragmentId == key)
                     {
                         component.SerializeV2WithoutReference(w);
                     }
@@ -334,7 +334,7 @@ namespace LEGO.AsyncAPI.Models
                 {
                     if (component.Reference != null &&
                         component.Reference.Type == ReferenceType.OperationBindings &&
-                        component.Reference.Id == key)
+                        component.Reference.FragmentId == key)
                     {
                         component.SerializeV2WithoutReference(w);
                     }
@@ -352,7 +352,7 @@ namespace LEGO.AsyncAPI.Models
                 {
                     if (component.Reference != null &&
                         component.Reference.Type == ReferenceType.MessageBindings &&
-                        component.Reference.Id == key)
+                        component.Reference.FragmentId == key)
                     {
                         component.SerializeV2WithoutReference(w);
                     }

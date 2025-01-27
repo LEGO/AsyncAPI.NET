@@ -10,6 +10,7 @@ namespace LEGO.AsyncAPI.Readers
     using System.Text.Json.Nodes;
     using System.Threading;
     using System.Threading.Tasks;
+    using Json.More;
     using Json.Pointer;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Extensions;
@@ -20,6 +21,7 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Readers.Services;
     using LEGO.AsyncAPI.Services;
     using LEGO.AsyncAPI.Validations;
+    using YamlDotNet.RepresentationModel;
 
     /// <summary>
     /// Service class for converting contents of TextReader into AsyncApiDocument instances.
@@ -211,7 +213,7 @@ namespace LEGO.AsyncAPI.Readers
 
         private void ResolveExternalReferences(AsyncApiDiagnostic diagnostic, IAsyncApiSerializable serializable, AsyncApiDocument hostDocument)
         {
-            var loader = this.settings.ExternalReferenceLoader ??= new DefaultStreamLoader();
+            var loader = this.settings.ExternalReferenceLoader ??= new DefaultStreamLoader(this.settings);
             var collector = new AsyncApiRemoteReferenceCollector(hostDocument);
             var walker = new AsyncApiWalker(collector);
             walker.Walk(serializable);
@@ -232,10 +234,11 @@ namespace LEGO.AsyncAPI.Readers
                     }
                     else
                     {
-                        stream = loader.Load(new Uri(reference.Reference.Reference, UriKind.RelativeOrAbsolute));
+                        stream = loader.Load(new Uri(reference.Reference.ExternalResource, UriKind.RelativeOrAbsolute));
+                        this.context.Workspace.RegisterComponent(reference.Reference.ExternalResource, stream);
                     }
 
-                    var component = this.ResolveStream(stream, reference, diagnostic);
+                    var component = this.ResolveArtifactReferences(stream, reference, diagnostic);
                     if (component == null)
                     {
                         diagnostic.Errors.Add(new AsyncApiError(string.Empty, $"Unable to deserialize reference '{reference.Reference.Reference}'"));
@@ -252,12 +255,34 @@ namespace LEGO.AsyncAPI.Readers
             }
         }
 
-        private IAsyncApiSerializable ResolveStream(Stream input, IAsyncApiReferenceable reference, AsyncApiDiagnostic diagnostic)
+        private JsonNode ReadToJson(Stream stream)
         {
-            var json = JsonNode.Parse(input);
+            if (stream != null)
+            {
+                var reader = new StreamReader(stream);
+                var yamlStream = new YamlStream();
+                yamlStream.Load(reader);
+                return yamlStream.Documents.First().ToJsonNode(this.settings.CultureInfo);
+            }
+
+            return default;
+        }
+
+        private IAsyncApiSerializable ResolveArtifactReferences(Stream stream, IAsyncApiReferenceable reference, AsyncApiDiagnostic diagnostic)
+        {
+            JsonNode json = null;
+            try
+            {
+                json = this.ReadToJson(stream);
+            }
+            catch
+            {
+                diagnostic.Errors.Add(new AsyncApiError(string.Empty, $"Unable to deserialize reference: '{reference.Reference.Reference}'"));
+            }
+
             if (reference.Reference.IsFragment)
             {
-                var pointer = JsonPointer.Parse(reference.Reference.Id);
+                var pointer = JsonPointer.Parse(reference.Reference.FragmentId);
                 if (pointer.TryEvaluate(json, out var pointerResult))
                 {
                     json = pointerResult;
@@ -269,53 +294,55 @@ namespace LEGO.AsyncAPI.Readers
                 }
             }
 
+            AsyncApiDiagnostic fragmentDiagnostic = new AsyncApiDiagnostic();
             IAsyncApiSerializable result = null;
             switch (reference.Reference.Type)
             {
                 case ReferenceType.Schema:
-                    result = this.ReadFragment<AsyncApiJsonSchema>(json, AsyncApiVersion.AsyncApi2_0, out var streamDiagnostics);
+                    result = this.ReadFragment<AsyncApiJsonSchema>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.Server:
-                    result = this.ReadFragment<AsyncApiServer>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiServer>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.Channel:
-                    result = this.ReadFragment<AsyncApiChannel>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiChannel>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.Message:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.SecurityScheme:
-                    result = this.ReadFragment<AsyncApiSecurityScheme>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiSecurityScheme>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.Parameter:
-                    result = this.ReadFragment<AsyncApiParameter>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiParameter>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.CorrelationId:
-                    result = this.ReadFragment<AsyncApiCorrelationId>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiCorrelationId>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.OperationTrait:
-                    result = this.ReadFragment<AsyncApiOperationTrait>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiOperationTrait>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.MessageTrait:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.ServerBindings:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.ChannelBindings:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.OperationBindings:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.MessageBindings:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out var _);
+                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 default:
                     diagnostic.Errors.Add(new AsyncApiError(reference.Reference.Reference, "Could not resolve reference."));
                     break;
             }
 
+            diagnostic.Append(fragmentDiagnostic);
             return result;
         }
     }

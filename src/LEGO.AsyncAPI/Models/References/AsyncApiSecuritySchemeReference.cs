@@ -33,13 +33,13 @@ namespace LEGO.AsyncAPI.Models
         public override string Name { get => this.Target?.Name; set => this.Target.Name = value; }
 
         public override ParameterLocation In { get => this.Target.In; set => this.Target.In = value; }
-        
+
         public override string Scheme { get => this.Target?.Scheme; set => this.Target.Scheme = value; }
-        
+
         public override string BearerFormat { get => this.Target?.BearerFormat; set => this.Target.BearerFormat = value; }
-        
+
         public override AsyncApiOAuthFlows Flows { get => this.Target?.Flows; set => this.Target.Flows = value; }
-        
+
         public override Uri OpenIdConnectUrl { get => this.Target?.OpenIdConnectUrl; set => this.Target.OpenIdConnectUrl = value; }
 
         public override IDictionary<string, IAsyncApiExtension> Extensions { get => this.Target?.Extensions; set => this.Target.Extensions = value; }

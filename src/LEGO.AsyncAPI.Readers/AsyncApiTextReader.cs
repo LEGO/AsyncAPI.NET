@@ -122,7 +122,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             var yamlStream = new YamlStream();
             yamlStream.Load(input);
-            return yamlStream.Documents.First().ToJsonNode(settings);
+            return yamlStream.Documents.First().ToJsonNode(settings.CultureInfo);
         }
     }
 }

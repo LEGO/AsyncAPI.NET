@@ -9,7 +9,6 @@ namespace LEGO.AsyncAPI.Readers.V2
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
     using LEGO.AsyncAPI.Readers.ParseNodes;
-    using LEGO.AsyncAPI.Writers;
 
     internal class AsyncApiV2VersionService : IAsyncApiVersionService
     {

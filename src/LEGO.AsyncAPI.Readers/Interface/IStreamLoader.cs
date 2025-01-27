@@ -4,6 +4,7 @@ namespace LEGO.AsyncAPI.Readers.Interface
 {
     using System;
     using System.IO;
+    using System.Text.Json.Nodes;
     using System.Threading.Tasks;
 
     public interface IStreamLoader

@@ -45,7 +45,7 @@ namespace LEGO.AsyncAPI.Models
                 }
 
                 // securityScheme.SerializeV2(writer);
-                writer.WritePropertyName(securityScheme.Reference.Id);
+                writer.WritePropertyName(securityScheme.Reference.FragmentId);
                 writer.WriteStartArray();
 
                 foreach (var scope in scopes)

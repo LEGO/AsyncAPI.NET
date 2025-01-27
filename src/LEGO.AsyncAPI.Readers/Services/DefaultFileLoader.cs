@@ -1,4 +1,4 @@
-// Copyright (c) The LEGO Group. All rights reserved.
+﻿// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Readers.Services
 {
@@ -11,7 +11,13 @@ namespace LEGO.AsyncAPI.Readers.Services
 
     internal class DefaultStreamLoader : IStreamLoader
     {
-        private static readonly HttpClient httpClient = new HttpClient();
+        private static readonly HttpClient HttpClient = new HttpClient();
+        private readonly AsyncApiReaderSettings settings;
+
+        public DefaultStreamLoader(AsyncApiReaderSettings settings)
+        {
+            this.settings = settings;
+        }
 
         public Stream Load(Uri uri)
         {
@@ -21,9 +27,11 @@ namespace LEGO.AsyncAPI.Readers.Services
                 {
                     case "file":
                         return File.OpenRead(uri.AbsolutePath);
+                        break;
                     case "http":
                     case "https":
-                        return httpClient.GetStreamAsync(uri).GetAwaiter().GetResult();
+                        return HttpClient.GetStreamAsync(uri).GetAwaiter().GetResult();
+                        break;
                     default:
                         throw new ArgumentException("Unsupported scheme");
                 }
@@ -43,9 +51,11 @@ namespace LEGO.AsyncAPI.Readers.Services
                 {
                     case "file":
                         return File.OpenRead(uri.AbsolutePath);
+                        break;
                     case "http":
                     case "https":
-                        return await httpClient.GetStreamAsync(uri);
+                        return await HttpClient.GetStreamAsync(uri);
+                        break;
                     default:
                         throw new ArgumentException("Unsupported scheme");
                 }

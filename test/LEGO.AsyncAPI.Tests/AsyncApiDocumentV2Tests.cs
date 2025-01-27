@@ -226,14 +226,7 @@ namespace LEGO.AsyncAPI.Tests
                     new AsyncApiSecurityRequirement
                     {
                         {
-                            new AsyncApiSecurityScheme()
-                            {
-                                Reference = new AsyncApiReference()
-                                {
-                                    Id = "saslScram",
-                                    Type = ReferenceType.SecurityScheme,
-                                },
-                            }, new List<string>()
+                            new AsyncApiSecuritySchemeReference("saslScram"), new List<string>()
                         },
                     },
                     },
@@ -266,14 +259,7 @@ namespace LEGO.AsyncAPI.Tests
                     new AsyncApiSecurityRequirement
                     {
                         {
-                            new AsyncApiSecurityScheme()
-                            {
-                                Reference = new AsyncApiReference()
-                                {
-                                    Id = "certs",
-                                    Type = ReferenceType.SecurityScheme,
-                                },
-                            }, new List<string>()
+                            new AsyncApiSecuritySchemeReference("certs"), new List<string>()
                         },
                     },
                     },
@@ -305,14 +291,7 @@ namespace LEGO.AsyncAPI.Tests
                     Parameters = new Dictionary<string, AsyncApiParameter>
                     {
                     {
-                        "streetlightId", new AsyncApiParameter()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Id = "streetlightId",
-                                Type = ReferenceType.Parameter,
-                            },
-                        }
+                        "streetlightId", new AsyncApiParameterReference("#/components/parameters/streetlightId")
                     },
                     },
                     Publish = new AsyncApiOperation()
@@ -325,7 +304,7 @@ namespace LEGO.AsyncAPI.Tests
                         {
                             Reference = new AsyncApiReference()
                             {
-                                Id = "kafka",
+                                FragmentId = "kafka",
                                 Type = ReferenceType.OperationTrait,
                             },
                         },
@@ -355,7 +334,7 @@ namespace LEGO.AsyncAPI.Tests
                         {
                             Reference = new AsyncApiReference()
                             {
-                                Id = "kafka",
+                                FragmentId = "kafka",
                                 Type = ReferenceType.OperationTrait,
                             },
                         },
@@ -373,14 +352,7 @@ namespace LEGO.AsyncAPI.Tests
                     Parameters = new Dictionary<string, AsyncApiParameter>
                     {
                     {
-                        "streetlightId", new AsyncApiParameter()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Id = "streetlightId",
-                                Type = ReferenceType.Parameter,
-                            },
-                        }
+                        "streetlightId", new AsyncApiParameterReference("#/components/parameters/streetlightId")
                     },
                     },
                     Subscribe = new AsyncApiOperation()
@@ -392,18 +364,18 @@ namespace LEGO.AsyncAPI.Tests
                         {
                             Reference = new AsyncApiReference()
                             {
-                                Id = "kafka",
+                                FragmentId = "kafka",
                                 Type = ReferenceType.OperationTrait,
                             },
                         },
                         },
                         Message = new List<AsyncApiMessage>
                         {
-                        new AsyncApiMessage()
+                        new AsyncApiMessageReference("#/components/messages/turnOnOff")
                         {
                             Reference = new AsyncApiReference()
                             {
-                                Id = "turnOnOff",
+                                FragmentId = "turnOnOff",
                                 Type = ReferenceType.Message,
                             },
                         },
@@ -417,14 +389,7 @@ namespace LEGO.AsyncAPI.Tests
                     Parameters = new Dictionary<string, AsyncApiParameter>
                     {
                     {
-                        "streetlightId", new AsyncApiParameter()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Id = "streetlightId",
-                                Type = ReferenceType.Parameter,
-                            },
-                        }
+                        "streetlightId", new AsyncApiParameterReference("#/components/parameters/streetlightId")
                     },
                     },
                     Subscribe = new AsyncApiOperation()
@@ -436,21 +401,14 @@ namespace LEGO.AsyncAPI.Tests
                         {
                             Reference = new AsyncApiReference()
                             {
-                                Id = "kafka",
+                                FragmentId = "kafka",
                                 Type = ReferenceType.OperationTrait,
                             },
                         },
                         },
                         Message = new List<AsyncApiMessage>
                         {
-                        new AsyncApiMessage()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Id = "dimLight",
-                                Type = ReferenceType.Message,
-                            },
-                        },
+                            new AsyncApiMessageReference("#/components/messages/dimLight"),
                         },
                     },
                 })
@@ -467,7 +425,7 @@ namespace LEGO.AsyncAPI.Tests
                         Reference = new AsyncApiReference()
                         {
                             Type = ReferenceType.MessageTrait,
-                            Id = "commonHeaders",
+                            FragmentId = "commonHeaders",
                         },
                     },
                     },
@@ -476,7 +434,7 @@ namespace LEGO.AsyncAPI.Tests
                         Reference = new AsyncApiReference()
                         {
                             Type = ReferenceType.Schema,
-                            Id = "lightMeasuredPayload",
+                            FragmentId = "lightMeasuredPayload",
                         },
                     },
                 })
@@ -492,7 +450,7 @@ namespace LEGO.AsyncAPI.Tests
                         Reference = new AsyncApiReference()
                         {
                             Type = ReferenceType.MessageTrait,
-                            Id = "commonHeaders",
+                            FragmentId = "commonHeaders",
                         },
                     },
                     },
@@ -501,7 +459,7 @@ namespace LEGO.AsyncAPI.Tests
                         Reference = new AsyncApiReference()
                         {
                             Type = ReferenceType.Schema,
-                            Id = "turnOnOffPayload",
+                            FragmentId = "turnOnOffPayload",
                         },
                     },
                 })
@@ -517,7 +475,7 @@ namespace LEGO.AsyncAPI.Tests
                         Reference = new AsyncApiReference()
                         {
                             Type = ReferenceType.MessageTrait,
-                            Id = "commonHeaders",
+                            FragmentId = "commonHeaders",
                         },
                     },
                     },
@@ -526,7 +484,7 @@ namespace LEGO.AsyncAPI.Tests
                         Reference = new AsyncApiReference()
                         {
                             Type = ReferenceType.Schema,
-                            Id = "dimLightPayload",
+                            FragmentId = "dimLightPayload",
                         },
                     },
                 })
@@ -549,7 +507,7 @@ namespace LEGO.AsyncAPI.Tests
                             Reference = new AsyncApiReference()
                             {
                                 Type = ReferenceType.Schema,
-                                Id = "sentAt",
+                                FragmentId = "sentAt",
                             },
                         }
                     },
@@ -578,7 +536,7 @@ namespace LEGO.AsyncAPI.Tests
                             Reference = new AsyncApiReference()
                             {
                                 Type = ReferenceType.Schema,
-                                Id = "sentAt",
+                                FragmentId = "sentAt",
                             },
                         }
                     },
@@ -604,7 +562,7 @@ namespace LEGO.AsyncAPI.Tests
                             Reference = new AsyncApiReference()
                             {
                                 Type = ReferenceType.Schema,
-                                Id = "sentAt",
+                                FragmentId = "sentAt",
                             },
                         }
                     },
@@ -900,14 +858,8 @@ namespace LEGO.AsyncAPI.Tests
                                 new AsyncApiSecurityRequirement
                                 {
                                     {
-                                        new AsyncApiSecurityScheme()
-                                        {
-                                            Reference = new AsyncApiReference()
-                                            {
-                                                Id = securitySchemeName,
-                                                Type = ReferenceType.SecurityScheme,
-                                            },
-                                        }, new List<string>
+                                        new AsyncApiSecuritySchemeReference(securitySchemeName),
+                                        new List<string>
                                         {
                                             requirementString,
                                         }
@@ -1230,7 +1182,7 @@ namespace LEGO.AsyncAPI.Tests
                     Reference = new AsyncApiReference()
                     {
                         Type = ReferenceType.ServerBindings,
-                        Id = "bindings",
+                        FragmentId = "bindings",
                     },
                 },
             });
@@ -1250,7 +1202,7 @@ namespace LEGO.AsyncAPI.Tests
                                 Reference = new AsyncApiReference()
                                 {
                                     Type = ReferenceType.ChannelBindings,
-                                    Id = "bindings",
+                                    FragmentId = "bindings",
                                 },
                             },
                         }

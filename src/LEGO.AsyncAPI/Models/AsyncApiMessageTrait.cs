@@ -68,8 +68,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// additional external documentation for this message.
         /// </summary>
-        public AsyncApiExternalDocumentation ExternalDocs { get; set; }
-
+        public AsyncApiExternalDocumentation ExternalDocs { get; set; } 
         /// <summary>
         /// a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the message.
         /// </summary>

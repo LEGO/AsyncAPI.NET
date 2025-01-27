@@ -5,13 +5,11 @@ namespace LEGO.AsyncAPI
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
 
     public class AsyncApiWorkspace
     {
-        private readonly Dictionary<string, IAsyncApiReferenceable> referenceRegistry = new();
         private readonly Dictionary<Uri, Stream> artifactsRegistry = new();
         private readonly Dictionary<Uri, IAsyncApiSerializable> resolvedReferenceRegistry = new();
 
@@ -156,12 +154,6 @@ namespace LEGO.AsyncAPI
             return false;
         }
 
-        public void RegisterReference(IAsyncApiReferenceable reference)
-        {
-            var location = reference.Reference.Reference;
-            this.referenceRegistry[location] = reference;
-        }
-
         public bool Contains(string location)
         {
             var key = this.ToLocationUrl(location);
@@ -169,6 +161,7 @@ namespace LEGO.AsyncAPI
         }
 
         public T ResolveReference<T>(string location)
+            where T : class
         {
             if (string.IsNullOrEmpty(location))
             {
@@ -178,16 +171,18 @@ namespace LEGO.AsyncAPI
             var uri = this.ToLocationUrl(location);
             if (this.resolvedReferenceRegistry.TryGetValue(uri, out var referenceableValue))
             {
-                return (T)referenceableValue;
+                return referenceableValue as T;
             }
 
-            if (this.artifactsRegistry.TryGetValue(uri, out var stream))
+            if (this.artifactsRegistry.TryGetValue(uri, out var json))
             {
-                return (T)(object)stream;
+                return (T)(object)json;
             }
 
             return default;
         }
+
+
 
         private Uri ToLocationUrl(string location)
         {

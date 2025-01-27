@@ -13,6 +13,8 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class AsyncApiReference : IAsyncApiSerializable
     {
+        private string originalString;
+
         public AsyncApiReference()
         {
         }
@@ -24,13 +26,14 @@ namespace LEGO.AsyncAPI.Models
                 throw new AsyncApiException($"The reference string '{reference}' has invalid format.");
             }
 
+            this.originalString = reference;
             var segments = reference.Split('#');
             if (segments.Length == 1)
             {
                 if (type == ReferenceType.SecurityScheme)
                 {
-                    this.Type = type;
-                    this.Id = reference;
+                    this.Type = ReferenceType.SecurityScheme;
+                    this.FragmentId = reference;
                     return;
                 }
 
@@ -41,51 +44,36 @@ namespace LEGO.AsyncAPI.Models
             }
             else if (segments.Length == 2)
             {
-                // Local components reference
-                if (reference.StartsWith("#"))
+                if (reference.StartsWith("#")) // is local reference
                 {
                     var localSegments = reference.Split('/');
 
                     if (localSegments.Length == 4)
                     {
-                        if (localSegments[1] == "components")
+                        if (localSegments[1] == "components") // is local components reference
                         {
-                            var referenceType = localSegments[2].GetEnumFromDisplayName<ReferenceType>();
-
-                            this.Type = referenceType;
-                            this.Id = localSegments[3];
-                            this.IsFragment = true;
-                            return;
+                            var referencedType = localSegments[2].GetEnumFromDisplayName<ReferenceType>();
+                            if (type == null || type == ReferenceType.None)
+                            {
+                                type = referencedType;
+                            }
+                            else
+                            {
+                                if (type != referencedType)
+                                {
+                                    throw new AsyncApiException("Referenced type mismatch");
+                                }
+                            }
                         }
                     }
-
-                    throw new AsyncApiException($"The reference string '{reference}' has invalid format.");
                 }
-
-                var id = segments[1];
-                if (id.StartsWith("/components/"))
+                else
                 {
-                    var localSegments = segments[1].Split('/');
-                    var referencedType = localSegments[2].GetEnumFromDisplayName<ReferenceType>();
-                    if (type == null)
-                    {
-                        type = referencedType;
-                    }
-                    else
-                    {
-                        if (type != referencedType)
-                        {
-                            throw new AsyncApiException("Referenced type mismatch");
-                        }
-                    }
-
-                    id = localSegments[3];
+                    this.ExternalResource = segments[0];
                 }
 
-                this.IsFragment = true;
-                this.ExternalResource = segments[0];
                 this.Type = type;
-                this.Id = id;
+                this.FragmentId = segments[1];
 
                 return;
             }
@@ -113,7 +101,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets the identifier of the reusable component of one particular ReferenceType.
         /// </summary>
-        public string Id { get; set; }
+        public string FragmentId { get; set; }
 
         /// <summary>
         /// Gets or sets the AsyncApiDocument that is hosting the AsyncApiReference instance. This is used to enable dereferencing the reference.
@@ -123,7 +111,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets a flag indicating whether a file is a valid OpenAPI document or a fragment.
         /// </summary>
-        public bool IsFragment { get; set; } = false;
+        public bool IsFragment => this.FragmentId != null;
 
         /// <summary>
         /// Gets a flag indicating whether this reference is an external reference.
@@ -137,22 +125,7 @@ namespace LEGO.AsyncAPI.Models
         {
             get
             {
-                if (this.IsExternal)
-                {
-                    return this.GetExternalReferenceV2();
-                }
-
-                if (!this.Type.HasValue)
-                {
-                    throw new ArgumentNullException(nameof(this.Type));
-                }
-
-                //if (this.Type == ReferenceType.SecurityScheme)
-                //{
-                //    return this.Id;
-                //}
-
-                return "#/components/" + this.Type.GetDisplayName() + "/" + this.Id;
+                return this.originalString;
             }
         }
 
@@ -184,7 +157,7 @@ namespace LEGO.AsyncAPI.Models
         private string GetExternalReferenceV2()
         {
 
-            return this.ExternalResource + (this.Id != null ? "/#/" + this.Id : string.Empty);
+            return this.ExternalResource + (this.FragmentId != null ? "#" + this.FragmentId : string.Empty);
         }
 
         public void Write(IAsyncApiWriter writer)

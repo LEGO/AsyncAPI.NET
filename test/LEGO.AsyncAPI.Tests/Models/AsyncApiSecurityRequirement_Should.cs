@@ -24,7 +24,7 @@ namespace LEGO.AsyncAPI.Tests.Models
         public void SerializeV2_Serializes()
         {
             var asyncApiSecurityRequirement = new AsyncApiSecurityRequirement();
-            asyncApiSecurityRequirement.Add(new AsyncApiSecurityScheme { Type = SecuritySchemeType.ApiKey }, new List<string> { "string" });
+            asyncApiSecurityRequirement.Add(new AsyncApiSecuritySchemeReference("apiKey"), new List<string> { "string" });
 
             var output = asyncApiSecurityRequirement.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
         }

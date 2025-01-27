@@ -452,7 +452,7 @@ namespace LEGO.AsyncAPI.Tests
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
             diagnostic.Errors.Should().NotBeEmpty();
-            doc.Channels.Values.First().Publish.Message.First().Should().BeNull();
+            doc.Channels.Values.First().Publish.Message.Should().BeEmpty();
         }
 
         [Test]

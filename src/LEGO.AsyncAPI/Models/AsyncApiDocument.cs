@@ -13,7 +13,7 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class AsyncApiDocument : IAsyncApiExtensible, IAsyncApiSerializable
     {
-        public AsyncApiWorkspace Workspace { get; set; }
+        internal AsyncApiWorkspace Workspace { get; set; }
 
         /// <summary>
         /// REQUIRED. Specifies the AsyncAPI Specification version being used.
@@ -110,7 +110,7 @@ namespace LEGO.AsyncAPI.Models
         }
 
         internal T? ResolveReference<T>(AsyncApiReference reference)
-            where T : IAsyncApiSerializable
+            where T : class, IAsyncApiSerializable
         {
             return this.Workspace.ResolveReference<T>(reference.Reference);
         }

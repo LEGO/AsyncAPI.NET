@@ -881,6 +881,11 @@ namespace LEGO.AsyncAPI.Services
             }
 
             this.visitor.Visit(securityRequirement);
+            foreach (var item in securityRequirement.Keys)
+            {
+                this.Walk(item as IAsyncApiReferenceable);
+            }
+
             this.Walk(securityRequirement as IAsyncApiExtensible);
         }
 
