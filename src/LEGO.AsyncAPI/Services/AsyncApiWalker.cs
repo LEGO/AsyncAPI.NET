@@ -336,8 +336,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiJsonSchema schema, bool isComponent = false)
         {
-            if (schema == null || this.ProcessAsReference(schema, isComponent))
+            if (schema is AsyncApiJsonSchemaReference reference)
             {
+                this.Walk(reference as IAsyncApiReferenceable);
                 return;
             }
 

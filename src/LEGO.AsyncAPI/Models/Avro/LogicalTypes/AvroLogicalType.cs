@@ -14,11 +14,7 @@ namespace LEGO.AsyncAPI.Models.Avro.LogicalTypes
 
         public abstract LogicalType LogicalType { get; }
 
-        public virtual void SerializeV2Core(IAsyncApiWriter writer)
-        {
-        }
-
-        public override void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeV2Core(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteOptionalProperty("type", this.Type);

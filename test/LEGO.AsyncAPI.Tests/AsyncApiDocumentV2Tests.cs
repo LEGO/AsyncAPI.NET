@@ -387,14 +387,7 @@ namespace LEGO.AsyncAPI.Tests
                     {
                     new AsyncApiMessageTraitReference("#/components/messageTraits/commonHeaders"),
                     },
-                    Payload = new AsyncApiJsonSchemaPayload
-                    {
-                        Reference = new AsyncApiReference()
-                        {
-                            Type = ReferenceType.Schema,
-                            FragmentId = "lightMeasuredPayload",
-                        },
-                    },
+                    Payload = new AsyncApiJsonSchemaPayloadReference("#/components/schemas/lightMeasuredPayload"),
                 })
                 .WithComponent("turnOnOff", new AsyncApiMessage()
                 {
@@ -405,14 +398,7 @@ namespace LEGO.AsyncAPI.Tests
                     {
                     new AsyncApiMessageTraitReference("#/components/messageTraits/commonHeaders"),
                     },
-                    Payload = new AsyncApiJsonSchemaPayload()
-                    {
-                        Reference = new AsyncApiReference()
-                        {
-                            Type = ReferenceType.Schema,
-                            FragmentId = "turnOnOffPayload",
-                        },
-                    },
+                    Payload = new AsyncApiJsonSchemaPayloadReference("#/components/schemas/turnOnOffPayload"),
                 })
                 .WithComponent("dimLight", new AsyncApiMessage()
                 {

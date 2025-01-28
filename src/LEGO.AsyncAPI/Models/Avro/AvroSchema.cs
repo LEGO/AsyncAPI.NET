@@ -25,7 +25,7 @@ namespace LEGO.AsyncAPI.Models
             return new AvroPrimitive(type);
         }
 
-        public void SerializeV2(IAsyncApiWriter writer)
+        public virtual void SerializeV2(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -38,9 +38,9 @@ namespace LEGO.AsyncAPI.Models
                 return;
             }
 
-            this.SerializeV2WithoutReference(writer);
+            this.SerializeV2Core(writer);
         }
 
-        public abstract void SerializeV2WithoutReference(IAsyncApiWriter writer);
+        public abstract void SerializeV2Core(IAsyncApiWriter writer);
     }
 }

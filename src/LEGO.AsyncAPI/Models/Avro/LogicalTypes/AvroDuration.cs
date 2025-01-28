@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Models.Avro.LogicalTypes
 
         public new int Size { get; } = 12;
 
-        public override void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeV2Core(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteOptionalProperty("type", this.Type);

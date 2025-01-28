@@ -101,17 +101,17 @@ namespace LEGO.AsyncAPI.Models
             {
                 var loops = writer.GetSettings().LoopDetector.Loops;
                 writer.WriteStartObject();
-                if (loops.TryGetValue(typeof(AsyncApiJsonSchema), out List<object> schemas))
+                if (loops.TryGetValue(typeof(AsyncApiJsonSchemaReference), out List<object> schemas))
                 {
-                    var asyncApiSchemas = schemas.Cast<AsyncApiJsonSchema>().Distinct().ToList()
-                        .ToDictionary<AsyncApiJsonSchema, string>(k => k.Reference.FragmentId);
+                    var asyncApiSchemas = schemas.Cast<AsyncApiJsonSchemaReference>().Distinct().ToList()
+                        .ToDictionary<AsyncApiJsonSchemaReference, string>(k => k.Reference.FragmentId);
 
                     writer.WriteOptionalMap(
                        AsyncApiConstants.Schemas,
                        this.Schemas,
                        (w, key, component) =>
                         {
-                            component.SerializeV2WithoutReference(w);
+                            component.SerializeV2(w);
                         });
                 }
 
@@ -130,11 +130,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Schemas,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Schema &&
-                        component.Reference.FragmentId == key)
+                    if (component is AsyncApiJsonSchemaReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
