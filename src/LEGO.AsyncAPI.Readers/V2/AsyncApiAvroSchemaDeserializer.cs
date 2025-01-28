@@ -2,8 +2,6 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using System;
-    using System.Threading;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Avro.LogicalTypes;

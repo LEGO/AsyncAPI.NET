@@ -39,25 +39,25 @@ public class Condition : IAsyncApiElement
         switch (node)
         {
             case MapNode mapNode:
-            {
-                var conditionValues = new Dictionary<string, Dictionary<string, StringOrStringList>>();
-                foreach (var conditionNode in mapNode)
                 {
-                    switch (conditionNode.Value)
+                    var conditionValues = new Dictionary<string, Dictionary<string, StringOrStringList>>();
+                    foreach (var conditionNode in mapNode)
                     {
-                        case MapNode conditionValueNode:
-                            conditionValues.Add(conditionNode.Name, new Dictionary<string, StringOrStringList>(conditionValueNode.Select(x =>
-                                    new KeyValuePair<string, StringOrStringList>(x.Name, StringOrStringList.Parse(x.Value)))
-                                .ToDictionary(x => x.Key, x => x.Value)));
-                            break;
-                        default:
-                            throw new ArgumentException($"An error occured while parsing a {nameof(Condition)} node. " +
-                                                        $"AWS condition values should be one or more key value pairs.");
+                        switch (conditionNode.Value)
+                        {
+                            case MapNode conditionValueNode:
+                                conditionValues.Add(conditionNode.Name, new Dictionary<string, StringOrStringList>(conditionValueNode.Select(x =>
+                                        new KeyValuePair<string, StringOrStringList>(x.Name, StringOrStringList.Parse(x.Value)))
+                                    .ToDictionary(x => x.Key, x => x.Value)));
+                                break;
+                            default:
+                                throw new ArgumentException($"An error occured while parsing a {nameof(Condition)} node. " +
+                                                            $"AWS condition values should be one or more key value pairs.");
+                        }
                     }
-                }
 
-                return new Condition(conditionValues);
-            }
+                    return new Condition(conditionValues);
+                }
 
             default:
                 throw new ArgumentException($"An error occured while parsing a {nameof(Condition)} node. " +

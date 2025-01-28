@@ -2,8 +2,6 @@
 
 namespace LEGO.AsyncAPI.Models.Interfaces
 {
-    using LEGO.AsyncAPI.Writers;
-
     public interface IAsyncApiReferenceable : IAsyncApiSerializable
     {
         /// <summary>

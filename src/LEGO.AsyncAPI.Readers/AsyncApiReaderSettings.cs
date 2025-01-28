@@ -8,7 +8,6 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Readers.Interface;
-    using LEGO.AsyncAPI.Readers.Services;
     using LEGO.AsyncAPI.Validations;
 
     public enum ReferenceResolutionSetting

@@ -513,8 +513,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiOperationTrait trait, bool isComponent = false)
         {
-            if (trait == null || this.ProcessAsReference(trait, isComponent))
+            if (trait is AsyncApiOperationTraitReference reference)
             {
+                this.Walk(reference as IAsyncApiReferenceable);
                 return;
             }
 
@@ -585,8 +586,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiMessageTrait trait, bool isComponent = false)
         {
-            if (trait == null || this.ProcessAsReference(trait, isComponent))
+            if (trait is AsyncApiMessageTraitReference reference)
             {
+                this.Walk(reference as IAsyncApiReferenceable);
                 return;
             }
 

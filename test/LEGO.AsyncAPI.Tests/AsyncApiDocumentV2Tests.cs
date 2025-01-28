@@ -300,14 +300,7 @@ namespace LEGO.AsyncAPI.Tests
                         OperationId = "receiveLightMeasurement",
                         Traits = new List<AsyncApiOperationTrait>
                         {
-                        new AsyncApiOperationTrait()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                FragmentId = "kafka",
-                                Type = ReferenceType.OperationTrait,
-                            },
-                        },
+                        new AsyncApiOperationTraitReference("#/components/operationTraits/kafka"),
                         },
                         Message = new List<AsyncApiMessage>
                         {
@@ -330,18 +323,11 @@ namespace LEGO.AsyncAPI.Tests
                         OperationId = "turnOn",
                         Traits = new List<AsyncApiOperationTrait>
                         {
-                        new AsyncApiOperationTrait()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                FragmentId = "kafka",
-                                Type = ReferenceType.OperationTrait,
-                            },
-                        },
+                            new AsyncApiOperationTraitReference("#/components/operationTraits/kafka"),
                         },
                         Message = new List<AsyncApiMessage>
                         {
-                        new AsyncApiMessageReference("#/components/messages/turnOnOff")
+                            new AsyncApiMessageReference("#/components/messages/turnOnOff"),
                         },
                     },
                 })
@@ -360,25 +346,11 @@ namespace LEGO.AsyncAPI.Tests
                         OperationId = "turnOff",
                         Traits = new List<AsyncApiOperationTrait>
                         {
-                        new AsyncApiOperationTrait()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                FragmentId = "kafka",
-                                Type = ReferenceType.OperationTrait,
-                            },
-                        },
+                        new AsyncApiOperationTraitReference("#/components/operationTraits/kafka"),
                         },
                         Message = new List<AsyncApiMessage>
                         {
-                        new AsyncApiMessageReference("#/components/messages/turnOnOff")
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                FragmentId = "turnOnOff",
-                                Type = ReferenceType.Message,
-                            },
-                        },
+                        new AsyncApiMessageReference("#/components/messages/turnOnOff"),
                         },
                     },
                 })
@@ -397,14 +369,7 @@ namespace LEGO.AsyncAPI.Tests
                         OperationId = "dimLight",
                         Traits = new List<AsyncApiOperationTrait>
                         {
-                        new AsyncApiOperationTrait()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                FragmentId = "kafka",
-                                Type = ReferenceType.OperationTrait,
-                            },
-                        },
+                        new AsyncApiOperationTraitReference("#/components/operationTraits/kafka"),
                         },
                         Message = new List<AsyncApiMessage>
                         {
@@ -420,14 +385,7 @@ namespace LEGO.AsyncAPI.Tests
                     ContentType = "application/json",
                     Traits = new List<AsyncApiMessageTrait>()
                     {
-                    new AsyncApiMessageTrait()
-                    {
-                        Reference = new AsyncApiReference()
-                        {
-                            Type = ReferenceType.MessageTrait,
-                            FragmentId = "commonHeaders",
-                        },
-                    },
+                    new AsyncApiMessageTraitReference("#/components/messageTraits/commonHeaders"),
                     },
                     Payload = new AsyncApiJsonSchemaPayload
                     {
@@ -445,14 +403,7 @@ namespace LEGO.AsyncAPI.Tests
                     Summary = "Command a particular streetlight to turn the lights on or off.",
                     Traits = new List<AsyncApiMessageTrait>()
                     {
-                    new AsyncApiMessageTrait()
-                    {
-                        Reference = new AsyncApiReference()
-                        {
-                            Type = ReferenceType.MessageTrait,
-                            FragmentId = "commonHeaders",
-                        },
-                    },
+                    new AsyncApiMessageTraitReference("#/components/messageTraits/commonHeaders"),
                     },
                     Payload = new AsyncApiJsonSchemaPayload()
                     {
@@ -470,14 +421,7 @@ namespace LEGO.AsyncAPI.Tests
                     Summary = "Command a particular streetlight to dim the lights.",
                     Traits = new List<AsyncApiMessageTrait>()
                     {
-                    new AsyncApiMessageTrait()
-                    {
-                        Reference = new AsyncApiReference()
-                        {
-                            Type = ReferenceType.MessageTrait,
-                            FragmentId = "commonHeaders",
-                        },
-                    },
+                    new AsyncApiMessageTraitReference("#/components/messageTraits/commonHeaders"),
                     },
                     Payload = new AsyncApiJsonSchemaPayload()
                     {

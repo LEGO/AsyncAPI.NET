@@ -14,9 +14,9 @@ namespace LEGO.AsyncAPI.Readers.Services
 
         public AsyncApiRemoteReferenceCollector(
             AsyncApiDocument currentDocument)
-                {
-                    this.currentDocument = currentDocument;
-                }
+        {
+            this.currentDocument = currentDocument;
+        }
         /// <summary>
         /// List of all external references collected from AsyncApiDocument.
         /// </summary>

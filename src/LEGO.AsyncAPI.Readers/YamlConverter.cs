@@ -58,7 +58,7 @@ namespace LEGO.AsyncAPI.Readers
                         ? JsonValue.Create(d)
                         : bool.TryParse(yaml.Value, out var b)
                             ? JsonValue.Create(b)
-                            : JsonValue.Create(yaml.Value) !;
+                            : JsonValue.Create(yaml.Value)!;
                 case ScalarStyle.SingleQuoted:
                 case ScalarStyle.DoubleQuoted:
                 case ScalarStyle.Literal:

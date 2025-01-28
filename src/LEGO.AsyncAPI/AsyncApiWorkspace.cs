@@ -182,8 +182,6 @@ namespace LEGO.AsyncAPI
             return default;
         }
 
-
-
         private Uri ToLocationUrl(string location)
         {
             return new(location, UriKind.RelativeOrAbsolute);

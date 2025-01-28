@@ -67,7 +67,7 @@ namespace LEGO.AsyncAPI.Validation.Rules
                     finally
                     {
                         context.Exit();
-                    }                    
+                    }
                 });
 
         private static string GetKeySignature(string path)

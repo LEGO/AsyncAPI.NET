@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Bindings.Sns
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Attributes;
-    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 

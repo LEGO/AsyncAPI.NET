@@ -260,11 +260,9 @@ namespace LEGO.AsyncAPI.Models
                 this.OperationTraits,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.OperationTrait &&
-                        component.Reference.FragmentId == key)
+                    if (component is AsyncApiOperationTraitReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -278,11 +276,9 @@ namespace LEGO.AsyncAPI.Models
                 this.MessageTraits,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.MessageTrait &&
-                        component.Reference.FragmentId == key)
+                    if (component is AsyncApiMessageTraitReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {

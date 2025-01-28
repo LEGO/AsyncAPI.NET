@@ -3,7 +3,6 @@
 namespace LEGO.AsyncAPI.Models
 {
     using System;
-    using System.Linq;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;

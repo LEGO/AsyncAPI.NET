@@ -5,7 +5,6 @@ namespace LEGO.AsyncAPI.Bindings.Sqs
     using System;
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Attributes;
-    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 

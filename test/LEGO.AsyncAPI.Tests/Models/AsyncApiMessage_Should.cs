@@ -126,7 +126,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             actual.Should()
                   .BePlatformAgnosticEquivalentTo(expected);
             message.Should().BeEquivalentTo(deserializedMessage);
-            }
+        }
 
         [Test]
         public void AsyncApiMessage_WithJsonSchemaFormat_Serializes()

@@ -7,31 +7,29 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Writers;
 
     /// <summary>
-    /// The definition of a message this application MAY use.
+    /// The definition of a message trait this application MAY use.
     /// </summary>
-    public class AsyncApiMessageReference : AsyncApiMessage, IAsyncApiReferenceable
+    public class AsyncApiMessageTraitReference : AsyncApiMessageTrait, IAsyncApiReferenceable
     {
-        private AsyncApiMessage target;
+        private AsyncApiMessageTrait target;
 
-        private AsyncApiMessage Target
+        private AsyncApiMessageTrait Target
         {
             get
             {
-                this.target ??= this.Reference.HostDocument.ResolveReference<AsyncApiMessage>(this.Reference);
+                this.target ??= this.Reference.HostDocument.ResolveReference<AsyncApiMessageTrait>(this.Reference);
                 return this.target;
             }
         }
 
-        public AsyncApiMessageReference(string reference)
+        public AsyncApiMessageTraitReference(string reference)
         {
-            this.Reference = new AsyncApiReference(reference, ReferenceType.Message);
+            this.Reference = new AsyncApiReference(reference, ReferenceType.MessageTrait);
         }
 
         public override string MessageId { get => this.Target?.MessageId; set => this.Target.MessageId = value; }
 
         public override AsyncApiJsonSchema Headers { get => this.Target?.Headers; set => this.Target.Headers = value; }
-
-        public override IAsyncApiMessagePayload Payload { get => this.Target?.Payload; set => this.Target.Payload = value; }
 
         public override AsyncApiCorrelationId CorrelationId { get => this.Target?.CorrelationId; set => this.Target.CorrelationId = value; }
 
@@ -54,8 +52,6 @@ namespace LEGO.AsyncAPI.Models
         public override AsyncApiBindings<IMessageBinding> Bindings { get => this.Target?.Bindings; set => this.Target.Bindings = value; }
 
         public override IList<AsyncApiMessageExample> Examples { get => this.Target?.Examples; set => this.Target.Examples = value; }
-
-        public override IList<AsyncApiMessageTrait> Traits { get => this.Target?.Traits; set => this.Target.Traits = value; }
 
         public override IDictionary<string, IAsyncApiExtension> Extensions { get => this.Target?.Extensions; set => this.Target.Extensions = value; }
 

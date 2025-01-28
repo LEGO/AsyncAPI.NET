@@ -5,7 +5,6 @@ namespace LEGO.AsyncAPI.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text.Json.Nodes;
     using FluentAssertions;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
@@ -432,7 +431,7 @@ namespace LEGO.AsyncAPI.Tests
         [Test]
         public void Read_WithWrongReference_AddsError()
         {
-            var yaml = 
+            var yaml =
                 """
                 asyncapi: 2.3.0
                 info:
