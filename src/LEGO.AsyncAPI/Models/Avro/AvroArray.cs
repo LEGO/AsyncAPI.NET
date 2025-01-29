@@ -6,14 +6,14 @@ namespace LEGO.AsyncAPI.Models
     using System.Linq;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroArray : AvroSchema
+    public class AvroArray : AsyncApiAvroSchema
     {
         public override string Type { get; } = "array";
 
         /// <summary>
         /// The schema of the array's items.
         /// </summary>
-        public AvroSchema Items { get; set; }
+        public AsyncApiAvroSchema Items { get; set; }
 
         /// <summary>
         /// A map of properties not in the schema, but added as additional metadata.

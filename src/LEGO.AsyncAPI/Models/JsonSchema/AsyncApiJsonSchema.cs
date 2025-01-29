@@ -11,7 +11,7 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// The Schema Object allows the definition of input and output data types.
     /// </summary>
-    public class AsyncApiJsonSchema : IAsyncApiExtensible, IAsyncApiSerializable
+    public class AsyncApiJsonSchema : IAsyncApiExtensible, IAsyncApiSerializable, IAsyncApiMessagePayload
     {
         /// <summary>
         /// follow JSON Schema definition. Short text providing information about the data.

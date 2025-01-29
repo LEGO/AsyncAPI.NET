@@ -699,7 +699,7 @@ namespace LEGO.AsyncAPI.Tests
                         implicit:
                           authorizationUrl: https://example.com/api/oauth/dialog
                           scopes:
-                            write:pets: modify pets in your account
+                            write:pets: modify pets in your account 
                             read:pets: read your pets
                 """;
             var reader = new AsyncApiStringReader();

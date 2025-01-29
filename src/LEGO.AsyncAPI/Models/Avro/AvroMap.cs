@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models
     using System.Linq;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroMap : AvroSchema
+    public class AvroMap : AsyncApiAvroSchema
     {
         public override string Type { get; } = "map";
 

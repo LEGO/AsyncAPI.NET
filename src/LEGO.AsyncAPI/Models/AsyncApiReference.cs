@@ -155,7 +155,6 @@ namespace LEGO.AsyncAPI.Models
 
         private string GetExternalReferenceV2()
         {
-
             return this.ExternalResource + (this.FragmentId != null ? "#" + this.FragmentId : string.Empty);
         }
 

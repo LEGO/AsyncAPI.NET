@@ -34,7 +34,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// The type of the field. Can be a primitive type, a complex type, or a union.
         /// </summary>
-        public AvroSchema Type { get; set; }
+        public AsyncApiAvroSchema Type { get; set; }
 
         /// <summary>
         /// The documentation for the field.

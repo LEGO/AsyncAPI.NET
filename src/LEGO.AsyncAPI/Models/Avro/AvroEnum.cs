@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models
     using System.Linq;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroEnum : AvroSchema
+    public class AvroEnum : AsyncApiAvroSchema
     {
         public override string Type { get; } = "enum";
 

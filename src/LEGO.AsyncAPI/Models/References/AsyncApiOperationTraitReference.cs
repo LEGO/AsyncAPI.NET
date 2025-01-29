@@ -17,7 +17,7 @@ namespace LEGO.AsyncAPI.Models
         {
             get
             {
-                this.target ??= this.Reference.HostDocument.ResolveReference<AsyncApiOperationTrait>(this.Reference);
+                this.target ??= this.Reference.HostDocument?.ResolveReference<AsyncApiOperationTrait>(this.Reference);
                 return this.target;
             }
         }
@@ -54,6 +54,7 @@ namespace LEGO.AsyncAPI.Models
             }
             else
             {
+                this.Reference.HostDocument = writer.RootDocument;
                 this.Target.SerializeV2(writer);
             }
         }

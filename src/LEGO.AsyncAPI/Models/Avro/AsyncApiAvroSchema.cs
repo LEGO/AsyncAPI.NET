@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public abstract class AvroSchema : IAsyncApiSerializable, IAsyncApiReferenceable
+    public abstract class AsyncApiAvroSchema : IAsyncApiSerializable, IAsyncApiReferenceable, IAsyncApiMessagePayload
     {
         public abstract string Type { get; }
 
@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models
 
         public AsyncApiReference Reference { get; set; }
 
-        public static implicit operator AvroSchema(AvroPrimitiveType type)
+        public static implicit operator AsyncApiAvroSchema(AvroPrimitiveType type)
         {
             return new AvroPrimitive(type);
         }

@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models
     using System.Linq;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroRecord : AvroSchema
+    public class AvroRecord : AsyncApiAvroSchema
     {
         public override string Type { get; } = "record";
 

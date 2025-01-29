@@ -88,9 +88,9 @@ namespace LEGO.AsyncAPI.Readers
                 case null:
                 case "":
                 case var _ when SupportedJsonSchemaFormats.Where(s => format.StartsWith(s)).Any():
-                    return new AsyncApiJsonSchemaPayload(AsyncApiSchemaDeserializer.LoadSchema(n));
+                    return AsyncApiSchemaDeserializer.LoadSchema(n);
                 case var _ when SupportedAvroSchemaFormats.Where(s => format.StartsWith(s)).Any():
-                    return new AsyncApiAvroSchemaPayload(AsyncApiAvroSchemaDeserializer.LoadSchema(n));
+                    return AsyncApiAvroSchemaDeserializer.LoadSchema(n);
                 default:
                     var supportedFormats = SupportedJsonSchemaFormats.Concat(SupportedAvroSchemaFormats);
                     throw new AsyncApiException($"'Could not deserialize Payload. Supported formats are {string.Join(", ", supportedFormats)}");

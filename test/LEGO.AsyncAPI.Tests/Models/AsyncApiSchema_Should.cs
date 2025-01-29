@@ -220,12 +220,6 @@ namespace LEGO.AsyncAPI.Tests.Models
             {
                 Url = new Uri("http://example.com/externalDocs"),
             },
-
-            Reference = new AsyncApiReference
-            {
-                Type = ReferenceType.Schema,
-                FragmentId = "schemaObject1",
-            },
         };
 
         public static AsyncApiJsonSchema AdvancedSchemaWithRequiredPropertiesObject = new AsyncApiJsonSchema
@@ -420,14 +414,14 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         new AsyncApiMessage
                         {
-                            Payload = new AsyncApiJsonSchemaPayload
+                            Payload = new AsyncApiJsonSchema
                             {
                                 Type = SchemaType.Object,
                                 Required = new HashSet<string> { "testB" },
                                 Properties = new Dictionary<string, AsyncApiJsonSchema>
                                 {
-                                    { "testC", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, FragmentId = "testC" } } },
-                                    { "testB", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, FragmentId = "testB" } } },
+                                    { "testC", new AsyncApiJsonSchemaReference("#/components/schemas/testC") },
+                                    { "testB", new AsyncApiJsonSchemaReference("#/components/schemas/testB") },
                                 },
                             },
                         },
@@ -440,7 +434,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                 Type = SchemaType.Object,
                 Properties = new Dictionary<string, AsyncApiJsonSchema>
                 {
-                    { "testD", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, FragmentId = "testD" } } },
+                    { "testD", new AsyncApiJsonSchemaReference("#/components/schemas/testD") },
                 },
             })
             .WithComponent("testB", new AsyncApiJsonSchema() { Description = "test", Type = SchemaType.Boolean })

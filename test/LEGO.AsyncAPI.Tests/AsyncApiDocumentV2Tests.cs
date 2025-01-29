@@ -387,7 +387,7 @@ namespace LEGO.AsyncAPI.Tests
                     {
                     new AsyncApiMessageTraitReference("#/components/messageTraits/commonHeaders"),
                     },
-                    Payload = new AsyncApiJsonSchemaPayloadReference("#/components/schemas/lightMeasuredPayload"),
+                    Payload = new AsyncApiJsonSchemaReference("#/components/schemas/lightMeasuredPayload"),
                 })
                 .WithComponent("turnOnOff", new AsyncApiMessage()
                 {
@@ -398,7 +398,7 @@ namespace LEGO.AsyncAPI.Tests
                     {
                     new AsyncApiMessageTraitReference("#/components/messageTraits/commonHeaders"),
                     },
-                    Payload = new AsyncApiJsonSchemaPayloadReference("#/components/schemas/turnOnOffPayload"),
+                    Payload = new AsyncApiJsonSchemaReference("#/components/schemas/turnOnOffPayload"),
                 })
                 .WithComponent("dimLight", new AsyncApiMessage()
                 {
@@ -409,14 +409,7 @@ namespace LEGO.AsyncAPI.Tests
                     {
                     new AsyncApiMessageTraitReference("#/components/messageTraits/commonHeaders"),
                     },
-                    Payload = new AsyncApiJsonSchemaPayload()
-                    {
-                        Reference = new AsyncApiReference()
-                        {
-                            Type = ReferenceType.Schema,
-                            FragmentId = "dimLightPayload",
-                        },
-                    },
+                    Payload = new AsyncApiJsonSchemaReference("#/components/schemas/dimLightPayload"),
                 })
                 .WithComponent("lightMeasuredPayload", new AsyncApiJsonSchema()
                 {
@@ -432,14 +425,7 @@ namespace LEGO.AsyncAPI.Tests
                         }
                     },
                     {
-                        "sentAt", new AsyncApiJsonSchema()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Type = ReferenceType.Schema,
-                                FragmentId = "sentAt",
-                            },
-                        }
+                        "sentAt", new AsyncApiJsonSchemaReference("#/components/schemas/sentAt")
                     },
                     },
                 })
@@ -461,14 +447,7 @@ namespace LEGO.AsyncAPI.Tests
                         }
                     },
                     {
-                        "sentAt", new AsyncApiJsonSchema()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Type = ReferenceType.Schema,
-                                FragmentId = "sentAt",
-                            },
-                        }
+                        "sentAt", new AsyncApiJsonSchemaReference("#/components/schemas/sentAt")
                     },
                     },
                 })
@@ -487,14 +466,7 @@ namespace LEGO.AsyncAPI.Tests
                         }
                     },
                     {
-                        "sentAt", new AsyncApiJsonSchema()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Type = ReferenceType.Schema,
-                                FragmentId = "sentAt",
-                            },
-                        }
+                        "sentAt", new AsyncApiJsonSchemaReference("#/components/schemas/sentAt")
                     },
                     },
                 })
@@ -1038,7 +1010,7 @@ namespace LEGO.AsyncAPI.Tests
 
             // Assert
             diagnostics.Errors.Should().HaveCount(0);
-            result.Channels.First().Value.Publish.Message.First().Payload.As<AsyncApiAvroSchemaPayload>().TryGetAs<AvroRecord>(out var record).Should().BeTrue();
+            result.Channels.First().Value.Publish.Message.First().Payload.As<AsyncApiAvroSchema>().TryGetAs<AvroRecord>(out var record).Should().BeTrue();
             record.Name.Should().Be("UserSignedUp");
         }
 
@@ -1091,7 +1063,7 @@ namespace LEGO.AsyncAPI.Tests
             // Assert
             diagnostics.Errors.Should().HaveCount(0);
             result.Channels.First().Value.Publish.Message.First().Title.Should().Be("Message for schema validation testing that is a json object");
-            result.Channels.First().Value.Publish.Message.First().Payload.As<AsyncApiJsonSchemaPayload>().Properties.Should().HaveCount(1);
+            result.Channels.First().Value.Publish.Message.First().Payload.As<AsyncApiJsonSchema>().Properties.Should().HaveCount(1);
         }
 
         [Test]

@@ -12,7 +12,7 @@ namespace LEGO.AsyncAPI.Models
     /// </summary>
     public class AsyncApiDocument : IAsyncApiExtensible, IAsyncApiSerializable
     {
-        internal AsyncApiWorkspace Workspace { get; set; }
+        internal AsyncApiWorkspace Workspace { get; set; } = new AsyncApiWorkspace();
 
         /// <summary>
         /// REQUIRED. Specifies the AsyncAPI Specification version being used.
@@ -73,6 +73,9 @@ namespace LEGO.AsyncAPI.Models
                 throw new ArgumentNullException(nameof(writer));
             }
 
+            this.Workspace.RegisterComponents(this);
+
+            writer.RootDocument = this;
             writer.WriteStartObject();
 
             // asyncApi

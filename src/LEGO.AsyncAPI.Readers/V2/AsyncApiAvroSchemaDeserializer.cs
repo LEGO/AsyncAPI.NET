@@ -212,7 +212,7 @@ namespace LEGO.AsyncAPI.Readers
             { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
         };
 
-        public static AvroSchema LoadSchema(ParseNode node)
+        public static AsyncApiAvroSchema LoadSchema(ParseNode node)
         {
             if (node is ValueNode valueNode)
             {
@@ -284,7 +284,7 @@ namespace LEGO.AsyncAPI.Readers
             throw new AsyncApiReaderException("Invalid node type");
         }
 
-        private static AvroSchema LoadLogicalType(MapNode mapNode)
+        private static AsyncApiAvroSchema LoadLogicalType(MapNode mapNode)
         {
             var type = mapNode["logicalType"]?.Value.GetScalarValue();
             switch (type)

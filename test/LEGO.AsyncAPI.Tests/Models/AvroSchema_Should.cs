@@ -28,7 +28,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                 default: null
             """;
 
-            var model = new AsyncApiStringReader().ReadFragment<AvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
+            var model = new AsyncApiStringReader().ReadFragment<AsyncApiAvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
             var reserialized = model.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
             reserialized.Should().Contain("default\": null");
         }
@@ -72,7 +72,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                   }
                 }
                 """;
-            var model = new AsyncApiStringReader().ReadFragment<AvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
+            var model = new AsyncApiStringReader().ReadFragment<AsyncApiAvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
             model.Metadata.Should().HaveCount(1);
             var reserialized = model.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
 
@@ -218,7 +218,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         Name = "contact",
                         Type = new AvroUnion
                         {
-                            Types = new List<AvroSchema>
+                            Types = new List<AsyncApiAvroSchema>
                             {
                                 AvroPrimitiveType.Null,
                                 new AvroRecord
@@ -294,7 +294,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         """;
 
             // Act
-            var model = new AsyncApiStringReader().ReadFragment<AvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
+            var model = new AsyncApiStringReader().ReadFragment<AsyncApiAvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diag);
             var serialized = model.SerializeAsJson(AsyncApiVersion.AsyncApi2_0);
             // Assert
             model.As<AvroArray>().Items.As<AvroUnion>().Types.Should().HaveCount(8);
@@ -438,7 +438,7 @@ namespace LEGO.AsyncAPI.Tests.Models
                         Name = "contact",
                         Type = new AvroUnion
                         {
-                            Types = new List<AvroSchema>
+                            Types = new List<AsyncApiAvroSchema>
                             {
                                 AvroPrimitiveType.Null,
                                 new AvroRecord
@@ -458,7 +458,7 @@ namespace LEGO.AsyncAPI.Tests.Models
             };
 
             // Act
-            var actual = new AsyncApiStringReader().ReadFragment<AvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
+            var actual = new AsyncApiStringReader().ReadFragment<AsyncApiAvroSchema>(input, AsyncApiVersion.AsyncApi2_0, out var diagnostic);
 
             // Assert
             actual.Should()

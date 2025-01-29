@@ -71,6 +71,7 @@ namespace LEGO.AsyncAPI
             {
                 location = baseUri + ReferenceType.SecurityScheme.GetDisplayName() + "/" + item.Key;
                 this.RegisterComponent(location, item.Value);
+                this.RegisterComponent(item.Key, item.Value);
             }
 
             // Register Parameters

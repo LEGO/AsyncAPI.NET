@@ -6,14 +6,14 @@ namespace LEGO.AsyncAPI.Models
     using System.Linq;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroUnion : AvroSchema
+    public class AvroUnion : AsyncApiAvroSchema
     {
         public override string Type { get; } = "map";
 
         /// <summary>
         /// The types in this union.
         /// </summary>
-        public IList<AvroSchema> Types { get; set; } = new List<AvroSchema>();
+        public IList<AsyncApiAvroSchema> Types { get; set; } = new List<AsyncApiAvroSchema>();
 
         /// <summary>
         /// A map of properties not in the schema, but added as additional metadata.

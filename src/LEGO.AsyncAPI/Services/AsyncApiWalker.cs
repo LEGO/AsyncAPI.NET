@@ -271,23 +271,21 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiChannel channel, bool isComponent = false)
         {
+            if (channel == null)
+            {
+                return;
+            }
             if (channel is AsyncApiChannelReference)
             {
                 this.Walk(channel as IAsyncApiReferenceable);
                 return;
             }
 
-            this.visitor.Visit(channel);
+            this.Walk(AsyncApiConstants.Subscribe, () => this.Walk(channel.Subscribe));
+            this.Walk(AsyncApiConstants.Publish, () => this.Walk(channel.Publish));
 
-            if (channel != null)
-            {
-                this.Walk(AsyncApiConstants.Subscribe, () => this.Walk(channel.Subscribe));
-                this.Walk(AsyncApiConstants.Publish, () => this.Walk(channel.Publish));
-
-                this.Walk(AsyncApiConstants.Bindings, () => this.Walk(channel.Bindings));
-                this.Walk(AsyncApiConstants.Parameters, () => this.Walk(channel.Parameters));
-            }
-
+            this.Walk(AsyncApiConstants.Bindings, () => this.Walk(channel.Bindings));
+            this.Walk(AsyncApiConstants.Parameters, () => this.Walk(channel.Parameters));
             this.Walk(channel as IAsyncApiExtensible);
         }
 
@@ -329,13 +327,32 @@ namespace LEGO.AsyncAPI.Services
             this.Walk(parameter as IAsyncApiExtensible);
         }
 
-        internal void Walk(AsyncApiAvroSchemaPayload payload)
+        internal void Walk(IAsyncApiMessagePayload payload)
         {
             this.visitor.Visit(payload);
+            if (payload is AsyncApiJsonSchema jsonSchema)
+            {
+                this.Walk(AsyncApiConstants.Payload, () => this.Walk((AsyncApiJsonSchema)payload));
+            }
+
+            if (payload is AsyncApiAvroSchema avroPayload)
+            {
+                this.Walk(AsyncApiConstants.Payload, () => this.Walk(avroPayload));
+            }
+        }
+
+        internal void Walk(AsyncApiAvroSchema schema)
+        {
+            this.visitor.Visit(schema);
         }
 
         internal void Walk(AsyncApiJsonSchema schema, bool isComponent = false)
         {
+            if (schema == null)
+            {
+                return;
+            }
+
             if (schema is AsyncApiJsonSchemaReference reference)
             {
                 this.Walk(reference as IAsyncApiReferenceable);
@@ -545,16 +562,7 @@ namespace LEGO.AsyncAPI.Services
             if (message != null)
             {
                 this.Walk(AsyncApiConstants.Headers, () => this.Walk(message.Headers));
-                if (message.Payload is AsyncApiJsonSchemaPayload payload)
-                {
-                    this.Walk(AsyncApiConstants.Payload, () => this.Walk((AsyncApiJsonSchema)payload));
-                }
-
-                if (message.Payload is AsyncApiAvroSchemaPayload avroPayload)
-                {
-                    this.Walk(AsyncApiConstants.Payload, () => this.Walk(avroPayload));
-                }
-
+                this.Walk(message.Payload);
                 this.Walk(AsyncApiConstants.CorrelationId, () => this.Walk(message.CorrelationId));
                 this.Walk(AsyncApiConstants.Tags, () => this.Walk(message.Tags));
                 this.Walk(AsyncApiConstants.Examples, () => this.Walk(message.Examples));

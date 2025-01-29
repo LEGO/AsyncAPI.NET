@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models
     using System.Linq;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroFixed : AvroSchema
+    public class AvroFixed : AsyncApiAvroSchema
     {
         public override string Type { get; } = "fixed";
 
