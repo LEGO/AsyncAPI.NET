@@ -161,6 +161,12 @@ namespace LEGO.AsyncAPI
             return this.resolvedReferenceRegistry.ContainsKey(key) || this.artifactsRegistry.ContainsKey(key);
         }
 
+        public T ResolveReference<T>(AsyncApiReference reference)
+            where T : class
+        {
+            return this.ResolveReference<T>(reference.Reference);
+        }
+
         public T ResolveReference<T>(string location)
             where T : class
         {

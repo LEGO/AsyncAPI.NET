@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Models
         {
             get
             {
-                this.target ??= this.Reference.HostDocument?.ResolveReference<AsyncApiJsonSchema>(this.Reference);
+                this.target ??= this.Reference.Workspace?.ResolveReference<AsyncApiJsonSchema>(this.Reference);
                 return this.target;
             }
         }
@@ -304,7 +304,7 @@ namespace LEGO.AsyncAPI.Models
                 return;
             }
 
-            this.Reference.HostDocument = writer.RootDocument;
+            this.Reference.Workspace = writer.Workspace;
             // If Loop is detected then just Serialize as a reference.
             if (!settings.LoopDetector.PushLoop(this))
             {

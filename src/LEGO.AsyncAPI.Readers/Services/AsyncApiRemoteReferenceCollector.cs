@@ -10,12 +10,12 @@ namespace LEGO.AsyncAPI.Readers.Services
     internal class AsyncApiRemoteReferenceCollector : AsyncApiVisitorBase
     {
         private readonly List<IAsyncApiReferenceable> references = new();
-        private AsyncApiDocument currentDocument;
+        private AsyncApiWorkspace workspace;
 
         public AsyncApiRemoteReferenceCollector(
-            AsyncApiDocument currentDocument)
+            AsyncApiWorkspace workspace)
         {
-            this.currentDocument = currentDocument;
+            this.workspace = workspace;
         }
         /// <summary>
         /// List of all external references collected from AsyncApiDocument.
@@ -36,9 +36,9 @@ namespace LEGO.AsyncAPI.Readers.Services
         {
             if (referenceable.Reference != null && referenceable.Reference.IsExternal)
             {
-                if (referenceable.Reference.HostDocument == null)
+                if (referenceable.Reference.Workspace == null)
                 {
-                    referenceable.Reference.HostDocument = this.currentDocument;
+                    referenceable.Reference.Workspace = this.workspace;
                 }
 
                 this.references.Add(referenceable);

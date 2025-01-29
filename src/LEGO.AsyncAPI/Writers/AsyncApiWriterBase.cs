@@ -68,7 +68,7 @@ namespace LEGO.AsyncAPI.Writers
         /// </summary>
         protected TextWriter Writer { get; }
 
-        public AsyncApiDocument RootDocument { get; set; }
+        public AsyncApiWorkspace Workspace { get; set; } = new AsyncApiWorkspace();
 
         /// <summary>
         /// Write start object.

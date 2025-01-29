@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Writers
 {
     public interface IAsyncApiWriter
     {
-        AsyncApiDocument RootDocument { get; set; }
+        AsyncApiWorkspace Workspace { get; set; }
 
         /// <summary>
         /// Write the start object.

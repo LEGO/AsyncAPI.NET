@@ -68,7 +68,6 @@ namespace LEGO.AsyncAPI.Tests
             var reference = doc.Servers.First().Value as AsyncApiServerReference;
             reference.Reference.ExternalResource.Should().Be("https://github.com/test/test");
             reference.Reference.FragmentId.Should().Be("whatever");
-            reference.Reference.HostDocument.Should().Be(doc);
             reference.Reference.IsFragment.Should().BeTrue();
         }
 
@@ -136,7 +135,6 @@ namespace LEGO.AsyncAPI.Tests
             var reference = doc.Servers.First().Value as AsyncApiServerReference;
             reference.Reference.ExternalResource.Should().BeNull();
             reference.Reference.FragmentId.Should().Be("/components/servers/whatever");
-            reference.Reference.HostDocument.Should().Be(doc);
             reference.Reference.IsFragment.Should().BeTrue();
             reference.Url.Should().Be("wss://production.gigantic-server.com:443");
 

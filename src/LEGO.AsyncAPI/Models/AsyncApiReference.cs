@@ -105,7 +105,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// Gets or sets the AsyncApiDocument that is hosting the AsyncApiReference instance. This is used to enable dereferencing the reference.
         /// </summary>
-        public AsyncApiDocument HostDocument { get; set; } = null;
+        public AsyncApiWorkspace Workspace { get; set; } = null;
 
         /// <summary>
         /// Gets a flag indicating whether a file is a valid OpenAPI document or a fragment.

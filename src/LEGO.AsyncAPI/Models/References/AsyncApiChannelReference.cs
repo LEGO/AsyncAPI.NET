@@ -14,7 +14,7 @@ namespace LEGO.AsyncAPI.Models
         {
             get
             {
-                this.target ??= this.Reference.HostDocument?.ResolveReference<AsyncApiChannel>(this.Reference);
+                this.target ??= this.Reference.Workspace?.ResolveReference<AsyncApiChannel>(this.Reference.Reference);
                 return this.target;
             }
         }
@@ -51,7 +51,7 @@ namespace LEGO.AsyncAPI.Models
             }
             else
             {
-                this.Reference.HostDocument = writer.RootDocument;
+                this.Reference.Workspace = writer.Workspace;
                 this.Target.SerializeV2(writer);
             }
         }

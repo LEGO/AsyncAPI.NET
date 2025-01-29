@@ -197,7 +197,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             var reader = new AsyncApiStringReader(this.settings);
 
-            var resolver = new AsyncApiReferenceHostDocumentResolver(document);
+            var resolver = new AsyncApiReferenceHostDocumentResolver(this.context.Workspace);
             var walker = new AsyncApiWalker(resolver);
             walker.Walk(document);
 
@@ -210,7 +210,7 @@ namespace LEGO.AsyncAPI.Readers
         private void ResolveExternalReferences(AsyncApiDiagnostic diagnostic, IAsyncApiSerializable serializable, AsyncApiDocument hostDocument)
         {
             var loader = this.settings.ExternalReferenceLoader ??= new DefaultStreamLoader(this.settings);
-            var collector = new AsyncApiRemoteReferenceCollector(hostDocument);
+            var collector = new AsyncApiRemoteReferenceCollector(this.context.Workspace);
             var walker = new AsyncApiWalker(collector);
             walker.Walk(serializable);
 

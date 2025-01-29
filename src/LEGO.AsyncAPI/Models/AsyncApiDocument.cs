@@ -74,8 +74,8 @@ namespace LEGO.AsyncAPI.Models
             }
 
             this.Workspace.RegisterComponents(this);
+            writer.Workspace = this.Workspace;
 
-            writer.RootDocument = this;
             writer.WriteStartObject();
 
             // asyncApi

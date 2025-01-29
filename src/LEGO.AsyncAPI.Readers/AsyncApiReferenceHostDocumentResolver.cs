@@ -9,13 +9,13 @@ namespace LEGO.AsyncAPI.Readers
 
     internal class AsyncApiReferenceHostDocumentResolver : AsyncApiVisitorBase
     {
-        private AsyncApiDocument currentDocument;
+        private AsyncApiWorkspace workspace;
         private List<AsyncApiError> errors = new List<AsyncApiError>();
 
         public AsyncApiReferenceHostDocumentResolver(
-            AsyncApiDocument currentDocument)
+            AsyncApiWorkspace workspace)
         {
-            this.currentDocument = currentDocument;
+            this.workspace = workspace;
         }
 
         public IEnumerable<AsyncApiError> Errors
@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Readers
         {
             if (referenceable.Reference != null)
             {
-                referenceable.Reference.HostDocument = this.currentDocument;
+                referenceable.Reference.Workspace = this.workspace;
             }
         }
     }
