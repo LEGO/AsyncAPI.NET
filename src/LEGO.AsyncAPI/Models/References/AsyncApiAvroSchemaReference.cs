@@ -44,7 +44,7 @@ namespace LEGO.AsyncAPI.Models
 
         public override bool Is<T>()
         {
-            if (Target == null)
+            if (this.Target == null)
             {
                 return false;
             }

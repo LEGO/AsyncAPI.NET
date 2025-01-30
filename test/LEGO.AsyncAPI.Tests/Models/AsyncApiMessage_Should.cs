@@ -232,12 +232,11 @@ namespace LEGO.AsyncAPI.Tests.Models
             var deserializedMessage = new AsyncApiStringReader().ReadFragment<AsyncApiMessage>(input, AsyncApiVersion.AsyncApi2_0, out _);
 
             // Assert
-            //TODO: reimplement this test.
-            //var payloadReference = deserializedMessage.Payload as AsyncApiAvroSchemaReference;
-            //deserializedMessage.Payload.UnresolvedReference.Should().BeTrue();
-            //deserializedMessage.Payload.Reference.Should().NotBeNull();
-            //deserializedMessage.Payload.Reference.IsExternal.Should().BeTrue();
-            //deserializedMessage.Payload.Reference.IsFragment.Should().BeTrue();
+            var payloadReference = deserializedMessage.Payload as AsyncApiAvroSchemaReference;
+            payloadReference.UnresolvedReference.Should().BeTrue();
+            payloadReference.Reference.Should().NotBeNull();
+            payloadReference.Reference.IsExternal.Should().BeTrue();
+            payloadReference.Reference.IsFragment.Should().BeTrue();
 
         }
 

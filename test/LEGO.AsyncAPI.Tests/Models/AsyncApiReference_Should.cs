@@ -72,26 +72,50 @@ namespace LEGO.AsyncAPI.Tests
         }
 
         [Test]
-        public void ResolveExternalReference()
+        public void ExternalFragmentReference_ResolvesFragtment()
         {
+            var externalJson =
+                """
+                {
+                    "servers": [
+                        {
+                            "url": "wss://production.gigantic-server.com:443",
+                            "protocol": "wss",
+                            "protocolVersion": "1.0.0",
+                            "description": "The production API server",
+                            "variables": {
+                                "username": {
+                                    "default": "demo",
+                                    "description": "This value is assigned by the service provider"
+                                },
+                                "password": {
+                                    "default": "demo",
+                                    "description": "This value is assigned by the service provider"
+                                }
+                            }
+                        }
+                    ]
+                }
+                """;
+
             var json =
                 """
- {
-   "asyncapi": "2.6.0",
-   "info": { },
-   "servers": {
-     "production": {
-       "$ref": "https://gist.githubusercontent.com/VisualBean/7dc9607d735122483e1bb7005ff3ad0e/raw/458729e4d56636ef3bb34762f4a5731ea5043bdf/servers.json#/servers/0"
-     }
-   }
- }
- """;
+                 {
+                   "asyncapi": "2.6.0",
+                   "info": { },
+                   "servers": {
+                     "production": {
+                       "$ref": "whatever/whatever.json#/servers/0"
+                     }
+                   }
+                 }
+                 """;
 
-            var doc = new AsyncApiStringReader(new AsyncApiReaderSettings { ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences }).Read(json, out var diag);
+            var doc = new AsyncApiStringReader(new AsyncApiReaderSettings { ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences, ExternalReferenceLoader = new MockStringLoader(externalJson) }).Read(json, out var diag);
             var reference = doc.Servers.First().Value as AsyncApiServerReference;
-            //reference.Reference.Id.Should().Be("whatever");
-            //reference.Reference.HostDocument.Should().Be(doc);
-            //reference.Reference.IsFragment.Should().BeTrue();
+            reference.Reference.FragmentId.Should().Be("/servers/0");
+            reference.Reference.IsFragment.Should().BeTrue();
+            reference.Url.Should().Be("wss://production.gigantic-server.com:443");
         }
 
 
@@ -416,8 +440,35 @@ namespace LEGO.AsyncAPI.Tests
         [Test]
         public void AsyncApiReference_WithExternalAvroResource_DeserializesCorrectly()
         {
+            var avroPayload =
+                """
+                {
+                  "type": "record",
+                  "name": "thecodebuzz_schema",
+                  "namespace": "thecodebuzz.avro",
+                  "fields": [
+                    {
+                      "name": "username",
+                      "type": "string",
+                      "doc": "Name of the user account on Thecodebuzz.com"
+                    },
+                    {
+                      "name": "email",
+                      "type": "string",
+                      "doc": "The email of the user logging message on the blog"
+                    },
+                    {
+                      "name": "timestamp",
+                      "type": "long",
+                      "doc": "time in seconds"
+                    }
+                  ],
+                  "doc:": "A basic schema for storing thecodebuzz blogs messages"
+                }
+                """;
+
             var yaml = """
-                asyncapi: 2.3.0
+                asyncapi: 2.6.0
                 info:
                   title: test
                   version: 1.0.0
@@ -425,61 +476,44 @@ namespace LEGO.AsyncAPI.Tests
                   workspace:
                     publish:
                       message:
+                        payload:
+                          $ref: ./some/path/to/external/payload.json
+                        schemaFormat: application/vnd.apache.avro
                         name: Test
                         title: Test message
                         summary: Test.
-                        schemaFormat: application/vnd.apache.avro
-                        contentType: application/cloudevents+json
-                        payload:
-                            $ref: "./some/path/to/external/payload.json"
                 """;
             var settings = new AsyncApiReaderSettings
             {
                 ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
-                ExternalReferenceLoader = new MockAvroSchemaLoader(),
+                ExternalReferenceLoader = new MockStringLoader(avroPayload),
             };
             var reader = new AsyncApiStringReader(settings);
             var doc = reader.Read(yaml, out var diagnostic);
             var message = doc.Channels["workspace"].Publish.Message.First();
             var payload = message.Payload.As<AsyncApiAvroSchema>();
             payload.As<AvroRecord>().Name.Should().Be("thecodebuzz_schema");
+
+            doc.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0).Should()
+                .BePlatformAgnosticEquivalentTo(yaml);
+
         }
     }
 
-    public class MockAvroSchemaLoader : IStreamLoader
+    public class MockStringLoader : IStreamLoader
     {
-        const string Payload =
-            """
-            {
-              "type": "record",
-              "name": "thecodebuzz_schema",
-              "namespace": "thecodebuzz.avro",
-              "fields": [
-                {
-                  "name": "username",
-                  "type": "string",
-                  "doc": "Name of the user account on Thecodebuzz.com"
-                },
-                {
-                  "name": "email",
-                  "type": "string",
-                  "doc": "The email of the user logging message on the blog"
-                },
-                {
-                  "name": "timestamp",
-                  "type": "long",
-                  "doc": "time in seconds"
-                }
-              ],
-              "doc:": "A basic schema for storing thecodebuzz blogs messages"
-            }
-            """;
+        public MockStringLoader(string input)
+        {
+            this.input = input;
+        }
+
+        private readonly string input;
 
         public Stream Load(Uri uri)
         {
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
-            writer.Write(Payload);
+            writer.Write(this.input);
             writer.Flush();
             stream.Position = 0;
             return stream;
@@ -490,6 +524,7 @@ namespace LEGO.AsyncAPI.Tests
             return Task.FromResult(this.Load(uri));
         }
     }
+
     public class MockJsonSchemaLoader : IStreamLoader
     {
         const string Message =
