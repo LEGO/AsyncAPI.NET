@@ -72,6 +72,11 @@ namespace LEGO.AsyncAPI.Writers
         /// <returns>True if it should be inlined otherwise false.</returns>
         public bool ShouldInlineReference(AsyncApiReference reference)
         {
+            if (reference.IsExternal)
+            {
+                return false;
+            }
+
             return this.InlineLocalReferences;
         }
     }

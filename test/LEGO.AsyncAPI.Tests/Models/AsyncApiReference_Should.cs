@@ -403,7 +403,7 @@ namespace LEGO.AsyncAPI.Tests
             var settings = new AsyncApiReaderSettings
             {
                 ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
-                ExternalReferenceLoader = new MockLoader(),
+                ExternalReferenceLoader = new MockJsonSchemaLoader(),
             };
             var reader = new AsyncApiStringReader(settings);
             var doc = reader.Read(yaml, out var diagnostic);
@@ -412,9 +412,85 @@ namespace LEGO.AsyncAPI.Tests
             var payload = message.Payload.As<AsyncApiJsonSchema>();
             payload.Properties.Count.Should().Be(1);
         }
+
+        [Test]
+        public void AsyncApiReference_WithExternalAvroResource_DeserializesCorrectly()
+        {
+            var yaml = """
+                asyncapi: 2.3.0
+                info:
+                  title: test
+                  version: 1.0.0
+                channels:
+                  workspace:
+                    publish:
+                      message:
+                        name: Test
+                        title: Test message
+                        summary: Test.
+                        schemaFormat: application/vnd.apache.avro
+                        contentType: application/cloudevents+json
+                        payload:
+                            $ref: "./some/path/to/external/payload.json"
+                """;
+            var settings = new AsyncApiReaderSettings
+            {
+                ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
+                ExternalReferenceLoader = new MockAvroSchemaLoader(),
+            };
+            var reader = new AsyncApiStringReader(settings);
+            var doc = reader.Read(yaml, out var diagnostic);
+            var message = doc.Channels["workspace"].Publish.Message.First();
+            var payload = message.Payload.As<AsyncApiAvroSchema>();
+            payload.As<AvroRecord>().Name.Should().Be("thecodebuzz_schema");
+        }
     }
 
-    public class MockLoader : IStreamLoader
+    public class MockAvroSchemaLoader : IStreamLoader
+    {
+        const string Payload =
+            """
+            {
+              "type": "record",
+              "name": "thecodebuzz_schema",
+              "namespace": "thecodebuzz.avro",
+              "fields": [
+                {
+                  "name": "username",
+                  "type": "string",
+                  "doc": "Name of the user account on Thecodebuzz.com"
+                },
+                {
+                  "name": "email",
+                  "type": "string",
+                  "doc": "The email of the user logging message on the blog"
+                },
+                {
+                  "name": "timestamp",
+                  "type": "long",
+                  "doc": "time in seconds"
+                }
+              ],
+              "doc:": "A basic schema for storing thecodebuzz blogs messages"
+            }
+            """;
+
+        public Stream Load(Uri uri)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(Payload);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+
+        public Task<Stream> LoadAsync(Uri uri)
+        {
+            return Task.FromResult(this.Load(uri));
+        }
+    }
+    public class MockJsonSchemaLoader : IStreamLoader
     {
         const string Message =
             """

@@ -343,6 +343,12 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiAvroSchema schema)
         {
+            if (schema is AsyncApiAvroSchemaReference reference)
+            {
+                this.Walk(reference as IAsyncApiReferenceable);
+                return;
+            }
+
             this.visitor.Visit(schema);
         }
 
@@ -1079,6 +1085,7 @@ namespace LEGO.AsyncAPI.Services
                 case AsyncApiOperation e: this.Walk(e); break;
                 case AsyncApiParameter e: this.Walk(e); break;
                 case AsyncApiJsonSchema e: this.Walk(e); break;
+                case AsyncApiAvroSchema e: this.Walk(e); break;
                 case AsyncApiSecurityRequirement e: this.Walk(e); break;
                 case AsyncApiSecurityScheme e: this.Walk(e); break;
                 case AsyncApiServer e: this.Walk(e); break;

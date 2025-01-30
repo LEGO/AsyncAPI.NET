@@ -15,23 +15,16 @@ namespace LEGO.AsyncAPI.Models
             return result != null;
         }
 
-        public static bool TryGetAs<T>(this AsyncApiAvroSchema avroSchema, out T result)
-    where T : AsyncApiAvroSchema
+        public static T As<T>(this IAsyncApiMessagePayload payload)
+            where T : class, IAsyncApiMessagePayload
         {
-            result = avroSchema as T;
-            return result != null;
+            return payload as T;
         }
 
         public static bool Is<T>(this IAsyncApiMessagePayload payload)
             where T : class, IAsyncApiMessagePayload
         {
             return payload is T;
-        }
-
-        public static bool Is<T>(this AsyncApiAvroSchema schema)
-            where T : AsyncApiAvroSchema
-        {
-            return schema is T;
         }
     }
 }

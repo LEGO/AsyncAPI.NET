@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public abstract class AsyncApiAvroSchema : IAsyncApiSerializable, IAsyncApiReferenceable, IAsyncApiMessagePayload
+    public abstract class AsyncApiAvroSchema : IAsyncApiSerializable, IAsyncApiMessagePayload
     {
         public abstract string Type { get; }
 
@@ -16,31 +16,29 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public abstract IDictionary<string, AsyncApiAny> Metadata { get; set; }
 
-        public bool UnresolvedReference { get; set; }
-
-        public AsyncApiReference Reference { get; set; }
-
         public static implicit operator AsyncApiAvroSchema(AvroPrimitiveType type)
         {
             return new AvroPrimitive(type);
         }
 
-        public virtual void SerializeV2(IAsyncApiWriter writer)
+        public abstract void SerializeV2(IAsyncApiWriter writer);
+
+        public virtual bool TryGetAs<T>(out T result)
+where T : AsyncApiAvroSchema
         {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
-            {
-                this.Reference.SerializeV2(writer);
-                return;
-            }
-
-            this.SerializeV2Core(writer);
+            result = this as T;
+            return result != null;
+        }
+        public virtual bool Is<T>()
+            where T : AsyncApiAvroSchema
+        {
+            return this is T;
         }
 
-        public abstract void SerializeV2Core(IAsyncApiWriter writer);
+        public virtual T As<T>()
+            where T : AsyncApiAvroSchema
+        {
+            return this as T;
+        }
     }
 }

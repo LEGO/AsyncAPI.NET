@@ -236,11 +236,7 @@ namespace LEGO.AsyncAPI.Readers
 
                 if (pointer != null)
                 {
-                    return new AvroRecord
-                    {
-                        UnresolvedReference = true,
-                        Reference = node.Context.VersionService.ConvertToAsyncApiReference(pointer, ReferenceType.Schema),
-                    };
+                    return new AsyncApiAvroSchemaReference(pointer);
                 }
 
                 var isLogicalType = mapNode["logicalType"] != null;

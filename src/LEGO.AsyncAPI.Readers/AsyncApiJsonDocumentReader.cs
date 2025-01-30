@@ -295,8 +295,18 @@ namespace LEGO.AsyncAPI.Readers
             switch (reference.Reference.Type)
             {
                 case ReferenceType.Schema:
-                    result = this.ReadFragment<AsyncApiJsonSchema>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
+                    if (reference is AsyncApiJsonSchemaReference)
+                    {
+                        result = this.ReadFragment<AsyncApiJsonSchema>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
+                    }
+
+                    if (reference is AsyncApiAvroSchemaReference)
+                    {
+                        result = this.ReadFragment<AsyncApiAvroSchema>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
+                    }
+
                     break;
+
                 case ReferenceType.Server:
                     result = this.ReadFragment<AsyncApiServer>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;

@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models
             this.Type = type.GetDisplayName();
         }
 
-        public override void SerializeV2Core(IAsyncApiWriter writer)
+        public override void SerializeV2(IAsyncApiWriter writer)
         {
             writer.WriteValue(this.Type);
             if (this.Metadata.Any())
