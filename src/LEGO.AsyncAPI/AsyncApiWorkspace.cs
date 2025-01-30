@@ -15,7 +15,6 @@ namespace LEGO.AsyncAPI
 
         public void RegisterComponents(AsyncApiDocument document)
         {
-            document.Workspace = this;
             if (document?.Components == null)
             {
                 return;
