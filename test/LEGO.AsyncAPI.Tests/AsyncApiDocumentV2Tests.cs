@@ -1069,6 +1069,38 @@ namespace LEGO.AsyncAPI.Tests
         [Test]
         public void Serialize_WithBindingReferences_SerializesDeserializes()
         {
+            var expected =
+                """
+                asyncapi: 2.6.0
+                info:
+                  description: test description
+                servers:
+                  production:
+                    url: example.com
+                    protocol: pulsar+ssl
+                    description: test description
+                    bindings:
+                      $ref: '#/components/serverBindings/bindings'
+                channels:
+                  testChannel:
+                    $ref: '#/components/channels/otherchannel'
+                components:
+                  channels:
+                    otherchannel:
+                      publish:
+                        description: test
+                      bindings:
+                        $ref: '#/components/channelBindings/bindings'
+                  serverBindings:
+                    bindings:
+                      pulsar:
+                        tenant: staging
+                  channelBindings:
+                    bindings:
+                      pulsar:
+                        namespace: users
+                        persistence: persistent
+                """;
             var doc = new AsyncApiDocument();
             doc.Info = new AsyncApiInfo()
             {
@@ -1079,14 +1111,7 @@ namespace LEGO.AsyncAPI.Tests
                 Description = "test description",
                 Protocol = "pulsar+ssl",
                 Url = "example.com",
-                Bindings = new AsyncApiBindings<IServerBinding>()
-                {
-                    Reference = new AsyncApiReference()
-                    {
-                        Type = ReferenceType.ServerBindings,
-                        FragmentId = "bindings",
-                    },
-                },
+                Bindings = new AsyncApiBindingsReference<IServerBinding>("#/components/serverBindings/bindings")
             });
             doc.Components = new AsyncApiComponents()
             {
@@ -1099,14 +1124,7 @@ namespace LEGO.AsyncAPI.Tests
                             {
                                 Description = "test",
                             },
-                            Bindings = new AsyncApiBindings<IChannelBinding>()
-                            {
-                                Reference = new AsyncApiReference()
-                                {
-                                    Type = ReferenceType.ChannelBindings,
-                                    FragmentId = "bindings",
-                                },
-                            },
+                            Bindings = new AsyncApiBindingsReference<IChannelBinding>("#/components/channelBindings/bindings")
                         }
                     },
                 },
@@ -1140,11 +1158,18 @@ namespace LEGO.AsyncAPI.Tests
                 "testChannel",
                 new AsyncApiChannelReference("#/components/channels/otherchannel"));
             var actual = doc.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
+            actual.Should().BePlatformAgnosticEquivalentTo(expected);
 
             var settings = new AsyncApiReaderSettings();
             settings.Bindings = BindingsCollection.Pulsar;
             var reader = new AsyncApiStringReader(settings);
             var deserialized = reader.Read(actual, out var diagnostic);
+            var serverBindings = deserialized.Servers.First().Value.Bindings;
+            serverBindings.TryGetValue<PulsarServerBinding>(out var binding);
+            binding.Tenant.Should().Be("staging");
+
+            var reserialized = deserialized.SerializeAsYaml(AsyncApiVersion.AsyncApi2_0);
+            reserialized.Should().BePlatformAgnosticEquivalentTo(expected);
         }
 
         [Test]

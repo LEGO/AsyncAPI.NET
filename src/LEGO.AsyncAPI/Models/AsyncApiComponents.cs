@@ -290,11 +290,9 @@ namespace LEGO.AsyncAPI.Models
                 this.ServerBindings,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ServerBindings &&
-                        component.Reference.FragmentId == key)
+                    if (component is AsyncApiBindingsReference<IServerBinding> reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -308,11 +306,9 @@ namespace LEGO.AsyncAPI.Models
                 this.ChannelBindings,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ChannelBindings &&
-                        component.Reference.FragmentId == key)
+                    if (component is AsyncApiBindingsReference<IChannelBinding> reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -326,11 +322,9 @@ namespace LEGO.AsyncAPI.Models
                 this.OperationBindings,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.OperationBindings &&
-                        component.Reference.FragmentId == key)
+                    if (component is AsyncApiBindingsReference<IOperationBinding> reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -344,11 +338,9 @@ namespace LEGO.AsyncAPI.Models
                 this.MessageBindings,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.MessageBindings &&
-                        component.Reference.FragmentId == key)
+                    if (component is AsyncApiBindingsReference<IMessageBinding> reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {

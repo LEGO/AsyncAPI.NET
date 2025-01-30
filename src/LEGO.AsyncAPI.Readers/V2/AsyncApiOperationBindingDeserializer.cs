@@ -12,9 +12,13 @@ namespace LEGO.AsyncAPI.Readers
         internal static AsyncApiBindings<IOperationBinding> LoadOperationBindings(ParseNode node)
         {
             var mapNode = node.CheckMapNode("operationBindings");
+            var pointer = mapNode.GetReferencePointer();
+            if (pointer != null)
+            {
+                return new AsyncApiBindingsReference<IOperationBinding>(pointer);
+            }
 
             var operationBindings = new AsyncApiBindings<IOperationBinding>();
-
             foreach (var property in mapNode)
             {
                 var operationBinding = LoadOperationBinding(property);

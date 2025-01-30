@@ -23,6 +23,32 @@ namespace LEGO.AsyncAPI.Tests
         }
 
         [Test]
+        public void Read_WithComponentBindings_Deserializes()
+        {
+            var yaml = @"
+                asyncapi: 2.6.0
+                info:
+                  title: test
+                  version: 1.0.0
+                channels:
+                  workspace:
+                    publish:
+                      bindings:
+                        http:
+                          type: response
+                      message:
+                        $ref: '#/components/messages/WorkspaceEventPayload'
+                components:
+                  messages:
+                    WorkspaceEventPayload:
+                      schemaFormat: application/schema+yaml;version=draft-07
+                ";
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+            Assert.AreEqual("application/schema+yaml;version=draft-07", doc.Components.Messages["WorkspaceEventPayload"].SchemaFormat);
+        }
+
+        [Test]
         public void Read_WithExtensionParser_Parses()
         {
             var extensionName = "x-someValue";

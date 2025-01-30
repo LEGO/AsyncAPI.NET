@@ -19,10 +19,10 @@ namespace LEGO.AsyncAPI.Readers
             { "correlationIds", (a, n) => a.CorrelationIds = n.CreateMap(LoadCorrelationId) },
             { "operationTraits", (a, n) => a.OperationTraits = n.CreateMap(LoadOperationTrait) },
             { "messageTraits", (a, n) => a.MessageTraits = n.CreateMap(LoadMessageTrait) },
-            { "serverBindings", (a, n) => a.ServerBindings = n.CreateMapWithReference(ReferenceType.ServerBindings, LoadServerBindings) },
-            { "channelBindings", (a, n) => a.ChannelBindings = n.CreateMapWithReference(ReferenceType.ChannelBindings, LoadChannelBindings) },
-            { "operationBindings", (a, n) => a.OperationBindings = n.CreateMapWithReference(ReferenceType.OperationBindings, LoadOperationBindings) },
-            { "messageBindings", (a, n) => a.MessageBindings = n.CreateMapWithReference(ReferenceType.MessageBindings, LoadMessageBindings) },
+            { "serverBindings", (a, n) => a.ServerBindings = n.CreateMap(LoadServerBindings) },
+            { "channelBindings", (a, n) => a.ChannelBindings = n.CreateMap(LoadChannelBindings) },
+            { "operationBindings", (a, n) => a.OperationBindings = n.CreateMap(LoadOperationBindings) },
+            { "messageBindings", (a, n) => a.MessageBindings = n.CreateMap(LoadMessageBindings) },
         };
 
         private static PatternFieldMap<AsyncApiComponents> componentsPatternFields =

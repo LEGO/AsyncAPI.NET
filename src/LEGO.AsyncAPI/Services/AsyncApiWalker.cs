@@ -624,8 +624,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiBindings<IServerBinding> serverBindings, bool isComponent = false)
         {
-            if (serverBindings == null || this.ProcessAsReference(serverBindings, isComponent))
+            if (serverBindings is AsyncApiBindingsReference<IServerBinding> reference)
             {
+                this.Walk(reference as IAsyncApiReferenceable);
                 return;
             }
 
@@ -653,8 +654,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiBindings<IChannelBinding> channelBindings, bool isComponent = false)
         {
-            if (channelBindings == null || this.ProcessAsReference(channelBindings, isComponent))
+            if (channelBindings is AsyncApiBindingsReference<IChannelBinding> reference)
             {
+                this.Walk(reference as IAsyncApiReferenceable);
                 return;
             }
 
@@ -682,8 +684,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiBindings<IOperationBinding> operationBindings, bool isComponent = false)
         {
-            if (operationBindings == null || this.ProcessAsReference(operationBindings, isComponent))
+            if (operationBindings is AsyncApiBindingsReference<IOperationBinding> reference)
             {
+                this.Walk(reference as IAsyncApiReferenceable);
                 return;
             }
 
@@ -711,8 +714,9 @@ namespace LEGO.AsyncAPI.Services
 
         internal void Walk(AsyncApiBindings<IMessageBinding> messageBindings, bool isComponent = false)
         {
-            if (messageBindings == null || this.ProcessAsReference(messageBindings, isComponent))
+            if (messageBindings is AsyncApiBindingsReference<IMessageBinding> reference)
             {
+                this.Walk(reference as IAsyncApiReferenceable);
                 return;
             }
 

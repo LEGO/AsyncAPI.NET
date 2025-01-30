@@ -118,7 +118,6 @@ namespace LEGO.AsyncAPI.Tests
             reference.Url.Should().Be("wss://production.gigantic-server.com:443");
         }
 
-
         [Test]
         public void ServerReference_WithComponentReference_ResolvesReference()
         {

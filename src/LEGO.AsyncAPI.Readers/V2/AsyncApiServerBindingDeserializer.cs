@@ -15,7 +15,7 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiBindings<IServerBinding>>(ReferenceType.ServerBindings, pointer);
+                return new AsyncApiBindingsReference<IServerBinding>(pointer);
             }
 
             var serverBindings = new AsyncApiBindings<IServerBinding>();
