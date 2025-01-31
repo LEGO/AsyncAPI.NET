@@ -99,7 +99,7 @@ namespace LEGO.AsyncAPI.Readers
             {
                 // Parse the AsyncApi Document
                 document = this.context.Parse(input);
-                this.ResolveReferences(diagnostic, document);
+                await this.ResolveReferencesAsync(diagnostic, document);
             }
             catch (AsyncApiException ex)
             {
@@ -172,6 +172,51 @@ namespace LEGO.AsyncAPI.Readers
             return (T)element;
         }
 
+        private async Task ResolveReferencesAsync(AsyncApiDiagnostic diagnostic, IAsyncApiSerializable serializable)
+        {
+            if (this.settings.ReferenceResolution == ReferenceResolutionSetting.DoNotResolveReferences)
+            {
+                return;
+            }
+
+            var collector = new AsyncApiReferenceCollector(this.context.Workspace);
+            var walker = new AsyncApiWalker(collector);
+            walker.Walk(serializable);
+
+            foreach (var reference in collector.References)
+            {
+                if (this.context.Workspace.Contains(reference.Reference.Reference))
+                {
+                    continue;
+                }
+
+                IAsyncApiSerializable component = null;
+                if (reference.Reference.IsExternal)
+                {
+                    if (this.settings.ReferenceResolution != ReferenceResolutionSetting.ResolveAllReferences)
+                    {
+                        continue;
+                    }
+
+                    component = await this.ResolveExternalReferenceAsync(diagnostic, reference);
+                }
+                else
+                {
+                    var stream = this.context.Workspace.ResolveReference<Stream>(string.Empty); // get whole document.
+                    component = this.ResolveStreamReference(stream, reference, diagnostic);
+                }
+
+                if (component == null)
+                {
+                    diagnostic.Errors.Add(new AsyncApiError(string.Empty, $"Unable to deserialize reference '{reference.Reference.Reference}'"));
+                    continue;
+                }
+
+                this.context.Workspace.RegisterComponent(reference.Reference.Reference, component);
+                this.ResolveReferences(diagnostic, component);
+            }
+        }
+
         private void ResolveReferences(AsyncApiDiagnostic diagnostic, IAsyncApiSerializable serializable)
         {
             if (this.settings.ReferenceResolution == ReferenceResolutionSetting.DoNotResolveReferences)
@@ -235,6 +280,36 @@ namespace LEGO.AsyncAPI.Readers
                 else
                 {
                     stream = loader.Load(new Uri(reference.Reference.ExternalResource, UriKind.RelativeOrAbsolute));
+                    this.context.Workspace.RegisterComponent(reference.Reference.ExternalResource, stream);
+                }
+
+                return this.ResolveStreamReference(stream, reference, diagnostic);
+            }
+            catch (AsyncApiException ex)
+            {
+                diagnostic.Errors.Add(new AsyncApiError(ex));
+                return null;
+            }
+        }
+
+        private async Task<IAsyncApiSerializable> ResolveExternalReferenceAsync(AsyncApiDiagnostic diagnostic, IAsyncApiReferenceable reference)
+        {
+            if (reference is null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            var loader = this.settings.ExternalReferenceLoader ??= new DefaultStreamLoader(this.settings);
+            try
+            {
+                Stream stream;
+                if (this.context.Workspace.Contains(reference.Reference.ExternalResource))
+                {
+                    stream = this.context.Workspace.ResolveReference<Stream>(reference.Reference.ExternalResource);
+                }
+                else
+                {
+                    stream = await loader.LoadAsync(new Uri(reference.Reference.ExternalResource, UriKind.RelativeOrAbsolute));
                     this.context.Workspace.RegisterComponent(reference.Reference.ExternalResource, stream);
                 }
 
