@@ -3,16 +3,15 @@
 namespace LEGO.AsyncAPI.Readers.Services
 {
     using System.Collections.Generic;
-    using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Services;
 
-    internal class AsyncApiRemoteReferenceCollector : AsyncApiVisitorBase
+    internal class AsyncApiReferenceCollector : AsyncApiVisitorBase
     {
         private readonly List<IAsyncApiReferenceable> references = new();
         private AsyncApiWorkspace workspace;
 
-        public AsyncApiRemoteReferenceCollector(
+        public AsyncApiReferenceCollector(
             AsyncApiWorkspace workspace)
         {
             this.workspace = workspace;
@@ -34,7 +33,7 @@ namespace LEGO.AsyncAPI.Readers.Services
         /// <param name="referenceable"></param>
         public override void Visit(IAsyncApiReferenceable referenceable)
         {
-            if (referenceable.Reference != null && referenceable.Reference.IsExternal)
+            if (referenceable.Reference != null)
             {
                 if (referenceable.Reference.Workspace == null)
                 {

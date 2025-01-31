@@ -169,20 +169,16 @@ namespace LEGO.AsyncAPI
         public T ResolveReference<T>(string location)
             where T : class
         {
-            if (string.IsNullOrEmpty(location))
-            {
-                return default;
-            }
-
             var uri = this.ToLocationUrl(location);
             if (this.resolvedReferenceRegistry.TryGetValue(uri, out var referenceableValue))
             {
                 return referenceableValue as T;
             }
 
-            if (this.artifactsRegistry.TryGetValue(uri, out var json))
+            if (this.artifactsRegistry.TryGetValue(uri, out var stream))
             {
-                return (T)(object)json;
+                stream.Position = 0;
+                return (T)(object)stream;
             }
 
             return default;

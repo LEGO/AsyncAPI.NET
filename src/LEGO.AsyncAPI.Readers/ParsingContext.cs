@@ -4,7 +4,9 @@ namespace LEGO.AsyncAPI.Readers
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Text.Json;
     using System.Text.Json.Nodes;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
@@ -81,7 +83,10 @@ namespace LEGO.AsyncAPI.Readers
                 case string version when version.StartsWith("2"):
                     this.VersionService = new AsyncApiV2VersionService(this.Diagnostic);
                     doc = this.VersionService.LoadDocument(this.RootNode);
-                    this.Workspace.RegisterComponents(doc);
+
+                    // Register components
+                    this.Workspace.RegisterComponents(doc); // pre-register components.
+                    this.Workspace.RegisterComponent(string.Empty, this.ParseToStream(jsonNode)); // register root document.
                     this.Diagnostic.SpecificationVersion = AsyncApiVersion.AsyncApi2_0;
                     break;
 
@@ -90,6 +95,18 @@ namespace LEGO.AsyncAPI.Readers
             }
 
             return doc;
+        }
+
+        private Stream ParseToStream(JsonNode node)
+        {
+            var stream = new MemoryStream();
+            using (var writer = new Utf8JsonWriter(stream))
+            {
+                node.WriteTo(writer);
+            }
+
+            stream.Position = 0;
+            return stream;
         }
 
         internal T ParseFragment<T>(JsonNode jsonNode, AsyncApiVersion version)

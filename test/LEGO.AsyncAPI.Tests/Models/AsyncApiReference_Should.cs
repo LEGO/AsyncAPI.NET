@@ -437,6 +437,29 @@ namespace LEGO.AsyncAPI.Tests
         }
 
         [Test]
+        public void AsyncApiReference_DocumentLevelReferencePointer_DeserializesCorrectly()
+        {
+            var yaml = """
+               asyncapi: 2.3.0
+               info:
+                 title: test
+                 version: 1.0.0
+               channels:
+                 workspace:
+                   publish:
+                     message:
+                       title: test message
+                 other:
+                   $ref: "#/channels/workspace"
+               """;
+
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+            doc.Channels.Should().HaveCount(2);
+            doc.Channels["other"].Publish.Message.First().Title.Should().Be("test message");
+        }
+
+        [Test]
         public void AsyncApiReference_WithExternalAvroResource_DeserializesCorrectly()
         {
             var avroPayload =

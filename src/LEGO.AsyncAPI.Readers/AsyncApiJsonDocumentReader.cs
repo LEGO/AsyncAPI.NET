@@ -172,45 +172,14 @@ namespace LEGO.AsyncAPI.Readers
             return (T)element;
         }
 
-        private void ResolveReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
+        private void ResolveReferences(AsyncApiDiagnostic diagnostic, IAsyncApiSerializable serializable)
         {
-            switch (this.settings.ReferenceResolution)
+            if (this.settings.ReferenceResolution == ReferenceResolutionSetting.DoNotResolveReferences)
             {
-                case ReferenceResolutionSetting.ResolveAllReferences:
-                    this.ResolveAllReferences(diagnostic, document);
-                    break;
-                case ReferenceResolutionSetting.ResolveInternalReferences:
-                    this.ResolveInternalReferences(diagnostic, document);
-                    break;
-                case ReferenceResolutionSetting.DoNotResolveReferences:
-                    break;
+                return;
             }
-        }
 
-        private void ResolveAllReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
-        {
-            this.ResolveInternalReferences(diagnostic, document);
-            this.ResolveExternalReferences(diagnostic, document, document);
-        }
-
-        private void ResolveInternalReferences(AsyncApiDiagnostic diagnostic, AsyncApiDocument document)
-        {
-            var reader = new AsyncApiStringReader(this.settings);
-
-            var resolver = new AsyncApiReferenceHostDocumentResolver(this.context.Workspace);
-            var walker = new AsyncApiWalker(resolver);
-            walker.Walk(document);
-
-            foreach (var item in resolver.Errors)
-            {
-                diagnostic.Errors.Add(item);
-            }
-        }
-
-        private void ResolveExternalReferences(AsyncApiDiagnostic diagnostic, IAsyncApiSerializable serializable, AsyncApiDocument hostDocument)
-        {
-            var loader = this.settings.ExternalReferenceLoader ??= new DefaultStreamLoader(this.settings);
-            var collector = new AsyncApiRemoteReferenceCollector(this.context.Workspace);
+            var collector = new AsyncApiReferenceCollector(this.context.Workspace);
             var walker = new AsyncApiWalker(collector);
             walker.Walk(serializable);
 
@@ -221,33 +190,60 @@ namespace LEGO.AsyncAPI.Readers
                     continue;
                 }
 
-                try
+                IAsyncApiSerializable component = null;
+                if (reference.Reference.IsExternal)
                 {
-                    Stream stream;
-                    if (this.context.Workspace.Contains(reference.Reference.ExternalResource))
+                    if (this.settings.ReferenceResolution != ReferenceResolutionSetting.ResolveAllReferences)
                     {
-                        stream = this.context.Workspace.ResolveReference<Stream>(reference.Reference.ExternalResource);
-                    }
-                    else
-                    {
-                        stream = loader.Load(new Uri(reference.Reference.ExternalResource, UriKind.RelativeOrAbsolute));
-                        this.context.Workspace.RegisterComponent(reference.Reference.ExternalResource, stream);
-                    }
-
-                    var component = this.ResolveStreamReferences(stream, reference, diagnostic);
-                    if (component == null)
-                    {
-                        diagnostic.Errors.Add(new AsyncApiError(string.Empty, $"Unable to deserialize reference '{reference.Reference.Reference}'"));
                         continue;
                     }
 
-                    this.context.Workspace.RegisterComponent(reference.Reference.Reference, component);
-                    this.ResolveExternalReferences(diagnostic, component, hostDocument);
+                    component = this.ResolveExternalReference(diagnostic, reference);
                 }
-                catch (AsyncApiException ex)
+                else
                 {
-                    diagnostic.Errors.Add(new AsyncApiError(ex));
+                    var stream = this.context.Workspace.ResolveReference<Stream>(string.Empty); // get whole document.
+                    component = this.ResolveStreamReference(stream, reference, diagnostic);
                 }
+
+                if (component == null)
+                {
+                    diagnostic.Errors.Add(new AsyncApiError(string.Empty, $"Unable to deserialize reference '{reference.Reference.Reference}'"));
+                    continue;
+                }
+
+                this.context.Workspace.RegisterComponent(reference.Reference.Reference, component);
+                this.ResolveReferences(diagnostic, component);
+            }
+        }
+
+        private IAsyncApiSerializable ResolveExternalReference(AsyncApiDiagnostic diagnostic, IAsyncApiReferenceable reference)
+        {
+            if (reference is null)
+            {
+                throw new ArgumentNullException(nameof(reference));
+            }
+
+            var loader = this.settings.ExternalReferenceLoader ??= new DefaultStreamLoader(this.settings);
+            try
+            {
+                Stream stream;
+                if (this.context.Workspace.Contains(reference.Reference.ExternalResource))
+                {
+                    stream = this.context.Workspace.ResolveReference<Stream>(reference.Reference.ExternalResource);
+                }
+                else
+                {
+                    stream = loader.Load(new Uri(reference.Reference.ExternalResource, UriKind.RelativeOrAbsolute));
+                    this.context.Workspace.RegisterComponent(reference.Reference.ExternalResource, stream);
+                }
+
+                return this.ResolveStreamReference(stream, reference, diagnostic);
+            }
+            catch (AsyncApiException ex)
+            {
+                diagnostic.Errors.Add(new AsyncApiError(ex));
+                return null;
             }
         }
 
@@ -264,7 +260,7 @@ namespace LEGO.AsyncAPI.Readers
             return default;
         }
 
-        private IAsyncApiSerializable ResolveStreamReferences(Stream stream, IAsyncApiReferenceable reference, AsyncApiDiagnostic diagnostic)
+        private IAsyncApiSerializable ResolveStreamReference(Stream stream, IAsyncApiReferenceable reference, AsyncApiDiagnostic diagnostic)
         {
             JsonNode json = null;
             try
@@ -274,6 +270,7 @@ namespace LEGO.AsyncAPI.Readers
             catch
             {
                 diagnostic.Errors.Add(new AsyncApiError(string.Empty, $"Unable to deserialize reference: '{reference.Reference.Reference}'"));
+                return null;
             }
 
             if (reference.Reference.IsFragment)
@@ -329,19 +326,19 @@ namespace LEGO.AsyncAPI.Readers
                     result = this.ReadFragment<AsyncApiOperationTrait>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.MessageTrait:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
+                    result = this.ReadFragment<AsyncApiMessageTrait>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.ServerBindings:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
+                    result = this.ReadFragment<AsyncApiBindings<IServerBinding>>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.ChannelBindings:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
+                    result = this.ReadFragment<AsyncApiBindings<IChannelBinding>>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.OperationBindings:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
+                    result = this.ReadFragment<AsyncApiBindings<IOperationBinding>>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 case ReferenceType.MessageBindings:
-                    result = this.ReadFragment<AsyncApiMessage>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
+                    result = this.ReadFragment<AsyncApiBindings<IMessageBinding>>(json, AsyncApiVersion.AsyncApi2_0, out fragmentDiagnostic);
                     break;
                 default:
                     diagnostic.Errors.Add(new AsyncApiError(reference.Reference.Reference, "Could not resolve reference."));

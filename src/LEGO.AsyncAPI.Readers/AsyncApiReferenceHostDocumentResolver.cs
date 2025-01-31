@@ -7,23 +7,14 @@ namespace LEGO.AsyncAPI.Readers
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Services;
 
-    internal class AsyncApiReferenceHostDocumentResolver : AsyncApiVisitorBase
+    internal class AsyncApiReferenceWorkspaceResolver : AsyncApiVisitorBase
     {
         private AsyncApiWorkspace workspace;
-        private List<AsyncApiError> errors = new List<AsyncApiError>();
 
-        public AsyncApiReferenceHostDocumentResolver(
+        public AsyncApiReferenceWorkspaceResolver(
             AsyncApiWorkspace workspace)
         {
             this.workspace = workspace;
-        }
-
-        public IEnumerable<AsyncApiError> Errors
-        {
-            get
-            {
-                return this.errors;
-            }
         }
 
         public override void Visit(IAsyncApiReferenceable referenceable)
