@@ -35,39 +35,72 @@ Main classes to know:
 ### Writing
 
 ```csharp
-var myFirstAsyncApi = new AsyncApiDocument
-{
-  Info = new AsyncApiInfo
-  {
-    Title = "my first asyncapi"
-  },
-  Channels = new Dictionary<string, AsyncApiChannel>
-  {
-    {
-	"users", new AsyncApiChannel
-	{
-	    Subscribe = new AsyncApiOperation
-	    {
-		OperationId = "users",
-		Description = "my users channel"
-	    }
-	}
-    }
-  }
-};
-var yaml = myFirstAsyncApi.SerializeAsYaml();
-//asyncapi: '2.5.0'
+ var myFirstAsyncApi = new AsyncApiDocument
+ {
+     Info = new AsyncApiInfo
+     {
+         Title = "my first asyncapi",
+     },
+     Channels = new Dictionary<string, AsyncApiChannel>
+     {
+         {
+             "users", new AsyncApiChannel
+             {
+                 Subscribe = new AsyncApiOperation
+                 {
+                     OperationId = "users",
+                     Description = "my users channel",
+                     Message = new List<AsyncApiMessage>
+                     {
+                       new AsyncApiMessageReference("#/components/messages/MyMessage"),
+                     },
+                 },
+             }
+         },
+     },
+     Components = new AsyncApiComponents
+     {
+         Messages = new Dictionary<string, AsyncApiMessage>
+         {
+             {
+                 "MyMessage", new AsyncApiMessage
+                 {
+                     Name = "Hello!",
+                 }
+             },
+         },
+     },
+ };
+
+var yaml = myFirstAsyncApi.SerializeAsYaml(AsyncApi);
+
+//asyncapi: 2.6.0
 //  info:
 //    title: my first asyncapi
-//  channels:
-//    users:
-//      subscribe:
-//        operationId: users
-//        description: my users channel
+//channels:
+//  users:
+//    subscribe:
+//      operationId: users
+//      description: my users channel
+//      message:
+//        $ref: '#/components/messages/MyMessage'
+//components:
+//  messages:
+//    MyMessage:
+//      name: Hello!
 ```
+
 
 ### Reading
 
+There are 3 reader types
+1. AsyncApiStringReader
+2. AsyncApiTextReader
+3. AsyncApiStreamReader
+
+All 3 supports both json and yaml.
+
+#### StreamReader
 ```csharp
 var httpClient = new HttpClient
 {
@@ -78,47 +111,45 @@ var stream = await httpClient.GetStreamAsync("master/examples/streetlights-kafka
 var asyncApiDocument = new AsyncApiStreamReader().Read(stream, out var diagnostic);
 ```
 
-#### Reading External $ref
-
-You can read externally referenced AsyncAPI documents by setting the `ReferenceResolution` property of the `AsyncApiReaderSettings` object to `ReferenceResolutionSetting.ResolveAllReferences` and providing an implementation for the `IAsyncApiExternalReferenceReader` interface. This interface contains a single method to which the built AsyncAPI.NET reader library will pass the location content contained in a `$ref` property (usually some form of path) and interface will return the content which is retrieved from wherever the `$ref` points to as a `string`. The AsyncAPI.NET reader will then automatically infer the `T` type of the content and recursively parse the external content into an AsyncAPI document as a child of the original document that contained the `$ref`. This means that you can have externally referenced documents that themselves contain external references. 
-
-This interface allows users to load the content of their external reference however and from whereever is required. A new instance of the implementor of `IAsyncApiExternalReferenceReader` should be registered with the `ExternalReferenceReader` property of the `AsyncApiReaderSettings` when creating the reader from which the `GetExternalResource` method will be called when resolving external references.
-
-Below is a very simple example of implementation for `IAsyncApiExternalReferenceReader` that simply loads a file and returns it as a string found at the reference endpoint.
+#### StringReader
 ```csharp
-using System.IO;
+var yaml =
+	"""
+	asyncapi: 2.6.0
+	  info:
+	    title: my first asyncapi
+	channels:
+	  users:
+	    subscribe:
+	      operationId: users
+	      description: my users channel
+	      message:
+	        $ref: '#/components/messages/MyMessage'
+	components:
+	  messages:
+	    MyMessage:
+	      name: Hello!
+	""";
 
-public class AsyncApiExternalFileSystemReader : IAsyncApiExternalReferenceReader
-{
-    public string Load(string reference)
-    {
-        return File.ReadAllText(reference);
-    }
-}
+var asyncApiDocument = new AsyncApiStringReader().Read(yaml, out var diagnostic);
 ```
+All readers will write warnings and errors to the diagnostics.
 
-This can then be configured in the reader as follows:
+
+### Reference Resolution
+Internal references are resolved by default. This includes component and non-component references e.g `#/components/messages/MyMessage` and `#/servers/0`.  
+External references can be resolved by setting `ReferenceResolution` to `ResolveAllReferences`.
+The default implementation will resolve anything prefixed with `file://`, `http://` & `https://`, however a custom implementation can be made, by inhereting from the `IStreamLoader` interface and setting the `ExternalReferenceLoader` in the `AsyncApiReaderSettings`.
+External references are always force converted to Json during resolution. This means that both yaml and json is supported - but not other serialization languages.
+
 ```csharp
-var settings = new AsyncApiReaderSettings
-{
-  ReferenceResolution = ReferenceResolutionSetting.ResolveAllReferences,
-  ExternalReferenceReader = new AsyncApiExternalFileSystemReader(),
-};
-var reader = new AsyncApiStringReader(settings);
+var settings = new AsyncApiReaderSettings { ReferenceResolution = ReferenceResolution.ResolveAllReferences };
+var document = new AsyncApiStringReader(settings).Read(json, out var diagnostics);
 ```
 
-This would function for a AsyncAPI document with following reference to load the content of `message.yaml` as a `AsyncApiMessage` object inline with the document object.
-```yaml
-asyncapi: 2.3.0
-info:
-  title: test
-  version: 1.0.0
-channels:
-  workspace:
-    publish:
-      message:
-        $ref: "../../../message.yaml"
-```
+
+
+Reference resolution can be disabled by setting `ReferenceResolution` to `DoNotResolveReferences`. 
 
 ### Bindings
 To add support for reading bindings, simply add the bindings you wish to support, to the `Bindings` collection of `AsyncApiReaderSettings`.
@@ -127,7 +158,7 @@ There is a nifty helper to add different types of bindings, or like in the examp
 ```csharp
 var settings = new AsyncApiReaderSettings();
 settings.Bindings = BindingsCollection.All;
-var asyncApiDocument = new AsyncApiStringReader(settings).Read(stream, out var diagnostic);
+var asyncApiDocument = new AsyncApiStringReader(settings).Read(yaml, out var diagnostic);
 ```
 
 ## Attribution
