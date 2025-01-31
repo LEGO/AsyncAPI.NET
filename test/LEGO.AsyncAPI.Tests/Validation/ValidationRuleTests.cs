@@ -4,7 +4,6 @@ namespace LEGO.AsyncAPI.Tests.Validation
 {
     using FluentAssertions;
     using LEGO.AsyncAPI.Readers;
-    using LEGO.AsyncAPI.Validations;
     using NUnit.Framework;
     using System.Linq;
 

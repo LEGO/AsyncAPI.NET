@@ -130,6 +130,10 @@ namespace LEGO.AsyncAPI.Validations
         /// <param name="item">The object to be validated.</param>
         public override void Visit(AsyncApiJsonSchema item) => this.Validate(item);
 
+        public override void Visit(AsyncApiAvroSchema item) => this.Validate(item);
+
+        public override void Visit(IAsyncApiMessagePayload item) => this.Validate(item);
+
         /// <summary>
         /// Execute validation rules against an <see cref="AsyncApiServer"/>.
         /// </summary>
@@ -143,10 +147,6 @@ namespace LEGO.AsyncAPI.Validations
         public override void Visit(IOperationBinding item) => this.Validate(item);
 
         public override void Visit(IMessageBinding item) => this.Validate(item);
-
-        public override void Visit(AsyncApiAvroSchemaPayload item) => this.Validate(item);
-
-        public override void Visit(AsyncApiJsonSchemaPayload item) => this.Validate(item);
 
         /// <summary>
         /// Execute validation rules against an <see cref="IAsyncApiExtensible"/>.
@@ -186,7 +186,7 @@ namespace LEGO.AsyncAPI.Validations
 
             // Validate unresolved references as references
             var potentialReference = item as IAsyncApiReferenceable;
-            if (potentialReference != null && potentialReference.UnresolvedReference)
+            if (potentialReference != null)
             {
                 type = typeof(IAsyncApiReferenceable);
             }

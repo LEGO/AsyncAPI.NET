@@ -1,9 +1,13 @@
 ﻿// Copyright (c) The LEGO Group. All rights reserved.
 
+using LEGO.AsyncAPI.Models;
+
 namespace LEGO.AsyncAPI.Writers
 {
     public interface IAsyncApiWriter
     {
+        AsyncApiWorkspace Workspace { get; set; }
+
         /// <summary>
         /// Write the start object.
         /// </summary>

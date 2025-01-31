@@ -28,7 +28,7 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiParameter>(ReferenceType.Parameter, pointer);
+                return new AsyncApiParameterReference(pointer);
             }
 
             var parameter = new AsyncApiParameter();

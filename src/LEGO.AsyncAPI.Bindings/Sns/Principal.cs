@@ -1,3 +1,5 @@
+// Copyright (c) The LEGO Group. All rights reserved.
+
 namespace LEGO.AsyncAPI.Bindings.Sns;
 
 using System;
@@ -28,20 +30,20 @@ public abstract class Principal : IAsyncApiElement
                 return new PrincipalStar();
 
             case MapNode mapNode:
-            {
-                var propertyNode = mapNode.First();
-                if (!IsValidPrincipalProperty(propertyNode.Name))
                 {
-                    throw new ArgumentException($"An error occured while parsing a {nameof(Principal)} node. " +
-                                                $"Node should contain a valid AWS principal property name.");
+                    var propertyNode = mapNode.First();
+                    if (!IsValidPrincipalProperty(propertyNode.Name))
+                    {
+                        throw new ArgumentException($"An error occured while parsing a {nameof(Principal)} node. " +
+                                                    $"Node should contain a valid AWS principal property name.");
+                    }
+
+                    var principalValue = new KeyValuePair<string, StringOrStringList>(
+                        propertyNode.Name,
+                        StringOrStringList.Parse(propertyNode.Value));
+
+                    return new PrincipalObject(principalValue);
                 }
-
-                var principalValue = new KeyValuePair<string, StringOrStringList>(
-                    propertyNode.Name,
-                    StringOrStringList.Parse(propertyNode.Value));
-
-                return new PrincipalObject(principalValue);
-            }
 
             default:
                 throw new ArgumentException($"An error occured while parsing a {nameof(Principal)} node. " +

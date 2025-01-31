@@ -97,21 +97,21 @@ namespace LEGO.AsyncAPI.Models
 
             // If references have been inlined we don't need the to render the components section
             // however if they have cycles, then we will need a component rendered
-            if (writer.GetSettings().InlineReferences)
+            if (writer.GetSettings().InlineLocalReferences)
             {
                 var loops = writer.GetSettings().LoopDetector.Loops;
                 writer.WriteStartObject();
-                if (loops.TryGetValue(typeof(AsyncApiJsonSchema), out List<object> schemas))
+                if (loops.TryGetValue(typeof(AsyncApiJsonSchemaReference), out List<object> schemas))
                 {
-                    var asyncApiSchemas = schemas.Cast<AsyncApiJsonSchema>().Distinct().ToList()
-                        .ToDictionary<AsyncApiJsonSchema, string>(k => k.Reference.Id);
+                    var asyncApiSchemas = schemas.Cast<AsyncApiJsonSchemaReference>().Distinct().ToList()
+                        .ToDictionary<AsyncApiJsonSchemaReference, string>(k => k.Reference.FragmentId);
 
                     writer.WriteOptionalMap(
                        AsyncApiConstants.Schemas,
                        this.Schemas,
                        (w, key, component) =>
                         {
-                            component.SerializeV2WithoutReference(w);
+                            component.SerializeV2(w);
                         });
                 }
 
@@ -130,11 +130,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Schemas,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Schema &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiJsonSchemaReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -148,11 +146,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Servers,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Server &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiServerReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -166,11 +162,9 @@ namespace LEGO.AsyncAPI.Models
                 this.ServerVariables,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ServerVariable &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiServerVariableReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -184,11 +178,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Channels,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Channel &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiChannelReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -202,11 +194,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Messages,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Message &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiMessageReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -220,11 +210,9 @@ namespace LEGO.AsyncAPI.Models
                 this.SecuritySchemes,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.SecurityScheme &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiSecuritySchemeReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -238,11 +226,9 @@ namespace LEGO.AsyncAPI.Models
                 this.Parameters,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.Parameter &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiParameterReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -256,11 +242,9 @@ namespace LEGO.AsyncAPI.Models
                 this.CorrelationIds,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.CorrelationId &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiCorrelationIdReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -274,11 +258,9 @@ namespace LEGO.AsyncAPI.Models
                 this.OperationTraits,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.OperationTrait &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiOperationTraitReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -292,11 +274,9 @@ namespace LEGO.AsyncAPI.Models
                 this.MessageTraits,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.MessageTrait &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiMessageTraitReference reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -310,11 +290,9 @@ namespace LEGO.AsyncAPI.Models
                 this.ServerBindings,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ServerBindings &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiBindingsReference<IServerBinding> reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -328,11 +306,9 @@ namespace LEGO.AsyncAPI.Models
                 this.ChannelBindings,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.ChannelBindings &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiBindingsReference<IChannelBinding> reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -346,11 +322,9 @@ namespace LEGO.AsyncAPI.Models
                 this.OperationBindings,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.OperationBindings &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiBindingsReference<IOperationBinding> reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {
@@ -364,11 +338,9 @@ namespace LEGO.AsyncAPI.Models
                 this.MessageBindings,
                 (w, key, component) =>
                 {
-                    if (component.Reference != null &&
-                        component.Reference.Type == ReferenceType.MessageBindings &&
-                        component.Reference.Id == key)
+                    if (component is AsyncApiBindingsReference<IMessageBinding> reference)
                     {
-                        component.SerializeV2WithoutReference(w);
+                        reference.SerializeV2(w);
                     }
                     else
                     {

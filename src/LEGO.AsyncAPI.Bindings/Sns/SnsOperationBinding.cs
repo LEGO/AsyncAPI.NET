@@ -59,7 +59,7 @@ namespace LEGO.AsyncAPI.Bindings.Sns
 
         private FixedFieldMap<RedrivePolicy> redrivePolicyFixedFields => new()
         {
-            { "deadLetterQueue", (a, n) => { a.DeadLetterQueue = n.ParseMapWithExtensions(identifierFixFields); } },
+            { "deadLetterQueue", (a, n) => { a.DeadLetterQueue = n.ParseMapWithExtensions(this.identifierFixFields); } },
             { "maxReceiveCount", (a, n) => { a.MaxReceiveCount = n.GetIntegerValue(); } },
         };
 

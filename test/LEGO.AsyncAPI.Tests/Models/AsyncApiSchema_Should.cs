@@ -1,4 +1,4 @@
-﻿// Copyright (c) The LEGO Group. All rights reserved.
+// Copyright (c) The LEGO Group. All rights reserved.
 
 namespace LEGO.AsyncAPI.Tests.Models
 {
@@ -220,12 +220,6 @@ namespace LEGO.AsyncAPI.Tests.Models
             {
                 Url = new Uri("http://example.com/externalDocs"),
             },
-
-            Reference = new AsyncApiReference
-            {
-                Type = ReferenceType.Schema,
-                Id = "schemaObject1",
-            },
         };
 
         public static AsyncApiJsonSchema AdvancedSchemaWithRequiredPropertiesObject = new AsyncApiJsonSchema
@@ -370,7 +364,7 @@ namespace LEGO.AsyncAPI.Tests.Models
         public void Deserialize_WithAdvancedSchema_Works()
         {
             // Arrange
-            var json = GetTestData<string>();
+            var json = this.GetTestData<string>();
             var expected = AdvancedSchemaObject;
 
             // Act
@@ -420,14 +414,14 @@ namespace LEGO.AsyncAPI.Tests.Models
                     {
                         new AsyncApiMessage
                         {
-                            Payload = new AsyncApiJsonSchemaPayload
+                            Payload = new AsyncApiJsonSchema
                             {
                                 Type = SchemaType.Object,
                                 Required = new HashSet<string> { "testB" },
                                 Properties = new Dictionary<string, AsyncApiJsonSchema>
                                 {
-                                    { "testC", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testC" } } },
-                                    { "testB", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testB" } } },
+                                    { "testC", new AsyncApiJsonSchemaReference("#/components/schemas/testC") },
+                                    { "testB", new AsyncApiJsonSchemaReference("#/components/schemas/testB") },
                                 },
                             },
                         },
@@ -440,14 +434,14 @@ namespace LEGO.AsyncAPI.Tests.Models
                 Type = SchemaType.Object,
                 Properties = new Dictionary<string, AsyncApiJsonSchema>
                 {
-                    { "testD", new AsyncApiJsonSchema { Reference = new AsyncApiReference { Type = ReferenceType.Schema, Id = "testD" } } },
+                    { "testD", new AsyncApiJsonSchemaReference("#/components/schemas/testD") },
                 },
             })
             .WithComponent("testB", new AsyncApiJsonSchema() { Description = "test", Type = SchemaType.Boolean })
             .Build();
 
             var outputString = new StringWriter();
-            var writer = new AsyncApiYamlWriter(outputString, new AsyncApiWriterSettings { InlineReferences = shouldInline });
+            var writer = new AsyncApiYamlWriter(outputString, new AsyncApiWriterSettings { InlineLocalReferences = shouldInline });
 
             // Act
             asyncApiDocument.SerializeV2(writer);

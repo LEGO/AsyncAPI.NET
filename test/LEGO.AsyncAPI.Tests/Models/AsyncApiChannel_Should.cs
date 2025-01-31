@@ -29,8 +29,8 @@ namespace LEGO.AsyncAPI.Tests.Models
                             - 97845c62-329c-4d87-ad24-4f611b909a10
                 """;
 
-            var channel = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(input, AsyncApiVersion.AsyncApi2_0, out var _ );
-            channel.Parameters.First().Value.Reference.Should().BeNull();
+            var channel = new AsyncApiStringReader().ReadFragment<AsyncApiChannel>(input, AsyncApiVersion.AsyncApi2_0, out var _);
+            channel.Parameters.First().Value.Should().NotBeOfType<AsyncApiParameterReference>();
         }
 
         [Test]

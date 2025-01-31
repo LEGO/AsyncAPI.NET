@@ -55,11 +55,15 @@ namespace LEGO.AsyncAPI.Services
         {
         }
 
-        public virtual void Visit(AsyncApiJsonSchemaPayload jsonPayload)
+        public virtual void Visit(IAsyncApiMessagePayload payload)
         {
         }
 
-        public virtual void Visit(AsyncApiAvroSchemaPayload avroPayload)
+        public virtual void Visit(AsyncApiAvroSchema item)
+        {
+        }
+
+        public virtual void Visit(AsyncApiJsonSchema item)
         {
         }
 
@@ -149,13 +153,6 @@ namespace LEGO.AsyncAPI.Services
         /// Visits <see cref="AsyncApiComponents"/>.
         /// </summary>
         public virtual void Visit(AsyncApiExternalDocumentation externalDocs)
-        {
-        }
-
-        /// <summary>
-        /// Visits <see cref="AsyncApiJsonSchema"/>.
-        /// </summary>
-        public virtual void Visit(AsyncApiJsonSchema schema)
         {
         }
 

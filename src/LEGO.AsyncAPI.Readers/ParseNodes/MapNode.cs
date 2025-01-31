@@ -116,11 +116,7 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
 
                         if (entry.value.Reference == null)
                         {
-                            entry.value.Reference = new AsyncApiReference()
-                            {
-                                Type = referenceType,
-                                Id = entry.key,
-                            };
+                            entry.value.Reference = new AsyncApiReference(entry.key, referenceType);
                         }
                     }
                     finally
@@ -185,7 +181,6 @@ namespace LEGO.AsyncAPI.Readers.ParseNodes
         {
             return new T()
             {
-                UnresolvedReference = true,
                 Reference = this.Context.VersionService.ConvertToAsyncApiReference(referenceId, referenceType),
             };
         }

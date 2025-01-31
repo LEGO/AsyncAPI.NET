@@ -10,12 +10,12 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// Describes the operations available on a single channel.
     /// </summary>
-    public class AsyncApiChannel : IAsyncApiReferenceable, IAsyncApiExtensible
+    public class AsyncApiChannel : IAsyncApiSerializable, IAsyncApiExtensible
     {
         /// <summary>
         /// an optional description of this channel item. CommonMark syntax can be used for rich text representation.
         /// </summary>
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         /// <summary>
         /// the servers on which this channel is available, specified as an optional unordered list of names (string keys) of Server Objects defined in the Servers Object (a map).
@@ -23,52 +23,32 @@ namespace LEGO.AsyncAPI.Models
         /// <remarks>
         /// If servers is absent or empty then this channel must be available on all servers defined in the Servers Object.
         /// </remarks>
-        public IList<string> Servers { get; set; } = new List<string>();
+        public virtual IList<string> Servers { get; set; } = new List<string>();
 
         /// <summary>
         /// a definition of the SUBSCRIBE operation, which defines the messages produced by the application and sent to the channel.
         /// </summary>
-        public AsyncApiOperation Subscribe { get; set; }
+        public virtual AsyncApiOperation Subscribe { get; set; }
 
         /// <summary>
         /// a definition of the PUBLISH operation, which defines the messages consumed by the application from the channel.
         /// </summary>
-        public AsyncApiOperation Publish { get; set; }
+        public virtual AsyncApiOperation Publish { get; set; }
 
         /// <summary>
         /// a map of the parameters included in the channel name. It SHOULD be present only when using channels with expressions (as defined by RFC 6570 section 2.2).
         /// </summary>
-        public IDictionary<string, AsyncApiParameter> Parameters { get; set; } = new Dictionary<string, AsyncApiParameter>();
+        public virtual IDictionary<string, AsyncApiParameter> Parameters { get; set; } = new Dictionary<string, AsyncApiParameter>();
 
         /// <summary>
         /// a map where the keys describe the name of the protocol and the values describe protocol-specific definitions for the channel.
         /// </summary>
-        public AsyncApiBindings<IChannelBinding> Bindings { get; set; } = new AsyncApiBindings<IChannelBinding>();
+        public virtual AsyncApiBindings<IChannelBinding> Bindings { get; set; } = new AsyncApiBindings<IChannelBinding>();
 
         /// <inheritdoc/>
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
+        public virtual IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        public bool UnresolvedReference { get; set; }
-
-        public AsyncApiReference Reference { get; set; }
-
-        public void SerializeV2(IAsyncApiWriter writer)
-        {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            if (this.Reference != null && !writer.GetSettings().ShouldInlineReference(this.Reference))
-            {
-                this.Reference.SerializeV2(writer);
-                return;
-            }
-
-            this.SerializeV2WithoutReference(writer);
-        }
-
-        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public virtual void SerializeV2(IAsyncApiWriter writer)
         {
             if (writer is null)
             {
@@ -92,11 +72,9 @@ namespace LEGO.AsyncAPI.Models
             // parameters
             writer.WriteOptionalMap(AsyncApiConstants.Parameters, this.Parameters, (writer, key, component) =>
             {
-                if (component.Reference != null &&
-                component.Reference.Type == ReferenceType.Channel &&
-                component.Reference.Id == key)
+                if (component is AsyncApiParameterReference reference)
                 {
-                    component.SerializeV2WithoutReference(writer);
+                    reference.SerializeV2(writer);
                 }
                 else
                 {

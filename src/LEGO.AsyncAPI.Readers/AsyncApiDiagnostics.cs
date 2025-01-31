@@ -13,5 +13,18 @@ namespace LEGO.AsyncAPI.Readers
         public IList<AsyncApiError> Warnings { get; set; } = new List<AsyncApiError>();
 
         public AsyncApiVersion SpecificationVersion { get; set; }
+
+        public void Append(AsyncApiDiagnostic diagnosticToAdd)
+        {
+            foreach (var error in diagnosticToAdd.Errors)
+            {
+                this.Errors.Add(new(error.Pointer, error.Message));
+            }
+
+            foreach (var warning in diagnosticToAdd.Warnings)
+            {
+                this.Warnings.Add(new(warning.Pointer, warning.Message));
+            }
+        }
     }
 }

@@ -2,8 +2,6 @@
 
 namespace LEGO.AsyncAPI.Readers
 {
-    using System;
-    using System.Threading;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Avro.LogicalTypes;
@@ -214,7 +212,7 @@ namespace LEGO.AsyncAPI.Readers
             { s => s.StartsWith(string.Empty), (a, p, n) => a.Metadata[p] = n.CreateAny() },
         };
 
-        public static AvroSchema LoadSchema(ParseNode node)
+        public static AsyncApiAvroSchema LoadSchema(ParseNode node)
         {
             if (node is ValueNode valueNode)
             {
@@ -238,11 +236,7 @@ namespace LEGO.AsyncAPI.Readers
 
                 if (pointer != null)
                 {
-                    return new AvroRecord
-                    {
-                        UnresolvedReference = true,
-                        Reference = node.Context.VersionService.ConvertToAsyncApiReference(pointer, ReferenceType.Schema),
-                    };
+                    return new AsyncApiAvroSchemaReference(pointer);
                 }
 
                 var isLogicalType = mapNode["logicalType"] != null;
@@ -286,7 +280,7 @@ namespace LEGO.AsyncAPI.Readers
             throw new AsyncApiReaderException("Invalid node type");
         }
 
-        private static AvroSchema LoadLogicalType(MapNode mapNode)
+        private static AsyncApiAvroSchema LoadLogicalType(MapNode mapNode)
         {
             var type = mapNode["logicalType"]?.Value.GetScalarValue();
             switch (type)

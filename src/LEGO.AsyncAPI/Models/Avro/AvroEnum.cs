@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models
     using System.Linq;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroEnum : AvroSchema
+    public class AvroEnum : AsyncApiAvroSchema
     {
         public override string Type { get; } = "enum";
 
@@ -45,7 +45,7 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public override IDictionary<string, AsyncApiAny> Metadata { get; set; } = new Dictionary<string, AsyncApiAny>();
 
-        public override void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeV2(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteOptionalProperty("type", this.Type);

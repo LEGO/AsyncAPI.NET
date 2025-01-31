@@ -11,69 +11,69 @@ namespace LEGO.AsyncAPI.Models
     /// <summary>
     /// The Schema Object allows the definition of input and output data types.
     /// </summary>
-    public class AsyncApiJsonSchema : IAsyncApiReferenceable, IAsyncApiExtensible, IAsyncApiSerializable
+    public class AsyncApiJsonSchema : IAsyncApiExtensible, IAsyncApiSerializable, IAsyncApiMessagePayload
     {
         /// <summary>
         /// follow JSON Schema definition. Short text providing information about the data.
         /// </summary>
-        public string Title { get; set; }
+        public virtual string Title { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public SchemaType? Type { get; set; }
+        public virtual SchemaType? Type { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public string Format { get; set; }
+        public virtual string Format { get; set; }
 
         /// <summary>
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-fge-json-schema-validation-00
         /// CommonMark syntax MAY be used for rich text representation.
         /// </summary>
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public double? Maximum { get; set; }
+        public virtual double? Maximum { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public double? ExclusiveMaximum { get; set; }
+        public virtual double? ExclusiveMaximum { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public double? Minimum { get; set; }
+        public virtual double? Minimum { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public double? ExclusiveMinimum { get; set; }
+        public virtual double? ExclusiveMinimum { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public int? MaxLength { get; set; }
+        public virtual int? MaxLength { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public int? MinLength { get; set; }
+        public virtual int? MinLength { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// This string SHOULD be a valid regular expression, according to the ECMA 262 regular expression dialect.
         /// </summary>
-        public string Pattern { get; set; }
+        public virtual string Pattern { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public double? MultipleOf { get; set; }
+        public virtual double? MultipleOf { get; set; }
 
         /// <summary>
         /// Follow JSON Schema definition: https://tools.ietf.org/html/draft-fge-json-schema-validation-00
@@ -81,7 +81,7 @@ namespace LEGO.AsyncAPI.Models
         /// Unlike JSON Schema, the value MUST conform to the defined type for the Schema Object defined at the same level.
         /// For example, if type is string, then default can be "foo" but cannot be 1.
         /// </summary>
-        public AsyncApiAny Default { get; set; }
+        public virtual AsyncApiAny Default { get; set; }
 
         /// <summary>
         /// a value indicating whether relevant only for Schema "properties" definitions. Declares the property as "read only".
@@ -91,7 +91,7 @@ namespace LEGO.AsyncAPI.Models
         /// A property MUST NOT be marked as both readOnly and writeOnly being true.
         /// Default value is false.
         /// </summary>
-        public bool ReadOnly { get; set; }
+        public virtual bool ReadOnly { get; set; }
 
         /// <summary>
         /// a value indicating whether relevant only for Schema "properties" definitions. Declares the property as "write only".
@@ -101,162 +101,156 @@ namespace LEGO.AsyncAPI.Models
         /// A property MUST NOT be marked as both readOnly and writeOnly being true.
         /// Default value is false.
         /// </summary>
-        public bool WriteOnly { get; set; }
+        public virtual bool WriteOnly { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        public IList<AsyncApiJsonSchema> AllOf { get; set; } = new List<AsyncApiJsonSchema>();
+        public virtual IList<AsyncApiJsonSchema> AllOf { get; set; } = new List<AsyncApiJsonSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        public IList<AsyncApiJsonSchema> OneOf { get; set; } = new List<AsyncApiJsonSchema>();
+        public virtual IList<AsyncApiJsonSchema> OneOf { get; set; } = new List<AsyncApiJsonSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        public IList<AsyncApiJsonSchema> AnyOf { get; set; } = new List<AsyncApiJsonSchema>();
+        public virtual IList<AsyncApiJsonSchema> AnyOf { get; set; } = new List<AsyncApiJsonSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Inline or referenced schema MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        public AsyncApiJsonSchema Not { get; set; }
+        public virtual AsyncApiJsonSchema Not { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiJsonSchema Contains { get; set; }
+        public virtual AsyncApiJsonSchema Contains { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiJsonSchema If { get; set; }
+        public virtual AsyncApiJsonSchema If { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiJsonSchema Then { get; set; }
+        public virtual AsyncApiJsonSchema Then { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiJsonSchema Else { get; set; }
+        public virtual AsyncApiJsonSchema Else { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public ISet<string> Required { get; set; } = new HashSet<string>();
+        public virtual ISet<string> Required { get; set; } = new HashSet<string>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Value MUST be an object and not an array. Inline or referenced schema MUST be of a Schema Object
         /// and not a standard JSON Schema. items MUST be present if the type is array.
         /// </summary>
-        public AsyncApiJsonSchema Items { get; set; }
+        public virtual AsyncApiJsonSchema Items { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Value MUST be an object and not an array. Inline or referenced schema MUST be of a Schema Object
         /// and not a standard JSON Schema. items MUST be present if the type is array.
         /// </summary>
-        public AsyncApiJsonSchema AdditionalItems { get; set; }
+        public virtual AsyncApiJsonSchema AdditionalItems { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public int? MaxItems { get; set; }
+        public virtual int? MaxItems { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public int? MinItems { get; set; }
+        public virtual int? MinItems { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public bool? UniqueItems { get; set; }
+        public virtual bool? UniqueItems { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Property definitions MUST be a Schema Object and not a standard JSON Schema (inline or referenced).
         /// </summary>
-        public IDictionary<string, AsyncApiJsonSchema> Properties { get; set; } = new Dictionary<string, AsyncApiJsonSchema>();
+        public virtual IDictionary<string, AsyncApiJsonSchema> Properties { get; set; } = new Dictionary<string, AsyncApiJsonSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public int? MaxProperties { get; set; }
+        public virtual int? MaxProperties { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public int? MinProperties { get; set; }
+        public virtual int? MinProperties { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html
         /// Value can be boolean or object. Inline or referenced schema
         /// MUST be of a Schema Object and not a standard JSON Schema.
         /// </summary>
-        public AsyncApiJsonSchema AdditionalProperties { get; set; }
+        public virtual AsyncApiJsonSchema AdditionalProperties { get; set; }
 
-        public IDictionary<string, AsyncApiJsonSchema> PatternProperties { get; set; } = new Dictionary<string, AsyncApiJsonSchema>();
+        public virtual IDictionary<string, AsyncApiJsonSchema> PatternProperties { get; set; } = new Dictionary<string, AsyncApiJsonSchema>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiJsonSchema PropertyNames { get; set; }
+        public virtual AsyncApiJsonSchema PropertyNames { get; set; }
 
         /// <summary>
         /// adds support for polymorphism.
         /// The discriminator is the schema property name that is used to differentiate between other schema that inherit this schema.
         /// </summary>
-        public string Discriminator { get; set; }
+        public virtual string Discriminator { get; set; }
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public IList<AsyncApiAny> Enum { get; set; } = new List<AsyncApiAny>();
+        public virtual IList<AsyncApiAny> Enum { get; set; } = new List<AsyncApiAny>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public IList<AsyncApiAny> Examples { get; set; } = new List<AsyncApiAny>();
+        public virtual IList<AsyncApiAny> Examples { get; set; } = new List<AsyncApiAny>();
 
         /// <summary>
         /// follow JSON Schema definition: https://json-schema.org/draft-07/json-schema-release-notes.html.
         /// </summary>
-        public AsyncApiAny Const { get; set; }
+        public virtual AsyncApiAny Const { get; set; }
 
         /// <summary>
         /// a value indicating whether allows sending a null value for the defined schema. Default value is false.
         /// </summary>
-        public bool Nullable { get; set; }
+        public virtual bool Nullable { get; set; }
 
         /// <summary>
         /// additional external documentation for this schema.
         /// </summary>
-        public AsyncApiExternalDocumentation ExternalDocs { get; set; }
+        public virtual AsyncApiExternalDocumentation ExternalDocs { get; set; }
 
         /// <summary>
         /// a value indicating whether specifies that a schema is deprecated and SHOULD be transitioned out of usage.
         /// Default value is false.
         /// </summary>
-        public bool Deprecated { get; set; }
+        public virtual bool Deprecated { get; set; }
 
-        /// <inheritdoc/>
-        public bool UnresolvedReference { get; set; }
+        public virtual IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
 
-        /// <inheritdoc/>
-        public AsyncApiReference Reference { get; set; }
-
-        public IDictionary<string, IAsyncApiExtension> Extensions { get; set; } = new Dictionary<string, IAsyncApiExtension>();
-
-        public void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public virtual void SerializeV2(IAsyncApiWriter writer)
         {
             writer.WriteStartObject();
 
@@ -419,56 +413,6 @@ namespace LEGO.AsyncAPI.Models
             writer.WriteExtensions(this.Extensions);
 
             writer.WriteEndObject();
-        }
-
-        public void SerializeV2(IAsyncApiWriter writer)
-        {
-            if (writer is null)
-            {
-                throw new ArgumentNullException(nameof(writer));
-            }
-
-            var target = this;
-
-            var settings = writer.GetSettings();
-
-            if (this.Reference != null)
-            {
-                if (!settings.ShouldInlineReference(this.Reference))
-                {
-                    this.Reference.SerializeV2(writer);
-                    return;
-                }
-
-                // If Loop is detected then just Serialize as a reference.
-                if (!settings.LoopDetector.PushLoop(this))
-                {
-                    settings.LoopDetector.SaveLoop(this);
-                    this.Reference.SerializeV2(writer);
-                    return;
-                }
-
-                target = this.GetReferenced(this.Reference.HostDocument);
-            }
-
-            target.SerializeV2WithoutReference(writer);
-
-            if (this.Reference != null)
-            {
-                settings.LoopDetector.PopLoop<AsyncApiJsonSchema>();
-            }
-        }
-
-        public AsyncApiJsonSchema GetReferenced(AsyncApiDocument document)
-        {
-            if (this.Reference != null && document != null)
-            {
-                return document.ResolveReference<AsyncApiJsonSchema>(this.Reference);
-            }
-            else
-            {
-                return this;
-            }
         }
     }
 }

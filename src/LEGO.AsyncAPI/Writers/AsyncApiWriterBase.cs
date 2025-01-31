@@ -2,6 +2,7 @@
 
 namespace LEGO.AsyncAPI.Writers
 {
+    using LEGO.AsyncAPI.Models;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -66,6 +67,8 @@ namespace LEGO.AsyncAPI.Writers
         /// Gets the text writer.
         /// </summary>
         protected TextWriter Writer { get; }
+
+        public AsyncApiWorkspace Workspace { get; set; } = new AsyncApiWorkspace();
 
         /// <summary>
         /// Write start object.

@@ -48,15 +48,8 @@ namespace LEGO.AsyncAPI.Tests.Models
                 new AsyncApiSecurityRequirement
                 {
                     {
-                        new AsyncApiSecurityScheme()
-                        {
-                            Reference = new AsyncApiReference()
-                            {
-                                Id = "schem1",
-                                Type = ReferenceType.SecurityScheme,
-                            },
-                            Name = "scheme1",
-                        }, new List<string>
+                        new AsyncApiSecuritySchemeReference("schem1")
+                        , new List<string>
                         {
                             "requirement",
                         }

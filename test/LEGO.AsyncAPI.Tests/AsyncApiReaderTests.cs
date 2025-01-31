@@ -5,7 +5,6 @@ namespace LEGO.AsyncAPI.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text.Json.Nodes;
     using FluentAssertions;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models;
@@ -21,6 +20,32 @@ namespace LEGO.AsyncAPI.Tests
             var yaml = @"asyncapi: 2.6.0";
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
+        }
+
+        [Test]
+        public void Read_WithComponentBindings_Deserializes()
+        {
+            var yaml = @"
+                asyncapi: 2.6.0
+                info:
+                  title: test
+                  version: 1.0.0
+                channels:
+                  workspace:
+                    publish:
+                      bindings:
+                        http:
+                          type: response
+                      message:
+                        $ref: '#/components/messages/WorkspaceEventPayload'
+                components:
+                  messages:
+                    WorkspaceEventPayload:
+                      schemaFormat: application/schema+yaml;version=draft-07
+                ";
+            var reader = new AsyncApiStringReader();
+            var doc = reader.Read(yaml, out var diagnostic);
+            Assert.AreEqual("application/schema+yaml;version=draft-07", doc.Components.Messages["WorkspaceEventPayload"].SchemaFormat);
         }
 
         [Test]
@@ -432,7 +457,7 @@ namespace LEGO.AsyncAPI.Tests
         [Test]
         public void Read_WithWrongReference_AddsError()
         {
-            var yaml = 
+            var yaml =
                 """
                 asyncapi: 2.3.0
                 info:
@@ -452,7 +477,7 @@ namespace LEGO.AsyncAPI.Tests
             var reader = new AsyncApiStringReader();
             var doc = reader.Read(yaml, out var diagnostic);
             diagnostic.Errors.Should().NotBeEmpty();
-            doc.Channels.Values.First().Publish.Message.First().Should().BeNull();
+            doc.Channels.Values.First().Publish.Message.Should().BeEmpty();
         }
 
         [Test]
@@ -700,7 +725,7 @@ namespace LEGO.AsyncAPI.Tests
                         implicit:
                           authorizationUrl: https://example.com/api/oauth/dialog
                           scopes:
-                            write:pets: modify pets in your account
+                            write:pets: modify pets in your account 
                             read:pets: read your pets
                 """;
             var reader = new AsyncApiStringReader();

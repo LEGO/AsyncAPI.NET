@@ -31,7 +31,7 @@ namespace LEGO.AsyncAPI.Models
                 return false;
             }
 
-            return x.Reference.Id == y.Reference.Id;
+            return x.Reference.FragmentId == y.Reference.FragmentId;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace LEGO.AsyncAPI.Models
         /// </summary>
         public int GetHashCode(IAsyncApiReferenceable obj)
         {
-            return obj?.Reference?.Id == null ? 0 : obj.Reference.Id.GetHashCode();
+            return obj?.Reference?.FragmentId == null ? 0 : obj.Reference.FragmentId.GetHashCode();
         }
     }
 }

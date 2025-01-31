@@ -36,19 +36,11 @@ namespace LEGO.AsyncAPI.Readers
             return securityRequirement;
         }
 
-        private static AsyncApiSecurityScheme LoadSecuritySchemeByReference(
+        private static AsyncApiSecuritySchemeReference LoadSecuritySchemeByReference(
             ParsingContext context,
             string schemeName)
         {
-            var securitySchemeObject = new AsyncApiSecurityScheme
-            {
-                UnresolvedReference = true,
-                Reference = new AsyncApiReference
-                {
-                    Id = schemeName,
-                    Type = ReferenceType.SecurityScheme,
-                },
-            };
+            var securitySchemeObject = new AsyncApiSecuritySchemeReference(schemeName);
 
             return securitySchemeObject;
         }

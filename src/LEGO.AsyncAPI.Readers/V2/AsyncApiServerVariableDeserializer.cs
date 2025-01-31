@@ -41,7 +41,7 @@ namespace LEGO.AsyncAPI.Readers
             var pointer = mapNode.GetReferencePointer();
             if (pointer != null)
             {
-                return mapNode.GetReferencedObject<AsyncApiServerVariable>(ReferenceType.ServerVariable, pointer);
+                return new AsyncApiServerVariableReference(pointer);
             }
 
             var serverVariable = new AsyncApiServerVariable();

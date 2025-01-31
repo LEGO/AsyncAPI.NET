@@ -229,11 +229,7 @@ namespace LEGO.AsyncAPI.Readers
 
             if (pointer != null)
             {
-                return new AsyncApiJsonSchema
-                {
-                    UnresolvedReference = true,
-                    Reference = node.Context.VersionService.ConvertToAsyncApiReference(pointer, ReferenceType.Schema),
-                };
+                return new AsyncApiJsonSchemaReference(pointer);
             }
 
             var schema = new AsyncApiJsonSchema();

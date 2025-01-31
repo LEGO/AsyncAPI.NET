@@ -6,7 +6,7 @@ namespace LEGO.AsyncAPI.Models
     using System.Linq;
     using LEGO.AsyncAPI.Writers;
 
-    public class AvroPrimitive : AvroSchema
+    public class AvroPrimitive : AsyncApiAvroSchema
     {
         public override string Type { get; }
 
@@ -20,7 +20,7 @@ namespace LEGO.AsyncAPI.Models
             this.Type = type.GetDisplayName();
         }
 
-        public override void SerializeV2WithoutReference(IAsyncApiWriter writer)
+        public override void SerializeV2(IAsyncApiWriter writer)
         {
             writer.WriteValue(this.Type);
             if (this.Metadata.Any())

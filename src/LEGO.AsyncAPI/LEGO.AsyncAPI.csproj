@@ -5,6 +5,7 @@
 	  <PackageId>AsyncAPI.NET</PackageId>
 	  <AssemblyName>LEGO.AsyncAPI</AssemblyName>
 	  <RootNamespace>LEGO.AsyncAPI</RootNamespace>
+	  <TargetFrameworks>netstandard2.0;net8</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="stylecop.json" />

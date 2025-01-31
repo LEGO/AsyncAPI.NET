@@ -72,6 +72,11 @@ namespace LEGO.AsyncAPI.Readers
         /// <summary>
         /// External reference reader implementation provided by users for reading external resources.
         /// </summary>
-        public IAsyncApiExternalReferenceReader ExternalReferenceReader { get; set; }
+        public IStreamLoader ExternalReferenceLoader { get; set; } = null;
+
+        /// <summary>
+        /// URL where relative references should be resolved from if.
+        /// </summary>
+        public Uri BaseUrl { get; set; }
     }
 }

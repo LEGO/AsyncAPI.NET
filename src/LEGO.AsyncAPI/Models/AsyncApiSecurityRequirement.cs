@@ -7,7 +7,7 @@ namespace LEGO.AsyncAPI.Models
     using LEGO.AsyncAPI.Models.Interfaces;
     using LEGO.AsyncAPI.Writers;
 
-    public class AsyncApiSecurityRequirement : Dictionary<AsyncApiSecurityScheme, IList<string>>, IAsyncApiSerializable
+    public class AsyncApiSecurityRequirement : Dictionary<AsyncApiSecuritySchemeReference, IList<string>>, IAsyncApiSerializable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncApiSecurityRequirement"/> class.
@@ -45,7 +45,7 @@ namespace LEGO.AsyncAPI.Models
                 }
 
                 // securityScheme.SerializeV2(writer);
-                writer.WritePropertyName(securityScheme.Reference.Id);
+                writer.WritePropertyName(securityScheme.Reference.FragmentId);
                 writer.WriteStartArray();
 
                 foreach (var scope in scopes)
