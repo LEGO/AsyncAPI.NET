@@ -213,7 +213,7 @@ namespace LEGO.AsyncAPI.Readers
                 }
 
                 this.context.Workspace.RegisterComponent(reference.Reference.Reference, component);
-                this.ResolveReferences(diagnostic, component);
+                await this.ResolveReferencesAsync(diagnostic, component);
             }
         }
 
@@ -269,7 +269,7 @@ namespace LEGO.AsyncAPI.Readers
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            var loader = this.settings.ExternalReferenceLoader ??= new DefaultStreamLoader(this.settings);
+            var loader = this.settings.ExternalReferenceLoader ??= new DefaultStreamLoader();
             try
             {
                 Stream stream;
@@ -299,7 +299,7 @@ namespace LEGO.AsyncAPI.Readers
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            var loader = this.settings.ExternalReferenceLoader ??= new DefaultStreamLoader(this.settings);
+            var loader = this.settings.ExternalReferenceLoader ??= new DefaultStreamLoader();
             try
             {
                 Stream stream;

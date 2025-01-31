@@ -14,10 +14,6 @@ namespace LEGO.AsyncAPI.Models
     {
         private string originalString;
 
-        public AsyncApiReference()
-        {
-        }
-
         public AsyncApiReference(string reference, ReferenceType? type)
         {
             if (string.IsNullOrWhiteSpace(reference))

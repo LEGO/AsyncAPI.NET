@@ -14,19 +14,16 @@ namespace LEGO.AsyncAPI.Readers
 
         public AsyncApiVersion SpecificationVersion { get; set; }
 
-        public void Append(AsyncApiDiagnostic diagnosticToAdd, string fileNameToAdd = null)
+        public void Append(AsyncApiDiagnostic diagnosticToAdd)
         {
-            var fileNameIsSupplied = !string.IsNullOrEmpty(fileNameToAdd);
             foreach (var error in diagnosticToAdd.Errors)
             {
-                var errMsgWithFileName = fileNameIsSupplied ? $"[File: {fileNameToAdd}] {error.Message}" : error.Message;
-                this.Errors.Add(new(error.Pointer, errMsgWithFileName));
+                this.Errors.Add(new(error.Pointer, error.Message));
             }
 
             foreach (var warning in diagnosticToAdd.Warnings)
             {
-                var warnMsgWithFileName = fileNameIsSupplied ? $"[File: {fileNameToAdd}] {warning.Message}" : warning.Message;
-                this.Warnings.Add(new(warning.Pointer, warnMsgWithFileName));
+                this.Warnings.Add(new(warning.Pointer, warning.Message));
             }
         }
     }
