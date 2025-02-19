@@ -1333,20 +1333,19 @@ namespace LEGO.AsyncAPI.Tests
         {
             // Arrange
             var spec = """
-                asyncapi: 2.6.0
-                info:
-                  title: Spec with missing channel info
-                  description: test description
-                servers:
-                  production:
-                    url: example.com
-                    protocol: pulsar+ssl
-                    description: test description
-                channels: { }
+            asyncapi: 2.6.0
+            info:
+              title: Spec with missing channel info
+              description: test description
+            servers:
+              production:
+                url: example.com
+                protocol: pulsar+ssl
+                description: test description
+            channels: { }
             """;
 
             var settings = new AsyncApiReaderSettings();
-            settings.Bindings = BindingsCollection.All;
             var reader = new AsyncApiStringReader(settings);
 
             // Act
