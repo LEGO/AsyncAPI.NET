@@ -1325,5 +1325,37 @@ namespace LEGO.AsyncAPI.Tests
 
             Assert.AreEqual("this mah binding", httpBinding.Headers.Description);
         }
+
+
+
+        [Test]
+        public void SerializeV2_EmptyChannelObject_DeserializeAndSerializePreserveChannelObject()
+        {
+            // Arrange
+            var spec = """
+                asyncapi: 2.6.0
+                info:
+                  title: Spec with missing channel info
+                  description: test description
+                servers:
+                  production:
+                    url: example.com
+                    protocol: pulsar+ssl
+                    description: test description
+                channels: { }
+            """;
+
+            var settings = new AsyncApiReaderSettings();
+            settings.Bindings = BindingsCollection.All;
+            var reader = new AsyncApiStringReader(settings);
+
+            // Act
+            var deserialized = reader.Read(spec, out var diagnostic);
+            var actual = deserialized.Serialize(AsyncApiVersion.AsyncApi2_0, AsyncApiFormat.Yaml);
+
+            // Assert
+            actual.Should()
+                .BePlatformAgnosticEquivalentTo(spec);
+        }
     }
 }
