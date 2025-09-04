@@ -30,7 +30,7 @@ namespace LEGO.AsyncAPI.Validation.Rules
                     context.Exit();
 
                     context.Enter("channels");
-                    if (document.Channels == null || !document.Channels.Keys.Any())
+                    if (document.Channels == null)
                     {
                         context.CreateError(
                             nameof(DocumentRequiredFields),
