@@ -6,8 +6,8 @@ namespace LEGO.AsyncAPI.Models
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Writers;
     using LEGO.AsyncAPI.Services;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// This is the root document object for the API specification. It combines resource listing and API declaration together into one document.
