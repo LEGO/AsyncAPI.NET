@@ -1202,6 +1202,10 @@ namespace LEGO.AsyncAPI.Tests
                     },
                 },
             };
+            if (doc.Channels == null)
+            {
+                doc.Channels = new Dictionary<string, AsyncApiChannel>();
+            }
             doc.Channels.Add(
                 "testChannel",
                 new AsyncApiChannel
@@ -1260,6 +1264,10 @@ namespace LEGO.AsyncAPI.Tests
                 Protocol = "pulsar+ssl",
                 Url = "example.com",
             });
+            if (doc.Channels == null)
+            {
+                doc.Channels = new Dictionary<string, AsyncApiChannel>();
+            }
             doc.Channels.Add(
                 "testChannel",
                 new AsyncApiChannel
