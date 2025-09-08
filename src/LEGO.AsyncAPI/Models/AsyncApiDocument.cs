@@ -6,8 +6,8 @@ namespace LEGO.AsyncAPI.Models
     using System.Collections.Generic;
     using LEGO.AsyncAPI.Exceptions;
     using LEGO.AsyncAPI.Models.Interfaces;
-    using LEGO.AsyncAPI.Writers;
     using LEGO.AsyncAPI.Services;
+    using LEGO.AsyncAPI.Writers;
 
     /// <summary>
     /// This is the root document object for the API specification. It combines resource listing and API declaration together into one document.
@@ -46,7 +46,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// REQUIRED. The available channels and messages for the API.
         /// </summary>
-        public IDictionary<string, AsyncApiChannel> Channels { get; set; } = new Dictionary<string, AsyncApiChannel>();
+        public IDictionary<string, AsyncApiChannel> Channels { get; set; }
 
         /// <summary>
         /// an element to hold various schemas for the specification.
