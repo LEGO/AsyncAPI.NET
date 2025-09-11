@@ -46,7 +46,7 @@ namespace LEGO.AsyncAPI.Models
         /// <summary>
         /// REQUIRED. The available channels and messages for the API.
         /// </summary>
-        public IDictionary<string, AsyncApiChannel> Channels { get; set; } = new Dictionary<string, AsyncApiChannel>();
+        public IDictionary<string, AsyncApiChannel> Channels { get; set; }
 
         /// <summary>
         /// an element to hold various schemas for the specification.

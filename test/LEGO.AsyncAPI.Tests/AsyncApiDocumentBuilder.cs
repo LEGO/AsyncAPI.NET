@@ -3,6 +3,7 @@
 namespace LEGO.AsyncAPI.Tests
 {
     using System;
+    using System.Collections.Generic;
     using LEGO.AsyncAPI.Models;
     using LEGO.AsyncAPI.Models.Interfaces;
 
@@ -42,6 +43,11 @@ namespace LEGO.AsyncAPI.Tests
 
         public AsyncApiDocumentBuilder WithChannel(string key, AsyncApiChannel channel)
         {
+            if (this.document.Channels == null)
+            {
+                this.document.Channels = new Dictionary<string, AsyncApiChannel>();
+            }
+
             this.document.Channels.Add(key, channel);
             return this;
         }
