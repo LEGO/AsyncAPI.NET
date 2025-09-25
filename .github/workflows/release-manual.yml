@@ -1,0 +1,28 @@
+name: Publish custom NuGet package version
+on:
+  workflow_dispatch:
+    inputs:
+      package_version:
+        description: 'NuGet package version (e.g. 6.0.0-beta.1041)'
+        required: true
+
+jobs:
+  pre-release:
+    runs-on: ubuntu-latest
+    name: Publish NuGet packages
+    environment: AsyncAPI
+    strategy:
+      matrix:
+        package-name: [ "LEGO.AsyncAPI", "LEGO.AsyncAPI.Readers", "LEGO.AsyncAPI.Bindings" ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Setup .NET Core @ Latest
+        uses: actions/setup-dotnet@v1
+
+      - name: Build ${{ matrix.package-name }} project and pack NuGet package
+        run: dotnet pack src/${{ matrix.package-name }}/${{ matrix.package-name }}.csproj -c Release -o out-${{ matrix.package-name }} -p:PackageVersion=${{ github.event.inputs.package_version }}
+
+      - name: Push generated package to NuGet
+        run: dotnet nuget push out-${{ matrix.package-name }}/*.nupkg -s https://api.nuget.org/v3/index.json --skip-duplicate -n --api-key ${{secrets.NUGET}}
