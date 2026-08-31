@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LEGO.AsyncAPI.Readers" Version="0.1.2008926433.35-prerelease" />
+    <PackageReference Include="AsyncAPI.NET.Readers" Version="*-*" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
